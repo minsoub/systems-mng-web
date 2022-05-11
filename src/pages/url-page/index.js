@@ -26,7 +26,7 @@ export default function FileSystemNavigator() {
         });
     };
     makeMenuData(data);
-    //console.log('data:', data);
+    console.log('menuData:', menuData);
     /*
     const data = [
         {
@@ -49,7 +49,12 @@ export default function FileSystemNavigator() {
         const selectItem = _.find(menuData, { id: nodeId });
         console.log('selectItem:', selectItem);
         if (selectItem.type === 'item') {
-            navgate(selectItem.url);
+            if (selectItem.external) {
+                //window.location.href = selectItem.url;
+                window.open(selectItem.url, '_blank');
+            } else {
+                navgate(selectItem.url);
+            }
         }
     };
     const renderTreeItem = (items) => {
