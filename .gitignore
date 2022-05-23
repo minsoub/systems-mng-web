@@ -108,3 +108,6 @@ dist
 
 #output
 build
+
+#Mac finder file
+.DS_Store

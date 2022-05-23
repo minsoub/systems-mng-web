@@ -26,6 +26,9 @@ const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons'
 // render - sample
 const TableSamplePage = Loadable(lazy(() => import('pages/table-page')));
 
+const CrudList = Loadable(lazy(() => import('pages/samples/crud/list')));
+const CrudWrite = Loadable(lazy(() => import('pages/samples/crud/write')));
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = [
@@ -95,6 +98,18 @@ const MainRoutes = [
             {
                 path: 'icons/ant',
                 element: <AntIcons />
+            },
+            {
+                path: 'crud/list',
+                element: <CrudList />
+            },
+            {
+                path: 'crud/write',
+                element: <CrudWrite />
+            },
+            {
+                path: 'crud/edit/:id',
+                element: <CrudWrite />
             }
         ]
     }

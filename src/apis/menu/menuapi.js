@@ -170,6 +170,29 @@ const menus = [
                 breadcrumbs: false
             }
         ]
+    },
+    {
+        id: 'crud',
+        title: 'CRUD Sample',
+        type: 'group',
+        children: [
+            {
+                id: 'crud-list',
+                title: 'List',
+                type: 'item',
+                url: '/crud/list',
+                icon: icons.LoginOutlined,
+                target: true
+            },
+            {
+                id: 'crud-write',
+                title: 'Write',
+                type: 'item',
+                url: '/crud/write',
+                icon: icons.ProfileOutlined,
+                target: true
+            }
+        ]
     }
 ];
 
