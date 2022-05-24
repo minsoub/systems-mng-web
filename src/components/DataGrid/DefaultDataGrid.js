@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { DataGrid, gridPageCountSelector, gridPageSelector, useGridApiContext, useGridSelector } from '@mui/x-data-grid';
 import { useDemoData } from '@mui/x-data-grid-generator';
 import { styled } from '@mui/material/styles';
@@ -104,29 +104,46 @@ function CustomPagination() {
     );
 }
 
-export function CustomDataGrid({ columns, rows, handlePageChange, handleGridClick, handleGridDoubleClick }) {
+export function CustomDataGrid({ columns, rows, handlePageChange, handleGridClick, handleGridDoubleClick, selectionChange }) {
     const handlePage = (page, details) => {
         handlePageChange(page + 1);
     };
-    return (
-        <div style={{ height: 400, width: '100%' }}>
-            <StyledDataGrid
-                checkboxSelection
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                components={{
-                    Pagination: CustomPagination
-                }}
-                rows={rows}
-                columns={columns}
-                onPageChange={handlePage}
-                onCellClick={handleGridClick}
-                onCellDoubleClick={handleGridDoubleClick}
-                isCellEditable={(params) => false}
-                disableSelectionOnClick
-            />
-        </div>
-    );
+
+    const [selectionModel, setSelectionModel] = useState([]);
+    useEffect(() => {
+        console.log('change selectionModel:', selectionModel);
+        selectionChange(selectionModel);
+    }, [selectionModel]);
+
+    if (rows) {
+        return (
+            <div style={{ height: 400, width: '100%' }}>
+                <StyledDataGrid
+                    checkboxSelection
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                    components={{
+                        Pagination: CustomPagination
+                    }}
+                    rows={rows}
+                    columns={columns}
+                    onPageChange={handlePage}
+                    onCellClick={handleGridClick}
+                    onCellDoubleClick={handleGridDoubleClick}
+                    isCellEditable={(params) => false}
+                    disableSelectionOnClick
+                    selectionModel={selectionModel}
+                    onSelectionModelChange={(newSelectionModel) => {
+                        console.log('newSelectionModel:', newSelectionModel);
+                        setSelectionModel(newSelectionModel);
+                    }}
+                    keepNonExistentRowsSelected
+                />
+            </div>
+        );
+    } else {
+        return null;
+    }
 }
 
 export default CustomDataGrid;

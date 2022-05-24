@@ -11,7 +11,7 @@ const DefaultButton = ({ buttonType, onButtonClick, children }) => {
                     disableElevation
                     disabled={false}
                     fullWidth
-                    size="medium"
+                    size="small"
                     type="button"
                     variant="contained"
                     color={buttonType}

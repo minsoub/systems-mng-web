@@ -1,3 +1,4 @@
+import React, { useRef } from 'react';
 // material-ui
 import { Box, FormControl, InputAdornment, OutlinedInput, Grid } from '@mui/material';
 
@@ -7,10 +8,11 @@ import DefaultButton from 'components/button/DefaultButton';
 // ==============================|| HEADER CONTENT - SEARCH ||============================== //
 
 const Search = ({ enterEvent }) => {
+    const refOutlinedInput = useRef();
     const handleKeyDown = (event) => {
         console.log('handleKeyDown', event);
         if (event.key == 'Enter') {
-            enterEvent();
+            enterEvent(refOutlinedInput.current.value);
         }
     };
     return (
@@ -30,6 +32,7 @@ const Search = ({ enterEvent }) => {
                     }}
                     placeholder="Search"
                     onKeyPress={handleKeyDown}
+                    inputRef={refOutlinedInput}
                 />
             </FormControl>
         </>
