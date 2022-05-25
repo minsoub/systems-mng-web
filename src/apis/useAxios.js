@@ -19,7 +19,7 @@ const useAxios = () => {
                 signal: ctrl.signal
             });
             console.log('success', res);
-            const returnData = { transactionId: tid, data: res.data };
+            const returnData = { transactionId: tid, data: res.data.data };
             setResponse(returnData);
         } catch (err) {
             console.log('error', err.message);

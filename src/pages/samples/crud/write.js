@@ -2,73 +2,32 @@ import React, { useRef } from 'react';
 import { useParams } from 'react-router';
 import MUIRichTextEditor from 'mui-rte';
 import { useEffect, useState } from 'react';
-
 // material-ui
 import { Button, Grid, Typography, OutlinedInput, InputLabel, Stack } from '@mui/material';
 import MainCard from 'components/MainCard';
 import DefaultButton from 'components/button/DefaultButton';
 import { useNavigate } from 'react-router-dom';
-import axiosInstanceDefault from '../../../apis/axiosDefault';
-import useAxios from '../../../apis/useAxios';
+import useFetchCrud from 'apis/crud/useFetchCrud';
 
 const Write = () => {
+    const refFormData = useRef();
     const { id } = useParams();
-    const [responseData, requestError, loading, callApi] = useAxios();
+    const [responseData, requestError, loading, { actionDetail, actionInsert, actionUpdate }] = useFetchCrud();
     const refEditor = useRef(null);
     const refTitle = useRef();
     const navgate = useNavigate();
     const [subject, setSubject] = useState('');
     const [content, setContent] = useState('');
 
-    const handleSaveButton = () => {
-        refEditor.current?.save();
-    };
-
-    // 데이터 등록
-    const insertCrudData = (data) => {
-        const title = refTitle.current.value;
-        const postData = {
-            userId: 'tester',
-            order: '1',
-            category: '',
-            title: title,
-            content: data,
-            useYn: true,
-            customer: 'cust',
-            language: 'ko'
-        };
-        callApi('insertData', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'post',
-            url: '/faq_content',
-            requestConfig: postData
-        });
-    };
-
-    // 데이터 상세 조회
-    const getCrudData = (id) => {
-        callApi('getData', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'get',
-            url: `/faq_content/${id}`,
-            requestConfig: {}
-        });
-    };
-
-    // 에디터 데이터 추출 후 저장
-    const editorDataCallback = (data) => {
-        insertCrudData(data);
-    };
-
     // 취소 버튼 클릭
     const handleCancelButton = () => {
-        navgate(-1);
+        navgate('/crud/list');
     };
 
     // onload 아이디가 있는 경우 데이터 조회
     useEffect(() => {
         if (id) {
-            getCrudData(id);
+            actionDetail(id);
         }
     }, []);
 
@@ -84,18 +43,78 @@ const Write = () => {
                         if (responseData.data.content) {
                             setContent(responseData.data.content);
                         }
+                        refFormData.current = responseData.data;
                     }
                     break;
                 case 'insertData':
                     navgate('/crud/list');
                     break;
-                case 'modifyData':
+                case 'updateData':
                     navgate('/crud/list');
                     break;
                 default:
             }
         }
     }, [responseData]);
+
+    // transaction error 처리
+    useEffect(() => {
+        if (requestError) {
+            console.log('>> requestError <<');
+            alert('error');
+        }
+    }, [requestError]);
+
+    // validation success - 저장 실행.
+    const onValid = (data) => {
+        console.log('onValid:', data);
+        // insertCrudData(data);
+    };
+
+    // validation error
+    const onError = (errors) => {
+        console.log('onError:', errors);
+        Object.keys(errors).some((obj) => {
+            const msg = errors[obj].message;
+            if (msg !== undefined) {
+                // toastService.addToast(msg);
+                alert(msg);
+                return true;
+            }
+            alert('System Error) Message not found.');
+            return true;
+        });
+    };
+    // 저장 버튼 클릭 -> 에디터 데이터 추출 -> 에디터 콜백함수 실행( <MUIRichTextEditor ... onSave={editorDataCallback} .... )
+    const handleSaveButton = () => {
+        console.log('handleSaveButton');
+        refEditor.current?.save();
+    };
+
+    // 에디터 데이터 추출 후 저장
+    const editorDataCallback = (editorValue) => {
+        console.log('editorDataCallback');
+        const title = refTitle.current.value;
+
+        if (refFormData && refFormData.current) {
+            const data = refFormData.current;
+            data.title = title;
+            data.content = editorValue;
+            actionUpdate(data);
+        } else {
+            const data = {
+                userId: 'tester',
+                order: '1',
+                category: '',
+                title: title,
+                content: editorValue,
+                useYn: true,
+                customer: 'cust',
+                language: 'ko'
+            };
+            actionInsert(data);
+        }
+    };
 
     return (
         <Grid container rowSpacing={2} columnSpacing={0.75}>

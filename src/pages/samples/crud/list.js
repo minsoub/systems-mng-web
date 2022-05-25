@@ -3,111 +3,70 @@ import { useNavigate } from 'react-router-dom';
 // material-ui
 import { Button, Grid, Typography } from '@mui/material';
 
-import axiosInstanceDefault from '../../../apis/axiosDefault';
-import useAxios from '../../../apis/useAxios';
-
 import DefaultButton from 'components/button/DefaultButton';
 import MainCard from 'components/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import Search from '../../../components/Input/Search';
+import useFetchCrud from 'apis/crud/useFetchCrud';
 
 const columns = [
     { field: 'id', headerName: 'ID' },
     {
-        field: 'userId',
-        headerName: '사용자 id'
-    },
-    {
         field: 'order',
-        headerName: '노출순서'
+        headerName: '노출순서',
+        flex: 1
     },
     {
         field: 'category',
-        headerName: '카테고리'
+        headerName: '카테고리',
+        flex: 1
     },
     {
         field: 'title',
-        headerName: '제목'
+        headerName: '제목',
+        flex: 1
     },
     {
         field: 'content',
-        headerName: '내용'
-    },
-    {
-        field: 'useYn',
-        headerName: '사용여부'
+        headerName: '내용',
+        flex: 1
     },
     {
         field: 'costomer',
-        headerName: '등록자'
+        headerName: '등록자',
+        flex: 1
     },
     {
         field: 'language',
-        headerName: '언어'
+        headerName: '언어',
+        flex: 1
     },
     {
-        field: 'createDate',
-        headerName: '생성날짜'
-    },
-    {
-        field: 'createAdminAccountId',
-        headerName: '생성자 id'
-    },
-    {
-        field: 'updateDate',
-        headerName: '수정날짜'
-    },
-    {
-        field: 'updateAdminAccountId',
-        headerName: '수정자 id'
+        field: 'create_date',
+        headerName: '생성날짜',
+        flex: 1
     }
 ];
 const TableSamplePage = () => {
     const navgate = useNavigate();
     // axios custom hook
-    const [responseData, requestError, loading, requestList] = useAxios();
+    const [responseData, requestError, loading, { actionSearch, actionList, actionDelete }] = useFetchCrud();
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
     // 그리드 목록 데이터
     const [dataGridRows, setDataGridRows] = useState([]);
 
-    // 데이터 검색
-    const getSearchData = (keyword) => {
-        const encodeKeyword = encodeURIComponent(keyword);
-        requestList('getList', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'get',
-            url: `/faq_content/search?keyword=${encodeKeyword}`,
-            requestConfig: {}
-        });
-    };
-
-    // 데이터 조회
-    const getListData = () => {
-        requestList('getList', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'get',
-            url: '/faq_content',
-            requestConfig: {}
-        });
-    };
-
-    // 선택된 그리드 데이터 삭제
-    const getDeleteData = () => {
-        if (selectedRows && selectedRows.length > 0) {
-            let paramIds = selectedRows.join('&ids=');
-            requestList('deleteData', {
-                axiosInstance: axiosInstanceDefault,
-                method: 'delete',
-                url: `/faq_content?ids=${paramIds}`,
-                requestConfig: {}
-            });
+    // transaction error 처리
+    useEffect(() => {
+        if (requestError) {
+            console.log('>> requestError <<');
+            alert('error');
         }
-    };
+    }, [requestError]);
 
     // onload
     useEffect(() => {
-        getListData();
+        actionList();
     }, []);
 
     // Transaction Return
@@ -125,7 +84,7 @@ const TableSamplePage = () => {
                 break;
             case 'deleteData':
                 console.log('deleteData');
-                getListData();
+                actionList();
                 break;
             default:
         }
@@ -147,7 +106,7 @@ const TableSamplePage = () => {
     // 검색
     const handleSearch = (keyword) => {
         console.log('search', keyword);
-        getSearchData(keyword);
+        actionSearch(keyword);
     };
 
     // 작성 버튼 클릭
@@ -157,7 +116,7 @@ const TableSamplePage = () => {
 
     // 삭제 버튼 클릭
     const handleDeleteButton = () => {
-        getDeleteData();
+        actionDelete(selectedRows);
     };
 
     //체크박스 선택된 row id 저장
