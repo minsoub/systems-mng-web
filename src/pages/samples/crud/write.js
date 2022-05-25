@@ -65,26 +65,6 @@ const Write = () => {
         }
     }, [requestError]);
 
-    // validation success - 저장 실행.
-    const onValid = (data) => {
-        console.log('onValid:', data);
-        // insertCrudData(data);
-    };
-
-    // validation error
-    const onError = (errors) => {
-        console.log('onError:', errors);
-        Object.keys(errors).some((obj) => {
-            const msg = errors[obj].message;
-            if (msg !== undefined) {
-                // toastService.addToast(msg);
-                alert(msg);
-                return true;
-            }
-            alert('System Error) Message not found.');
-            return true;
-        });
-    };
     // 저장 버튼 클릭 -> 에디터 데이터 추출 -> 에디터 콜백함수 실행( <MUIRichTextEditor ... onSave={editorDataCallback} .... )
     const handleSaveButton = () => {
         console.log('handleSaveButton');
