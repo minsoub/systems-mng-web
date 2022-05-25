@@ -14,4 +14,4 @@
 ## Build
 - local : yarn start
 - dev : yarn build:dev
-- product : yarn build:prodyar
+- product : yarn build:prod
