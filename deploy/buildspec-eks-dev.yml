@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    SPRING_PROFILE: "eks-dev"
+    NODE_PROFILE: "eks-dev"
     REPO_URI: "807380035085.dkr.ecr.ap-northeast-2.amazonaws.com/systems-mng-web-dev-repo"
     CONTAINER_NAME: "systems-mng-web-dev-container"
     SERVICE_ROLE: "arn:aws:iam::807380035085:role/service-role/codebuild-systems-mng-web-eks-dev-build-service-role"
