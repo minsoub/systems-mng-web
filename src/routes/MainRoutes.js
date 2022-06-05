@@ -15,6 +15,7 @@ const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 
 // render - login
 const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
+const OtpLogin = Loadable(lazy(() => import('pages/authentication/OtpLogin')));
 const AuthRegister = Loadable(lazy(() => import('pages/authentication/Register')));
 
 // render - utilities
@@ -43,6 +44,10 @@ const MainRoutes = [
             {
                 path: 'login',
                 element: <AuthLogin />
+            },
+            {
+                path: 'otplogin',
+                element: <OtpLogin />
             },
             {
                 path: 'register',

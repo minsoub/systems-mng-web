@@ -1,4 +1,5 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink, Outlet } from 'react-router-dom';
 
 // material-ui
@@ -29,37 +30,83 @@ import AnimateButton from 'components/@extended/AnimateButton';
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
+import useAuthorized from 'apis/auth/auths';
+
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const AuthLogin = () => {
-    const [checked, setChecked] = React.useState(false);
+    const navigate = useNavigate();
 
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [checked, setChecked] = useState(false);
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const [responseData, requestError, loading, { actionLogin }] = useAuthorized();
+
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
+        console.log('handleMouseDownPassword');
     };
+
+    // transaction error 처리
+    useEffect(() => {
+        if (requestError) {
+            console.log('>> requestError <<');
+            console.log(requestError);
+            alert('error');
+        }
+    }, [requestError]);
+
+    // Transaction Return
+    useEffect(() => {
+        if (!responseData) {
+            return;
+        }
+        console.log(responseData.transactionId);
+        switch (responseData.transactionId) {
+            case 'siginin':
+                console.log(responseData);
+                if (responseData.data) {
+                    //setDataGridRows(responseData.data);
+                    // email, otpInfo:encode_key, url
+                    // site_id, token
+                    console.log('success => ');
+                    console.log(responseData.data);
+                    navigate('/otplogin', { state: responseData.data });
+                }
+                break;
+            default:
+        }
+    }, [responseData]);
 
     return (
         <>
             <Formik
                 initialValues={{
-                    email: 'info@codedthemes.com',
-                    password: '123456',
+                    email: '',
+                    password: '',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
                     email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
                     password: Yup.string().max(255).required('Password is required')
                 })}
+                // onSubmit={(values) => {
+                //     console.log(values);
+                //     actionLogin(value.email, value.password);
+                // }}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
                         setStatus({ success: false });
-                        setSubmitting(false);
+                        setSubmitting(true);
+                        console.log(values);
+                        actionLogin(values.email, values.password);
                     } catch (err) {
+                        console.log(err);
                         setStatus({ success: false });
                         setErrors({ submit: err.message });
                         setSubmitting(false);
@@ -165,16 +212,16 @@ const AuthLogin = () => {
                                 </AnimateButton>
                             </Grid>
                             <Grid item xs={12}>
-                                <Divider>
+                                {/* <Divider>
                                     <Typography variant="caption"> Login with</Typography>
-                                </Divider>
+                                </Divider> */}
                                 <Divider>
                                     [<a href="/dashboard">로그인 테스트</a>]
                                 </Divider>
                             </Grid>
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                 <FirebaseSocial />
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                     </form>
                 )}

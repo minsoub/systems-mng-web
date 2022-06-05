@@ -10,6 +10,7 @@ const useAxios = () => {
     const axiosFetch = async (tid, configObj) => {
         const { axiosInstance, method, url, requestConfig = {} } = configObj;
 
+        console.log('axiosFetch called..');
         try {
             setLoading(true);
             const ctrl = new AbortController();
@@ -19,7 +20,7 @@ const useAxios = () => {
                 signal: ctrl.signal
             });
             console.log('success', res);
-            const returnData = { transactionId: tid, data: res.data.data };
+            const returnData = { transactionId: tid, data: res.data };
             setResponse(returnData);
         } catch (err) {
             console.log('error', err.message);

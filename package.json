@@ -1,5 +1,5 @@
 {
-    "name": "mantis-free-react-admin-template",
+    "name": "smart-admin-react-template",
     "version": "1.0.0",
     "private": true,
     "dependencies": {
@@ -102,5 +102,5 @@
         "prettier": "2.2.1",
         "react-error-overlay": "6.0.9"
     },
-    "proxy": "http://localhost:8080"
+    "proxy": "http://k8s-systemsd-systemsg-ebcd4f0604-1552855188.ap-northeast-2.elb.amazonaws.com"
 }
