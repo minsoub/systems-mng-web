@@ -78,11 +78,13 @@ const OtpForm = ({ result }) => {
                 if (responseData.data) {
                     // Token 정보 저장
                     const authData = {
-                        site_id: result.site_id,
+                        siteId: result.site_id,
                         email: result.email,
-                        accessToken: responseData.data.accessToken
+                        accessToken: responseData.data.access_token,
+                        isLoggined: true
                     };
                     dispatch(setAuthData(authData));
+                    localStorage.setItem('authenticated', JSON.stringify(authData));
                     // alert("로그인을 완료하였습니다!!!")
                     navigate('/dashboard');
                 }
@@ -121,7 +123,7 @@ const OtpForm = ({ result }) => {
                             site_id: result.site_id,
                             otp_no: otpNo.concat(values.otp1, values.otp2, values.otp3, values.otp4, values.otp5, values.otp6),
                             token: result.token,
-                            encode_key: result.otpInfo.encode_key
+                            encode_key: result.otp_info.encode_key
                         };
                         console.log(data);
                         actionOtp(data);
@@ -160,7 +162,7 @@ const OtpForm = ({ result }) => {
                                             maxWidth: { xs: 300, md: 320 }
                                         }}
                                         alt="QR Code"
-                                        src={result.otpInfo.url}
+                                        src={result.otp_info.url}
                                     />
                                 </Stack>
                             </Grid>

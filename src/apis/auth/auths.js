@@ -15,7 +15,7 @@ const useAuthorized = () => {
             requestConfig: {
                 email: email,
                 passwd: password,
-                site_id: '628cfe073d11df86c8933a89'
+                siteId: '628cfe073d11df86c8933a89'
             }
         });
     };

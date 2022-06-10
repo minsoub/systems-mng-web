@@ -117,10 +117,10 @@ export function CustomDataGrid({ columns, rows, handlePageChange, handleGridClic
 
     if (rows) {
         return (
-            <div style={{ height: 400, width: '100%' }}>
+            <div style={{ height: 600, width: '100%' }}>
                 <StyledDataGrid
                     checkboxSelection
-                    pageSize={5}
+                    pageSize={20}
                     rowsPerPageOptions={[5]}
                     components={{
                         Pagination: CustomPagination

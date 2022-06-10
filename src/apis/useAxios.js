@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AxiosInstance } from 'axios';
+import { useSelector } from 'react-redux';
 
 const useAxios = () => {
     const [response, setResponse] = useState();
@@ -7,14 +8,54 @@ const useAxios = () => {
     const [loading, setLoading] = useState(false);
     const [controller, setController] = useState();
 
+    const { siteId, email, accessToken, isLoggined } = useSelector((state) => state.authsReducer);
+
     const axiosFetch = async (tid, configObj) => {
         const { axiosInstance, method, url, requestConfig = {} } = configObj;
 
         console.log('axiosFetch called..');
+        // console.log(siteId);
+        // console.log(email);
+        // console.log(accessToken);
+        // console.log(isLoggined);
+        let authData = null;
+        if (localStorage.hasOwnProperty('authenticated')) {
+            console.log(localStorage.getItem('authenticated'));
+            authData = JSON.parse(localStorage.getItem('authenticated'));
+        }
+        console.log(authData);
+
+        // register a synchronous request interceptor
+        console.log(url);
+        if (url.indexOf('adm') === -1) {
+            console.log('here is called...');
+            let Authorization = `Bearer ${authData.accessToken}`; // `Bearer ${accessToken}`;
+            let site_id = authData.siteId; //siteId;
+            console.log(Authorization);
+            //if (!isLoggined) {
+            if (authData == null) {
+                console.log('토큰 정보가 존재하지 않습니다!!!');
+                setError('Token 정보가 존재하지 않습니다');
+                return;
+            }
+            axiosInstance.interceptors.request.use(
+                (config) => ({
+                    ...config,
+                    headers: {
+                        ...config.headers,
+                        Authorization,
+                        site_id
+                    }
+                }),
+                null,
+                { synchronous: true }
+            );
+        }
         try {
             setLoading(true);
             const ctrl = new AbortController();
             setController(ctrl);
+
             const res = await axiosInstance[method](url, {
                 ...requestConfig,
                 signal: ctrl.signal

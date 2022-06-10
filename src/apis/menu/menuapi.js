@@ -13,6 +13,7 @@ import {
     LoadingOutlined
 } from '@ant-design/icons';
 import Apis from 'apis/Apis';
+import icon from '../../../node_modules/refractor/lang/icon';
 
 // icons
 const icons = {
@@ -66,6 +67,65 @@ const menus = [
                 url: '/register',
                 icon: icons.ProfileOutlined,
                 target: true
+            }
+        ]
+    },
+    {
+        id: 'smartadmin',
+        title: '통합시스템 관리',
+        type: 'group',
+        children: [
+            {
+                id: 'site',
+                title: '사이트 관리',
+                type: 'item',
+                url: '/site/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true
+            },
+            {
+                id: 'account',
+                title: '계정 관리',
+                type: 'item',
+                url: '/account/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true
+            },
+            {
+                id: 'roles',
+                title: 'Role 관리',
+                type: 'collapse',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                children: [
+                    {
+                        id: 'role_management',
+                        title: 'Role 리스트',
+                        type: 'item',
+                        url: '/roles/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined
+                    },
+                    {
+                        id: 'role_regt',
+                        title: 'Role 등록',
+                        type: 'item',
+                        url: '/roles/reg',
+                        auth: true,
+                        icon: icons.ChromeOutlined
+                    },
+                    {
+                        id: 'role_mapping',
+                        title: '사용자 맵핑',
+                        type: 'item',
+                        url: '/roles/mapping',
+                        auth: true,
+                        icon: icons.ChromeOutlined
+                    }
+                ]
             }
         ]
     },

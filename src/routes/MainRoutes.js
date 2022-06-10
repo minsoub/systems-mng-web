@@ -6,6 +6,7 @@ import MainLayout from 'layout/MainLayout';
 import MinimalLayout from 'layout/MinimalLayout';
 import TableUrlPage from 'pages/url-page/index';
 import EditorPage from 'pages/editor-page/index';
+import SiteRegForm from 'pages/site/SiteRegForm';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -30,6 +31,14 @@ const TableSamplePage = Loadable(lazy(() => import('pages/table-page')));
 const CrudList = Loadable(lazy(() => import('pages/samples/crud/list')));
 const CrudWrite = Loadable(lazy(() => import('pages/samples/crud/write')));
 
+// render - job page
+const SiteManagementPage = Loadable(lazy(() => import('pages/site/index')));
+
+const AccountManagementPage = Loadable(lazy(() => import('pages/account/index')));
+const AccountRegForm = Loadable(lazy(() => import('pages/account/AccountRegForm')));
+
+const RoleManagementPage = Loadable(lazy(() => import('pages/roles/index')));
+const RoleRegForm = Loadable(lazy(() => import('pages/roles/RoleRegForm')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = [
@@ -64,17 +73,32 @@ const MainRoutes = [
                 element: <DashboardDefault />
             },
             {
-                path: 'color',
-                element: <Color />
+                path: 'site/list',
+                element: <SiteManagementPage />
             },
             {
-                path: 'dashboard',
-                children: [
-                    {
-                        path: 'default',
-                        element: <DashboardDefault />
-                    }
-                ]
+                path: 'site/reg',
+                element: <SiteRegForm />
+            },
+            {
+                path: 'account/list',
+                element: <AccountManagementPage />
+            },
+            {
+                path: 'account/reg',
+                element: <AccountRegForm />
+            },
+            {
+                path: 'roles/list',
+                element: <RoleManagementPage />
+            },
+            {
+                path: 'roles/reg',
+                element: <RoleRegForm />
+            },
+            {
+                path: 'roles/mapping',
+                element: <RoleManagementPage />
             },
             {
                 path: 'table-page',
