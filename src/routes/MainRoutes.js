@@ -36,6 +36,10 @@ const AccountMng = Loadable(lazy(() => import('pages/totalmng/accountmng/index')
 const AccountMngForm = Loadable(lazy(() => import('pages/totalmng/accountmng/AccountMngForm')));
 
 // render - 통합 시스템 관리
+=======
+const CryptoSample = Loadable(lazy(() => import('pages/samples/crud/cryptoSample')));
+// render - job page
+>>>>>>> feature/LRC-PRJ
 const SiteManagementPage = Loadable(lazy(() => import('pages/site/index')));
 
 const AccountManagementPage = Loadable(lazy(() => import('pages/account/index')));
@@ -165,6 +169,10 @@ const MainRoutes = [
             {
                 path: 'crud/edit/:id',
                 element: <CrudWrite />
+            },
+            {
+                path: 'crud/crypto',
+                element: <CryptoSample />
             }
         ]
     }

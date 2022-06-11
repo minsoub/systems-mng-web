@@ -1,6 +1,7 @@
 import React from 'react';
 import axiosInstanceAuth from '../axiosAuth';
 import useAxios from '../useAxios';
+import { doEncrypt } from 'utils/Crypt';
 
 const useAuthorized = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
@@ -13,8 +14,8 @@ const useAuthorized = () => {
             method: 'post',
             url: `/adm/login`,
             requestConfig: {
-                email: email,
-                passwd: password,
+                email: doEncrypt(email),
+                passwd: doEncrypt(password),
                 siteId: '628cfe073d11df86c8933a89'
             }
         });
