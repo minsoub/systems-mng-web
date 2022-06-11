@@ -35,13 +35,14 @@ import { DatePicker } from 'antd';
 import { MenuItem } from '../../../node_modules/@mui/material/index';
 import UserSearchDialog from 'pages/popup/UserSearchPopup';
 import { values } from 'lodash';
+import { is } from '../../../../../../Library/Caches/typescript/4.6/node_modules/@babel/types/lib/index';
 
 const SiteRegForm = () => {
     let isSubmitting = false;
 
     const navigate = useNavigate();
     const { paramId } = useParams();
-    const [responseData, requestError, loading, { actionInsert, actionDetail }] = SiteApi();
+    const [responseData, requestError, loading, { siteInsert, siteDetail, siteDelete, siteUpdate }] = SiteApi();
 
     // Alert Dialog
     const [open, setOpen] = useState(false);
@@ -62,10 +63,10 @@ const SiteRegForm = () => {
     const [valid_start_date, setValidStartDate] = useState('');
     const [valid_end_date, setValidEndDate] = useState('');
     const [adminPhone, setAdminPhone] = useState('');
+    const [description, setDescritpion] = useState('');
 
-    const onChagnge = (date, dateString) => {
-        console.log(date, dateString);
-    };
+    const [readOnlyId, setReadonlyId] = useState(false);
+    const [isDeleted, setDisabledButton] = useState(true);
 
     // transaction error 처리
     useEffect(() => {
@@ -80,9 +81,12 @@ const SiteRegForm = () => {
 
     // onload
     useEffect(() => {
+        console.log('paramId');
+        console.log(paramId);
         errorClear();
         if (paramId) {
-            actionDetail(paramId);
+            console.log(paramId);
+            siteDetail(paramId);
         }
     }, []);
 
@@ -108,15 +112,54 @@ const SiteRegForm = () => {
             case 'detailData':
                 if (responseData.data.data) {
                     // 세부 내역을 세팅하고 수정모드로 들어간다.
+                    setId(responseData.data.data.id);
+                    setName(responseData.data.data.name);
+                    setIsUse(responseData.data.data.is_use);
+                    setValidStartDate(validDateSplit(responseData.data.data.valid_start_date));
+                    setValidEndDate(validDateSplit(responseData.data.data.valid_end_date));
+                    setDescritpion(responseData.data.data.description);
+                    setAdminId(responseData.data.data.admin_account_id);
+                    setAdminEmail(responseData.data.data.admin_account_email);
+                    setAdminPhone(responseData.data.data.admin_account_phone);
+                    setReadonlyId(true);
+                    setDisabledButton(false); // delete button enable
+                }
+                break;
+            case 'updateData':
+                if (responseData.data.data) {
+                    alert('수정을 완료하였습니다');
+                    // 세부 내역을 세팅하고 수정모드로 들어간다.
+                    setId(responseData.data.data.id);
+                    setName(responseData.data.data.name);
+                    setIsUse(responseData.data.data.is_use);
+                    setValidStartDate(validDateSplit(responseData.data.data.valid_start_date));
+                    setValidEndDate(validDateSplit(responseData.data.data.valid_end_date));
+                    setDescritpion(responseData.data.data.description);
+                    setAdminId(responseData.data.data.admin_account_id);
+                    setAdminEmail(responseData.data.data.admin_account_email);
+                    setAdminPhone(responseData.data.data.admin_account_phone);
+                    setReadonlyId(true);
+                    setDisabledButton(false); // delete button enable
                 }
                 break;
             case 'deleteData':
                 console.log('deleteData');
-                //actionList();
+                navigate('/site/list');
                 break;
             default:
         }
     }, [responseData]);
+
+    const validDateSplit = (data) => {
+        if (data !== null) {
+            let d = data.substring(0, 10);
+            console.log(d);
+            return d;
+        } else {
+            console.log(data);
+            return data;
+        }
+    };
 
     const closePopup = () => {
         // Close Popup
@@ -134,13 +177,76 @@ const SiteRegForm = () => {
         }
     };
 
+    const handleChange = (e) => {
+        switch (e.target.name) {
+            case 'id':
+                setId(e.target.value);
+                break;
+            case 'name':
+                setName(e.target.value);
+                break;
+            case 'is_use':
+                setIsUse(e.target.value);
+                break;
+            case 'valid_start_date':
+                setValidStartDate(e.target.value);
+                break;
+            case 'valid_end_date':
+                setValidEndDate(e.target.value);
+                break;
+            case 'description':
+                setDescritpion(e.target.value);
+                break;
+            case 'admin_account_id':
+                setAdminId(e.target.value);
+                break;
+            case 'admin_account_phone':
+                setAdminPhone(e.target.value);
+                break;
+            case 'admin_account_email':
+                setAdminEmail(e.target.value);
+                break;
+            default:
+                break;
+        }
+    };
+    const handleBlur = (e) => {
+        console.log(e);
+    };
+
     // new
     const newClick = () => {
         // data clear
+        setReadonlyId(false);
+        setId('');
+        setName('');
+        setIsUse(false);
+        setValidStartDate('');
+        setValidEndDate('');
+        setDescritpion('');
+        setAdminId('');
+        setAdminEmail('');
+        setAdminPhone('');
+        setDisabledButton(true);
     };
 
     // delete
-    const deleteClick = () => {};
+    const deleteClick = () => {
+        if (confirm('삭제를 하시겠습니까')) {
+            const requestData = {
+                id: id,
+                name: name,
+                is_use: false,
+                valid_start_date: valid_start_date,
+                valid_end_date: valid_end_date,
+                description: description,
+                admin_account_id: adminId,
+                admin_account_phone: adminPhone,
+                admin_account_email: adminEmail
+            };
+            siteDelete(id, requestData);
+        }
+    };
 
     // list
     const listClick = () => {
@@ -178,49 +284,53 @@ const SiteRegForm = () => {
                     //site_id: Yup.string().required('SITE ID is required'),
                     //type: Yup.string().required('Type is required')
                 })}
-                onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+                onSubmit={async (values, { setStatus, setSubmitting }) => {
                     try {
                         // Validation check
-                        if (values.id === '') {
+                        if (id === '') {
                             setErrorTitle('입력 오류');
                             setErrorMessage('Site 아이디를 입력하지 않았습니다');
                             setOpen(true);
                             return;
                         }
-                        if (values.name === '') {
+                        if (name === '') {
                             setErrorTitle('입력 오류');
                             setErrorMessage('Site Name을 입력하지 않았습니다');
                             setOpen(true);
                             return;
                         }
                         // Data 가공
-                        setOpen(true);
+                        setOpen(false);
                         const requestData = {
-                            id: values.id,
-                            name: values.name,
-                            is_use: values.is_use,
-                            valid_start_date: values.valid_start_date,
-                            valid_end_date: values.valid_end_date,
-                            description: values.description,
+                            id: id,
+                            name: name,
+                            is_use: is_use,
+                            valid_start_date: valid_start_date,
+                            valid_end_date: valid_end_date,
+                            description: description,
                             admin_account_id: adminId,
-                            admin_account_phone: values.admin_account_phone,
+                            admin_account_phone: adminPhone,
                             admin_account_email: adminEmail
                         };
                         console.log('called onSubmit...');
                         console.log(requestData);
                         setStatus({ success: false });
                         setSubmitting(true);
-                        console.log(values);
-                        actionInsert(requestData);
+                        if (paramId) {
+                            siteUpdate(paramId, requestData);
+                        } else {
+                            siteInsert(requestData);
+                        }
                     } catch (err) {
                         console.log(err);
-                        setStatus({ success: false });
-                        setErrors({ submit: err.message });
+                        setErrorTitle('Error Message');
+                        setErrorMessage(err.message);
+                        setOpen(true);
                         setSubmitting(false);
                     }
                 }}
             >
-                {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+                {({ errors, handleSubmit, isSubmitting, touched, values }) => (
                     <form noValidate onSubmit={handleSubmit}>
                         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
                             <Grid item xs={12} md={7} lg={12}>
@@ -247,10 +357,11 @@ const SiteRegForm = () => {
                                                         id="filled-hidden-label-small"
                                                         type="text"
                                                         size="small"
-                                                        value={values.id}
+                                                        value={id}
                                                         name="id"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
+                                                        inputProps={{ readOnly: readOnlyId }}
                                                         placeholder="사이트 ID를 등록하세요!!!"
                                                         fullWidth
                                                         error={Boolean(touched.id && errors.id)}
@@ -270,7 +381,7 @@ const SiteRegForm = () => {
                                                         id="filled-hidden-label-small"
                                                         type="text"
                                                         size="small"
-                                                        value={values.name}
+                                                        value={name}
                                                         name="name"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
@@ -294,7 +405,7 @@ const SiteRegForm = () => {
                                                     <Checkbox
                                                         defaultChecked
                                                         name="is_use"
-                                                        value={values.is_use}
+                                                        value={is_use}
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
                                                     />
@@ -311,7 +422,7 @@ const SiteRegForm = () => {
                                             <TextField
                                                 id="valid_start_date"
                                                 name="valid_start_date"
-                                                //value={values.valid_start_date}
+                                                value={valid_start_date}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 type="date"
@@ -326,7 +437,7 @@ const SiteRegForm = () => {
                                             <TextField
                                                 id="valid_end_date"
                                                 name="valid_end_date"
-                                                //value={values.valid_end_date}
+                                                value={valid_end_date}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 type="date"
@@ -348,7 +459,7 @@ const SiteRegForm = () => {
                                                         id="filled-hidden-label-small"
                                                         type="text"
                                                         size="small"
-                                                        value={values.description}
+                                                        value={description}
                                                         name="description"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
@@ -408,7 +519,7 @@ const SiteRegForm = () => {
                                                         id="filled-hidden-label-small"
                                                         type="text"
                                                         size="small"
-                                                        value={values.admin_account_phone}
+                                                        value={adminPhone}
                                                         name="admin_account_phone"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
@@ -453,7 +564,7 @@ const SiteRegForm = () => {
                                             disableElevation
                                             disabled={isSubmitting}
                                             size="small"
-                                            type="submit"
+                                            type="button"
                                             variant="contained"
                                             color="secondary"
                                             onClick={newClick}
@@ -462,9 +573,20 @@ const SiteRegForm = () => {
                                         </Button>
                                         <Button
                                             disableElevation
+                                            disabled={isDeleted}
+                                            size="small"
+                                            type="button"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={deleteClick}
+                                        >
+                                            삭제
+                                        </Button>
+                                        <Button
+                                            disableElevation
                                             disabled={isSubmitting}
                                             size="small"
-                                            type="submit"
+                                            type="button"
                                             variant="contained"
                                             color="secondary"
                                             onClick={listClick}

@@ -6,22 +6,23 @@ const AccountApis = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
 
     // 데이터 검색
-    const getSearchData = (keyword) => {
+    const getSearchData = (is_use, keyword) => {
+        if (is_use === null) is_use = '';
         const encodeKeyword = encodeURIComponent(keyword);
         callApi('getList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/accounts?searchText=${encodeKeyword}`,
+            url: `/accounts?searchText=${encodeKeyword}&isUse=${is_use}`,
             requestConfig: {}
         });
     };
 
     // 데이터 조회
-    const getListData = () => {
+    const getListData = (is_use) => {
         callApi('getList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: '/accounts',
+            url: `/accounts?isUse=${is_use}`,
             requestConfig: {}
         });
     };
@@ -40,31 +41,41 @@ const AccountApis = () => {
     };
 
     // 데이터 등록
-    const insertCrudData = (data) => {
+    const insertData = (data) => {
         callApi('insertData', {
             axiosInstance: axiosInstanceDefault,
             method: 'post',
-            url: '/faq/content',
+            url: '/account',
             requestConfig: data
         });
     };
 
-    // 데이터 상세 조회
-    const getCrudData = (id) => {
+    // 통합관리 - 계정 데이터 상세 조회
+    const getDetailData = (id) => {
         callApi('getData', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/faq/content/${id}`,
+            url: `/accountmng/${id}`,
             requestConfig: {}
         });
     };
 
     // 데이터 수정
-    const updateCrudData = (data) => {
+    const updateMng = (id, data) => {
         callApi('updateData', {
             axiosInstance: axiosInstanceDefault,
             method: 'put',
-            url: '/faq/content',
+            url: `/accountmng/${id}`,
+            requestConfig: data
+        });
+    };
+
+    // 통합관리 > 계정 등록
+    const insertMngAccount = (data) => {
+        callApi('insertData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'post',
+            url: '/accountmng',
             requestConfig: data
         });
     };
@@ -74,12 +85,13 @@ const AccountApis = () => {
         requestError,
         loading,
         {
-            actionSearch: getSearchData,
-            actionList: getListData,
-            actionDelete: getDeleteData,
-            actionInsert: insertCrudData,
-            actionDetail: getCrudData,
-            actionUpdate: updateCrudData
+            accountSearch: getSearchData,
+            accountList: getListData,
+            accountDelete: getDeleteData,
+            accountInsert: insertData,
+            accountDetail: getDetailData,
+            accountMngUpdate: updateMng,
+            accountMngInsert: insertMngAccount
         }
     ];
 };

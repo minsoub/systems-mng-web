@@ -71,6 +71,22 @@ const menus = [
         ]
     },
     {
+        id: 'totaladmin',
+        title: '통합관리',
+        type: 'group',
+        children: [
+            {
+                id: 'accountmng',
+                title: '계정 관리',
+                type: 'item',
+                url: '/accountmng/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true
+            }
+        ]
+    },
+    {
         id: 'smartadmin',
         title: '통합시스템 관리',
         type: 'group',

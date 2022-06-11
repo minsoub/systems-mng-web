@@ -40,7 +40,7 @@ function UserSearchDialog(props) {
     const [selectedRows, setSeletedRows] = useState({});
     const [dataGridRows, setDataGridRows] = useState([]);
     const [keyword, setKeyword] = useState('');
-    const [responseData, requestError, loading, { actionSearch }] = AccountApis();
+    const [responseData, requestError, loading, { accountSearch }] = AccountApis();
     const [errorOpen, setErrorOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -96,7 +96,7 @@ function UserSearchDialog(props) {
         if (keyword === '') {
             alert('검색단어를 입력하세요');
         } else {
-            actionSearch(keyword);
+            accountSearch(keyword);
         }
     };
 

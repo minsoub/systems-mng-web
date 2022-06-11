@@ -11,8 +11,11 @@ import {
     TextField,
     Collapse,
     Alert,
-    AlertTitle,    
-    Typography
+    AlertTitle,
+    Typography,
+    FormControl,
+    Select,
+    MenuItem
 } from '@mui/material';
 import MainCard from 'components/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
@@ -22,6 +25,7 @@ import { Input } from 'antd';
 import { boolean } from '../../../node_modules/yup/lib/index';
 import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
 import SiteApi from 'apis/site/siteapi';
+import { bool } from 'prop-types';
 
 const SiteManagementPage = () => {
     let isSubmitting = false;
@@ -49,18 +53,20 @@ const SiteManagementPage = () => {
             field: 'is_use',
             headerName: '사용여부',
             flex: 1,
-            headerAlign: 'center'
+            headerAlign: 'center',
+            align: 'center'
         },
         {
             field: 'create_date',
             headerName: '생성날짜',
             flex: 1,
-            headerAlign: 'center'
+            headerAlign: 'center',
+            align: 'center'
         }
     ];
 
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { actionSearch, actionList }] = SiteApi();
+    const [responseData, requestError, loading, { siteSearch, siteList }] = SiteApi();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -69,6 +75,9 @@ const SiteManagementPage = () => {
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const [is_use, setIsUsed] = useState('');
+    const [keyword, setKeyword] = useState('');
 
     // transaction error 처리
     useEffect(() => {
@@ -84,8 +93,9 @@ const SiteManagementPage = () => {
     // onload
     useEffect(() => {
         errorClear();
+        setIsUsed('true');
         // 리스트 가져오기
-        actionList();
+        siteList(true);
     }, []);
 
     // Transaction Return
@@ -94,7 +104,7 @@ const SiteManagementPage = () => {
             return;
         }
         switch (responseData.transactionId) {
-            case 'getList':
+            case 'siteList':
                 if (responseData.data.data) {
                     setDataGridRows(responseData.data.data);
                 } else {
@@ -103,7 +113,7 @@ const SiteManagementPage = () => {
                 break;
             case 'deleteData':
                 console.log('deleteData');
-                actionList();
+                siteList();
                 break;
             default:
         }
@@ -128,8 +138,15 @@ const SiteManagementPage = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navgate(`/site/reg/${rowData.id}`);
+            navigate(`/site/reg/${rowData.id}`);
         }
+    };
+
+    const isUseChanged = (e) => {
+        setIsUsed(e.target.value);
+    };
+    const keywordChanged = (e) => {
+        setKeyword(e.target.value);
     };
 
     // 그리드 더블 클릭
@@ -137,10 +154,20 @@ const SiteManagementPage = () => {
 
     // list
     const listClick = () => {
-        // test
+        let isUse = 'true';
+        setKeyword('');
+        console.log('listClick called');
+        console.log(is_use);
+        siteSearch(is_use, '');
     };
     // search
-    const searchClick = () => {};
+    const searchClick = () => {
+        if (keyword === '') {
+            alert('검색 단어를 입력하세요!');
+            return;
+        }
+        siteSearch(is_use, keyword);
+    };
 
     // new
     const newClick = () => {
@@ -165,7 +192,22 @@ const SiteManagementPage = () => {
                 </Grid>
                 <MainCard sx={{ mt: 1 }}>
                     <Stack direction="row" spacing={1}>
-                        <OutlinedInput fullWidth id="word" type="text" value="" name="word" placeholder="" />
+                        <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
+                            <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
+                                <MenuItem value="true">사용</MenuItem>
+                                <MenuItem value="false">미사용</MenuItem>
+                                <MenuItem value="">전체</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <OutlinedInput
+                            fullWidth
+                            id="word"
+                            type="text"
+                            value={keyword}
+                            name="word"
+                            placeholder=""
+                            onChange={keywordChanged}
+                        />
                         <Button
                             disableElevation
                             disabled={isSubmitting}
@@ -179,9 +221,6 @@ const SiteManagementPage = () => {
                         </Button>
                         <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={newClick}>
                             신규
-                        </Button>
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={deleteClick}>
-                            삭제
                         </Button>
                         <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
                             리스트

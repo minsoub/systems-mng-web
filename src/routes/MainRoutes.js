@@ -31,7 +31,11 @@ const TableSamplePage = Loadable(lazy(() => import('pages/table-page')));
 const CrudList = Loadable(lazy(() => import('pages/samples/crud/list')));
 const CrudWrite = Loadable(lazy(() => import('pages/samples/crud/write')));
 
-// render - job page
+// render - 통합 관리
+const AccountMng = Loadable(lazy(() => import('pages/totalmng/accountmng/index')));
+const AccountMngForm = Loadable(lazy(() => import('pages/totalmng/accountmng/AccountMngForm')));
+
+// render - 통합 시스템 관리
 const SiteManagementPage = Loadable(lazy(() => import('pages/site/index')));
 
 const AccountManagementPage = Loadable(lazy(() => import('pages/account/index')));
@@ -72,6 +76,20 @@ const MainRoutes = [
                 path: 'dashboard',
                 element: <DashboardDefault />
             },
+            // 통합관리
+            {
+                path: 'accountmng/list',
+                element: <AccountMng />
+            },
+            {
+                path: 'accountmng/reg',
+                element: <AccountMngForm />
+            },
+            {
+                path: 'accountmng/reg/:paramId',
+                element: <AccountMngForm />
+            },
+            // 통합시스템 관리
             {
                 path: 'site/list',
                 element: <SiteManagementPage />
@@ -81,11 +99,19 @@ const MainRoutes = [
                 element: <SiteRegForm />
             },
             {
+                path: 'site/reg/:paramId',
+                element: <SiteRegForm />
+            },
+            {
                 path: 'account/list',
                 element: <AccountManagementPage />
             },
             {
                 path: 'account/reg',
+                element: <AccountRegForm />
+            },
+            {
+                path: 'account/reg/:paramId',
                 element: <AccountRegForm />
             },
             {

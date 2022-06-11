@@ -6,22 +6,22 @@ const SiteApi = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
 
     // 데이터 검색
-    const getSearchData = (keyword) => {
+    const getSearchData = (is_use, keyword) => {
         const encodeKeyword = encodeURIComponent(keyword);
-        callApi('getList', {
+        callApi('siteList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/sites?searchText=${encodeKeyword}`,
+            url: `/sites?searchText=${encodeKeyword}&isUse=${is_use}`,
             requestConfig: {}
         });
     };
 
     // 데이터 조회
-    const getListData = () => {
-        callApi('getList', {
+    const getListData = (is_use) => {
+        callApi('siteList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: '/sites',
+            url: `/sites?isUse=${is_use}`,
             requestConfig: {}
         });
     };
@@ -37,6 +37,15 @@ const SiteApi = () => {
                 requestConfig: {}
             });
         }
+    };
+
+    const getDelete = (id, data) => {
+        callApi('deleteData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/site/${id}`,
+            requestConfig: data
+        });
     };
 
     // 데이터 등록
@@ -60,11 +69,11 @@ const SiteApi = () => {
     };
 
     // 데이터 수정
-    const updateCrudData = (data) => {
+    const updateSiteData = (id, data) => {
         callApi('updateData', {
             axiosInstance: axiosInstanceDefault,
             method: 'put',
-            url: '/faq/content',
+            url: `/site/${id}`,
             requestConfig: data
         });
     };
@@ -74,12 +83,12 @@ const SiteApi = () => {
         requestError,
         loading,
         {
-            actionSearch: getSearchData,
-            actionList: getListData,
-            actionDelete: getDeleteData,
-            actionInsert: insertStite,
-            actionDetail: getDetailData,
-            actionUpdate: updateCrudData
+            siteSearch: getSearchData,
+            siteList: getListData,
+            siteDelete: getDelete,
+            siteInsert: insertStite,
+            siteDetail: getDetailData,
+            siteUpdate: updateSiteData
         }
     ];
 };

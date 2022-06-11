@@ -22,19 +22,13 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
-import { boolean } from '../../../node_modules/yup/lib/index';
-import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
+import { boolean } from '../../../../node_modules/yup/lib/index';
+import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import AccountApis from 'apis/account/accountapis';
 
-const AccountManagementPage = () => {
+const AccountMng = () => {
     let isSubmitting = false;
     const columns = [
-        {
-            field: 'id',
-            headerName: 'ID',
-            flex: 1,
-            headerAlign: 'center'
-        },
         {
             field: 'name',
             headerName: '사용자명',
@@ -56,17 +50,23 @@ const AccountManagementPage = () => {
             headerAlign: 'center'
         },
         {
+            field: 'last_login_date',
+            headerName: 'Last Login Date',
+            flex: 1,
+            headerAlign: 'center'
+        },
+        {
+            field: 'valid_start_date',
+            headerName: '만료일자',
+            flex: 1,
+            headerAlign: 'center'
+        },
+        {
             field: 'status',
             headerName: '상태',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
-        },
-        {
-            field: 'create_date',
-            headerName: '생성날짜',
-            flex: 1,
-            headerAlign: 'center'
         }
     ];
 
@@ -143,7 +143,7 @@ const AccountManagementPage = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/account/reg/${rowData.id}`);
+            navigate(`/accountmng/reg/${rowData.id}`);
         }
     };
 
@@ -179,7 +179,7 @@ const AccountManagementPage = () => {
     // new
     const newClick = () => {
         console.log('called register form');
-        navigate('/account/reg');
+        navigate('/accountmng/reg');
     };
 
     // delete
@@ -193,7 +193,7 @@ const AccountManagementPage = () => {
                         <Typography variant="h3">계정 관리</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6">통합 시스템관리 > 계정관리</Typography>
+                        <Typography variant="h6">통합관리 > 계정관리</Typography>
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
@@ -275,4 +275,4 @@ const AccountManagementPage = () => {
     );
 };
 
-export default AccountManagementPage;
+export default AccountMng;
