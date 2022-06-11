@@ -30,7 +30,7 @@ const TableSamplePage = Loadable(lazy(() => import('pages/table-page')));
 
 const CrudList = Loadable(lazy(() => import('pages/samples/crud/list')));
 const CrudWrite = Loadable(lazy(() => import('pages/samples/crud/write')));
-
+const CryptoSample = Loadable(lazy(() => import('pages/samples/crud/cryptoSample')));
 // render - job page
 const SiteManagementPage = Loadable(lazy(() => import('pages/site/index')));
 
@@ -139,6 +139,10 @@ const MainRoutes = [
             {
                 path: 'crud/edit/:id',
                 element: <CrudWrite />
+            },
+            {
+                path: 'crud/crypto',
+                element: <CryptoSample />
             }
         ]
     }

@@ -251,6 +251,14 @@ const menus = [
                 url: '/crud/write',
                 icon: icons.ProfileOutlined,
                 target: true
+            },
+            {
+                id: 'crypto-sample',
+                title: 'Cripto sample',
+                type: 'item',
+                url: '/crud/crypto',
+                icon: icons.ProfileOutlined,
+                target: true
             }
         ]
     }
