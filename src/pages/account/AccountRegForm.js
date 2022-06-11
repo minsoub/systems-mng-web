@@ -40,7 +40,7 @@ const AccountRegForm = () => {
 
     const navigate = useNavigate();
     const { paramId } = useParams();
-    const [responseData, requestError, loading, { actionSearch, actionList }] = AccountApis();
+    const [responseData, requestError, loading, { accountDetail }] = AccountApis();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
     // 그리드 선택된 row id
@@ -67,6 +67,13 @@ const AccountRegForm = () => {
     const [password, setPassword] = useState('');
     const [is_use, setIsUse] = useState(false);
     const [send_chk, setSendChk] = useState(false);
+
+    // Email 작성 여부
+    const [emailStatus, setEmailStatus] = useState(false);
+    // Email 중복 체크
+    const [emailChk, setEmailChk] = useState(false);
+    // 중복 체크 버튼 제어
+    const [isUpdate, setIsUpdate] = useState(false);
 
     const siteChanged = (event) => {
         console.log(event.target.value);
@@ -102,6 +109,11 @@ const AccountRegForm = () => {
         // 사이트 구분 리스트 가져오기
         siteSearch(true, '');
 
+        if (paramId) {
+            // 수정 데이터 조회
+            accountDetail(paramId);
+        }
+
         // 운영권한 - DB에서 가져와야 된다.
         const cc = [
             { id: '0', name: '통합시스템 관리자' },
@@ -136,6 +148,7 @@ const AccountRegForm = () => {
                     });
                     setItemList(siteList);
                 }
+                break;
             default:
         }
     }, [resData]);
@@ -155,9 +168,22 @@ const AccountRegForm = () => {
                     setDataGridRows([]);
                 }
                 break;
+            case 'getData':
+                if (responseData.data.data) {
+                    let res = responseData.data.data;
+                    setId(res.id);
+                    setEmail(res.email);
+                    setName(res.name);
+                    //setPassword(res.password);
+                    setIsUse(res.is_use);
+                    setStatus(res.status);
+                    setEmailStatus(true);
+                    setEmailChk(true);
+                }
+                break;
             case 'deleteData':
                 console.log('deleteData');
-                actionList();
+                //actionList();
                 break;
             default:
         }
@@ -440,6 +466,7 @@ const AccountRegForm = () => {
                                                     <MenuItem value="INIT_REQUEST">초기화요청</MenuItem>
                                                     <MenuItem value="INIT_CONFIRM">초기화확인</MenuItem>
                                                     <MenuItem value="INIT_COMPLETE">초기화완료</MenuItem>
+                                                    <MenuItem value="INIT_REGISTER">신규등록</MenuItem>
                                                     <MenuItem value="DENY_ACCESS">중지상태</MenuItem>
                                                 </Select>
                                             </FormControl>

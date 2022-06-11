@@ -40,7 +40,7 @@ const AccountMngForm = () => {
 
     const navigate = useNavigate();
     const { paramId } = useParams();
-    const [responseData, requestError, loading, { accountSearch, accountMngInsert, accountDetail, accountMngUpdate }] = AccountApis();
+    const [responseData, requestError, loading, { accountSearch, accountMngInsert, accountMngDetail, accountMngUpdate }] = AccountApis();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
     // 그리드 선택된 row id
@@ -90,7 +90,7 @@ const AccountMngForm = () => {
         // detail search - 수정모드이면
         if (paramId) {
             // 수정 데이터 조회
-            accountDetail(paramId);
+            accountMngDetail(paramId);
         } else {
             setIsUpdate(false);
         }
@@ -154,7 +154,7 @@ const AccountMngForm = () => {
                 setName(e.target.value);
                 break;
             case 'is_use':
-                setIsUse(e.target.value);
+                setIsUse(e.target.checked);
                 break;
             case 'email':
                 setEmail(e.target.value);
@@ -255,6 +255,7 @@ const AccountMngForm = () => {
                         }
                         //actionLogin(values.email, values.password);
                     } catch (err) {
+                        console.log('here is error called...');
                         console.log(err);
                         setErrorTitle('Error Message');
                         setErrorMessage(err.message);
@@ -371,7 +372,7 @@ const AccountMngForm = () => {
                                                 control={
                                                     <Checkbox
                                                         name="is_use"
-                                                        defaultChecked
+                                                        checked={is_use}
                                                         value={is_use}
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}

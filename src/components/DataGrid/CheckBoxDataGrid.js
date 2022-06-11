@@ -4,6 +4,7 @@ import { useDemoData } from '@mui/x-data-grid-generator';
 import { styled } from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
+import { alpha } from '@mui/material/styles';
 
 function customCheckbox(theme) {
     return {
@@ -70,8 +71,17 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     '& .MuiDataGrid-iconSeparator': {
         display: 'none'
     },
+    '& .MuiDataGrid-columnHeader': {
+        backgroundColor: alpha('#e0e0e0', 0.4)
+    },
     '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-        borderRight: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'}`
+        borderRight: `1px solid '#303030'`
+    },
+    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
+        borderLeft: `1px solid '#303030'`
+    },
+    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
+        borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'}`
     },
     '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
         borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'}`

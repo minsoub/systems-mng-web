@@ -27,6 +27,16 @@ const AccountApis = () => {
         });
     };
 
+    // 계정 데이터 상세 조회
+    const getDetailData = (id) => {
+        callApi('getData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/account/${id}`,
+            requestConfig: {}
+        });
+    };
+
     // 선택된 그리드 데이터 삭제
     const getDeleteData = (selectedRows) => {
         if (selectedRows && selectedRows.length > 0) {
@@ -51,7 +61,7 @@ const AccountApis = () => {
     };
 
     // 통합관리 - 계정 데이터 상세 조회
-    const getDetailData = (id) => {
+    const getDetailDataMng = (id) => {
         callApi('getData', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
@@ -60,7 +70,7 @@ const AccountApis = () => {
         });
     };
 
-    // 데이터 수정
+    // 통합관리 - 데이터 수정
     const updateMng = (id, data) => {
         callApi('updateData', {
             axiosInstance: axiosInstanceDefault,
@@ -80,6 +90,16 @@ const AccountApis = () => {
         });
     };
 
+    // 통합관리 > 계정 삭제 : 일괄 삭제
+    const deleteMngAccounts = (idsList) => {
+        callApi('deleteDatas', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/accountmng/${idsList}`,
+            requestConfig: {}
+        });
+    };
+
     return [
         responseData,
         requestError,
@@ -87,11 +107,13 @@ const AccountApis = () => {
         {
             accountSearch: getSearchData,
             accountList: getListData,
+            accountDetail: getDetailData,
             accountDelete: getDeleteData,
             accountInsert: insertData,
-            accountDetail: getDetailData,
+            accountMngDetail: getDetailDataMng,
             accountMngUpdate: updateMng,
-            accountMngInsert: insertMngAccount
+            accountMngInsert: insertMngAccount,
+            accountMngDeletes: deleteMngAccounts
         }
     ];
 };

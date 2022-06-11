@@ -51,7 +51,7 @@ const AccountManagementPage = () => {
         },
         {
             field: 'role_management_name',
-            headerName: '구분',
+            headerName: '운영권한',
             flex: 1,
             headerAlign: 'center'
         },
