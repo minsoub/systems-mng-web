@@ -244,7 +244,6 @@ const AccountMngForm = () => {
                         };
                         console.log(requestData);
                         setSubmitting(true);
-                        console.log(values);
                         if (paramId) {
                             requestData.id = id;
                             requestData.status = status;

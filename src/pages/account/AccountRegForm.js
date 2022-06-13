@@ -32,6 +32,7 @@ import { boolean } from '../../../node_modules/yup/lib/index';
 import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
 import AccountApis from 'apis/account/accountapis';
 import SiteApi from 'apis/site/siteapi';
+import RoleApi from 'apis/roles/roleapi';
 import { DatePicker } from 'antd';
 import { MenuItem } from '../../../node_modules/@mui/material/index';
 
@@ -40,8 +41,9 @@ const AccountRegForm = () => {
 
     const navigate = useNavigate();
     const { paramId } = useParams();
-    const [responseData, requestError, loading, { accountDetail }] = AccountApis();
+    const [responseData, requestError, loading, { accountDetail, accountSearch, accountUpdate, accountInsert }] = AccountApis();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
+    const [resRoleData, resRoleError, resRoleLoading, { roleComboSearch }] = RoleApi();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -50,7 +52,6 @@ const AccountRegForm = () => {
     const [roleList, setRoleList] = useState([]);
     const [role_id, setRoleId] = useState('');
     const [site_id, setSiteId] = useState('');
-    const [status, setStatus] = useState('');
 
     // User Search Dialog
     const [openUserSearch, setOpenUserSearch] = useState(false);
@@ -62,10 +63,12 @@ const AccountRegForm = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     // Form data
+    const [id, setId] = useState('');
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    const [is_use, setIsUse] = useState(false);
+    const [is_use, setIsUse] = useState(true);
+    const [status, setStatus] = useState('');
     const [send_chk, setSendChk] = useState(false);
 
     // Email 작성 여부
@@ -75,53 +78,52 @@ const AccountRegForm = () => {
     // 중복 체크 버튼 제어
     const [isUpdate, setIsUpdate] = useState(false);
 
-    const siteChanged = (event) => {
-        console.log(event.target.value);
-        setSiteId(event.target.value);
+    // site가 변경되었을 때 호출된다.
+    const siteChanged = (e) => {
+        console.log('siteChanged called..');
+        console.log(e.target.value);
+        setSiteId(e.target.value);
+        console.log(site_id);
+        setRoleList([]);
+        roleComboSearch(true, 'ADMIN', e.target.value);
     };
 
-    const roleChanged = (event) => {
-        console.log(event.target.value);
-        setRoleId(event.target.value);
+    const roleChanged = (e) => {
+        console.log(e.target.value);
+        setRoleId(e.target.value);
     };
 
-    const statusChanged = (event) => {
-        console.log(event.target.value);
-        setStatus(event.target.value);
+    const statusChanged = (e) => {
+        console.log(e.target.value);
+        setStatus(e.target.value);
     };
 
     // transaction error 처리
     useEffect(() => {
-        if (requestError || reqErr) {
+        if (requestError || reqErr || resRoleError) {
             let err = requestError ? requestError : reqErr;
+            if (resRoleError) err = resRoleError;
+
             console.log('error requestError');
             console.log(err);
             setErrorTitle('Error Message');
             setErrorMessage(err);
             setOpen(true);
         }
-    }, [requestError, reqErr]);
+    }, [requestError, reqErr, resRoleError]);
 
     // onload
     useEffect(() => {
         errorClear();
-        //actionList();
         // 사이트 구분 리스트 가져오기
         siteSearch(true, '');
 
         if (paramId) {
             // 수정 데이터 조회
             accountDetail(paramId);
+        } else {
+            setIsUpdate(false);
         }
-
-        // 운영권한 - DB에서 가져와야 된다.
-        const cc = [
-            { id: '0', name: '통합시스템 관리자' },
-            { id: '1', name: '통합계정 관리자' },
-            { id: '2', name: '사이트 관리자' },
-            { id: '3', name: '사이트 운영관리자' }
-        ];
-        setRoleList(cc);
     }, []);
 
     // 에러 정보를 클리어 한다.
@@ -132,6 +134,7 @@ const AccountRegForm = () => {
     };
 
     // Combobox data transaction
+    // 사이트
     useEffect(() => {
         if (!resData) {
             return;
@@ -153,6 +156,34 @@ const AccountRegForm = () => {
         }
     }, [resData]);
 
+    // 운영권한(Role)
+    useEffect(() => {
+        if (!resRoleData) {
+            return;
+        }
+        switch (resRoleData.transactionId) {
+            case 'roleList':
+                if (resRoleData.data.data) {
+                    let roleData = resRoleData.data.data;
+                    let roleList = [];
+                    //roleList.push({ id: 'ALL', name: '통합시스템 관리자' });
+                    roleData.map((role, index) => {
+                        const s = { id: role.id, name: role.name };
+                        console.log(s);
+                        roleList.push(s);
+                    });
+                    setRoleList(roleList);
+                    if (paramId) {
+                        console.log('수정모드에서의 운영권한 멥핑');
+                        console.log(role_id);
+                        setRoleId(role_id);
+                    }
+                }
+                break;
+            default:
+        }
+    }, [resRoleData]);
+
     // Transaction Return
     useEffect(() => {
         if (!responseData) {
@@ -161,11 +192,15 @@ const AccountRegForm = () => {
         console.log(responseData);
         console.log(responseData.transactionId);
         switch (responseData.transactionId) {
-            case 'getList':
-                if (responseData.data && responseData.data.length > 0) {
-                    setDataGridRows(responseData.data);
+            case 'getList': // Email 중복 체크
+                if (responseData.data.data.length > 0) {
+                    // 중복이다.
+                    alert('이미 등록된 메일 주소입니다!!!');
+                    setEmailChk(false);
                 } else {
-                    setDataGridRows([]);
+                    // 중복이 아니다.
+                    alert('사용 가능한 이메일 주소입니다!!!');
+                    setEmailChk(true);
                 }
                 break;
             case 'getData':
@@ -174,15 +209,28 @@ const AccountRegForm = () => {
                     setId(res.id);
                     setEmail(res.email);
                     setName(res.name);
+                    setSiteId(res.site_id);
+                    setRoleId(res.role_id);
                     //setPassword(res.password);
                     setIsUse(res.is_use);
                     setStatus(res.status);
+                    setIsUpdate(true);
                     setEmailStatus(true);
                     setEmailChk(true);
+                    // 수정모드이면 운영권한 콤보박스 데이터를 조회한다.
+                    setRoleList([]);
+                    roleComboSearch(true, 'ADMIN', res.site_id);
                 }
                 break;
-            case 'deleteData':
+            case 'insertData':
+                alert('등록을 완료하였습니다!!!');
+                navigate('/account/list');
+            case 'updateData':
+                alert('수정을 완료하였습니다!!!');
+                navigate('/account/list');
+            case 'deleteDatas':
                 console.log('deleteData');
+                alert('삭제 처리를 완료하였습니다');
                 //actionList();
                 break;
             default:
@@ -194,29 +242,21 @@ const AccountRegForm = () => {
             case 'id':
                 setId(e.target.value);
                 break;
+            case 'email':
+                setEmail(e.target.value);
+                setEmailChk(false);
+                break;
             case 'name':
                 setName(e.target.value);
                 break;
+            case 'password':
+                setPassword(e.target.value);
+                break;
             case 'is_use':
-                setIsUse(e.target.value);
+                setIsUse(e.target.checked);
                 break;
-            case 'valid_start_date':
-                setValidStartDate(e.target.value);
-                break;
-            case 'valid_end_date':
-                setValidEndDate(e.target.value);
-                break;
-            case 'description':
-                setDescritpion(e.target.value);
-                break;
-            case 'admin_account_id':
-                setAdminId(e.target.value);
-                break;
-            case 'admin_account_phone':
-                setAdminPhone(e.target.value);
-                break;
-            case 'admin_account_email':
-                setAdminEmail(e.target.value);
+            case 'send_chk':
+                setSendChk(e.target.checked);
                 break;
             default:
                 break;
@@ -241,6 +281,16 @@ const AccountRegForm = () => {
     // list
     const listClick = () => {
         navigate('/account/list');
+    };
+
+    // Email Duplicate Check
+    const emailDuplicateCheck = () => {
+        // 메일 주소 중복 체크를 한다.
+        if (email === '') {
+            alert('메일 주소를 입력 후 중복 체크 해주시기 바랍니다!!!');
+            return;
+        }
+        accountSearch(true, email);
     };
 
     return (
@@ -300,19 +350,24 @@ const AccountRegForm = () => {
                         // Data 가공
                         setOpen(true);
                         const requestData = {
+                            site_id: site_id,
                             admin_account_id: id,
                             email: email,
                             name: name,
                             password: password,
                             role_management_id: role_id,
-                            status: values.status,
+                            status: status,
                             is_use: is_use,
                             is_send_mail: send_chk
                         };
                         console.log(requestData);
+                        if (paramId) {
+                            accountUpdate(id, requestData);
+                        } else {
+                            accountInsert(requestData);
+                        }
                         //setStatus({ success: false });
                         setSubmitting(true);
-                        console.log(values);
                         //actionLogin(values.email, values.password);
                     } catch (err) {
                         console.log(err);
@@ -322,7 +377,7 @@ const AccountRegForm = () => {
                     }
                 }}
             >
-                {({ errors, handleSubmit, isSubmitting, touched, values }) => (
+                {({ errors, handleSubmit, isSubmitting, touched }) => (
                     <form noValidate onSubmit={handleSubmit}>
                         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
                             <Grid item xs={12} md={7} lg={12}>
@@ -342,8 +397,8 @@ const AccountRegForm = () => {
                                                 <Stack spacing={0}>사이트명</Stack>
                                             </FormControl>
                                         </Grid>
-                                        <Grid item xs={8} sm={3}>
-                                            <FormControl sx={{ m: 0, minWidth: 160, maxHeight: 25 }} size="small">
+                                        <Grid item xs={8} sm={4}>
+                                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 25 }} size="small">
                                                 <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                                     <MenuItem value="">
                                                         <em>Choose a Site Type</em>
@@ -361,15 +416,16 @@ const AccountRegForm = () => {
                                                 <Stack spacing={0}>이메일 주소</Stack>
                                             </FormControl>
                                         </Grid>
-                                        <Grid item xs={8} sm={2}>
+                                        <Grid item xs={8} sm={3}>
                                             <Stack spacing={3}>
-                                                <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
+                                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small">
                                                     <TextField
                                                         id="filled-hidden-label-small"
                                                         type="text"
                                                         size="small"
                                                         value={email}
                                                         name="email"
+                                                        inputProps={{ readOnly: emailStatus }}
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
                                                         placeholder="Enter Email ID"
@@ -384,23 +440,24 @@ const AccountRegForm = () => {
                                                 <Button
                                                     disableElevation
                                                     size="small"
-                                                    type="submit"
+                                                    type="button"
+                                                    disabled={isUpdate}
                                                     variant="contained"
                                                     color="secondary"
-                                                    onClick={newClick}
+                                                    onClick={emailDuplicateCheck}
                                                 >
                                                     중복체크
                                                 </Button>
                                             </FormControl>
                                         </Grid>
                                     </Grid>
-                                    <Grid container spacing={3}>
+                                    <Grid container spacing={4}>
                                         <Grid item xs={8} sm={1.5}>
                                             <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                                 <Stack spacing={0}>Name</Stack>
                                             </FormControl>
                                         </Grid>
-                                        <Grid item xs={8} sm={3}>
+                                        <Grid item xs={8} sm={4}>
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
@@ -419,19 +476,21 @@ const AccountRegForm = () => {
                                                 <Stack spacing={0}> Password</Stack>
                                             </FormControl>
                                         </Grid>
-                                        <Grid item xs={8} sm={2}>
-                                            <TextField
-                                                id="filled-hidden-label-small"
-                                                type="password"
-                                                size="small"
-                                                value={password}
-                                                name="password"
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                placeholder="Input the password."
-                                                fullWidth
-                                                error={Boolean(touched.password && errors.password)}
-                                            />
+                                        <Grid item xs={8} sm={4}>
+                                            <FormControl sx={{ m: 0, minWidth: 100, maxHeight: 30 }} size="small">
+                                                <TextField
+                                                    id="filled-hidden-label-small"
+                                                    type="password"
+                                                    size="small"
+                                                    value={password}
+                                                    name="password"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    placeholder="Input the password."
+                                                    fullWidth
+                                                    error={Boolean(touched.password && errors.password)}
+                                                />
+                                            </FormControl>
                                         </Grid>
                                     </Grid>
                                     <Grid container spacing={3}>
@@ -440,7 +499,7 @@ const AccountRegForm = () => {
                                                 <Stack spacing={0}>운영권한</Stack>
                                             </FormControl>
                                         </Grid>
-                                        <Grid item xs={8} sm={3}>
+                                        <Grid item xs={8} sm={4}>
                                             <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
                                                 <Select name="role_id" label="운영권한" value={role_id} onChange={roleChanged}>
                                                     <MenuItem value="">
@@ -478,7 +537,7 @@ const AccountRegForm = () => {
                                                 <Stack spacing={0}>전송여부</Stack>
                                             </FormControl>
                                         </Grid>
-                                        <Grid item xs={8} sm={3}>
+                                        <Grid item xs={8} sm={4}>
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
@@ -499,9 +558,15 @@ const AccountRegForm = () => {
                                         <Grid item xs={8} sm={3}>
                                             <FormControlLabel
                                                 control={
-                                                    <Checkbox name="is_use" value={is_use} onBlur={handleBlur} onChange={handleChange} />
+                                                    <Checkbox
+                                                        name="is_use"
+                                                        checked={is_use}
+                                                        value={is_use}
+                                                        onBlur={handleBlur}
+                                                        onChange={handleChange}
+                                                    />
                                                 }
-                                                label="사용하지 않음"
+                                                label="사용함"
                                             />
                                         </Grid>
                                     </Grid>

@@ -23,7 +23,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
 import { boolean } from '../../../node_modules/yup/lib/index';
-import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
+import CheckBoxDataGrid from '../../components/DataGrid/CheckBoxDataGrid';
 import AccountApis from 'apis/account/accountapis';
 
 const AccountManagementPage = () => {
@@ -53,7 +53,8 @@ const AccountManagementPage = () => {
             field: 'role_management_name',
             headerName: '운영권한',
             flex: 1,
-            headerAlign: 'center'
+            headerAlign: 'center',
+            align: 'center'
         },
         {
             field: 'status',
@@ -63,7 +64,7 @@ const AccountManagementPage = () => {
             align: 'center'
         },
         {
-            field: 'create_date',
+            field: 'valid_start_date',
             headerName: '생성날짜',
             flex: 1,
             headerAlign: 'center'
@@ -71,7 +72,7 @@ const AccountManagementPage = () => {
     ];
 
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { accountSearch, accountList }] = AccountApis();
+    const [responseData, requestError, loading, { accountSearch, accountList, accountDeletes }] = AccountApis();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -116,9 +117,10 @@ const AccountManagementPage = () => {
                     setDataGridRows([]);
                 }
                 break;
-            case 'deleteData':
+            case 'deleteDatas':
                 console.log('deleteData');
-                accountList();
+                alert('삭제 처리를 완료하였습니다!');
+                accountSearch(is_use, '');
                 break;
             default:
         }
@@ -183,7 +185,25 @@ const AccountManagementPage = () => {
     };
 
     // delete
-    const deleteClick = () => {};
+    const deleteClick = () => {
+        if (selectedRows.length === 0) {
+            alert('삭제 할 계정에 대해서 체크박스를 선택하세요!!!');
+            return;
+        }
+        console.log(selectedRows);
+        if (confirm('선택한 계정에 대해서 삭제를 하시겠습니까?')) {
+            // 선택한 계정에 대해서 삭제를 수행한다.
+            let deleteIds = '';
+            let idx = 0;
+            selectedRows.map((data, Index) => {
+                if (idx > 0) deleteIdx = deleteIdx + '::';
+                deleteIds = deleteIds + data;
+                idx++;
+            });
+            console.log(deleteIds);
+            accountDeletes(deleteIds);
+        }
+    };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
@@ -238,7 +258,7 @@ const AccountManagementPage = () => {
                     </Stack>
                 </MainCard>
                 <MainCard sx={{ mt: 2 }} content={false}>
-                    <DefaultDataGrid
+                    <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
                         handlePageChange={handlePage}

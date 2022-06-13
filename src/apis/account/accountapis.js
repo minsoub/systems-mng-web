@@ -59,6 +59,25 @@ const AccountApis = () => {
             requestConfig: data
         });
     };
+    // 데이터 수정
+    const updateData = (id, data) => {
+        callApi('updateData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/account/${id}`,
+            requestConfig: data
+        });
+    };
+
+    // 통합관리 > 계정 삭제 : 일괄 삭제
+    const deleteAccounts = (idsList) => {
+        callApi('deleteDatas', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/account/${idsList}`,
+            requestConfig: {}
+        });
+    };
 
     // 통합관리 - 계정 데이터 상세 조회
     const getDetailDataMng = (id) => {
@@ -109,7 +128,9 @@ const AccountApis = () => {
             accountList: getListData,
             accountDetail: getDetailData,
             accountDelete: getDeleteData,
+            accountDeletes: deleteAccounts,
             accountInsert: insertData,
+            accountUpdate: updateData,
             accountMngDetail: getDetailDataMng,
             accountMngUpdate: updateMng,
             accountMngInsert: insertMngAccount,
