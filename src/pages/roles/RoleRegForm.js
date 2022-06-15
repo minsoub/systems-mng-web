@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import {
-    OutlinedInput,
     Box,
     Button,
     Grid,
@@ -30,7 +29,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
 import { boolean } from '../../../node_modules/yup/lib/index';
 import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
-import AccountApis from 'apis/account/accountapis';
+import RoleApi from 'apis/roles/roleapi';
+import SiteApi from 'apis/site/siteapi';
 import { DatePicker } from 'antd';
 import { MenuItem } from '../../../node_modules/@mui/material/index';
 
@@ -38,25 +38,39 @@ const RoleRegForm = () => {
     let isSubmitting = false;
 
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { actionSearch, actionList }] = AccountApis();
+    const { paramId, search_site_id, search_is_use } = useParams();
+    const [responseData, requestError, loading, { roleCheck, roleDetail, roleInsert, roleUpdate, roleDelete }] = RoleApi();
+    const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
-    // 그리드 목록 데이터
-    const [dataGridRows, setDataGridRows] = useState([]);
-    const [visible, setVisible] = useState(true);
-    const [errors, setErrors] = useState('');
-    const [itemList, setItemList] = useState([]);
-    const [type, setType] = useState('');
+
+    // const [visible, setVisible] = useState(true);
+    // const [errors, setErrors] = useState('');
+
+    // 사이트 콤보박스 입력 항목
+    const [siteList, setSiteList] = useState([]);
+    const [idStatus, setIdStatus] = useState(false);
+
+    // 중복 체크
+    const [idChk, setIdChk] = useState(false); // 중보 체크 여부
+    // 중복 체크 버튼 제어
+    const [isUpdate, setIsUpdate] = useState(false);
+    // 삭제 버튼 제어
+    const [isDisabled, setIsDisabled] = useState(true);
+
+    // 데이터 입력 항목
+    const [id, setId] = useState('');
+    const [name, setName] = useState('');
+    const [valid_start_date, setValidStartDate] = useState('');
+    const [valid_end_date, setValidEndDate] = useState('');
+    const [is_use, setIsUse] = useState(true);
     const [site_id, setSiteId] = useState('');
+    const [type, setType] = useState('');
 
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-
-    const onChagnge = (date, dateString) => {
-        console.log(date, dateString);
-    };
 
     const siteChanged = (event) => {
         console.log(event.target.value);
@@ -73,21 +87,27 @@ const RoleRegForm = () => {
         if (requestError) {
             console.log('error requestError');
             console.log(requestError);
-            setErrors(requestError);
-            setVisible(true);
+            setErrorTitle('Error Message');
+            setErrorMessage(requestError);
+            setOpen(true);
         }
     }, [requestError]);
 
     // onload
     useEffect(() => {
+        console.log('props data => ');
+        console.log(search_site_id);
+        console.log(search_is_use);
         errorClear();
-        //actionList();
         // 사이트 구분 리스트 가져오기
-        const dd = [
-            { id: 'xxxx1', name: '거래지원사이트' },
-            { id: 'xxxx2', name: '투자보호센터' }
-        ];
-        setItemList(dd);
+        siteSearch(true, '');
+        if (paramId) {
+            // 수정 데이터 조회
+            roleDetail(paramId);
+            setIsDisabled(false);
+        } else {
+            setIsUpdate(false);
+        }
     }, []);
 
     // 에러 정보를 클리어 한다.
@@ -96,6 +116,39 @@ const RoleRegForm = () => {
         setErrorTitle('');
         setErrorMessage('');
     };
+
+    // Email Duplicate Check
+    const idDuplicateCheck = () => {
+        // ID 중복 체크를 한다.
+        if (id === '') {
+            alert('ID를 입력 후 중복 체크 해주시기 바랍니다!!!');
+            return;
+        }
+        roleCheck(id);
+    };
+
+    // Combobox data transaction
+    // 사이트
+    useEffect(() => {
+        if (!resData) {
+            return;
+        }
+        switch (resData.transactionId) {
+            case 'siteList':
+                if (resData.data.data) {
+                    let siteData = resData.data.data;
+                    let list = [];
+                    siteData.map((site, index) => {
+                        const s = { id: site.id, name: site.name };
+                        console.log(s);
+                        list.push(s);
+                    });
+                    setSiteList(list);
+                }
+                break;
+            default:
+        }
+    }, [resData]);
 
     // Transaction Return
     useEffect(() => {
@@ -110,13 +163,80 @@ const RoleRegForm = () => {
                     setDataGridRows([]);
                 }
                 break;
-            case 'deleteData':
+            case 'detailData':
+                if (responseData.data.data) {
+                    let res = responseData.data.data;
+                    setId(res.id);
+                    setName(res.name);
+                    setValidStartDate(res.valid_start_date);
+                    setValidEndDate(res.valid_end_date);
+                    setIsUse(res.is_use);
+                    setSiteId(res.site_id);
+                    setType(res.type);
+
+                    setIsUpdate(true);
+                    setIdStatus(true);
+                    setIdChk(true);
+                    // 수정모드이면 운영권한 콤보박스 데이터를 조회한다.
+                    //setRoleList([]);
+                    //roleComboSearch(true, 'ADMIN', res.site_id);
+                }
+                break;
+            case 'duplicateData':
+                if (responseData.data.data) {
+                    alert('이미 등록된 아이디입니다!!!');
+                    setIdChk(false);
+                } else {
+                    alert('사용 가능한 아이디입니다!!!');
+                    setIdChk(true);
+                }
+                break;
+            case 'insertData':
+                alert('등록을 완료하였습니다!!!');
+                navigate('/roles/list');
+                break;
+            case 'updateData':
+                alert('수정을 완료하였습니다!!!');
+                break;
+            case 'deleteeData':
                 console.log('deleteData');
-                actionList();
+                alert('삭제를 완료하였습니다!!!');
+                navigate('/roles/list');
                 break;
             default:
         }
     }, [responseData]);
+
+    const handleChange = (e) => {
+        switch (e.target.name) {
+            case 'id':
+                setId(e.target.value);
+                break;
+            case 'name':
+                setName(e.target.value);
+                break;
+            case 'valid_start_date':
+                setValidStartDate(e.target.value);
+                break;
+            case 'valid_end_date':
+                setValidEndDate(e.target.value);
+                break;
+            case 'is_use':
+                setIsUse(e.target.checked);
+                break;
+            case 'site_id':
+                setSiteId(e.target.checked);
+                break;
+            case 'type':
+                setType(e.target.value);
+                break;
+            default:
+                break;
+        }
+    };
+    const handleBlur = (e) => {
+        console.log(e);
+    };
 
     const handleClose = () => {
         setVisible(false);
@@ -127,8 +247,30 @@ const RoleRegForm = () => {
         navigate('/roles/reg');
     };
 
+    // List
+    const listClick = () => {
+        if (search_site_id) {
+            navigate(`/roles/list/${search_site_id}/${search_is_use}`);
+        } else {
+            navigate(`/roles/list`);
+        }
+    };
+
     // delete
-    const deleteClick = () => {};
+    const deleteClick = () => {
+        if (confirm('삭제를 하시겠습니까')) {
+            const requestData = {
+                id: id,
+                name: name,
+                valid_start_date: valid_start_date,
+                valid_end_date: valid_end_date,
+                site_id: site_id,
+                is_use: false,
+                type: type
+            };
+            roleDelete(id, requestData);
+        }
+    };
 
     return (
         <>
@@ -157,32 +299,63 @@ const RoleRegForm = () => {
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
                         // Validation check
-                        if (values.id === '') {
-                            setErrorTitle('입력 오류');
-                            setErrorMessage('Role 아이디를 입력하지 않았습니다');
-                            setOpen(true);
-                        }
-                        if (values.name === '') {
+                        if (name === '') {
                             setErrorTitle('입력 오류');
                             setErrorMessage('Role Name을 입력하지 않았습니다');
                             setOpen(true);
+                            return;
+                        }
+                        if (valid_start_date === '') {
+                            setErrorTitle('입력 오류');
+                            setErrorMessage('유효기간을 입력하지 않았습니다');
+                            setOpen(true);
+                            return;
+                        }
+                        if (valid_end_date === '') {
+                            setErrorTitle('입력 오류');
+                            setErrorMessage('유효기간을 입력하지 않았습니다');
+                            setOpen(true);
+                            return;
+                        }
+                        if (site_id === '') {
+                            setErrorTitle('입력 오류');
+                            setErrorMessage('사이트 구분을 선택하지 않았습니다!!!');
+                            setOpen(true);
+                            return;
+                        }
+                        if (type === '') {
+                            setErrorTitle('입력 오류');
+                            setErrorMessage('운영구분을 선택하지 않았습니다!!!');
+                            setOpen(true);
+                            return;
+                        }
+                        if (!idChk) {
+                            setErrorTitle('입력 오류');
+                            setErrorMessage('ID 중복 체크를 하지 않았습니다!!!');
+                            setOpen(true);
+                            return;
                         }
                         // Data 가공
                         setOpen(true);
                         const requestData = {
-                            id: values.id,
-                            name: values.name,
-                            valid_start_date: values.valid_start_date,
-                            valid_end_date: values.valid_end_date,
+                            id: id,
+                            name: name,
+                            valid_start_date: valid_start_date,
+                            valid_end_date: valid_end_date,
                             site_id: site_id,
+                            is_use: is_use,
                             type: type
                         };
                         console.log('called onSubmit...');
                         console.log(requestData);
                         setStatus({ success: false });
                         setSubmitting(true);
-                        console.log(values);
-                        //actionLogin(values.email, values.password);
+                        //console.log(values);
+                        if (paramId) {
+                            roleUpdate(id, requestData);
+                        } else {
+                            roleInsert(requestData);
+                        }
                     } catch (err) {
                         console.log(err);
                         setStatus({ success: false });
@@ -191,13 +364,13 @@ const RoleRegForm = () => {
                     }
                 }}
             >
-                {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+                {({ errors, handleSubmit, isSubmitting, touched }) => (
                     <form noValidate onSubmit={handleSubmit}>
                         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
                             <Grid item xs={12} md={7} lg={12}>
                                 <Grid container alignItems="center" justifyContent="space-between">
                                     <Grid item>
-                                        <Typography variant="h3">Role 관리</Typography>
+                                        <Typography variant="h3">Role 등록</Typography>
                                     </Grid>
                                     <Grid item>
                                         <Typography variant="h6">통합관리 &gt; Role 관리 &gt; Role 등록</Typography>
@@ -212,17 +385,18 @@ const RoleRegForm = () => {
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={2}>
-                                            <Stack spacing={3}>
-                                                <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
+                                            <Stack spacing={5}>
+                                                <FormControl sx={{ m: 0, maxHeight: 30, maxWidth: 220 }} size="small">
                                                     <TextField
                                                         id="filled-hidden-label-small"
                                                         type="text"
                                                         size="small"
-                                                        value={values.id}
+                                                        value={id}
                                                         name="id"
+                                                        inputProps={{ readOnly: idStatus }}
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        placeholder="Enter Role ID"
+                                                        placeholder="Role ID"
                                                         fullWidth
                                                         error={Boolean(touched.id && errors.id)}
                                                     />
@@ -234,10 +408,11 @@ const RoleRegForm = () => {
                                                 <Button
                                                     disableElevation
                                                     size="small"
-                                                    type="submit"
+                                                    type="button"
+                                                    disabled={isUpdate}
                                                     variant="contained"
                                                     color="secondary"
-                                                    onClick={newClick}
+                                                    onClick={idDuplicateCheck}
                                                 >
                                                     중복체크
                                                 </Button>
@@ -249,18 +424,20 @@ const RoleRegForm = () => {
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={2}>
-                                            <TextField
-                                                id="filled-hidden-label-small"
-                                                type="text"
-                                                size="small"
-                                                value={values.name}
-                                                name="name"
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                placeholder="Enter Role Name"
-                                                fullWidth
-                                                error={Boolean(touched.name && errors.name)}
-                                            />
+                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                                <TextField
+                                                    id="filled-hidden-label-small"
+                                                    type="text"
+                                                    size="small"
+                                                    value={name}
+                                                    name="name"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    placeholder="Enter Role Name"
+                                                    fullWidth
+                                                    error={Boolean(touched.name && errors.name)}
+                                                />
+                                            </FormControl>
                                         </Grid>
                                     </Grid>
                                     <Grid container spacing={3}>
@@ -273,7 +450,7 @@ const RoleRegForm = () => {
                                             <TextField
                                                 id="valid_start_date"
                                                 name="valid_start_date"
-                                                //value={values.valid_start_date}
+                                                value={valid_start_date}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 type="date"
@@ -288,7 +465,7 @@ const RoleRegForm = () => {
                                             <TextField
                                                 id="valid_end_date"
                                                 name="valid_end_date"
-                                                //value={values.valid_end_date}
+                                                value={valid_end_date}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 type="date"
@@ -306,8 +483,9 @@ const RoleRegForm = () => {
                                                 control={
                                                     <Checkbox
                                                         defaultChecked
+                                                        checked={is_use}
                                                         name="is_use"
-                                                        value={values.is_use}
+                                                        value={is_use}
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
                                                     />
@@ -323,12 +501,12 @@ const RoleRegForm = () => {
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0, minWidth: 140, maxHeight: 25 }} size="small">
+                                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 25 }} size="small">
                                                 <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                                     <MenuItem value="">
                                                         <em>Choose a Site Type</em>
                                                     </MenuItem>
-                                                    {itemList.map((item, index) => (
+                                                    {siteList.map((item, index) => (
                                                         <MenuItem key={index} value={item.id}>
                                                             {item.name}
                                                         </MenuItem>
@@ -344,8 +522,8 @@ const RoleRegForm = () => {
                                         <Grid item xs={8} sm={3}>
                                             <FormControl sx={{ m: 0, minWidth: 140 }} size="small">
                                                 <Select name="type" label="구분" value={type} onChange={typeChanged}>
-                                                    <MenuItem value="0">Admin</MenuItem>
-                                                    <MenuItem value="1">User</MenuItem>
+                                                    <MenuItem value="ADMIN">ADMIN</MenuItem>
+                                                    <MenuItem value="USER">USER</MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </Grid>
@@ -361,6 +539,28 @@ const RoleRegForm = () => {
                                             color="primary"
                                         >
                                             저장하기
+                                        </Button>
+                                        <Button
+                                            disableElevation
+                                            disabled={isDisabled}
+                                            size="small"
+                                            type="button"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={deleteClick}
+                                        >
+                                            삭제
+                                        </Button>
+                                        <Button
+                                            disableElevation
+                                            disabled={isSubmitting}
+                                            size="small"
+                                            type="button"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={listClick}
+                                        >
+                                            리스트
                                         </Button>
                                     </Stack>
                                     {errors.submit && (

@@ -28,27 +28,43 @@ import { boolean } from '../../../node_modules/yup/lib/index';
 import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
+import ProgramApi from 'apis/programs/programapi';
+import ErrorScreen from 'components/ErrorScreen';
 
-const RoleManagementPage = () => {
+const ProgramManagementPage = () => {
     let isSubmitting = false;
     const columns = [
         {
             field: 'id',
-            headerName: 'Role ID',
+            headerName: '프로그램 ID',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
             field: 'name',
-            headerName: 'Role Name',
+            headerName: '프로그래명',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'kind_name',
+            headerName: '분류',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'action_method',
+            headerName: 'Action Type',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
             field: 'type',
-            headerName: 'Type',
+            headerName: '관리메뉴',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
@@ -56,13 +72,6 @@ const RoleManagementPage = () => {
         {
             field: 'is_use',
             headerName: '사용여부',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'valid_date',
-            headerName: '유효기간',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
@@ -76,8 +85,7 @@ const RoleManagementPage = () => {
         }
     ];
     const navigate = useNavigate();
-    const { search_site_id, search_is_use } = useParams();
-    const [responseData, requestError, loading, { roleSearch, roleList }] = RoleApi();
+    const [responseData, requestError, loading, { programSearch, programList }] = ProgramApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
     // 그리드 선택된 row id
@@ -85,17 +93,16 @@ const RoleManagementPage = () => {
     // 그리드 목록 데이터
     const [dataGridRows, setDataGridRows] = useState([]);
 
+    ////////////////////////////////////////////////////
+    // 공통 에러 처리
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    ////////////////////////////////////////////////////
 
     const [siteList, setSiteList] = useState([]);
     const [site_id, setSiteId] = useState('');
     const [is_use, setIsUse] = useState(true);
-
-    // 파라미터 상태값
-    const [param_site_id, setParamSiteId] = useState(search_site_id);
-    const [param_is_use, setParamIsUse] = useState(search_is_use);
 
     // Change Event
     // site가 변경되었을 때 호출된다.
@@ -107,18 +114,8 @@ const RoleManagementPage = () => {
 
     // onload
     useEffect(() => {
-        errorClear();
         // 사이트 구분 리스트 가져오기
-        console.log('paramter data => ');
-        console.log(search_site_id);
-        console.log(search_is_use);
-        console.log('====================');
-        // if (search_site_id) {
-        //     setParamSiteId(search_site_id);
-        //     setParamIsUse(search_is_use);
-        // }
         siteSearch(true, '');
-        //roleList();
     }, []);
 
     // transaction error 처리
@@ -150,20 +147,11 @@ const RoleManagementPage = () => {
                     });
                     setSiteList(list);
 
-                    if (param_site_id) {
-                        console.log('==============called...here ');
-                        console.log(search_site_id);
-                        console.log(search_is_use);
-                        console.log(param_site_id);
-                        console.log(param_is_use);
-                        console.log('================');
-                        setSiteId(param_site_id);
-                        if (param_is_use === 'true') {
-                            setIsUse(true);
-                        } else {
-                            setIsUse(false);
-                        }
-                        roleSearch(param_is_use, search_site_id);
+                    let searchData = JSON.parse(localStorage.getItem('pgmSearchData'));
+                    if (searchData) {
+                        setSiteId(searchData.site_id);
+                        setIsUse(searchData.is_use);
+                        programSearch(searchData.site_id, searchData.is_use);
                         //searchClick();
                     }
                 }
@@ -178,7 +166,7 @@ const RoleManagementPage = () => {
             return;
         }
         switch (responseData.transactionId) {
-            case 'roleList':
+            case 'siteList':
                 if (responseData.data.data && responseData.data.data.length > 0) {
                     setDataGridRows(responseData.data.data);
                 } else {
@@ -192,13 +180,6 @@ const RoleManagementPage = () => {
             default:
         }
     }, [responseData]);
-
-    // 에러 정보를 클리어 한다.
-    const errorClear = () => {
-        setOpen(false);
-        setErrorTitle('');
-        setErrorMessage('');
-    };
 
     const handleClose = () => {
         setVisible(false);
@@ -226,25 +207,32 @@ const RoleManagementPage = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            let searchCondition = { site_id: site_id, is_use: is_use };
-            navigate(`/roles/reg/${rowData.id}/${site_id}/${is_use}`);
+            console.log(rowData);
+            // 검색 데이터에 대한 세팅.
+            let searchData = { site_id: site_id, is_use: is_use };
+            localStorage.setItem('pgmSearchData', JSON.stringify(searchData));
+            navigate(`/pgm/reg/${rowData.id}/${rowData.row.site_id}`);
         }
     };
 
     // 그리드 더블 클릭
     const handleDoubleClick = (rowData) => {};
 
-    // new
+    // program 등록 화면
     const newClick = (e) => {
         console.log('called register form');
-        navigate('/roles/reg');
+        navigate('/pgm/reg');
     };
 
-    // search
+    // program search
     const searchClick = () => {
-        errorClear();
         console.log('searchClick called...');
-        roleSearch(is_use, site_id);
+        if (!site_id) {
+            alert('사이트명을 선택하지 않았습니다!!!');
+            return;
+        }
+        console.log(site_id);
+        programSearch(site_id, true);
     };
 
     return (
@@ -252,10 +240,10 @@ const RoleManagementPage = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
-                        <Typography variant="h3">Role 관리</Typography>
+                        <Typography variant="h3">프로그램 리스트</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6">통합관리 &gt; Role 관리 &gt; Role 리스트</Typography>
+                        <Typography variant="h6">통합관리 &gt; 프로그램 관리 &gt; 프로그램 리스트</Typography>
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
@@ -298,32 +286,10 @@ const RoleManagementPage = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </MainCard>
-                <MainCard sx={{ mt: 3 }} content={false}>
-                    <Collapse in={open}>
-                        <Alert
-                            severity="error"
-                            action={
-                                <IconButton
-                                    aria-label="close"
-                                    color="inherit"
-                                    size="small"
-                                    onClick={() => {
-                                        errorClear();
-                                    }}
-                                >
-                                    <CloseIcon fontSize="inherit" />
-                                </IconButton>
-                            }
-                            sx={{ mb: 2 }}
-                        >
-                            <AlertTitle>{errorTitle}</AlertTitle>
-                            {errorMessage}
-                        </Alert>
-                    </Collapse>
-                </MainCard>
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>
     );
 };
 
-export default RoleManagementPage;
+export default ProgramManagementPage;

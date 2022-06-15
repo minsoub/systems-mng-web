@@ -45,6 +45,12 @@ const AccountRegForm = Loadable(lazy(() => import('pages/account/AccountRegForm'
 
 const RoleManagementPage = Loadable(lazy(() => import('pages/roles/index')));
 const RoleRegForm = Loadable(lazy(() => import('pages/roles/RoleRegForm')));
+const RoleMappingForm = Loadable(lazy(() => import('pages/roles/RoleMappingForm')));
+
+const ProgramManagementPage = Loadable(lazy(() => import('pages/programs/index')));
+const ProgramRegForm = Loadable(lazy(() => import('pages/programs/ProgramRegForm')));
+
+const MenuRegForm = Loadable(lazy(() => import('pages/menumng/MenuRegForm')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = [
@@ -121,13 +127,38 @@ const MainRoutes = [
                 element: <RoleManagementPage />
             },
             {
+                path: 'roles/list/:search_site_id/:search_is_use',
+                element: <RoleManagementPage />
+            },
+            {
                 path: 'roles/reg',
                 element: <RoleRegForm />
             },
             {
-                path: 'roles/mapping',
-                element: <RoleManagementPage />
+                path: 'roles/reg/:paramId/:search_site_id/:search_is_use',
+                element: <RoleRegForm />
             },
+            {
+                path: 'roles/mapping',
+                element: <RoleMappingForm />
+            },
+            {
+                path: 'menus/reg',
+                element: <MenuRegForm />
+            },
+            {
+                path: 'menus/mapping',
+                element: <MenuRegForm />
+            },
+            {
+                path: 'pgm/list',
+                element: <ProgramManagementPage />
+            },
+            {
+                path: 'pgm/reg',
+                element: <ProgramRegForm />
+            },
+            { path: 'pgm/reg/:paramId/:paramSiteId', element: <ProgramRegForm /> },
             {
                 path: 'table-page',
                 element: <TableSamplePage />

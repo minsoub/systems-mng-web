@@ -6,12 +6,12 @@ const RoleApi = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
 
     // 데이터 검색
-    const getSearchData = (is_use, keyword) => {
-        const encodeKeyword = encodeURIComponent(keyword);
+    const getSearchData = (is_use, site_id) => {
+        //const encodeKeyword = encodeURIComponent(keyword);
         callApi('roleList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/sites?searchText=${encodeKeyword}&isUse=${is_use}`,
+            url: `/roles?isUse=${is_use}&siteId=${site_id}`,
             requestConfig: {}
         });
     };
@@ -36,34 +36,21 @@ const RoleApi = () => {
         });
     };
 
-    // 선택된 그리드 데이터 삭제
-    const getDeleteData = (selectedRows) => {
-        if (selectedRows && selectedRows.length > 0) {
-            let paramIds = selectedRows.join('&ids=');
-            callApi('deleteData', {
-                axiosInstance: axiosInstanceDefault,
-                method: 'delete',
-                url: `/faq/content?ids=${paramIds}`,
-                requestConfig: {}
-            });
-        }
-    };
-
     const getDelete = (id, data) => {
         callApi('deleteData', {
             axiosInstance: axiosInstanceDefault,
             method: 'put',
-            url: `/site/${id}`,
+            url: `/role/${id}`,
             requestConfig: data
         });
     };
 
     // 데이터 등록
-    const insertStite = (data) => {
+    const insertRole = (data) => {
         callApi('insertData', {
             axiosInstance: axiosInstanceDefault,
             method: 'post',
-            url: '/site',
+            url: '/role',
             requestConfig: data
         });
     };
@@ -73,17 +60,58 @@ const RoleApi = () => {
         callApi('detailData', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/site/${id}`,
+            url: `/role/${id}`,
+            requestConfig: {}
+        });
+    };
+
+    // 중복 조회
+    const getDuplicateCheck = (id) => {
+        callApi('duplicateData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/role/${id}`,
             requestConfig: {}
         });
     };
 
     // 데이터 수정
-    const updateSiteData = (id, data) => {
+    const updateRoleData = (id, data) => {
         callApi('updateData', {
             axiosInstance: axiosInstanceDefault,
             method: 'put',
-            url: `/site/${id}`,
+            url: `/role/${id}`,
+            requestConfig: data
+        });
+    };
+
+    // 데이터 삭제
+    const deleteRoleData = (id, data) => {
+        callApi('deleteeData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/role/${id}`,
+            requestConfig: data
+        });
+    };
+
+    const roleRegisterSearch = (id, site_id, type) => {
+        callApi('registerList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/role/${id}/accounts`, // s?siteId=${site_id}&isUse=${is_use}&type=${type}`,
+            requestConfig: {}
+        });
+    };
+
+    // 사용자 맵핑 저장
+    const roleRegisterSave = (id, data) => {
+        console.log(id);
+        console.log(data);
+        callApi('registerData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/role/${id}/accounts`,
             requestConfig: data
         });
     };
@@ -96,10 +124,13 @@ const RoleApi = () => {
             roleSearch: getSearchData,
             roleList: getListData,
             roleComboSearch: getListComboData,
-            roleDelete: getDelete,
-            roleInsert: insertStite,
+            roleDelete: deleteRoleData,
+            roleInsert: insertRole,
             roleDetail: getDetailData,
-            roleUpdate: updateSiteData
+            roleCheck: getDuplicateCheck,
+            roleUpdate: updateRoleData,
+            roleRegisterSearch: roleRegisterSearch,
+            roleRegisterSave: roleRegisterSave
         }
     ];
 };

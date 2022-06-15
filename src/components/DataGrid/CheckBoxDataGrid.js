@@ -114,7 +114,7 @@ function CheckBoxPagination() {
     );
 }
 
-export function CheckBoxDataGrid({ columns, rows, handlePageChange, handleGridClick, handleGridDoubleClick, selectionChange }) {
+export function CheckBoxDataGrid({ columns, rows, handlePageChange, handleGridClick, handleGridDoubleClick, selectionChange, height }) {
     const handlePage = (page, details) => {
         handlePageChange(page + 1);
     };
@@ -125,9 +125,14 @@ export function CheckBoxDataGrid({ columns, rows, handlePageChange, handleGridCl
         selectionChange(selectionModel);
     }, [selectionModel]);
 
+    let mHeight = 600;
+
+    if (height) {
+        mHeight = height;
+    }
     if (rows) {
         return (
-            <div style={{ height: 600, width: '100%' }}>
+            <div style={{ height: mHeight, width: '100%' }}>
                 <StyledDataGrid
                     checkboxSelection
                     pageSize={20}

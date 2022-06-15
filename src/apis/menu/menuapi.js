@@ -71,6 +71,49 @@ const menus = [
         ]
     },
     {
+        id: 'sitemanagement',
+        title: '사이트관리',
+        type: 'group',
+        children: [
+            {
+                id: 'siteaccess',
+                title: '사용자 접근관리',
+                type: 'item',
+                url: '/access/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true
+            },
+            {
+                id: 'sitemenu',
+                title: '메뉴 관리',
+                type: 'item',
+                url: '/sitemenu/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true
+            },
+            {
+                id: 'siteauth',
+                title: '권한 관리',
+                type: 'item',
+                url: '/siteauth/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true
+            },
+            {
+                id: 'sitelog',
+                title: '감사로그 조회',
+                type: 'item',
+                url: '/sitelog/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true
+            }
+        ]
+    },
+    {
         id: 'totaladmin',
         title: '통합관리',
         type: 'group',
@@ -138,6 +181,58 @@ const menus = [
                         title: '사용자 맵핑',
                         type: 'item',
                         url: '/roles/mapping',
+                        auth: true,
+                        icon: icons.ChromeOutlined
+                    }
+                ]
+            },
+            {
+                id: 'menus',
+                title: '메뉴 관리',
+                type: 'collapse',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                children: [
+                    {
+                        id: 'menu_register',
+                        title: '메뉴 등록',
+                        type: 'item',
+                        url: '/menus/reg',
+                        auth: true,
+                        icon: icons.ChromeOutlined
+                    },
+                    {
+                        id: 'menu_mapping',
+                        title: '프로그램 연결',
+                        type: 'item',
+                        url: '/menus/mapping',
+                        auth: true,
+                        icon: icons.ChromeOutlined
+                    }
+                ]
+            },
+            {
+                id: 'programs',
+                title: '프로그램 관리',
+                type: 'collapse',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                children: [
+                    {
+                        id: 'program_list',
+                        title: '프로그램 리스트',
+                        type: 'item',
+                        url: '/pgm/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined
+                    },
+                    {
+                        id: 'program_reg',
+                        title: '프로그램 등록',
+                        type: 'item',
+                        url: '/pgm/reg',
                         auth: true,
                         icon: icons.ChromeOutlined
                     }
