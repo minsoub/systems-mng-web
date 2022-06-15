@@ -31,6 +31,11 @@ const useAxios = () => {
             }
             let Authorization = `Bearer ${authData.accessToken}`; // `Bearer ${accessToken}`;
             let site_id = authData.siteId; //siteId;
+            // Token 처리
+            axiosInstance.defaults.headers.Authorization = Authorization;
+            // site_id 처리
+            axiosInstance.defaults.headers.site_id = site_id;
+            /*
             //if (!isLoggined) {
             axiosInstance.interceptors.request.use(
                 (config) => ({
@@ -44,6 +49,7 @@ const useAxios = () => {
                 null,
                 { synchronous: true }
             );
+            */
         }
         try {
             setLoading(true);
