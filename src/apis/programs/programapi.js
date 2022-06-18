@@ -15,6 +15,16 @@ const ProgramApi = () => {
             requestConfig: {}
         });
     };
+    // 검색어를 통한 데이터 검색
+    const getTextSearchData = (site_id, is_use, keyword) => {
+        const encodeKeyword = encodeURIComponent(keyword);
+        callApi('programList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/site/${site_id}/programs?isUse=${is_use}&search_text=${keyword}`,
+            requestConfig: {}
+        });
+    };
 
     // 데이터 조회
     const getListData = (is_use) => {
@@ -84,6 +94,7 @@ const ProgramApi = () => {
         loading,
         {
             programSearch: getSearchData,
+            programTextSearch: getTextSearchData,
             programList: getListData,
             programDelete: getDelete,
             programInsert: insertProgram,

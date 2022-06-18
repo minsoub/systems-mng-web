@@ -9,7 +9,7 @@ import { alpha } from '@mui/material/styles';
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     border: 1,
-    color: theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.85)',
+    color: 'rgba(0,0,0,.50)',
     fontFamily: [
         '-apple-system',
         'BlinkMacSystemFont',
@@ -31,7 +31,8 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
         display: 'none'
     },
     '& .MuiDataGrid-columnHeader': {
-        backgroundColor: alpha('#e0e0e0', 0.4)
+        backgroundColor: alpha('#eeeeee', 0.7),
+        height: 45
     },
     '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
         borderRight: `1px solid '#303030'`

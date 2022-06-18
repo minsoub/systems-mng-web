@@ -51,6 +51,10 @@ const ProgramManagementPage = Loadable(lazy(() => import('pages/programs/index')
 const ProgramRegForm = Loadable(lazy(() => import('pages/programs/ProgramRegForm')));
 
 const MenuRegForm = Loadable(lazy(() => import('pages/menumng/MenuRegForm')));
+const MenuMappingForm = Loadable(lazy(() => import('pages/menumng/MenuMappingForm')));
+
+const AuthManagementPage = Loadable(lazy(() => import('pages/authmng/index')));
+const AuthMngRegForm = Loadable(lazy(() => import('pages/authmng/AuthMngReg.js')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = [
@@ -148,7 +152,7 @@ const MainRoutes = [
             },
             {
                 path: 'menus/mapping',
-                element: <MenuRegForm />
+                element: <MenuMappingForm />
             },
             {
                 path: 'pgm/list',
@@ -159,6 +163,14 @@ const MainRoutes = [
                 element: <ProgramRegForm />
             },
             { path: 'pgm/reg/:paramId/:paramSiteId', element: <ProgramRegForm /> },
+            {
+                path: 'authmng/list',
+                element: <AuthManagementPage />
+            },
+            {
+                path: 'authmng/reg',
+                element: <AuthMngRegForm />
+            },
             {
                 path: 'table-page',
                 element: <TableSamplePage />

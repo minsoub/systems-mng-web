@@ -95,6 +95,7 @@ const RoleApi = () => {
         });
     };
 
+    // role에 등록된 사용자 리스트 조회
     const roleRegisterSearch = (id, site_id, type) => {
         callApi('registerList', {
             axiosInstance: axiosInstanceDefault,

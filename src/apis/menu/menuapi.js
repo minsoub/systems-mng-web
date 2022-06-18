@@ -35,6 +35,7 @@ const menus = [
         id: 'group-dashboard',
         title: 'Navigation',
         type: 'group',
+        parents_menu_id: '',
         children: [
             {
                 id: 'dashboard',
@@ -43,7 +44,8 @@ const menus = [
                 url: '/dashboard/default',
                 auth: true, // 로그인 했을 때만 사용가능 메뉴
                 icon: icons.DashboardOutlined,
-                breadcrumbs: false
+                breadcrumbs: false,
+                parents_menu_id: 'xxx'
             }
         ]
     },
@@ -51,6 +53,7 @@ const menus = [
         id: 'authentication',
         title: 'Authentication',
         type: 'group',
+        parents_menu_id: '',
         children: [
             {
                 id: 'login1',
@@ -58,7 +61,8 @@ const menus = [
                 type: 'item',
                 url: '/login',
                 icon: icons.LoginOutlined,
-                target: true
+                target: true,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'register1',
@@ -66,7 +70,8 @@ const menus = [
                 type: 'item',
                 url: '/register',
                 icon: icons.ProfileOutlined,
-                target: true
+                target: true,
+                parents_menu_id: 'xxx'
             }
         ]
     },
@@ -74,6 +79,7 @@ const menus = [
         id: 'sitemanagement',
         title: '사이트관리',
         type: 'group',
+        parents_menu_id: '',
         children: [
             {
                 id: 'siteaccess',
@@ -82,7 +88,8 @@ const menus = [
                 url: '/access/list',
                 auth: true,
                 icon: icons.ChromeOutlined,
-                breadcrumbs: true
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'sitemenu',
@@ -91,7 +98,8 @@ const menus = [
                 url: '/sitemenu/list',
                 auth: true,
                 icon: icons.ChromeOutlined,
-                breadcrumbs: true
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'siteauth',
@@ -100,7 +108,8 @@ const menus = [
                 url: '/siteauth/list',
                 auth: true,
                 icon: icons.ChromeOutlined,
-                breadcrumbs: true
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'sitelog',
@@ -109,7 +118,8 @@ const menus = [
                 url: '/sitelog/list',
                 auth: true,
                 icon: icons.ChromeOutlined,
-                breadcrumbs: true
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
             }
         ]
     },
@@ -117,6 +127,7 @@ const menus = [
         id: 'totaladmin',
         title: '통합관리',
         type: 'group',
+        parents_menu_id: '',
         children: [
             {
                 id: 'accountmng',
@@ -125,7 +136,8 @@ const menus = [
                 url: '/accountmng/list',
                 auth: true,
                 icon: icons.ChromeOutlined,
-                breadcrumbs: true
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
             }
         ]
     },
@@ -133,6 +145,7 @@ const menus = [
         id: 'smartadmin',
         title: '통합시스템 관리',
         type: 'group',
+        parents_menu_id: '',
         children: [
             {
                 id: 'site',
@@ -141,7 +154,8 @@ const menus = [
                 url: '/site/list',
                 auth: true,
                 icon: icons.ChromeOutlined,
-                breadcrumbs: true
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'account',
@@ -150,7 +164,8 @@ const menus = [
                 url: '/account/list',
                 auth: true,
                 icon: icons.ChromeOutlined,
-                breadcrumbs: true
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'roles',
@@ -159,6 +174,7 @@ const menus = [
                 auth: true,
                 icon: icons.ChromeOutlined,
                 breadcrumbs: true,
+                parents_menu_id: 'xxx',
                 children: [
                     {
                         id: 'role_management',
@@ -166,7 +182,8 @@ const menus = [
                         type: 'item',
                         url: '/roles/list',
                         auth: true,
-                        icon: icons.ChromeOutlined
+                        icon: icons.ChromeOutlined,
+                        parents_menu_id: 'xxx'
                     },
                     {
                         id: 'role_regt',
@@ -174,7 +191,8 @@ const menus = [
                         type: 'item',
                         url: '/roles/reg',
                         auth: true,
-                        icon: icons.ChromeOutlined
+                        icon: icons.ChromeOutlined,
+                        parents_menu_id: 'xxx'
                     },
                     {
                         id: 'role_mapping',
@@ -182,7 +200,8 @@ const menus = [
                         type: 'item',
                         url: '/roles/mapping',
                         auth: true,
-                        icon: icons.ChromeOutlined
+                        icon: icons.ChromeOutlined,
+                        parents_menu_id: 'xxx'
                     }
                 ]
             },
@@ -193,6 +212,7 @@ const menus = [
                 auth: true,
                 icon: icons.ChromeOutlined,
                 breadcrumbs: true,
+                parents_menu_id: 'xxx',
                 children: [
                     {
                         id: 'menu_register',
@@ -200,7 +220,8 @@ const menus = [
                         type: 'item',
                         url: '/menus/reg',
                         auth: true,
-                        icon: icons.ChromeOutlined
+                        icon: icons.ChromeOutlined,
+                        parents_menu_id: 'xxx'
                     },
                     {
                         id: 'menu_mapping',
@@ -208,7 +229,8 @@ const menus = [
                         type: 'item',
                         url: '/menus/mapping',
                         auth: true,
-                        icon: icons.ChromeOutlined
+                        icon: icons.ChromeOutlined,
+                        parents_menu_id: 'xxx'
                     }
                 ]
             },
@@ -226,7 +248,8 @@ const menus = [
                         type: 'item',
                         url: '/pgm/list',
                         auth: true,
-                        icon: icons.ChromeOutlined
+                        icon: icons.ChromeOutlined,
+                        parents_menu_id: 'xxx'
                     },
                     {
                         id: 'program_reg',
@@ -234,7 +257,36 @@ const menus = [
                         type: 'item',
                         url: '/pgm/reg',
                         auth: true,
-                        icon: icons.ChromeOutlined
+                        icon: icons.ChromeOutlined,
+                        parents_menu_id: 'xxx'
+                    }
+                ]
+            },
+            {
+                id: 'authmng',
+                title: '권한 관리',
+                type: 'collapse',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                children: [
+                    {
+                        id: 'authmng_list',
+                        title: '권한 리스트',
+                        type: 'item',
+                        url: '/authmng/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        parents_menu_id: 'xxx'
+                    },
+                    {
+                        id: 'authmng_reg',
+                        title: '권한 맵핑 등록',
+                        type: 'item',
+                        url: '/authmng/reg',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        parents_menu_id: 'xxx'
                     }
                 ]
             }
@@ -244,6 +296,7 @@ const menus = [
         id: 'sample',
         title: 'Bityumbsystems Sample',
         type: 'group',
+        parents_menu_id: '',
         children: [
             {
                 id: 'TableList1',
@@ -252,7 +305,8 @@ const menus = [
                 url: '/table-page',
                 auth: true,
                 icon: icons.ChromeOutlined,
-                breadcrumbs: true
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'TableList2',
@@ -261,6 +315,7 @@ const menus = [
                 auth: true,
                 icon: icons.ChromeOutlined,
                 breadcrumbs: true,
+                parents_menu_id: 'xxx',
                 children: [
                     {
                         id: 'url_test',
@@ -268,7 +323,8 @@ const menus = [
                         type: 'item',
                         url: '/url-page',
                         auth: true,
-                        icon: icons.ChromeOutlined
+                        icon: icons.ChromeOutlined,
+                        parents_menu_id: 'xxx'
                     },
                     {
                         id: 'board_write',
@@ -276,7 +332,8 @@ const menus = [
                         type: 'item',
                         url: '/editor-page',
                         auth: true,
-                        icon: icons.ChromeOutlined
+                        icon: icons.ChromeOutlined,
+                        parents_menu_id: 'xxx'
                     }
                 ]
             }
@@ -286,6 +343,7 @@ const menus = [
         id: 'support',
         title: 'Support',
         type: 'group',
+        parents_menu_id: '',
         children: [
             {
                 id: 'sample-page',
@@ -293,7 +351,8 @@ const menus = [
                 type: 'item',
                 url: '/sample-page',
                 auth: true,
-                icon: icons.ChromeOutlined
+                icon: icons.ChromeOutlined,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'documentation',
@@ -302,7 +361,8 @@ const menus = [
                 url: 'https://codedthemes.gitbook.io/mantis-react/',
                 icon: icons.QuestionOutlined,
                 external: true,
-                target: true
+                target: true,
+                parents_menu_id: 'xxx'
             }
         ]
     },
@@ -310,27 +370,31 @@ const menus = [
         id: 'utilities',
         title: 'Utilities',
         type: 'group',
+        parents_menu_id: '',
         children: [
             {
                 id: 'util-typography',
                 title: 'Typography',
                 type: 'item',
                 url: '/typography',
-                icon: icons.FontSizeOutlined
+                icon: icons.FontSizeOutlined,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'util-color',
                 title: 'Color',
                 type: 'item',
                 url: '/color',
-                icon: icons.BgColorsOutlined
+                icon: icons.BgColorsOutlined,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'util-shadow',
                 title: 'Shadow',
                 type: 'item',
                 url: '/shadow',
-                icon: icons.BarcodeOutlined
+                icon: icons.BarcodeOutlined,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'ant-icons',
@@ -338,7 +402,8 @@ const menus = [
                 type: 'item',
                 url: '/icons/ant',
                 icon: icons.AntDesignOutlined,
-                breadcrumbs: false
+                breadcrumbs: false,
+                parents_menu_id: 'xxx'
             }
         ]
     },
@@ -346,6 +411,7 @@ const menus = [
         id: 'crud',
         title: 'CRUD Sample',
         type: 'group',
+        parents_menu_id: '',
         children: [
             {
                 id: 'crud-list',
@@ -353,7 +419,8 @@ const menus = [
                 type: 'item',
                 url: '/crud/list',
                 icon: icons.LoginOutlined,
-                target: true
+                target: true,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'crud-write',
@@ -361,7 +428,8 @@ const menus = [
                 type: 'item',
                 url: '/crud/write',
                 icon: icons.ProfileOutlined,
-                target: true
+                target: true,
+                parents_menu_id: 'xxx'
             },
             {
                 id: 'crypto-sample',
@@ -369,7 +437,8 @@ const menus = [
                 type: 'item',
                 url: '/crud/crypto',
                 icon: icons.ProfileOutlined,
-                target: true
+                target: true,
+                parents_menu_id: 'xxx'
             }
         ]
     }

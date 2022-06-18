@@ -81,7 +81,12 @@ function CloseSquare(props) {
 const MenuRegForm = () => {
     const navigate = useNavigate();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-    const [responseData, requestError, responseLoading, { menumngSearch, menumngDetail, menumngInsert }] = MenuMngApi();
+    const [
+        responseData,
+        requestError,
+        responseLoading,
+        { menumngSearch, menumngDetail, menumngInsert, menumngUpdate, menumngDelete }
+    ] = MenuMngApi();
 
     const [expanded, setExpanded] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -90,109 +95,18 @@ const MenuRegForm = () => {
     const [isUpdate, setIsUpdate] = useState(false); // input mode
     const [isButton, setIsButton] = useState(false); // +, - 버튼 모드
 
-    const menuData = [
-        {
-            id: 't1',
-            name: '통합관리',
-            is_use: true,
-            site_id: 'xxxx',
-            order: 1,
-            parent_menu_id: '',
-            childMenu: [
-                {
-                    id: 't2',
-                    name: '사이트관리',
-                    is_use: true,
-                    site_id: 'xxxx',
-                    order: 1,
-                    parent_menu_id: 't1'
-                },
-                {
-                    id: 't3',
-                    name: '메뉴 관리',
-                    is_use: true,
-                    site_id: 'xxxx',
-                    order: 1,
-                    parent_menu_id: 't1'
-                },
-                {
-                    id: 't4',
-                    name: '권한 관리',
-                    is_use: true,
-                    site_id: 'xxxx',
-                    order: 1,
-                    parent_menu_id: 't1'
-                }
-            ]
-        },
-        {
-            id: 't5',
-            name: '통합 관리',
-            is_use: true,
-            site_id: 'xxxx',
-            order: 1,
-            parent_menu_id: '',
-            childMenu: [
-                {
-                    id: 't6',
-                    name: '계정 관리',
-                    is_use: true,
-                    site_id: 'xxxx',
-                    order: 1,
-                    parent_menu_id: 't5'
-                }
-            ]
-        },
-        {
-            id: 't7',
-            name: '통합시스템 관리',
-            is_use: true,
-            site_id: 'xxxx',
-            order: 1,
-            parent_menu_id: '',
-            childMenu: [
-                {
-                    id: 't8',
-                    name: '사이트 관리',
-                    is_use: true,
-                    site_id: 'xxxx',
-                    order: 1,
-                    parent_menu_id: 't7'
-                },
-                {
-                    id: 't9',
-                    name: '메뉴 관리',
-                    is_use: true,
-                    site_id: 'xxxx',
-                    order: 1,
-                    parent_menu_id: 't7',
-                    childMenu: [
-                        {
-                            id: 't10',
-                            name: '메뉴 등록',
-                            is_use: true,
-                            site_id: 'xxxx',
-                            order: 1,
-                            parent_menu_id: 't9'
-                        }
-                    ]
-                }
-            ]
-        }
-    ];
-
     // 입력 데이터 - Default
     const [inputs, setInputs] = useState({
         id: '',
         name: '',
         site_id: '',
-        parent_menu_id: '',
-        parent_menu_name: '',
+        parents_menu_id: '',
+        parents_menu_name: '',
         order: 1,
         is_use: true,
         url: '',
         type: '',
-        target: '',
+        target: false,
         icon: '',
         external_link: false,
         description: ''
@@ -201,8 +115,8 @@ const MenuRegForm = () => {
         id,
         name,
         site_id,
-        parent_menu_id,
-        parent_menu_name,
+        parents_menu_id,
+        parents_menu_name,
         order,
         is_use,
         url,
@@ -225,26 +139,6 @@ const MenuRegForm = () => {
         //errorClear();
         // 사이트 구분 리스트 가져오기
         siteSearch(true, '');
-        // setMenuData(menuData);
-        // //roleList();
-        // // test - tree expended
-        // console.log(menudata);
-        // let exp = [];
-        // menudata.map((data, idx) => {
-        //     exp.push(data.id);
-        //     if (data.childMenu) {
-        //         data.map((d, i) => {
-        //             exp.push(d.id);
-        //             if (d.childMenu) {
-        //                 d.map((c, k) => {
-        //                     c.push(c.id);
-        //                 });
-        //             }
-        //         });
-        //     }
-        // });
-        // setExpanded(exp);
-        // console.log(exp);
     }, []);
 
     // transaction error 처리
@@ -301,9 +195,10 @@ const MenuRegForm = () => {
                         id: res.id,
                         name: res.name,
                         site_id: res.site_id,
-                        parent_menu_id: res.parent_menu_id,
-                        parent_menu_name: res.parent_menu_name,
+                        parents_menu_id: res.parents_menu_id === null ? '' : res.parents_menu_id,
+                        parents_menu_name: res.parents_menu_name,
                         order: res.order,
+                        is_use: res.is_use,
                         url: res.url,
                         type: res.type,
                         target: res.target,
@@ -322,9 +217,10 @@ const MenuRegForm = () => {
                         id: res.id,
                         name: res.name,
                         site_id: res.site_id,
-                        parent_menu_id: res.parent_menu_id,
-                        parent_menu_name: res.parent_menu_name,
+                        parents_menu_id: res.parents_menu_id === null ? '' : res.parents_menu_id,
+                        parents_menu_name: res.parents_menu_name,
                         order: res.order,
+                        is_use: res.is_use,
                         url: res.url,
                         type: res.type,
                         target: res.target,
@@ -336,7 +232,35 @@ const MenuRegForm = () => {
                     searchClick();
                 }
                 break;
-            case 'detailData':
+            case 'updateData':
+                if (responseData.data.data) {
+                    alert('저장을 완료하였습니다!!!');
+                    let res = responseData.data.data;
+                    setInputs({
+                        id: res.id,
+                        name: res.name,
+                        site_id: res.site_id,
+                        parents_menu_id: res.parents_menu_id === null ? '' : res.parents_menu_id,
+                        parents_menu_name: res.parents_menu_name,
+                        order: res.order,
+                        is_use: res.is_use,
+                        url: res.url,
+                        type: res.type,
+                        target: res.target,
+                        icon: res.icon,
+                        external_link: res.external_link,
+                        description: res.description
+                    });
+                    setIsUpdate(true);
+                    searchClick();
+                }
+                break;
+            case 'deleteData':
+                if (responseData.data.data) {
+                    alert('삭제를 완료하였습니다!!!');
+                    inputClear();
+                    menumngSearch(inputs.site_id, search_is_use);
+                }
                 break;
             default:
         }
@@ -351,6 +275,25 @@ const MenuRegForm = () => {
 
     const handleClose = () => {
         setVisible(false);
+    };
+
+    // Input Form clear
+    const inputClear = () => {
+        setInputs({
+            id: '',
+            name: '',
+            site_id: '',
+            parents_menu_id: '',
+            parents_menu_name: '',
+            order: 1,
+            is_use: true,
+            url: '',
+            type: '',
+            target: false,
+            icon: '',
+            external_link: false,
+            description: ''
+        });
     };
 
     const isUseChange = (e) => {
@@ -397,7 +340,7 @@ const MenuRegForm = () => {
             if (!isUpdate) {
                 menumngInsert(inputs);
             } else {
-                menuUpdate(inputs);
+                menumngUpdate(inputs);
             }
         }
     };
@@ -433,61 +376,142 @@ const MenuRegForm = () => {
         setExpanded(nodeIds);
     };
 
-    const handleSelect = (event, nodeIds) => {
+    const handleSelect = (nodeIds) => {
+        console.log(nodeIds);
         setSelected(nodeIds);
+        setExpanded(nodeIds);
         // 선택한 노드에 대해서 상세 데이터를 조회한다.
-        if (!isButton) {
-            menumngDetail(nodeIds, inputs.site_id);
-        }
+        menumngDetail(nodeIds, inputs.site_id);
     };
 
-    const onPlusSelect = (e) => {
-        console.log(e);
-        console.log(e.target.id);
+    const onPlusSelect = (nodeIds) => {
+        console.log('onPlusSelect called => ' + nodeIds);
         if (menudata) {
-            setIsButton(true);
+            //console.log(menudata);
             let found = 0;
             menudata.map((item, idx) => {
-                if (item.id === e.target.id) {
+                if (item.id === nodeIds) {
                     found = 1;
-                    console.log('found...');
+                    console.log('found...1');
                     console.log(item);
                     setInputs({
-                        ...inputs, // 기존 input 객체 복사
-                        [parent_menu_id]: item.id,
-                        [parent_menu_name]: item.name
+                        id: '',
+                        name: '',
+                        site_id: site_id,
+                        parents_menu_id: item.id,
+                        parents_menu_name: item.name,
+                        order: '1',
+                        is_use: true,
+                        url: '',
+                        type: '',
+                        target: false,
+                        icon: '',
+                        external_link: false,
+                        description: ''
                     });
-                    console.log(inputs);
+                    setSelected(nodeIds);
+                    setIsUpdate(false); // 수정모드
+                    return;
+                } else if (item.child_menu && item.child_menu.length) {
+                    item.child_menu.map((subitem, index) => {
+                        if (subitem.id === nodeIds) {
+                            found = 1;
+                            console.log('found...2');
+                            console.log(subitem);
+                            setInputs({
+                                id: '',
+                                name: '',
+                                site_id: site_id,
+                                parents_menu_id: subitem.id,
+                                parents_menu_name: subitem.name,
+                                order: '1',
+                                is_use: true,
+                                url: '',
+                                type: '',
+                                target: false,
+                                icon: '',
+                                external_link: false,
+                                description: ''
+                            });
+                            setSelected(nodeIds);
+                            setIsUpdate(false); // 수정모드
+                            return;
+                        } else if (subitem.child_menu && subitem.child_menu.length) {
+                            subitem.child_menu.map((subdata, i) => {
+                                if (subdata.id === nodeIds) {
+                                    found = 1;
+                                    console.log('found...3');
+                                    console.log(subdata);
+                                    setInputs({
+                                        id: '',
+                                        name: '',
+                                        site_id: site_id,
+                                        parents_menu_id: subdata.id,
+                                        parents_menu_name: subdata.name,
+                                        order: '1',
+                                        is_use: true,
+                                        url: '',
+                                        type: '',
+                                        target: false,
+                                        icon: '',
+                                        external_link: false,
+                                        description: ''
+                                    });
+                                    setSelected(nodeIds);
+                                    setIsUpdate(false); // 수정모드
+                                    return;
+                                }
+                            });
+                        }
+                    });
                 }
             });
         }
     };
 
-    const onMinusSelect = (e) => {
-        console.log(e.target.id);
+    // minus button 클릭 시 하위 메뉴까지 삭제한다.
+    const onMinusSelect = (nodeIds) => {
+        console.log('onMinusSelect called => ' + nodeIds);
+        let deleteIds = [];
+        if (menudata) {
+            //console.log(menudata);
+            let found = 0;
+            menudata.map((item, idx) => {
+                if (item.id === nodeIds) {
+                    deleteIds.push(item.id);
+                    if (item.child_menu && item.child_menu.length) {
+                        item.child_menu.map((subitem, index) => {
+                            if (subitem.parents_menu_id === nodeIds) {
+                                deleteIds.push(subitem.id);
+                                if (item.child_menu.child_menu && item.child_menu.child_menu.length) {
+                                    item.child_menu.child_menu.map((subsubitem, i) => {
+                                        if (subsubitem.parents_menu_id === subitem.id) {
+                                            deleteIds.push(subsubitem.id);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                    return;
+                }
+            });
+        }
+        if (deleteIds && deleteIds.length) {
+            if (
+                confirm(
+                    '삭제를 진행하시겠습니까? 상위 메뉴 삭제는 하위 메뉴까지 같이 삭제됩니다.(연결된 프로그램이 있으면 프로그램도 같이 삭제됩니다'
+                )
+            ) {
+                menumngDelete(site_id, deleteIds);
+            }
+        }
     };
 
     const renderTreeItem = (items) => {
         //console.log(items);
         const menu = items.map((item) => {
-            if (!item.parent_menu_id) {
-                return (
-                    <StyledTtreeItem
-                        key={item.id}
-                        nodeId={item.id}
-                        dataMsg={item.id}
-                        labelText={item.name}
-                        labelPlus={'block'}
-                        labelMinus={'none'}
-                        color="#a250f5"
-                        bgColor="#f3e8fd"
-                        plusSelect={onPlusSelect}
-                        minusSelect={onMinusSelect}
-                    >
-                        {renderTreeItem(item.child_menu)}
-                    </StyledTtreeItem>
-                );
-            } else if (item.child_menu && item.child_menu.length) {
+            if (item.child_menu && item.child_menu.length) {
                 return (
                     <StyledTtreeItem
                         key={item.id}
@@ -496,6 +520,9 @@ const MenuRegForm = () => {
                         labelText={item.name}
                         labelPlus={'block'}
                         labelMinus={'block'}
+                        plusSelect={onPlusSelect}
+                        minusSelect={onMinusSelect}
+                        nodeSelect={handleSelect}
                     >
                         {renderTreeItem(item.child_menu)}
                     </StyledTtreeItem>
@@ -509,6 +536,9 @@ const MenuRegForm = () => {
                         labelText={item.name}
                         labelPlus={'block'}
                         labelMinus={'block'}
+                        plusSelect={onPlusSelect}
+                        minusSelect={onMinusSelect}
+                        nodeSelect={handleSelect}
                     />
                 );
             }
@@ -564,7 +594,8 @@ const MenuRegForm = () => {
                                     label="사용함"
                                 />
                             </Grid>
-                            <Grid item xs={8} sm={1}>
+                            <Grid item xs={8} sm={6.1}></Grid>
+                            <Grid item xs={8} sm={0.6}>
                                 <FormControl sx={{ m: 1 }} size="small">
                                     <Button
                                         disableElevation
@@ -578,8 +609,8 @@ const MenuRegForm = () => {
                                     </Button>
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={8} sm={5.5}></Grid>
-                            <Grid item xs={8} sm={1}>
+                            <Grid item xs={8} sm={0.2}></Grid>
+                            <Grid item xs={8} sm={0.6}>
                                 <FormControl sx={{ m: 1 }} size="small">
                                     <Button
                                         disableElevation
@@ -599,26 +630,29 @@ const MenuRegForm = () => {
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item md={3}>
                         <MainCard sx={{ mt: 2 }} content={false}>
-                            <TreeView
-                                aria-label="controlled"
-                                defaultExpanded={['1']}
-                                defaultCollapseIcon={<MinusSquare />}
-                                defaultExpandIcon={<PlusSquare />}
-                                defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 620, flexGrow: 1, overflowY: 'auto' }}
-                                expanded={expanded}
-                                selected={selected}
-                                onNodeToggle={handleToggle}
-                                onNodeSelect={handleSelect}
-                            >
-                                {renderTreeItem(menudata)}
-                            </TreeView>
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <TreeView
+                                    aria-label="controlled"
+                                    //defaultExpanded={expanded}
+                                    defaultCollapseIcon={<MinusSquare />}
+                                    defaultExpandIcon={<PlusSquare />}
+                                    defaultEndIcon={<CloseSquare />}
+                                    sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
+                                    //expanded={expanded}
+                                    //selected={selected}
+                                    onNodeToggle={handleToggle}
+                                    //onNodeSelect={handleSelect}
+                                >
+                                    {renderTreeItem(menudata)}
+                                </TreeView>
+                            </Grid>
                         </MainCard>
                     </Grid>
                     <Grid item md={8.8}>
                         <Stack spacing={2}>
                             <MainCard sx={{ mt: 2, height: 620 }} content={false}>
-                                <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <Grid container spacing={0} sx={{ mt: 4 }}>
+                                    <Grid item xs={8} sm={0.2}></Grid>
                                     <Grid item xs={8} sm={1.5}>
                                         <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                             <Stack spacing={0}>메뉴 ID</Stack>
@@ -663,6 +697,7 @@ const MenuRegForm = () => {
                                 </Grid>
 
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <Grid item xs={8} sm={0.2}></Grid>
                                     <Grid item xs={8} sm={1.5}>
                                         <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                             <Stack spacing={0}>상위 메뉴 ID</Stack>
@@ -675,8 +710,8 @@ const MenuRegForm = () => {
                                                     id="filled-hidden-label-small"
                                                     type="text"
                                                     size="small"
-                                                    value={parent_menu_id}
-                                                    name="parent_menu_id"
+                                                    value={parents_menu_id}
+                                                    name="parents_menu_id"
                                                     inputProps={{ readOnly: true }}
                                                     onBlur={handleBlur}
                                                     onChange={handleChange}
@@ -696,8 +731,8 @@ const MenuRegForm = () => {
                                             id="filled-hidden-label-small"
                                             type="text"
                                             size="small"
-                                            value={parent_menu_name}
-                                            name="parent_menu_name"
+                                            value={parents_menu_name}
+                                            name="parents_menu_name"
                                             inputProps={{ readOnly: true }}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
@@ -705,7 +740,7 @@ const MenuRegForm = () => {
                                             fullWidth
                                         />
                                     </Grid>
-                                    <Grid item xs={8} sx={{ mt: 0 }} sm={2}>
+                                    {/* <Grid item xs={8} sx={{ mt: 0 }} sm={2}>
                                         <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
                                             <Button
                                                 disableElevation
@@ -718,10 +753,11 @@ const MenuRegForm = () => {
                                                 검색
                                             </Button>
                                         </FormControl>
-                                    </Grid>
+                                    </Grid> */}
                                 </Grid>
 
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <Grid item xs={8} sm={0.2}></Grid>
                                     <Grid item xs={8} sm={1.5}>
                                         <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                             <Stack spacing={0}>정렬 순서</Stack>
@@ -767,6 +803,7 @@ const MenuRegForm = () => {
                                 </Grid>
 
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <Grid item xs={8} sm={0.2}></Grid>
                                     <Grid item xs={8} sm={1.5}>
                                         <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                             <Stack spacing={0}>메뉴 URL</Stack>
@@ -793,6 +830,7 @@ const MenuRegForm = () => {
                                 </Grid>
 
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <Grid item xs={8} sm={0.2}></Grid>
                                     <Grid item xs={8} sm={1.5}>
                                         <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                             <Stack spacing={0}>메뉴 타입</Stack>
@@ -830,6 +868,7 @@ const MenuRegForm = () => {
                                 </Grid>
 
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <Grid item xs={8} sm={0.2}></Grid>
                                     <Grid item xs={8} sm={1.5}>
                                         <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                             <Stack spacing={0}>메뉴 아이콘</Stack>
@@ -867,6 +906,7 @@ const MenuRegForm = () => {
                                 </Grid>
 
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <Grid item xs={8} sm={0.2}></Grid>
                                     <Grid item xs={8} sm={1.5}>
                                         <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                             <Stack spacing={0}>비고</Stack>

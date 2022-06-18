@@ -13,7 +13,7 @@ const useAxios = () => {
     const axiosFetch = async (tid, configObj) => {
         const { axiosInstance, method, url, requestConfig = {} } = configObj;
 
-        console.log('axiosFetch called..');
+        //console.log('axiosFetch called..');
         let authData = null;
         if (localStorage.hasOwnProperty('authenticated')) {
             //console.log(localStorage.getItem('authenticated'));
@@ -52,6 +52,8 @@ const useAxios = () => {
             */
         }
         try {
+            //console.log('called......');
+            console.log(requestConfig);
             setLoading(true);
             const ctrl = new AbortController();
             setController(ctrl);

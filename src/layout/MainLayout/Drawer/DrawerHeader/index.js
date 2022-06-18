@@ -7,7 +7,7 @@ import { Stack, Chip } from '@mui/material';
 // project import
 import DrawerHeaderStyled from './DrawerHeaderStyled';
 import Logo from 'components/Logo';
-
+import InnerLogo from 'components/Logo/InnerLogo';
 // ==============================|| DRAWER HEADER ||============================== //
 
 const DrawerHeader = ({ open }) => {
@@ -17,9 +17,7 @@ const DrawerHeader = ({ open }) => {
         // only available in paid version
         <DrawerHeaderStyled theme={theme} open={open}>
             <Stack direction="row" spacing={1} alignItems="center">
-                <div>
-                    <h3>[icon]Smart Admin</h3>
-                </div>
+                <InnerLogo />
                 <Chip
                     label={process.env.REACT_APP_VERSION}
                     size="small"
@@ -29,7 +27,6 @@ const DrawerHeader = ({ open }) => {
                     target="_blank"
                     clickable
                 />
-                {/* <Logo /> */}
             </Stack>
         </DrawerHeaderStyled>
     );

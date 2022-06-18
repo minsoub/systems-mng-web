@@ -9,8 +9,8 @@ import { alpha } from '@mui/material/styles';
 function customCheckbox(theme) {
     return {
         '& .MuiCheckbox-root svg': {
-            width: 16,
-            height: 16,
+            width: 14,
+            height: 14,
             backgroundColor: 'transparent',
             border: `1px solid ${theme.palette.mode === 'light' ? '#d9d9d9' : 'rgb(67, 67, 67)'}`,
             borderRadius: 2
@@ -25,7 +25,7 @@ function customCheckbox(theme) {
         '& .MuiCheckbox-root.Mui-checked .MuiIconButton-label:after': {
             position: 'absolute',
             display: 'table',
-            border: '2px solid #fff',
+            border: '1px solid #fff',
             borderTop: 0,
             borderLeft: 0,
             transform: 'rotate(45deg) translate(-50%,-50%)',
@@ -49,8 +49,8 @@ function customCheckbox(theme) {
 }
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-    border: 0,
-    color: theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.85)',
+    border: 1,
+    color: 'rgba(0,0,0,.50)',
     fontFamily: [
         '-apple-system',
         'BlinkMacSystemFont',
@@ -72,7 +72,8 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
         display: 'none'
     },
     '& .MuiDataGrid-columnHeader': {
-        backgroundColor: alpha('#e0e0e0', 0.4)
+        backgroundColor: alpha('#eeeeee', 0.7),
+        height: 45
     },
     '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
         borderRight: `1px solid '#303030'`
@@ -90,7 +91,7 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
         color: theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.65)'
     },
     '& .MuiPaginationItem-root': {
-        borderRadius: 0
+        borderRadius: 2
     },
     ...customCheckbox(theme)
 }));

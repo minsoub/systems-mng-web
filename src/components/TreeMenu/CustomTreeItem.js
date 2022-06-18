@@ -65,20 +65,8 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     }
 }));
 
-function StyledTreeItem(props) {
-    const {
-        plusSelect,
-        minusSelect,
-        nodeSelect,
-        dataMsg,
-        bgColor,
-        color,
-        labelIcon: LabelIcon,
-        labelPlus,
-        labelMinus,
-        labelText,
-        ...other
-    } = props;
+function CustomTreeItem(props) {
+    const { nodeSelect, dataMsg, bgColor, color, labelIcon: LabelIcon, labelText, ...other } = props;
 
     return (
         <StyledTreeItemRoot
@@ -87,28 +75,6 @@ function StyledTreeItem(props) {
                     <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
                     <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }} onClick={() => nodeSelect(dataMsg)}>
                         {labelText}
-                    </Typography>
-                    <Typography variant="caption" color="inherit">
-                        <Box
-                            id={dataMsg}
-                            display={labelPlus}
-                            component={PlusSquare}
-                            data-msg={dataMsg}
-                            color="inherit"
-                            sx={{ mr: 1 }}
-                            onClick={() => plusSelect(dataMsg)}
-                        />
-                    </Typography>
-                    <Typography variant="caption" color="inherit">
-                        <Box
-                            id={dataMsg}
-                            display={labelMinus}
-                            component={MinusSquare}
-                            data-msg={dataMsg}
-                            color="inherit"
-                            sx={{ mr: 1 }}
-                            onClick={() => minusSelect(dataMsg)}
-                        />
                     </Typography>
                 </Box>
             }
@@ -121,13 +87,11 @@ function StyledTreeItem(props) {
     );
 }
 
-StyledTreeItem.propTypes = {
+CustomTreeItem.propTypes = {
     dataMsg: PropTypes.string,
     bgColor: PropTypes.string,
     color: PropTypes.string,
     labelIcon: PropTypes.elementType,
-    labelPlus: PropTypes.string,
-    labelMinus: PropTypes.string,
     labelText: PropTypes.string.isRequired
 };
-export default StyledTreeItem;
+export default CustomTreeItem;

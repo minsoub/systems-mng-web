@@ -5,6 +5,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import * as menuapi from 'apis/menu/menuapi';
 import { useNavigate } from 'react-router-dom';
+import MenuTreeItem from 'components/TreeMenu/MenuTreeItem';
+import SvgIcon from '@mui/material/SvgIcon';
 
 export default function FileSystemNavigator() {
     const navgate = useNavigate();
@@ -27,25 +29,9 @@ export default function FileSystemNavigator() {
     };
     makeMenuData(data);
     console.log('menuData:', menuData);
-    /*
-    const data = [
-        {
-            id: '1',
-            title: 'Applications',
-            children: [{ id: '2', title: 'Calendar' }]
-        },
-        {
-            id: '5',
-            title: 'Documents',
-            children: [
-                { id: '10', title: 'OSS' },
-                { id: '6', title: 'MUI', children: [{ id: '8', title: 'Index' }] }
-            ]
-        }
-    ];
-*/
 
     const handleMenu = (event, nodeId) => {
+        console.log('handleMenu called....');
         const selectItem = _.find(menuData, { id: nodeId });
         console.log('selectItem:', selectItem);
         if (selectItem.type === 'item') {
@@ -59,14 +45,20 @@ export default function FileSystemNavigator() {
     };
     const renderTreeItem = (items) => {
         const menu = items.map((item) => {
+            let variant = '';
+            if (!item.parents_menu_id || item.parents_menu_id === '') {
+                variant = 'h5';
+            } else {
+                variant = 'body2';
+            }
             if (item.children && item.children.length) {
                 return (
-                    <TreeItem key={item.id} nodeId={item.id} label={item.title}>
+                    <MenuTreeItem key={item.id} nodeId={item.id} label={item.title} labelText={item.title} variant={variant}>
                         {renderTreeItem(item.children)}
-                    </TreeItem>
+                    </MenuTreeItem>
                 );
             } else {
-                return <TreeItem key={item.id} nodeId={item.id} label={item.title} />;
+                return <MenuTreeItem key={item.id} nodeId={item.id} label={item.title} labelText={item.title} variant={variant} />;
             }
             return null;
         });
@@ -76,8 +68,8 @@ export default function FileSystemNavigator() {
         <TreeView
             aria-label="file system navigator"
             defaultExpanded={expendMenuId}
-            defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpandIcon={<ChevronRightIcon />}
+            defaultCollapseIcon={<ChevronRightIcon />}
+            defaultExpandIcon={<ExpandMoreIcon />}
             onNodeSelect={handleMenu}
             sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
         >

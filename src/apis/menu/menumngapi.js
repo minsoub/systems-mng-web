@@ -16,25 +16,14 @@ const MenuMngApi = () => {
         });
     };
 
-    // 선택된 그리드 데이터 삭제
-    const getDeleteData = (selectedRows) => {
-        if (selectedRows && selectedRows.length > 0) {
-            let paramIds = selectedRows.join('&ids=');
-            callApi('deleteData', {
-                axiosInstance: axiosInstanceDefault,
-                method: 'delete',
-                url: `/faq/content?ids=${paramIds}`,
-                requestConfig: {}
-            });
-        }
-    };
-
-    const getDelete = (id, data) => {
+    // 메뉴 데이터 일괄 삭제
+    const getDeleteMenu = (id, data) => {
+        let deleteIds = { menu_ids: data };
         callApi('deleteData', {
             axiosInstance: axiosInstanceDefault,
             method: 'put',
-            url: `/site/${id}`,
-            requestConfig: data
+            url: `/site/${id}/menu`,
+            requestConfig: deleteIds
         });
     };
 
@@ -67,6 +56,26 @@ const MenuMngApi = () => {
             requestConfig: data
         });
     };
+    // 메뉴와 프로그램매핑
+    const registerProgramMenuMapping = (menu_id, site_id, data) => {
+        let send_data = { program_ids: data };
+        console.log(send_data);
+        callApi('registerData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/site/${site_id}/menu/${menu_id}/programs`,
+            requestConfig: send_data
+        });
+    };
+    // 메뉴와 프로그램 연결된 프로그램 조회
+    const registerProgramMenuSearch = (menu_id, site_id) => {
+        callApi('mappingList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/site/${site_id}/menu/${menu_id}/programs`,
+            requestConfig: {}
+        });
+    };
 
     return [
         responseData,
@@ -74,10 +83,12 @@ const MenuMngApi = () => {
         loading,
         {
             menumngSearch: getSearchData,
-            menumngDelete: getDelete,
+            menumngDelete: getDeleteMenu,
             menumngInsert: insertMenu,
             menumngDetail: getDetailData,
-            menumngUpdate: updateProgramData
+            menumngUpdate: updateProgramData,
+            programMapping: registerProgramMenuMapping,
+            programMappingSearch: registerProgramMenuSearch
         }
     ];
 };

@@ -28,8 +28,9 @@ import { boolean } from '../../../node_modules/yup/lib/index';
 import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
+import ErrorScreen from 'components/ErrorScreen';
 
-const RoleManagementPage = () => {
+const AuthManagementPage = () => {
     let isSubmitting = false;
     const columns = [
         {
@@ -61,8 +62,15 @@ const RoleManagementPage = () => {
             align: 'center'
         },
         {
-            field: 'valid_date',
-            headerName: '유효기간',
+            field: 'valid_start_date',
+            headerName: '유효기간(From)',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'valid_end_date',
+            headerName: '유효기간(To)',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
@@ -77,7 +85,7 @@ const RoleManagementPage = () => {
     ];
     const navigate = useNavigate();
     const { search_site_id, search_is_use } = useParams();
-    const [responseData, requestError, loading, { roleSearch, roleList }] = RoleApi();
+    const [responseData, requestError, loading, { roleList, roleComboSearch }] = RoleApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
     // 그리드 선택된 row id
@@ -85,12 +93,16 @@ const RoleManagementPage = () => {
     // 그리드 목록 데이터
     const [dataGridRows, setDataGridRows] = useState([]);
 
+    ////////////////////////////////////////////////////
+    // 공통 에러 처리
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    ////////////////////////////////////////////////////
 
     const [siteList, setSiteList] = useState([]);
     const [site_id, setSiteId] = useState('');
+    const [type, setType] = useState('ADMIN');
     const [is_use, setIsUse] = useState(true);
 
     // 파라미터 상태값
@@ -100,14 +112,15 @@ const RoleManagementPage = () => {
     // Change Event
     // site가 변경되었을 때 호출된다.
     const siteChanged = (e) => {
-        console.log('siteChanged called..');
-        console.log(e.target.value);
         setSiteId(e.target.value);
+    };
+    // Role Type인 변경되었을 때 호출된다.
+    const typeChanged = (e) => {
+        setType(e.target.value);
     };
 
     // onload
     useEffect(() => {
-        errorClear();
         // 사이트 구분 리스트 가져오기
         console.log('paramter data => ');
         console.log(search_site_id);
@@ -193,13 +206,6 @@ const RoleManagementPage = () => {
         }
     }, [responseData]);
 
-    // 에러 정보를 클리어 한다.
-    const errorClear = () => {
-        setOpen(false);
-        setErrorTitle('');
-        setErrorMessage('');
-    };
-
     const handleClose = () => {
         setVisible(false);
     };
@@ -226,25 +232,23 @@ const RoleManagementPage = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            let searchCondition = { site_id: site_id, is_use: is_use };
-            navigate(`/roles/reg/${rowData.id}/${site_id}/${is_use}`);
+            let searchCondition = { site_id: site_id, is_use: is_use, type: type };
+
+            navigate(`/authmng/reg/${rowData.id}`);
         }
     };
 
     // 그리드 더블 클릭
     const handleDoubleClick = (rowData) => {};
 
-    // new
-    const newClick = (e) => {
-        console.log('called register form');
-        navigate('/roles/reg');
-    };
-
     // search
     const searchClick = () => {
-        errorClear();
         console.log('searchClick called...');
-        roleSearch(is_use, site_id);
+        if (!site_id) {
+            alert('사이트명을 선택하세요!!!');
+            return;
+        }
+        roleComboSearch(is_use, type, site_id);
     };
 
     return (
@@ -252,10 +256,10 @@ const RoleManagementPage = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
-                        <Typography variant="h3">Role 관리</Typography>
+                        <Typography variant="h3">권한 관리</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6">통합관리 &gt; Role 관리 &gt; Role 리스트</Typography>
+                        <Typography variant="h6">통합관리 &gt; 권한 관리 &gt; 권한관리 리스트</Typography>
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
@@ -282,12 +286,25 @@ const RoleManagementPage = () => {
                                 </FormControl>
                             </Grid>
                             <Grid item xs={8} sm={1}>
+                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                    <Stack spacing={0}>Role Type</Stack>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={8} sm={2.5}>
+                                <FormControl sx={{ m: 0.5, minWidth: 200, maxHeight: 25 }} size="small">
+                                    <Select name="type" label="Role Type" value={type} onChange={typeChanged}>
+                                        <MenuItem value="ADMIN">ADMIN</MenuItem>
+                                        <MenuItem value="USER">USER</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={8} sm={1}>
                                 <FormControlLabel
                                     control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
                                     label="사용함"
                                 />
                             </Grid>
-                            <Grid item xs={8} sm={6}></Grid>
+                            <Grid item xs={8} sm={3.3}></Grid>
                             <Grid item xs={8} sm={0.6}>
                                 <FormControl sx={{ m: 1 }} size="small">
                                     <Button
@@ -299,21 +316,6 @@ const RoleManagementPage = () => {
                                         onClick={searchClick}
                                     >
                                         검색
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.2}></Grid>
-                            <Grid item xs={8} sm={0.6}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={newClick}
-                                    >
-                                        등록
                                     </Button>
                                 </FormControl>
                             </Grid>
@@ -330,32 +332,10 @@ const RoleManagementPage = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </MainCard>
-                <MainCard sx={{ mt: 3 }} content={false}>
-                    <Collapse in={open}>
-                        <Alert
-                            severity="error"
-                            action={
-                                <IconButton
-                                    aria-label="close"
-                                    color="inherit"
-                                    size="small"
-                                    onClick={() => {
-                                        errorClear();
-                                    }}
-                                >
-                                    <CloseIcon fontSize="inherit" />
-                                </IconButton>
-                            }
-                            sx={{ mb: 2 }}
-                        >
-                            <AlertTitle>{errorTitle}</AlertTitle>
-                            {errorMessage}
-                        </Alert>
-                    </Collapse>
-                </MainCard>
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>
     );
 };
 
-export default RoleManagementPage;
+export default AuthManagementPage;
