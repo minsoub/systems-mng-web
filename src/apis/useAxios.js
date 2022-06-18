@@ -52,7 +52,8 @@ const useAxios = () => {
             */
         }
         try {
-            //console.log('called......');
+            console.log('called......');
+            console.log(url);
             console.log(requestConfig);
             setLoading(true);
             const ctrl = new AbortController();
