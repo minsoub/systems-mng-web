@@ -35,7 +35,6 @@ import { DatePicker } from 'antd';
 import { MenuItem } from '../../../node_modules/@mui/material/index';
 import UserSearchDialog from 'pages/popup/UserSearchPopup';
 import { values } from 'lodash';
-import { is } from '../../../../../../Library/Caches/typescript/4.6/node_modules/@babel/types/lib/index';
 
 const SiteRegForm = () => {
     let isSubmitting = false;
