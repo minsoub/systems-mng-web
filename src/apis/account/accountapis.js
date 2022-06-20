@@ -50,7 +50,7 @@ const AccountApis = () => {
         }
     };
 
-    // 데이터 등록
+    // 통합시스템 관리 - 계정 등록
     const insertData = (data) => {
         callApi('insertData', {
             axiosInstance: axiosInstanceDefault,
@@ -59,13 +59,45 @@ const AccountApis = () => {
             requestConfig: data
         });
     };
-    // 데이터 수정
+    // 통합시스템 관리 - 계정 수정
     const updateData = (id, data) => {
         callApi('updateData', {
             axiosInstance: axiosInstanceDefault,
             method: 'put',
             url: `/account/${id}`,
             requestConfig: data
+        });
+    };
+
+    // 통합시스템 관리 - 접근 관리 수정 (롤정보 업데이트)
+    const updateRoleData = (id, data) => {
+        callApi('updateRoleData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/account/${id}/role`,
+            requestConfig: data
+        });
+    };
+
+    // 데이터 검색
+    const getSearchMngData = (is_use, keyword) => {
+        if (is_use === null) is_use = '';
+        const encodeKeyword = encodeURIComponent(keyword);
+        callApi('getList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/accountmng?searchText=${encodeKeyword}&isUse=${is_use}`,
+            requestConfig: {}
+        });
+    };
+
+    // 통합 시스템 관리 - 계정 상세 데이터 조회(롤 리스트 조회)
+    const getDetailRoleMng = (id) => {
+        callApi('getRoleData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/account/${id}/roles`,
+            requestConfig: {}
         });
     };
 
@@ -131,10 +163,13 @@ const AccountApis = () => {
             accountDeletes: deleteAccounts,
             accountInsert: insertData,
             accountUpdate: updateData,
+            accountMngSearch: getSearchMngData,
             accountMngDetail: getDetailDataMng,
             accountMngUpdate: updateMng,
             accountMngInsert: insertMngAccount,
-            accountMngDeletes: deleteMngAccounts
+            accountMngDeletes: deleteMngAccounts,
+            accountMngRole: getDetailRoleMng,
+            accountRoleUpdate: updateRoleData
         }
     ];
 };

@@ -47,19 +47,22 @@ const AccountMng = () => {
             field: 'role_management_name',
             headerName: '구분',
             flex: 1,
-            headerAlign: 'center'
+            headerAlign: 'center',
+            align: 'center'
         },
         {
             field: 'last_login_date',
             headerName: 'Last Login Date',
             flex: 1,
-            headerAlign: 'center'
+            headerAlign: 'center',
+            align: 'center'
         },
         {
             field: 'valid_start_date',
             headerName: '만료일자',
             flex: 1,
-            headerAlign: 'center'
+            headerAlign: 'center',
+            align: 'center'
         },
         {
             field: 'status',
@@ -71,7 +74,7 @@ const AccountMng = () => {
     ];
 
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { accountSearch, accountList, accountMngDeletes }] = AccountApis();
+    const [responseData, requestError, loading, { accountMngSearch, accountList, accountMngDeletes }] = AccountApis();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -102,7 +105,7 @@ const AccountMng = () => {
         errorClear();
         setIsUsed('true');
         // 리스트 가져오기
-        accountList(true);
+        accountMngSearch(true, '');
     }, []);
 
     // Transaction Return
@@ -122,7 +125,7 @@ const AccountMng = () => {
                 console.log('deleteData');
                 if (responseData.data.data && responseData.data.data.count > 0) {
                     alert('삭제를 완료하였습니다');
-                    accountList(true);
+                    listClick();
                 }
                 break;
             default:
@@ -170,7 +173,7 @@ const AccountMng = () => {
         setKeyword('');
         console.log('listClick called');
         console.log(is_use);
-        accountSearch(is_use, '');
+        accountMngSearch(is_use, '');
     };
     // search
     const searchClick = () => {
@@ -179,7 +182,7 @@ const AccountMng = () => {
             alert('검색 단어를 입력하세요!');
             return;
         }
-        accountSearch(is_use, keyword);
+        accountMngSearch(is_use, keyword);
     };
 
     // new
@@ -222,44 +225,90 @@ const AccountMng = () => {
                     <Grid container spacing={2}></Grid>
                 </Grid>
                 <MainCard sx={{ mt: 1 }}>
-                    <Stack direction="row" spacing={1}>
-                        <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
-                            <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
-                                <MenuItem value="true">사용</MenuItem>
-                                <MenuItem value="false">미사용</MenuItem>
-                                <MenuItem value="">전체</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <OutlinedInput
-                            fullWidth
-                            id="word"
-                            type="text"
-                            value={keyword}
-                            name="word"
-                            placeholder=""
-                            onChange={keywordChanged}
-                        />
-                        <Button
-                            disableElevation
-                            disabled={isSubmitting}
-                            size="small"
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            onClick={searchClick}
-                        >
-                            검색
-                        </Button>
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={newClick}>
-                            신규
-                        </Button>
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={deleteClick}>
-                            삭제
-                        </Button>
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
-                            리스트
-                        </Button>
-                    </Stack>
+                    <Grid container alignItems="center" justifyContent="space-between">
+                        <Grid container spacing={0} sx={{ mt: 0 }}>
+                            <Grid item xs={8} sm={2}>
+                                <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
+                                    <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
+                                        <MenuItem value="true">사용</MenuItem>
+                                        <MenuItem value="false">미사용</MenuItem>
+                                        <MenuItem value="">전체</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={8} sm={4}>
+                                <FormControl sx={{ m: 0.5, minWidth: 300, maxHeight: 25 }} size="small">
+                                    <OutlinedInput
+                                        fullWidth
+                                        id="word"
+                                        type="text"
+                                        value={keyword}
+                                        name="word"
+                                        placeholder=""
+                                        onChange={keywordChanged}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={8} sm={3.2}></Grid>
+                            <Grid item xs={8} sm={0.7}>
+                                <FormControl sx={{ m: 1 }} size="small">
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="small"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={searchClick}
+                                    >
+                                        검색
+                                    </Button>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={8} sm={0.7}>
+                                <FormControl sx={{ m: 1 }} size="small">
+                                    <Button
+                                        disableElevation
+                                        size="small"
+                                        type="submit"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={newClick}
+                                    >
+                                        신규
+                                    </Button>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={8} sm={0.7}>
+                                <FormControl sx={{ m: 1 }} size="small">
+                                    <Button
+                                        disableElevation
+                                        size="small"
+                                        type="submit"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={deleteClick}
+                                    >
+                                        삭제
+                                    </Button>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={8} sm={0.7}>
+                                <FormControl sx={{ m: 1 }} size="small">
+                                    <Button
+                                        disableElevation
+                                        size="small"
+                                        type="submit"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={listClick}
+                                    >
+                                        리스트
+                                    </Button>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </MainCard>
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <CheckBoxDataGrid

@@ -286,7 +286,7 @@ const AuthManagementPage = () => {
                                 </FormControl>
                             </Grid>
                             <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                <FormControl sx={{ m: 1, maxHeight: 30 }} size="small">
                                     <Stack spacing={0}>Role Type</Stack>
                                 </FormControl>
                             </Grid>
