@@ -89,7 +89,7 @@ const NavItem = ({ item, level }) => {
                 })
             }}
         >
-            {itemIcon && (
+            {itemIcon && level === 1 && (
                 <ListItemIcon
                     sx={{
                         minWidth: 28,

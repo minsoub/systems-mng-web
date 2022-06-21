@@ -7,8 +7,10 @@ import * as menuapi from 'apis/menu/menuapi';
 import { useNavigate } from 'react-router-dom';
 import MenuTreeItem from 'components/TreeMenu/MenuTreeItem';
 import SvgIcon from '@mui/material/SvgIcon';
+import NavGroup from './NavGroup';
+import { Box, Typography } from '@mui/material';
 
-export default function FileSystemNavigator() {
+export default function FileSystemNavigator(navigation) {
     const navgate = useNavigate();
     const data = menuapi.findmenus({}).items;
     //검색용 메뉴 데이터 생성
@@ -64,16 +66,32 @@ export default function FileSystemNavigator() {
         });
         return menu;
     };
-    return (
-        <TreeView
-            aria-label="file system navigator"
-            defaultExpanded={expendMenuId}
-            defaultCollapseIcon={<ChevronRightIcon />}
-            defaultExpandIcon={<ExpandMoreIcon />}
-            onNodeSelect={handleMenu}
-            sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
-        >
-            {renderTreeItem(data)}
-        </TreeView>
-    );
+
+    //console.log(navigation);
+    const navGroups = menuapi.findmenus({}).items.map((item) => {
+        switch (item.type) {
+            case 'group':
+                return <NavGroup key={item.id} item={item} />;
+            default:
+                return (
+                    <Typography key={item.id} variant="h6" color="error" align="center">
+                        Fix - Navigation Group
+                    </Typography>
+                );
+        }
+        // });
+    });
+    return <Box sx={{ pt: 1 }}>{navGroups}</Box>;
+    // return (
+    //     <TreeView
+    //         aria-label="file system navigator"
+    //         defaultExpanded={expendMenuId}
+    //         defaultCollapseIcon={<ChevronRightIcon />}
+    //         defaultExpandIcon={<ExpandMoreIcon />}
+    //         onNodeSelect={handleMenu}
+    //         sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
+    //     >
+    //         {renderTreeItem(data)}
+    //     </TreeView>
+    // );
 }

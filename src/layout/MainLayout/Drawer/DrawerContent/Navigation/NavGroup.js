@@ -16,14 +16,8 @@ const NavGroup = ({ item }) => {
 
     const navCollapse = item.children?.map((menuItem) => {
         switch (menuItem.type) {
-            case 'collapse':
+            case 'collapse': // 서브 메뉴가 있다.
                 return <NavSub key={menuItem.id} item={menuItem} level={1} />;
-
-            // return (
-            //     <Typography key={menuItem.id} variant="caption" color="error" sx={{ p: 2.5 }}>
-            //         collapse - only available in paid version
-            //     </Typography>
-            // );
             case 'item':
                 return <NavItem key={menuItem.id} item={menuItem} level={1} />;
             default:
@@ -44,7 +38,6 @@ const NavGroup = ({ item }) => {
                         <Typography variant="subtitle2" color="textSecondary">
                             {item.title}
                         </Typography>
-                        {/* only available in paid version */}
                     </Box>
                 )
             }

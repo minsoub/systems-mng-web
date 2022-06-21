@@ -30,9 +30,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SvgIcon from '@mui/material/SvgIcon';
 import { Input } from 'antd';
-import { boolean } from '../../../node_modules/yup/lib/index';
-import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
-import CheckBoxDataGrid from '../../components/DataGrid/CheckBoxDataGrid';
+import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
+import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
 import SiteApi from 'apis/site/siteapi';
 import MenuMngApi from 'apis/menu/menumngapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -78,7 +77,7 @@ function CloseSquare(props) {
     );
 }
 
-const MenuRegForm = () => {
+const SiteMenuRegForm = () => {
     const navigate = useNavigate();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
     const [
@@ -94,6 +93,8 @@ const MenuRegForm = () => {
 
     const [isUpdate, setIsUpdate] = useState(false); // input mode
     const [isButton, setIsButton] = useState(false); // +, - 버튼 모드
+
+    const [login_site_id, setLoginStiteId] = useState(''); // 사용자 로그인 - 사이트 ID
 
     // 입력 데이터 - Default
     const [inputs, setInputs] = useState({
@@ -131,14 +132,12 @@ const MenuRegForm = () => {
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const [siteList, setSiteList] = useState([]);
-    const [search_is_use, setIsUse] = useState(true);
-
-    // onload
+    // TODO: onload
     useEffect(() => {
-        //errorClear();
-        // 사이트 구분 리스트 가져오기
-        siteSearch(true, '');
+        // 세션 정보에서 사이트 아이디 정보를 가져온다.
+        setLoginStiteId('62a15f4ae4129b518b133129');
+        // 디폴트 메뉴 조회
+        menumngSearch('62a15f4ae4129b518b133129', true);
     }, []);
 
     // transaction error 처리
@@ -151,29 +150,6 @@ const MenuRegForm = () => {
             setOpen(true);
         }
     }, [requestError]);
-
-    // Combobox data transaction
-    // 사이트
-    useEffect(() => {
-        if (!resData) {
-            return;
-        }
-        switch (resData.transactionId) {
-            case 'siteList':
-                if (resData.data.data) {
-                    let siteData = resData.data.data;
-                    let list = [];
-                    siteData.map((site, index) => {
-                        const s = { id: site.id, name: site.name };
-                        console.log(s);
-                        list.push(s);
-                    });
-                    setSiteList(list);
-                }
-                break;
-            default:
-        }
-    }, [resData]);
 
     // Transaction Return
     useEffect(() => {
@@ -259,19 +235,12 @@ const MenuRegForm = () => {
                 if (responseData.data.data) {
                     alert('삭제를 완료하였습니다!!!');
                     inputClear();
-                    menumngSearch(inputs.site_id, search_is_use);
+                    menumngSearch(login_site_id, true);
                 }
                 break;
             default:
         }
     }, [responseData]);
-
-    // 에러 정보를 클리어 한다.
-    // const errorClear = () => {
-    //     setOpen(false);
-    //     setErrorTitle('');
-    //     setErrorMessage('');
-    // };
 
     const handleClose = () => {
         setVisible(false);
@@ -296,34 +265,14 @@ const MenuRegForm = () => {
         });
     };
 
-    const isUseChange = (e) => {
-        switch (e.target.name) {
-            case 'is_use':
-                setIsUse(e.target.checked);
-                break;
-            default:
-                break;
-        }
-    };
-
-    // search
+    // menu data search
     const searchClick = () => {
-        //errorClear();
-        console.log('searchClick called...');
-        if (!inputs.site_id) {
-            alert('사이트명을 선택하세요!!!');
-            return;
-        }
-        menumngSearch(inputs.site_id, search_is_use);
+        menumngSearch(login_site_id, true);
     };
     // 저장한다.
     const saveClick = () => {
         console.log(inputs);
         // Validation check
-        if (!inputs.site_id) {
-            setError('사이트명을 선택하지 않았습니다');
-            return;
-        }
         if (!inputs.name) {
             setError('메뉴명을 입력하지 않았습니다!');
             return;
@@ -360,11 +309,6 @@ const MenuRegForm = () => {
         console.log(e);
     };
 
-    // 메뉴 팝업 검색
-    const menuPopupSearch = () => {
-        // 검색
-    };
-
     // 에러 메시지 처리
     const setError = (msg) => {
         setErrorTitle('입력 오류');
@@ -381,7 +325,7 @@ const MenuRegForm = () => {
         setSelected(nodeIds);
         setExpanded(nodeIds);
         // 선택한 노드에 대해서 상세 데이터를 조회한다.
-        menumngDetail(nodeIds, inputs.site_id);
+        menumngDetail(nodeIds, login_site_id);
     };
 
     const onPlusSelect = (nodeIds) => {
@@ -397,7 +341,7 @@ const MenuRegForm = () => {
                     setInputs({
                         id: '',
                         name: '',
-                        site_id: site_id,
+                        site_id: login_site_id,
                         parents_menu_id: item.id,
                         parents_menu_name: item.name,
                         order: '1',
@@ -421,7 +365,7 @@ const MenuRegForm = () => {
                             setInputs({
                                 id: '',
                                 name: '',
-                                site_id: site_id,
+                                site_id: login_site_id,
                                 parents_menu_id: subitem.id,
                                 parents_menu_name: subitem.name,
                                 order: '1',
@@ -445,7 +389,7 @@ const MenuRegForm = () => {
                                     setInputs({
                                         id: '',
                                         name: '',
-                                        site_id: site_id,
+                                        site_id: login_site_id,
                                         parents_menu_id: subdata.id,
                                         parents_menu_name: subdata.name,
                                         order: '1',
@@ -576,64 +520,17 @@ const MenuRegForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
-                        <Typography variant="h3">사이트 메뉴 등록</Typography>
+                        <Typography variant="h3">메뉴 등록</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6">통합관리 &gt; 메뉴 관리 &gt; 메뉴 등록</Typography>
+                        <Typography variant="h6">사이트 관리 &gt; 메뉴 관리 &gt; 메뉴 등록</Typography>
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
                 <MainCard sx={{ mt: 1 }}>
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Site 구분</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
-                                    <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
-                                        <MenuItem value="">
-                                            <em>Choose a Site Type</em>
-                                        </MenuItem>
-                                        {siteList.map((item, index) => (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            name="search_is_use"
-                                            checked={search_is_use}
-                                            value={search_is_use}
-                                            onChange={isUseChange}
-                                        />
-                                    }
-                                    label="사용함"
-                                />
-                            </Grid>
-                            <Grid item xs={8} sm={6.1}></Grid>
-                            <Grid item xs={8} sm={0.6}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={searchClick}
-                                    >
-                                        검색
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.2}></Grid>
+                            <Grid item xs={8} sm={11.4}></Grid>
                             <Grid item xs={8} sm={0.6}>
                                 <FormControl sx={{ m: 1 }} size="small">
                                     <Button
@@ -764,20 +661,6 @@ const MenuRegForm = () => {
                                             fullWidth
                                         />
                                     </Grid>
-                                    {/* <Grid item xs={8} sx={{ mt: 0 }} sm={2}>
-                                        <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                            <Button
-                                                disableElevation
-                                                size="small"
-                                                type="button"
-                                                variant="contained"
-                                                color="secondary"
-                                                onClick={menuPopupSearch}
-                                            >
-                                                검색
-                                            </Button>
-                                        </FormControl>
-                                    </Grid> */}
                                 </Grid>
 
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
@@ -965,4 +848,4 @@ const MenuRegForm = () => {
     );
 };
 
-export default MenuRegForm;
+export default SiteMenuRegForm;

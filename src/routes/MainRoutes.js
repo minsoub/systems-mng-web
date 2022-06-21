@@ -31,6 +31,14 @@ const TableSamplePage = Loadable(lazy(() => import('pages/table-page')));
 const CrudList = Loadable(lazy(() => import('pages/samples/crud/list')));
 const CrudWrite = Loadable(lazy(() => import('pages/samples/crud/write')));
 
+// render - 사이트 관리
+const AccessMngPage = Loadable(lazy(() => import('pages/operator/accessmng/index')));
+const AccessRegForm = Loadable(lazy(() => import('pages/operator/accessmng/AccessRegForm')));
+const SiteMenuRegForm = Loadable(lazy(() => import('pages/operator/menu/index')));
+const SiteMenuMappingForm = Loadable(lazy(() => import('pages/operator/menu/SiteMenuMappingForm')));
+const SiteAuthManagementPage = Loadable(lazy(() => import('pages/operator/auth/index')));
+const SiteAuthMngRegForm = Loadable(lazy(() => import('pages/operator/auth/SiteAuthMngReg')));
+
 // render - 통합 관리
 const AccountMng = Loadable(lazy(() => import('pages/totalmng/accountmng/index')));
 const AccountMngForm = Loadable(lazy(() => import('pages/totalmng/accountmng/AccountMngForm')));
@@ -87,6 +95,31 @@ const MainRoutes = [
             {
                 path: 'dashboard',
                 element: <DashboardDefault />
+            },
+            // 사이트 관리
+            {
+                path: 'access/list',
+                element: <AccessMngPage />
+            },
+            {
+                path: 'access/reg',
+                element: <AccessRegForm />
+            },
+            {
+                path: 'sitemenu/list',
+                element: <SiteMenuRegForm />
+            },
+            {
+                path: '/sitemenus/mapping',
+                element: <SiteMenuMappingForm />
+            },
+            {
+                path: '/siteauth/list',
+                element: <SiteAuthManagementPage />
+            },
+            {
+                path: '/siteauth/reg',
+                element: <SiteAuthMngRegForm />
             },
             // 통합관리
             {
