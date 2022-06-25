@@ -73,7 +73,7 @@ function CustomPagination() {
     );
 }
 
-export function CustomDataGrid({ columns, rows, handlePageChange, handleGridClick, handleGridDoubleClick, selectionChange }) {
+export function CustomDataGrid({ columns, rows, handlePageChange, handleGridClick, handleGridDoubleClick, selectionChange, height }) {
     const handlePage = (page, details) => {
         handlePageChange(page + 1);
     };
@@ -84,9 +84,14 @@ export function CustomDataGrid({ columns, rows, handlePageChange, handleGridClic
         selectionChange(selectionModel);
     }, [selectionModel]);
 
+    let mHeight = 600;
+
+    if (height) {
+        mHeight = height;
+    }
     if (rows) {
         return (
-            <div style={{ padding: 2, height: 600, width: '100%' }}>
+            <div style={{ padding: 2, height: mHeight, width: '100%' }}>
                 <StyledDataGrid
                     pageSize={20}
                     rowsPerPageOptions={[5]}

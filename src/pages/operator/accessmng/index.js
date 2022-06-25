@@ -243,7 +243,7 @@ const AccessMngPage = () => {
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={8} sm={3.2}></Grid>
+                            <Grid item xs={8} sm={2.9}></Grid>
                             <Grid item xs={8} sm={0.7}>
                                 <FormControl sx={{ m: 1 }} size="small">
                                     <Button
@@ -259,6 +259,7 @@ const AccessMngPage = () => {
                                     </Button>
                                 </FormControl>
                             </Grid>
+                            <Grid item xs={8} sm={0.1}></Grid>
                             <Grid item xs={8} sm={0.7}>
                                 <FormControl sx={{ m: 1 }} size="small">
                                     <Button
@@ -273,6 +274,7 @@ const AccessMngPage = () => {
                                     </Button>
                                 </FormControl>
                             </Grid>
+                            <Grid item xs={8} sm={0.1}></Grid>
                             <Grid item xs={8} sm={0.7}>
                                 <FormControl sx={{ m: 1 }} size="small">
                                     <Button
@@ -287,6 +289,7 @@ const AccessMngPage = () => {
                                     </Button>
                                 </FormControl>
                             </Grid>
+                            <Grid item xs={8} sm={0.1}></Grid>
                             <Grid item xs={8} sm={0.7}>
                                 <FormControl sx={{ m: 1 }} size="small">
                                     <Button

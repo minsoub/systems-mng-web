@@ -88,28 +88,32 @@ function StyledTreeItem(props) {
                     <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }} onClick={() => nodeSelect(dataMsg)}>
                         {labelText}
                     </Typography>
-                    <Typography variant="caption" color="inherit">
-                        <Box
-                            id={dataMsg}
-                            display={labelPlus}
-                            component={PlusSquare}
-                            data-msg={dataMsg}
-                            color="inherit"
-                            sx={{ mr: 1 }}
-                            onClick={() => plusSelect(dataMsg)}
-                        />
-                    </Typography>
-                    <Typography variant="caption" color="inherit">
-                        <Box
-                            id={dataMsg}
-                            display={labelMinus}
-                            component={MinusSquare}
-                            data-msg={dataMsg}
-                            color="inherit"
-                            sx={{ mr: 1 }}
-                            onClick={() => minusSelect(dataMsg)}
-                        />
-                    </Typography>
+                    {plusSelect && (
+                        <Typography variant="caption" color="inherit">
+                            <Box
+                                id={dataMsg}
+                                display={labelPlus}
+                                component={PlusSquare}
+                                data-msg={dataMsg}
+                                color="inherit"
+                                sx={{ mr: 1 }}
+                                onClick={() => plusSelect(dataMsg)}
+                            />
+                        </Typography>
+                    )}
+                    {minusSelect && (
+                        <Typography variant="caption" color="inherit">
+                            <Box
+                                id={dataMsg}
+                                display={labelMinus}
+                                component={MinusSquare}
+                                data-msg={dataMsg}
+                                color="inherit"
+                                sx={{ mr: 1 }}
+                                onClick={() => minusSelect(dataMsg)}
+                            />
+                        </Typography>
+                    )}
                 </Box>
             }
             style={{

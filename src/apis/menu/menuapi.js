@@ -76,8 +76,98 @@ const menus = [
     //     ]
     // },
     {
+        id: 'sitemoperator',
+        title: '사이트 운영',
+        type: 'group',
+        parents_menu_id: '',
+        children: [
+            {
+                id: 'dealmng',
+                title: '거래지원 관리',
+                type: 'item',
+                url: '/projects/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
+            },
+            {
+                id: 'dealmng2',
+                title: 'FAQ 관리',
+                type: 'collapse',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                parents_menu_id: 'xxx',
+                children: [
+                    {
+                        id: 'dealmng19',
+                        title: '컨텐츠 관리',
+                        type: 'item',
+                        url: '/faq/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        breadcrumbs: true,
+                        parents_menu_id: 'xxx'
+                    },
+                    {
+                        id: 'dealmng20',
+                        title: '카테고리 관리',
+                        type: 'item',
+                        url: '/faq/categorylist',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        breadcrumbs: true,
+                        parents_menu_id: 'xxx'
+                    }
+                ]
+            },
+            {
+                id: 'statusmng',
+                title: '상태값 관리',
+                type: 'collapse',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                parents_menu_id: 'xxx',
+                children: [
+                    {
+                        id: 'dealmng13',
+                        title: '상태값 관리',
+                        type: 'item',
+                        url: '/status/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        breadcrumbs: true,
+                        parents_menu_id: 'xxx'
+                    },
+                    {
+                        id: 'dealmng14',
+                        title: '계열 관리',
+                        type: 'item',
+                        url: '/line/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        breadcrumbs: true,
+                        parents_menu_id: 'xxx'
+                    }
+                ]
+            },
+            {
+                id: 'dealmng4',
+                title: '서비스 로그 관리',
+                type: 'item',
+                url: '/service/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
+            }
+        ]
+    },
+    {
         id: 'sitemanagement',
-        title: '사이트관리',
+        title: '사이트 관리',
         type: 'group',
         parents_menu_id: '',
         children: [

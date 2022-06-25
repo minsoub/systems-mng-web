@@ -31,6 +31,15 @@ const TableSamplePage = Loadable(lazy(() => import('pages/table-page')));
 const CrudList = Loadable(lazy(() => import('pages/samples/crud/list')));
 const CrudWrite = Loadable(lazy(() => import('pages/samples/crud/write')));
 
+// render - 사이트 운영 (거래지원 신청)
+const ProjectsPage = Loadable(lazy(() => import('pages/lrc/projects/index')));
+const ProjectsDetailPage = Loadable(lazy(() => import('pages/lrc/projects/detail')));
+const StatusRegForm = Loadable(lazy(() => import('pages/lrc/state/index')));
+const LineMngPage = Loadable(lazy(() => import('pages/lrc/line/index')));
+const FaqCategoryPage = Loadable(lazy(() => import('pages/lrc/faq/categorylist')));
+const FaqContentsPage = Loadable(lazy(() => import('pages/lrc/faq/index')));
+const FaqRegForm = Loadable(lazy(() => import('pages/lrc/faq/faqreg')));
+
 // render - 사이트 관리
 const AccessMngPage = Loadable(lazy(() => import('pages/operator/accessmng/index')));
 const AccessRegForm = Loadable(lazy(() => import('pages/operator/accessmng/AccessRegForm')));
@@ -38,6 +47,7 @@ const SiteMenuRegForm = Loadable(lazy(() => import('pages/operator/menu/index'))
 const SiteMenuMappingForm = Loadable(lazy(() => import('pages/operator/menu/SiteMenuMappingForm')));
 const SiteAuthManagementPage = Loadable(lazy(() => import('pages/operator/auth/index')));
 const SiteAuthMngRegForm = Loadable(lazy(() => import('pages/operator/auth/SiteAuthMngReg')));
+const SiteLogPage = Loadable(lazy(() => import('pages/operator/log/index')));
 
 // render - 통합 관리
 const AccountMng = Loadable(lazy(() => import('pages/totalmng/accountmng/index')));
@@ -96,6 +106,39 @@ const MainRoutes = [
                 path: 'dashboard',
                 element: <DashboardDefault />
             },
+            // 사이트 운영
+            {
+                path: 'projects/list',
+                element: <ProjectsPage />
+            },
+            {
+                path: 'projects/detail',
+                element: <ProjectsDetailPage />
+            },
+            {
+                path: 'status/list',
+                element: <StatusRegForm />
+            },
+            {
+                path: 'line/list',
+                element: <LineMngPage />
+            },
+            {
+                path: 'faq/categorylist',
+                element: <FaqCategoryPage />
+            },
+            {
+                path: 'faq/list',
+                element: <FaqContentsPage />
+            },
+            {
+                path: 'faq/reg/:paramId',
+                element: <FaqRegForm />
+            },
+            {
+                path: 'faq/req/:paramId/:paramNo',
+                element: <FaqRegForm />
+            },
             // 사이트 관리
             {
                 path: 'access/list',
@@ -120,6 +163,10 @@ const MainRoutes = [
             {
                 path: '/siteauth/reg',
                 element: <SiteAuthMngRegForm />
+            },
+            {
+                path: '/sitelog/list',
+                element: <SiteLogPage />
             },
             // 통합관리
             {

@@ -28,14 +28,12 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
-import { boolean } from '../../../node_modules/yup/lib/index';
 import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
 import SiteApi from 'apis/site/siteapi';
 import ProgramApi from 'apis/programs/programapi';
 import { DatePicker } from 'antd';
 import { MenuItem } from '../../../node_modules/@mui/material/index';
 import ErrorScreen from 'components/ErrorScreen';
-import { BrandingWatermarkRounded, InputSharp } from '../../../node_modules/@mui/icons-material/index';
 
 const ProgramRegForm = () => {
     let isSubmitting = false;

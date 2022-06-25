@@ -215,7 +215,7 @@ const SiteManagementPage = () => {
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={8} sm={3.9}></Grid>
+                            <Grid item xs={8} sm={3.7}></Grid>
                             <Grid item xs={8} sm={0.7}>
                                 <Button
                                     disableElevation
@@ -229,6 +229,7 @@ const SiteManagementPage = () => {
                                     검색
                                 </Button>
                             </Grid>
+                            <Grid item xs={8} sm={0.1}></Grid>
                             <Grid item xs={8} sm={0.7}>
                                 <Button
                                     disableElevation
@@ -241,6 +242,7 @@ const SiteManagementPage = () => {
                                     신규
                                 </Button>
                             </Grid>
+                            <Grid item xs={8} sm={0.1}></Grid>
                             <Grid item xs={8} sm={0.7}>
                                 <Button
                                     disableElevation
