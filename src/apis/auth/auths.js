@@ -31,13 +31,25 @@ const useAuthorized = () => {
             requestConfig: data
         });
     };
+    // 사용자 OTP 초기화 요청
+    const otpClear = (data) => {
+        console.log('otpClear called...');
+        console.log(data);
+        callApi('otpClear', {
+            axiosInstance: axiosInstanceAuth,
+            method: 'post',
+            url: `/adm/otp/clear`,
+            requestConfig: data
+        });
+    };
     return [
         responseData,
         requestError,
         loading,
         {
             actionLogin: siginIn,
-            actionOtp: optLogin
+            actionOtp: optLogin,
+            actionClear: otpClear
         }
     ];
 };

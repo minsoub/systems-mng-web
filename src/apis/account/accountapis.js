@@ -150,6 +150,15 @@ const AccountApis = () => {
             requestConfig: {}
         });
     };
+    // 패스워드 수정
+    const updatePasswordInfo = (data) => {
+        callApi('updatePasswordData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/account`,
+            requestConfig: data
+        });
+    };
 
     return [
         responseData,
@@ -169,7 +178,8 @@ const AccountApis = () => {
             accountMngInsert: insertMngAccount,
             accountMngDeletes: deleteMngAccounts,
             accountMngRole: getDetailRoleMng,
-            accountRoleUpdate: updateRoleData
+            accountRoleUpdate: updateRoleData,
+            updatePasswordInfo: updatePasswordInfo
         }
     ];
 };

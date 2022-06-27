@@ -79,7 +79,7 @@ const AccountRegForm = () => {
         responseData,
         requestError,
         loading,
-        { accountMngDetail, accountSearch, accountUpdate, accountInsert, accountMngRole, accountRoleUpdate }
+        { accountMngDetail, accountDetail, accountSearch, accountUpdate, accountInsert, accountMngRole, accountRoleUpdate }
     ] = AccountApis();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
     const [resRoleData, resRoleError, resRoleLoading, { roleComboSearch }] = RoleApi();
@@ -174,6 +174,7 @@ const AccountRegForm = () => {
         if (paramId) {
             // 수정 데이터 조회
             accountMngDetail(paramId);
+            //accountDetail(paramId);
             // Role 정보 조회
             accountMngRole(paramId);
             setIsRoleUpdate(false);
@@ -397,20 +398,18 @@ const AccountRegForm = () => {
             return;
         }
         // Data 가공
-        let roles = '';
+        let roles = [];
         let found = 0;
         dataGridRegisterRows.map((data, idx) => {
-            if (found === 1) roles = roles + ',';
-            roles = roles + data.id;
-            found++;
+            roles.push(data.id);
         });
         const requestData = {
-            admin_account_id: id,
+            id: id,
             site_id: '', // null 이 가능.
             email: email,
             name: name,
             password: password,
-            role_management_id: roles,
+            roles: roles,
             status: status,
             is_use: is_use,
             is_send_mail: send_chk

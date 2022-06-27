@@ -76,7 +76,11 @@ const AuthLogin = () => {
                     // site_id, token
                     console.log('success => ');
                     console.log(responseData.data);
-                    navigate('/otplogin', { state: responseData.data });
+                    if (responseData.data.opt_key && responseData.data.opt_key.length > 0) {
+                        navigate('/otpsimplelogin', { state: responseData.data });
+                    } else {
+                        navigate('/otplogin', { state: responseData.data });
+                    }
                 }
                 break;
             default:
@@ -174,7 +178,7 @@ const AuthLogin = () => {
 
                             <Grid item xs={12} sx={{ mt: -1 }}>
                                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                                    <FormControlLabel
+                                    {/* <FormControlLabel
                                         control={
                                             <Checkbox
                                                 checked={checked}
@@ -185,7 +189,7 @@ const AuthLogin = () => {
                                             />
                                         }
                                         label={<Typography variant="h6">Keep me sign in</Typography>}
-                                    />
+                                    /> */}
                                     <Link variant="h6" component={RouterLink} to="" color="text.primary">
                                         Forgot Password?
                                     </Link>

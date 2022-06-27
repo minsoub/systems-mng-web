@@ -34,16 +34,14 @@ import MainCard from 'components/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import { StyledTableCell, FontTableCell } from 'components/CustomTableCell';
 import ErrorScreen from 'components/ErrorScreen';
-import FaqApis from 'apis/lrc/faq/faqapi';
-import CategoryApis from 'apis/lrc/faq/categoryapi';
+import AccountApis from 'apis/account/accountapis';
+import { doEncrypt } from 'utils/Crypt';
 
-const FaqRegForm = () => {
+const ProfileUpdateForm = () => {
     let isSubmitting = false;
 
     const navigate = useNavigate();
-    const { paramId, paramNo } = useParams();
-    const [responseData, requestError, loading, { faqSearch, faqInsert, faqUpdate, faqDelete, faqDetail }] = FaqApis();
-    const [resData, reqError, resLoading, { categorySearch }] = CategoryApis();
+    const [responseData, requestError, loading, { updatePasswordInfo }] = AccountApis();
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -52,24 +50,20 @@ const FaqRegForm = () => {
     const [errorMessage, setErrorMessage] = useState('');
     ////////////////////////////////////////////////////
 
-    // 카테고리 리스트
-    const [categorys, setCategoryList] = useState([]);
-
-    // button control
-    const [isUpdate, setIsUpdate] = useState(false);
-
     // Form data
     // 입력 데이터 - Default
     const [inputs, setInputs] = useState({
-        id: '',
-        order: 1,
-        category_code: '',
-        title: '',
-        use_yn: true,
-        content: '',
-        language: paramId
+        current_password: '',
+        new_password: '',
+        confirm_password: ''
     });
-    const { id, order, category_code, title, content, use_yn, language } = inputs;
+    const { current_password, new_password, confirm_password } = inputs;
+
+    let authData = null;
+    if (localStorage.hasOwnProperty('authenticated')) {
+        //console.log(localStorage.getItem('authenticated'));
+        authData = JSON.parse(localStorage.getItem('authenticated'));
+    }
 
     // transaction error 처리
     useEffect(() => {
@@ -81,41 +75,6 @@ const FaqRegForm = () => {
             setOpen(true);
         }
     }, [requestError]);
-
-    // onload
-    useEffect(() => {
-        console.log('paramId');
-        console.log(paramId);
-        console.log('paramNo');
-        console.log(paramNo);
-        categorySearch(paramId);
-    }, []);
-
-    // Category List
-    useEffect(() => {
-        if (!resData) {
-            return;
-        }
-        switch (resData.transactionId) {
-            case 'getList':
-                if (resData.data.data && resData.data.data.length > 0) {
-                    let resultData = [];
-                    resData.data.data.map((item) => {
-                        let data = { id: item.id, name: item.name, count: 0 };
-                        resultData.push(data);
-                    });
-                    setCategoryList(resultData);
-                    if (paramNo) {
-                        console.log(paramNo);
-                        faqDetail(paramNo);
-                    }
-                } else {
-                    setCategoryList([]);
-                }
-                break;
-            default:
-        }
-    }, [resData]);
 
     // Transaction Return
     useEffect(() => {
@@ -155,6 +114,9 @@ const FaqRegForm = () => {
                 alert('삭제를 완료하였습니다!!!');
                 navigate('/faq/list');
                 break;
+            case 'updatePasswordData':
+                alert('패스워드 수정을 완료하였습니다!!!');
+                navigate('/dashboard');
             default:
         }
     }, [responseData]);
@@ -176,38 +138,40 @@ const FaqRegForm = () => {
     };
 
     // delete
-    const deleteClick = () => {
-        if (confirm('삭제를 하시겠습니까')) {
-            const requestData = {
-                id: id,
-                is_use: false
-            };
-            faqDelete(requestData);
-        }
+    const cancelClick = () => {
+        navigate('/dashboard');
     };
 
-    // list
-    const listClick = () => {
-        navigate('/faq/list');
-    };
     const saveClick = () => {
-        if (!category_code) {
-            alert('카테고리를 선택하세요!!!');
+        if (!current_password) {
+            alert('현재 비밀번호를 입력하세요!!!');
             return;
         }
-        if (!title) {
-            alert('제목을 입력하세요!!!');
+        if (!new_password) {
+            alert('신규 비밀번호를 입력하세요!!!');
             return;
         }
-        if (!content) {
-            alert('내용을 입력하세요!!!');
+        if (!confirm_password) {
+            alert('신규 비밀번호 확인을 입력하세요!!!');
             return;
         }
-        if (!paramNo) {
-            faqInsert(inputs);
-        } else {
-            faqUpdate(inputs);
+        if (new_password !== confirm_password) {
+            alert('신규 비밀번호와 신규 비밀번호 확인이 일치하지 않습니다!!!');
+            return;
         }
+        // 패스워드 로직 검증
+        const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,64}$/; // /^(?=.*\d)(?=.*[a-zA-Z~!@#$%^&*_])[0-9a-zA-Z~!@#$%^&*_]{8,64}$/;
+        if (!regex.test(new_password)) {
+            alert('요청한 패스워드 형식에 일치하지 않습니다!!!');
+            return;
+        }
+        let send_data = {
+            email: authData.email,
+            current_password: doEncrypt(current_password),
+            new_password: doEncrypt(new_password),
+            confirm_password: doEncrypt(confirm_password)
+        };
+        updatePasswordInfo(send_data);
     };
 
     return (
@@ -215,10 +179,10 @@ const FaqRegForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
-                        <Typography variant="h3">콘텐츠 관리 등록 ({paramId})</Typography>
+                        <Typography variant="h3">비밀번호 재설정</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6">사이트 운영 &gt; FAQ 관리 &gt; 콘텐츠 관리</Typography>
+                        <Typography variant="h6">비밀번호 재설정</Typography>
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
@@ -229,53 +193,23 @@ const FaqRegForm = () => {
                             <Table sx={{ width: 1000 }} stickyHeader aria-label="simple table">
                                 <TableBody>
                                     <TableRow>
-                                        <StyledTableCell component="th" scope="row" style={{ width: 200 }}>
-                                            카테고리 선택 <font color="red">*</font>
+                                        <StyledTableCell component="th" scope="row" style={{ width: 300 }}>
+                                            비밀번호를 변경 후 이용해주세요.
                                         </StyledTableCell>
-                                        <TableCell component="th" scope="row" style={{ width: 300 }}>
-                                            <FormControl sx={{ m: 0, minWidth: 180 }} size="small">
-                                                <Select
-                                                    name="category_code"
-                                                    label="카테고리명"
-                                                    value={category_code}
-                                                    onChange={handleChange}
-                                                >
-                                                    {categorys.map((item, index) => (
-                                                        <MenuItem key={index} value={item.id}>
-                                                            {item.name}
-                                                        </MenuItem>
-                                                    ))}
-                                                </Select>
-                                            </FormControl>
-                                        </TableCell>
-                                        <StyledTableCell component="th" scope="row" style={{ width: 200 }}>
-                                            사용 여부 <font color="red">*</font>
-                                        </StyledTableCell>
-                                        <TableCell component="th" scope="row" style={{ width: 300 }}>
-                                            <FormControl sx={{ m: 0 }} fullWidth>
-                                                <RadioGroup
-                                                    row
-                                                    aria-labelledby="demo-row-radio-buttons-group-label"
-                                                    name="use_yn"
-                                                    value={use_yn}
-                                                    onChange={handleChange}
-                                                >
-                                                    <FormControlLabel value="true" control={<Radio />} label="사용함" />
-                                                    <FormControlLabel value="false" control={<Radio />} label="사용안함" />
-                                                </RadioGroup>
-                                            </FormControl>
-                                        </TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <StyledTableCell component="th" scope="row" style={{ width: 200 }}>
-                                            제 목 <font color="red">*</font>
+                                        <StyledTableCell component="th" scope="row" style={{ width: 300 }}>
+                                            현재 비밀번호 <font color="red">*</font>
                                         </StyledTableCell>
-                                        <TableCell component="th" scope="row" colSpan={3} style={{ width: 680 }}>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell component="th" scope="row" style={{ width: 300 }}>
                                             <FormControl sx={{ m: 0 }} fullWidth>
                                                 <TextField
                                                     id="outlined-multiline-static"
-                                                    value={title}
-                                                    name="title"
+                                                    type="password"
+                                                    value={current_password}
+                                                    name="current_password"
                                                     onChange={handleChange}
                                                 />
                                             </FormControl>
@@ -283,19 +217,46 @@ const FaqRegForm = () => {
                                     </TableRow>
                                     <TableRow>
                                         <StyledTableCell component="th" scope="row" style={{ width: 200 }}>
-                                            내 용 <font color="red">*</font>
+                                            신규 비밀번호 <font color="red">*</font>
                                         </StyledTableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell component="th" scope="row" style={{ width: 300 }}>
+                                            <FormControl sx={{ m: 0 }} fullWidth>
+                                                <TextField
+                                                    id="outlined-multiline-static"
+                                                    type="password"
+                                                    value={new_password}
+                                                    name="new_password"
+                                                    onChange={handleChange}
+                                                />
+                                            </FormControl>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <StyledTableCell component="th" scope="row" style={{ width: 200 }}>
+                                            신규 비밀번호 확인<font color="red">*</font>
+                                        </StyledTableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell component="th" scope="row" style={{ width: 300 }}>
+                                            <FormControl sx={{ m: 0 }} fullWidth>
+                                                <TextField
+                                                    id="outlined-multiline-static"
+                                                    type="password"
+                                                    value={confirm_password}
+                                                    name="confirm_password"
+                                                    onChange={handleChange}
+                                                />
+                                            </FormControl>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
                                         <TableCell component="th" scope="row" colSpan={3} style={{ height: 200, width: 680 }}>
-                                            <FormControl sx={{ m: 0 }} fullWidth>
-                                                <TextField
-                                                    id="outlined-multiline-static"
-                                                    value={content}
-                                                    name="content"
-                                                    multiline
-                                                    rows={6}
-                                                    onChange={handleChange}
-                                                />
-                                            </FormControl>
+                                            - 영문 소문자, 대문자, 특수문자를 포함하여 8자리-64자리로 만들어 주세요.<p></p>
+                                            단, 허용되는 특수문자 (~!@#$%^&*_)와 다른 특수문자는 사용할 수 없습니다.<p></p>- 타 사이트와
+                                            동일하거나 비슷한 암호를 설정하지 마세요.<p></p>타 사이트에서 암호가 유출될 경우 제3자가
+                                            회원님의 계정에 접근할 위험이 있습니다.
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -303,8 +264,8 @@ const FaqRegForm = () => {
                         </Grid>
                     </Grid>
                     <Grid container spacing={0} sx={{ mt: 1 }}>
-                        <Grid item xs={8} sm={0.2}></Grid>
-                        <Grid item xs={8} sm={0.1}>
+                        <Grid item xs={8} sm={0.1}></Grid>
+                        <Grid item xs={8} sm={0.7}>
                             <FormControl sx={{ m: 1 }} size="small">
                                 <Button
                                     disableElevation
@@ -312,33 +273,17 @@ const FaqRegForm = () => {
                                     type="submit"
                                     variant="contained"
                                     color="secondary"
-                                    onClick={listClick}
+                                    onClick={cancelClick}
                                 >
-                                    목록
-                                </Button>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={9.5}></Grid>
-                        <Grid item xs={8} sm={0.7}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={saveClick}>
-                                    저장
+                                    취소
                                 </Button>
                             </FormControl>
                         </Grid>
                         <Grid item xs={8} sm={0.1}></Grid>
                         <Grid item xs={8} sm={0.7}>
                             <FormControl sx={{ m: 1 }} size="small">
-                                <Button
-                                    disableElevation
-                                    disabled={!isUpdate}
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={deleteClick}
-                                >
-                                    삭제
+                                <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={saveClick}>
+                                    변경
                                 </Button>
                             </FormControl>
                         </Grid>
@@ -350,4 +295,4 @@ const FaqRegForm = () => {
     );
 };
 
-export default FaqRegForm;
+export default ProfileUpdateForm;

@@ -42,6 +42,15 @@ const FaqApis = () => {
             requestConfig: data
         });
     };
+    // order update
+    const faqUpdateData = (data) => {
+        callApi('updateOrderData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/mng/lrc/faq/content`,
+            requestConfig: data
+        });
+    };
 
     // 삭제
     const deleteData = (data) => {
@@ -62,6 +71,7 @@ const FaqApis = () => {
             faqDetail: getDetailData,
             faqInsert: insertData,
             faqUpdate: updateData,
+            faqOrderSave: faqUpdateData,
             faqDelete: deleteData
         }
     ];

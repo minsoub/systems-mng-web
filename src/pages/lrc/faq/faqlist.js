@@ -23,6 +23,8 @@ import {
     Tab,
     Tabs
 } from '@mui/material';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import MainCard from 'components/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
@@ -42,53 +44,68 @@ const FaqContent = (props) => {
             headerName: '번호',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 100
         },
         {
-            field: 'order',
+            field: 'id',
             headerName: '노출순서',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 100,
+            renderCell: (params) => (
+                <strong>
+                    <ArrowCircleUpIcon onClick={() => gridOrderClick('+', params.value)} />
+
+                    <ArrowCircleDownIcon onClick={() => gridOrderClick('-', params.value)} />
+                </strong>
+            )
         },
         {
             field: 'category',
             headerName: '카테고리',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 100
         },
         {
             field: 'title',
             headerName: '제목',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            minWidth: 450,
+            maxWidth: 850
         },
         {
             field: 'use_yn',
             headerName: '사용여부',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 100
         },
         {
             field: 'email',
             headerName: '등록자',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 200
         },
         {
             field: 'create_date',
             headerName: '등록일시',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 180
         }
     ];
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { faqSearch }] = FaqApis();
+    const [responseData, requestError, loading, { faqSearch, faqOrderSave }] = FaqApis();
     const [resData, reqError, resLoading, { categorySearch }] = CategoryApis();
 
     const { language, children, tabindex, index, ...other } = props;
@@ -202,9 +219,17 @@ const FaqContent = (props) => {
                     setDataGridRows([]);
                 }
                 break;
-            case 'deleteData':
-                console.log('deleteData');
-                roleList();
+            case 'updateOrderData':
+                alert('노출 순서를 저장하였습니다!!!');
+                // 초기화
+                categorys.map((category, index) => {
+                    setCategoryList((current) =>
+                        current.map((obj) => {
+                            return { ...obj, count: 0 };
+                        })
+                    );
+                });
+                faqSearch(language);
                 break;
             default:
         }
@@ -228,25 +253,80 @@ const FaqContent = (props) => {
 
     // 그리드 클릭
     const handleClick = (rowData) => {
-        if (rowData && rowData.field && rowData.field !== '__check__') {
-            //let searchCondition = { site_id: site_id, is_use: is_use, type: type };
-            //navigate(`/authmng/reg/${rowData.id}`);
-        }
+        // if (rowData && rowData.field && rowData.field !== '__check__') {
+        //     //let searchCondition = { site_id: site_id, is_use: is_use, type: type };
+        //     navigate(`/faq/reg/${language}/${rowData.id}`);
+        // }
     };
 
     // 그리드 더블 클릭
-    const handleDoubleClick = (rowData) => {};
+    const handleDoubleClick = (rowData) => {
+        if (rowData && rowData.field && rowData.field !== '__check__') {
+            //let searchCondition = { site_id: site_id, is_use: is_use, type: type };
+            navigate(`/faq/reg/${language}/${rowData.id}`);
+        }
+    };
 
     // 등록 화면
     const regClick = () => {
         navigate(`/faq/reg/${language}`);
     };
-    const orderClick = () => {};
+    // 노출 순서 저장.
+    const orderClick = () => {
+        if (dataGridRows.length === 0) {
+            return;
+        }
+        if (confirm('저장하시겠습니까?')) {
+            let order = [];
+            dataGridRows.map((item, index) => {
+                order.push({ id: item.id, order: index });
+            });
+            let data = { order_list: order };
+            faqOrderSave(data);
+        }
+    };
     // 분류 클릭 시
     const filterClick = (id) => {
         console.log(id);
-        let filterGridData = dataGridRows.filter((el) => el.category_code === id);
+        let filterGridData = totalDataGridRows.filter((el) => el.category_code === id);
         setDataGridRows(filterGridData);
+    };
+
+    // Grid order click
+    const gridOrderClick = (kind, id) => {
+        console.log(kind);
+        console.log(id);
+        // index 구하기
+        let index = -1;
+        dataGridRows.map((item, idx) => {
+            if (item.id === id) {
+                index = idx;
+                return;
+            }
+        });
+        console.log(index);
+        let copyGrid = [...dataGridRows];
+
+        if (index > -1) {
+            if ((index === 0 && kind === '+') || (index === copyGrid.length - 1 && kind === '-')) {
+                console.log('not work...');
+            } else {
+                if (kind === '+') {
+                    let original = copyGrid[index]; // curent
+                    let copy = copyGrid[index - 1];
+                    copyGrid[index] = copy; //{ ...copyGrid[index], copy };
+                    copyGrid[index - 1] = original; //{ ...copyGrid[index + 1], original };
+                    setDataGridRows(copyGrid);
+                } else {
+                    let original = copyGrid[index]; // curent
+                    let copy = copyGrid[index + 1];
+                    copyGrid[index] = copy; // { ...copyGrid[index], copy };
+                    copyGrid[index + 1] = original; // { ...copyGrid[index + 1], original };
+                    console.log(copyGrid);
+                    setDataGridRows(copyGrid);
+                }
+            }
+        }
     };
 
     return (
@@ -280,8 +360,8 @@ const FaqContent = (props) => {
                         </Button>
                     </FormControl>
                 </Grid>
-                <Grid item xs={8} sm={8.0}></Grid>
-                <Grid item xs={8} sm={1}>
+                <Grid item xs={8} sm={8.7}></Grid>
+                <Grid item xs={8} sm={0.7}>
                     <FormControl sx={{ m: 1 }} size="small">
                         <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={regClick}>
                             등록

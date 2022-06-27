@@ -24,7 +24,7 @@ import MainCard from 'components/MainCard';
 import Transitions from 'components/@extended/Transitions';
 import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
-
+import { useNavigate } from 'react-router-dom';
 // assets
 import avatar1 from 'assets/images/users/avatar-1.png';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
@@ -55,9 +55,16 @@ function a11yProps(index) {
 
 const Profile = () => {
     const theme = useTheme();
-
+    const navigate = useNavigate();
     const handleLogout = async () => {
-        // logout
+        if (confirm('로그아웃 하시겠습니까?')) {
+            // logout
+            localStorage.clear();
+            navigate('/login');
+        }
+    };
+    const handleUpdate = () => {
+        navigate('/profile/update');
     };
 
     const anchorRef = useRef(null);
@@ -81,6 +88,12 @@ const Profile = () => {
 
     const iconBackColorOpen = 'grey.300';
 
+    let authData = null;
+    if (localStorage.hasOwnProperty('authenticated')) {
+        //console.log(localStorage.getItem('authenticated'));
+        authData = JSON.parse(localStorage.getItem('authenticated'));
+    }
+
     return (
         <Box sx={{ flexShrink: 0, ml: 0.75 }}>
             <ButtonBase
@@ -97,8 +110,8 @@ const Profile = () => {
                 onClick={handleToggle}
             >
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
-                    <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
-                    <Typography variant="subtitle1">John Doe</Typography>
+                    {/* <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} /> */}
+                    <Typography variant="subtitle1">Login by {authData.email}</Typography>
                 </Stack>
             </ButtonBase>
             <Popper
@@ -141,18 +154,27 @@ const Profile = () => {
                                                     <Stack direction="row" spacing={1.25} alignItems="center">
                                                         <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
                                                         <Stack>
-                                                            <Typography variant="h6">John Doe</Typography>
+                                                            <Typography variant="h6">{authData.email}</Typography>
                                                             <Typography variant="body2" color="textSecondary">
-                                                                UI/UX Designer
+                                                                Smart Admin 관리자
                                                             </Typography>
                                                         </Stack>
                                                     </Stack>
                                                 </Grid>
-                                                <Grid item>
+                                                <Grid item sx={{ mt: 3 }}>
+                                                    <Stack direction="row" spacing={1.25} alignItems="center">
+                                                        <Stack>
+                                                            <Typography variant="body2" color="textSecondary">
+                                                                ( 접속일시 : {authData.loginDate} )
+                                                            </Typography>
+                                                        </Stack>
+                                                    </Stack>
+                                                </Grid>
+                                                {/* <Grid item>
                                                     <IconButton size="large" color="secondary" onClick={handleLogout}>
                                                         <LogoutOutlined />
                                                     </IconButton>
-                                                </Grid>
+                                                </Grid> */}
                                             </Grid>
                                         </CardContent>
                                         {open && (
@@ -173,10 +195,10 @@ const Profile = () => {
                                                                 textTransform: 'capitalize'
                                                             }}
                                                             icon={<UserOutlined style={{ marginBottom: 0, marginRight: '10px' }} />}
-                                                            label="Profile"
+                                                            label="계정 정보 수정"
                                                             {...a11yProps(0)}
                                                         />
-                                                        <Tab
+                                                        {/* <Tab
                                                             sx={{
                                                                 display: 'flex',
                                                                 flexDirection: 'row',
@@ -187,15 +209,15 @@ const Profile = () => {
                                                             icon={<SettingOutlined style={{ marginBottom: 0, marginRight: '10px' }} />}
                                                             label="Setting"
                                                             {...a11yProps(1)}
-                                                        />
+                                                        /> */}
                                                     </Tabs>
                                                 </Box>
                                                 <TabPanel value={value} index={0} dir={theme.direction}>
-                                                    <ProfileTab handleLogout={handleLogout} />
+                                                    <ProfileTab handleLogout={handleLogout} handleUpdate={handleUpdate} />
                                                 </TabPanel>
-                                                <TabPanel value={value} index={1} dir={theme.direction}>
+                                                {/* <TabPanel value={value} index={1} dir={theme.direction}>
                                                     <SettingTab />
-                                                </TabPanel>
+                                                </TabPanel> */}
                                             </>
                                         )}
                                     </MainCard>

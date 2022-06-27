@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAuthData } from '../../../store/reducers/auth';
 import moment from 'moment';
+
 // material-ui
 import {
     Button,
@@ -34,11 +35,10 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 import useAuthorized from 'apis/auth/auths';
-import { Box } from '../../../../node_modules/@mui/material/index';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
-const OtpForm = ({ result }) => {
+const OtpSimpleForm = ({ result }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -46,7 +46,7 @@ const OtpForm = ({ result }) => {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    const [responseData, requestError, loading, { actionOtp }] = useAuthorized();
+    const [responseData, requestError, loading, { actionOtp, actionClear }] = useAuthorized();
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -90,6 +90,12 @@ const OtpForm = ({ result }) => {
                     navigate('/dashboard');
                 }
                 break;
+            case 'otpClear':
+                if (responseData.data) {
+                    alert('OTP 초기화 신청을 완료하였습니다. 다시 로그인 하시기 바랍니다!!!');
+                    navigate('/login');
+                }
+                break;
             default:
         }
     }, [responseData]);
@@ -97,6 +103,19 @@ const OtpForm = ({ result }) => {
     const CancelClick = () => {
         if (confirm('취소하시겠습니까?')) {
             navigate('/login');
+        }
+    };
+    const clearOtp = (e) => {
+        e.preventDefault();
+        console.log('called..');
+        if (confirm('초기화 요청하시겠습니까?')) {
+            let data = {
+                site_id: result.site_id,
+                email: result.email,
+                otp_key: result.opt_key,
+                token: result.token
+            };
+            actionClear(data);
         }
     };
 
@@ -145,40 +164,15 @@ const OtpForm = ({ result }) => {
             >
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                     <form noValidate onSubmit={handleSubmit}>
-                        <Grid container spacing={3}>
+                        <Grid container spacing={3} sx={{ mt: 3 }}>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>
-                                    <Typography variant="h5">1. OTP 앱을 설치해 주세요</Typography>
-                                    <InputLabel>App Store, Google Play Store에서 Google Authenticator를 다운로드 합니다.</InputLabel>
+                                    <InputLabel>Google Authenticator에 표시된 6자리 코드를 입력해 주세요</InputLabel>
                                 </Stack>
                             </Grid>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>
-                                    <Typography variant="h5">2. 바코드를 스캔하고 앱에 표시된 6자리 코드를 입력해 주세요.</Typography>
-                                    <InputLabel>설치된 앱에서 "+" 버튼을 누르고 QR 코드 스캔 메뉴를 통해 바코드를 스캔합니다.</InputLabel>
-                                </Stack>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>
-                                    <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Grid item xs={8} sm={1.7}></Grid>
-                                        <Grid item xs={8} sm={5.0}>
-                                            <Box
-                                                component="img"
-                                                sx={{
-                                                    height: 300,
-                                                    width: 320,
-                                                    maxHeight: { xs: 300, md: 320 },
-                                                    maxWidth: { xs: 300, md: 320 }
-                                                }}
-                                                alt="QR Code"
-                                                src={result.otp_info.url}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.1}></Grid>
-                                    </Grid>
-                                </Stack>
-                            </Grid>
+                            <Grid item xs={12}></Grid>
+                            <Grid item xs={12}></Grid>
+                            <Grid item xs={12}></Grid>
                             <Grid item xs={12}>
                                 <Stack direction="row" spacing={1}>
                                     <OutlinedInput
@@ -287,26 +281,22 @@ const OtpForm = ({ result }) => {
                                 </Grid>
                             )}
                             <Grid item xs={12}>
-                                <Grid container spacing={0} sx={{ mt: 0 }}>
-                                    <Grid item xs={8} sm={1.1}></Grid>
-                                    <Grid item xs={8} sm={5.0}>
-                                        <AnimateButton>
-                                            <Button
-                                                disableElevation
-                                                disabled={isSubmitting}
-                                                fullWidth
-                                                size="large"
-                                                type="button"
-                                                variant="contained"
-                                                color="secondary"
-                                                onClick={CancelClick}
-                                            >
-                                                취소하기
-                                            </Button>
-                                        </AnimateButton>
+                                <Grid container spacing={0} sx={{ mt: 5 }}>
+                                    <Grid item xs={8} sm={4}></Grid>
+                                    <Grid item xs={8} sm={6.0}>
+                                        <InputLabel>
+                                            OTP를 분실했나요?{' '}
+                                            <b>
+                                                <a href="#" onClick={clearOtp}>
+                                                    초기화 요청
+                                                </a>
+                                            </b>
+                                        </InputLabel>
                                     </Grid>
-                                    <Grid item xs={8} sm={0.1}></Grid>
-                                    <Grid item xs={8} sm={5.0}>
+                                </Grid>
+                                <Grid container spacing={0} sx={{ mt: 6 }}>
+                                    <Grid item xs={8} sm={1.1}></Grid>
+                                    <Grid item xs={8} sm={10.0}>
                                         <AnimateButton>
                                             <Button
                                                 disableElevation
@@ -317,10 +307,11 @@ const OtpForm = ({ result }) => {
                                                 variant="contained"
                                                 color="primary"
                                             >
-                                                인증하기
+                                                확인
                                             </Button>
                                         </AnimateButton>
                                     </Grid>
+                                    <Grid item xs={8} sm={1.1}></Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -331,8 +322,8 @@ const OtpForm = ({ result }) => {
     );
 };
 
-OtpForm.propTypes = {
+OtpSimpleForm.propTypes = {
     result: PropTypes.any
 };
 
-export default OtpForm;
+export default OtpSimpleForm;

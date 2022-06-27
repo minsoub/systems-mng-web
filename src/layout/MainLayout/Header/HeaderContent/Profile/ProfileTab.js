@@ -10,7 +10,7 @@ import { EditOutlined, ProfileOutlined, LogoutOutlined, UserOutlined, WalletOutl
 
 // ==============================|| HEADER PROFILE - PROFILE TAB ||============================== //
 
-const ProfileTab = ({ handleLogout }) => {
+const ProfileTab = ({ handleLogout, handleUpdate }) => {
     const theme = useTheme();
 
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -20,13 +20,13 @@ const ProfileTab = ({ handleLogout }) => {
 
     return (
         <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32, color: theme.palette.grey[500] } }}>
-            <ListItemButton selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)}>
+            <ListItemButton selected={selectedIndex === 0} onClick={handleUpdate}>
                 <ListItemIcon>
                     <EditOutlined />
                 </ListItemIcon>
-                <ListItemText primary="Edit Profile" />
+                <ListItemText primary="비밀번호 재설정" />
             </ListItemButton>
-            <ListItemButton selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)}>
+            {/* <ListItemButton selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)}>
                 <ListItemIcon>
                     <UserOutlined />
                 </ListItemIcon>
@@ -44,7 +44,7 @@ const ProfileTab = ({ handleLogout }) => {
                     <WalletOutlined />
                 </ListItemIcon>
                 <ListItemText primary="Billing" />
-            </ListItemButton>
+            </ListItemButton> */}
             <ListItemButton selected={selectedIndex === 2} onClick={handleLogout}>
                 <ListItemIcon>
                     <LogoutOutlined />

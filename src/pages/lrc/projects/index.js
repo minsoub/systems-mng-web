@@ -27,9 +27,11 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
-import RoleApi from 'apis/roles/roleapi';
-import SiteApi from 'apis/site/siteapi';
+import StatusApi from 'apis/lrc/status/statusapi';
 import ErrorScreen from 'components/ErrorScreen';
+import { BusinessCheckboxList } from './component/business';
+import { NetworkCheckboxList } from './component/network';
+import moment from 'moment';
 
 const ProjectsPage = () => {
     let isSubmitting = false;
@@ -106,8 +108,7 @@ const ProjectsPage = () => {
         }
     ];
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { roleList, roleComboSearch }] = RoleApi();
-    const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
+    const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -123,29 +124,37 @@ const ProjectsPage = () => {
 
     // 검색 조건
     const [keyword, setKeyword] = useState('');
-    const [start_date, setStartDate] = useState('');
-    const [end_date, setEndDate] = useState('');
+    const [start_date, setStartDate] = useState(new Date());
+    const [end_date, setEndDate] = useState(new Date());
     const [period, setPeriod] = useState('1');
-    const [checked1, setChecked1] = useState(false);
-    const [checked2, setChecked2] = useState(false);
-    const [checked3, setChecked3] = useState(false);
-    const [checked4, setChecked4] = useState(false);
+    const [sts, setSts] = useState('');
+    const [process, setProcess] = useState('');
+
+    const [checkedBusinessItems, setCheckedBusinessItems] = useState(new Set()); // 비즈니스 체크박스 리스트
+    const [checkedNetworkItems, setCheckedNetworkItems] = useState(new Set()); // Network 체크박스 리스트
+    const [statusAllList, setStatusAllList] = useState([]); // 전체 상태 리스트
+    const [statusList, setStatusList] = useState([]); // 계약 상태
+    const [processList, setProcessList] = useState([]); // 계약 상태 변경 시 진행상태 출력 리스트.
+
+    const [isAllChecked, setIsAllChecked] = useState(false);
     // onload
     useEffect(() => {
-        //siteSearch(true, '');
-        //roleList();
+        statusSearch(); // 상태 값 모두 조회
+        setStartDate(moment().format('YYYY-MM-DD'));
+        setEndDate(moment().format('YYYY-MM-DD'));
+        console.log(new Date());
     }, []);
 
     // transaction error 처리
-    useEffect(() => {
-        if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
-        }
-    }, [requestError]);
+    // useEffect(() => {
+    //     if (requestError) {
+    //         console.log('error requestError');
+    //         console.log(requestError);
+    //         setErrorTitle('Error Message');
+    //         setErrorMessage(requestError);
+    //         setOpen(true);
+    //     }
+    // }, [requestError]);
 
     // Combobox data transaction
     // 사이트
@@ -154,33 +163,20 @@ const ProjectsPage = () => {
             return;
         }
         switch (resData.transactionId) {
-            case 'siteList':
+            case 'getList':
                 if (resData.data.data) {
-                    let siteData = resData.data.data;
-                    let list = [];
-                    siteData.map((site, index) => {
-                        const s = { id: site.id, name: site.name };
-                        console.log(s);
-                        list.push(s);
-                    });
-                    setSiteList(list);
+                    setStatusAllList(resData.data.data);
 
-                    if (param_site_id) {
-                        console.log('==============called...here ');
-                        console.log(search_site_id);
-                        console.log(search_is_use);
-                        console.log(param_site_id);
-                        console.log(param_is_use);
-                        console.log('================');
-                        setSiteId(param_site_id);
-                        if (param_is_use === 'true') {
-                            setIsUse(true);
-                        } else {
-                            setIsUse(false);
+                    let itemData = resData.data.data;
+                    let list = [];
+                    itemData.map((item, index) => {
+                        if (item.parent_code === '') {
+                            const s = { id: item.id, name: item.name };
+                            console.log(s);
+                            list.push(s);
                         }
-                        roleSearch(param_is_use, search_site_id);
-                        //searchClick();
-                    }
+                    });
+                    setStatusList(list);
                 }
                 break;
             default:
@@ -188,25 +184,25 @@ const ProjectsPage = () => {
     }, [resData]);
 
     // Transaction Return
-    useEffect(() => {
-        if (!responseData) {
-            return;
-        }
-        switch (responseData.transactionId) {
-            case 'roleList':
-                if (responseData.data.data && responseData.data.data.length > 0) {
-                    setDataGridRows(responseData.data.data);
-                } else {
-                    setDataGridRows([]);
-                }
-                break;
-            case 'deleteData':
-                console.log('deleteData');
-                roleList();
-                break;
-            default:
-        }
-    }, [responseData]);
+    // useEffect(() => {
+    //     if (!responseData) {
+    //         return;
+    //     }
+    //     switch (responseData.transactionId) {
+    //         case 'roleList':
+    //             if (responseData.data.data && responseData.data.data.length > 0) {
+    //                 setDataGridRows(responseData.data.data);
+    //             } else {
+    //                 setDataGridRows([]);
+    //             }
+    //             break;
+    //         case 'deleteData':
+    //             console.log('deleteData');
+    //             roleList();
+    //             break;
+    //         default:
+    //     }
+    // }, [responseData]);
 
     const handleClose = () => {
         setVisible(false);
@@ -227,8 +223,80 @@ const ProjectsPage = () => {
                 break;
             case 'period':
                 setPeriod(e.target.value);
+                setDateFromToSet(e.target.value);
+                break;
+            case 'sts':
+                setSts(e.target.value);
+                // 진행상태 출력.
+                processPrint(e.target.value);
+                break;
+            case 'process':
+                setProcess(e.target.value);
+                break;
             default:
                 break;
+        }
+    };
+    // 기간 선택시 날짜 변경
+    const setDateFromToSet = (periodIndex) => {
+        switch (periodIndex) {
+            case '1':
+                setStartDate(moment().format('YYYY-MM-DD'));
+                setEndDate(moment().format('YYYY-MM-DD'));
+                break;
+            case '2':
+                setStartDate(moment().add(-1, 'days').format('YYYY-MM-DD'));
+                setEndDate(moment().add(-1, 'days').format('YYYY-MM-DD'));
+                break;
+            case '3':
+                setStartDate(moment().format('YYYY-MM-DD'));
+                setEndDate(moment().add(30, 'days').format('YYYY-MM-DD'));
+                break;
+            case '4':
+                setStartDate(moment().format('YYYY-MM-DD'));
+                setEndDate(moment().add(90, 'days').format('YYYY-MM-DD'));
+                break;
+            default:
+                break;
+        }
+    };
+    // 계약 상태 변경 시 진행상태 출력
+    const processPrint = (id) => {
+        setProcessList([]);
+        console.log(id);
+        let list = [];
+        statusAllList.map((item, index) => {
+            if (item.id === id && item.children && item.children.length > 0) {
+                item.children.map((subitem, idx) => {
+                    const s = { id: subitem.id, name: subitem.name };
+                    //console.log(s);
+                    list.push(s);
+                });
+                setProcessList(list);
+                return;
+            }
+        });
+    };
+    // Business Checkbox Handler
+    const checkedBusinessItemHandler = (id, isChecked) => {
+        console.log(id);
+        if (isChecked) {
+            checkedBusinessItems.add(id);
+            setCheckedBusinessItems(checkedBusinessItems);
+        } else if (!isChecked && checkedBusinessItems.has(id)) {
+            checkedBusinessItems.delete(id);
+            setCheckedBusinessItems(checkedBusinessItems);
+        }
+    };
+    // Network Checkbox Handler
+    const checkedNetworkItemHandler = (id, isChecked) => {
+        console.log(id);
+        if (isChecked) {
+            checkedNetworkItems.add(id);
+            setCheckedNetworkItems(checkedNetworkItems);
+        } else if (!isChecked && checkedNetworkItems.has(id)) {
+            checkedNetworkItems.delete(id);
+            setCheckedNetworkItems(checkedNetworkItems);
         }
     };
 
@@ -258,7 +326,19 @@ const ProjectsPage = () => {
         console.log('searchClick called...');
         //roleComboSearch(is_use, type, site_id);
     };
-    const clearClick = () => {};
+    const clearClick = () => {
+        setPeriod('1');
+        setStartDate(moment().format('YYYY-MM-DD'));
+        setEndDate(moment().format('YYYY-MM-DD'));
+        setSts('');
+        setProcess('');
+        checkedBusinessItems.clear();
+        setCheckedBusinessItems(new Set());
+        setCheckedNetworkItems(new Set());
+        checkedNetworkItems.clear();
+        setKeyword('');
+        setIsAllChecked(false);
+    };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
@@ -289,7 +369,6 @@ const ProjectsPage = () => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         type="date"
-                                        defaultValue=""
                                         sx={{ width: 140 }}
                                     />
                                 </FormControl>
@@ -306,7 +385,6 @@ const ProjectsPage = () => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         type="date"
-                                        defaultValue=""
                                         sx={{ width: 140 }}
                                     />
                                 </FormControl>
@@ -336,10 +414,13 @@ const ProjectsPage = () => {
                             </Grid>
                             <Grid item xs={8} sm={2.5}>
                                 <FormControl sx={{ m: 0, minWidth: 280 }} size="small">
-                                    <Select name="status" label="계정상태" value={period} onChange={handleChange}>
-                                        <MenuItem value="true">사용</MenuItem>
-                                        <MenuItem value="false">미사용</MenuItem>
+                                    <Select name="sts" label="계정상태" value={sts} onChange={handleChange}>
                                         <MenuItem value="">전체</MenuItem>
+                                        {statusList.map((item, index) => (
+                                            <MenuItem key={index} value={item.id}>
+                                                {item.name}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
                             </Grid>
@@ -351,70 +432,27 @@ const ProjectsPage = () => {
                             </Grid>
                             <Grid item xs={8} sm={2}>
                                 <FormControl sx={{ m: 0, minWidth: 280 }} size="small">
-                                    <Select name="status" label="계정상태" value={period} onChange={handleChange}>
-                                        <MenuItem value="true">사용</MenuItem>
-                                        <MenuItem value="false">미사용</MenuItem>
+                                    <Select name="process" label="계정상태" value={process} onChange={handleChange}>
                                         <MenuItem value="">전체</MenuItem>
+                                        {processList.map((item, index) => (
+                                            <MenuItem key={index} value={item.id}>
+                                                {item.name}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
                             </Grid>
                         </Grid>
+                        <BusinessCheckboxList checkedItemHandler={checkedBusinessItemHandler} isAllChecked={isAllChecked} />
+                        <NetworkCheckboxList checkedItemHandler={checkedNetworkItemHandler} />
                         <Grid container spacing={0} sx={{ mt: 1 }}>
-                            <Grid item xs={8} sm={1.2}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>사업 계열</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0 }} size="small">
-                                    <FormControlLabel
-                                        control={<Checkbox defaultChecked checked={checked1} onChange={handleChange} />}
-                                        label="NFT"
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.7}></Grid>
-                            <Grid item xs={8} sm={2}>
-                                <FormControl sx={{ m: 0 }} size="small">
-                                    <FormControlLabel
-                                        control={<Checkbox defaultChecked checked={checked2} onChange={handleChange} />}
-                                        label="DeFi"
-                                    />
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={0} sx={{ mt: 1 }}>
-                            <Grid item xs={8} sm={1.2}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>네트워크 계열</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0 }} size="small">
-                                    <FormControlLabel
-                                        control={<Checkbox defaultChecked checked={checked3} onChange={handleChange} />}
-                                        label="ERC-20"
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.7}></Grid>
-                            <Grid item xs={8} sm={2}>
-                                <FormControl sx={{ m: 0 }} size="small">
-                                    <FormControlLabel
-                                        control={<Checkbox defaultChecked checked={checked4} onChange={handleChange} />}
-                                        label="Klatn"
-                                    />
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
                             <Grid item xs={8} sm={1.2}>
                                 <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                     <Stack spacing={0}>검색어</Stack>
                                 </FormControl>
                             </Grid>
                             <Grid item xs={8} sm={4}>
-                                <FormControl sx={{ m: 0, minHeight: 25, minWidth: 240 }} size="small">
+                                <FormControl sx={{ m: 0, minHeight: 25, minWidth: 640 }} size="small">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"

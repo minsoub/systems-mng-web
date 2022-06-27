@@ -65,7 +65,7 @@ const AccountManagementPage = () => {
             align: 'center'
         },
         {
-            field: 'valid_start_date',
+            field: 'create_date',
             headerName: '생성날짜',
             flex: 1,
             headerAlign: 'center',
@@ -198,7 +198,7 @@ const AccountManagementPage = () => {
             let deleteIds = '';
             let idx = 0;
             selectedRows.map((data, Index) => {
-                if (idx > 0) deleteIdx = deleteIdx + '::';
+                if (idx > 0) deleteIds = deleteIds + '::';
                 deleteIds = deleteIds + data;
                 idx++;
             });

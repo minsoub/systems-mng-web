@@ -17,6 +17,7 @@ const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 // render - login
 const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
 const OtpLogin = Loadable(lazy(() => import('pages/authentication/OtpLogin')));
+const OtpSimpleLogin = Loadable(lazy(() => import('pages/authentication/OtpSimpleLogin')));
 const AuthRegister = Loadable(lazy(() => import('pages/authentication/Register')));
 
 // render - utilities
@@ -31,6 +32,8 @@ const TableSamplePage = Loadable(lazy(() => import('pages/table-page')));
 const CrudList = Loadable(lazy(() => import('pages/samples/crud/list')));
 const CrudWrite = Loadable(lazy(() => import('pages/samples/crud/write')));
 
+// profile - updateform
+const ProfileUpdateForm = Loadable(lazy(() => import('pages/profile/index')));
 // render - 사이트 운영 (거래지원 신청)
 const ProjectsPage = Loadable(lazy(() => import('pages/lrc/projects/index')));
 const ProjectsDetailPage = Loadable(lazy(() => import('pages/lrc/projects/detail')));
@@ -93,6 +96,10 @@ const MainRoutes = [
                 element: <OtpLogin />
             },
             {
+                path: 'otpsimplelogin',
+                element: <OtpSimpleLogin />
+            },
+            {
                 path: 'register',
                 element: <AuthRegister />
             }
@@ -105,6 +112,11 @@ const MainRoutes = [
             {
                 path: 'dashboard',
                 element: <DashboardDefault />
+            },
+            // profile update
+            {
+                path: 'profile/update',
+                element: <ProfileUpdateForm />
             },
             // 사이트 운영
             {
@@ -136,7 +148,7 @@ const MainRoutes = [
                 element: <FaqRegForm />
             },
             {
-                path: 'faq/req/:paramId/:paramNo',
+                path: 'faq/reg/:paramId/:paramNo',
                 element: <FaqRegForm />
             },
             // 사이트 관리

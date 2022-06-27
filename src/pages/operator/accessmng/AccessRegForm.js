@@ -399,12 +399,12 @@ const AccessRegForm = () => {
             roles.push(data.id);
         });
         const requestData = {
-            admin_account_id: id,
+            id: id,
             site_id: '', // null 이 가능.
             email: email,
             name: name,
             password: password,
-            role_management_id: roles,
+            roles: roles,
             status: status,
             is_use: is_use,
             is_send_mail: send_chk
