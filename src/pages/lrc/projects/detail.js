@@ -114,6 +114,7 @@ const ProjectsDetailPage = () => {
         }
     ];
     const navigate = useNavigate();
+    const { paramId } = useParams();
     const [responseData, requestError, loading, { roleList, roleComboSearch }] = RoleApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
@@ -308,16 +309,16 @@ const ProjectsDetailPage = () => {
                                 <Grid container spacing={0} sx={{ mt: 0 }}>
                                     <Grid item xs={8} sm={8}>
                                         <TabPanel value={value} index={0}>
-                                            <OfficeInfo value={value} index={0} />
+                                            <OfficeInfo value={value} projectId={paramId} index={0} />
                                         </TabPanel>
                                         <TabPanel value={value} index={1}>
-                                            <ProjectMng value={value} index={1} />
+                                            <ProjectMng value={value} projectId={paramId} index={1} />
                                         </TabPanel>
                                         <TabPanel value={value} index={2}>
-                                            <FileMng value={value} index={2} />
+                                            <FileMng value={value} projectId={paramId} index={2} />
                                         </TabPanel>
                                         <TabPanel value={value} index={3}>
-                                            <ProjectHistory value={value} index={3} />
+                                            <ProjectHistory value={value} projectId={paramId} index={3} />
                                         </TabPanel>
                                     </Grid>
                                     <Grid item xs={8} sm={4}>

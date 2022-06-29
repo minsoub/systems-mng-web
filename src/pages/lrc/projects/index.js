@@ -28,6 +28,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import StatusApi from 'apis/lrc/status/statusapi';
+import FoundationApi from 'apis/lrc/project/foundationapi';
 import ErrorScreen from 'components/ErrorScreen';
 import { BusinessCheckboxList } from './component/business';
 import { NetworkCheckboxList } from './component/network';
@@ -109,6 +110,7 @@ const ProjectsPage = () => {
     ];
     const navigate = useNavigate();
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
+    const [responseData, requestError, Loading, { foundationSearch }] = FoundationApi();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -124,11 +126,11 @@ const ProjectsPage = () => {
 
     // 검색 조건
     const [keyword, setKeyword] = useState('');
-    const [start_date, setStartDate] = useState(new Date());
-    const [end_date, setEndDate] = useState(new Date());
+    const [from_date, setStartDate] = useState(new Date());
+    const [to_date, setEndDate] = useState(new Date());
     const [period, setPeriod] = useState('1');
-    const [sts, setSts] = useState('');
-    const [process, setProcess] = useState('');
+    const [contract_code, setSts] = useState('');
+    const [progress_code, setProcess] = useState('');
 
     const [checkedBusinessItems, setCheckedBusinessItems] = useState(new Set()); // 비즈니스 체크박스 리스트
     const [checkedNetworkItems, setCheckedNetworkItems] = useState(new Set()); // Network 체크박스 리스트
@@ -184,25 +186,21 @@ const ProjectsPage = () => {
     }, [resData]);
 
     // Transaction Return
-    // useEffect(() => {
-    //     if (!responseData) {
-    //         return;
-    //     }
-    //     switch (responseData.transactionId) {
-    //         case 'roleList':
-    //             if (responseData.data.data && responseData.data.data.length > 0) {
-    //                 setDataGridRows(responseData.data.data);
-    //             } else {
-    //                 setDataGridRows([]);
-    //             }
-    //             break;
-    //         case 'deleteData':
-    //             console.log('deleteData');
-    //             roleList();
-    //             break;
-    //         default:
-    //     }
-    // }, [responseData]);
+    useEffect(() => {
+        if (!responseData) {
+            return;
+        }
+        switch (responseData.transactionId) {
+            case 'getList':
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    setDataGridRows(responseData.data.data);
+                } else {
+                    setDataGridRows([]);
+                }
+                break;
+            default:
+        }
+    }, [responseData]);
 
     const handleClose = () => {
         setVisible(false);
@@ -215,22 +213,22 @@ const ProjectsPage = () => {
             case 'keyword':
                 setKeyword(e.target.value);
                 break;
-            case 'start_date':
+            case 'from_date':
                 setStartDate(e.target.value);
                 break;
-            case 'end_date':
+            case 'to_date':
                 setEndDate(e.target.value);
                 break;
             case 'period':
                 setPeriod(e.target.value);
                 setDateFromToSet(e.target.value);
                 break;
-            case 'sts':
+            case 'contract_code':
                 setSts(e.target.value);
                 // 진행상태 출력.
                 processPrint(e.target.value);
                 break;
-            case 'process':
+            case 'progress_code':
                 setProcess(e.target.value);
                 break;
             default:
@@ -325,6 +323,25 @@ const ProjectsPage = () => {
     const searchClick = () => {
         console.log('searchClick called...');
         //roleComboSearch(is_use, type, site_id);
+        let business_list = [];
+        let network_list = [];
+        Array.from(checkedBusinessItems).map((item, idx) => {
+            business_list.push(item.id);
+        });
+        Array.from(checkedNetworkItems).map((item, idx) => {
+            network_list.push(item.id);
+        });
+        // 검색 조건 세팅
+        let data = {
+            from_date: from_date,
+            to_date: to_date,
+            contract_code: contract_code,
+            progress_code: progress_code,
+            business_list: business_list,
+            network_list: network_list,
+            keyword: keyword
+        };
+        foundationSearch(data);
     };
     const clearClick = () => {
         setPeriod('1');
@@ -363,9 +380,9 @@ const ProjectsPage = () => {
                             <Grid item xs={8} sm={1.5}>
                                 <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
                                     <TextField
-                                        id="start_date"
-                                        name="start_date"
-                                        value={start_date}
+                                        id="from_date"
+                                        name="from_date"
+                                        value={from_date}
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         type="date"
@@ -379,9 +396,9 @@ const ProjectsPage = () => {
                             <Grid item xs={8} sm={1.5}>
                                 <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
                                     <TextField
-                                        id="end_date"
-                                        name="end_date"
-                                        value={end_date}
+                                        id="to_date"
+                                        name="to_date"
+                                        value={to_date}
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         type="date"
@@ -414,7 +431,7 @@ const ProjectsPage = () => {
                             </Grid>
                             <Grid item xs={8} sm={2.5}>
                                 <FormControl sx={{ m: 0, minWidth: 280 }} size="small">
-                                    <Select name="sts" label="계정상태" value={sts} onChange={handleChange}>
+                                    <Select name="contract_code" label="계정상태" value={contract_code} onChange={handleChange}>
                                         <MenuItem value="">전체</MenuItem>
                                         {statusList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
@@ -432,7 +449,7 @@ const ProjectsPage = () => {
                             </Grid>
                             <Grid item xs={8} sm={2}>
                                 <FormControl sx={{ m: 0, minWidth: 280 }} size="small">
-                                    <Select name="process" label="계정상태" value={process} onChange={handleChange}>
+                                    <Select name="progress_code" label="계정상태" value={progress_code} onChange={handleChange}>
                                         <MenuItem value="">전체</MenuItem>
                                         {processList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>

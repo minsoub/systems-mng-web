@@ -128,6 +128,10 @@ const MainRoutes = [
                 element: <ProjectsDetailPage />
             },
             {
+                path: 'projects/detail/:paramId',
+                element: <ProjectsDetailPage />
+            },
+            {
                 path: 'status/list',
                 element: <StatusRegForm />
             },

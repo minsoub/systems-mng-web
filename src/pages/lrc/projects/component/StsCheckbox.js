@@ -68,7 +68,11 @@ export const StsCheckbox = ({ checkedItemHandler, isAllChecked, item }) => {
     return (
         <>
             <FormControl key={item.id} sx={{ m: 0 }} size="small">
-                <FormControlLabel key={item.id} control={<Checkbox id={item.id} onChange={(e) => checkHandler(e)} />} label={item.name} />
+                <FormControlLabel
+                    key={item.id}
+                    control={<Checkbox id={item.id} checked={bChecked} onChange={(e) => checkHandler(e)} />}
+                    label={item.name}
+                />
             </FormControl>
         </>
     );

@@ -32,97 +32,21 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
-import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
-import RoleApi from 'apis/roles/roleapi';
-import SiteApi from 'apis/site/siteapi';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import ErrorScreen from 'components/ErrorScreen';
 import TabPanel from 'components/TabPanel';
+import FoundationApi from 'apis/lrc/project/foundationapi';
+import NumberFormat from 'react-number-format';
 
 const OfficeInfo = (props) => {
-    let isSubmitting = false;
-    const columns = [
-        {
-            field: 'id',
-            headerName: '프로젝트명',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'name',
-            headerName: '심볼',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'type',
-            headerName: '거래지원 현황',
-            width: 300,
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            rederCell: (params) => {
-                <div>
-                    <Typography>{params.value.name}</Typography>
-                    <Typography color="textSecondary">{params.value.title}</Typography>
-                </div>;
-            }
-        },
-        {
-            field: 'is_use',
-            headerName: '사업 계열',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'valid_start_date',
-            headerName: '네트워크 계열',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'valid_end_date',
-            headerName: '마케팅 수량',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'parameter',
-            headerName: '연결 프로젝트',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'project_date',
-            headerName: '상장일',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'create_date',
-            headerName: '등록일시',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        }
-    ];
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { roleList, roleComboSearch }] = RoleApi();
-    const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-    const { children, tabindex, index, ...other } = props;
-
-    // 그리드 선택된 row id
-    const [selectedRows, setSeletedRows] = useState([]);
-    // 그리드 목록 데이터
-    const [dataGridRows, setDataGridRows] = useState([]);
-
-    const [value, setValue] = React.useState(0);
+    const [
+        responseData,
+        requestError,
+        Loading,
+        { foundationSearch, marketingSearch, reviewSearch, projectSearch, userSearch, icoSearch, officeSearch }
+    ] = FoundationApi();
+    const { projectId, children, tabindex, index, ...other } = props;
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -131,19 +55,31 @@ const OfficeInfo = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
     ////////////////////////////////////////////////////
 
-    // 검색 조건
-    const [keyword, setKeyword] = useState('');
-    const [start_date, setStartDate] = useState('');
-    const [end_date, setEndDate] = useState('');
-    const [period, setPeriod] = useState('1');
-    const [checked1, setChecked1] = useState(false);
-    const [checked2, setChecked2] = useState(false);
-    const [checked3, setChecked3] = useState(false);
-    const [checked4, setChecked4] = useState(false);
+    // 출력 정보 조회 데이터
+    const [officeInfo, setOfficeInfo] = useState({}); // 재단정보
+    const [projecInfo, setProjectInfo] = useState({}); // 프로젝트 정보
+    const [userList, setUserList] = useState([]); // User 정보
+    const [icoList, setIcoList] = useState([]); // ICO 정보
+    const [marketingList, setMarketingList] = useState([]); // 마켓팅 수량
+    const [reviewList, setReviewList] = useState([]); // 검토평가 리스트
+
     // onload
     useEffect(() => {
         //siteSearch(true, '');
         //roleList();
+        // 1. 재단정보 조회
+        officeSearch(projectId);
+        // 2. 프로젝트 정보 조회
+        projectSearch(projectId);
+        // 3. 담당자 정보 조회
+        userSearch(projectId);
+        // 4. 상장 정보 조회
+        icoSearch(projectId);
+        // 5. 마케팅 수량 정보 조회
+        marketingSearch(projectId);
+        // 6. 검토 평가 조회
+        reviewSearch(projectId);
+        // 7. 서류 제출 현황 조회
     }, []);
 
     // transaction error 처리
@@ -157,62 +93,53 @@ const OfficeInfo = (props) => {
         }
     }, [requestError]);
 
-    // Combobox data transaction
-    // 사이트
-    useEffect(() => {
-        if (!resData) {
-            return;
-        }
-        switch (resData.transactionId) {
-            case 'siteList':
-                if (resData.data.data) {
-                    let siteData = resData.data.data;
-                    let list = [];
-                    siteData.map((site, index) => {
-                        const s = { id: site.id, name: site.name };
-                        console.log(s);
-                        list.push(s);
-                    });
-                    setSiteList(list);
-
-                    if (param_site_id) {
-                        console.log('==============called...here ');
-                        console.log(search_site_id);
-                        console.log(search_is_use);
-                        console.log(param_site_id);
-                        console.log(param_is_use);
-                        console.log('================');
-                        setSiteId(param_site_id);
-                        if (param_is_use === 'true') {
-                            setIsUse(true);
-                        } else {
-                            setIsUse(false);
-                        }
-                        roleSearch(param_is_use, search_site_id);
-                        //searchClick();
-                    }
-                }
-                break;
-            default:
-        }
-    }, [resData]);
-
     // Transaction Return
     useEffect(() => {
         if (!responseData) {
             return;
         }
         switch (responseData.transactionId) {
-            case 'roleList':
-                if (responseData.data.data && responseData.data.data.length > 0) {
-                    setDataGridRows(responseData.data.data);
+            case 'getFoundationInfo':
+                if (responseData.data.data) {
+                    setOfficeInfo(responseData.data.data);
                 } else {
-                    setDataGridRows([]);
+                    setOfficeInfo({});
                 }
                 break;
-            case 'deleteData':
-                console.log('deleteData');
-                roleList();
+            case 'getProjectList':
+                if (responseData.data.data) {
+                    setProjectInfo(responseData.data.data);
+                } else {
+                    setProjectInfo({});
+                }
+                break;
+            case 'getUserList':
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    setUserList(responseData.data.data);
+                } else {
+                    setUserList([]);
+                }
+                break;
+            case 'getIcoList':
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    setIcoList(responseData.data.data);
+                } else {
+                    setIcoList([]);
+                }
+                break;
+            case 'getMarketingList':
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    setMarketingList(responseData.data.data);
+                } else {
+                    setMarketingList([]);
+                }
+                break;
+            case 'getReviewList':
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    setReviewList(responseData.data.data);
+                } else {
+                    setReviewList([]);
+                }
                 break;
             default:
         }
@@ -277,66 +204,94 @@ const OfficeInfo = (props) => {
     return (
         <Grid container alignItems="center" justifyContent="space-between">
             <Grid container spacing={0} sx={{ mt: 0 }}>
-                <Grid item xs={8} sm={3}>
-                    <Typography variant="h3">위믹스(WEMIX)</Typography>
+                <Grid item xs={8} sm={4}>
+                    <Typography variant="h3">
+                        {officeInfo.project_name}({officeInfo.symbol})
+                    </Typography>
                 </Grid>
                 <Grid item xs={8} sm={1}>
                     <FormControl sx={{ m: 0 }} size="small">
                         <Button disableElevation size="small" type="submit" variant="contained" color="primary">
-                            접수중
+                            {officeInfo.contract_name}
                         </Button>
                     </FormControl>
                 </Grid>
-                <Grid item xs={8} sm={2}></Grid>
+                <Grid item xs={8} sm={1}></Grid>
                 <Grid item xs={8} sm={3} sx={{ m: 1 }}>
-                    <Typography variant="h6">[체크리스트] 미작성</Typography>
+                    <Typography variant="h6">{officeInfo.progress_name}</Typography>
+                </Grid>
+                <Grid item xs={8} sm={2} sx={{ m: 0 }}>
+                    <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
+                        <Select name="site_id" label="연결 프로젝트 선택" onChange={handleChange}>
+                            <MenuItem value="">
+                                <em>연결 프로젝트 선택</em>
+                            </MenuItem>
+                        </Select>
+                    </FormControl>
                 </Grid>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 1 }}>
                 <FormControl sx={{ m: 0 }} fullWidth>
-                    <TextField id="outlined-multiline-static" multiline rows={3} defaultValue="Default Value" />
+                    <TextField id="outlined-multiline-static" multiline rows={3} defaultValue={officeInfo.admin_memo} />
                 </FormControl>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 1 }}>
                 <Typography variant="h4">프로젝트 정보</Typography>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 1 }}>
-                <MainCard sx={{ mt: 1 }} content={false}>
-                    <Table sx={{ width: 900 }} stickyHeader aria-label="simple table">
+                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                    <Table
+                        fixedheader={false}
+                        style={{ border: 1, width: '100%', tableLayout: 'auto' }}
+                        stickyHeader
+                        aria-label="simple table"
+                    >
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">사업계열</TableCell>
-                                <TableCell align="center">네트워크 계열</TableCell>
-                                <TableCell align="center">백서 링크</TableCell>
-                                <TableCell align="center">최초 발행일</TableCell>
+                                <TableCell style={{ width: '25%' }} align="center">
+                                    사업계열
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center">
+                                    네트워크 계열
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center">
+                                    백서 링크
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center">
+                                    최초 발행일
+                                </TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableRow>
-                            <TableCell component="th" scope="row">
-                                -333
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
-                            </TableCell>
-                        </TableRow>
+                        {projecInfo && (
+                            <TableRow>
+                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                    {projecInfo.business_name}
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                    {projecInfo.network_name}
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                    {projecInfo.whitepaper_link}
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                    {projecInfo.create_date}
+                                </TableCell>
+                            </TableRow>
+                        )}
                     </Table>
-                    <Table sx={{ width: 900 }} stickyHeader aria-label="simple table">
+                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">컨텍스트 주소</TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableRow>
-                            <TableCell component="th" scope="row">
-                                http://33333asdfasffasfasfasfasfasfasfsafasfasfasfasfasffasfasfasfasfasfasfas
-                            </TableCell>
-                        </TableRow>
+                        {projecInfo && (
+                            <TableRow>
+                                <TableCell component="th" scope="row">
+                                    {projecInfo.contract_address}
+                                </TableCell>
+                            </TableRow>
+                        )}
                     </Table>
                 </MainCard>
             </Grid>
@@ -344,30 +299,40 @@ const OfficeInfo = (props) => {
                 <Typography variant="h4">담당자 정보</Typography>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false}>
-                    <Table sx={{ width: 900 }} stickyHeader aria-label="simple table">
+                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                    <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">이름</TableCell>
-                                <TableCell align="center">연락처</TableCell>
-                                <TableCell align="center">SNS ID</TableCell>
-                                <TableCell align="center">이메일주소</TableCell>
+                                <TableCell style={{ width: '25%' }} align="center">
+                                    이름
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center">
+                                    연락처
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center">
+                                    SNS ID
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center">
+                                    이메일주소
+                                </TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableRow>
-                            <TableCell component="th" scope="row">
-                                -333
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
-                            </TableCell>
-                        </TableRow>
+                        {userList.map((item, index) => (
+                            <TableRow>
+                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                    {item.user_name}
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                    {item.phone}
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                    {item.sns_id}
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                    {item.email}
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </Table>
                 </MainCard>
             </Grid>
@@ -376,8 +341,8 @@ const OfficeInfo = (props) => {
                 <Typography variant="h4">상장 정보</Typography>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false}>
-                    <Table sx={{ width: 900 }} stickyHeader aria-label="simple table">
+                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">마켓 정보</TableCell>
@@ -385,17 +350,19 @@ const OfficeInfo = (props) => {
                                 <TableCell align="center">상장가 (원)</TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableRow>
-                            <TableCell component="th" scope="row">
-                                -333
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
-                            </TableCell>
-                        </TableRow>
+                        {icoList.map((item, index) => (
+                            <TableRow>
+                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                    {item.market_info}
+                                </TableCell>
+                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                    {item.ico_date}
+                                </TableCell>
+                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                    <NumberFormat value={item.price} displayType={'text'} thousandSeparator={true} prefix={''} />
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </Table>
                 </MainCard>
             </Grid>
@@ -404,8 +371,8 @@ const OfficeInfo = (props) => {
                 <Typography variant="h4">마케팅 수량</Typography>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false}>
-                    <Table sx={{ width: 900 }} stickyHeader aria-label="simple table">
+                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">심볼</TableCell>
@@ -413,17 +380,19 @@ const OfficeInfo = (props) => {
                                 <TableCell align="center">실제 상장 지원 수량</TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableRow>
-                            <TableCell component="th" scope="row">
-                                -333
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
-                            </TableCell>
-                        </TableRow>
+                        {marketingList.map((item, index) => (
+                            <TableRow>
+                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                    {item.symbol}
+                                </TableCell>
+                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                    <NumberFormat value={item.minimum_quantity} displayType={'text'} thousandSeparator={true} prefix={''} />
+                                </TableCell>
+                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                    <NumberFormat value={item.actual_quantity} displayType={'text'} thousandSeparator={true} prefix={''} />
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </Table>
                 </MainCard>
             </Grid>
@@ -432,8 +401,8 @@ const OfficeInfo = (props) => {
                 <Typography variant="h4">검토 평가</Typography>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false}>
-                    <Table sx={{ width: 900 }} stickyHeader aria-label="simple table">
+                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">평가 기관</TableCell>
@@ -441,17 +410,19 @@ const OfficeInfo = (props) => {
                                 <TableCell align="center">평가 자료</TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableRow>
-                            <TableCell component="th" scope="row">
-                                -333
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
-                            </TableCell>
-                        </TableRow>
+                        {reviewList.map((item, index) => (
+                            <TableRow>
+                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                    {item.organization}
+                                </TableCell>
+                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                    {item.result}
+                                </TableCell>
+                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                    {item.reference}
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </Table>
                 </MainCard>
             </Grid>
@@ -460,8 +431,8 @@ const OfficeInfo = (props) => {
                 <Typography variant="h4">서류 제출 현황</Typography>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false}>
-                    <Table sx={{ width: 900 }} stickyHeader aria-label="simple table">
+                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">거래지원 신청서</TableCell>
