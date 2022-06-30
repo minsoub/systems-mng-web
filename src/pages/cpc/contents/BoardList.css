@@ -1,0 +1,18 @@
+.div_thumbnail {
+    height: 240px;
+    overflow: hidden;
+}
+
+.img_thumbnail {
+    max-width: 100%;
+    height: auto !important;
+}
+
+.desc_container {
+    width: 100%;
+}
+
+.overflow-wrap {
+    overflow-wrap: break-word;
+    white-space: normal;
+}

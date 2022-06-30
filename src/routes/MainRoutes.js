@@ -43,6 +43,33 @@ const FaqCategoryPage = Loadable(lazy(() => import('pages/lrc/faq/categorylist')
 const FaqContentsPage = Loadable(lazy(() => import('pages/lrc/faq/index')));
 const FaqRegForm = Loadable(lazy(() => import('pages/lrc/faq/faqreg')));
 
+// render - 고객보호센터 - 메인 관리
+const CpcMainContentsMng = Loadable(lazy(() => import('pages/cpc/main/contents/index')));
+
+// render - 고객보호센터 - 콘텐츠 관리
+const CpcDamageCaseMng = Loadable(lazy(() => import('pages/cpc/contents/DamageCaseMng')));
+const CpcDamageCaseMngForm = Loadable(lazy(() => import('pages/cpc/contents/DamageCaseMngForm')));
+const CpcCampaignMng = Loadable(lazy(() => import('pages/cpc/contents/CampaignMng')));
+const CpcCampaignMngForm = Loadable(lazy(() => import('pages/cpc/contents/CampaignMngForm')));
+const CpcVirtualAssetBasicMng = Loadable(lazy(() => import('pages/cpc/contents/VirtualAssetBasicMng')));
+const CpcVirtualAssetBasicMngForm = Loadable(lazy(() => import('pages/cpc/contents/VirtualAssetBasicMngForm')));
+const CpcInsightColumnMng = Loadable(lazy(() => import('pages/cpc/contents/InsightColumnMng')));
+const CpcInsightColumnMngForm = Loadable(lazy(() => import('pages/cpc/contents/InsightColumnMngForm')));
+const CpcVirtualAssetTrendMng = Loadable(lazy(() => import('pages/cpc/contents/VirtualAssetTrendMng')));
+const CpcVirtualAssetTrendMngForm = Loadable(lazy(() => import('pages/cpc/contents/VirtualAssetTrendMngForm')));
+const CpcBlockChainNewsMng = Loadable(lazy(() => import('pages/cpc/contents/BlockChainNewsMng')));
+const CpcBlockChainNewsMngForm = Loadable(lazy(() => import('pages/cpc/contents/BlockChainNewsMngForm')));
+const CpcNoticeMng = Loadable(lazy(() => import('pages/cpc/contents/NoticeMng')));
+const CpcNoticeMngForm = Loadable(lazy(() => import('pages/cpc/contents/NoticeMngForm')));
+
+// render - 고객보호센터 - 사기신고 관리
+const CpcFraudReportMng = Loadable(lazy(() => import('pages/cpc/fraudReport/index')));
+const CpcFraudReportMngForm = Loadable(lazy(() => import('pages/cpc/fraudReport/FraudReportMngForm')));
+
+// render - 고객보호센터 - 법률상담 관리
+const CpcLegalCounsellingMng = Loadable(lazy(() => import('pages/cpc/legalCounselling/index')));
+const CpcLegalCounsellingMngForm = Loadable(lazy(() => import('pages/cpc/legalCounselling/LegalCounsellingMngForm')));
+
 // render - 사이트 관리
 const AccessMngPage = Loadable(lazy(() => import('pages/operator/accessmng/index')));
 const AccessRegForm = Loadable(lazy(() => import('pages/operator/accessmng/AccessRegForm')));
@@ -154,6 +181,114 @@ const MainRoutes = [
             {
                 path: 'faq/reg/:paramId/:paramNo',
                 element: <FaqRegForm />
+            },
+            // 고객보호센터 - 메인 관리
+            {
+                path: 'cpc/main/contents/list',
+                element: <CpcMainContentsMng />
+            },
+            // 고객보호센터 - 콘텐츠 관리
+            {
+                path: 'cpc/contents/damage-case/list',
+                element: <CpcDamageCaseMng />
+            },
+            {
+                path: 'cpc/contents/damage-case/reg',
+                element: <CpcDamageCaseMngForm />
+            },
+            {
+                path: 'cpc/contents/damage-case/reg/:boardId',
+                element: <CpcDamageCaseMngForm />
+            },
+            {
+                path: 'cpc/contents/campaign/list',
+                element: <CpcCampaignMng />
+            },
+            {
+                path: 'cpc/contents/campaign/reg',
+                element: <CpcCampaignMngForm />
+            },
+            {
+                path: 'cpc/contents/campaign/reg/:boardId',
+                element: <CpcCampaignMngForm />
+            },
+            {
+                path: 'cpc/contents/virtual-asset-basic/list',
+                element: <CpcVirtualAssetBasicMng />
+            },
+            {
+                path: 'cpc/contents/virtual-asset-basic/reg',
+                element: <CpcVirtualAssetBasicMngForm />
+            },
+            {
+                path: 'cpc/contents/virtual-asset-basic/reg/:boardId',
+                element: <CpcVirtualAssetBasicMngForm />
+            },
+            {
+                path: 'cpc/contents/insight-column/list',
+                element: <CpcInsightColumnMng />
+            },
+            {
+                path: 'cpc/contents/insight-column/reg',
+                element: <CpcInsightColumnMngForm />
+            },
+            {
+                path: 'cpc/contents/insight-column/reg/:boardId',
+                element: <CpcInsightColumnMngForm />
+            },
+            {
+                path: 'cpc/contents/virtual-asset-trend/list',
+                element: <CpcVirtualAssetTrendMng />
+            },
+            {
+                path: 'cpc/contents/virtual-asset-trend/reg',
+                element: <CpcVirtualAssetTrendMngForm />
+            },
+            {
+                path: 'cpc/contents/virtual-asset-trend/reg/:boardId',
+                element: <CpcVirtualAssetTrendMngForm />
+            },
+            {
+                path: 'cpc/contents/blockchain-news/list',
+                element: <CpcBlockChainNewsMng />
+            },
+            {
+                path: 'cpc/contents/blockchain-news/reg',
+                element: <CpcBlockChainNewsMngForm />
+            },
+            {
+                path: 'cpc/contents/blockchain-news/reg/:newsId',
+                element: <CpcBlockChainNewsMngForm />
+            },
+            {
+                path: 'cpc/contents/notice/list',
+                element: <CpcNoticeMng />
+            },
+            {
+                path: 'cpc/contents/notice/reg',
+                element: <CpcNoticeMngForm />
+            },
+            {
+                path: 'cpc/contents/notice/reg/:boardId',
+                element: <CpcNoticeMngForm />
+            },
+            // 고객보호센터 - 사기신고 관리
+            {
+                path: 'cpc/fraud-report/list',
+                element: <CpcFraudReportMng />
+            },
+            {
+                path: 'cpc/fraud-report/reg/:id',
+                element: <CpcFraudReportMngForm />
+            },
+            // 고객보호센터 - 법률상담 관리
+            {
+                path: 'cpc/legal-counselling/list',
+                element: <CpcLegalCounsellingMng />
+            },
+            {
+                path: 'cpc/legal-counselling/reg/:id',
+                element: <CpcLegalCounsellingMngForm />
             },
             // 사이트 관리
             {

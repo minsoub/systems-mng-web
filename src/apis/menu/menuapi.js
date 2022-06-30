@@ -154,6 +154,128 @@ const menus = [
                 ]
             },
             {
+                id: 'cpcmain',
+                title: '메인 관리',
+                type: 'collapse',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                parents_menu_id: 'sitemoperator',
+                children: [
+                    {
+                        id: 'cpcmaincontents',
+                        title: '콘텐츠 노출 관리',
+                        type: 'item',
+                        url: '/cpc/main/contents/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        breadcrumbs: true,
+                        parents_menu_id: 'cpcmain'
+                    }
+                ]
+            },
+            {
+                id: 'cpccontents',
+                title: '콘텐츠 관리',
+                type: 'collapse',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                parents_menu_id: 'sitemoperator',
+                children: [
+                    {
+                        id: 'cpcdamagecase',
+                        title: '피해사례',
+                        type: 'item',
+                        url: '/cpc/contents/damage-case/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        breadcrumbs: true,
+                        parents_menu_id: 'cpccontents'
+                    },
+                    {
+                        id: 'cpccampaign',
+                        title: '안전거래 캠페인',
+                        type: 'item',
+                        url: '/cpc/contents/campaign/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        breadcrumbs: true,
+                        parents_menu_id: 'cpccontents'
+                    },
+                    {
+                        id: 'cpcvirtualassetbasic',
+                        title: '가상자산의 기초',
+                        type: 'item',
+                        url: '/cpc/contents/virtual-asset-basic/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        breadcrumbs: true,
+                        parents_menu_id: 'cpccontents'
+                    },
+                    {
+                        id: 'cpcinsightcolumn',
+                        title: '인사이트 칼럼',
+                        type: 'item',
+                        url: '/cpc/contents/insight-column/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        breadcrumbs: true,
+                        parents_menu_id: 'cpccontents'
+                    },
+                    {
+                        id: 'cpcvirtualassettrend',
+                        title: '가상자산 동향',
+                        type: 'item',
+                        url: '/cpc/contents/virtual-asset-trend/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        breadcrumbs: true,
+                        parents_menu_id: 'cpccontents'
+                    },
+                    {
+                        id: 'cpcblockchainnews',
+                        title: '블록체인 뉴스',
+                        type: 'item',
+                        url: '/cpc/contents/blockchain-news/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        breadcrumbs: true,
+                        parents_menu_id: 'cpccontents'
+                    },
+                    {
+                        id: 'cpcnotice',
+                        title: '공지사항',
+                        type: 'item',
+                        url: '/cpc/contents/notice/list',
+                        auth: true,
+                        icon: icons.ChromeOutlined,
+                        breadcrumbs: true,
+                        parents_menu_id: 'cpccontents'
+                    }
+                ]
+            },
+            {
+                id: 'cpcfraudreport',
+                title: '사기신고 관리',
+                type: 'item',
+                url: '/cpc/fraud-report/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                parents_menu_id: 'sitemoperator'
+            },
+            {
+                id: 'cpclegalcounselling',
+                title: '법률상담 관리',
+                type: 'item',
+                url: '/cpc/legal-counselling/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                parents_menu_id: 'sitemoperator'
+            },
+            {
                 id: 'dealmng4',
                 title: '서비스 로그 관리',
                 type: 'item',
