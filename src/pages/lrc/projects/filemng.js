@@ -1,44 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import {
-    OutlinedInput,
-    Box,
     Button,
     Grid,
-    Stack,
     TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
     Typography,
     FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Radio,
-    RadioGroup,
     Table,
     TableBody,
-    TableContainer,
     TableHead,
     TableRow
 } from '@mui/material';
 import MainCard from 'components/MainCard';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
-import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import { styled } from '@mui/material/styles';
 import FilesApi from 'apis/lrc/project/filesapi';
-import ErrorScreen from 'components/ErrorScreen';
-import TabPanel from 'components/TabPanel';
-import { wrap } from 'lodash';
-import { FileDownload } from '../../../../node_modules/@mui/icons-material/index';
 
 const FileMng = (props) => {
     const navigate = useNavigate();
@@ -432,12 +410,19 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url1" name="url1" value={url1} onChange={handleChange} onBlur={handleBlur} />
+                                                <TextField
+                                                    id="url1"
+                                                    name="url1"
+                                                    size="small"
+                                                    value={url1}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -473,7 +458,7 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -493,6 +478,7 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file1"
                                                     name="file1"
+                                                    size="small"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
                                                         accept:
@@ -533,12 +519,12 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url2" name="url2" value={url2} onChange={handleChange} />
+                                                <TextField id="url2" name="url2" size="small" value={url2} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -574,7 +560,7 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -594,6 +580,7 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file2"
                                                     name="file2"
+                                                    size="small"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
                                                         accept:
@@ -634,12 +621,12 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url3" name="url3" value={url3} onChange={handleChange} />
+                                                <TextField id="url3" name="url3" size="small" value={url3} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -675,7 +662,7 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -695,6 +682,7 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file3"
                                                     name="file3"
+                                                    size="small"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
                                                         accept:
@@ -735,12 +723,12 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url4" name="url4" value={url4} onChange={handleChange} />
+                                                <TextField id="url4" name="url4" size="small" value={url4} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -776,7 +764,7 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -796,6 +784,7 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file4"
                                                     name="file4"
+                                                    size="small"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
                                                         accept:
@@ -836,12 +825,12 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url5" name="url5" value={url5} onChange={handleChange} />
+                                                <TextField id="url5" name="url5" size="small" value={url5} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -877,7 +866,7 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -897,6 +886,7 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file5"
                                                     name="file5"
+                                                    size="small"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
                                                         accept:
@@ -937,12 +927,12 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url6" name="url6" value={url6} onChange={handleChange} />
+                                                <TextField id="url6" name="url6" size="small" value={url6} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -978,7 +968,7 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -998,6 +988,7 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file6"
                                                     name="file6"
+                                                    size="small"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
                                                         accept:
@@ -1038,12 +1029,12 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url7" name="url7" value={url7} onChange={handleChange} />
+                                                <TextField id="url7" name="url7" size="small" value={url7} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -1079,7 +1070,7 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -1099,6 +1090,7 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file7"
                                                     name="file7"
+                                                    size="small"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
                                                         accept:
@@ -1139,12 +1131,12 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url8" name="url8" value={url8} onChange={handleChange} />
+                                                <TextField id="url8" name="url8" size="small" value={url8} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -1180,7 +1172,7 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -1200,6 +1192,7 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file8"
                                                     name="file8"
+                                                    size="small"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
                                                         accept:
@@ -1240,12 +1233,12 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url9" name="url9" value={url9} onChange={handleChange} />
+                                                <TextField id="url9" name="url9" size="small" value={url9} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -1281,7 +1274,7 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -1301,6 +1294,7 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file9"
                                                     name="file9"
+                                                    size="small"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
                                                         accept:
@@ -1340,13 +1334,13 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
-                                            <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url10" name="url10" value={url10} onChange={handleChange} />
+                                            <FormControl sx={{ m: 0 }} fullWidth>
+                                                <TextField id="url10" name="url10" size="small" value={url10} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -1382,7 +1376,7 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 1 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -1402,6 +1396,7 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file10"
                                                     name="file10"
+                                                    size="small"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
                                                         accept:

@@ -26,7 +26,7 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
-import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import StatusApi from 'apis/lrc/status/statusapi';
 import FoundationApi from 'apis/lrc/project/foundationapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -45,7 +45,7 @@ const ProjectsPage = () => {
             align: 'center'
         },
         {
-            field: 'name',
+            field: 'symbol',
             headerName: '심볼',
             flex: 1,
             headerAlign: 'center',
@@ -66,14 +66,14 @@ const ProjectsPage = () => {
             }
         },
         {
-            field: 'is_use',
+            field: 'business_name',
             headerName: '사업 계열',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
-            field: 'valid_start_date',
+            field: 'network_name',
             headerName: '네트워크 계열',
             flex: 1,
             headerAlign: 'center',
@@ -87,14 +87,14 @@ const ProjectsPage = () => {
             align: 'center'
         },
         {
-            field: 'parameter',
+            field: 'project_link',
             headerName: '연결 프로젝트',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
-            field: 'project_date',
+            field: 'ico_date',
             headerName: '상장일',
             flex: 1,
             headerAlign: 'center',
@@ -130,7 +130,7 @@ const ProjectsPage = () => {
     const [to_date, setEndDate] = useState(new Date());
     const [period, setPeriod] = useState('1');
     const [contract_code, setSts] = useState('');
-    const [progress_code, setProcess] = useState('');
+    const [process_code, setProcess] = useState('');
 
     const [checkedBusinessItems, setCheckedBusinessItems] = useState(new Set()); // 비즈니스 체크박스 리스트
     const [checkedNetworkItems, setCheckedNetworkItems] = useState(new Set()); // Network 체크박스 리스트
@@ -159,7 +159,6 @@ const ProjectsPage = () => {
     // }, [requestError]);
 
     // Combobox data transaction
-    // 사이트
     useEffect(() => {
         if (!resData) {
             return;
@@ -228,7 +227,7 @@ const ProjectsPage = () => {
                 // 진행상태 출력.
                 processPrint(e.target.value);
                 break;
-            case 'progress_code':
+            case 'process_code':
                 setProcess(e.target.value);
                 break;
             default:
@@ -310,9 +309,7 @@ const ProjectsPage = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            let searchCondition = { site_id: site_id, is_use: is_use, type: type };
-
-            //navigate(`/authmng/reg/${rowData.id}`);
+            navigate(`/projects/detail/${rowData.id}`);
         }
     };
 
@@ -336,7 +333,7 @@ const ProjectsPage = () => {
             from_date: from_date,
             to_date: to_date,
             contract_code: contract_code,
-            progress_code: progress_code,
+            progress_code: process_code,
             business_list: business_list,
             network_list: network_list,
             keyword: keyword
@@ -449,7 +446,7 @@ const ProjectsPage = () => {
                             </Grid>
                             <Grid item xs={8} sm={2}>
                                 <FormControl sx={{ m: 0, minWidth: 280 }} size="small">
-                                    <Select name="progress_code" label="계정상태" value={progress_code} onChange={handleChange}>
+                                    <Select name="process_code" label="계정상태" value={process_code} onChange={handleChange}>
                                         <MenuItem value="">전체</MenuItem>
                                         {processList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
