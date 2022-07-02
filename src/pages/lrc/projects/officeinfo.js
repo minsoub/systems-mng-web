@@ -36,6 +36,7 @@ import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import ErrorScreen from 'components/ErrorScreen';
 import TabPanel from 'components/TabPanel';
 import FoundationApi from 'apis/lrc/project/foundationapi';
+import StatusApi from 'apis/lrc/status/statusapi';
 import NumberFormat from 'react-number-format';
 
 const OfficeInfo = (props) => {
@@ -44,8 +45,9 @@ const OfficeInfo = (props) => {
         responseData,
         requestError,
         Loading,
-        { foundationSearch, marketingSearch, reviewSearch, projectSearch, userSearch, icoSearch, officeSearch }
+        { foundationSearch, marketingSearch, reviewSearch, projectSearch, userSearch, icoSearch, officeSearch, projectLinkListSearch }
     ] = FoundationApi();
+    const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
     const { projectId, children, tabindex, index, ...other } = props;
 
     ////////////////////////////////////////////////////
@@ -57,6 +59,7 @@ const OfficeInfo = (props) => {
 
     // 출력 정보 조회 데이터
     const [officeInfo, setOfficeInfo] = useState({}); // 재단정보
+    const [projectLink, setProjectLink] = useState([]); // 프로젝트 연결 리스트.
     const [projecInfo, setProjectInfo] = useState({}); // 프로젝트 정보
     const [userList, setUserList] = useState([]); // User 정보
     const [icoList, setIcoList] = useState([]); // ICO 정보
@@ -69,6 +72,8 @@ const OfficeInfo = (props) => {
         //roleList();
         // 1. 재단정보 조회
         officeSearch(projectId);
+        // 1.1 프로젝트 연결 조회
+        projectLinkListSearch(projectId);
         // 2. 프로젝트 정보 조회
         projectSearch(projectId);
         // 3. 담당자 정보 조회
@@ -80,7 +85,7 @@ const OfficeInfo = (props) => {
         // 6. 검토 평가 조회
         reviewSearch(projectId);
         // 7. 서류 제출 현황 조회
-    }, []);
+    }, [projectId]);
 
     // transaction error 처리
     useEffect(() => {
@@ -104,6 +109,13 @@ const OfficeInfo = (props) => {
                     setOfficeInfo(responseData.data.data);
                 } else {
                     setOfficeInfo({});
+                }
+                break;
+            case 'getProjectLinkList': // 프로젝트 연결 리스트
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    setProjectLink(responseData.data.data);
+                } else {
+                    setProjectLink([]);
                 }
                 break;
             case 'getProjectList':
@@ -153,8 +165,10 @@ const OfficeInfo = (props) => {
     };
     const handleChange = (e) => {
         switch (e.target.name) {
-            case 'keyword':
-                setKeyword(e.target.value);
+            case 'project_link':
+                if (e.target.value === '') return;
+                console.log(e.target.value);
+                navigate('/projects/detail/' + e.target.value);
                 break;
             case 'start_date':
                 setStartDate(e.target.value);
@@ -218,14 +232,19 @@ const OfficeInfo = (props) => {
                 </Grid>
                 <Grid item xs={8} sm={1}></Grid>
                 <Grid item xs={8} sm={3} sx={{ m: 1 }}>
-                    <Typography variant="h6">{officeInfo.progress_name}</Typography>
+                    <Typography variant="h6">{officeInfo.process_name}</Typography>
                 </Grid>
                 <Grid item xs={8} sm={2} sx={{ m: 0 }}>
                     <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
-                        <Select name="site_id" label="연결 프로젝트 선택" onChange={handleChange}>
+                        <Select name="project_link" label="연결 프로젝트 선택" onChange={handleChange}>
                             <MenuItem value="">
                                 <em>연결 프로젝트 선택</em>
                             </MenuItem>
+                            {projectLink.map((item, index) => (
+                                <MenuItem key={index} value={item.link_project_id}>
+                                    {item.link_project_name} ( {item.link_project_symbol} )
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                 </Grid>
