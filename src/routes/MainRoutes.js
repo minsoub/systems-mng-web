@@ -278,7 +278,7 @@ const MainRoutes = [
                 element: <CpcFraudReportMng />
             },
             {
-                path: 'cpc/fraud-report/reg/:id',
+                path: 'cpc/fraud-report/reg/:applyId',
                 element: <CpcFraudReportMngForm />
             },
             // 고객보호센터 - 법률상담 관리
@@ -287,7 +287,7 @@ const MainRoutes = [
                 element: <CpcLegalCounsellingMng />
             },
             {
-                path: 'cpc/legal-counselling/reg/:id',
+                path: 'cpc/legal-counselling/reg/:applyId',
                 element: <CpcLegalCounsellingMngForm />
             },
             // 사이트 관리
