@@ -37,6 +37,7 @@ const DamageCaseMngForm = () => {
     const [id, setId] = useState('');
     const [category, setCategory] = useState('');
     const [title, setTitle] = useState('');
+    const [createAccountName, setCreateAccountName] = useState('');
 
     // 웹에디터
     const editorRef = useRef(null);
@@ -93,10 +94,12 @@ const DamageCaseMngForm = () => {
                 setCategory(responseData.data.data.category);
                 setTitle(responseData.data.data.title);
                 setContent(responseData.data.data.contents);
+                setCreateAccountName(responseData.data.data.createAccountName);
                 break;
             case 'createBoard':
                 alert('등록되었습니다.');
                 setId(responseData.data.data.id);
+                setCreateAccountName(responseData.data.data.createAccountName);
                 break;
             case 'updateBoard':
                 alert('저장되었습니다.');
@@ -161,8 +164,10 @@ const DamageCaseMngForm = () => {
                 contents: content,
                 category
             };
+            const formData = new FormData();
+            formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
             console.log(data);
-            createBoard(boardMasterId, data);
+            createBoard(boardMasterId, formData);
         }
     };
 
@@ -186,8 +191,10 @@ const DamageCaseMngForm = () => {
                 contents: content,
                 category
             };
+            const formData = new FormData();
+            formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
             console.log(data);
-            updateBoard(boardMasterId, data);
+            updateBoard(boardMasterId, formData);
         }
     };
 
@@ -234,7 +241,7 @@ const DamageCaseMngForm = () => {
                                 <Stack spacing={0}>제목</Stack>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={8} sm={4}>
+                        <Grid item xs>
                             <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
                                 <TextField
                                     id="filled-hidden-label-small"
@@ -267,6 +274,20 @@ const DamageCaseMngForm = () => {
                             </FormControl>
                         </Grid>
                     </Grid>
+                    {createAccountName && (
+                        <Grid container spacing={3}>
+                            <Grid item xs={8} sm={1.5}>
+                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                    <Stack spacing={0}>등록자</Stack>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs mr={1}>
+                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
+                                    {createAccountName}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    )}
                 </MainCard>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item xs={8} sm={0.8}>

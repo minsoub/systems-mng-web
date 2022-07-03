@@ -39,6 +39,7 @@ const NoticeMngForm = () => {
     const [is_set_notice, setIsSetNotice] = useState(false);
     const [title, setTitle] = useState('');
     const [tags, setTags] = useState([]);
+    const [createAccountName, setCreateAccountName] = useState('');
 
     // 웹에디터
     const editorRef = useRef(null);
@@ -130,6 +131,7 @@ const NoticeMngForm = () => {
                 setIsSetNotice(responseData.data.data.is_set_notice);
                 setTitle(responseData.data.data.title);
                 setContent(responseData.data.data.contents);
+                setCreateAccountName(responseData.data.data.createAccountName);
 
                 if (responseData.data.data.tags) {
                     const tempTags = responseData.data.data.tags.map((tag) => {
@@ -144,6 +146,7 @@ const NoticeMngForm = () => {
             case 'createBoard':
                 alert('등록되었습니다.');
                 setId(responseData.data.data.id);
+                setCreateAccountName(responseData.data.data.createAccountName);
                 break;
             case 'updateBoard':
                 alert('저장되었습니다.');
@@ -332,6 +335,20 @@ const NoticeMngForm = () => {
                             </FormControl>
                         </Grid>
                     </Grid>
+                    {createAccountName && (
+                        <Grid container spacing={3}>
+                            <Grid item xs={8} sm={1.5}>
+                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                    <Stack spacing={0}>등록자</Stack>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs mr={1}>
+                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
+                                    {createAccountName}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    )}
                 </MainCard>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item xs={8} sm={0.8}>

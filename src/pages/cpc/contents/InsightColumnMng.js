@@ -22,13 +22,14 @@ import moment from 'moment';
 import './BoardList.css';
 
 const InsightColumnMng = () => {
+    const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
     let isSubmitting = false;
     const getContents = (params) => {
         return (
             <div className="desc_container">
                 <h3 className="overflow-wrap">{params.row.title}</h3>
                 <p className="overflow-wrap">{params.row.description}</p>
-                <p className="overflow-wrap">{params.row.tags && '#'.concat(params.row.tags.join(' #'))}</p>
+                <p className="overflow-wrap">{params.row.tags && params.row.tags.length > 0 && '#'.concat(params.row.tags.join(' #'))}</p>
                 <p>{params.row.create_date}</p>
             </div>
         );
@@ -59,7 +60,11 @@ const InsightColumnMng = () => {
             align: 'center',
             renderCell: (params) => (
                 <div className="div_thumbnail">
-                    <img className="img_thumbnail" src={params.value} alt={`${params.row.title} 썸네일 이미지`} />
+                    <img
+                        className="img_thumbnail"
+                        src={params.value && (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)}
+                        alt={`${params.row.title} 썸네일 이미지`}
+                    />
                 </div>
             ),
             maxWidth: 240

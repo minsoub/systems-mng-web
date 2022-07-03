@@ -21,14 +21,15 @@ import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import './BoardList.css';
 
-const VirtualAssetTrendMng = () => {
+const DigitalAssetTrendMng = () => {
+    const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
     let isSubmitting = false;
     const getContents = (params) => {
         return (
             <div className="desc_container">
                 <h3 className="overflow-wrap">{params.row.title}</h3>
                 <p className="overflow-wrap">{params.row.description}</p>
-                <p className="overflow-wrap">{params.row.tags && '#'.concat(params.row.tags.join(' #'))}</p>
+                <p className="overflow-wrap">{params.row.tags && params.row.tags.length > 0 && '#'.concat(params.row.tags.join(' #'))}</p>
                 <p>{params.row.create_date}</p>
             </div>
         );
@@ -51,7 +52,11 @@ const VirtualAssetTrendMng = () => {
             align: 'center',
             renderCell: (params) => (
                 <div className="div_thumbnail">
-                    <img className="img_thumbnail" src={params.value} alt={`${params.row.title} 썸네일 이미지`} />
+                    <img
+                        className="img_thumbnail"
+                        src={params.value && (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)}
+                        alt={`${params.row.title} 썸네일 이미지`}
+                    />
                 </div>
             ),
             maxWidth: 240
@@ -216,7 +221,7 @@ const VirtualAssetTrendMng = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/cpc/contents/virtual-asset-trend/reg/${rowData.id}`);
+            navigate(`/cpc/contents/digital-asset-trend/reg/${rowData.id}`);
         }
     };
 
@@ -267,7 +272,7 @@ const VirtualAssetTrendMng = () => {
     // 등록
     const addClick = () => {
         console.log('addClick called...');
-        navigate('/cpc/contents/virtual-asset-trend/reg');
+        navigate('/cpc/contents/digital-asset-trend/reg');
     };
 
     return (
@@ -430,4 +435,4 @@ const VirtualAssetTrendMng = () => {
     );
 };
 
-export default VirtualAssetTrendMng;
+export default DigitalAssetTrendMng;
