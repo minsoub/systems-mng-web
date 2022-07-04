@@ -67,8 +67,8 @@ const CpcFraudReportMng = Loadable(lazy(() => import('pages/cpc/fraudReport/inde
 const CpcFraudReportMngForm = Loadable(lazy(() => import('pages/cpc/fraudReport/FraudReportMngForm')));
 
 // render - 고객보호센터 - 법률상담 관리
-const CpcLegalCounsellingMng = Loadable(lazy(() => import('pages/cpc/legalCounselling/index')));
-const CpcLegalCounsellingMngForm = Loadable(lazy(() => import('pages/cpc/legalCounselling/LegalCounsellingMngForm')));
+const CpcLegalCounselingMng = Loadable(lazy(() => import('pages/cpc/legalCounseling/index')));
+const CpcLegalCounselingMngForm = Loadable(lazy(() => import('pages/cpc/legalCounseling/LegalCounselingMngForm')));
 
 // render - 사이트 관리
 const AccessMngPage = Loadable(lazy(() => import('pages/operator/accessmng/index')));
@@ -283,12 +283,12 @@ const MainRoutes = [
             },
             // 고객보호센터 - 법률상담 관리
             {
-                path: 'cpc/legal-counselling/list',
-                element: <CpcLegalCounsellingMng />
+                path: 'cpc/legal-counseling/list',
+                element: <CpcLegalCounselingMng />
             },
             {
-                path: 'cpc/legal-counselling/reg/:applyId',
-                element: <CpcLegalCounsellingMngForm />
+                path: 'cpc/legal-counseling/reg/:applyId',
+                element: <CpcLegalCounselingMngForm />
             },
             // 사이트 관리
             {

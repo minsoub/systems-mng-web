@@ -14,14 +14,13 @@ import {
     RadioGroup
 } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
-import FraudReportApi from 'apis/cpc/fraudReport/fraudreportapi';
+import LegalCounselingApi from 'apis/cpc/legalCounseling/regalcounselingapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 
-const FraudReportMng = () => {
+const LegalCounselingMng = () => {
     let isSubmitting = false;
     const columns = [
         {
@@ -58,11 +57,35 @@ const FraudReportMng = () => {
             }
         },
         {
-            field: 'title',
-            headerName: '제목',
+            field: 'name',
+            headerName: '이름',
             flex: 1,
             headerAlign: 'center',
             align: 'left'
+        },
+        {
+            field: 'email',
+            headerName: '이메일주소',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'cell_phone',
+            headerName: '전화번호',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'service_privacy',
+            headerName: '서비스 이용 동의',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            renderCell: (params) => {
+                return params.value && params.value === true && <CheckIcon />;
+            }
         },
         {
             field: 'terms_privacy',
@@ -75,35 +98,15 @@ const FraudReportMng = () => {
             }
         },
         {
-            field: 'attach_file_id',
-            headerName: '첨부파일',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 120,
-            renderCell: (params) => {
-                return params.value && <AttachFileIcon />;
-            }
-        },
-        {
             field: 'create_date',
             headerName: '등록일시',
             flex: 1,
             headerAlign: 'center',
-            align: 'center',
-            maxWidth: 200
-        },
-        {
-            field: 'email',
-            headerName: '제보자',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 220
+            align: 'center'
         }
     ];
     const navigate = useNavigate();
-    const [responseData, requestError, resLoading, { searchFraudReportList, getExcelDownload, getFileDownload }] = FraudReportApi();
+    const [responseData, requestError, resLoading, { searchLegalCounselingList, getExcelDownload, getFileDownload }] = LegalCounselingApi();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -136,7 +139,7 @@ const FraudReportMng = () => {
             status,
             keyword
         };
-        searchFraudReportList(request);
+        searchLegalCounselingList(request);
     }, []);
 
     // transaction error 처리
@@ -156,7 +159,7 @@ const FraudReportMng = () => {
             return;
         }
         switch (responseData.transactionId) {
-            case 'getFraudReports':
+            case 'getLegalCounselings':
                 if (responseData.data.data && responseData.data.data.length > 0) {
                     setDataGridRows(responseData.data.data);
                 } else {
@@ -256,7 +259,7 @@ const FraudReportMng = () => {
                 setDownloadFileName(rowData.row.attach_file_name);
                 getFileDownload(rowData.row.attach_file_id);
             } else {
-                navigate(`/cpc/fraud-report/reg/${rowData.id}`);
+                navigate(`/cpc/legal-counseling/reg/${rowData.id}`);
             }
         }
     };
@@ -283,7 +286,7 @@ const FraudReportMng = () => {
             status,
             keyword
         };
-        searchFraudReportList(request);
+        searchLegalCounselingList(request);
     };
 
     // 엑셀 다운로드
@@ -295,7 +298,7 @@ const FraudReportMng = () => {
             status,
             keyword
         };
-        setDownloadFileName('사기신고_다운로드.xlsx');
+        setDownloadFileName('법률상담신청_다운로드.xlsx');
         getExcelDownload(request);
     };
 
@@ -304,10 +307,10 @@ const FraudReportMng = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
-                        <Typography variant="h3">사기신고 관리</Typography>
+                        <Typography variant="h3">법률 상담 관리</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 사기신고 관리</Typography>
+                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 법률 상담 관리</Typography>
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
@@ -484,4 +487,4 @@ const FraudReportMng = () => {
     );
 };
 
-export default FraudReportMng;
+export default LegalCounselingMng;

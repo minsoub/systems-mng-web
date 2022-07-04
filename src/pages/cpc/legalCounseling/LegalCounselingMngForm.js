@@ -13,13 +13,18 @@ import {
     FormControlLabel
 } from '@mui/material';
 import MainCard from 'components/MainCard';
-import FraudReportApi from 'apis/cpc/fraudReport/fraudreportapi';
+import LegalCounselingApi from 'apis/cpc/legalCounseling/regalcounselingapi';
 import ErrorScreen from 'components/ErrorScreen';
 
-const FraudReportMngForm = () => {
+const LegalCounselingMngForm = () => {
     const navigate = useNavigate();
     const { applyId } = useParams();
-    const [responseData, requestError, resLoading, { searchFraudReport, updateFraudReport, getFileDownload }] = FraudReportApi();
+    const [
+        responseData,
+        requestError,
+        resLoading,
+        { searchLegalCounseling, updateLegalCounseling, getFileDownload }
+    ] = LegalCounselingApi();
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -31,9 +36,11 @@ const FraudReportMngForm = () => {
     // 입력 값
     const [id, setId] = useState('');
     const [status, setStatus] = useState('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [title, setTitle] = useState('');
+    const [cell_phone, setCellPhone] = useState('');
     const [contents, setContents] = useState('');
+    const [service_privacy, setServicePrivacy] = useState('');
     const [terms_privacy, setTermsPrivacy] = useState('');
     const [answer_to_contacts, setAnswerToContacts] = useState('');
     const [answer, setAnswer] = useState('');
@@ -62,7 +69,7 @@ const FraudReportMngForm = () => {
     // Transaction Return
     useEffect(() => {
         if (id) {
-            searchFraudReport(id);
+            searchLegalCounseling(id);
         }
     }, [id]);
 
@@ -71,11 +78,13 @@ const FraudReportMngForm = () => {
             return;
         }
         switch (responseData.transactionId) {
-            case 'getFraudReport':
+            case 'getLegalCounseling':
                 setStatus(responseData.data.data.status);
+                setName(responseData.data.data.name);
                 setEmail(responseData.data.data.email);
-                setTitle(responseData.data.data.title);
+                setCellPhone(responseData.data.data.cell_phone);
                 setContents(responseData.data.data.contents);
+                setServicePrivacy(responseData.data.data.service_privacy);
                 setTermsPrivacy(responseData.data.data.terms_privacy);
                 setAnswerToContacts(responseData.data.data.answer_to_contacts);
                 setAnswer(responseData.data.data.answer);
@@ -83,7 +92,7 @@ const FraudReportMngForm = () => {
                 setAttachFileName(responseData.data.data.attach_file_name);
                 setCreateDate(responseData.data.data.create_date);
                 break;
-            case 'updateFraudReport':
+            case 'updateLegalCounseling':
                 alert('저장되었습니다.');
                 break;
             case 'getFileDownload':
@@ -135,7 +144,7 @@ const FraudReportMngForm = () => {
     // 목록
     const listClick = () => {
         console.log('listClick called...');
-        navigate('/cpc/fraud-report/list');
+        navigate('/cpc/legal-counseling/list');
     };
 
     const isValidate = () => {
@@ -157,7 +166,7 @@ const FraudReportMngForm = () => {
                 send_to_email
             };
             console.log(data);
-            updateFraudReport(data);
+            updateLegalCounseling(data);
         }
     };
 
@@ -166,10 +175,10 @@ const FraudReportMngForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
-                        <Typography variant="h3">사고신고 관리</Typography>
+                        <Typography variant="h3">법률 상담 관리</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 사고신고 관리</Typography>
+                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 법률 상담 관리</Typography>
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
@@ -189,7 +198,17 @@ const FraudReportMngForm = () => {
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
                             <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>제보자</Stack>
+                                <Stack spacing={0}>이름</Stack>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs mr={1}>
+                            {name}
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3}>
+                        <Grid item xs={8} sm={1.5}>
+                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                <Stack spacing={0}>이메일주소</Stack>
                             </FormControl>
                         </Grid>
                         <Grid item xs mr={1}>
@@ -199,11 +218,11 @@ const FraudReportMngForm = () => {
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
                             <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>제목</Stack>
+                                <Stack spacing={0}>전화번호</Stack>
                             </FormControl>
                         </Grid>
                         <Grid item xs mr={1}>
-                            {title}
+                            {cell_phone}
                         </Grid>
                     </Grid>
                     <Grid container spacing={3}>
@@ -214,6 +233,16 @@ const FraudReportMngForm = () => {
                         </Grid>
                         <Grid item xs mr={1}>
                             {contents}
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3}>
+                        <Grid item xs={8} sm={1.5}>
+                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                <Stack spacing={0}>서비스 이용 동의</Stack>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs mr={1}>
+                            {service_privacy === true ? 'Y' : 'N'}
                         </Grid>
                     </Grid>
                     <Grid container spacing={3}>
@@ -309,4 +338,4 @@ const FraudReportMngForm = () => {
     );
 };
 
-export default FraudReportMngForm;
+export default LegalCounselingMngForm;

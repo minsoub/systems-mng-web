@@ -266,10 +266,10 @@ const menus = [
                 parents_menu_id: 'sitemoperator'
             },
             {
-                id: 'cpclegalcounselling',
+                id: 'cpclegalcounseling',
                 title: '법률상담 관리',
                 type: 'item',
-                url: '/cpc/legal-counselling/list',
+                url: '/cpc/legal-counseling/list',
                 auth: true,
                 icon: icons.ChromeOutlined,
                 breadcrumbs: true,
