@@ -10,12 +10,12 @@ const FraudReportApis = () => {
     const getFraudReports = (request) => {
         const start_date = request.start_date;
         const end_date = request.end_date;
-        const staus = request.staus == undefined ? '' : encodeURIComponent(request.staus);
+        const status = request.status == undefined ? '' : encodeURIComponent(request.status);
         const keyword = request.keyword == undefined ? '' : encodeURIComponent(request.keyword);
         callApi('getFraudReports', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/mng/cpc/fraud-report?start_date=${start_date}&end_date=${end_date}&staus=${staus}&query=${keyword}`,
+            url: `/mng/cpc/fraud-report?start_date=${start_date}&end_date=${end_date}&status=${status}&query=${keyword}`,
             requestConfig: {}
         });
     };
@@ -44,12 +44,12 @@ const FraudReportApis = () => {
     const getExcelDownload = (request) => {
         const start_date = request.start_date;
         const end_date = request.end_date;
-        const staus = request.staus == undefined ? '' : encodeURIComponent(request.staus);
+        const status = request.status == undefined ? '' : encodeURIComponent(request.status);
         const keyword = request.keyword == undefined ? '' : encodeURIComponent(request.keyword);
         callApi('getExcelDownload', {
             axiosInstance: axiosInstanceDownload,
             method: 'get',
-            url: `/mng/cpc/fraud-report/excel-download?start_date=${start_date}&end_date=${end_date}&staus=${staus}&query=${keyword}`,
+            url: `/mng/cpc/fraud-report/excel-download?start_date=${start_date}&end_date=${end_date}&status=${status}&query=${keyword}`,
             requestConfig: {}
         });
     };

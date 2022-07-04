@@ -14,6 +14,7 @@ import {
     RadioGroup
 } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import LegalCounselingApi from 'apis/cpc/legalCounseling/regalcounselingapi';
@@ -61,7 +62,7 @@ const LegalCounselingMng = () => {
             headerName: '이름',
             flex: 1,
             headerAlign: 'center',
-            align: 'left'
+            align: 'center'
         },
         {
             field: 'email',
@@ -95,6 +96,17 @@ const LegalCounselingMng = () => {
             align: 'center',
             renderCell: (params) => {
                 return params.value && params.value === true && <CheckIcon />;
+            }
+        },
+        {
+            field: 'attach_file_id',
+            headerName: '첨부파일',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 120,
+            renderCell: (params) => {
+                return params.value && <AttachFileIcon />;
             }
         },
         {
@@ -397,7 +409,7 @@ const LegalCounselingMng = () => {
                                 </Stack>
                             </Grid>
                         </Grid>
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
+                        {/* <Grid container spacing={0} sx={{ mt: 0 }}>
                             <Grid item xs={8} sm={0.7}>
                                 <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                     <Stack spacing={0}>검색어</Stack>
@@ -418,7 +430,7 @@ const LegalCounselingMng = () => {
                                     />
                                 </FormControl>
                             </Grid>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </MainCard>
                 <Grid container alignItems="right" justifyContent="space-between">
