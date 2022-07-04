@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
@@ -11,13 +11,21 @@ import {
     FormControl
 } from '@mui/material';
 import MainCard from 'components/MainCard';
-import BlockChainNewsApi from 'apis/cpc/board/newsapi';
+import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
+import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
+import ThumbnailAttach from './ThumbnailAttach';
+import JoditEditor from 'jodit-react';
+import { WithContext as ReactTags } from 'react-tag-input';
+import './ReactTags.css';
 
-const BlockChainNewsMngForm = () => {
+const DigitalAssetBasicMngForm = () => {
     const navigate = useNavigate();
-    const { newsId } = useParams();
-    const [responseData, requestError, resLoading, { searchNews, createNews, updateNews, deleteNews }] = BlockChainNewsApi();
+    const { boardId } = useParams();
+    const boardMasterId = 'CPC_DIGITAL_ASSET';
+    const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
+    const [responseData, requestError, resLoading, { searchBoard, createBoard, updateBoard, deleteBoard }] = BoardApi();
+    const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -28,16 +36,64 @@ const BlockChainNewsMngForm = () => {
 
     // 입력 값
     const [id, setId] = useState('');
-    const [newspaper, setNewspaper] = useState('');
     const [title, setTitle] = useState('');
-    const [thumbnail_url, setThumbnailUrl] = useState('');
-    const [posting_date, setPostingDate] = useState('');
-    const [link_url, setLinkUrl] = useState('');
+    const [thumbnail, setThumbnail] = useState('');
+    const [description, setDescription] = useState('');
+    const [tags, setTags] = useState([]);
     const [createAccountName, setCreateAccountName] = useState('');
+
+    // 파일
+    const [thumbnailFile, setThumbnailFile] = useState('');
+    const handleFileChange = (file) => {
+        console.log(file);
+        if (file != null) {
+            setThumbnailFile(file);
+        }
+    };
+
+    // 웹에디터
+    const editorRef = useRef(null);
+    const [content, setContent] = useState('');
+    const config = {
+        readonly: false,
+        placeholder: '내용을 입력하세요.',
+        uploader: {
+            insertImageAsBase64URI: true
+        },
+        width: '100%',
+        height: 700
+    };
+
+    // 태그
+    const [suggestions, setSuggestions] = useState([]);
+    const KeyCodes = {
+        comma: 188,
+        enter: 13
+    };
+    const delimiters = [KeyCodes.comma, KeyCodes.enter];
+    const handleDelete = (i) => {
+        setTags(tags.filter((tag, index) => index !== i));
+    };
+    const handleAddition = (tag) => {
+        setTags([...tags, tag]);
+    };
+    const handleDrag = (tag, currPos, newPos) => {
+        const newTags = tags.slice();
+
+        newTags.splice(currPos, 1);
+        newTags.splice(newPos, 0, tag);
+
+        // re-render
+        setTags(newTags);
+    };
+    const handleTagClick = (index) => {
+        console.log(`The tag at index ${index} was clicked`);
+    };
 
     // onload
     useEffect(() => {
-        setId(newsId);
+        searchBoardMaster(boardMasterId);
+        setId(boardId);
     }, []);
 
     // transaction error 처리
@@ -53,8 +109,26 @@ const BlockChainNewsMngForm = () => {
 
     // Transaction Return
     useEffect(() => {
+        if (!resBoardMaster) {
+            return;
+        }
+        if (resBoardMaster.data.data.is_use_tag) {
+            const masterTags = resBoardMaster.data.data.tags;
+            if (masterTags) {
+                const tempSuggestions = masterTags.map((tag) => {
+                    return {
+                        id: tag,
+                        text: tag
+                    };
+                });
+                setSuggestions(tempSuggestions);
+            }
+        }
+    }, [resBoardMaster]);
+
+    useEffect(() => {
         if (id) {
-            searchNews(id);
+            searchBoard(boardMasterId, id);
         }
     }, [id]);
 
@@ -63,23 +137,32 @@ const BlockChainNewsMngForm = () => {
             return;
         }
         switch (responseData.transactionId) {
-            case 'getNews':
-                setNewspaper(responseData.data.data.newspaper);
+            case 'getBoard':
                 setTitle(responseData.data.data.title);
-                setThumbnailUrl(responseData.data.data.thumbnail_url);
-                setPostingDate(responseData.data.data.posting_date);
-                setLinkUrl(responseData.data.data.link_url);
+                setThumbnail(responseData.data.data.thumbnail);
+                setDescription(responseData.data.data.description);
+                setContent(responseData.data.data.contents);
                 setCreateAccountName(responseData.data.data.createAccountName);
+
+                if (responseData.data.data.tags) {
+                    const tempTags = responseData.data.data.tags.map((tag) => {
+                        return {
+                            id: tag,
+                            text: tag
+                        };
+                    });
+                    setTags(tempTags);
+                }
                 break;
-            case 'createNews':
+            case 'createBoard':
                 alert('등록되었습니다.');
                 setId(responseData.data.data.id);
                 setCreateAccountName(responseData.data.data.createAccountName);
                 break;
-            case 'updateNews':
+            case 'updateBoard':
                 alert('저장되었습니다.');
                 break;
-            case 'deleteNews':
+            case 'deleteBoard':
                 alert('삭제되었습니다.');
                 listClick();
                 break;
@@ -95,20 +178,14 @@ const BlockChainNewsMngForm = () => {
     };
     const handleChange = (e) => {
         switch (e.target.name) {
-            case 'newspaper':
-                setNewspaper(e.target.value);
+            case 'thumbnail':
+                setThumbnail(e.target.value);
+                break;
+            case 'description':
+                setDescription(e.target.value);
                 break;
             case 'title':
                 setTitle(e.target.value);
-                break;
-            case 'thumbnail_url':
-                setThumbnailUrl(e.target.value);
-                break;
-            case 'posting_date':
-                setPostingDate(e.target.value);
-                break;
-            case 'link_url':
-                setLinkUrl(e.target.value);
                 break;
             default:
                 break;
@@ -118,24 +195,16 @@ const BlockChainNewsMngForm = () => {
     // 목록
     const listClick = () => {
         console.log('listClick called...');
-        navigate('/cpc/contents/blockchain-news/list');
+        navigate('/cpc/contents/digital-asset-basic/list');
     };
 
     const isValidate = () => {
-        if (!newspaper) {
-            alert('언론사를 입력해주세요.');
-            return false;
-        }
         if (!title) {
             alert('제목을 입력해주세요.');
             return false;
         }
-        if (!posting_date) {
-            alert('뉴스 게시일을 선택해주세요.');
-            return false;
-        }
-        if (!link_url) {
-            alert('뉴스 링크를 입력해주세요.');
+        if (!content) {
+            alert('내용을 입력해주세요.');
             return false;
         }
         return true;
@@ -147,15 +216,21 @@ const BlockChainNewsMngForm = () => {
 
         if (!isValidate()) return;
         if (confirm('등록 하시겠습니까?')) {
+            const inputTags = tags.map((tag) => {
+                return tag.text;
+            });
             const data = {
-                newspaper,
                 title,
-                thumbnail_url,
-                posting_date,
-                link_url
+                description,
+                thumbnail,
+                contents: content,
+                tags: inputTags
             };
-            console.log(data);
-            createNews(data);
+            const formData = new FormData();
+            formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+            thumbnailFile && formData.append('file', thumbnailFile, { type: 'multipart/form-data' });
+            console.log(formData);
+            createBoard(boardMasterId, formData);
         }
     };
 
@@ -163,7 +238,7 @@ const BlockChainNewsMngForm = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (confirm('삭제 하시겠습니까?')) {
-            deleteNews(id);
+            deleteBoard(boardMasterId, id);
         }
     };
 
@@ -173,16 +248,22 @@ const BlockChainNewsMngForm = () => {
 
         if (!isValidate()) return;
         if (confirm('저장 하시겠습니까?')) {
+            const inputTags = tags.map((tag) => {
+                return tag.text;
+            });
             const data = {
                 id,
-                newspaper,
                 title,
-                thumbnail_url,
-                posting_date,
-                link_url
+                description,
+                thumbnail,
+                contents: content,
+                tags: inputTags
             };
-            console.log(data);
-            updateNews(data);
+            const formData = new FormData();
+            formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+            thumbnailFile && formData.append('file', thumbnailFile, { type: 'multipart/form-data' });
+            console.log(formData);
+            updateBoard(boardMasterId, formData);
         }
     };
 
@@ -191,44 +272,22 @@ const BlockChainNewsMngForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
-                        <Typography variant="h3">콘텐츠 관리(블록체인 뉴스)</Typography>
+                        <Typography variant="h3">콘텐츠 관리(가상자산의 기초)</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 콘텐츠 관리 &gt; 블록체인 뉴스</Typography>
+                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 콘텐츠 관리 &gt; 가상자산의 기초</Typography>
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
                 <MainCard sx={{ mt: 2 }} content={false}>
-                    <Grid container spacing={3} mt={1}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>언론사</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={newspaper}
-                                    name="newspaper"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="언론사를 입력하세요."
-                                    fullWidth
-                                />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
                             <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>뉴스 제목</Stack>
+                                <Stack spacing={0}>제목</Stack>
                             </FormControl>
                         </Grid>
-                        <Grid item xs mr={1}>
-                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
+                        <Grid item xs>
+                            <FormControl sx={{ m: 0 }} size="small" required fullWidth>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -237,7 +296,7 @@ const BlockChainNewsMngForm = () => {
                                     name="title"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
-                                    placeholder="뉴스 제목을 입력하세요."
+                                    placeholder="제목을 입력하세요."
                                     fullWidth
                                 />
                             </FormControl>
@@ -246,21 +305,54 @@ const BlockChainNewsMngForm = () => {
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
                             <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>썸네일 이미지 링크</Stack>
+                                <Stack spacing={0}>썸네일 이미지</Stack>
                             </FormControl>
                         </Grid>
-                        <Grid item xs mr={1}>
-                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
+                        <Grid item xs>
+                            <ThumbnailAttach
+                                thumbnail={
+                                    thumbnail && (thumbnail.indexOf('http') === -1 ? `${boardThumbnailUrl}/${thumbnail}` : thumbnail)
+                                }
+                                handleChange={handleFileChange}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3}>
+                        <Grid item xs={8} sm={1.5}>
+                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                <Stack spacing={0}>요약 설명</Stack>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs>
+                            <FormControl sx={{ mt: 1, mb: 1 }} size="small" required fullWidth>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
                                     size="small"
-                                    value={thumbnail_url}
-                                    name="thumbnail_url"
+                                    value={description}
+                                    name="description"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
-                                    placeholder="썸네일 이미지 링크를 입력하세요."
+                                    placeholder="썸네일 하단에 표시될 요약 설명을 입력하세요."
                                     fullWidth
+                                    multiline
+                                />
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3}>
+                        <Grid item xs={8} sm={1.5}>
+                            <FormControl sx={{ m: 1 }} size="small">
+                                <Stack spacing={0}>내용</Stack>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs>
+                            <FormControl sx={{ m: 0 }} fullWidth>
+                                <JoditEditor
+                                    ref={editorRef}
+                                    value={content}
+                                    config={config}
+                                    onBlur={(newContent) => setContent(newContent)}
                                 />
                             </FormControl>
                         </Grid>
@@ -268,42 +360,22 @@ const BlockChainNewsMngForm = () => {
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
                             <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>뉴스 게시일</Stack>
+                                <Stack spacing={0}>해시태그</Stack>
                             </FormControl>
                         </Grid>
-                        <Grid item xs mr={1}>
-                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
-                                <TextField
-                                    id="posting_date"
-                                    name="posting_date"
-                                    value={posting_date}
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    type="date"
-                                    defaultValue=""
-                                    sx={{ width: 140 }}
-                                />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>뉴스 링크</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={link_url}
-                                    name="link_url"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="뉴스 링크를 입력하세요."
-                                    fullWidth
+                        <Grid item xs>
+                            <FormControl sx={{ mt: 1 }} size="small" required fullWidth>
+                                <ReactTags
+                                    tags={tags}
+                                    suggestions={suggestions}
+                                    delimiters={delimiters}
+                                    handleDelete={handleDelete}
+                                    handleAddition={handleAddition}
+                                    handleDrag={handleDrag}
+                                    handleTagClick={handleTagClick}
+                                    inputFieldPosition="inline"
+                                    placeholder="태그 입력 후 엔터"
+                                    autocomplete
                                 />
                             </FormControl>
                         </Grid>
@@ -380,4 +452,4 @@ const BlockChainNewsMngForm = () => {
     );
 };
 
-export default BlockChainNewsMngForm;
+export default DigitalAssetBasicMngForm;

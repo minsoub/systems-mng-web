@@ -21,14 +21,15 @@ import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import './BoardList.css';
 
-const VirtualAssetBasicMng = () => {
+const DigitalAssetBasicMng = () => {
+    const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
     let isSubmitting = false;
     const getContents = (params) => {
         return (
             <div className="desc_container">
                 <h3 className="overflow-wrap">{params.row.title}</h3>
                 <p className="overflow-wrap">{params.row.description}</p>
-                <p className="overflow-wrap">{params.row.tags && '#'.concat(params.row.tags.join(' #'))}</p>
+                <p className="overflow-wrap">{params.row.tags && params.row.tags.length > 0 && '#'.concat(params.row.tags.join(' #'))}</p>
                 <p>{params.row.create_date}</p>
             </div>
         );
@@ -51,7 +52,11 @@ const VirtualAssetBasicMng = () => {
             align: 'center',
             renderCell: (params) => (
                 <div className="div_thumbnail">
-                    <img className="img_thumbnail" src={params.value} alt={`${params.row.title} 썸네일 이미지`} />
+                    <img
+                        className="img_thumbnail"
+                        src={params.value && (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)}
+                        alt={`${params.row.title} 썸네일 이미지`}
+                    />
                 </div>
             ),
             maxWidth: 240
@@ -74,7 +79,7 @@ const VirtualAssetBasicMng = () => {
         }
     ];
     const navigate = useNavigate();
-    const boardMasterId = 'CPC_VIRTUAL_ASSET';
+    const boardMasterId = 'CPC_DIGITAL_ASSET';
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoardList, deleteBoardList }] = BoardApi();
 
@@ -216,7 +221,7 @@ const VirtualAssetBasicMng = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/cpc/contents/virtual-asset-basic/reg/${rowData.id}`);
+            navigate(`/cpc/contents/digital-asset-basic/reg/${rowData.id}`);
         }
     };
 
@@ -267,7 +272,7 @@ const VirtualAssetBasicMng = () => {
     // 등록
     const addClick = () => {
         console.log('addClick called...');
-        navigate('/cpc/contents/virtual-asset-basic/reg');
+        navigate('/cpc/contents/digital-asset-basic/reg');
     };
 
     return (
@@ -430,4 +435,4 @@ const VirtualAssetBasicMng = () => {
     );
 };
 
-export default VirtualAssetBasicMng;
+export default DigitalAssetBasicMng;

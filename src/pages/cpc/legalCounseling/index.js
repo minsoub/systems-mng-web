@@ -13,28 +13,16 @@ import {
     Radio,
     RadioGroup
 } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';
-import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
-import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
-import BoardApi from 'apis/cpc/board/boardapi';
+import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
+import LegalCounselingApi from 'apis/cpc/legalCounseling/regalcounselingapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
-import './BoardList.css';
 
-const InsightColumnMng = () => {
-    const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
+const LegalCounselingMng = () => {
     let isSubmitting = false;
-    const getContents = (params) => {
-        return (
-            <div className="desc_container">
-                <h3 className="overflow-wrap">{params.row.title}</h3>
-                <p className="overflow-wrap">{params.row.description}</p>
-                <p className="overflow-wrap">{params.row.tags && params.row.tags.length > 0 && '#'.concat(params.row.tags.join(' #'))}</p>
-                <p>{params.row.create_date}</p>
-            </div>
-        );
-    };
-
     const columns = [
         {
             field: 'id',
@@ -45,51 +33,92 @@ const InsightColumnMng = () => {
             maxWidth: 100
         },
         {
-            field: 'category',
-            headerName: '카테고리',
+            field: 'status',
+            headerName: '상태',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 200
+            maxWidth: 100,
+            valueFormatter: (params) => {
+                let statusName = '';
+                switch (params.value) {
+                    case 'REGISTER':
+                        statusName = '접수';
+                        break;
+                    case 'REQUEST':
+                        statusName = '답변요청';
+                        break;
+                    case 'COMPLETE':
+                        statusName = '답변완료';
+                        break;
+                    default:
+                        break;
+                }
+                return `${statusName}`;
+            }
         },
         {
-            field: 'thumbnail',
-            headerName: '썸네일 이미지',
+            field: 'name',
+            headerName: '이름',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'email',
+            headerName: '이메일주소',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'cell_phone',
+            headerName: '전화번호',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'service_privacy',
+            headerName: '서비스 이용 동의',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            renderCell: (params) => (
-                <div className="div_thumbnail">
-                    <img
-                        className="img_thumbnail"
-                        src={params.value && (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)}
-                        alt={`${params.row.title} 썸네일 이미지`}
-                    />
-                </div>
-            ),
-            maxWidth: 240
+            renderCell: (params) => {
+                return params.value && params.value === true && <CheckIcon />;
+            }
         },
         {
-            field: 'contents',
-            headerName: '콘텐츠',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'left',
-            renderCell: getContents
-        },
-        {
-            field: 'create_account_name',
-            headerName: '등록자',
+            field: 'terms_privacy',
+            headerName: '개인정보 수집 및 이용 동의',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            minWidth: 300
+            renderCell: (params) => {
+                return params.value && params.value === true && <CheckIcon />;
+            }
+        },
+        {
+            field: 'attach_file_id',
+            headerName: '첨부파일',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 120,
+            renderCell: (params) => {
+                return params.value && <AttachFileIcon />;
+            }
+        },
+        {
+            field: 'create_date',
+            headerName: '등록일시',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
         }
     ];
     const navigate = useNavigate();
-    const boardMasterId = 'CPC_INSIGHT_COLUMN';
-    const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
-    const [responseData, requestError, resLoading, { searchBoardList, deleteBoardList }] = BoardApi();
+    const [responseData, requestError, resLoading, { searchLegalCounselingList, getExcelDownload, getFileDownload }] = LegalCounselingApi();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -107,14 +136,22 @@ const InsightColumnMng = () => {
     const [start_date, setStartDate] = useState('');
     const [end_date, setEndDate] = useState('');
     const [period, setPeriod] = useState('1');
-    const [category, setCategory] = useState('');
+    const [status, setStatus] = useState('');
     const [keyword, setKeyword] = useState('');
+    const [downloadFileName, setDownloadFileName] = useState('');
 
     // onload
     useEffect(() => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
-        searchBoardMaster(boardMasterId);
+
+        const request = {
+            start_date: moment().format('YYYY-MM-DD'),
+            end_date: moment().format('YYYY-MM-DD'),
+            status,
+            keyword
+        };
+        searchLegalCounselingList(request);
     }, []);
 
     // transaction error 처리
@@ -130,39 +167,34 @@ const InsightColumnMng = () => {
 
     // Transaction Return
     useEffect(() => {
-        if (!resBoardMaster) {
-            return;
-        }
-        const request = {
-            start_date,
-            end_date,
-            keyword,
-            category
-        };
-        searchBoardList(boardMasterId, request);
-    }, [resBoardMaster]);
-
-    useEffect(() => {
         if (!responseData) {
             return;
         }
         switch (responseData.transactionId) {
-            case 'getBoards':
+            case 'getLegalCounselings':
                 if (responseData.data.data && responseData.data.data.length > 0) {
                     setDataGridRows(responseData.data.data);
                 } else {
                     setDataGridRows([]);
                 }
                 break;
-            case 'deleteBoards':
-                alert('삭제되었습니다.');
-                const request = {
-                    start_date,
-                    end_date,
-                    keyword,
-                    category
-                };
-                searchBoardList(boardMasterId, request);
+            case 'getExcelDownload':
+            case 'getFileDownload':
+                if (responseData.data) {
+                    let res = responseData;
+                    console.log('res data....');
+                    console.log(res);
+                    console.log(res.fileName);
+                    const url = window.URL.createObjectURL(new Blob([res.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `${downloadFileName}`);
+                    link.style.cssText = 'display:none';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    setDownloadFileName('');
+                }
                 break;
             default:
         }
@@ -188,8 +220,8 @@ const InsightColumnMng = () => {
                 setPeriod(e.target.value);
                 setDateFromToSet(e.target.value);
                 break;
-            case 'category':
-                setCategory(e.target.value);
+            case 'status':
+                setStatus(e.target.value);
                 break;
             case 'keyword':
                 setKeyword(e.target.value);
@@ -234,8 +266,13 @@ const InsightColumnMng = () => {
 
     // 그리드 클릭
     const handleClick = (rowData) => {
-        if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/cpc/contents/insight-column/reg/${rowData.id}`);
+        if (rowData && rowData.field) {
+            if (rowData.field === 'attach_file_id') {
+                setDownloadFileName(rowData.row.attach_file_name);
+                getFileDownload(rowData.row.attach_file_id);
+            } else {
+                navigate(`/cpc/legal-counseling/reg/${rowData.id}`);
+            }
         }
     };
 
@@ -248,7 +285,7 @@ const InsightColumnMng = () => {
         setStartDate('');
         setEndDate('');
         setPeriod('1');
-        setCategory('');
+        setStatus('');
         setKeyword('');
     };
 
@@ -258,37 +295,23 @@ const InsightColumnMng = () => {
         const request = {
             start_date,
             end_date,
-            keyword,
-            category
+            status,
+            keyword
         };
-        searchBoardList(boardMasterId, request);
+        searchLegalCounselingList(request);
     };
 
-    // 삭제
-    const deleteClick = () => {
-        console.log('deleteClick called...');
-        if (selectedRows.length === 0) {
-            alert('삭제 할 콘텐츠를 체크하세요!');
-            return;
-        }
-        console.log(selectedRows);
-        if (confirm('삭제 하시겠습니까?')) {
-            let deleteIds = '';
-            let idx = 0;
-            selectedRows.map((data, Index) => {
-                if (idx > 0) deleteIds = deleteIds + '::';
-                deleteIds = deleteIds + data;
-                idx++;
-            });
-            console.log(deleteIds);
-            deleteBoardList(boardMasterId, deleteIds);
-        }
-    };
-
-    // 등록
-    const addClick = () => {
-        console.log('addClick called...');
-        navigate('/cpc/contents/insight-column/reg');
+    // 엑셀 다운로드
+    const excelDownloadClick = () => {
+        console.log('excelDownloadClick called...');
+        const request = {
+            start_date,
+            end_date,
+            status,
+            keyword
+        };
+        setDownloadFileName('법률상담신청_다운로드.xlsx');
+        getExcelDownload(request);
     };
 
     return (
@@ -296,10 +319,10 @@ const InsightColumnMng = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
-                        <Typography variant="h3">콘텐츠 관리(인사이트 칼럼)</Typography>
+                        <Typography variant="h3">법률 상담 관리</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 콘텐츠 관리 &gt; 인사이트 칼럼</Typography>
+                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 법률 상담 관리</Typography>
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
@@ -364,7 +387,7 @@ const InsightColumnMng = () => {
                         <Grid container spacing={0} sx={{ mt: 0 }}>
                             <Grid item xs={8} sm={0.7}>
                                 <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>카테고리</Stack>
+                                    <Stack spacing={0}>상태</Stack>
                                 </FormControl>
                             </Grid>
                             <Grid item xs={8} sm={7.3}>
@@ -372,23 +395,21 @@ const InsightColumnMng = () => {
                                     <FormControl sx={{ m: 0, height: 25 }} fullWidth>
                                         <RadioGroup
                                             row
-                                            aria-labelledby="category-radio-buttons-group-label"
-                                            name="category"
-                                            value={category}
+                                            aria-labelledby="status-radio-buttons-group-label"
+                                            name="status"
+                                            value={status}
                                             onChange={handleChange}
                                         >
                                             <FormControlLabel value="" control={<Radio />} label="전체" />
-                                            {resBoardMaster &&
-                                                resBoardMaster.data.data.is_use_category &&
-                                                resBoardMaster.data.data.categories.map((category) => (
-                                                    <FormControlLabel value={category} control={<Radio />} label={category} />
-                                                ))}
+                                            <FormControlLabel value="REGISTER" control={<Radio />} label="접수" />
+                                            <FormControlLabel value="REQUEST" control={<Radio />} label="답변요청" />
+                                            <FormControlLabel value="COMPLETE" control={<Radio />} label="답변완료" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Stack>
                             </Grid>
                         </Grid>
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
+                        {/* <Grid container spacing={0} sx={{ mt: 0 }}>
                             <Grid item xs={8} sm={0.7}>
                                 <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                     <Stack spacing={0}>검색어</Stack>
@@ -409,7 +430,7 @@ const InsightColumnMng = () => {
                                     />
                                 </FormControl>
                             </Grid>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </MainCard>
                 <Grid container alignItems="right" justifyContent="space-between">
@@ -446,8 +467,24 @@ const InsightColumnMng = () => {
                         </Grid>
                     </Grid>
                 </Grid>
+                <Grid container alignItems="center" justifyContent="flex-end">
+                    <Grid item xs={8} sm={1.2}>
+                        <FormControl sx={{ mt: 1, mb: 1 }} size="small">
+                            <Button
+                                disableElevation
+                                size="small"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={excelDownloadClick}
+                            >
+                                엑셀다운로드
+                            </Button>
+                        </FormControl>
+                    </Grid>
+                </Grid>
                 <MainCard sx={{ mt: 2 }} content={false}>
-                    <CheckBoxDataGrid
+                    <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
                         handlePageChange={handlePage}
@@ -456,26 +493,10 @@ const InsightColumnMng = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </MainCard>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item xs={8} sm={0.8}>
-                        <FormControl sx={{ m: 1 }} size="small">
-                            <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={deleteClick}>
-                                선택삭제
-                            </Button>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={8} sm={0.6}>
-                        <FormControl sx={{ m: 1 }} size="small">
-                            <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={addClick}>
-                                등록
-                            </Button>
-                        </FormControl>
-                    </Grid>
-                </Grid>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>
     );
 };
 
-export default InsightColumnMng;
+export default LegalCounselingMng;

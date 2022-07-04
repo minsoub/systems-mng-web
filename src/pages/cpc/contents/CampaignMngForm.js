@@ -8,16 +8,15 @@ import {
     Stack,
     TextField,
     Typography,
-    FormControl,
-    Card,
-    CardMedia
+    FormControl
 } from '@mui/material';
 import MainCard from 'components/MainCard';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
+import ThumbnailAttach from './ThumbnailAttach';
 import JoditEditor from 'jodit-react';
-import { Tag, WithContext as ReactTags } from 'react-tag-input';
+import { WithContext as ReactTags } from 'react-tag-input';
 import './ReactTags.css';
 
 const CampaignMngForm = () => {
@@ -26,6 +25,7 @@ const CampaignMngForm = () => {
     const boardMasterId = 'CPC_CAMPAIGN';
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoard, createBoard, updateBoard, deleteBoard }] = BoardApi();
+    const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -40,6 +40,16 @@ const CampaignMngForm = () => {
     const [thumbnail, setThumbnail] = useState('');
     const [description, setDescription] = useState('');
     const [tags, setTags] = useState([]);
+    const [createAccountName, setCreateAccountName] = useState('');
+
+    // 파일
+    const [thumbnailFile, setThumbnailFile] = useState('');
+    const handleFileChange = (file) => {
+        console.log(file);
+        if (file != null) {
+            setThumbnailFile(file);
+        }
+    };
 
     // 웹에디터
     const editorRef = useRef(null);
@@ -132,17 +142,22 @@ const CampaignMngForm = () => {
                 setThumbnail(responseData.data.data.thumbnail);
                 setDescription(responseData.data.data.description);
                 setContent(responseData.data.data.contents);
-                const tempTags = responseData.data.data.tags.map((tag) => {
-                    return {
-                        id: tag,
-                        text: tag
-                    };
-                });
-                setTags(tempTags);
+                setCreateAccountName(responseData.data.data.createAccountName);
+
+                if (responseData.data.data.tags) {
+                    const tempTags = responseData.data.data.tags.map((tag) => {
+                        return {
+                            id: tag,
+                            text: tag
+                        };
+                    });
+                    setTags(tempTags);
+                }
                 break;
             case 'createBoard':
                 alert('등록되었습니다.');
                 setId(responseData.data.data.id);
+                setCreateAccountName(responseData.data.data.createAccountName);
                 break;
             case 'updateBoard':
                 alert('저장되었습니다.');
@@ -211,8 +226,11 @@ const CampaignMngForm = () => {
                 contents: content,
                 tags: inputTags
             };
-            console.log(data);
-            createBoard(boardMasterId, data);
+            const formData = new FormData();
+            formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+            thumbnailFile && formData.append('file', thumbnailFile, { type: 'multipart/form-data' });
+            console.log(formData);
+            createBoard(boardMasterId, formData);
         }
     };
 
@@ -241,8 +259,11 @@ const CampaignMngForm = () => {
                 contents: content,
                 tags: inputTags
             };
-            console.log(data);
-            updateBoard(boardMasterId, data);
+            const formData = new FormData();
+            formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+            thumbnailFile && formData.append('file', thumbnailFile, { type: 'multipart/form-data' });
+            console.log(formData);
+            updateBoard(boardMasterId, formData);
         }
     };
 
@@ -265,8 +286,8 @@ const CampaignMngForm = () => {
                                 <Stack spacing={0}>제목</Stack>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={8} sm={4}>
-                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
+                        <Grid item xs>
+                            <FormControl sx={{ m: 0 }} size="small" required fullWidth>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -284,15 +305,16 @@ const CampaignMngForm = () => {
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
                             <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>썸네일</Stack>
+                                <Stack spacing={0}>썸네일 이미지</Stack>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={8} sm={4}>
-                            <FormControl sx={{ mb: 1, minWidth: 160 }} size="small" required fullWidth>
-                                <Card>
-                                    <CardMedia style={{ width: 398, height: 240 }} image={thumbnail} />
-                                </Card>
-                            </FormControl>
+                        <Grid item xs>
+                            <ThumbnailAttach
+                                thumbnail={
+                                    thumbnail && (thumbnail.indexOf('http') === -1 ? `${boardThumbnailUrl}/${thumbnail}` : thumbnail)
+                                }
+                                handleChange={handleFileChange}
+                            />
                         </Grid>
                     </Grid>
                     <Grid container spacing={3}>
@@ -302,7 +324,7 @@ const CampaignMngForm = () => {
                             </FormControl>
                         </Grid>
                         <Grid item xs>
-                            <FormControl sx={{ m: 0 }} size="small" required fullWidth>
+                            <FormControl sx={{ mt: 1, mb: 1 }} size="small" required fullWidth>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -358,6 +380,20 @@ const CampaignMngForm = () => {
                             </FormControl>
                         </Grid>
                     </Grid>
+                    {createAccountName && (
+                        <Grid container spacing={3}>
+                            <Grid item xs={8} sm={1.5}>
+                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                    <Stack spacing={0}>등록자</Stack>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs mr={1}>
+                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
+                                    {createAccountName}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    )}
                 </MainCard>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item xs={8} sm={0.8}>

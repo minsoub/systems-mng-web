@@ -204,10 +204,10 @@ const menus = [
                         parents_menu_id: 'cpccontents'
                     },
                     {
-                        id: 'cpcvirtualassetbasic',
+                        id: 'cpcdigitalassetbasic',
                         title: '가상자산의 기초',
                         type: 'item',
-                        url: '/cpc/contents/virtual-asset-basic/list',
+                        url: '/cpc/contents/digital-asset-basic/list',
                         auth: true,
                         icon: icons.ChromeOutlined,
                         breadcrumbs: true,
@@ -224,10 +224,10 @@ const menus = [
                         parents_menu_id: 'cpccontents'
                     },
                     {
-                        id: 'cpcvirtualassettrend',
+                        id: 'cpcdigitalassettrend',
                         title: '가상자산 동향',
                         type: 'item',
-                        url: '/cpc/contents/virtual-asset-trend/list',
+                        url: '/cpc/contents/digital-asset-trend/list',
                         auth: true,
                         icon: icons.ChromeOutlined,
                         breadcrumbs: true,
@@ -266,10 +266,10 @@ const menus = [
                 parents_menu_id: 'sitemoperator'
             },
             {
-                id: 'cpclegalcounselling',
+                id: 'cpclegalcounseling',
                 title: '법률상담 관리',
                 type: 'item',
-                url: '/cpc/legal-counselling/list',
+                url: '/cpc/legal-counseling/list',
                 auth: true,
                 icon: icons.ChromeOutlined,
                 breadcrumbs: true,

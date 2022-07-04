@@ -51,12 +51,12 @@ const CpcDamageCaseMng = Loadable(lazy(() => import('pages/cpc/contents/DamageCa
 const CpcDamageCaseMngForm = Loadable(lazy(() => import('pages/cpc/contents/DamageCaseMngForm')));
 const CpcCampaignMng = Loadable(lazy(() => import('pages/cpc/contents/CampaignMng')));
 const CpcCampaignMngForm = Loadable(lazy(() => import('pages/cpc/contents/CampaignMngForm')));
-const CpcVirtualAssetBasicMng = Loadable(lazy(() => import('pages/cpc/contents/VirtualAssetBasicMng')));
-const CpcVirtualAssetBasicMngForm = Loadable(lazy(() => import('pages/cpc/contents/VirtualAssetBasicMngForm')));
+const CpcDigitalAssetBasicMng = Loadable(lazy(() => import('pages/cpc/contents/DigitalAssetBasicMng')));
+const CpcDigitalAssetBasicMngForm = Loadable(lazy(() => import('pages/cpc/contents/DigitalAssetBasicMngForm')));
 const CpcInsightColumnMng = Loadable(lazy(() => import('pages/cpc/contents/InsightColumnMng')));
 const CpcInsightColumnMngForm = Loadable(lazy(() => import('pages/cpc/contents/InsightColumnMngForm')));
-const CpcVirtualAssetTrendMng = Loadable(lazy(() => import('pages/cpc/contents/VirtualAssetTrendMng')));
-const CpcVirtualAssetTrendMngForm = Loadable(lazy(() => import('pages/cpc/contents/VirtualAssetTrendMngForm')));
+const CpcDigitalAssetTrendMng = Loadable(lazy(() => import('pages/cpc/contents/DigitalAssetTrendMng')));
+const CpcDigitalAssetTrendMngForm = Loadable(lazy(() => import('pages/cpc/contents/DigitalAssetTrendMngForm')));
 const CpcBlockChainNewsMng = Loadable(lazy(() => import('pages/cpc/contents/BlockChainNewsMng')));
 const CpcBlockChainNewsMngForm = Loadable(lazy(() => import('pages/cpc/contents/BlockChainNewsMngForm')));
 const CpcNoticeMng = Loadable(lazy(() => import('pages/cpc/contents/NoticeMng')));
@@ -67,8 +67,8 @@ const CpcFraudReportMng = Loadable(lazy(() => import('pages/cpc/fraudReport/inde
 const CpcFraudReportMngForm = Loadable(lazy(() => import('pages/cpc/fraudReport/FraudReportMngForm')));
 
 // render - 고객보호센터 - 법률상담 관리
-const CpcLegalCounsellingMng = Loadable(lazy(() => import('pages/cpc/legalCounselling/index')));
-const CpcLegalCounsellingMngForm = Loadable(lazy(() => import('pages/cpc/legalCounselling/LegalCounsellingMngForm')));
+const CpcLegalCounselingMng = Loadable(lazy(() => import('pages/cpc/legalCounseling/index')));
+const CpcLegalCounselingMngForm = Loadable(lazy(() => import('pages/cpc/legalCounseling/LegalCounselingMngForm')));
 
 // render - 사이트 관리
 const AccessMngPage = Loadable(lazy(() => import('pages/operator/accessmng/index')));
@@ -213,16 +213,16 @@ const MainRoutes = [
                 element: <CpcCampaignMngForm />
             },
             {
-                path: 'cpc/contents/virtual-asset-basic/list',
-                element: <CpcVirtualAssetBasicMng />
+                path: 'cpc/contents/digital-asset-basic/list',
+                element: <CpcDigitalAssetBasicMng />
             },
             {
-                path: 'cpc/contents/virtual-asset-basic/reg',
-                element: <CpcVirtualAssetBasicMngForm />
+                path: 'cpc/contents/digital-asset-basic/reg',
+                element: <CpcDigitalAssetBasicMngForm />
             },
             {
-                path: 'cpc/contents/virtual-asset-basic/reg/:boardId',
-                element: <CpcVirtualAssetBasicMngForm />
+                path: 'cpc/contents/digital-asset-basic/reg/:boardId',
+                element: <CpcDigitalAssetBasicMngForm />
             },
             {
                 path: 'cpc/contents/insight-column/list',
@@ -237,16 +237,16 @@ const MainRoutes = [
                 element: <CpcInsightColumnMngForm />
             },
             {
-                path: 'cpc/contents/virtual-asset-trend/list',
-                element: <CpcVirtualAssetTrendMng />
+                path: 'cpc/contents/digital-asset-trend/list',
+                element: <CpcDigitalAssetTrendMng />
             },
             {
-                path: 'cpc/contents/virtual-asset-trend/reg',
-                element: <CpcVirtualAssetTrendMngForm />
+                path: 'cpc/contents/digital-asset-trend/reg',
+                element: <CpcDigitalAssetTrendMngForm />
             },
             {
-                path: 'cpc/contents/virtual-asset-trend/reg/:boardId',
-                element: <CpcVirtualAssetTrendMngForm />
+                path: 'cpc/contents/digital-asset-trend/reg/:boardId',
+                element: <CpcDigitalAssetTrendMngForm />
             },
             {
                 path: 'cpc/contents/blockchain-news/list',
@@ -278,17 +278,17 @@ const MainRoutes = [
                 element: <CpcFraudReportMng />
             },
             {
-                path: 'cpc/fraud-report/reg/:id',
+                path: 'cpc/fraud-report/reg/:applyId',
                 element: <CpcFraudReportMngForm />
             },
             // 고객보호센터 - 법률상담 관리
             {
-                path: 'cpc/legal-counselling/list',
-                element: <CpcLegalCounsellingMng />
+                path: 'cpc/legal-counseling/list',
+                element: <CpcLegalCounselingMng />
             },
             {
-                path: 'cpc/legal-counselling/reg/:id',
-                element: <CpcLegalCounsellingMngForm />
+                path: 'cpc/legal-counseling/reg/:applyId',
+                element: <CpcLegalCounselingMngForm />
             },
             // 사이트 관리
             {
