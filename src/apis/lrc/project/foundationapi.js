@@ -203,6 +203,24 @@ const FoundationApi = () => {
             requestConfig: {}
         });
     };
+    // File Search - 서류 제출 현황
+    const getDocumentFiles = (projectId) => {
+        callApi('getFileList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/submitted-document/file?projectId=${projectId}`,
+            requestConfig: {}
+        });
+    };
+    // File Search - 서류 제출 현황
+    const getDocumentUrls = (projectId) => {
+        callApi('getDocList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/submitted-document/url?projectId=${projectId}`,
+            requestConfig: {}
+        });
+    };
     return [
         responseData,
         requestError,
@@ -220,6 +238,8 @@ const FoundationApi = () => {
             icoSearch: getIcoListData,
             updateIcoList: updateIcoList,
             officeSearch: getFoundationInfo,
+            fileSearch: getDocumentFiles,
+            docSearch: getDocumentUrls,
             fileReviewDownload: getFile,
             symbolKeywordSearch: keywordSimbolSearch,
             projectConnectSave: projectConnectSave,

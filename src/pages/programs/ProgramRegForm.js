@@ -59,14 +59,19 @@ const ProgramRegForm = () => {
     });
     const { site_id, type, id, name, kind_name, action_method, action_url, is_use, description } = inputs;
 
-    // Alert Dialog
+    ////////////////////////////////////////////////////
+    // 공통 에러 처리
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
+    ////////////////////////////////////////////////////
     // onload
     useEffect(() => {
-        errorClear();
         // 사이트 구분 리스트 가져오기
         siteSearch(true, '');
 
@@ -83,21 +88,15 @@ const ProgramRegForm = () => {
     useEffect(() => {
         if (requestError || reqErr) {
             let err = requestError ? requestError : reqErr;
-            console.log('error requestError');
-            console.log(err);
-            setErrorTitle('Error Message');
-            setErrorMessage(err);
-            setOpen(true);
+            if (err.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(err);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + err.error.code + '] ' + err.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError, reqErr]);
-
-    // 에러 정보를 클리어 한다.
-    const errorClear = () => {
-        setOpen(false);
-        setErrorTitle('');
-        setErrorMessage('');
-    };
-
     // Combobox data transaction
     // 사이트
     useEffect(() => {
@@ -230,12 +229,7 @@ const ProgramRegForm = () => {
     const listClick = () => {
         navigate('/pgm/list');
     };
-    // 에러 메시지 처리
-    const setError = (msg) => {
-        setErrorTitle('입력 오류');
-        setErrorMessage(msg);
-        setOpen(true);
-    };
+
     // Clear Data
     const setClearData = () => {
         console.log('setClearData called...');
@@ -483,7 +477,7 @@ const ProgramRegForm = () => {
                             </Button>
                         </Stack>
                     </MainCard>
-                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 </Grid>
             </Grid>
         </>

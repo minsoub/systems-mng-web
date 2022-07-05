@@ -102,10 +102,17 @@ const AccountRegForm = () => {
     const [openUserSearch, setOpenUserSearch] = useState(false);
     const [selectedValue, setSelectedValue] = useState([]);
 
-    // Alert Dialog
+    ////////////////////////////////////////////////////
+    // 공통 에러 처리
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
+    ////////////////////////////////////////////////////
 
     // Form data
     const [id, setId] = useState('');
@@ -157,11 +164,13 @@ const AccountRegForm = () => {
             let err = requestError ? requestError : reqErr;
             if (resRoleError) err = resRoleError;
 
-            console.log('error requestError');
-            console.log(err);
-            setErrorTitle('Error Message');
-            setErrorMessage(err);
-            setOpen(true);
+            if (err.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(err);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + err.error.code + '] ' + err.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError, reqErr, resRoleError]);
 
@@ -855,7 +864,7 @@ const AccountRegForm = () => {
                             </Grid>
                         </Grid>
                     </MainCard>
-                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 </Grid>
             </Grid>
         </>

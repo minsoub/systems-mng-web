@@ -51,6 +51,8 @@ const SiteMenuMappingForm = Loadable(lazy(() => import('pages/operator/menu/Site
 const SiteAuthManagementPage = Loadable(lazy(() => import('pages/operator/auth/index')));
 const SiteAuthMngRegForm = Loadable(lazy(() => import('pages/operator/auth/SiteAuthMngReg')));
 const SiteLogPage = Loadable(lazy(() => import('pages/operator/log/index')));
+const ServiceLog = Loadable(lazy(() => import('pages/lrc/logs/index')));
+const ServiceDetail = Loadable(lazy(() => import('pages/lrc/logs/detail')));
 
 // render - 통합 관리
 const AccountMng = Loadable(lazy(() => import('pages/totalmng/accountmng/index')));
@@ -155,6 +157,14 @@ const MainRoutes = [
                 path: 'faq/reg/:paramId/:paramNo',
                 element: <FaqRegForm />
             },
+            {
+                path: 'service/list',
+                element: <ServiceLog />
+            },
+            {
+                path: 'service/log/:paramId',
+                element: <ServiceDetail />
+            },
             // 사이트 관리
             {
                 path: 'access/list',
@@ -175,6 +185,10 @@ const MainRoutes = [
             {
                 path: '/siteauth/list',
                 element: <SiteAuthManagementPage />
+            },
+            {
+                path: '/siteauth/reg/:paramId',
+                element: <SiteAuthMngRegForm />
             },
             {
                 path: '/siteauth/reg',
@@ -265,6 +279,10 @@ const MainRoutes = [
             },
             {
                 path: 'authmng/reg',
+                element: <AuthMngRegForm />
+            },
+            {
+                path: 'authmng/reg/:paramId',
                 element: <AuthMngRegForm />
             },
             {

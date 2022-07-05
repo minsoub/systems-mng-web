@@ -24,10 +24,10 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
-import { boolean } from '../../../node_modules/yup/lib/index';
-import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
+import ErrorScreen from 'components/ErrorScreen';
 
 const RoleManagementPage = () => {
     let isSubmitting = false;
@@ -85,9 +85,17 @@ const RoleManagementPage = () => {
     // 그리드 목록 데이터
     const [dataGridRows, setDataGridRows] = useState([]);
 
+    ////////////////////////////////////////////////////
+    // 공통 에러 처리
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
+    ////////////////////////////////////////////////////
 
     const [siteList, setSiteList] = useState([]);
     const [site_id, setSiteId] = useState('');
@@ -107,7 +115,6 @@ const RoleManagementPage = () => {
 
     // onload
     useEffect(() => {
-        errorClear();
         // 사이트 구분 리스트 가져오기
         console.log('paramter data => ');
         console.log(search_site_id);
@@ -124,11 +131,13 @@ const RoleManagementPage = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
@@ -193,13 +202,6 @@ const RoleManagementPage = () => {
         }
     }, [responseData]);
 
-    // 에러 정보를 클리어 한다.
-    const errorClear = () => {
-        setOpen(false);
-        setErrorTitle('');
-        setErrorMessage('');
-    };
-
     const handleClose = () => {
         setVisible(false);
     };
@@ -242,7 +244,6 @@ const RoleManagementPage = () => {
 
     // search
     const searchClick = () => {
-        errorClear();
         console.log('searchClick called...');
         roleSearch(is_use, site_id);
     };
@@ -330,29 +331,7 @@ const RoleManagementPage = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </MainCard>
-                <MainCard sx={{ mt: 3 }} content={false}>
-                    <Collapse in={open}>
-                        <Alert
-                            severity="error"
-                            action={
-                                <IconButton
-                                    aria-label="close"
-                                    color="inherit"
-                                    size="small"
-                                    onClick={() => {
-                                        errorClear();
-                                    }}
-                                >
-                                    <CloseIcon fontSize="inherit" />
-                                </IconButton>
-                            }
-                            sx={{ mb: 2 }}
-                        >
-                            <AlertTitle>{errorTitle}</AlertTitle>
-                            {errorMessage}
-                        </Alert>
-                    </Collapse>
-                </MainCard>
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
             </Grid>
         </Grid>
     );

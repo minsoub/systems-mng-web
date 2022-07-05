@@ -395,7 +395,7 @@ const ProjectMng = (props) => {
             if (item.id === id && item.children && item.children.length > 0) {
                 item.children.map((subitem, idx) => {
                     const s = { id: subitem.id, name: subitem.name };
-                    //console.log(s);
+                    console.log(s);
                     list.push(s);
                 });
                 setProcessList(list);
@@ -411,10 +411,31 @@ const ProjectMng = (props) => {
         console.log(e);
     };
     const handleChange = (e) => {
+        console.log(e.target.name);
         switch (e.target.name) {
             case 'contract_code':
                 // 진행상태 출력.
+                setContract_code(e.target.value);
                 processPrint(e.target.value);
+                break;
+            case 'process_code':
+                console.log(e.target.value);
+                setProcess_code(e.target.value);
+                break;
+            case 'business_code':
+                setBusiness_code(e.target.value);
+                break;
+            case 'network_code':
+                setNetwork_code(e.target.value);
+                break;
+            case 'create_date':
+                setCreate_date(e.target.value);
+                break;
+            case 'btc_ico_date':
+                setBtc_ico_date(e.target.value);
+                break;
+            case 'krw_ico_date':
+                setKrw_ico_date(e.target.value);
                 break;
             default:
                 break;
@@ -636,6 +657,7 @@ const ProjectMng = (props) => {
                 }
             });
             let saveData = { ico_info_list: ico_info_list };
+            console.log(saveData);
             updateIcoList(projectId, saveData);
         }
     };
@@ -776,7 +798,7 @@ const ProjectMng = (props) => {
                 </Grid>
                 <Grid item xs={8} sm={10.5}>
                     <FormControl sx={{ m: 0, minWidth: 380 }} size="small">
-                        <Select name="proceess_code" label="진행상태" value={process_code} onChange={handleChange}>
+                        <Select name="process_code" label="진행상태" value={process_code} onChange={handleChange}>
                             <MenuItem value="">전체</MenuItem>
                             {processList.map((item, index) => (
                                 <MenuItem key={index} value={item.id}>
@@ -829,7 +851,7 @@ const ProjectMng = (props) => {
                         <TableRow>
                             <TableCell component="th" scope="row">
                                 <FormControl sx={{ m: 0, minWidth: 140 }} size="small">
-                                    <Select name="status" value={business_code} onChange={handleChange}>
+                                    <Select name="business_code" value={business_code} onChange={handleChange}>
                                         <MenuItem value="true">사용</MenuItem>
                                         {businessList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
@@ -841,7 +863,7 @@ const ProjectMng = (props) => {
                             </TableCell>
                             <TableCell component="th" scope="row">
                                 <FormControl sx={{ m: 0, minWidth: 124 }} size="small">
-                                    <Select name="status" value={network_code} onChange={handleChange}>
+                                    <Select name="network_code" value={network_code} onChange={handleChange}>
                                         <MenuItem value="true">사용</MenuItem>
                                         {networkList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
@@ -859,8 +881,8 @@ const ProjectMng = (props) => {
                             <TableCell component="th" scope="row">
                                 <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
                                     <TextField
-                                        id="start_date"
-                                        name="start_date"
+                                        id="create_date"
+                                        name="create_date"
                                         size="small"
                                         value={create_date}
                                         onBlur={handleBlur}

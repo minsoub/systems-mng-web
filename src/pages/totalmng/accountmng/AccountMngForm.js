@@ -29,11 +29,11 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
-import { boolean } from '../../../../node_modules/yup/lib/index';
-import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import AccountApis from 'apis/account/accountapis';
 import SiteApi from 'apis/site/siteapi';
 import { DatePicker } from 'antd';
+import ErrorScreen from 'components/ErrorScreen';
 
 const AccountMngForm = () => {
     let isSubmitting = false;
