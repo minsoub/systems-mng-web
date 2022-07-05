@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { lazy, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
@@ -19,7 +19,13 @@ import {
     FormControlLabel,
     Checkbox,
     Radio,
-    RadioGroup
+    RadioGroup,
+    Table,
+    TableCell,
+    TableHead,
+    TableRow,
+    TableBody,
+    TablePagination
 } from '@mui/material';
 import { makeStyles, withStyles } from '@mui/styles';
 import MainCard from 'components/MainCard';
@@ -191,7 +197,6 @@ const ProjectsPage = () => {
     const [isSearch, setIsSearch] = useState(false);
     // onload
     useEffect(() => {
-        statusSearch(); // 상태 값 모두 조회
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
         statusSearch(); // 상태 값 모두 조회
@@ -199,15 +204,23 @@ const ProjectsPage = () => {
     }, []);
 
     // transaction error 처리
-    // useEffect(() => {
-    //     if (requestError) {
-    //         console.log('error requestError');
-    //         console.log(requestError);
-    //         setErrorTitle('Error Message');
-    //         setErrorMessage(requestError);
-    //         setOpen(true);
-    //     }
-    // }, [requestError]);
+    useEffect(() => {
+        if (requestError) {
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
+        }
+    }, [requestError]);
+    useEffect(() => {
+        if (isSearch) {
+            searchClick();
+            setIsSearch(false);
+        }
+    }, [isSearch]);
 
     // Combobox data transaction
     useEffect(() => {
@@ -328,12 +341,12 @@ const ProjectsPage = () => {
                 setEndDate(moment().add(-1, 'days').format('YYYY-MM-DD'));
                 break;
             case '3':
-                setStartDate(moment().format('YYYY-MM-DD'));
-                setEndDate(moment().add(30, 'days').format('YYYY-MM-DD'));
+                setStartDate(moment().add(-30, 'days').format('YYYY-MM-DD'));
+                setEndDate(moment().format('YYYY-MM-DD'));
                 break;
             case '4':
-                setStartDate(moment().format('YYYY-MM-DD'));
-                setEndDate(moment().add(90, 'days').format('YYYY-MM-DD'));
+                setStartDate(moment().add(-90, 'days').format('YYYY-MM-DD'));
+                setEndDate(moment().format('YYYY-MM-DD'));
                 break;
             default:
                 break;
@@ -390,9 +403,9 @@ const ProjectsPage = () => {
 
     // 그리드 클릭
     const handleClick = (rowData) => {
-        if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/projects/detail/${rowData.id}`);
-        }
+        //if (rowData && rowData.field && rowData.field !== '__check__') {
+        navigate(`/projects/detail/${rowData.id}`);
+        //}
     };
 
     // 그리드 더블 클릭
@@ -659,20 +672,115 @@ const ProjectsPage = () => {
                         <Grid item xs={8} sm={0.1}></Grid>
                         <Grid item xs={8} sm={0.7}>
                             상장완료(2)
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </MainCard>
-                <MainCard sx={{ mt: 2 }} content={false}>
-                    <DefaultDataGrid
+                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                    <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell style={{ width: '7%' }} align="center" rowSpan={2}>
+                                    프로젝트명
+                                </StyledTableCell>
+                                <StyledTableCell style={{ width: '5%' }} align="center" rowSpan={2}>
+                                    심볼
+                                </StyledTableCell>
+                                <StyledTableCell style={{ width: '15%' }} align="center" colSpan={2}>
+                                    거래지원 현황
+                                </StyledTableCell>
+                                <StyledTableCell style={{ width: '8%' }} align="center" rowSpan={2}>
+                                    사업 계열
+                                </StyledTableCell>
+                                <StyledTableCell style={{ width: '8%' }} align="center" rowSpan={2}>
+                                    네트워크 계열
+                                </StyledTableCell>
+                                <StyledTableCell style={{ width: '20%' }} align="center" colSpan={2}>
+                                    마케팅 수량
+                                </StyledTableCell>
+                                <StyledTableCell style={{ width: '15%' }} align="center" rowSpan={2}>
+                                    연결 프로젝트
+                                </StyledTableCell>
+                                <StyledTableCell style={{ width: '13%' }} align="center" rowSpan={2}>
+                                    상장일
+                                </StyledTableCell>
+                                <StyledTableCell style={{ width: '12%' }} align="center" rowSpan={2}>
+                                    등록일시
+                                </StyledTableCell>
+                            </TableRow>
+                            <TableRow>
+                                <StyledTableCell style={{ width: '7.5%' }} align="center">
+                                    계약 상태
+                                </StyledTableCell>
+                                <StyledTableCell style={{ width: '7.5%' }} align="center">
+                                    진행 상태
+                                </StyledTableCell>
+                                <StyledTableCell style={{ width: '10%' }} align="center">
+                                    최소
+                                </StyledTableCell>
+                                <StyledTableCell style={{ width: '10%' }} align="center">
+                                    실제
+                                </StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {dataGridRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
+                                <TableRow hover onClick={() => handleClick(item)}>
+                                    <TableCell style={{ width: '7%' }} align="center" component="th" scope="row">
+                                        {item.project_name}
+                                    </TableCell>
+                                    <TableCell style={{ width: '5%' }} align="center" component="th" scope="row">
+                                        {item.symbol}
+                                    </TableCell>
+                                    <TableCell style={{ width: '7.5%' }} align="center" component="th" scope="row">
+                                        {item.contract_name}
+                                    </TableCell>
+                                    <TableCell style={{ width: '7.5%' }} align="center" component="th" scope="row">
+                                        {item.progress_name}
+                                    </TableCell>
+                                    <TableCell style={{ width: '8%' }} align="center" component="th" scope="row">
+                                        {item.business_name}
+                                    </TableCell>
+                                    <TableCell style={{ width: '8%' }} align="center" component="th" scope="row">
+                                        {item.network_name}
+                                    </TableCell>
+                                    <TableCell style={{ width: '10%' }} align="center" component="th" scope="row">
+                                        {item.minimum_quantity}
+                                    </TableCell>
+                                    <TableCell style={{ width: '10%' }} align="center" component="th" scope="row">
+                                        {item.actual_quantity}
+                                    </TableCell>
+                                    <TableCell style={{ width: '15%' }} align="center" component="th" scope="row">
+                                        {item.project_link}
+                                    </TableCell>
+                                    <TableCell style={{ width: '13%' }} align="center" component="th" scope="row">
+                                        {item.ico_date}
+                                    </TableCell>
+                                    <TableCell style={{ width: '12%' }} align="center" component="th" scope="row">
+                                        {item.create_date}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                    <TablePagination
+                        rowsPerPageOptions={[10, 25, 100]}
+                        component="div"
+                        count={dataGridRows.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                    {/* <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
-                    />
+                    /> */}
                 </MainCard>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
             </Grid>
         </Grid>
     );

@@ -46,7 +46,18 @@ const OfficeInfo = (props) => {
         responseData,
         requestError,
         Loading,
-        { foundationSearch, marketingSearch, reviewSearch, projectSearch, userSearch, icoSearch, officeSearch, projectLinkListSearch }
+        {
+            foundationSearch,
+            marketingSearch,
+            reviewSearch,
+            projectSearch,
+            userSearch,
+            icoSearch,
+            officeSearch,
+            fileSearch,
+            docSearch,
+            projectLinkListSearch
+        }
     ] = FoundationApi();
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
     const { projectId, children, tabindex, index, ...other } = props;
@@ -98,7 +109,8 @@ const OfficeInfo = (props) => {
         marketingSearch(projectId);
         // 6. 검토 평가 조회
         reviewSearch(projectId);
-        // 7. 서류 제출 현황 조회
+        // 7.1 URL 서류 제출 현황 조회
+        docSearch(projectId);
     }, [projectId]);
 
     // transaction error 처리
@@ -611,17 +623,25 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableRow>
-                            <TableCell component="th" scope="row">
-                                -333
+                            <TableCell component="th" scope="row" align="center">
+                                {file1.item}
+                                <br />
+                                {file1.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
+                            <TableCell component="th" scope="row" align="center">
+                                {file2.item}
+                                <br />
+                                {file2.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
+                            <TableCell component="th" scope="row" align="center">
+                                {file3.item}
+                                <br />
+                                {file3.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
+                            <TableCell component="th" scope="row" align="center">
+                                {file4.item}
+                                <br />
+                                {file4.item1}
                             </TableCell>
                         </TableRow>
                         <TableHead>
@@ -633,17 +653,25 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableRow>
-                            <TableCell component="th" scope="row">
-                                -333
+                            <TableCell component="th" scope="row" align="center">
+                                {file5.item}
+                                <br />
+                                {file5.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
+                            <TableCell component="th" scope="row" align="center">
+                                {file6.item}
+                                <br />
+                                {file6.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
+                            <TableCell component="th" scope="row" align="center">
+                                {file7.item}
+                                <br />
+                                {file7.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
+                            <TableCell component="th" scope="row" align="center">
+                                {file8.item}
+                                <br />
+                                {file8.item1}
                             </TableCell>
                         </TableRow>
                         <TableHead>
@@ -655,11 +683,15 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableRow>
-                            <TableCell component="th" scope="row">
-                                -333
+                            <TableCell component="th" scope="row" align="center">
+                                {file9.item}
+                                <br />
+                                {file9.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
+                            <TableCell component="th" scope="row" align="center">
+                                {file10.item}
+                                <br />
+                                {file10.item1}
                             </TableCell>
                             <TableCell component="th" scope="row"></TableCell>
                             <TableCell component="th" scope="row"></TableCell>

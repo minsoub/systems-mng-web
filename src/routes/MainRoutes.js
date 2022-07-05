@@ -184,6 +184,14 @@ const MainRoutes = [
                 path: 'faq/reg/:paramId/:paramNo',
                 element: <FaqRegForm />
             },
+            {
+                path: 'service/list',
+                element: <ServiceLog />
+            },
+            {
+                path: 'service/log/:paramId',
+                element: <ServiceDetail />
+            },
             // 고객보호센터 - 메인 관리
             {
                 path: 'cpc/main/contents/list',
