@@ -78,8 +78,8 @@ const SiteMenuMappingForm = Loadable(lazy(() => import('pages/operator/menu/Site
 const SiteAuthManagementPage = Loadable(lazy(() => import('pages/operator/auth/index')));
 const SiteAuthMngRegForm = Loadable(lazy(() => import('pages/operator/auth/SiteAuthMngReg')));
 const SiteLogPage = Loadable(lazy(() => import('pages/operator/log/index')));
-const ServiceLog = Loadable(lazy(() => import('pages/lrc/logs/index')));
-const ServiceDetail = Loadable(lazy(() => import('pages/lrc/logs/detail')));
+const ServiceLog = Loadable(lazy(() => import('pages/lrc/servicelogs/index')));
+const ServiceDetail = Loadable(lazy(() => import('pages/lrc/servicelogs/detail')));
 
 // render - 통합 관리
 const AccountMng = Loadable(lazy(() => import('pages/totalmng/accountmng/index')));
@@ -105,7 +105,7 @@ const MenuMappingForm = Loadable(lazy(() => import('pages/menumng/MenuMappingFor
 
 const AuthManagementPage = Loadable(lazy(() => import('pages/authmng/index')));
 const AuthMngRegForm = Loadable(lazy(() => import('pages/authmng/AuthMngReg.js')));
-// ==============================|| MAIN ROUTING ||============================== //
+// ==============================|| MAIN ROUTING ||==============================  //
 
 const MainRoutes = [
     {
