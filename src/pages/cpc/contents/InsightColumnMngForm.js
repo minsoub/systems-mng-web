@@ -43,6 +43,7 @@ const InsightColumnMngForm = () => {
     const [thumbnail, setThumbnail] = useState('');
     const [description, setDescription] = useState('');
     const [tags, setTags] = useState([]);
+    const [contributor, setContributor] = useState('');
     const [createAccountName, setCreateAccountName] = useState('');
 
     // 파일
@@ -146,6 +147,7 @@ const InsightColumnMngForm = () => {
                 setThumbnail(responseData.data.data.thumbnail);
                 setDescription(responseData.data.data.description);
                 setContent(responseData.data.data.contents);
+                setContributor(responseData.data.data.contributor);
                 setCreateAccountName(responseData.data.data.createAccountName);
 
                 if (responseData.data.data.tags) {
@@ -194,6 +196,9 @@ const InsightColumnMngForm = () => {
             case 'title':
                 setTitle(e.target.value);
                 break;
+            case 'contributor':
+                setContributor(e.target.value);
+                break;
             default:
                 break;
         }
@@ -236,7 +241,8 @@ const InsightColumnMngForm = () => {
                 description,
                 thumbnail,
                 contents: content,
-                tags: inputTags
+                tags: inputTags,
+                contributor
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
@@ -270,7 +276,8 @@ const InsightColumnMngForm = () => {
                 description,
                 thumbnail,
                 contents: content,
-                tags: inputTags
+                tags: inputTags,
+                contributor
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
@@ -412,6 +419,25 @@ const InsightColumnMngForm = () => {
                                     placeholder="태그 입력 후 엔터"
                                     autocomplete
                                 />
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3}>
+                        <Grid item xs={8} sm={1.5}>
+                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                <Stack spacing={0}>기고자 정보</Stack>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={8} sm={4}>
+                            <FormControl sx={{ m: 0, minWidth: 160 }} size="small" required fullWidth>
+                                <Select name="contributor" label="기고자 정보" value={contributor} onChange={handleChange}>
+                                    <MenuItem value="">선택</MenuItem>
+                                    <MenuItem value="김상겸 변호사">김상겸 변호사</MenuItem>
+                                    <MenuItem value="김휘강 교수">김휘강 교수</MenuItem>
+                                    <MenuItem value="박상혁 기자">박상혁 기자</MenuItem>
+                                    <MenuItem value="이데일리 부국장">이데일리 부국장</MenuItem>
+                                    <MenuItem value="하종은 병원장">하종은 병원장</MenuItem>
+                                </Select>
                             </FormControl>
                         </Grid>
                     </Grid>
