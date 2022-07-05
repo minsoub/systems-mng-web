@@ -36,7 +36,9 @@ import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import ErrorScreen from 'components/ErrorScreen';
 import TabPanel from 'components/TabPanel';
 import FoundationApi from 'apis/lrc/project/foundationapi';
+import StatusApi from 'apis/lrc/status/statusapi';
 import NumberFormat from 'react-number-format';
+import moment from 'moment';
 
 const OfficeInfo = (props) => {
     const navigate = useNavigate();
@@ -44,8 +46,20 @@ const OfficeInfo = (props) => {
         responseData,
         requestError,
         Loading,
-        { foundationSearch, marketingSearch, reviewSearch, projectSearch, userSearch, icoSearch, officeSearch }
+        {
+            foundationSearch,
+            marketingSearch,
+            reviewSearch,
+            projectSearch,
+            userSearch,
+            icoSearch,
+            officeSearch,
+            fileSearch,
+            docSearch,
+            projectLinkListSearch
+        }
     ] = FoundationApi();
+    const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
     const { projectId, children, tabindex, index, ...other } = props;
 
     ////////////////////////////////////////////////////
@@ -57,18 +71,34 @@ const OfficeInfo = (props) => {
 
     // 출력 정보 조회 데이터
     const [officeInfo, setOfficeInfo] = useState({}); // 재단정보
+    const [projectLink, setProjectLink] = useState([]); // 프로젝트 연결 리스트.
     const [projecInfo, setProjectInfo] = useState({}); // 프로젝트 정보
     const [userList, setUserList] = useState([]); // User 정보
     const [icoList, setIcoList] = useState([]); // ICO 정보
     const [marketingList, setMarketingList] = useState([]); // 마켓팅 수량
     const [reviewList, setReviewList] = useState([]); // 검토평가 리스트
+    // 서류제출 현황 항목 정의
+    const [file1, setFile1] = useState({}); // 거래지원 신청서
+    const [file2, setFile2] = useState({}); // 개인정보 수집 및 이용동의서
+    const [file3, setFile3] = useState({}); // 프로젝트 백서
+    const [file4, setFile4] = useState({}); // 기술검토보고서
+    const [file5, setFile5] = useState({}); // 토큰세일 및 분배 계획서
+    const [file6, setFile6] = useState({}); // 법률 검토 의견서
+    const [file7, setFile7] = useState({}); // 사업자 등록증
+    const [file8, setFile8] = useState({}); // 윤리서약서
+    const [file9, setFile9] = useState({}); // 규제준수 확약서
+    const [file10, setFile10] = useState({}); // 기타
 
     // onload
     useEffect(() => {
         //siteSearch(true, '');
         //roleList();
+        // 7. 서류 제출 현황 조회
+        fileSearch(projectId);
         // 1. 재단정보 조회
         officeSearch(projectId);
+        // 1.1 프로젝트 연결 조회
+        projectLinkListSearch(projectId);
         // 2. 프로젝트 정보 조회
         projectSearch(projectId);
         // 3. 담당자 정보 조회
@@ -79,8 +109,9 @@ const OfficeInfo = (props) => {
         marketingSearch(projectId);
         // 6. 검토 평가 조회
         reviewSearch(projectId);
-        // 7. 서류 제출 현황 조회
-    }, []);
+        // 7.1 URL 서류 제출 현황 조회
+        docSearch(projectId);
+    }, [projectId]);
 
     // transaction error 처리
     useEffect(() => {
@@ -104,6 +135,13 @@ const OfficeInfo = (props) => {
                     setOfficeInfo(responseData.data.data);
                 } else {
                     setOfficeInfo({});
+                }
+                break;
+            case 'getProjectLinkList': // 프로젝트 연결 리스트
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    setProjectLink(responseData.data.data);
+                } else {
+                    setProjectLink([]);
                 }
                 break;
             case 'getProjectList':
@@ -141,7 +179,142 @@ const OfficeInfo = (props) => {
                     setReviewList([]);
                 }
                 break;
+            case 'getFileList':
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    let files = responseData.data.data;
+                    // 첫번째 데이터 들이 최신 데이터들이다.
+                    files.map((item, index) => {
+                        let name = '';
+                        if (item.create_admin_account_id) {
+                            name = '관리자';
+                        } else {
+                            name = '사용자';
+                        }
+                        let data = { item: `문서 추가(${name})`, item1: `${item.create_date}`, d: item.create_date };
+                        //console.log(data);
+                        if (item.type === 'IPO_APPLICATION') {
+                            if (!file1.item) setFile1(data);
+                            console.log(file1);
+                        } else if (item.type === 'COLLECT_CONFIRM') {
+                            if (!file2.item) setFile2(data);
+                        } else if (item.type === 'PROJECT_WHITEPAPER') {
+                            if (!file3.item) setFile3(data);
+                        } else if (item.type === 'TECH_REVIEW_REPORT') {
+                            if (!file4.item) setFile4(data);
+                        } else if (item.type === 'TOKEN_DIVISION_PLAN') {
+                            if (!file5.item) setFile5(data);
+                        } else if (item.type === 'LEGAL_REVIEW') {
+                            if (!file6.item) setFile6(data);
+                        } else if (item.type === 'BUSINESS_LICENSE') {
+                            if (!file7.item) setFile7(data);
+                        } else if (item.type === 'ETHICAL_WRITE_AUTH') {
+                            if (!file8.item) setFile8(data);
+                        } else if (item.type === 'REGULATORY_COMPLIANCE') {
+                            if (!file9.item) setFile9(data);
+                        } else if (item.type === 'ETC') {
+                            if (!file10.item) setFile10(data);
+                        }
+                    });
+                }
+                break;
+            case 'getDocList':
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    let docs = responseData.data.data;
+                    // 첫번째 데이터 들이 최신 데이터들이다.
+                    docs.map((item, index) => {
+                        let name = '';
+                        if (item.create_admin_account_id) {
+                            name = '관리자';
+                        } else {
+                            name = '사용자';
+                        }
+                        let data = { item: `URL 추가(${name})`, item1: `${item.create_date}`, d: item.create_date };
+                        if (item.type === 'IPO_APPLICATION') {
+                            if (!file1.item) setFile1(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file1.d)) {
+                                    setFile1(data);
+                                }
+                            }
+                        } else if (item.type === 'COLLECT_CONFIRM') {
+                            if (!file2.item) setFile2(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file2.d)) {
+                                    setFile2(data);
+                                }
+                            }
+                        } else if (item.type === 'PROJECT_WHITEPAPER') {
+                            if (!file3.item) setFile3(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file3.d)) {
+                                    setFile3(data);
+                                }
+                            }
+                        } else if (item.type === 'TECH_REVIEW_REPORT') {
+                            if (!file4.item) setFile4(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file4.d)) {
+                                    setFile4(data);
+                                }
+                            }
+                        } else if (item.type === 'TOKEN_DIVISION_PLAN') {
+                            if (!file5.item) setFile5(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file5.d)) {
+                                    setFile5(data);
+                                }
+                            }
+                        } else if (item.type === 'LEGAL_REVIEW') {
+                            if (!file6.item) setFile6(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file6.d)) {
+                                    setFile6(data);
+                                }
+                            }
+                        } else if (item.type === 'BUSINESS_LICENSE') {
+                            if (!file7.item) setFile7(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file7.d)) {
+                                    setFile7(data);
+                                }
+                            }
+                        } else if (item.type === 'ETHICAL_WRITE_AUTH') {
+                            if (!file8.item) setFile8(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file8.d)) {
+                                    setFile8(data);
+                                }
+                            }
+                        } else if (item.type === 'REGULATORY_COMPLIANCE') {
+                            if (!file9.item) setFile9(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file9.d)) {
+                                    setFile9(data);
+                                }
+                            }
+                        } else if (item.type === 'ETC') {
+                            if (!file10.item) setFile10(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file10.d)) {
+                                    setFile10(data);
+                                }
+                            }
+                        }
+                    });
+                }
+                break;
             default:
+                break;
         }
     }, [responseData]);
 
@@ -153,8 +326,10 @@ const OfficeInfo = (props) => {
     };
     const handleChange = (e) => {
         switch (e.target.name) {
-            case 'keyword':
-                setKeyword(e.target.value);
+            case 'project_link':
+                if (e.target.value === '') return;
+                console.log(e.target.value);
+                navigate('/projects/detail/' + e.target.value);
                 break;
             case 'start_date':
                 setStartDate(e.target.value);
@@ -218,17 +393,23 @@ const OfficeInfo = (props) => {
                 </Grid>
                 <Grid item xs={8} sm={1}></Grid>
                 <Grid item xs={8} sm={3} sx={{ m: 1 }}>
-                    <Typography variant="h6">{officeInfo.progress_name}</Typography>
+                    <Typography variant="h6">{officeInfo.process_name}</Typography>
                 </Grid>
                 <Grid item xs={8} sm={2} sx={{ m: 0 }}>
                     <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
-                        <Select name="site_id" label="연결 프로젝트 선택" onChange={handleChange}>
+                        <Select name="project_link" label="연결 프로젝트 선택" onChange={handleChange}>
                             <MenuItem value="">
                                 <em>연결 프로젝트 선택</em>
                             </MenuItem>
+                            {projectLink.map((item, index) => (
+                                <MenuItem key={index} value={item.link_project_id}>
+                                    {item.link_project_name} ( {item.link_project_symbol} )
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                 </Grid>
+                <Grid item xs={8} sm={0.2}></Grid>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 1 }}>
                 <FormControl sx={{ m: 0 }} fullWidth>
@@ -442,17 +623,25 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableRow>
-                            <TableCell component="th" scope="row">
-                                -333
+                            <TableCell component="th" scope="row" align="center">
+                                {file1.item}
+                                <br />
+                                {file1.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
+                            <TableCell component="th" scope="row" align="center">
+                                {file2.item}
+                                <br />
+                                {file2.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
+                            <TableCell component="th" scope="row" align="center">
+                                {file3.item}
+                                <br />
+                                {file3.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
+                            <TableCell component="th" scope="row" align="center">
+                                {file4.item}
+                                <br />
+                                {file4.item1}
                             </TableCell>
                         </TableRow>
                         <TableHead>
@@ -464,17 +653,25 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableRow>
-                            <TableCell component="th" scope="row">
-                                -333
+                            <TableCell component="th" scope="row" align="center">
+                                {file5.item}
+                                <br />
+                                {file5.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
+                            <TableCell component="th" scope="row" align="center">
+                                {file6.item}
+                                <br />
+                                {file6.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
+                            <TableCell component="th" scope="row" align="center">
+                                {file7.item}
+                                <br />
+                                {file7.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -33
+                            <TableCell component="th" scope="row" align="center">
+                                {file8.item}
+                                <br />
+                                {file8.item1}
                             </TableCell>
                         </TableRow>
                         <TableHead>
@@ -486,11 +683,15 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableRow>
-                            <TableCell component="th" scope="row">
-                                -333
+                            <TableCell component="th" scope="row" align="center">
+                                {file9.item}
+                                <br />
+                                {file9.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row">
-                                -333
+                            <TableCell component="th" scope="row" align="center">
+                                {file10.item}
+                                <br />
+                                {file10.item1}
                             </TableCell>
                             <TableCell component="th" scope="row"></TableCell>
                             <TableCell component="th" scope="row"></TableCell>

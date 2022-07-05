@@ -1,5 +1,7 @@
 import React from 'react';
-import axiosInstanceDefault from '../../axiosDefault';
+import axiosInstanceDefault from 'apis/axiosDefault';
+import axiosInstanceUpload from 'apis/axiosUpload';
+import axiosInstanceDownload from 'apis/axiosDownload';
 import useAxios from '../../useAxios';
 
 const FoundationApi = () => {
@@ -35,7 +37,7 @@ const FoundationApi = () => {
             data.contract_code +
             '&progressCode=' +
             data.progress_code;
-        parameter += '&businessList=' + businesslist + '&networkList=' + networklist + '&keyword=';
+        parameter += '&businessCode=' + businesslist + '&networkCode=' + networklist + '&keyword=' + encodeURIComponent(data.keyword);
         callApi('getList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
@@ -44,34 +46,6 @@ const FoundationApi = () => {
         });
     };
 
-    // LRC - 등록
-    const insertData = (data) => {
-        callApi('insertData', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'post',
-            url: '/mng/lrc/statusmanagment/line-code',
-            requestConfig: data
-        });
-    };
-    // 수정
-    const updateData = (data) => {
-        callApi('updateData', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'put',
-            url: `/mng/lrc/statusmanagment/line-code/${data.id}`,
-            requestConfig: data
-        });
-    };
-
-    // 수정
-    const deleteData = (data) => {
-        callApi('deleteData', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'delete',
-            url: `/mng/lrc/statusmanagment/line-code/${data.id}`,
-            requestConfig: {}
-        });
-    };
     // 재단정보
     // 재단정보 조회
     const getFoundationInfo = (data) => {
@@ -80,6 +54,15 @@ const FoundationApi = () => {
             method: 'get',
             url: `/mng/lrc/lrcmanagment/project/foundation-info/${data}`,
             requestConfig: {}
+        });
+    };
+    // 재단정보 수정
+    const updateFoundationInfo = (data) => {
+        callApi('updateFoundationInfo', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'post',
+            url: `/mng/lrc/lrcmanagment/project/foundation-info/${data.id}`,
+            requestConfig: data
         });
     };
 
@@ -91,6 +74,15 @@ const FoundationApi = () => {
             method: 'get',
             url: `/mng/lrc/lrcmanagment/project/project-info/${data}`,
             requestConfig: {}
+        });
+    };
+    // 프로젝트 정보 수정
+    const updateProjectInfo = (data) => {
+        callApi('updateProjectInfo', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/mng/lrc/lrcmanagment/project/project-info/${data.project_id}`,
+            requestConfig: data
         });
     };
 
@@ -115,6 +107,15 @@ const FoundationApi = () => {
             requestConfig: {}
         });
     };
+    // 상장정보 정보 수정
+    const updateIcoList = (projectId, data) => {
+        callApi('updateIcoList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'post',
+            url: `/mng/lrc/lrcmanagment/project/ico-info/${projectId}`,
+            requestConfig: data
+        });
+    };
 
     // 마케팅 정보
     // 마케팅 수량 정보 조회
@@ -124,6 +125,16 @@ const FoundationApi = () => {
             method: 'get',
             url: `/mng/lrc/lrcmanagment/project/marketing-quantity/${data}`,
             requestConfig: {}
+        });
+    };
+
+    // 마케팅 리스트 정보 수정
+    const updateMarketingList = (projectId, data) => {
+        callApi('updateMarketingList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'post',
+            url: `/mng/lrc/lrcmanagment/project/marketing-quantity/${projectId}`,
+            requestConfig: data
         });
     };
 
@@ -137,22 +148,103 @@ const FoundationApi = () => {
             requestConfig: {}
         });
     };
+    // 검토 평가 리스트 수정 - 파일 업로드 가능
+    const updateReviewList = (projectId, data) => {
+        callApi('updateReviewList', {
+            axiosInstance: axiosInstanceUpload,
+            method: 'post',
+            url: `/mng/lrc/lrcmanagment/project/review-estimate/upload/s3`,
+            requestConfig: data
+        });
+    };
+    // 파일 다운로드
+    const getFile = (key) => {
+        callApi('getFile', {
+            axiosInstance: axiosInstanceDownload,
+            method: 'get',
+            url: `/mng/lrc/files/download/s3/common/${key}`,
+            requestConfig: {}
+        });
+    };
 
+    const keywordSimbolSearch = (keyword, projectId) => {
+        callApi('getProjectKeyList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/project-link/foundation?symbol=${keyword}&projectId=${projectId}`,
+            requestConfig: {}
+        });
+    };
+
+    // 프로젝트 연결
+    const projectConnectSave = (data) => {
+        callApi('projectConnect', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'post',
+            url: `/mng/lrc/lrcmanagment/project/project-link`,
+            requestConfig: data
+        });
+    };
+    // 프로젝트 연결 해제
+    const projectDisconnectSave = (id) => {
+        callApi('projectDisconnect', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/mng/lrc/lrcmanagment/project/project-link/${id}`,
+            requestConfig: {}
+        });
+    };
+    // 프로젝트 연결 조회
+    const projectLinkListSearch = (projectId) => {
+        callApi('getProjectLinkList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/project-link/link/${projectId}`,
+            requestConfig: {}
+        });
+    };
+    // File Search - 서류 제출 현황
+    const getDocumentFiles = (projectId) => {
+        callApi('getFileList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/submitted-document/file?projectId=${projectId}`,
+            requestConfig: {}
+        });
+    };
+    // File Search - 서류 제출 현황
+    const getDocumentUrls = (projectId) => {
+        callApi('getDocList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/submitted-document/url?projectId=${projectId}`,
+            requestConfig: {}
+        });
+    };
     return [
         responseData,
         requestError,
         loading,
         {
             foundationSearch: getListData,
-            foundationInsert: insertData,
-            foundationUpdate: updateData,
-            foundationDelete: deleteData,
+            updateFoundationInfo: updateFoundationInfo,
             marketingSearch: getMarketingListData,
+            updateMarketingList: updateMarketingList,
             reviewSearch: getReviewListData,
+            updateReviewList: updateReviewList,
             projectSearch: getProjectListData,
+            updateProjectInfo: updateProjectInfo,
             userSearch: getUserListData,
             icoSearch: getIcoListData,
-            officeSearch: getFoundationInfo
+            updateIcoList: updateIcoList,
+            officeSearch: getFoundationInfo,
+            fileSearch: getDocumentFiles,
+            docSearch: getDocumentUrls,
+            fileReviewDownload: getFile,
+            symbolKeywordSearch: keywordSimbolSearch,
+            projectConnectSave: projectConnectSave,
+            projectDisconnectSave: projectDisconnectSave,
+            projectLinkListSearch: projectLinkListSearch
         }
     ];
 };

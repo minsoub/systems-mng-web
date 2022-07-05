@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 const useAxios = () => {
     const [response, setResponse] = useState();
-    const [error, setError] = useState('');
+    const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
     const [controller, setController] = useState();
 
@@ -53,8 +53,6 @@ const useAxios = () => {
         }
         try {
             console.log('called......');
-            //console.log(url);
-            console.log(requestConfig);
             setLoading(true);
             const ctrl = new AbortController();
             setController(ctrl);
@@ -90,13 +88,15 @@ const useAxios = () => {
                 const returnData = { transactionId: tid, data: res.data };
                 setResponse(returnData);
             } else {
+                console.log(res);
                 const returnData = { transactionId: tid, data: res.data };
                 setResponse(returnData);
             }
             //setResponse(returnData);
         } catch (err) {
+            console.log(err);
             console.log('error', err.message);
-            setError(err.message);
+            setError(err.response.data);
         } finally {
             setLoading(false);
         }

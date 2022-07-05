@@ -50,6 +50,11 @@ const FaqRegForm = () => {
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
     ////////////////////////////////////////////////////
 
     // 카테고리 리스트
@@ -74,11 +79,13 @@ const FaqRegForm = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
@@ -344,7 +351,7 @@ const FaqRegForm = () => {
                         </Grid>
                     </Grid>
                 </MainCard>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
             </Grid>
         </Grid>
     );

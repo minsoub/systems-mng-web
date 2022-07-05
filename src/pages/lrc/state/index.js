@@ -110,10 +110,17 @@ const StatusRegForm = () => {
     });
     const { id, name, order_no, parent_code, parent_code_name, use_yn } = inputs;
 
+    ////////////////////////////////////////////////////
+    // 공통 에러 처리
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
+    ////////////////////////////////////////////////////
     // TODO: onload
     useEffect(() => {
         // 디폴트 상태 트리 조회
@@ -123,11 +130,13 @@ const StatusRegForm = () => {
     // transaction error 처리
     useEffect(() => {
         if (reqErr) {
-            console.log('error requestError');
-            console.log(reqErr);
-            setErrorTitle('Error Message');
-            setErrorMessage(reqErr);
-            setOpen(true);
+            if (reqErr.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(reqErr);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + reqErr.error.code + '] ' + reqErr.error.message);
+                setOpen(true);
+            }
         }
     }, [reqErr]);
 
@@ -543,7 +552,7 @@ const StatusRegForm = () => {
                         </Stack>
                     </Grid>
                 </Grid>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
             </Grid>
         </Grid>
     );
