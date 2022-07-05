@@ -355,7 +355,7 @@ const ProjectsDetailPage = () => {
                                         </TabPanel>
                                     </Grid>
                                     <Grid item xs={8} sm={4}>
-                                        <Chat />
+                                        <Chat projectId={paramId} />
                                     </Grid>
                                 </Grid>
                             </Box>

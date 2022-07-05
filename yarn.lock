@@ -13197,6 +13197,30 @@
     "@types/node" "*"
     "acorn" "^7.1.0"
 
+"rsocket-core@^1.0.0-alpha.1":
+  "integrity" "sha512-xStK9VyEScp1abXRKlUhdswebPA8FSmhDpKhc2oExazLoIxLu8mJa89iMcs3+0DCC6ENOVXLJKhY5zXMNI/JQA=="
+  "resolved" "https://registry.npmjs.org/rsocket-core/-/rsocket-core-1.0.0-alpha.1.tgz"
+  "version" "1.0.0-alpha.1"
+
+"rsocket-flowable@^0.0.27":
+  "integrity" "sha512-I/1vETXP+qCfGFeMY8i+QLhyBpcEj0nDmWnP2vh7lDyOBNT9LjAiY6kigUzEHbfhoNe3vnJWYK6uCzxIsi622Q=="
+  "resolved" "https://registry.npmjs.org/rsocket-flowable/-/rsocket-flowable-0.0.27.tgz"
+  "version" "0.0.27"
+
+"rsocket-types@^0.0.27":
+  "integrity" "sha512-88vgA+d31a6wW5YP63jQZ0CqZ3DALtH4oCbuMtIcNy28m1kDYGPZunhsnw+YC/XtjOqb5hKhn10ZQm7OK2xc1g=="
+  "resolved" "https://registry.npmjs.org/rsocket-types/-/rsocket-types-0.0.27.tgz"
+  "version" "0.0.27"
+  dependencies:
+    "rsocket-flowable" "^0.0.27"
+
+"rsocket-websocket-client@^1.0.0-alpha.1":
+  "integrity" "sha512-DMnRWUEhj2zc8Yu/FYD3HeqaLsW4QbSr0VN9X5f4SSFQ1elb2LRNdeXRmS157VBeuBcHwAuj0ZJnrDl1yOK43Q=="
+  "resolved" "https://registry.npmjs.org/rsocket-websocket-client/-/rsocket-websocket-client-1.0.0-alpha.1.tgz"
+  "version" "1.0.0-alpha.1"
+  dependencies:
+    "rsocket-core" "^1.0.0-alpha.1"
+
 "rsvp@^4.8.4":
   "integrity" "sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA=="
   "resolved" "https://registry.npmjs.org/rsvp/-/rsvp-4.8.5.tgz"
