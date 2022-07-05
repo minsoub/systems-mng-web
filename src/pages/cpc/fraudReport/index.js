@@ -13,7 +13,6 @@ import {
     Radio,
     RadioGroup
 } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
@@ -22,7 +21,6 @@ import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 
 const FraudReportMng = () => {
-    let isSubmitting = false;
     const columns = [
         {
             field: 'id',
@@ -30,7 +28,7 @@ const FraudReportMng = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 100
+            maxWidth: 200
         },
         {
             field: 'status',
@@ -38,7 +36,7 @@ const FraudReportMng = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 100,
+            maxWidth: 200,
             valueFormatter: (params) => {
                 let statusName = '';
                 switch (params.value) {
@@ -63,16 +61,6 @@ const FraudReportMng = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'left'
-        },
-        {
-            field: 'terms_privacy',
-            headerName: '개인정보 수집 및 이용 동의',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            renderCell: (params) => {
-                return params.value && params.value === true && <CheckIcon />;
-            }
         },
         {
             field: 'attach_file_id',

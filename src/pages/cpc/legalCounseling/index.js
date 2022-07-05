@@ -13,7 +13,6 @@ import {
     Radio,
     RadioGroup
 } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
@@ -22,7 +21,6 @@ import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 
 const LegalCounselingMng = () => {
-    let isSubmitting = false;
     const columns = [
         {
             field: 'id',
@@ -77,26 +75,6 @@ const LegalCounselingMng = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center'
-        },
-        {
-            field: 'service_privacy',
-            headerName: '서비스 이용 동의',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            renderCell: (params) => {
-                return params.value && params.value === true && <CheckIcon />;
-            }
-        },
-        {
-            field: 'terms_privacy',
-            headerName: '개인정보 수집 및 이용 동의',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            renderCell: (params) => {
-                return params.value && params.value === true && <CheckIcon />;
-            }
         },
         {
             field: 'attach_file_id',
