@@ -21,6 +21,7 @@ import {
     Radio,
     RadioGroup
 } from '@mui/material';
+import { makeStyles, withStyles } from '@mui/styles';
 import MainCard from 'components/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
@@ -32,10 +33,36 @@ import FoundationApi from 'apis/lrc/project/foundationapi';
 import ErrorScreen from 'components/ErrorScreen';
 import { BusinessCheckboxList } from './component/business';
 import { NetworkCheckboxList } from './component/network';
+import StsCategory from './component/stscategory';
 import moment from 'moment';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSearchData } from 'store/reducers/projectsearch';
 
 const ProjectsPage = () => {
     let isSubmitting = false;
+    const useStyles = makeStyles({
+        tableRow: {
+            height: 25
+        },
+        tableCell: {
+            padding: '0px 16px',
+            height: 35
+        },
+        table: {
+            minWidth: 650,
+            '& .MuiTableCell-root': {
+                borderLeft: '1px solid rgba(224, 224, 224, 1)'
+            }
+        }
+    });
+
+    const StyledTableCell = withStyles((theme) => ({
+        root: {
+            padding: '0px 16px',
+            height: 35
+        }
+    }))(TableCell);
+
     const columns = [
         {
             field: 'id',
@@ -112,16 +139,34 @@ const ProjectsPage = () => {
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
     const [responseData, requestError, Loading, { foundationSearch }] = FoundationApi();
 
+    const {
+        reduceFromDate,
+        reduceToDate,
+        reducePeriod,
+        reduceContractCode,
+        reduceProcessCode,
+        reduceBusinessList,
+        reduceNetworkList,
+        reduceKeyword
+    } = useSelector((state) => state.projectSearchReducer);
+    const dispatch = useDispatch();
+
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
     // 그리드 목록 데이터
     const [dataGridRows, setDataGridRows] = useState([]);
+    const [totalDataGridRows, setTotalDataGridRows] = useState([]);
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
     ////////////////////////////////////////////////////
 
     // 검색 조건
@@ -138,12 +183,18 @@ const ProjectsPage = () => {
     const [statusList, setStatusList] = useState([]); // 계약 상태
     const [processList, setProcessList] = useState([]); // 계약 상태 변경 시 진행상태 출력 리스트.
 
+    // 진행상태
+    const [categoryList, setCategoryList] = useState([]);
+
     const [isAllChecked, setIsAllChecked] = useState(false);
+    // reduce search mode
+    const [isSearch, setIsSearch] = useState(false);
     // onload
     useEffect(() => {
         statusSearch(); // 상태 값 모두 조회
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
+        statusSearch(); // 상태 값 모두 조회
         console.log(new Date());
     }, []);
 
@@ -170,14 +221,29 @@ const ProjectsPage = () => {
 
                     let itemData = resData.data.data;
                     let list = [];
+                    let category = [];
                     itemData.map((item, index) => {
                         if (item.parent_code === '') {
                             const s = { id: item.id, name: item.name };
                             console.log(s);
                             list.push(s);
+
+                            const s1 = { id: item.id, name: item.name, count: 0 };
+                            category.push(s1);
                         }
                     });
                     setStatusList(list);
+                    setCategoryList(category);
+                    // reduce 상태값을 사용하여 검색을 수행한다.
+                    if (reduceFromDate) setStartDate(reduceFromDate);
+                    if (reduceToDate) setEndDate(reduceToDate);
+                    if (reduceKeyword) setKeyword(reduceKeyword);
+                    if (reducePeriod) setPeriod(reducePeriod);
+                    if (reduceContractCode) setSts(reduceContractCode);
+                    if (reduceProcessCode) setProcess(reduceProcessCode);
+
+                    // 사업계열, 네트워크 계열
+                    if (reduceFromDate && reduceToDate) setIsSearch(true);
                 }
                 break;
             default:
@@ -193,6 +259,22 @@ const ProjectsPage = () => {
             case 'getList':
                 if (responseData.data.data && responseData.data.data.length > 0) {
                     setDataGridRows(responseData.data.data);
+                    setTotalDataGridRows(responseData.data.data);
+
+                    responseData.data.data.map((item, idx) => {
+                        categoryList.map((category, index) => {
+                            if (item.contract_code === category.id) {
+                                setCategoryList((current) =>
+                                    current.map((obj) => {
+                                        if (obj.id === category.id) {
+                                            return { ...obj, count: obj.count + 1 };
+                                        }
+                                        return obj;
+                                    })
+                                );
+                            }
+                        });
+                    });
                 } else {
                     setDataGridRows([]);
                 }
@@ -339,6 +421,18 @@ const ProjectsPage = () => {
             keyword: keyword
         };
         foundationSearch(data);
+        // 검색 조건에 대해서 상태를 저장한다.
+        const searchData = {
+            reduceFromDate: from_date,
+            reduceToDate: to_date,
+            reducePeriod: period,
+            reduceContractCode: contract_code,
+            reduceProcessCode: process_code,
+            reduceBusinessList: business_list,
+            reduceNetworkList: network_list,
+            reduceKeyword: keyword
+        };
+        dispatch(setSearchData(searchData));
     };
     const clearClick = () => {
         setPeriod('1');
@@ -352,6 +446,28 @@ const ProjectsPage = () => {
         checkedNetworkItems.clear();
         setKeyword('');
         setIsAllChecked(false);
+    };
+    // 분류 클릭 시
+    const filterClick = (id) => {
+        if (id) {
+            console.log(id);
+            let filterGridData = totalDataGridRows.filter((el) => el.contract_code === id);
+            setDataGridRows(filterGridData);
+        } else {
+            setDataGridRows(totalDataGridRows);
+        }
+    };
+
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
     };
 
     return (
@@ -521,6 +637,15 @@ const ProjectsPage = () => {
                     <Grid container spacing={0} sx={{ mt: 2 }}>
                         <Grid item xs={8} sm={0.3}></Grid>
                         <Grid item xs={8} sm={0.7}>
+                            <Typography variant="caption" color="inherit" onClick={() => filterClick(null)}>
+                                전체({totalDataGridRows.length})
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={8} sm={0.2}></Grid>
+                        {categoryList.map((item, index) => (
+                            <StsCategory key={index} id={item.id} content={item.name} count={item.count} filterClick={filterClick} />
+                        ))}
+                        {/* <Grid item xs={8} sm={0.7}>
                             전체(2)
                         </Grid>
                         <Grid item xs={8} sm={0.1}></Grid>

@@ -21,7 +21,13 @@ import {
     Radio,
     RadioGroup,
     Tab,
-    Tabs
+    Tabs,
+    Table,
+    TableCell,
+    TableHead,
+    TableRow,
+    TableBody,
+    TablePagination
 } from '@mui/material';
 import MainCard from 'components/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
@@ -275,6 +281,11 @@ const ProjectsDetailPage = () => {
         setValue(value);
     };
 
+    const listClick = () => {
+        console.log('listClick called');
+        navigate('/projects/list');
+    };
+
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
@@ -302,7 +313,29 @@ const ProjectsDetailPage = () => {
                                             </Tabs>
                                         </Grid>
                                         <Grid item xs={8} sm={4}>
-                                            4
+                                            <Table
+                                                fixedHeader={false}
+                                                style={{ width: '100%', tableLayout: 'auto' }}
+                                                stickyHeader
+                                                aria-label="simple table"
+                                            >
+                                                <TableRow>
+                                                    <TableCell align="right" component="th" scope="row">
+                                                        <FormControl sx={{ m: 0 }} size="small">
+                                                            <Button
+                                                                disableElevation
+                                                                size="small"
+                                                                type="submit"
+                                                                variant="contained"
+                                                                color="secondary"
+                                                                onClick={listClick}
+                                                            >
+                                                                목록
+                                                            </Button>
+                                                        </FormControl>
+                                                    </TableCell>
+                                                </TableRow>
+                                            </Table>
                                         </Grid>
                                     </Grid>
                                 </Box>

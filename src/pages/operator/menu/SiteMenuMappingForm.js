@@ -191,9 +191,17 @@ const SiteMenuMappingForm = () => {
         color: '#ffffff'
     }));
 
+    ////////////////////////////////////////////////////
+    // 공통 에러 처리
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
+    ////////////////////////////////////////////////////
 
     const [siteList, setSiteList] = useState([]);
 
@@ -221,11 +229,13 @@ const SiteMenuMappingForm = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
@@ -679,7 +689,7 @@ const SiteMenuMappingForm = () => {
                         </Stack>
                     </Grid>
                 </Grid>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
             </Grid>
         </Grid>
     );

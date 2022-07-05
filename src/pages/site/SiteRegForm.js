@@ -70,11 +70,13 @@ const SiteRegForm = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 

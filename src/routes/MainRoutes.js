@@ -78,6 +78,8 @@ const SiteMenuMappingForm = Loadable(lazy(() => import('pages/operator/menu/Site
 const SiteAuthManagementPage = Loadable(lazy(() => import('pages/operator/auth/index')));
 const SiteAuthMngRegForm = Loadable(lazy(() => import('pages/operator/auth/SiteAuthMngReg')));
 const SiteLogPage = Loadable(lazy(() => import('pages/operator/log/index')));
+const ServiceLog = Loadable(lazy(() => import('pages/lrc/logs/index')));
+const ServiceDetail = Loadable(lazy(() => import('pages/lrc/logs/detail')));
 
 // render - 통합 관리
 const AccountMng = Loadable(lazy(() => import('pages/totalmng/accountmng/index')));
@@ -312,6 +314,10 @@ const MainRoutes = [
                 element: <SiteAuthManagementPage />
             },
             {
+                path: '/siteauth/reg/:paramId',
+                element: <SiteAuthMngRegForm />
+            },
+            {
                 path: '/siteauth/reg',
                 element: <SiteAuthMngRegForm />
             },
@@ -400,6 +406,10 @@ const MainRoutes = [
             },
             {
                 path: 'authmng/reg',
+                element: <AuthMngRegForm />
+            },
+            {
+                path: 'authmng/reg/:paramId',
                 element: <AuthMngRegForm />
             },
             {

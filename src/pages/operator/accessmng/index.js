@@ -24,6 +24,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
 import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
 import AccountApis from 'apis/account/accountapis';
+import ErrorScreen from 'components/ErrorScreen';
 
 const AccessMngPage = () => {
     let isSubmitting = false;
@@ -79,9 +80,17 @@ const AccessMngPage = () => {
     const [selectedRows, setSeletedRows] = useState([]);
     // 그리드 목록 데이터
     const [dataGridRows, setDataGridRows] = useState([]);
+    ////////////////////////////////////////////////////
+    // 공통 에러 처리
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
+    ////////////////////////////////////////////////////
 
     const [is_use, setIsUsed] = useState('');
     const [keyword, setKeyword] = useState('');
@@ -89,17 +98,18 @@ const AccessMngPage = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
     // onload
     useEffect(() => {
-        errorClear();
         setIsUsed('true');
         // 리스트 가져오기
         accountMngSearch(true, '');
@@ -126,13 +136,6 @@ const AccessMngPage = () => {
             default:
         }
     }, [responseData]);
-
-    // 에러 정보를 클리어 한다.
-    const errorClear = () => {
-        setOpen(false);
-        setErrorTitle('');
-        setErrorMessage('');
-    };
 
     //체크박스 선택된 row id 저장
     const handleSelectionChange = (item) => {
@@ -162,7 +165,6 @@ const AccessMngPage = () => {
 
     // list
     const listClick = () => {
-        errorClear();
         let isUse = 'true';
         setKeyword('');
         console.log('listClick called');
@@ -171,7 +173,6 @@ const AccessMngPage = () => {
     };
     // search
     const searchClick = () => {
-        errorClear();
         if (keyword === '') {
             alert('검색 단어를 입력하세요!');
             return;
@@ -317,29 +318,7 @@ const AccessMngPage = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </MainCard>
-                <MainCard sx={{ mt: 3 }} content={false}>
-                    <Collapse in={open}>
-                        <Alert
-                            severity="error"
-                            action={
-                                <IconButton
-                                    aria-label="close"
-                                    color="inherit"
-                                    size="small"
-                                    onClick={() => {
-                                        errorClear();
-                                    }}
-                                >
-                                    <CloseIcon fontSize="inherit" />
-                                </IconButton>
-                            }
-                            sx={{ mb: 2 }}
-                        >
-                            <AlertTitle>{errorTitle}</AlertTitle>
-                            {errorMessage}
-                        </Alert>
-                    </Collapse>
-                </MainCard>
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
             </Grid>
         </Grid>
     );

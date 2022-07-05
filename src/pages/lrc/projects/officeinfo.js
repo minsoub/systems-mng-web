@@ -38,6 +38,7 @@ import TabPanel from 'components/TabPanel';
 import FoundationApi from 'apis/lrc/project/foundationapi';
 import StatusApi from 'apis/lrc/status/statusapi';
 import NumberFormat from 'react-number-format';
+import moment from 'moment';
 
 const OfficeInfo = (props) => {
     const navigate = useNavigate();
@@ -65,11 +66,24 @@ const OfficeInfo = (props) => {
     const [icoList, setIcoList] = useState([]); // ICO 정보
     const [marketingList, setMarketingList] = useState([]); // 마켓팅 수량
     const [reviewList, setReviewList] = useState([]); // 검토평가 리스트
+    // 서류제출 현황 항목 정의
+    const [file1, setFile1] = useState({}); // 거래지원 신청서
+    const [file2, setFile2] = useState({}); // 개인정보 수집 및 이용동의서
+    const [file3, setFile3] = useState({}); // 프로젝트 백서
+    const [file4, setFile4] = useState({}); // 기술검토보고서
+    const [file5, setFile5] = useState({}); // 토큰세일 및 분배 계획서
+    const [file6, setFile6] = useState({}); // 법률 검토 의견서
+    const [file7, setFile7] = useState({}); // 사업자 등록증
+    const [file8, setFile8] = useState({}); // 윤리서약서
+    const [file9, setFile9] = useState({}); // 규제준수 확약서
+    const [file10, setFile10] = useState({}); // 기타
 
     // onload
     useEffect(() => {
         //siteSearch(true, '');
         //roleList();
+        // 7. 서류 제출 현황 조회
+        fileSearch(projectId);
         // 1. 재단정보 조회
         officeSearch(projectId);
         // 1.1 프로젝트 연결 조회
@@ -153,7 +167,142 @@ const OfficeInfo = (props) => {
                     setReviewList([]);
                 }
                 break;
+            case 'getFileList':
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    let files = responseData.data.data;
+                    // 첫번째 데이터 들이 최신 데이터들이다.
+                    files.map((item, index) => {
+                        let name = '';
+                        if (item.create_admin_account_id) {
+                            name = '관리자';
+                        } else {
+                            name = '사용자';
+                        }
+                        let data = { item: `문서 추가(${name})`, item1: `${item.create_date}`, d: item.create_date };
+                        //console.log(data);
+                        if (item.type === 'IPO_APPLICATION') {
+                            if (!file1.item) setFile1(data);
+                            console.log(file1);
+                        } else if (item.type === 'COLLECT_CONFIRM') {
+                            if (!file2.item) setFile2(data);
+                        } else if (item.type === 'PROJECT_WHITEPAPER') {
+                            if (!file3.item) setFile3(data);
+                        } else if (item.type === 'TECH_REVIEW_REPORT') {
+                            if (!file4.item) setFile4(data);
+                        } else if (item.type === 'TOKEN_DIVISION_PLAN') {
+                            if (!file5.item) setFile5(data);
+                        } else if (item.type === 'LEGAL_REVIEW') {
+                            if (!file6.item) setFile6(data);
+                        } else if (item.type === 'BUSINESS_LICENSE') {
+                            if (!file7.item) setFile7(data);
+                        } else if (item.type === 'ETHICAL_WRITE_AUTH') {
+                            if (!file8.item) setFile8(data);
+                        } else if (item.type === 'REGULATORY_COMPLIANCE') {
+                            if (!file9.item) setFile9(data);
+                        } else if (item.type === 'ETC') {
+                            if (!file10.item) setFile10(data);
+                        }
+                    });
+                }
+                break;
+            case 'getDocList':
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    let docs = responseData.data.data;
+                    // 첫번째 데이터 들이 최신 데이터들이다.
+                    docs.map((item, index) => {
+                        let name = '';
+                        if (item.create_admin_account_id) {
+                            name = '관리자';
+                        } else {
+                            name = '사용자';
+                        }
+                        let data = { item: `URL 추가(${name})`, item1: `${item.create_date}`, d: item.create_date };
+                        if (item.type === 'IPO_APPLICATION') {
+                            if (!file1.item) setFile1(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file1.d)) {
+                                    setFile1(data);
+                                }
+                            }
+                        } else if (item.type === 'COLLECT_CONFIRM') {
+                            if (!file2.item) setFile2(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file2.d)) {
+                                    setFile2(data);
+                                }
+                            }
+                        } else if (item.type === 'PROJECT_WHITEPAPER') {
+                            if (!file3.item) setFile3(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file3.d)) {
+                                    setFile3(data);
+                                }
+                            }
+                        } else if (item.type === 'TECH_REVIEW_REPORT') {
+                            if (!file4.item) setFile4(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file4.d)) {
+                                    setFile4(data);
+                                }
+                            }
+                        } else if (item.type === 'TOKEN_DIVISION_PLAN') {
+                            if (!file5.item) setFile5(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file5.d)) {
+                                    setFile5(data);
+                                }
+                            }
+                        } else if (item.type === 'LEGAL_REVIEW') {
+                            if (!file6.item) setFile6(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file6.d)) {
+                                    setFile6(data);
+                                }
+                            }
+                        } else if (item.type === 'BUSINESS_LICENSE') {
+                            if (!file7.item) setFile7(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file7.d)) {
+                                    setFile7(data);
+                                }
+                            }
+                        } else if (item.type === 'ETHICAL_WRITE_AUTH') {
+                            if (!file8.item) setFile8(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file8.d)) {
+                                    setFile8(data);
+                                }
+                            }
+                        } else if (item.type === 'REGULATORY_COMPLIANCE') {
+                            if (!file9.item) setFile9(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file9.d)) {
+                                    setFile9(data);
+                                }
+                            }
+                        } else if (item.type === 'ETC') {
+                            if (!file10.item) setFile10(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file10.d)) {
+                                    setFile10(data);
+                                }
+                            }
+                        }
+                    });
+                }
+                break;
             default:
+                break;
         }
     }, [responseData]);
 
@@ -248,6 +397,7 @@ const OfficeInfo = (props) => {
                         </Select>
                     </FormControl>
                 </Grid>
+                <Grid item xs={8} sm={0.2}></Grid>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 1 }}>
                 <FormControl sx={{ m: 0 }} fullWidth>

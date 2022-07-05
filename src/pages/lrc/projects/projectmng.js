@@ -411,10 +411,31 @@ const ProjectMng = (props) => {
         console.log(e);
     };
     const handleChange = (e) => {
+        console.log(e.target.name);
         switch (e.target.name) {
             case 'contract_code':
                 // 진행상태 출력.
+                setContract_code(e.target.value);
                 processPrint(e.target.value);
+                break;
+            case 'process_code':
+                console.log(e.target.value);
+                setProcess_code(e.target.value);
+                break;
+            case 'business_code':
+                setBusiness_code(e.target.value);
+                break;
+            case 'network_code':
+                setNetwork_code(e.target.value);
+                break;
+            case 'create_date':
+                setCreate_date(e.target.value);
+                break;
+            case 'btc_ico_date':
+                setBtc_ico_date(e.target.value);
+                break;
+            case 'krw_ico_date':
+                setKrw_ico_date(e.target.value);
                 break;
             default:
                 break;
@@ -636,6 +657,7 @@ const ProjectMng = (props) => {
                 }
             });
             let saveData = { ico_info_list: ico_info_list };
+            console.log(saveData);
             updateIcoList(projectId, saveData);
         }
     };

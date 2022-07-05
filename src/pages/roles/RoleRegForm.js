@@ -17,7 +17,8 @@ import {
     Alert,
     Collapse,
     AlertTitle,
-    Typography
+    Typography,
+    MenuItem
 } from '@mui/material';
 // third party
 import * as Yup from 'yup';
@@ -27,12 +28,11 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
-import { boolean } from '../../../node_modules/yup/lib/index';
-import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
 import { DatePicker } from 'antd';
-import { MenuItem } from '../../../node_modules/@mui/material/index';
+import ErrorScreen from 'components/ErrorScreen';
 
 const RoleRegForm = () => {
     let isSubmitting = false;
@@ -85,11 +85,13 @@ const RoleRegForm = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
