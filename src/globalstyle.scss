@@ -75,6 +75,13 @@
     margin-left: 21px;
 }
 
+@media (min-width: 1024px) {
+    .css-1ol3ns7-MuiGrid-root {
+        max-width: 100%;
+        flex-basis: 100%;
+    }
+}
+
 legend {
     display: none;
 }

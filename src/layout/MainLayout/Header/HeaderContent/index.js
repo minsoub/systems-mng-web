@@ -5,8 +5,8 @@ import { GithubOutlined } from '@ant-design/icons';
 // project import
 import Search from './Search';
 import Profile from './Profile';
-import Notification from './Notification';
 import MobileSection from './MobileSection';
+import './styles.scss';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
@@ -14,14 +14,15 @@ const HeaderContent = () => {
     const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     return (
-        <>
+        <div className="searchAndUser">
+            {/* 검색바 */}
             {!matchesXs && <Search />}
             {matchesXs && <Box sx={{ width: '100%', ml: 1 }} />}
 
-            {/* <Notification /> */}
+            {/* 유저 정보*/}
             {!matchesXs && <Profile />}
             {matchesXs && <MobileSection />}
-        </>
+        </div>
     );
 };
 
