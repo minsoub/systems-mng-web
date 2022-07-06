@@ -91,7 +91,7 @@ export function CustomDataGrid({ columns, rows, handlePageChange, handleGridClic
     }
     if (rows) {
         return (
-            <div style={{ padding: 2, height: mHeight, width: '100%' }}>
+            <div style={{ height: mHeight, width: '100%' }}>
                 <StyledDataGrid
                     pageSize={20}
                     rowsPerPageOptions={[5]}
