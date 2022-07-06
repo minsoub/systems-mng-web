@@ -1,0 +1,18 @@
+.admin--title {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Public Sans', sans-serif;
+    align-items: center;
+    width: 100%;
+    h3 {
+        font-weight: 600;
+        font-size: 1.5rem;
+        line-height: 1.33;
+    }
+
+    h6 {
+        font-weight: 400;
+        font-size: 0.875rem;
+        line-height: 1.57;
+    }
+}

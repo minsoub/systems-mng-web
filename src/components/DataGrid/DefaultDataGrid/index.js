@@ -4,8 +4,8 @@ import { useDemoData } from '@mui/x-data-grid-generator';
 import { styled } from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-import { SortByAlpha } from '../../../node_modules/@mui/icons-material/index';
 import { alpha } from '@mui/material/styles';
+import './style.scss';
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     border: 1,

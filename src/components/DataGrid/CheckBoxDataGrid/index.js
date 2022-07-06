@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import { alpha } from '@mui/material/styles';
+import './style.scss';
 
 function customCheckbox(theme) {
     return {

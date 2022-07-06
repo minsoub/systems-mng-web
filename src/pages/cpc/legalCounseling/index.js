@@ -6,9 +6,6 @@ import {
     Button,
     Grid,
     Stack,
-    TextField,
-    Typography,
-    FormControl,
     FormControlLabel,
     Radio,
     RadioGroup
@@ -19,6 +16,11 @@ import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import LegalCounselingApi from 'apis/cpc/legalCounseling/regalcounselingapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
+import HeaderTitle from 'components/HeaderTitle';
+import SearchDate from 'components/ContentManage/SearchDate';
+import SearchBar from 'components/ContentManage/SearchBar';
+import cx from 'classnames';
+import ButtonLayout from 'components/Common/ButtonLayout';
 
 const LegalCounselingMng = () => {
     const columns = [
@@ -295,171 +297,47 @@ const LegalCounselingMng = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">법률 상담 관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 법률 상담 관리</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
-                <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>기간 검색</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
-                                    <TextField
-                                        id="start_date"
-                                        name="start_date"
-                                        value={start_date}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        type="date"
-                                        defaultValue=""
-                                        sx={{ width: 140 }}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.3}>
-                                ~{' '}
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
-                                    <TextField
-                                        id="end_date"
-                                        name="end_date"
-                                        value={end_date}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        type="date"
-                                        defaultValue=""
-                                        sx={{ width: 140 }}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <Stack spacing={3}>
-                                    <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                        <RadioGroup
-                                            row
-                                            aria-labelledby="period-radio-buttons-group-label"
-                                            name="period"
-                                            value={period}
-                                            onChange={handleChange}
-                                        >
-                                            <FormControlLabel value="1" control={<Radio />} label="오늘" />
-                                            <FormControlLabel value="2" control={<Radio />} label="어제" />
-                                            <FormControlLabel value="3" control={<Radio />} label="1개월" />
-                                            <FormControlLabel value="4" control={<Radio />} label="3개월" />
-                                        </RadioGroup>
-                                    </FormControl>
-                                </Stack>
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>상태</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={7.3}>
-                                <Stack spacing={3}>
-                                    <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                        <RadioGroup
-                                            row
-                                            aria-labelledby="status-radio-buttons-group-label"
-                                            name="status"
-                                            value={status}
-                                            onChange={handleChange}
-                                        >
-                                            <FormControlLabel value="" control={<Radio />} label="전체" />
-                                            <FormControlLabel value="REGISTER" control={<Radio />} label="접수" />
-                                            <FormControlLabel value="REQUEST" control={<Radio />} label="답변요청" />
-                                            <FormControlLabel value="COMPLETE" control={<Radio />} label="답변완료" />
-                                        </RadioGroup>
-                                    </FormControl>
-                                </Stack>
-                            </Grid>
-                        </Grid>
-                        {/* <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>검색어</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={5.3}>
-                                <FormControl sx={{ m: 0, minHeight: 25, minWidth: 240 }} size="small" fullWidth>
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={keyword}
-                                        name="keyword"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder=""
-                                        fullWidth
-                                    />
-                                </FormControl>
-                            </Grid>
-                        </Grid> */}
-                    </Grid>
+                <HeaderTitle titleNm="법률 상담 관리" menuStep01="사이트 운영" menuStep02="법률 상담 관리" />
+                <MainCard>
+                    {/* 기간 검색 */}
+                    <SearchDate
+                        start_date={start_date}
+                        end_date={end_date}
+                        period={period}
+                        handleBlur={handleBlur}
+                        handleChange={handleChange}
+                    />
+
+                    {/* 카테고리 영역 */}
+                    <div className={cx('category')}>
+                        <Stack spacing={10} className={cx('borderTitle')}>
+                            상태
+                        </Stack>
+
+                        <RadioGroup
+                            row
+                            aria-labelledby="status-radio-buttons-group-label"
+                            name="status"
+                            value={status}
+                            onChange={handleChange}
+                        >
+                            <FormControlLabel value="" control={<Radio />} label="전체" />
+                            <FormControlLabel value="REGISTER" control={<Radio />} label="접수" />
+                            <FormControlLabel value="REQUEST" control={<Radio />} label="답변요청" />
+                            <FormControlLabel value="COMPLETE" control={<Radio />} label="답변완료" />
+                        </RadioGroup>
+                    </div>
                 </MainCard>
-                <Grid container alignItems="right" justifyContent="space-between">
-                    <Grid container spacing={0} sx={{ mt: 0 }}>
-                        <Grid item xs={8} sm={10.5}></Grid>
-                        <Grid item xs={8} sm={0.6}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={clearClick}
-                                >
-                                    초기화
-                                </Button>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={0.1}></Grid>
-                        <Grid item xs={8} sm={0.6}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={searchClick}
-                                >
-                                    검색
-                                </Button>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid container alignItems="center" justifyContent="flex-end">
-                    <Grid item xs={8} sm={1.2}>
-                        <FormControl sx={{ mt: 1, mb: 1 }} size="small">
-                            <Button
-                                disableElevation
-                                size="small"
-                                type="submit"
-                                variant="contained"
-                                color="secondary"
-                                onClick={excelDownloadClick}
-                            >
-                                엑셀다운로드
-                            </Button>
-                        </FormControl>
-                    </Grid>
+                <Grid className={cx('outButtons searchPointColor')}>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
+                            초기화
+                        </Button>
+
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                            검색
+                        </Button>
+                    </ButtonLayout>
                 </Grid>
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <DefaultDataGrid
@@ -471,6 +349,20 @@ const LegalCounselingMng = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </MainCard>
+                <Grid className={cx('outButtons searchPointColor')}>
+                    <ButtonLayout>
+                        <Button
+                            disableElevation
+                            size="medium"
+                            type="submit"
+                            variant="contained"
+                            color="secondary"
+                            onClick={excelDownloadClick}
+                        >
+                            엑셀 다운로드
+                        </Button>
+                    </ButtonLayout>
+                </Grid>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>

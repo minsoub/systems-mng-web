@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import './styles.scss';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -23,17 +24,20 @@ const Header = ({ open, handleDrawerToggle }) => {
     // common header
     const mainHeader = (
         <Toolbar>
-            <IconButton
-                disableRipple
-                aria-label="open drawer"
-                onClick={handleDrawerToggle}
-                edge="start"
-                color="secondary"
-                sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
-            >
-                {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            </IconButton>
-            <HeaderContent />
+            <div className="mainHeader">
+                {/* 왼쪽 메뉴바 열고 닫기 */}
+                <IconButton
+                    disableRipple
+                    aria-label="open drawer"
+                    onClick={handleDrawerToggle}
+                    edge="start"
+                    color="secondary"
+                    sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
+                >
+                    {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                </IconButton>
+                <HeaderContent />
+            </div>
         </Toolbar>
     );
 

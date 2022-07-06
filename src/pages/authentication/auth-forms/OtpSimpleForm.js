@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink, Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -41,21 +41,22 @@ import useAuthorized from 'apis/auth/auths';
 const OtpSimpleForm = ({ result }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const inputRef = useRef(null);
 
-    const [checked, setChecked] = useState(false);
+    // const [checked, setChecked] = useState(false);
 
-    const [showPassword, setShowPassword] = useState(false);
+    // const [showPassword, setShowPassword] = useState(false);
 
     const [responseData, requestError, loading, { actionOtp, actionClear }] = useAuthorized();
 
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
+    // const handleClickShowPassword = () => {
+    //     setShowPassword(!showPassword);
+    // };
 
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-        console.log('handleMouseDownPassword');
-    };
+    // const handleMouseDownPassword = (event) => {
+    //     event.preventDefault();
+    //     console.log('handleMouseDownPassword');
+    // };
 
     // transaction error 처리
     useEffect(() => {
@@ -100,11 +101,11 @@ const OtpSimpleForm = ({ result }) => {
         }
     }, [responseData]);
 
-    const CancelClick = () => {
-        if (confirm('취소하시겠습니까?')) {
-            navigate('/login');
-        }
-    };
+    // const CancelClick = () => {
+    //     if (confirm('취소하시겠습니까?')) {
+    //         navigate('/login');
+    //     }
+    // };
     const clearOtp = (e) => {
         e.preventDefault();
         console.log('called..');
@@ -170,24 +171,20 @@ const OtpSimpleForm = ({ result }) => {
                                     <InputLabel>Google Authenticator에 표시된 6자리 코드를 입력해 주세요</InputLabel>
                                 </Stack>
                             </Grid>
-                            <Grid item xs={12}></Grid>
-                            <Grid item xs={12}></Grid>
-                            <Grid item xs={12}></Grid>
                             <Grid item xs={12}>
                                 <Stack direction="row" spacing={1}>
                                     <OutlinedInput
-                                        fullWidth
                                         error={Boolean(touched.otp1 && errors.otp1)}
                                         id="-password-login"
                                         type="password"
                                         value={values.otp1}
                                         name="otp1"
+                                        inputRef={inputRef}
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder=""
                                     />
                                     <OutlinedInput
-                                        fullWidth
                                         error={Boolean(touched.otp2 && errors.otp2)}
                                         id="-password-login"
                                         type="password"
@@ -198,7 +195,6 @@ const OtpSimpleForm = ({ result }) => {
                                         placeholder=""
                                     />
                                     <OutlinedInput
-                                        fullWidth
                                         error={Boolean(touched.otp3 && errors.otp3)}
                                         id="-password-login"
                                         type="password"
@@ -209,7 +205,6 @@ const OtpSimpleForm = ({ result }) => {
                                         placeholder=""
                                     />
                                     <OutlinedInput
-                                        fullWidth
                                         error={Boolean(touched.otp4 && errors.otp4)}
                                         id="-password-login"
                                         type="password"
@@ -220,7 +215,6 @@ const OtpSimpleForm = ({ result }) => {
                                         placeholder=""
                                     />
                                     <OutlinedInput
-                                        fullWidth
                                         error={Boolean(touched.otp5 && errors.otp5)}
                                         id="-password-login"
                                         type="password"
@@ -231,7 +225,6 @@ const OtpSimpleForm = ({ result }) => {
                                         placeholder=""
                                     />
                                     <OutlinedInput
-                                        fullWidth
                                         error={Boolean(touched.otp6 && errors.otp6)}
                                         id="-password-login"
                                         type="password"
@@ -283,21 +276,13 @@ const OtpSimpleForm = ({ result }) => {
                             )}
                             <Grid item xs={12}>
                                 <Grid container spacing={0} sx={{ mt: 5 }}>
-                                    <Grid item xs={8} sm={4}></Grid>
-                                    <Grid item xs={8} sm={6.0}>
-                                        <InputLabel>
-                                            OTP를 분실했나요?{' '}
-                                            <b>
-                                                <a href="#" onClick={clearOtp}>
-                                                    초기화 요청
-                                                </a>
-                                            </b>
-                                        </InputLabel>
-                                    </Grid>
-                                </Grid>
-                                <Grid container spacing={0} sx={{ mt: 6 }}>
-                                    <Grid item xs={8} sm={1.1}></Grid>
-                                    <Grid item xs={8} sm={10.0}>
+                                    <Grid item xs={10} sm={12}>
+                                        <div className="label--center">
+                                            <span>OTP를 분실했나요?</span>
+                                            <a href="#" onClick={clearOtp}>
+                                                초기화 요청
+                                            </a>
+                                        </div>
                                         <AnimateButton>
                                             <Button
                                                 disableElevation
@@ -312,7 +297,6 @@ const OtpSimpleForm = ({ result }) => {
                                             </Button>
                                         </AnimateButton>
                                     </Grid>
-                                    <Grid item xs={8} sm={1.1}></Grid>
                                 </Grid>
                             </Grid>
                         </Grid>

@@ -1,0 +1,27 @@
+// 상단 검색 박스
+.css-1v9be3b-MuiCardContent-root:last-child {
+    padding-bottom: 0;
+}
+
+.css-1v9be3b-MuiCardContent-root {
+    padding: 20px !important;
+}
+
+// 검색 결과 리스트
+.css-3yvf2w-MuiDataGrid-root .MuiDataGrid-columnHeader {
+    height: 55px;
+}
+
+.css-25381f-MuiDataGrid-footerContainer {
+    display: flex;
+    -ms-flex-align: center;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid rgba(253, 253, 253, 1);
+    margin-bottom: 20px;
+    min-height: auto;
+}
+
+.css-3yvf2w-MuiDataGrid-root {
+    font-size: 14px;
+}
