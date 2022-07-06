@@ -191,7 +191,6 @@ const OtpForm = ({ result }) => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder=""
-                                        inputProps={{ maxLength: 1 }}
                                     />
                                     <OutlinedInput
                                         fullWidth
@@ -203,7 +202,6 @@ const OtpForm = ({ result }) => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder=""
-                                        inputProps={{ maxLength: 1 }}
                                     />
                                     <OutlinedInput
                                         fullWidth
@@ -215,7 +213,6 @@ const OtpForm = ({ result }) => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder=""
-                                        inputProps={{ maxLength: 1 }}
                                     />
                                     <OutlinedInput
                                         fullWidth
@@ -227,7 +224,6 @@ const OtpForm = ({ result }) => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder=""
-                                        inputProps={{ maxLength: 1 }}
                                     />
                                     <OutlinedInput
                                         fullWidth
@@ -239,7 +235,6 @@ const OtpForm = ({ result }) => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder=""
-                                        inputProps={{ maxLength: 1 }}
                                     />
                                     <OutlinedInput
                                         fullWidth

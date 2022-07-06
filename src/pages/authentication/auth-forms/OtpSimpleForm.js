@@ -185,7 +185,6 @@ const OtpSimpleForm = ({ result }) => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder=""
-                                        inputProps={{ maxLength: 1 }}
                                     />
                                     <OutlinedInput
                                         fullWidth
@@ -197,7 +196,6 @@ const OtpSimpleForm = ({ result }) => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder=""
-                                        inputProps={{ maxLength: 1 }}
                                     />
                                     <OutlinedInput
                                         fullWidth
@@ -209,7 +207,6 @@ const OtpSimpleForm = ({ result }) => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder=""
-                                        inputProps={{ maxLength: 1 }}
                                     />
                                     <OutlinedInput
                                         fullWidth
@@ -221,7 +218,6 @@ const OtpSimpleForm = ({ result }) => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder=""
-                                        inputProps={{ maxLength: 1 }}
                                     />
                                     <OutlinedInput
                                         fullWidth
@@ -233,7 +229,6 @@ const OtpSimpleForm = ({ result }) => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder=""
-                                        inputProps={{ maxLength: 1 }}
                                     />
                                     <OutlinedInput
                                         fullWidth
