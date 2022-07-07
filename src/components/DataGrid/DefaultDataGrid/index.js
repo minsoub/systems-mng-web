@@ -73,7 +73,16 @@ function CustomPagination() {
     );
 }
 
-export function CustomDataGrid({ columns, rows, handlePageChange, handleGridClick, handleGridDoubleClick, selectionChange, height }) {
+export function CustomDataGrid({
+    columns,
+    rows,
+    handlePageChange,
+    handleGridClick,
+    handleGridDoubleClick,
+    selectionChange,
+    height,
+    pageSize
+}) {
     const handlePage = (page, details) => {
         handlePageChange(page + 1);
     };
@@ -93,7 +102,7 @@ export function CustomDataGrid({ columns, rows, handlePageChange, handleGridClic
         return (
             <div style={{ height: mHeight, width: '100%' }}>
                 <StyledDataGrid
-                    pageSize={20}
+                    pageSize={pageSize || 20}
                     rowsPerPageOptions={[5]}
                     components={{
                         Pagination: CustomPagination
