@@ -16,7 +16,7 @@ import React, { useEffect, useRef, useState } from 'react';
 //import WebSocket from 'ws';
 //const WebSocket = require('ws');
 
-const siteId = process.env.REACT_APP_DEFAULT_SITE_ID ? process.env.REACT_APP_DEFAULT_SITE_ID : '';
+const siteId = process.env.REACT_APP_DEFAULT_CHAT_SITE_ID ? process.env.REACT_APP_DEFAULT_CHAT_SITE_ID : '';
 const serverURL = process.env.REACT_APP_CHAT_SERVER_URL ? process.env.REACT_APP_CHAT_SERVER_URL : 'ws://localhost:9090';
 let authData = null;
 if (localStorage.hasOwnProperty('authenticated')) {
@@ -196,6 +196,7 @@ const useRScoketClient = () => {
         }
     };
 
+    // 기존 채팅 리스트 가져오기
     const sendJoinChat = (route) => {
         if (rSocket) {
             const message = {
