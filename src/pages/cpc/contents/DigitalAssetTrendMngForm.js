@@ -263,7 +263,7 @@ const DigitalAssetTrendMngForm = () => {
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
             thumbnailFile && formData.append('file', thumbnailFile, { type: 'multipart/form-data' });
             console.log(formData);
-            updateBoard(boardMasterId, formData);
+            updateBoard(boardMasterId, data.id, formData);
         }
     };
 

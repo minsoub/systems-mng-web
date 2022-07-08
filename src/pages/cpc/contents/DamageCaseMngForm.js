@@ -194,7 +194,7 @@ const DamageCaseMngForm = () => {
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
             console.log(data);
-            updateBoard(boardMasterId, formData);
+            updateBoard(boardMasterId, data.id, formData);
         }
     };
 
