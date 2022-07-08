@@ -499,7 +499,7 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         </TableHead>
                         {userList.map((item, index) => (
-                            <TableRow>
+                            <TableRow key={index}>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
                                     {item.user_name}
                                 </TableCell>
@@ -532,7 +532,7 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         </TableHead>
                         {icoList.map((item, index) => (
-                            <TableRow>
+                            <TableRow key={index}>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
                                     {item.market_info}
                                 </TableCell>
@@ -562,7 +562,7 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         </TableHead>
                         {marketingList.map((item, index) => (
-                            <TableRow>
+                            <TableRow key={index}>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
                                     {item.symbol}
                                 </TableCell>
@@ -592,7 +592,7 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         </TableHead>
                         {reviewList.map((item, index) => (
-                            <TableRow>
+                            <TableRow key={index}>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
                                     {item.organization}
                                 </TableCell>

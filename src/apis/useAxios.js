@@ -67,7 +67,7 @@ const useAxios = () => {
                 };
             }
             const res = await axiosInstance[method](url, data);
-            console.log('success', res);
+            //console.log('success', res);
             //console.log(res.headers);
             //const returnData = { transactionId: tid, data: res.data };
             if (res.headers['content-disposition']) {
@@ -88,7 +88,7 @@ const useAxios = () => {
                 const returnData = { transactionId: tid, data: res.data };
                 setResponse(returnData);
             } else {
-                console.log(res);
+                //console.log(res);
                 const returnData = { transactionId: tid, data: res.data };
                 setResponse(returnData);
             }
@@ -96,6 +96,7 @@ const useAxios = () => {
         } catch (err) {
             console.log(err);
             console.log('error', err.message);
+            //if (err.re)
             setError(err.response.data);
         } finally {
             setLoading(false);

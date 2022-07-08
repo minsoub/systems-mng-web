@@ -30,6 +30,8 @@ import {
     TablePagination
 } from '@mui/material';
 import MainCard from 'components/MainCard';
+import { tableCellClasses } from '@mui/material/TableCell';
+import { styled } from '@mui/material/styles';
 import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -44,6 +46,8 @@ import ProjectMng from './projectmng';
 import FileMng from './filemng';
 import ProjectHistory from './history';
 import Chat from './chat';
+import ChatApi from 'apis/chat/chatapi';
+import { FileDownload } from '../../../../node_modules/@mui/icons-material/index';
 
 const ProjectsDetailPage = () => {
     let isSubmitting = false;
@@ -121,8 +125,8 @@ const ProjectsDetailPage = () => {
     ];
     const navigate = useNavigate();
     const { paramId } = useParams();
-    const [responseData, requestError, loading, { roleList, roleComboSearch }] = RoleApi();
-    const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
+
+    const [resData, reqError, loading, { insertChatFile, getChatFile, getChatFileList }] = ChatApi();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -131,99 +135,78 @@ const ProjectsDetailPage = () => {
 
     const [value, setValue] = React.useState(0);
 
+    // 파일 정보
+    const [file_part, setFilePart] = useState();
+    const [file, setFile] = useState('');
+
+    // 파일 리스트
+    const [fileList, setFileList] = useState([]);
+    const [fileName, setFileName] = useState('');
+
     ////////////////////////////////////////////////////
     // 공통 에러 처리
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
     ////////////////////////////////////////////////////
 
-    // 검색 조건
-    const [keyword, setKeyword] = useState('');
-    const [start_date, setStartDate] = useState('');
-    const [end_date, setEndDate] = useState('');
-    const [period, setPeriod] = useState('1');
-    const [checked1, setChecked1] = useState(false);
-    const [checked2, setChecked2] = useState(false);
-    const [checked3, setChecked3] = useState(false);
-    const [checked4, setChecked4] = useState(false);
     // onload
     useEffect(() => {
         //siteSearch(true, '');
         //roleList();
+        // 파일 리스트 조회
+        getChatFileList(paramId);
     }, []);
 
     // transaction error 처리
     useEffect(() => {
-        if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+        if (reqError) {
+            if (reqError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(reqError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + reqError.error.code + '] ' + reqError.error.message);
+                setOpen(true);
+            }
         }
-    }, [requestError]);
+    }, [reqError]);
 
-    // Combobox data transaction
-    // 사이트
     useEffect(() => {
         if (!resData) {
             return;
         }
         switch (resData.transactionId) {
-            case 'siteList':
+            case 'getFileList':
                 if (resData.data.data) {
-                    let siteData = resData.data.data;
-                    let list = [];
-                    siteData.map((site, index) => {
-                        const s = { id: site.id, name: site.name };
-                        console.log(s);
-                        list.push(s);
-                    });
-                    setSiteList(list);
-
-                    if (param_site_id) {
-                        console.log('==============called...here ');
-                        console.log(search_site_id);
-                        console.log(search_is_use);
-                        console.log(param_site_id);
-                        console.log(param_is_use);
-                        console.log('================');
-                        setSiteId(param_site_id);
-                        if (param_is_use === 'true') {
-                            setIsUse(true);
-                        } else {
-                            setIsUse(false);
-                        }
-                        roleSearch(param_is_use, search_site_id);
-                        //searchClick();
-                    }
+                    console.log(resData);
+                    setFileList(resData.data.data);
+                }
+                break;
+            case 'getFile':
+                if (resData.data) {
+                    let res = resData;
+                    console.log('res data....');
+                    console.log(res);
+                    console.log(res.fileName);
+                    const url = window.URL.createObjectURL(new Blob([res.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `${fileName}`);
+                    link.style.cssText = 'display:none';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    setFileName('');
                 }
                 break;
             default:
         }
     }, [resData]);
-
-    // Transaction Return
-    useEffect(() => {
-        if (!responseData) {
-            return;
-        }
-        switch (responseData.transactionId) {
-            case 'roleList':
-                if (responseData.data.data && responseData.data.data.length > 0) {
-                    setDataGridRows(responseData.data.data);
-                } else {
-                    setDataGridRows([]);
-                }
-                break;
-            case 'deleteData':
-                console.log('deleteData');
-                roleList();
-                break;
-            default:
-        }
-    }, [responseData]);
 
     const handleClose = () => {
         setVisible(false);
@@ -249,34 +232,6 @@ const ProjectsDetailPage = () => {
         }
     };
 
-    //체크박스 선택된 row id 저장
-    const handleSelectionChange = (item) => {
-        if (item) {
-            setSeletedRows(item);
-        }
-    };
-    // 페이징 변경 이벤트
-    const handlePage = (page) => {};
-
-    // 그리드 클릭
-    const handleClick = (rowData) => {
-        if (rowData && rowData.field && rowData.field !== '__check__') {
-            let searchCondition = { site_id: site_id, is_use: is_use, type: type };
-
-            //navigate(`/authmng/reg/${rowData.id}`);
-        }
-    };
-
-    // 그리드 더블 클릭
-    const handleDoubleClick = (rowData) => {};
-
-    // search
-    const searchClick = () => {
-        console.log('searchClick called...');
-        //roleComboSearch(is_use, type, site_id);
-    };
-    const clearClick = () => {};
-
     const tabChange = (event, value) => {
         setValue(value);
     };
@@ -285,6 +240,68 @@ const ProjectsDetailPage = () => {
         console.log('listClick called');
         navigate('/projects/list');
     };
+
+    const fileSave = (type, data) => {
+        if (!file) {
+            alert('파일을 업로드 하지 않았습니다!!!');
+            return;
+        }
+        const formData = new FormData();
+        formData.append('file', file_part);
+        formData.append('projectId', paramId);
+        formData.append('fileName', file);
+        formData.append('fileType', file_part.type);
+        // 3.2MB로 계산하기
+        formData.append('fileSize', humanFileSize(file_part.size, true, 2));
+
+        console.log(formData);
+        insertChatFile(formData);
+    };
+
+    // 입력 박스 입력 시 호출
+    const fileHandleChange = (e) => {
+        if (!e.target.files[0]) {
+            setFilePart();
+            return;
+        }
+        setFile(e.target.files[0].name);
+        setFilePart(e.target.files[0]);
+    };
+
+    function humanFileSize(bytes, si = false, dp = 1) {
+        const thresh = si ? 1000 : 1024;
+
+        if (Math.abs(bytes) < thresh) {
+            return bytes + ' B';
+        }
+
+        const units = si ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+        let u = -1;
+        const r = 10 ** dp;
+
+        do {
+            bytes /= thresh;
+            ++u;
+        } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+
+        return bytes.toFixed(dp) + ' ' + units[u];
+    }
+
+    // 파일을 다운로드 한다.
+    const FileDownload = (key, name) => {
+        setFileName(name);
+        getChatFile(key);
+    };
+
+    const FontTableCell = styled(TableCell)(({ theme }) => ({
+        // [`&.${tableCellClasses.head}`]: {
+        //     backgroundColor: theme.palette.common.black,
+        //     color: theme.palette.common.white
+        // },
+        [`&.${tableCellClasses.body}`]: {
+            fontSize: 9
+        }
+    }));
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
@@ -356,13 +373,76 @@ const ProjectsDetailPage = () => {
                                     </Grid>
                                     <Grid item xs={8} sm={4}>
                                         <Chat projectId={paramId} />
+                                        <Table
+                                            fixedHeader={false}
+                                            style={{ width: '100%', tableLayout: 'auto' }}
+                                            stickyHeader
+                                            aria-label="simple table"
+                                        >
+                                            <TableRow>
+                                                <TableCell align="center" component="th" scope="row">
+                                                    <FormControl sx={{ m: 0 }} size="small">
+                                                        <Button
+                                                            disableElevation
+                                                            size="small"
+                                                            type="button"
+                                                            variant="contained"
+                                                            color="primary"
+                                                            onClick={() => fileSave('CHAT', file)}
+                                                        >
+                                                            파일 업로드
+                                                        </Button>
+                                                    </FormControl>
+                                                </TableCell>
+                                                <TableCell align="center" component="th" scope="row">
+                                                    <FormControl sx={{ m: 0 }} fullWidth>
+                                                        <TextField
+                                                            type="file"
+                                                            id="file"
+                                                            name="file"
+                                                            size="small"
+                                                            onChange={fileHandleChange}
+                                                            inputProps={{
+                                                                accept:
+                                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                </TableCell>
+                                            </TableRow>
+                                        </Table>
+                                        <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                                            &nbsp;첨부파일 목록
+                                            <Table
+                                                style={{ border: 1, width: '100%', tableLayout: 'auto' }}
+                                                stickyHeader
+                                                aria-label="simple table"
+                                            >
+                                                <TableBody>
+                                                    {fileList.map((item, index) => (
+                                                        <TableRow key={index}>
+                                                            <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
+                                                                [ 사용자 ]
+                                                            </FontTableCell>
+                                                            <FontTableCell style={{ width: '66%', lineBreak: 'anywhere' }}>
+                                                                <a href="#" onClick={() => FileDownload(item.id, item.file_name)}>
+                                                                    {item.file_name}
+                                                                </a>
+                                                                <p></p>
+                                                                {item.file_sze} {item.create_date}≈
+                                                            </FontTableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </MainCard>
                                     </Grid>
                                 </Grid>
                             </Box>
                         </Grid>
                     </Grid>
                 </MainCard>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
             </Grid>
         </Grid>
     );

@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) =>
             marginBottom: '10px',
             padding: '10px',
             backgroundColor: '#f8e896',
-            width: '60%',
+            width: '90%',
             //height: "50px",
             textAlign: 'left',
             font: "400 .9em 'Open Sans', sans-serif",
@@ -151,7 +151,7 @@ export const MessageRight = (props) => {
                     <div>
                         <div className={classes.messageContent}>{message}</div>
                     </div>
-                    <div className={classes.messageTimeStampRight}>{timestamp}</div>
+                    <div className={classes.messageTimeStampRight}>{timestamp} [삭제]</div>
                 </div>
             </div>
             {displayName}

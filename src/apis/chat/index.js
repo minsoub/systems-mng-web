@@ -10,7 +10,20 @@ import {
     RSocketClient
 } from 'rsocket-core';
 import RSocketWebsocketClient from 'rsocket-websocket-client';
+import { Flowable } from 'rsocket-flowable';
+import { ReactiveSocket } from 'rsocket-types';
 import React, { useEffect, useRef, useState } from 'react';
+//import WebSocket from 'ws';
+//const WebSocket = require('ws');
+
+const siteId = process.env.REACT_APP_DEFAULT_SITE_ID ? process.env.REACT_APP_DEFAULT_SITE_ID : '';
+const serverURL = process.env.REACT_APP_CHAT_SERVER_URL ? process.env.REACT_APP_CHAT_SERVER_URL : 'ws://localhost:9090';
+let authData = null;
+if (localStorage.hasOwnProperty('authenticated')) {
+    //console.log(localStorage.getItem('authenticated'));
+    authData = JSON.parse(localStorage.getItem('authenticated'));
+    console.log(authData.accessToken);
+}
 
 const useRScoketClient = () => {
     const connection = useRef();
@@ -18,10 +31,12 @@ const useRScoketClient = () => {
     const [clientError, setClientError] = useState();
     const [responseData, setResponseData] = useState();
     const [responseError, setResponseError] = useState();
+    const [projectId, setProjectId] = useState('');
 
     const getMetadata = (route) => {
         const socketAuthProvider = encodeBearerAuthMetadata(
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiYXVkIjoiaGVsbG8tc2VydmljZSIsImFjY291bnRfaWQiOiJyaWhvbmdvIiwicm9sZSI6IlVTRVIiLCJpc3MiOiJoZWxsby1zZXJ2aWNlLWRlbW8iLCJleHAiOjE2NTY1MDk0NjEsImp0aSI6ImQzMWUwMWEzLWZlMWUtNDU1Yi04ZTUwLWQ0MTkyODhhODY2NiJ9.061X4m386ISFNdnn5XLZSySu_ryc1LYoIqDl8YfL_Yc'
+            authData.accessToken
+            //'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiYXVkIjoiaGVsbG8tc2VydmljZSIsImFjY291bnRfaWQiOiJyaWhvbmdvIiwicm9sZSI6IlVTRVIiLCJpc3MiOiJoZWxsby1zZXJ2aWNlLWRlbW8iLCJleHAiOjE2NTY1MDk0NjEsImp0aSI6ImQzMWUwMWEzLWZlMWUtNDU1Yi04ZTUwLWQ0MTkyODhhODY2NiJ9.061X4m386ISFNdnn5XLZSySu_ryc1LYoIqDl8YfL_Yc'
         );
         const metadata = encodeCompositeMetadata([
             [MESSAGE_RSOCKET_ROUTING.string, encodeRoute(route)],
@@ -29,19 +44,45 @@ const useRScoketClient = () => {
         ]);
         return metadata;
     };
+    const createClient = async (projectId) => {
+        console.log('>>createClient called..<<');
+        setProjectId(projectId);
+        // //let url = new URL('ws://adf6a8418bce84e3582843612fe2477f-1744457513.ap-northeast-2.elb.amazonaws.com:9090');
+        // //console.log(url);
+        // const transportOptions = {
+        //     debug: true,
+        //     url: serverURL, //'ws://k8s-systemsd-systemsc-383ed2dc5d-1210336174.ap-northeast-2.elb.amazonaws.com:9090',
+        //     wsCreator: (url) => new WebSocket(url)
+        // };
+        // const setup = {
+        //     dataMimeType: 'application/json', //APPLICATION_JSON, // 'applicaton/json',
+        //     keepAlive: 5000, // avoid sending during test
+        //     lifetime: 100000,
+        //     metadataMimeType: 'application/json' //MESSAGE_RSOCKET_COMPOSITE_METADATA
+        // };
+        // //constructor(options: ClientOptions, encoders?: Encoders<any>);
+        // const transport = new RSocketWebsocketClient(transportOptions, BufferEncoders); // { options: transportOptions, encoders: BufferEncoders });
+        // console.log('client create...');
+        // const client = new RSocketClient({
+        //     setup,
+        //     transport,
+        //     errorHandler: (e) => {
+        //         console.log('>> RScoketClient error <<');
+        //         setClientError(e);
+        //     }
+        // });
 
-    const createClient = async () => {
         const client = new RSocketClient({
             setup: {
-                dataMimeType: 'applicaton/json',
+                dataMimeType: APPLICATION_JSON.string,
                 keepAlive: 5000, // avoid sending during test
                 lifetime: 100000,
-                metadataMimeType: MESSAGE_RSOCKET_COMPOSITE_METADATA
+                metadataMimeType: MESSAGE_RSOCKET_COMPOSITE_METADATA.string
             },
             transport: new RSocketWebsocketClient(
                 {
                     debug: true,
-                    url: 'ws://localhost:9090',
+                    url: serverURL,
                     wsCreator: (url) => {
                         return new WebSocket(url);
                     }
@@ -53,109 +94,114 @@ const useRScoketClient = () => {
                 setClientError(e);
             }
         });
+
         connection.current = await client;
         const returnSocket = await client.connect();
         setRSocket(returnSocket);
-
-        // const transportOptions = {
-        //     url: 'ws://127.0.0.1:9898',
-        //     wsCreator: (url) => {
-        //         return new WebSocket(url);
-        //     }
-        // };
-        // const setup = {
-        //     keepAlive: 1000000,
-        //     lifetime: 100000,
-        //     dataMimeType: APPLICATION_JSON.string,
-        //     metadataMimeType: MESSAGE_RSOCKET_COMPOSITE_METADATA.string
-        // };
-        // const transport = new RSocketWebsocketClient(transportOptions, BufferEncoders);
-        // const client = new RSocketClient({ setup, transport });
-
-        // connection.current = await client;
-        // const returnSocket = await client.connect();
-        // setRSocket(returnSocket);
     };
 
     useEffect(() => {
         console.log('>> RsocketConnection <<');
-        createClient();
-        return () => {
-            if (connection && connection.current) {
-                console.log('useRSocketClient clean up');
-                connection.current.close();
-            }
-        };
+        //createClient();
+        // return () => {
+        //     if (connection && connection.current) {
+        //         console.log('useRSocketClient clean up');
+        //         connection.current.close();
+        //     }
+        // };
     }, []);
 
     const connectionClose = () => {
+        console.log('connectionClose called....');
         if (connection && connection.current) {
-            connection.current.client();
+            console.log('connection closed....');
+            connection.current.close();
         }
     };
 
-    const sendRequestResponse = (route, message) => {
+    const sendRequestResponse = (route, project_id, message) => {
+        console.log('sendRequest called...');
         console.log('>> sendRequestResponse <<', route, message);
         const messageRequest = {
             content: message,
-            chat_room: 'chat1',
-            site_id: 'lrc'
+            chat_room: project_id,
+            site_id: siteId
         };
+        console.log(messageRequest);
 
         if (rSocket && rSocket) {
+            console.log(rSocket);
             rSocket
                 .requestResponse({
                     data: Buffer.from(JSON.stringify(messageRequest)),
                     metadata: getMetadata(route)
                 })
                 .subscribe({
-                    onComplete: () => console.log('complete'),
+                    onComplete: (response) => {
+                        if (response && response.data) {
+                            const text = response.data.toString();
+                            const data = JSON.parse(text);
+                            console.log(text);
+                            console.log(data);
+                        }
+                    },
                     onError: (error) => {
-                        console.debug(`onError: ${error}`);
+                        console.log(`onError: ${error}`);
                         setResponseError(error);
                     },
-                    onNext: (payload) => {
-                        const json = payload.data.toString();
-                        console.debug(json);
-                        setResponseData(JSON.parse(json).content);
-                    },
-                    onSubscribe: (subscription) => {
-                        subscription.request(2147483647);
+                    // onNext: (payload) => {
+                    //     const json = payload.data.toString();
+                    //     console.log(json);
+                    //     setResponseData(JSON.parse(json).content);
+                    // },
+                    onSubscribe: (cancel) => {
+                        console.log(cancel);
+                        //subscription.request(2147483647);
                     }
                 });
         }
     };
 
-    const sendJoinChat = (route, chatRoom, siteId) => {
-        console.log('>> joinChat <<', route);
-        console.log(rSocket);
+    const sendRequestChannel = (route) => {
+        console.log('sendRequestChannel called...');
+        const channelRequest = {
+            chat_room: projectId,
+            site_id: siteId
+        };
+        console.log(channelRequest);
+        if (rSocket) {
+            rSocket
+                .requestChannel(
+                    Flowable.just({
+                        data: Buffer.from(JSON.stringify(channelRequest)),
+                        metadata: getMetadata(route)
+                    })
+                )
+                .subscribe({
+                    onComplete: () => console.log('complete'),
+                    onError: (error) => {
+                        //console.debug(`onError: ${error}`);
+                        setResponseError(error);
+                    },
+                    onNext: (payload) => {
+                        const text = payload.data.toString();
+                        const data = JSON.parse(text);
+                        setResponseData(data);
+                    },
+                    onSubscribe: (subscription) => {
+                        // console.log(subscription);
+                        subscription.request(10031);
+                    }
+                });
+        }
+    };
+
+    const sendJoinChat = (route) => {
         if (rSocket) {
             const message = {
-                chat_room: chatRoom,
+                chat_room: projectId,
                 site_id: siteId
             };
-            // rSocket
-            //     .requestResponse({
-            //         data: Buffer.from(JSON.stringify(message)),
-            //         metadata: getMetadata("create-chat"),
-            //     })
-            //     .subscribe({
-            //         onComplete: (response: any) => {
-            //             console.log(`onComplete: ${response.data}`, response.data);
-            //             if (response && response.data) {
-            //                 const data = response.data.toString();
-            //                 console.log(data);
-            //             }
-            //         },
-            //         onError: (error: Error) => {
-            //             console.log(`onError: ${error}`);
-            //             setResponseError(error);
-            //         },
-            //         onSubscribe: (cancel: any) => {
-            //             console.log("onSubscribe");
-            //         },
-            //     });
-
             rSocket
                 .requestResponse({
                     data: Buffer.from(JSON.stringify(message)),
@@ -163,26 +209,25 @@ const useRScoketClient = () => {
                 })
                 .subscribe({
                     onComplete: (response) => {
-                        // console.log(`onComplete: ${response.data}`, response.data);
                         if (response && response.data) {
-                            const data = response.data.toString();
-                            console.log(data);
-                            // setResponseData(data);
+                            const text = response.data.toString();
+                            const data = JSON.parse(text);
+                            setResponseData(data);
                         }
                     },
                     onError: (error) => {
-                        console.log(`onError: ${error}`);
+                        //console.log(`onError: ${error}`);
                         setResponseError(error);
                     },
                     onSubscribe: (cancel) => {
-                        sendRequestResponse('send-chat-message', '');
-                        console.log('onSubscribe');
+                        sendRequestChannel('channel-chat-message');
+                        // console.log('onSubscribe');
                     }
                 });
         }
     };
 
-    return [clientError, rSocket, sendJoinChat, sendRequestResponse, responseData, responseError];
+    return [clientError, rSocket, createClient, sendJoinChat, connectionClose, sendRequestResponse, responseData, responseError];
 };
 
 export default useRScoketClient;
