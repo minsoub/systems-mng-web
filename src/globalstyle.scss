@@ -1,0 +1,87 @@
+// 전역 스타일 파일
+
+// 공통 타이틀
+.borderTitle {
+    width: 80px;
+    align-items: center;
+    display: inline-grid;
+}
+
+// 기간 검색 중 카테고리 부분
+.category {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+// 버튼 오른쪽 정렬
+.outButtons {
+    width: 100%;
+    text-align: right;
+    display: inline-block;
+    margin-top: 16px;
+}
+
+// 상단 검색 박스
+.css-1v9be3b-MuiCardContent-root:last-child {
+    padding-bottom: 0;
+}
+
+.css-1v9be3b-MuiCardContent-root {
+    padding: 20px !important;
+}
+
+// 검색 결과 리스트
+.css-3yvf2w-MuiDataGrid-root .MuiDataGrid-columnHeader {
+    height: 55px;
+}
+
+.css-25381f-MuiDataGrid-footerContainer {
+    display: flex;
+    -ms-flex-align: center;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid rgba(253, 253, 253, 1);
+    margin-bottom: 20px;
+    min-height: auto;
+}
+
+.css-3yvf2w-MuiDataGrid-root {
+    font-size: 14px;
+}
+
+// 에러 메시지 박스
+.css-1aoneob-MuiPaper-root-MuiAlert-root {
+    margin-bottom: 0;
+}
+
+// 상단 메뉴바 아이콘
+.css-1ydvtxb-MuiButtonBase-root-MuiIconButton-root {
+    margin-left: 0;
+    font-size: 1.2rem;
+}
+
+// 상단 아래
+.css-dasaed-MuiGrid-root > .MuiGrid-item {
+    padding-top: 100px;
+}
+
+// Login By 유저정보
+.css-w7zj6u-MuiTypography-root {
+    font-weight: 400;
+}
+
+// 사용함 체크박스
+.checkedBox {
+    margin-left: 21px;
+}
+
+@media (min-width: 1024px) {
+    .css-1ol3ns7-MuiGrid-root {
+        max-width: 100%;
+        flex-basis: 100%;
+    }
+}
+
+legend {
+    display: none;
+}

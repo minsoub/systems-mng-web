@@ -40,7 +40,7 @@ const LegalCounselingMngForm = () => {
     const [email, setEmail] = useState('');
     const [cell_phone, setCellPhone] = useState('');
     const [contents, setContents] = useState('');
-    const [service_privacy, setServicePrivacy] = useState('');
+    const [entrust_privacy, setEntrustPrivacy] = useState('');
     const [terms_privacy, setTermsPrivacy] = useState('');
     const [answer_to_contacts, setAnswerToContacts] = useState('');
     const [answer, setAnswer] = useState('');
@@ -84,7 +84,7 @@ const LegalCounselingMngForm = () => {
                 setEmail(responseData.data.data.email);
                 setCellPhone(responseData.data.data.cell_phone);
                 setContents(responseData.data.data.contents);
-                setServicePrivacy(responseData.data.data.service_privacy);
+                setEntrustPrivacy(responseData.data.data.entrust_privacy);
                 setTermsPrivacy(responseData.data.data.terms_privacy);
                 setAnswerToContacts(responseData.data.data.answer_to_contacts);
                 setAnswer(responseData.data.data.answer);
@@ -238,11 +238,11 @@ const LegalCounselingMngForm = () => {
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
                             <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>서비스 이용 동의</Stack>
+                                <Stack spacing={0}>개인정보 취급 동의</Stack>
                             </FormControl>
                         </Grid>
                         <Grid item xs mr={1}>
-                            {service_privacy === true ? 'Y' : 'N'}
+                            {entrust_privacy === true ? 'Y' : 'N'}
                         </Grid>
                     </Grid>
                     <Grid container spacing={3}>

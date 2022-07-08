@@ -246,6 +246,7 @@ const OtpForm = ({ result }) => {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder=""
+                                        inputProps={{ maxLength: 1 }}
                                     />
                                 </Stack>
                                 <Stack>

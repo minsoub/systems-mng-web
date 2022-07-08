@@ -4,26 +4,23 @@ import { useNavigate } from 'react-router-dom';
 // eslint-disable-next-line prettier/prettier
 import {
     Button,
-    Grid,
-    Stack,
-    TextField,
-    Typography,
-    FormControl,
-    FormControlLabel,
-    Radio,
-    RadioGroup
+    Grid
 } from '@mui/material';
 import MainCard from 'components/MainCard';
-import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
+import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import './BoardList.css';
+import HeaderTitle from 'components/HeaderTitle';
+import SearchDate from 'components/ContentManage/SearchDate';
+import SearchBar from 'components/ContentManage/SearchBar';
+import cx from 'classnames';
+import ButtonLayout from 'components/Common/ButtonLayout';
 
 const DigitalAssetBasicMng = () => {
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
-    let isSubmitting = false;
     const getContents = (params) => {
         return (
             <div className="desc_container">
@@ -278,130 +275,30 @@ const DigitalAssetBasicMng = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">콘텐츠 관리(가상자산의 기초)</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 콘텐츠 관리 &gt; 가상자산의 기초</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
-                <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>기간 검색</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
-                                    <TextField
-                                        id="start_date"
-                                        name="start_date"
-                                        value={start_date}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        type="date"
-                                        defaultValue=""
-                                        sx={{ width: 140 }}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.3}>
-                                ~{' '}
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
-                                    <TextField
-                                        id="end_date"
-                                        name="end_date"
-                                        value={end_date}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        type="date"
-                                        defaultValue=""
-                                        sx={{ width: 140 }}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <Stack spacing={3}>
-                                    <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                        <RadioGroup
-                                            row
-                                            aria-labelledby="period-radio-buttons-group-label"
-                                            name="period"
-                                            value={period}
-                                            onChange={handleChange}
-                                        >
-                                            <FormControlLabel value="1" control={<Radio />} label="오늘" />
-                                            <FormControlLabel value="2" control={<Radio />} label="어제" />
-                                            <FormControlLabel value="3" control={<Radio />} label="1개월" />
-                                            <FormControlLabel value="4" control={<Radio />} label="3개월" />
-                                        </RadioGroup>
-                                    </FormControl>
-                                </Stack>
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>검색어</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={5.3}>
-                                <FormControl sx={{ m: 0, minHeight: 25, minWidth: 240 }} size="small" fullWidth>
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={keyword}
-                                        name="keyword"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder=""
-                                        fullWidth
-                                    />
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                <HeaderTitle titleNm="가상자산의 기초" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="가상자산의 기초" />
+                <MainCard>
+                    {/* 기간 검색 */}
+                    <SearchDate
+                        start_date={start_date}
+                        end_date={end_date}
+                        period={period}
+                        handleBlur={handleBlur}
+                        handleChange={handleChange}
+                    />
+
+                    {/* 검색바 */}
+                    <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <Grid container alignItems="right" justifyContent="space-between">
-                    <Grid container spacing={0} sx={{ mt: 0 }}>
-                        <Grid item xs={8} sm={10.5}></Grid>
-                        <Grid item xs={8} sm={0.6}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={clearClick}
-                                >
-                                    초기화
-                                </Button>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={0.1}></Grid>
-                        <Grid item xs={8} sm={0.6}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={searchClick}
-                                >
-                                    검색
-                                </Button>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
+                <Grid className={cx('outButtons searchPointColor')}>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
+                            초기화
+                        </Button>
+
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                            검색
+                        </Button>
+                    </ButtonLayout>
                 </Grid>
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <CheckBoxDataGrid
@@ -413,21 +310,15 @@ const DigitalAssetBasicMng = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </MainCard>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item xs={8} sm={0.8}>
-                        <FormControl sx={{ m: 1 }} size="small">
-                            <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={deleteClick}>
-                                선택삭제
-                            </Button>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={8} sm={0.6}>
-                        <FormControl sx={{ m: 1 }} size="small">
-                            <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={addClick}>
-                                등록
-                            </Button>
-                        </FormControl>
-                    </Grid>
+                <Grid className={cx('outButtons searchPointColor')}>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
+                            선택 삭제
+                        </Button>
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
+                            등록
+                        </Button>
+                    </ButtonLayout>
                 </Grid>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>

@@ -4,8 +4,8 @@ import { useDemoData } from '@mui/x-data-grid-generator';
 import { styled } from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-import { SortByAlpha } from '../../../node_modules/@mui/icons-material/index';
 import { alpha } from '@mui/material/styles';
+import './style.scss';
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     border: 1,
@@ -73,7 +73,16 @@ function CustomPagination() {
     );
 }
 
-export function CustomDataGrid({ columns, rows, handlePageChange, handleGridClick, handleGridDoubleClick, selectionChange, height }) {
+export function CustomDataGrid({
+    columns,
+    rows,
+    handlePageChange,
+    handleGridClick,
+    handleGridDoubleClick,
+    selectionChange,
+    height,
+    pageSize
+}) {
     const handlePage = (page, details) => {
         handlePageChange(page + 1);
     };
@@ -91,9 +100,9 @@ export function CustomDataGrid({ columns, rows, handlePageChange, handleGridClic
     }
     if (rows) {
         return (
-            <div style={{ padding: 2, height: mHeight, width: '100%' }}>
+            <div style={{ height: mHeight, width: '100%' }}>
                 <StyledDataGrid
-                    pageSize={20}
+                    pageSize={pageSize || 20}
                     rowsPerPageOptions={[5]}
                     components={{
                         Pagination: CustomPagination

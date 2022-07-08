@@ -34,6 +34,7 @@ const FraudReportMngForm = () => {
     const [email, setEmail] = useState('');
     const [title, setTitle] = useState('');
     const [contents, setContents] = useState('');
+    const [entrust_privacy, setEntrustPrivacy] = useState('');
     const [terms_privacy, setTermsPrivacy] = useState('');
     const [answer_to_contacts, setAnswerToContacts] = useState('');
     const [answer, setAnswer] = useState('');
@@ -76,6 +77,7 @@ const FraudReportMngForm = () => {
                 setEmail(responseData.data.data.email);
                 setTitle(responseData.data.data.title);
                 setContents(responseData.data.data.contents);
+                setEntrustPrivacy(responseData.data.data.entrust_privacy);
                 setTermsPrivacy(responseData.data.data.terms_privacy);
                 setAnswerToContacts(responseData.data.data.answer_to_contacts);
                 setAnswer(responseData.data.data.answer);
@@ -214,6 +216,16 @@ const FraudReportMngForm = () => {
                         </Grid>
                         <Grid item xs mr={1}>
                             {contents}
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3}>
+                        <Grid item xs={8} sm={1.5}>
+                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                <Stack spacing={0}>개인정보 취급 동의</Stack>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs mr={1}>
+                            {entrust_privacy === true ? 'Y' : 'N'}
                         </Grid>
                     </Grid>
                     <Grid container spacing={3}>

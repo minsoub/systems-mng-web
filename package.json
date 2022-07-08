@@ -26,6 +26,7 @@
         "antd": "^4.21.0",
         "apexcharts": "^3.27.3",
         "axios": "^0.27.2",
+        "classnames": "^2.3.1",
         "crypto-js": "^4.1.1",
         "draft-js": "^0.11.7",
         "env-cmd": "^10.1.0",
@@ -116,6 +117,7 @@
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-react": "^7.26.1",
         "eslint-plugin-react-hooks": "4.0.8",
+        "node-sass": "^6.0.1",
         "prettier": "2.2.1",
         "react-error-overlay": "6.0.9"
     },
