@@ -187,6 +187,12 @@ const ProjectsDetailPage = () => {
                     setFileList(resData.data.data);
                 }
                 break;
+            case 'insertData':
+                if (resData.data.data) {
+                    console.log(resData);
+                    getChatFileList(paramId);
+                }
+                break;
             case 'getFile':
                 if (resData.data) {
                     let res = resData;
@@ -380,7 +386,7 @@ const ProjectsDetailPage = () => {
                                             aria-label="simple table"
                                         >
                                             <TableRow>
-                                                <TableCell align="center" component="th" scope="row">
+                                                <TableCell align="center" component="th" scope="row" style={{ width: '30%' }}>
                                                     <FormControl sx={{ m: 0 }} size="small">
                                                         <Button
                                                             disableElevation
@@ -429,7 +435,7 @@ const ProjectsDetailPage = () => {
                                                                     {item.file_name}
                                                                 </a>
                                                                 <p></p>
-                                                                {item.file_sze} {item.create_date}≈
+                                                                {item.file_size}&nbsp;{item.create_date}≈
                                                             </FontTableCell>
                                                         </TableRow>
                                                     ))}

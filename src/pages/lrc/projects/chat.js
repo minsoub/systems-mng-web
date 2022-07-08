@@ -157,14 +157,50 @@ const Chat = (props) => {
         console.log('get response data: ', responseData);
         //console.log(responseData);
         if (responseData) {
-            const mDataSend = {
-                recevier: 'receiveUser',
-                sender: 'Listing Team',
-                message: responseData.content,
-                createdDt: responseData.create_date
-            };
-            console.log(mDataSend);
-            setMessageList([...messageList, mDataSend]);
+            if (responseData.length) {
+                let msg = [];
+                responseData.map((item, index) => {
+                    let data = {};
+                    if (item.role === 'ADMIN') {
+                        data = {
+                            recevier: 'receiveUser',
+                            sender: 'Listing Team',
+                            message: item.content,
+                            createdDt: item.create_date
+                        };
+                    } else {
+                        data = {
+                            recevier: 'Listing Team',
+                            sender: item.email,
+                            message: item.content,
+                            createdDt: item.create_date
+                        };
+                    }
+                    console.log(data);
+                    msg.push(data);
+                    //setMessageList([...messageList, mDataSend]);
+                });
+                setMessageList(msg);
+            } else {
+                let data = {};
+                if (responseData.role === 'ADMIN') {
+                    data = {
+                        recevier: 'receiveUser',
+                        sender: 'Listing Team',
+                        message: responseData.content,
+                        createdDt: responseData.create_date
+                    };
+                } else {
+                    data = {
+                        recevier: 'Listing Team',
+                        sender: responseData.email,
+                        message: responseData.content,
+                        createdDt: responseData.create_date
+                    };
+                }
+                console.log(data);
+                setMessageList([...messageList, data]);
+            }
         }
     }, [responseData]);
 
