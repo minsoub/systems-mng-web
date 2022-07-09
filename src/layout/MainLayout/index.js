@@ -47,19 +47,19 @@ const MainLayout = () => {
     }, [drawerOpen]);
 
     //useEffect(() => {
-    const menuApiQuery = async () => {
-        console.log('menuApiQuery called....');
-        if (navigation === null) {
-            const data = menuapi.findmenus({});
-            console.log(`MainLayout : ${data}`);
-            setNavigation(data);
-        }
-    };
+    // const menuApiQuery = async () => {
+    //     console.log('menuApiQuery called....');
+    //     if (navigation === null) {
+    //         const data = menuapi.findmenus({});
+    //         console.log(`MainLayout : ${data}`);
+    //         setNavigation(data);
+    //     }
+    // };
     // }, []); // , [navigation]);
 
-    useEffect(() => {
-        menuApiQuery();
-    }, []);
+    // useEffect(() => {
+    //     menuApiQuery();
+    // }, []);
 
     return (
         <Box sx={{ display: 'flex', width: '100%' }}>

@@ -154,6 +154,16 @@ const menus = [
                 ]
             },
             {
+                id: 'dealmng4',
+                title: '서비스 로그 관리',
+                type: 'item',
+                url: '/service/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
+            },
+            {
                 id: 'cpcmain',
                 title: '메인 관리',
                 type: 'collapse',
@@ -274,16 +284,6 @@ const menus = [
                 icon: icons.ChromeOutlined,
                 breadcrumbs: true,
                 parents_menu_id: 'sitemoperator'
-            },
-            {
-                id: 'dealmng4',
-                title: '서비스 로그 관리',
-                type: 'item',
-                url: '/service/list',
-                auth: true,
-                icon: icons.ChromeOutlined,
-                breadcrumbs: true,
-                parents_menu_id: 'xxx'
             }
         ]
     },
@@ -706,10 +706,11 @@ export function findmenus({ email, password }) {
     return menuItems;
 }
 
-export const findlist = async () => {
-    const response = await Apis.get('/menulist');
+export const findlist = async (site_id) => {
+    //`/site/${site_id}/menu-list?isUse=${is_use}`,
+    const response = await Apis.get(`/site/${site_id}/menu-list?isUse=true`);
 
     console.log(response.data);
 
-    return response;
+    return response.data.data;
 };

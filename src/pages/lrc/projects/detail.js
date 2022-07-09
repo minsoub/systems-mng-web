@@ -379,46 +379,34 @@ const ProjectsDetailPage = () => {
                                     </Grid>
                                     <Grid item xs={8} sm={4}>
                                         <Chat projectId={paramId} />
-                                        <Table
-                                            fixedHeader={false}
-                                            style={{ width: '100%', tableLayout: 'auto' }}
-                                            stickyHeader
-                                            aria-label="simple table"
-                                        >
-                                            <TableRow>
-                                                <TableCell align="center" component="th" scope="row" style={{ width: '30%' }}>
-                                                    <FormControl sx={{ m: 0 }} size="small">
-                                                        <Button
-                                                            disableElevation
-                                                            size="small"
-                                                            type="button"
-                                                            variant="contained"
-                                                            color="primary"
-                                                            onClick={() => fileSave('CHAT', file)}
-                                                        >
-                                                            파일 업로드
-                                                        </Button>
-                                                    </FormControl>
-                                                </TableCell>
-                                                <TableCell align="center" component="th" scope="row">
-                                                    <FormControl sx={{ m: 0 }} fullWidth>
-                                                        <TextField
-                                                            type="file"
-                                                            id="file"
-                                                            name="file"
-                                                            size="small"
-                                                            onChange={fileHandleChange}
-                                                            inputProps={{
-                                                                accept:
-                                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-                                                            }}
-                                                        />
-                                                    </FormControl>
-                                                </TableCell>
-                                            </TableRow>
-                                        </Table>
+
+                                        <div className="file--upload">
+                                            <Button
+                                                disableElevation
+                                                size="medium"
+                                                type="button"
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={() => fileSave('CHAT', file)}
+                                            >
+                                                파일 업로드
+                                            </Button>
+
+                                            <TextField
+                                                type="file"
+                                                id="file"
+                                                name="file"
+                                                size="small"
+                                                onChange={fileHandleChange}
+                                                inputProps={{
+                                                    accept:
+                                                        '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                }}
+                                            />
+                                        </div>
+
                                         <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                                            &nbsp;첨부파일 목록
+                                            첨부파일 목록
                                             <Table
                                                 style={{ border: 1, width: '100%', tableLayout: 'auto' }}
                                                 stickyHeader

@@ -183,8 +183,12 @@ const AuthManagementPage = () => {
                         } else {
                             setIsUse(false);
                         }
-                        roleSearch(param_is_use, search_site_id);
+                        roleComboSearch(param_is_use, search_site_id);
                         //searchClick();
+                    } else {
+                        setSiteId(list[1].id);
+                        setType('ADMIN');
+                        roleComboSearch(is_use, 'ADMIN', list[1].id);
                     }
                 }
                 break;
@@ -241,7 +245,7 @@ const AuthManagementPage = () => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
             let searchCondition = { site_id: site_id, is_use: is_use, type: type };
 
-            navigate(`/authmng/reg/${rowData.id}`);
+            navigate(`/authmng/reg/${site_id}/${type}/${rowData.id}`);
         }
     };
 

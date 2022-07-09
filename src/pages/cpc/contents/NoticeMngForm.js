@@ -211,8 +211,9 @@ const NoticeMngForm = () => {
                 contents: content,
                 tags: inputTags
             };
-            console.log(data);
-            createBoard(boardMasterId, data);
+            const formData = new FormData();
+            formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+            createBoard(boardMasterId, formData);
         }
     };
 
@@ -240,8 +241,10 @@ const NoticeMngForm = () => {
                 contents: content,
                 tags: inputTags
             };
-            console.log(data);
-            updateBoard(boardMasterId, data);
+            const formData = new FormData();
+            formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+            console.log(formData);
+            updateBoard(boardMasterId, data.id, formData);
         }
     };
 

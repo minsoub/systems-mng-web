@@ -160,6 +160,16 @@ const AccountApis = () => {
         });
     };
 
+    // 계정 Role List 조회
+    const getAccessRole = (id) => {
+        callApi('getRoleList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/account/${id}/roles`,
+            requestConfig: {}
+        });
+    };
+
     return [
         responseData,
         requestError,
@@ -179,7 +189,8 @@ const AccountApis = () => {
             accountMngDeletes: deleteMngAccounts,
             accountMngRole: getDetailRoleMng,
             accountRoleUpdate: updateRoleData,
-            updatePasswordInfo: updatePasswordInfo
+            updatePasswordInfo: updatePasswordInfo,
+            getAccessRole: getAccessRole
         }
     ];
 };

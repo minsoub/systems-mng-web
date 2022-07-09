@@ -257,6 +257,11 @@ const MenuMappingForm = () => {
                         list.push(s);
                     });
                     setSiteList(list);
+                    setInputs({
+                        ...inputs, // 기존 input 객체 복사
+                        site_id: list[1].id
+                    });
+                    menumngSearch(list[1].id, is_use);
                 }
                 break;
             default:
@@ -503,7 +508,7 @@ const MenuMappingForm = () => {
                         <Typography variant="h3">프로그램 연결</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6">통합관리 &gt; 메뉴 관리 &gt; 프로그램 연결</Typography>
+                        <Typography variant="h6">통합시스템 관리 &gt; 메뉴 관리 &gt; 프로그램 연결</Typography>
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
@@ -562,7 +567,7 @@ const MenuMappingForm = () => {
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 620, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 720, flexGrow: 1, overflowY: 'auto' }}
                                 //expanded={expanded}
                                 //selected={selected}
                                 onNodeToggle={handleToggle}
@@ -574,7 +579,7 @@ const MenuMappingForm = () => {
                     </Grid>
                     <Grid item md={8.8}>
                         <Stack spacing={2}>
-                            <MainCard sx={{ mt: 2, height: 620 }} content={false}>
+                            <MainCard sx={{ mt: 2, height: 720 }} content={false}>
                                 <Grid container spacing={0} sx={{ mt: 2 }}>
                                     <Grid item xs={8} sm={0.2}></Grid>
                                     <Grid item xs={8} sm={2.8}>
@@ -680,7 +685,7 @@ const MenuMappingForm = () => {
                                                     handleGridClick={handleClick}
                                                     handleGridDoubleClick={handleDoubleClick}
                                                     selectionChange={handleSelectionSearchChange}
-                                                    height={240}
+                                                    height={340}
                                                 />
                                             </MainCard>
                                         </Grid>

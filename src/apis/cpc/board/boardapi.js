@@ -50,11 +50,11 @@ const BoardApis = () => {
     };
 
     // 게시글 수정
-    const updateBoard = (boardMasterId, data) => {
+    const updateBoard = (boardMasterId, boardId, data) => {
         callApi('updateBoard', {
             axiosInstance: axiosInstanceDefault,
             method: 'put',
-            url: `/mng/cpc/board/${boardMasterId}/${data.id}`,
+            url: `/mng/cpc/board/${boardMasterId}/${boardId}`,
             requestConfig: data
         });
     };

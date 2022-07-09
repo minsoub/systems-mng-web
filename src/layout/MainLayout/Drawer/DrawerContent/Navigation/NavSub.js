@@ -1,6 +1,18 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-
+import {
+    LoginOutlined,
+    ProfileOutlined,
+    ChromeOutlined,
+    QuestionOutlined,
+    DashboardOutlined,
+    AppstoreAddOutlined,
+    AntDesignOutlined,
+    BarcodeOutlined,
+    BgColorsOutlined,
+    FontSizeOutlined,
+    LoadingOutlined
+} from '@ant-design/icons';
 // material-ui
 import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Box, List, Typography, Collapse } from '@mui/material';
 
@@ -19,6 +31,20 @@ import { activeItem } from 'store/reducers/menu';
 import NavItem from './NavItem';
 
 // ==============================|| NAVIGATION - LIST Sub GROUP ||============================== //
+// icons
+const icons = {
+    LoginOutlined,
+    ProfileOutlined,
+    ChromeOutlined,
+    QuestionOutlined,
+    DashboardOutlined,
+    AppstoreAddOutlined,
+    AntDesignOutlined,
+    BarcodeOutlined,
+    BgColorsOutlined,
+    FontSizeOutlined,
+    LoadingOutlined
+};
 
 const NavSub = ({ item, level }) => {
     const [open, setOpen] = useState(false);
@@ -57,14 +83,15 @@ const NavSub = ({ item, level }) => {
     const textColor = 'text.primary';
     const iconSelectedColor = 'primary.main';
 
+    item.icon = icons.ChromeOutlined;
     const Icon = item.icon;
     const itemIcon = item.icon ? <Icon style={{ fontSize: drawerOpen ? '1rem' : '1.25rem' }} /> : false;
 
     const isSelected = openItem.findIndex((id) => id === item.id) > -1;
 
-    const navCollapse = item.children?.map((menuItem) => {
+    const navCollapse = item.child_menu?.map((menuItem) => {
         switch (menuItem.type) {
-            case 'item':
+            case 'ITEM':
                 return <NavItem key={menuItem.id} item={menuItem} level={2} />;
             default:
                 return (
@@ -146,7 +173,7 @@ const NavSub = ({ item, level }) => {
                     <ListItemText
                         primary={
                             <Typography variant="h6" sx={{ color: isSelected ? iconSelectedColor : textColor }}>
-                                {item.title}
+                                {item.name}
                             </Typography>
                         }
                     />

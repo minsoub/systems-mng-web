@@ -8,6 +8,7 @@ import { Stack, Chip } from '@mui/material';
 import DrawerHeaderStyled from './DrawerHeaderStyled';
 import Logo from 'components/Logo';
 import InnerLogo from 'components/Logo/InnerLogo';
+
 // ==============================|| DRAWER HEADER ||============================== //
 
 const DrawerHeader = ({ open }) => {

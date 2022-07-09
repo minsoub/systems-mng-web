@@ -1,5 +1,5 @@
 // material-ui
-import { Box, IconButton, Link, useMediaQuery } from '@mui/material';
+import { Stack, Box, IconButton, Link, useMediaQuery } from '@mui/material';
 import { GithubOutlined } from '@ant-design/icons';
 
 // project import
@@ -7,7 +7,6 @@ import Search from './Search';
 import Profile from './Profile';
 import MobileSection from './MobileSection';
 import './styles.scss';
-
 // ==============================|| HEADER - CONTENT ||============================== //
 
 const HeaderContent = () => {
@@ -16,7 +15,7 @@ const HeaderContent = () => {
     return (
         <div className="searchAndUser">
             {/* 검색바 */}
-            {!matchesXs && <Search />}
+            {/* {!matchesXs && <Search />} */}
             {matchesXs && <Box sx={{ width: '100%', ml: 1 }} />}
 
             {/* 유저 정보*/}

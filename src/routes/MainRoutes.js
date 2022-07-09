@@ -417,7 +417,7 @@ const MainRoutes = [
                 element: <AuthMngRegForm />
             },
             {
-                path: 'authmng/reg/:paramId',
+                path: 'authmng/reg/:siteId/:roleType/:roleId',
                 element: <AuthMngRegForm />
             },
             {

@@ -114,7 +114,7 @@ const useStyles = makeStyles((theme) =>
     })
 );
 
-export const MessageLeft = (props) => {
+export const Message = (props) => {
     const message = props.message ? props.message : 'no message';
     const timestamp = props.timestamp ? props.timestamp : '';
     const photoURL = props.photoURL ? props.photoURL : '';
@@ -137,7 +137,7 @@ export const MessageLeft = (props) => {
         </>
     );
 };
-export const MessageRight = (props) => {
+export const Message = (props) => {
     const classes = useStyles();
     const message = props.message ? props.message : 'no message';
     const timestamp = props.timestamp ? props.timestamp : '';
