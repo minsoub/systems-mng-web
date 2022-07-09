@@ -1,63 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import {
-    OutlinedInput,
-    Box,
     Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
     FormControl,
-    Select,
-    MenuItem,
     FormControlLabel,
-    Checkbox,
-    Paper,
-    IconButton,
+    Grid,
+    Radio,
+    RadioGroup,
+    Stack,
     Table,
     TableBody,
     TableCell,
-    TableContainer,
-    TableHead,
     TableRow,
-    Radio,
-    RadioGroup
+    TextField,
+    Typography
 } from '@mui/material';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { styled } from '@mui/material/styles';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
 import SvgIcon from '@mui/material/SvgIcon';
-import { Input } from 'antd';
-import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
-import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
 import StatusApi from 'apis/lrc/status/statusapi';
-import MenuMngApi from 'apis/menu/menumngapi';
 import ErrorScreen from 'components/ErrorScreen';
 import StyledTtreeItem from 'components/TreeMenu/StyledTreeItem';
-import { StyledTableCell, FontTableCell } from 'components/CustomTableCell';
+import { StyledTableCell } from 'components/CustomTableCell';
 import TreeView from '@mui/lab/TreeView';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem from '@mui/lab/TreeItem';
-
-import MailIcon from '@mui/icons-material/Mail';
-import Label from '@mui/icons-material/Label';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import InfoIcon from '@mui/icons-material/Info';
-import ForumIcon from '@mui/icons-material/Forum';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import menu from 'store/reducers/menu';
 
 function MinusSquare(props) {
     return (

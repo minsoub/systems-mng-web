@@ -1,0 +1,153 @@
+// 색상표 함수
+$green: rgba(185, 216, 254, 0.7);
+$blue: white;
+$orange: #e38968;
+$gray: #92959e;
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+.chat--room {
+    background: #f2f5f8;
+    border-radius: 5px;
+    color: #434651;
+    margin-top: 20px;
+    &__box {
+        padding: 30px 30px 20px;
+        border-bottom: 2px solid white;
+        overflow-y: scroll;
+        height: 60vh;
+    }
+}
+.msg--left {
+    text-align: left;
+}
+
+.msg--right {
+    text-align: right;
+}
+
+.msg--left__time {
+    color: lighten($gray, 8%);
+    padding-left: 12px;
+    font-size: 14px;
+}
+
+.msg--right__time {
+    padding-right: 12px;
+    font-size: 14px;
+}
+.message-data-name {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.85);
+}
+.message {
+    color: rgba(0, 0, 0, 0.7);
+    padding: 18px 20px;
+    line-height: 26px;
+    font-size: 16px;
+    border-radius: 7px;
+    margin-bottom: 30px;
+    position: relative;
+    &:after {
+        bottom: 100%;
+        right: 29px;
+        border: solid transparent;
+        content: ' ';
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-bottom-color: $green;
+        border-width: 10px;
+        margin-left: -10px;
+    }
+}
+
+.my-message {
+    background: $green;
+    cursor: pointer;
+}
+
+.other-message {
+    background: $blue;
+
+    &:after {
+        border-bottom-color: $blue;
+        left: 29px;
+    }
+}
+
+// 말풍선 위치
+.msg--right__speechBubble {
+    display: grid;
+    justify-items: right;
+
+    .message-data-time {
+        width: 100%;
+        display: flex;
+        justify-items: right;
+    }
+
+    // 삭제하기 버튼
+    .my-message__delete {
+        display: none;
+    }
+
+    &:hover {
+        .my-message__delete {
+            display: block;
+        }
+    }
+}
+
+.msg--left__speechBubble {
+    display: grid;
+    justify-items: right;
+
+    .message-data-time {
+        display: flex;
+        justify-items: right;
+    }
+}
+
+// 공통 스타일
+.message-data-time {
+    color: lighten($gray, 8%);
+    margin-bottom: 20px;
+}
+
+.chat-message {
+    padding: 30px;
+
+    input {
+        width: 100%;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        resize: none;
+        background: #ffffff;
+    }
+}
+
+.me {
+    color: $blue;
+}
+
+// 메세지 보내기
+.chat-message {
+    .inputLayout {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+            width: 85%;
+        }
+        .css-1szk0az-MuiFormLabel-root-MuiInputLabel-root.MuiInputLabel-sizeSmall {
+            line-height: 23px;
+        }
+    }
+}
