@@ -117,6 +117,16 @@ const RoleApi = () => {
         });
     };
 
+    // 사용자 맵핑 롤 삭제
+    const roleRegisterDelete = (role_id, user_id) => {
+        callApi('registerDeleteRoleData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/role/${role_id}/accounts/${user_id}`,
+            requestConfig: {}
+        });
+    };
+
     return [
         responseData,
         requestError,
@@ -131,7 +141,8 @@ const RoleApi = () => {
             roleCheck: getDuplicateCheck,
             roleUpdate: updateRoleData,
             roleRegisterSearch: roleRegisterSearch,
-            roleRegisterSave: roleRegisterSave
+            roleRegisterSave: roleRegisterSave,
+            roleRegisterDelete: roleRegisterDelete
         }
     ];
 };

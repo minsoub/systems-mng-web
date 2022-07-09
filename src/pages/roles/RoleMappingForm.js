@@ -19,7 +19,13 @@ import {
     FormControlLabel,
     Checkbox,
     Paper,
-    IconButton
+    IconButton,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
 } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -31,8 +37,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { Input } from 'antd';
 import { boolean } from '../../../node_modules/yup/lib/index';
-import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
-import CheckBoxDataGrid from '../../components/DataGrid/CheckBoxDataGrid';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
+import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
 import AccountApis from 'apis/account/accountapis';
@@ -97,7 +103,7 @@ const RoleMappingForm = () => {
     }));
 
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { roleSearch, roleRegisterSave, roleRegisterSearch }] = RoleApi();
+    const [responseData, requestError, loading, { roleSearch, roleRegisterSave, roleRegisterSearch, roleRegisterDelete }] = RoleApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
     const [resAccData, reqAccErr, resAccLoading, { accountSearch }] = AccountApis();
 
@@ -121,9 +127,17 @@ const RoleMappingForm = () => {
     // 저장을 위한 이전 데이터 백업
     const [prevDataGridRows, setPrevDataGridRows] = useState([]);
 
+    ////////////////////////////////////////////////////
+    // 공통 에러 처리
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
+    ////////////////////////////////////////////////////
 
     const [siteList, setSiteList] = useState([]);
     const [site_id, setSiteId] = useState('');
@@ -178,6 +192,8 @@ const RoleMappingForm = () => {
                         list.push(s);
                     });
                     setSiteList(list);
+                    setSiteId(list[1].id);
+                    roleSearch(true, list[1].id);
                 }
                 break;
             default:
@@ -320,6 +336,13 @@ const RoleMappingForm = () => {
                 console.log(data);
                 roleRegisterSave(selectedRole, data);
             }
+        } else if (dataGridRegisterRows.length === 0 && prevDataGridRows.length > 0) {
+            if (confirm('등록 취소한 사용자를 모두 삭제하시겠습니까?')) {
+                // all delete
+                prevDataGridRows.map((prev, index) => {
+                    roleRegisterDelete(selectedRole, prev.id);
+                });
+            }
         } else {
             alert('등록된 사용자가 없습니다!!!');
         }
@@ -327,7 +350,11 @@ const RoleMappingForm = () => {
 
     const handleBlur = () => {};
     const handleChange = (e) => {
-        setKeyword(e.target.value);
+        if (e.target.name === 'site_id') {
+            setSiteId(e.target.value);
+        } else {
+            setKeyword(e.target.value);
+        }
     };
     // 사용자 검색
     const userSearchClick = () => {
@@ -385,38 +412,71 @@ const RoleMappingForm = () => {
                         <Typography variant="h3">사용자 맵핑</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6">통합관리 &gt; Role 관리 &gt; 사용자 맵핑</Typography>
+                        <Typography variant="h6">통합시스템 관리 &gt; Role 관리 &gt; 사용자 맵핑</Typography>
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
                 <MainCard sx={{ mt: 1 }}>
-                    <Stack direction="row" spacing={1}>
-                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                            <Stack spacing={0}>Site 구분</Stack>
-                        </FormControl>
-                        <FormControl sx={{ m: 0, minWidth: 200, minHeight: 30 }} size="small">
-                            <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
-                                <MenuItem value="">
-                                    <em>Choose a Site Type</em>
-                                </MenuItem>
-                                {siteList.map((item, index) => (
-                                    <MenuItem key={index} value={item.id}>
-                                        {item.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <FormControlLabel
-                            control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
-                            label="사용함"
-                        />
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={searchClick}>
-                            검색
-                        </Button>
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={saveClick}>
-                            저장
-                        </Button>
-                    </Stack>
+                    <Table
+                        fixedheader={false}
+                        style={{ border: 1, width: '100%', tableLayout: 'auto' }}
+                        stickyHeader
+                        aria-label="simple table"
+                    >
+                        <TableBody>
+                            <TableRow>
+                                <TableCell style={{ width: '8%' }} align="center">
+                                    Site 구분
+                                </TableCell>
+                                <TableCell style={{ width: '15%' }} align="center">
+                                    <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
+                                        <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
+                                            <MenuItem value="">
+                                                <em>Choose a Site Type</em>
+                                            </MenuItem>
+                                            {siteList.map((item, index) => (
+                                                <MenuItem key={index} value={item.id}>
+                                                    {item.name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </TableCell>
+                                <TableCell style={{ width: '10%' }} align="center">
+                                    <FormControlLabel
+                                        control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
+                                        label="사용함"
+                                    />
+                                </TableCell>
+                                <TableCell style={{ width: '65%' }} align="right">
+                                    <FormControl sx={{ m: 1 }} size="small">
+                                        <Button
+                                            disableElevation
+                                            size="small"
+                                            type="submit"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={searchClick}
+                                        >
+                                            검색
+                                        </Button>
+                                    </FormControl>
+                                    <FormControl sx={{ m: 1 }} size="small">
+                                        <Button
+                                            disableElevation
+                                            size="small"
+                                            type="submit"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={saveClick}
+                                        >
+                                            저장
+                                        </Button>
+                                    </FormControl>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
                 </MainCard>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item md={4}>
@@ -424,6 +484,7 @@ const RoleMappingForm = () => {
                             <DefaultDataGrid
                                 columns={columns}
                                 rows={dataGridRows}
+                                height={700}
                                 handlePageChange={handlePage}
                                 handleGridClick={handleClick}
                                 handleGridDoubleClick={handleDoubleClick}
@@ -443,10 +504,10 @@ const RoleMappingForm = () => {
                                     columns={regColumns}
                                     rows={dataGridRegisterRows}
                                     handlePageChange={handlePage}
-                                    handleGridClick={handleClick}
+                                    //handleGridClick={handleClick}
                                     handleGridDoubleClick={handleDoubleClick}
                                     selectionChange={handleSelectionRegisterChange}
-                                    height={220}
+                                    height={300}
                                 />
                             </MainCard>
                         </Stack>
@@ -467,7 +528,7 @@ const RoleMappingForm = () => {
                                 </Grid>
                                 <Grid item xs={8} sm={4}>
                                     <Stack spacing={5}>
-                                        <FormControl sx={{ m: 0, maxHeight: 30, maxWidth: 220 }} size="small">
+                                        <FormControl sx={{ m: 0, maxWidth: 220 }} size="small">
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
@@ -482,6 +543,7 @@ const RoleMappingForm = () => {
                                         </FormControl>
                                     </Stack>
                                 </Grid>
+                                <Grid item xs={8} sm={4}></Grid>
                                 <Grid item xs={8} sm={2}>
                                     <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
                                         <Button
@@ -504,7 +566,7 @@ const RoleMappingForm = () => {
                                     columns={searchColumns}
                                     rows={dataGridSearchRows}
                                     handlePageChange={handlePage}
-                                    handleGridClick={handleClick}
+                                    //handleGridClick={handleClick}
                                     handleGridDoubleClick={handleDoubleClick}
                                     selectionChange={handleSelectionSearchChange}
                                     height={220}
@@ -513,30 +575,7 @@ const RoleMappingForm = () => {
                         </Stack>
                     </Grid>
                 </Grid>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
-                {/* <MainCard sx={{ mt: 3 }} content={false}>
-                    <Collapse in={open}>
-                        <Alert
-                            severity="error"
-                            action={
-                                <IconButton
-                                    aria-label="close"
-                                    color="inherit"
-                                    size="small"
-                                    onClick={() => {
-                                        errorClear();
-                                    }}
-                                >
-                                    <CloseIcon fontSize="inherit" />
-                                </IconButton>
-                            }
-                            sx={{ mb: 2 }}
-                        >
-                            <AlertTitle>{errorTitle}</AlertTitle>
-                            {errorMessage}
-                        </Alert>
-                    </Collapse>
-                </MainCard> */}
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
             </Grid>
         </Grid>
     );

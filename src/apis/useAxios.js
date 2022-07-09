@@ -96,8 +96,7 @@ const useAxios = () => {
         } catch (err) {
             console.log(err);
             console.log('error', err.message);
-            //if (err.re)
-            setError(err.response.data);
+            if (err.response) setError(err.response.data);
         } finally {
             setLoading(false);
         }

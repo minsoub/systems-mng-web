@@ -19,7 +19,13 @@ import {
     FormControlLabel,
     Checkbox,
     Paper,
-    IconButton
+    IconButton,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
 } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -173,12 +179,18 @@ const MenuRegForm = () => {
                 if (resData.data.data) {
                     let siteData = resData.data.data;
                     let list = [];
+                    let firstSelectedSite;
                     siteData.map((site, index) => {
                         const s = { id: site.id, name: site.name };
-                        console.log(s);
                         list.push(s);
+                        if (index === 0) firstSelectedSite = site.id;
                     });
                     setSiteList(list);
+                    setInputs({
+                        ...inputs,
+                        site_id: firstSelectedSite
+                    });
+                    menumngSearch(firstSelectedSite, search_is_use);
                 }
                 break;
             default:
@@ -276,13 +288,6 @@ const MenuRegForm = () => {
         }
     }, [responseData]);
 
-    // 에러 정보를 클리어 한다.
-    // const errorClear = () => {
-    //     setOpen(false);
-    //     setErrorTitle('');
-    //     setErrorMessage('');
-    // };
-
     const handleClose = () => {
         setVisible(false);
     };
@@ -292,7 +297,7 @@ const MenuRegForm = () => {
         setInputs({
             id: '',
             name: '',
-            site_id: '',
+            site_id: inputs.site_id,
             parents_menu_id: '',
             parents_menu_name: '',
             order: 1,
@@ -304,6 +309,7 @@ const MenuRegForm = () => {
             external_link: false,
             description: ''
         });
+        setIsUpdate(false);
     };
 
     const isUseChange = (e) => {
@@ -318,8 +324,6 @@ const MenuRegForm = () => {
 
     // search
     const searchClick = () => {
-        //errorClear();
-        console.log('searchClick called...');
         if (!inputs.site_id) {
             alert('사이트명을 선택하세요!!!');
             return;
@@ -347,6 +351,7 @@ const MenuRegForm = () => {
             return;
         }
         if (confirm('저장하시겠습니까?')) {
+            console.log(isUpdate);
             if (!isUpdate) {
                 menumngInsert(inputs);
             } else {
@@ -594,72 +599,85 @@ const MenuRegForm = () => {
                     <Grid container spacing={2}></Grid>
                 </Grid>
                 <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Site 구분</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
-                                    <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
-                                        <MenuItem value="">
-                                            <em>Choose a Site Type</em>
-                                        </MenuItem>
-                                        {siteList.map((item, index) => (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
+                    <Table
+                        fixedheader={false}
+                        style={{ border: 1, width: '100%', tableLayout: 'auto' }}
+                        stickyHeader
+                        aria-label="simple table"
+                    >
+                        <TableBody>
+                            <TableRow>
+                                <TableCell style={{ width: '110' }} align="center">
+                                    Site 구분
+                                </TableCell>
+                                <TableCell style={{ width: '15%' }} align="center">
+                                    <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
+                                        <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
+                                            <MenuItem value="">
+                                                <em>Choose a Site Type</em>
                                             </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            name="search_is_use"
-                                            checked={search_is_use}
-                                            value={search_is_use}
-                                            onChange={isUseChange}
-                                        />
-                                    }
-                                    label="사용함"
-                                />
-                            </Grid>
-                            <Grid item xs={8} sm={6.1}></Grid>
-                            <Grid item xs={8} sm={0.6}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={searchClick}
-                                    >
-                                        검색
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.2}></Grid>
-                            <Grid item xs={8} sm={0.6}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={saveClick}
-                                    >
-                                        저장
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                                            {siteList.map((item, index) => (
+                                                <MenuItem key={index} value={item.id}>
+                                                    {item.name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </TableCell>
+                                <TableCell style={{ width: '10%' }} align="center">
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                name="search_is_use"
+                                                checked={search_is_use}
+                                                value={search_is_use}
+                                                onChange={isUseChange}
+                                            />
+                                        }
+                                        label="사용함"
+                                    />
+                                </TableCell>
+                                <TableCell style={{ width: '65%' }} align="right">
+                                    <FormControl sx={{ m: 1 }} size="small">
+                                        <Button
+                                            disableElevation
+                                            size="small"
+                                            type="submit"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={searchClick}
+                                        >
+                                            검색
+                                        </Button>
+                                    </FormControl>
+                                    <FormControl sx={{ m: 1 }} size="small">
+                                        <Button
+                                            disableElevation
+                                            size="small"
+                                            type="submit"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={saveClick}
+                                        >
+                                            저장
+                                        </Button>
+                                    </FormControl>
+                                    <FormControl sx={{ m: 1 }} size="small">
+                                        <Button
+                                            disableElevation
+                                            size="small"
+                                            type="submit"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={inputClear}
+                                        >
+                                            신규
+                                        </Button>
+                                    </FormControl>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
                 </MainCard>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item md={3}>
@@ -671,7 +689,7 @@ const MenuRegForm = () => {
                                     defaultCollapseIcon={<MinusSquare />}
                                     defaultExpandIcon={<PlusSquare />}
                                     defaultEndIcon={<CloseSquare />}
-                                    sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
+                                    sx={{ height: 700, flexGrow: 1, overflowY: 'auto' }}
                                     //expanded={expanded}
                                     //selected={selected}
                                     onNodeToggle={handleToggle}
@@ -684,7 +702,7 @@ const MenuRegForm = () => {
                     </Grid>
                     <Grid item md={8.8}>
                         <Stack spacing={2}>
-                            <MainCard sx={{ mt: 2, height: 620 }} content={false}>
+                            <MainCard sx={{ mt: 2, height: 710 }} content={false}>
                                 <Grid container spacing={0} sx={{ mt: 4 }}>
                                     <Grid item xs={8} sm={0.2}></Grid>
                                     <Grid item xs={8} sm={1.5}>

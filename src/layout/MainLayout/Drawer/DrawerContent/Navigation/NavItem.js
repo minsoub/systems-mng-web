@@ -2,7 +2,19 @@ import PropTypes from 'prop-types';
 import { forwardRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
+import {
+    LoginOutlined,
+    ProfileOutlined,
+    ChromeOutlined,
+    QuestionOutlined,
+    DashboardOutlined,
+    AppstoreAddOutlined,
+    AntDesignOutlined,
+    BarcodeOutlined,
+    BgColorsOutlined,
+    FontSizeOutlined,
+    LoadingOutlined
+} from '@ant-design/icons';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
@@ -11,7 +23,20 @@ import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography } 
 import { activeItem } from 'store/reducers/menu';
 
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
-
+// icons
+const icons = {
+    LoginOutlined,
+    ProfileOutlined,
+    ChromeOutlined,
+    QuestionOutlined,
+    DashboardOutlined,
+    AppstoreAddOutlined,
+    AntDesignOutlined,
+    BarcodeOutlined,
+    BgColorsOutlined,
+    FontSizeOutlined,
+    LoadingOutlined
+};
 const NavItem = ({ item, level }) => {
     const theme = useTheme();
     const dispatch = useDispatch();
@@ -31,7 +56,7 @@ const NavItem = ({ item, level }) => {
     const itemHandler = (id) => {
         dispatch(activeItem({ openItem: [id] }));
     };
-
+    item.icon = icons.ChromeOutlined;
     const Icon = item.icon;
     const itemIcon = item.icon ? <Icon style={{ fontSize: drawerOpen ? '1rem' : '1.25rem' }} /> : false;
 
@@ -120,7 +145,7 @@ const NavItem = ({ item, level }) => {
                 <ListItemText
                     primary={
                         <Typography variant="h6" sx={{ color: isSelected ? iconSelectedColor : textColor }}>
-                            {item.title}
+                            {item.name}
                         </Typography>
                     }
                 />

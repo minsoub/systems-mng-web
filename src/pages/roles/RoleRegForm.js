@@ -375,7 +375,7 @@ const RoleRegForm = () => {
                                         <Typography variant="h3">Role 등록</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Typography variant="h6">통합관리 &gt; Role 관리 &gt; Role 등록</Typography>
+                                        <Typography variant="h6">통합시스템 관리 &gt; Role 관리 &gt; Role 등록</Typography>
                                     </Grid>
                                     <Grid container spacing={2}></Grid>
                                 </Grid>

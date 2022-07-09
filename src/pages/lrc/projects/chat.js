@@ -37,8 +37,7 @@ const Chat = (props) => {
         },
         {
             createdDt: '2022-05-14T21:48:11.063',
-            message:
-                'Lorem Ipsum refers to text that the DTP (Desktop Publishing) industry use as replacement text when the real text is not',
+            message: 'Lorem Ipsum refers tt',
             receiver: 'receiveUser',
             sender: 'sendUser'
         },
@@ -118,7 +117,6 @@ const Chat = (props) => {
         if (responseData) {
             if (responseData.length) {
                 let msg = [];
-
                 responseData.map((item, index) => {
                     let data = {};
                     if (item.role === 'ADMIN') {
@@ -169,9 +167,20 @@ const Chat = (props) => {
         console.log(responseError);
     }, [responseError]);
 
+    // 메시지 전송 Text 박스
+    const sendRequest = (data) => {
+        // if (rSocket) {
+        //     console.log(rSocket);
+        //     sendJoinChat('join-chat', projectId);
+        // }
+        console.log(data);
+        const route = 'send-chat-message';
+        sendRequestResponse(route, projectId, data);
+    };
+
     return (
         <div className="chatting--container">
-            <ChattingRoom>
+            <ChattingRoom sendMessage={sendRequest}>
                 {messageList.map((item, idx) => {
                     if (item.sender === 'Listing Team') {
                         return <MessageRight key={idx} message={item.message} timestamp={item.createdDt} displayName={item.sender} />;

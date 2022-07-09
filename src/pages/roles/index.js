@@ -17,7 +17,13 @@ import {
     Select,
     MenuItem,
     FormControlLabel,
-    Checkbox
+    Checkbox,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
 } from '@mui/material';
 import MainCard from 'components/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
@@ -174,6 +180,9 @@ const RoleManagementPage = () => {
                         }
                         roleSearch(param_is_use, search_site_id);
                         //searchClick();
+                    } else {
+                        // default 조회
+                        roleSearch(is_use, list[1].id);
                     }
                 }
                 break;
@@ -256,70 +265,71 @@ const RoleManagementPage = () => {
                         <Typography variant="h3">Role 관리</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6">통합관리 &gt; Role 관리 &gt; Role 리스트</Typography>
+                        <Typography variant="h6">통합시스템 관리 &gt; Role 관리 &gt; Role 리스트</Typography>
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
                 <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Site Name</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0.5, minWidth: 200, maxHeight: 25 }} size="small">
-                                    <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
-                                        <MenuItem value="">
-                                            <em>Choose a Site Type</em>
-                                        </MenuItem>
-                                        {siteList.map((item, index) => (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
+                    <Table
+                        fixedheader={false}
+                        style={{ border: 1, width: '100%', tableLayout: 'auto' }}
+                        stickyHeader
+                        aria-label="simple table"
+                    >
+                        <TableBody>
+                            <TableRow>
+                                <TableCell style={{ width: '8%' }} align="center">
+                                    Site Name
+                                </TableCell>
+                                <TableCell style={{ width: '15%' }} align="center">
+                                    <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
+                                        <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
+                                            <MenuItem value="">
+                                                <em>Choose a Site Type</em>
                                             </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControlLabel
-                                    control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
-                                    label="사용함"
-                                />
-                            </Grid>
-                            <Grid item xs={8} sm={6}></Grid>
-                            <Grid item xs={8} sm={0.6}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={searchClick}
-                                    >
-                                        검색
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.2}></Grid>
-                            <Grid item xs={8} sm={0.6}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={newClick}
-                                    >
-                                        등록
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                                            {siteList.map((item, index) => (
+                                                <MenuItem key={index} value={item.id}>
+                                                    {item.name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </TableCell>
+                                <TableCell style={{ width: '10%' }} align="center">
+                                    <FormControlLabel
+                                        control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
+                                        label="사용함"
+                                    />
+                                </TableCell>
+                                <TableCell style={{ width: '65%' }} align="right">
+                                    <FormControl sx={{ m: 1 }} size="small">
+                                        <Button
+                                            disableElevation
+                                            size="small"
+                                            type="submit"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={searchClick}
+                                        >
+                                            검색
+                                        </Button>
+                                    </FormControl>
+                                    <FormControl sx={{ m: 1 }} size="small">
+                                        <Button
+                                            disableElevation
+                                            size="small"
+                                            type="submit"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={newClick}
+                                        >
+                                            등록
+                                        </Button>
+                                    </FormControl>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
                 </MainCard>
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <DefaultDataGrid

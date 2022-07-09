@@ -92,6 +92,8 @@ const AuthMngRegForm = () => {
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
     const [roleRequestData, roleRequestError, roleLoading, { roleComboSearch, roleRegisterSearch }] = RoleApi();
 
+    const { siteId, roleType, roleId } = useParams();
+
     const [expanded, setExpanded] = useState([]);
     const [selected, setSelected] = useState([]);
     const [menudata, setMenuData] = useState([]); // menu data
@@ -216,6 +218,12 @@ const AuthMngRegForm = () => {
     useEffect(() => {
         // 사이트 구분 리스트 가져오기
         siteSearch(true, '');
+        if (roleType) {
+            setInputs({
+                ...inputs, // 기존 input 객체 복사
+                type: roleType
+            });
+        }
     }, []);
 
     // Role data
@@ -233,6 +241,17 @@ const AuthMngRegForm = () => {
                         });
                         console.log(list);
                         setRoleList(list);
+
+                        if (roleId) {
+                            setInputs({
+                                ...inputs, // 기존 input 객체 복사
+                                role_id: roleId
+                            });
+                            // 등록된 메뉴 리스트 조회
+                            menumngSearch(siteId, true);
+                            // role에 등록된 사용자 조회
+                            roleRegisterSearch(roleId, siteId, roleType);
+                        }
                     }
                     break;
                 case 'registerList':
@@ -285,6 +304,13 @@ const AuthMngRegForm = () => {
                         list.push(s);
                     });
                     setSiteList(list);
+                    if (siteId) {
+                        setInputs({
+                            ...inputs, // 기존 input 객체 복사
+                            site_id: siteId
+                        });
+                        roleComboSearch(true, type, siteId);
+                    }
                 }
                 break;
             default:

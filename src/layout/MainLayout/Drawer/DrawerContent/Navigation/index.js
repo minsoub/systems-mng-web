@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -9,10 +9,51 @@ import MenuTreeItem from 'components/TreeMenu/MenuTreeItem';
 import SvgIcon from '@mui/material/SvgIcon';
 import NavGroup from './NavGroup';
 import { Box, Typography } from '@mui/material';
+import MenuMngApi from 'apis/menu/menumngapi';
 
 export default function FileSystemNavigator(navigation) {
     const navgate = useNavigate();
-    const data = menuapi.findmenus({}).items;
+    const [menuList, setMenuList] = useState([]);
+    //const data = menuapi.findmenus({}).items;
+    const [responseData, requestError, loading, { menumngSearch }] = MenuMngApi();
+
+    let authData = null;
+    if (localStorage.hasOwnProperty('authenticated')) {
+        //console.log(localStorage.getItem('authenticated'));
+        authData = JSON.parse(localStorage.getItem('authenticated'));
+    }
+    let site_id = authData.siteId; // login site id
+
+    //const data = menumngSearch(site_id, true);
+    //  menuapi.findlist(site_id);
+
+    useEffect(() => {
+        console.log('menusearch called...');
+        menumngSearch(site_id, true);
+    }, []);
+
+    useEffect(() => {
+        if (requestError) {
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+            }
+        }
+    }, [requestError]);
+
+    useEffect(() => {
+        if (!responseData) {
+            return;
+        }
+        console.log(responseData);
+        if (responseData.data) {
+            console.log(responseData.data);
+            console.log('menuData:', responseData.data.data);
+            setMenuList(responseData.data.data);
+            makeMenuData(responseData.data.data);
+        }
+    }, [responseData]);
+
     //검색용 메뉴 데이터 생성
     const menuData = [];
     const expendMenuId = [];
@@ -29,8 +70,6 @@ export default function FileSystemNavigator(navigation) {
             }
         });
     };
-    makeMenuData(data);
-    console.log('menuData:', menuData);
 
     const handleMenu = (event, nodeId) => {
         console.log('handleMenu called....');
@@ -45,43 +84,45 @@ export default function FileSystemNavigator(navigation) {
             }
         }
     };
-    const renderTreeItem = (items) => {
-        const menu = items.map((item) => {
-            let variant = '';
-            if (!item.parents_menu_id || item.parents_menu_id === '') {
-                variant = 'h5';
-            } else {
-                variant = 'body2';
+    // const renderTreeItem = (items) => {
+    //     const menu = items.map((item) => {
+    //         let variant = '';
+    //         if (!item.parents_menu_id || item.parents_menu_id === '') {
+    //             variant = 'h5';
+    //         } else {
+    //             variant = 'body2';
+    //         }
+    //         if (item.children && item.children.length) {
+    //             return (
+    //                 <MenuTreeItem key={item.id} nodeId={item.id} label={item.name} labelText={item.name} variant={variant}>
+    //                     {renderTreeItem(item.children)}
+    //                 </MenuTreeItem>
+    //             );
+    //         } else {
+    //             return <MenuTreeItem key={item.id} nodeId={item.id} label={item.name} labelText={item.name} variant={variant} />;
+    //         }
+    //         return null;
+    //     });
+    //     return menu;
+    // };
+
+    //console.log(navigation);
+    const navGroups = (menus) => {
+        const menu = menus.map((item) => {
+            switch (item.type) {
+                case 'GROUP':
+                    return <NavGroup key={item.id} item={item} />;
+                default:
+                    return (
+                        <Typography key={item.id} variant="h6" color="error" align="center">
+                            Fix - Navigation Group
+                        </Typography>
+                    );
             }
-            if (item.children && item.children.length) {
-                return (
-                    <MenuTreeItem key={item.id} nodeId={item.id} label={item.title} labelText={item.title} variant={variant}>
-                        {renderTreeItem(item.children)}
-                    </MenuTreeItem>
-                );
-            } else {
-                return <MenuTreeItem key={item.id} nodeId={item.id} label={item.title} labelText={item.title} variant={variant} />;
-            }
-            return null;
         });
         return menu;
     };
-
-    //console.log(navigation);
-    const navGroups = menuapi.findmenus({}).items.map((item) => {
-        switch (item.type) {
-            case 'group':
-                return <NavGroup key={item.id} item={item} />;
-            default:
-                return (
-                    <Typography key={item.id} variant="h6" color="error" align="center">
-                        Fix - Navigation Group
-                    </Typography>
-                );
-        }
-        // });
-    });
-    return <Box sx={{ pt: 1 }}>{navGroups}</Box>;
+    return menuList.length > 0 && <Box sx={{ pt: 1 }}>{navGroups(menuList)}</Box>;
     // return (
     //     <TreeView
     //         aria-label="file system navigator"
