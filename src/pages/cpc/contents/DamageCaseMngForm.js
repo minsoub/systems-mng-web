@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
@@ -39,6 +39,12 @@ const DamageCaseMngForm = () => {
     const [title, setTitle] = useState('');
     const [createAccountName, setCreateAccountName] = useState('');
 
+    let authData = null;
+    if (localStorage.hasOwnProperty('authenticated')) {
+        authData = JSON.parse(localStorage.getItem('authenticated'));
+    }
+    let Authorization = `Bearer ${authData.accessToken}`;
+
     // 웹에디터
     const editorRef = useRef(null);
     const [content, setContent] = useState('');
@@ -46,11 +52,83 @@ const DamageCaseMngForm = () => {
         readonly: false,
         placeholder: '내용을 입력하세요.',
         uploader: {
-            insertImageAsBase64URI: true
+            insertImageAsBase64URI: false,
+            url: process.env.REACT_APP_DEFAULT_API_URL + '/mng/cpc/board/upload',
+            imagesExtensions: ['jpg', 'png', 'jpeg', 'gif'],
+            headers: { Authorization: `${Authorization}`, site_id: process.env.REACT_APP_DEFAULT_SITE_ID },
+            filesVariableName: function (t) {
+                return 'files[' + t + ']';
+            }, //"files",
+            withCredentials: false,
+            pathVariableName: 'path',
+            format: 'json',
+            method: 'POST',
+            prepareData: function (formdata) {
+                return formdata;
+            },
+            isSuccess: function (e) {
+                debugger;
+                if (e.result === 'SUCCESS') {
+                    const j = this.jodit;
+                    const tagName = 'img';
+                    const elm = j.createInside.element(tagName);
+                    elm.setAttribute('src', process.env.REACT_APP_BOARD_SERVER_URL + '/' + e.data.file_key);
+                    j.s.insertImage(elm, null, j.o.imageDefaultWidth);
+                }
+            },
+            getMessage: function (e) {
+                return void 0 !== e.data.messages && Array.isArray(e.data.messages) ? e.data.messages.join('') : '';
+            },
+            process: function (resp) {
+                // success callback transfrom data to defaultHandlerSuccess use.it's up to you.
+                let files = [];
+                files.unshift(resp.data);
+                return {
+                    files: resp.data,
+                    error: resp.msg,
+                    msg: resp.msg
+                };
+            },
+            error: function (e) {
+                console.log(e);
+                // obj.j.e.fire('errorMessage', e.message, 'error', 4000);
+            },
+            defaultHandlerSuccess: function (obj, resp) {
+                // `this` is the editor.
+                const j = obj;
+                debugger;
+                if (resp.files && resp.files.length) {
+                    const tagName = 'img';
+                    resp.files.forEach((filename, index) => {
+                        //edetor insertimg function
+                        const elm = j.createInside.element(tagName);
+                        elm.setAttribute('src', filename);
+                        j.s.insertImage(elm, null, j.o.imageDefaultWidth);
+                    });
+                }
+            },
+            defaultHandlerError: function (obj, e) {
+                obj.j.e.fire('errorMessage', e.message);
+            },
+            contentType: function (e) {
+                return (
+                    (void 0 === this.jodit.ownerWindow.FormData || 'string' == typeof e) &&
+                    'application/x-www-form-urlencoded; charset=UTF-8'
+                );
+            }
         },
         width: '100%',
         height: 700
     };
+    const handleBlurAreaChange = useCallback((value, event) => {
+        console.log('handleBlurAreaChange', value, event);
+    }, []);
+
+    const handleWYSIWYGChange = useCallback((newValue) => {
+        console.log('handleWYSIWYGChange', newValue);
+        setContent(newValue);
+        return setContent(() => newValue);
+    }, []);
 
     // onload
     useEffect(() => {
@@ -269,7 +347,8 @@ const DamageCaseMngForm = () => {
                                     ref={editorRef}
                                     value={content}
                                     config={config}
-                                    onBlur={(newContent) => setContent(newContent)}
+                                    onChange={handleWYSIWYGChange}
+                                    onBlur={handleBlurAreaChange}
                                 />
                             </FormControl>
                         </Grid>
