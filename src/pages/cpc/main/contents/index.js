@@ -1,19 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    Button,
-    Grid,
-    Box,
-    Tab,
-    Paper,
-    TableContainer,
-    Table,
-    TableHead,
-    TableBody,
-    TableRow,
-    TableCell
-} from '@mui/material';
+import { Button, Grid, Box, Tab, Paper, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import MainContentsApi from 'apis/cpc/mainContents/maincontentsapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -91,7 +79,7 @@ const MainContents = () => {
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="메인 관리" menuStep01="사이트 운영" menuStep02="메인 관리" menuStep03="콘텐츠 노출 관리" />
-                <br />
+
                 <TabContext value={tabIndex}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={handleChange} aria-label="main contents tabs">

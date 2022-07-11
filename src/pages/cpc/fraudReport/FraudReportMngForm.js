@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
-import {
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Typography,
-    FormControl,
-    Checkbox,
-    FormControlLabel
-} from '@mui/material';
-import MainCard from 'components/MainCard';
+import './styles.scss';
+import { Button, Grid, TextField, FormControl, Checkbox, FormControlLabel } from '@mui/material';
 import FraudReportApi from 'apis/cpc/fraudReport/fraudreportapi';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from 'components/HeaderTitle';
+import cx from 'classnames';
+import DetailBoardContent from 'components/DetailBoard/Content';
+import ButtonLayout from 'components/Common/ButtonLayout';
 
 const FraudReportMngForm = () => {
     const navigate = useNavigate();
@@ -130,8 +123,10 @@ const FraudReportMngForm = () => {
 
     // 파일 다운로드
     const downloadClick = () => {
-        setDownloadFileName(attach_file_name);
-        getFileDownload(attach_file_id);
+        if (attach_file_id) {
+            setDownloadFileName(attach_file_name);
+            getFileDownload(attach_file_id);
+        }
     };
 
     // 목록
@@ -166,155 +161,75 @@ const FraudReportMngForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">사고신고 관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 사고신고 관리</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
-                <MainCard sx={{ mt: 2 }} content={false}>
-                    <Grid container spacing={3} mt={1}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>상태</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            {status === 'REGISTER' && '접수'}
-                            {status === 'REQUEST' && '답변요청'}
-                            {status === 'COMPLETE' && '답변완료'}
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>제보자</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            {email}
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>제목</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            {title}
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>내용</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            {contents}
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>개인정보 취급 동의</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            {entrust_privacy === true ? 'Y' : 'N'}
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>개인정보 수집 및 이용 동의</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            {terms_privacy === true ? 'Y' : 'N'}
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>첨부파일</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
+                <HeaderTitle titleNm="사고신고 관리" menuStep01="사이트 운영" menuStep02="사고신고 관리" />
+
+                <table className={cx('content--table')}>
+                    <DetailBoardContent
+                        titleNm="상태"
+                        children={
+                            <>
+                                {status === 'REGISTER' && '접수'}
+                                {status === 'REQUEST' && '답변요청'}
+                                {status === 'COMPLETE' && '답변완료'}
+                            </>
+                        }
+                    />
+                    <DetailBoardContent titleNm="제보자" children={email} />
+                    <DetailBoardContent titleNm="제목" children={title} />
+                    <DetailBoardContent titleNm="내용" children={contents} />
+                    <DetailBoardContent titleNm="개인정보 취급 동의" children={entrust_privacy === true ? 'Y' : 'N'} />
+                    <DetailBoardContent titleNm="개인정보 수집 및 이용 동의" children={terms_privacy === true ? 'Y' : 'N'} />
+                    <DetailBoardContent
+                        titleNm="첨부파일"
+                        children={
                             <Button onClick={downloadClick} variant="text" color="primary">
                                 {attach_file_name}
                             </Button>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>답변</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            <Grid item xs>
-                                <FormControl sx={{ m: 0 }} size="small" required fullWidth>
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={answer}
-                                        name="answer"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="답변을 입력하세요."
-                                        fullWidth
-                                        multiline
-                                        minRows={4}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            {answer_to_contacts && (
-                                <Grid item xs>
-                                    <FormControl sx={{ m: 0 }} size="small" required fullWidth>
-                                        <FormControlLabel
-                                            control={<Checkbox checked={send_to_email} name="send_to_email" onChange={handleChange} />}
-                                            label="이메일로 답변하기"
-                                        />
-                                    </FormControl>
-                                </Grid>
-                            )}
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>등록일시</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            {create_date}
-                        </Grid>
-                    </Grid>
-                </MainCard>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item xs={8} sm={0.8}>
-                        <FormControl sx={{ m: 1 }} size="small">
-                            <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
-                                목록
-                            </Button>
-                        </FormControl>
-                    </Grid>
-                    <Grid container xs={8} direction="row" justifyContent="flex-end" alignItems="center">
-                        <Grid item xs={8} sm={1}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={saveClick}>
-                                    저장
-                                </Button>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                        }
+                    />
+                    <DetailBoardContent
+                        titleNm="답변"
+                        children={
+                            <>
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="small"
+                                    value={answer}
+                                    name="answer"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    placeholder="답변을 입력하세요."
+                                    fullWidth
+                                    multiline
+                                    minRows={4}
+                                />
+
+                                {answer_to_contacts && (
+                                    <Grid item xs>
+                                        <FormControl sx={{ m: 0 }} size="small" required fullWidth>
+                                            <FormControlLabel
+                                                control={<Checkbox checked={send_to_email} name="send_to_email" onChange={handleChange} />}
+                                                label="이메일로 답변하기"
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                )}
+                            </>
+                        }
+                    />
+                    <DetailBoardContent titleNm="등록일시" children={create_date} />
+                </table>
+
+                <ButtonLayout buttonName="content--right__button">
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                        목록
+                    </Button>
+
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
+                        저장
+                    </Button>
+                </ButtonLayout>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>

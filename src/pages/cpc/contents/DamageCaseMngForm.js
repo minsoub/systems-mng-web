@@ -17,6 +17,8 @@ import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import JoditEditor from 'jodit-react';
+import ButtonLayout from 'components/Common/ButtonLayout';
+import TopInputLayout from 'components/Common/TopInputLayout';
 
 const DamageCaseMngForm = () => {
     const navigate = useNavigate();
@@ -282,12 +284,12 @@ const DamageCaseMngForm = () => {
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                            <FormControl size="medium">
                                 <Stack spacing={0}>카테고리</Stack>
                             </FormControl>
                         </Grid>
                         <Grid item xs={8} sm={4}>
-                            <FormControl sx={{ m: 0, minWidth: 160 }} size="small" required fullWidth>
+                            <FormControl sx={{ minWidth: 100 }} size="medium" required fullWidth>
                                 <Select name="category" label="카테고리" value={category} onChange={handleChange}>
                                     <MenuItem value="">선택</MenuItem>
                                     <MenuItem value="피싱">피싱</MenuItem>
@@ -306,12 +308,12 @@ const DamageCaseMngForm = () => {
                     </Grid>
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                            <FormControl size="medium">
                                 <Stack spacing={0}>제목</Stack>
                             </FormControl>
                         </Grid>
                         <Grid item xs>
-                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
+                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="medium" required fullWidth>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -328,7 +330,7 @@ const DamageCaseMngForm = () => {
                     </Grid>
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1 }} size="small">
+                            <FormControl size="medium">
                                 <Stack spacing={0}>내용</Stack>
                             </FormControl>
                         </Grid>
@@ -346,69 +348,49 @@ const DamageCaseMngForm = () => {
                     {createAccountName && (
                         <Grid container spacing={3}>
                             <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                <FormControl sx={{ m: 1, minHeight: 30 }} size="medium">
                                     <Stack spacing={0}>등록자</Stack>
                                 </FormControl>
                             </Grid>
                             <Grid item xs mr={1}>
-                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
+                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="medium" required fullWidth>
                                     {createAccountName}
                                 </FormControl>
                             </Grid>
                         </Grid>
                     )}
                 </MainCard>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item xs={8} sm={0.8}>
-                        <FormControl sx={{ m: 1 }} size="small">
-                            <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
-                                목록
-                            </Button>
-                        </FormControl>
-                    </Grid>
+                <TopInputLayout>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                        목록
+                    </Button>
                     {!id && (
-                        <Grid item xs={8} sm={0.6}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={addClick}>
+                        <Grid item xs={8}>
+                            <ButtonLayout>
+                                <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addClick}>
                                     등록
                                 </Button>
-                            </FormControl>
+                            </ButtonLayout>
                         </Grid>
                     )}
                     {id && (
-                        <Grid container xs={8} direction="row" justifyContent="flex-end" alignItems="center">
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={deleteClick}
-                                    >
-                                        삭제
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={saveClick}
-                                    >
-                                        저장
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
+                        <ButtonLayout>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={deleteClick}
+                            >
+                                삭제
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
+                                저장
+                            </Button>
+                        </ButtonLayout>
                     )}
-                </Grid>
+                </TopInputLayout>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>

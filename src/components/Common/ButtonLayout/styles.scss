@@ -11,6 +11,13 @@
     margin-top: 60px;
 }
 
+.content--right__button {
+    justify-content: end;
+    width: 100%;
+    display: flex;
+    margin-top: 16px;
+}
+
 .searchPointColor {
     // 초기화, 신규, 리스트 등등
     button:nth-child(1) {

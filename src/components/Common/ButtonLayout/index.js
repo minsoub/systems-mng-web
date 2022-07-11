@@ -1,5 +1,6 @@
 import './styles.scss';
 import cx from 'classnames';
+import PropTypes from 'prop-types';
 
 // 버튼이 여러개 일 때
 /**
@@ -9,7 +10,16 @@ import cx from 'classnames';
  * @constructor
  */
 const ButtonLayout = ({ children, buttonName }) => {
+    ButtonLayout.defaultProps = {
+        buttonName: ''
+    };
+
     return <div className={cx(`buttonLayout ${buttonName}`)}>{children}</div>;
 };
 
 export default ButtonLayout;
+
+ButtonLayout.propTypes = {
+    buttonName: PropTypes.string.isRequired,
+    children: PropTypes.any
+};

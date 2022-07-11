@@ -2,9 +2,13 @@ import { FormControl, FormControlLabel, RadioGroup, Radio, Stack, TextField } fr
 import cx from 'classnames';
 import './styles.scss';
 
-const SearchDate = ({ start_date, end_date, period, handleBlur, handleChange }) => {
+const SearchDate = ({ start_date, handleBlur, handleChange, end_date, noneChecked, period }) => {
+    SearchDate.defaultProps = {
+        noneChecked: null
+    };
+
     return (
-        <div className={cx('result__list--date')}>
+        <div className={cx(`result__list--date ${noneChecked}`)}>
             <Stack spacing={10} className={cx('borderTitle')}>
                 기간 검색
             </Stack>
@@ -34,14 +38,19 @@ const SearchDate = ({ start_date, end_date, period, handleBlur, handleChange }) 
                 </FormControl>
             </div>
 
-            <div>
-                <RadioGroup row aria-labelledby="period-radio-buttons-group-label" name="period" value={period} onChange={handleChange}>
-                    <FormControlLabel value="1" control={<Radio />} label="오늘" />
-                    <FormControlLabel value="2" control={<Radio />} label="어제" />
-                    <FormControlLabel value="3" control={<Radio />} label="1개월" />
-                    <FormControlLabel value="4" control={<Radio />} label="3개월" />
-                </RadioGroup>
-            </div>
+            <RadioGroup
+                className={cx('date-checked')}
+                row
+                aria-labelledby="period-radio-buttons-group-label"
+                name="period"
+                value={period}
+                onChange={handleChange}
+            >
+                <FormControlLabel value="1" control={<Radio />} label="오늘" />
+                <FormControlLabel value="2" control={<Radio />} label="어제" />
+                <FormControlLabel value="3" control={<Radio />} label="1개월" />
+                <FormControlLabel value="4" control={<Radio />} label="3개월" />
+            </RadioGroup>
         </div>
     );
 };
