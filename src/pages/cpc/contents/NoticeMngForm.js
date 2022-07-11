@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
@@ -122,15 +122,6 @@ const NoticeMngForm = () => {
         width: '100%',
         height: 700
     };
-    const handleBlurAreaChange = useCallback((value, event) => {
-        console.log('handleBlurAreaChange', value, event);
-    }, []);
-
-    const handleWYSIWYGChange = useCallback((newValue) => {
-        console.log('handleWYSIWYGChange', newValue);
-        setContent(newValue);
-        return setContent(() => newValue);
-    }, []);
 
     // 태그
     const [suggestions, setSuggestions] = useState([]);
@@ -388,8 +379,7 @@ const NoticeMngForm = () => {
                                     ref={editorRef}
                                     value={content}
                                     config={config}
-                                    onChange={handleWYSIWYGChange}
-                                    onBlur={handleBlurAreaChange}
+                                    onBlur={(newContent) => setContent(newContent)}
                                 />
                             </FormControl>
                         </Grid>
