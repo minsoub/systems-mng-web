@@ -61,76 +61,17 @@ const DigitalAssetBasicMngForm = () => {
     const editorRef = useRef(null);
     const [content, setContent] = useState('');
     const config = {
+        language: 'ko',
         readonly: false,
         placeholder: '내용을 입력하세요.',
+        enableDragAndDropFileToEditor: true,
         uploader: {
             insertImageAsBase64URI: false,
             url: process.env.REACT_APP_DEFAULT_API_URL + '/mng/cpc/board/upload',
-            imagesExtensions: ['jpg', 'png', 'jpeg', 'gif'],
-            headers: { Authorization: `${Authorization}`, site_id: process.env.REACT_APP_DEFAULT_SITE_ID },
-            filesVariableName: function (t) {
-                return 'files[' + t + ']';
-            }, //"files",
-            withCredentials: false,
-            pathVariableName: 'path',
-            format: 'json',
-            method: 'POST',
-            prepareData: function (formdata) {
-                return formdata;
-            },
-            isSuccess: function (e) {
-                debugger;
-                if (e.result === 'SUCCESS') {
-                    const j = this.jodit;
-                    const tagName = 'img';
-                    const elm = j.createInside.element(tagName);
-                    elm.setAttribute('src', process.env.REACT_APP_BOARD_SERVER_URL + '/' + e.data.file_key);
-                    j.s.insertImage(elm, null, j.o.imageDefaultWidth);
-                }
-            },
-            getMessage: function (e) {
-                return void 0 !== e.data.messages && Array.isArray(e.data.messages) ? e.data.messages.join('') : '';
-            },
-            process: function (resp) {
-                // success callback transfrom data to defaultHandlerSuccess use.it's up to you.
-                let files = [];
-                files.unshift(resp.data);
-                return {
-                    files: resp.data,
-                    error: resp.msg,
-                    msg: resp.msg
-                };
-            },
-            error: function (e) {
-                console.log(e);
-                // obj.j.e.fire('errorMessage', e.message, 'error', 4000);
-            },
-            defaultHandlerSuccess: function (obj, resp) {
-                // `this` is the editor.
-                const j = obj;
-                debugger;
-                if (resp.files && resp.files.length) {
-                    const tagName = 'img';
-                    resp.files.forEach((filename, index) => {
-                        //edetor insertimg function
-                        const elm = j.createInside.element(tagName);
-                        elm.setAttribute('src', filename);
-                        j.s.insertImage(elm, null, j.o.imageDefaultWidth);
-                    });
-                }
-            },
-            defaultHandlerError: function (obj, e) {
-                obj.j.e.fire('errorMessage', e.message);
-            },
-            contentType: function (e) {
-                return (
-                    (void 0 === this.jodit.ownerWindow.FormData || 'string' == typeof e) &&
-                    'application/x-www-form-urlencoded; charset=UTF-8'
-                );
-            }
+            headers: { Authorization: `${Authorization}`, site_id: process.env.REACT_APP_DEFAULT_SITE_ID }
         },
         width: '100%',
-        height: 700
+        height: 500
     };
 
     // 태그
