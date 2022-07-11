@@ -55,10 +55,14 @@ const NoticeMngForm = () => {
         readonly: false,
         placeholder: '내용을 입력하세요.',
         enableDragAndDropFileToEditor: true,
+        imageDefaultWidth: null,
         uploader: {
             insertImageAsBase64URI: false,
             url: process.env.REACT_APP_DEFAULT_API_URL + '/mng/cpc/board/upload',
-            headers: { Authorization: `${Authorization}`, site_id: process.env.REACT_APP_DEFAULT_SITE_ID }
+            headers: { Authorization: `${Authorization}`, site_id: process.env.REACT_APP_DEFAULT_SITE_ID },
+            filesVariableName() {
+                return 'files';
+            }
         },
         width: '100%',
         height: 500
