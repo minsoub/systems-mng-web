@@ -127,6 +127,26 @@ const RoleApi = () => {
         });
     };
 
+    // Role에 연관된 메뉴 트리 조회
+    const roleRegisterTreeList = (role_id, site_id) => {
+        callApi('roleRegisterTreeList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/role/${role_id}/sites/${site_id}`, // s?siteId=${site_id}&isUse=${is_use}&type=${type}`,
+            requestConfig: {}
+        });
+    };
+
+    // 권한 맵핑 저장
+    const roleMenuSave = (role_id, data) => {
+        callApi('roleMenuSave', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'post',
+            url: `/role/${role_id}/resources`,
+            requestConfig: data
+        });
+    };
+
     return [
         responseData,
         requestError,
@@ -142,7 +162,9 @@ const RoleApi = () => {
             roleUpdate: updateRoleData,
             roleRegisterSearch: roleRegisterSearch,
             roleRegisterSave: roleRegisterSave,
-            roleRegisterDelete: roleRegisterDelete
+            roleRegisterDelete: roleRegisterDelete,
+            roleRegisterTreeList: roleRegisterTreeList,
+            roleMenuSave: roleMenuSave
         }
     ];
 };

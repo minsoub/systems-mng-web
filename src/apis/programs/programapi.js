@@ -21,7 +21,7 @@ const ProgramApi = () => {
         callApi('programList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/site/${site_id}/programs?isUse=${is_use}&search_text=${keyword}`,
+            url: `/site/${site_id}/programs?isUse=${is_use}&searchText=${encodeKeyword}`,
             requestConfig: {}
         });
     };
@@ -34,19 +34,6 @@ const ProgramApi = () => {
             url: `/sites?isUse=${is_use}`,
             requestConfig: {}
         });
-    };
-
-    // 선택된 그리드 데이터 삭제
-    const getDeleteData = (selectedRows) => {
-        if (selectedRows && selectedRows.length > 0) {
-            let paramIds = selectedRows.join('&ids=');
-            callApi('deleteData', {
-                axiosInstance: axiosInstanceDefault,
-                method: 'delete',
-                url: `/faq/content?ids=${paramIds}`,
-                requestConfig: {}
-            });
-        }
     };
 
     const getDelete = (id, data) => {

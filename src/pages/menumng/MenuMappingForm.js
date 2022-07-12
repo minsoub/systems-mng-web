@@ -479,6 +479,9 @@ const MenuMappingForm = () => {
         console.log(nodeIds);
         setSelected(nodeIds);
         setExpanded(nodeIds);
+        // 프로그램 목록 초기화
+        setSearchGridRows([]);
+        setSelectedSearchRows([]);
         // 선택한 노드에 대해서 상세 데이터를 조회한다.
         programMappingSearch(nodeIds, site_id);
     };
@@ -567,7 +570,7 @@ const MenuMappingForm = () => {
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 720, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 780, flexGrow: 1, overflowY: 'auto' }}
                                 //expanded={expanded}
                                 //selected={selected}
                                 onNodeToggle={handleToggle}
@@ -579,7 +582,7 @@ const MenuMappingForm = () => {
                     </Grid>
                     <Grid item md={8.8}>
                         <Stack spacing={2}>
-                            <MainCard sx={{ mt: 2, height: 720 }} content={false}>
+                            <MainCard sx={{ mt: 2, height: 780 }} content={false}>
                                 <Grid container spacing={0} sx={{ mt: 2 }}>
                                     <Grid item xs={8} sm={0.2}></Grid>
                                     <Grid item xs={8} sm={2.8}>
@@ -677,7 +680,7 @@ const MenuMappingForm = () => {
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 1 }}>
                                         <Grid item xs={8} sm={12}>
-                                            <MainCard sx={{ mt: 0 }} content={false}>
+                                            <MainCard sx={{ mt: 0, height: 400 }} content={false}>
                                                 <CheckBoxDataGrid
                                                     columns={searchColumns}
                                                     rows={dataGridSearchRows}
@@ -685,7 +688,7 @@ const MenuMappingForm = () => {
                                                     handleGridClick={handleClick}
                                                     handleGridDoubleClick={handleDoubleClick}
                                                     selectionChange={handleSelectionSearchChange}
-                                                    height={340}
+                                                    height={400}
                                                 />
                                             </MainCard>
                                         </Grid>
