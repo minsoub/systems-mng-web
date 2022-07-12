@@ -38,7 +38,7 @@ import MenuMngApi from 'apis/menu/menumngapi';
 import ProgramApi from 'apis/programs/programapi';
 import RoleApi from 'apis/roles/roleapi';
 import ErrorScreen from 'components/ErrorScreen';
-import CustomTreeItem from 'components/TreeMenu/CustomTreeItem';
+import CheckBoxTreeItem from 'components/TreeMenu/CheckBoxTreeItem';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -52,6 +52,7 @@ import ForumIcon from '@mui/icons-material/Forum';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import menu from 'store/reducers/menu';
+import { check } from 'prettier';
 
 function MinusSquare(props) {
     return (
@@ -90,7 +91,14 @@ const AuthMngRegForm = () => {
         { menumngSearch, menumngDetail, programMapping, programMappingSearch }
     ] = MenuMngApi();
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
-    const [roleRequestData, roleRequestError, roleLoading, { roleComboSearch, roleRegisterSearch }] = RoleApi();
+    const [
+        roleRequestData,
+        roleRequestError,
+        roleLoading,
+        { roleComboSearch, roleRegisterSearch, roleRegisterTreeList, roleMenuSave }
+    ] = RoleApi();
+
+    const { siteId, roleType, roleId } = useParams();
 
     const { siteId, roleType, roleId } = useParams();
 
@@ -200,6 +208,9 @@ const AuthMngRegForm = () => {
     const [dataGridRoleRows, setDataGridRoleRows] = useState([]);
     const [dataGridProgramRows, setDataGridProgramRows] = useState([]);
 
+    const [selectedMenuName, setSelectedMenuName] = useState('');
+    const [selectedMenuId, setSelectedMenuId] = useState('');
+
     // 검색 그리드 선택된 row id
     const [selectedProgramRows, setSelectedProgramRows] = useState([]);
     const [selectedRoleRows, setSelectedRoleRows] = useState([]);
@@ -261,6 +272,23 @@ const AuthMngRegForm = () => {
                         setDataGridRoleRows([]);
                     }
                     break;
+                case 'roleRegisterTreeList':
+                    console.log(roleRequestData.data.data.menu_list);
+                    if (roleRequestData.data.data.menu_list && roleRequestData.data.data.menu_list.length > 0) {
+                        setMenuData(roleRequestData.data.data.menu_list);
+                    } else {
+                        setMenuData([]);
+                    }
+                    break;
+                case 'roleMenuSave':
+                    if (roleRequestData.data.data) {
+                        alert('저장을 완료하였습니다!!!');
+                        // 등록된 메뉴 리스트 조회
+                        //menumngSearch(site_id, true);
+                        roleRegisterTreeList(role_id, site_id);
+                        // role에 등록된 사용자 조회
+                        roleRegisterSearch(role_id, site_id, type);
+                    }
                 default:
             }
         } else if (roleRequestError) {
@@ -341,6 +369,7 @@ const AuthMngRegForm = () => {
         }
         switch (responseData.transactionId) {
             case 'menuList':
+                // Not used
                 if (responseData.data.data && responseData.data.data.length > 0) {
                     setMenuData(responseData.data.data);
                 } else {
@@ -384,7 +413,8 @@ const AuthMngRegForm = () => {
             return;
         }
         // 등록된 메뉴 리스트 조회
-        menumngSearch(site_id, true);
+        //menumngSearch(site_id, true);
+        roleRegisterTreeList(role_id, site_id);
         // role에 등록된 사용자 조회
         roleRegisterSearch(role_id, site_id, type);
     };
@@ -399,10 +429,25 @@ const AuthMngRegForm = () => {
         } else {
             value = e.target.value;
         }
-        setInputs({
-            ...inputs, // 기존 input 객체 복사
-            [name]: value
-        });
+        console.log(name);
+        console.log(value);
+        if (e.target.name === 'role_id') {
+            console.log(e.target);
+            roleList.map((item, index) => {
+                if (item.id === e.target.value) {
+                    setInputs({
+                        ...inputs, // 기존 input 객체 복사
+                        [name]: value,
+                        role_name: item.name
+                    });
+                }
+            });
+        } else {
+            setInputs({
+                ...inputs, // 기존 input 객체 복사
+                [name]: value
+            });
+        }
         if (e.target.name === 'site_id') {
             // 사이트 아이디가 변경되면 Type에 따라서 Role 정보를 조회한다.
             roleComboSearch(true, type, e.target.value);
@@ -423,6 +468,7 @@ const AuthMngRegForm = () => {
         if (item) {
             console.log(item);
             setSelectedProgramRows(item);
+            console.log(selectedProgramRows);
         }
     };
     // 사용자 리스트 선택
@@ -449,8 +495,64 @@ const AuthMngRegForm = () => {
     // 그리드 더블 클릭
     const handleDoubleClick = (rowData) => {};
 
+    // 체크 된 데이터를 반영한다.
+    const programMappingSave = () => {
+        // 저장한다.
+        if (selectedProgramRows.length === 0) {
+            alert('프로그램 목록을 선택하지 않았습니다!!!');
+            return;
+        }
+        // 선택된 프로그램 목록을 트리의 메뉴의 프로그램 목록에 반영한다.
+        let found = 0;
+        menudata.map((item, index) => {
+            if (item.id === selectedMenuId) {
+                item.program_id = selectedRoleRows;
+                found = 1;
+            }
+            item.child_menu_resources.map((child, idx) => {
+                if (child.id === selectedMenuId) {
+                    child.program_id = selectedProgramRows;
+                    found = 1;
+                }
+                child.child_menu_resources.map((sub, i) => {
+                    if (sub.id === selectedMenuId) {
+                        sub.program_id = selectedProgramRows;
+                        found = 1;
+                    }
+                });
+            });
+        });
+        if (found === 1) alert('적용되었습니다!!!');
+    };
+
     // 저장 버튼 클릭
-    const programMappingSaveClick = () => {};
+    const programMappingSaveClick = () => {
+        let saveData = [];
+        if (menudata && confirm('저장하시겠습니까?')) {
+            menudata.map((item, index) => {
+                // 1차
+                if (item.visible === true) {
+                    saveData.push({ menuId: item.id, programId: [] });
+                }
+                if (item.child_menu_resources.length > 0) {
+                    item.child_menu_resources.map((child, idx) => {
+                        if (child.visible === true) {
+                            saveData.push({ menuId: child.id, programId: [] });
+                        }
+
+                        if (child.child_menu_resources.length > 0) {
+                            child.child_menu_resources.map((sub, i) => {
+                                if (sub.visible == true) {
+                                    saveData.push({ menuId: sub.id, programId: [] });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            roleMenuSave(roleId, saveData);
+        }
+    };
 
     // 선택된 프로그램에 대해서 연결 시킨다.
     const plusRegister = () => {
@@ -516,29 +618,139 @@ const AuthMngRegForm = () => {
 
     // TreeView Event Call
     const handleToggle = (event, nodeIds) => {
+        console.log('handleToggle...');
         setExpanded(nodeIds);
     };
 
     // TreeView 메뉴를 선택했을 때 연결된 프로그램 목록 조회와 메뉴 아이디를 상태에 보관해야 한다.
-    const handleSelect = (nodeIds) => {
+    const handleSelect = (nodeIds, nodeName) => {
+        console.log('handleSelect called...');
         console.log(nodeIds);
         setSelected(nodeIds);
         setExpanded(nodeIds);
         // 선택한 노드에 대해서 상세 데이터를 조회한다.
         programMappingSearch(nodeIds, site_id);
+        // 트리 메뉴에서 선택한 노드의 메뉴명을 가져온다.
+        console.log(nodeName);
+        setSelectedMenuName(nodeName);
+        setSelectedMenuId(nodeIds);
+    };
+
+    const visibleChange = (id, checkValue) => {
+        console.log(id);
+        console.log(checkValue);
+        let found = 0;
+        let checkItems = [];
+        let checkMenuData = menudata;
+        checkMenuData.map((item, index) => {
+            // 최상위일 때
+            if (item.id === id) {
+                found = 1;
+
+                item.visible = checkValue;
+                item.child_menu_resources.map((child, idx) => {
+                    child.visible = checkValue;
+                    if (child.child_menu_resources.length > 0) {
+                        child.child_menu_resources.map((sub, i) => {
+                            sub.visible = checkValue;
+                        });
+                    }
+                });
+            }
+        });
+        if (found === 0) {
+            // 1단계에서는 없다. - 2단계
+            checkMenuData.map((item, index) => {
+                item.child_menu_resources.map((child, idx) => {
+                    if (child.id === id) {
+                        found = 1;
+                        item.visible = checkValue;
+                        child.visible = checkValue;
+                        if (child.child_menu_resources.length > 0) {
+                            child.child_menu_resources.map((sub, i) => {
+                                sub.visible = checkValue;
+                            });
+                        }
+                    }
+                });
+            });
+            console.log('2');
+            console.log(found);
+            if (found === 0) {
+                // 3단계
+                console.log('3');
+                checkMenuData.map((item, index) => {
+                    item.child_menu_resources.map((child, idx) => {
+                        child.child_menu_resources.map((sub, i) => {
+                            if (sub.id === id) {
+                                found = 1;
+                                item.visible = checkValue;
+                                child.visible = checkValue;
+                                sub.visible = checkValue;
+                            }
+                        });
+                    });
+                });
+            }
+        }
+        console.log('checkMenuData');
+        console.log(checkMenuData);
+        setMenuData(checkMenuData);
+        renderTreeItem(checkMenuData);
+    };
+
+    const statusUpdate = (id, checked) => {
+        setMenuData((current) => {
+            current.map((obj) => {
+                if (obj.id === id) {
+                    console.log(obj);
+                    return { ...obj, visible: checked };
+                } else {
+                    obj.child_menu_resources.map((o1) => {
+                        if (o1.id === id) {
+                            console.log(o1);
+                            return { ...o1, visible: checked };
+                        }
+                        return o1;
+                    });
+                }
+                return obj;
+            });
+        });
     };
 
     const renderTreeItem = (items) => {
+        //console.log('renderTreeItem called...');
         //console.log(items);
         const menu = items.map((item) => {
-            if (item.child_menu && item.child_menu.length) {
+            if (item.child_menu_resources && item.child_menu_resources.length) {
                 return (
-                    <CustomTreeItem key={item.id} nodeId={item.id} dataMsg={item.id} labelText={item.name} nodeSelect={handleSelect}>
-                        {renderTreeItem(item.child_menu)}
-                    </CustomTreeItem>
+                    <CheckBoxTreeItem
+                        key={item.id}
+                        nodeId={item.id}
+                        dataMsg={item.id}
+                        label={item.name}
+                        visible={item.visible}
+                        //nodeSelect={() => handleSelect(item.id, item.name)}
+                        visibleChange={visibleChange}
+                        dataClick={() => handleSelect(item.id, item.name)}
+                    >
+                        {renderTreeItem(item.child_menu_resources)}
+                    </CheckBoxTreeItem>
                 );
             } else {
-                return <CustomTreeItem key={item.id} nodeId={item.id} dataMsg={item.id} labelText={item.name} nodeSelect={handleSelect} />;
+                return (
+                    <CheckBoxTreeItem
+                        key={item.id}
+                        nodeId={item.id}
+                        dataMsg={item.id}
+                        label={item.name}
+                        visible={item.visible}
+                        //nodeSelect={() => handleSelect(item.id, item.name)}
+                        visibleChange={visibleChange}
+                        dataClick={() => handleSelect(item.id, item.name)}
+                    />
+                );
             }
             return null;
         });
@@ -636,13 +848,16 @@ const AuthMngRegForm = () => {
                             <TreeView
                                 aria-label="controlled"
                                 // defaultExpanded={expanded}
-                                defaultCollapseIcon={<MinusSquare />}
-                                defaultExpandIcon={<PlusSquare />}
-                                defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 620, flexGrow: 1, overflowY: 'auto' }}
+                                defaultCollapseIcon={<ExpandMoreIcon />}
+                                defaultExpandIcon={<ChevronRightIcon />}
+                                //defaultCollapseIcon={<MinusSquare />}
+                                //defaultExpandIcon={<PlusSquare />}
+                                //defaultEndIcon={<CloseSquare />}
+                                sx={{ height: 720, flexGrow: 1, overflowY: 'auto' }}
                                 //expanded={expanded}
                                 //selected={selected}
-                                onNodeToggle={handleToggle}
+                                //onNodeToggle={handleToggle}
+                                //onDoubleClick={handleToggle}
                                 //onNodeSelect={handleSelect}
                             >
                                 {renderTreeItem(menudata)}
@@ -651,7 +866,7 @@ const AuthMngRegForm = () => {
                     </Grid>
                     <Grid item md={8.8}>
                         <Stack spacing={2}>
-                            <MainCard sx={{ mt: 2, height: 620 }} content={false}>
+                            <MainCard sx={{ mt: 2, height: 720 }} content={false}>
                                 <Grid container spacing={0} sx={{ mt: 2 }}>
                                     <Grid item xs={8} sm={0.2}></Grid>
                                     <Grid item xs={8} sm={2.8}>
@@ -659,10 +874,26 @@ const AuthMngRegForm = () => {
                                             <Item>Role : {role_name}</Item>
                                         </Stack>
                                     </Grid>
+                                    <Grid item xs={8} sm={4.5}></Grid>
+                                    <Grid item xs={8} sm={3.5}></Grid>
+                                    <Grid item xs={8} sm={1}>
+                                        <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
+                                            <Button
+                                                disableElevation
+                                                size="small"
+                                                type="button"
+                                                variant="contained"
+                                                color="secondary"
+                                                onClick={programMappingSaveClick}
+                                            >
+                                                저장
+                                            </Button>
+                                        </FormControl>
+                                    </Grid>
                                 </Grid>
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
                                     <Grid item xs={8} sm={12}>
-                                        <MainCard sx={{ mt: 0, height: 240 }} content={false}>
+                                        <MainCard sx={{ mt: 0, height: 290 }} content={false}>
                                             <DefaultDataGrid
                                                 columns={roleColumns}
                                                 rows={dataGridRoleRows}
@@ -670,7 +901,7 @@ const AuthMngRegForm = () => {
                                                 handleGridClick={handleClick}
                                                 handleGridDoubleClick={handleDoubleClick}
                                                 selectionChange={handleSelectionRoleChange}
-                                                height={240}
+                                                height={290}
                                             />
                                         </MainCard>
                                     </Grid>
@@ -708,9 +939,9 @@ const AuthMngRegForm = () => {
                                                     type="button"
                                                     variant="contained"
                                                     color="secondary"
-                                                    onClick={programMappingSaveClick}
+                                                    onClick={programMappingSave}
                                                 >
-                                                    저장
+                                                    선택반영
                                                 </Button>
                                             </FormControl>
                                         </Grid>
@@ -725,7 +956,7 @@ const AuthMngRegForm = () => {
                                                     handleGridClick={handleClick}
                                                     handleGridDoubleClick={handleDoubleClick}
                                                     selectionChange={handleSelectionProgramChange}
-                                                    height={240}
+                                                    height={290}
                                                 />
                                             </MainCard>
                                         </Grid>
