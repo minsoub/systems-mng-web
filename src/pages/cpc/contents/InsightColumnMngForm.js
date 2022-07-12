@@ -446,11 +446,11 @@ const InsightColumnMngForm = () => {
                             <FormControl sx={{ m: 0, minWidth: 160 }} size="small" required fullWidth>
                                 <Select name="contributor" label="기고자 정보" value={contributor} onChange={handleChange}>
                                     <MenuItem value="">선택</MenuItem>
-                                    <MenuItem value="김상겸 변호사">김상겸 변호사</MenuItem>
-                                    <MenuItem value="김휘강 교수">김휘강 교수</MenuItem>
-                                    <MenuItem value="박상혁 기자">박상혁 기자</MenuItem>
-                                    <MenuItem value="이데일리 부국장">이데일리 부국장</MenuItem>
-                                    <MenuItem value="하종은 병원장">하종은 병원장</MenuItem>
+                                    <MenuItem value="김상겸">김상겸 변호사</MenuItem>
+                                    <MenuItem value="김휘강">김휘강 교수</MenuItem>
+                                    <MenuItem value="박상혁">박상혁 기자</MenuItem>
+                                    <MenuItem value="이정훈">이정훈 이데일리 부국장</MenuItem>
+                                    <MenuItem value="하종은">하종은 병원장</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
