@@ -532,24 +532,25 @@ const AuthMngRegForm = () => {
             menudata.map((item, index) => {
                 // 1차
                 if (item.visible === true) {
-                    saveData.push({ menuId: item.id, programId: [] });
+                    saveData.push({ menu_id: item.id, program_id: item.program_list });
                 }
                 if (item.child_menu_resources.length > 0) {
                     item.child_menu_resources.map((child, idx) => {
                         if (child.visible === true) {
-                            saveData.push({ menuId: child.id, programId: [] });
+                            saveData.push({ menu_id: child.id, program_id: item.program_list });
                         }
 
                         if (child.child_menu_resources.length > 0) {
                             child.child_menu_resources.map((sub, i) => {
                                 if (sub.visible == true) {
-                                    saveData.push({ menuId: sub.id, programId: [] });
+                                    saveData.push({ menu_id: sub.id, program_id: item.program_list });
                                 }
                             });
                         }
                     });
                 }
             });
+            console.log(saveData);
             roleMenuSave(roleId, saveData);
         }
     };
