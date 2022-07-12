@@ -46,6 +46,12 @@ const InsightColumnMngForm = () => {
     const [contributor, setContributor] = useState('');
     const [createAccountName, setCreateAccountName] = useState('');
 
+    let authData = null;
+    if (localStorage.hasOwnProperty('authenticated')) {
+        authData = JSON.parse(localStorage.getItem('authenticated'));
+    }
+    let Authorization = `Bearer ${authData.accessToken}`;
+
     // 파일
     const [thumbnailFile, setThumbnailFile] = useState('');
     const handleFileChange = (file) => {
@@ -59,13 +65,21 @@ const InsightColumnMngForm = () => {
     const editorRef = useRef(null);
     const [content, setContent] = useState('');
     const config = {
+        language: 'ko',
         readonly: false,
         placeholder: '내용을 입력하세요.',
+        enableDragAndDropFileToEditor: true,
+        imageDefaultWidth: null,
         uploader: {
-            insertImageAsBase64URI: true
+            insertImageAsBase64URI: false,
+            url: process.env.REACT_APP_DEFAULT_API_URL + '/mng/cpc/board/upload',
+            headers: { Authorization: `${Authorization}`, site_id: process.env.REACT_APP_DEFAULT_SITE_ID },
+            filesVariableName() {
+                return 'files';
+            }
         },
         width: '100%',
-        height: 700
+        height: 500
     };
 
     // 태그
@@ -432,11 +446,11 @@ const InsightColumnMngForm = () => {
                             <FormControl sx={{ m: 0, minWidth: 160 }} size="small" required fullWidth>
                                 <Select name="contributor" label="기고자 정보" value={contributor} onChange={handleChange}>
                                     <MenuItem value="">선택</MenuItem>
-                                    <MenuItem value="김상겸 변호사">김상겸 변호사</MenuItem>
-                                    <MenuItem value="김휘강 교수">김휘강 교수</MenuItem>
-                                    <MenuItem value="박상혁 기자">박상혁 기자</MenuItem>
-                                    <MenuItem value="이데일리 부국장">이데일리 부국장</MenuItem>
-                                    <MenuItem value="하종은 병원장">하종은 병원장</MenuItem>
+                                    <MenuItem value="김상겸">김상겸 변호사</MenuItem>
+                                    <MenuItem value="김휘강">김휘강 교수</MenuItem>
+                                    <MenuItem value="박상혁">박상혁 기자</MenuItem>
+                                    <MenuItem value="이정훈">이정훈 이데일리 부국장</MenuItem>
+                                    <MenuItem value="하종은">하종은 병원장</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>

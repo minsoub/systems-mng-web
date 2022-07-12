@@ -41,17 +41,31 @@ const NoticeMngForm = () => {
     const [tags, setTags] = useState([]);
     const [createAccountName, setCreateAccountName] = useState('');
 
+    let authData = null;
+    if (localStorage.hasOwnProperty('authenticated')) {
+        authData = JSON.parse(localStorage.getItem('authenticated'));
+    }
+    let Authorization = `Bearer ${authData.accessToken}`;
+
     // 웹에디터
     const editorRef = useRef(null);
     const [content, setContent] = useState('');
     const config = {
+        language: 'ko',
         readonly: false,
         placeholder: '내용을 입력하세요.',
+        enableDragAndDropFileToEditor: true,
+        imageDefaultWidth: null,
         uploader: {
-            insertImageAsBase64URI: true
+            insertImageAsBase64URI: false,
+            url: process.env.REACT_APP_DEFAULT_API_URL + '/mng/cpc/board/upload',
+            headers: { Authorization: `${Authorization}`, site_id: process.env.REACT_APP_DEFAULT_SITE_ID },
+            filesVariableName() {
+                return 'files';
+            }
         },
         width: '100%',
-        height: 700
+        height: 500
     };
 
     // 태그

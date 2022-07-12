@@ -62,7 +62,7 @@
 
 // 상단 아래
 .css-dasaed-MuiGrid-root > .MuiGrid-item {
-    padding-top: 100px;
+    padding-top: 45px;
 }
 
 // Login By 유저정보
@@ -75,13 +75,67 @@
     margin-left: 21px;
 }
 
+// table이나 기본적인 표
+.css-15oiqrv-MuiPaper-root-MuiCard-root,
+.css-hjn8fk-MuiPaper-root-MuiCard-root,
+.css-1d9nlt3-MuiPaper-root-MuiCard-root,
+.css-xiy5o3-MuiPaper-root-MuiCard-root,
+.css-13mu4hp-MuiPaper-root-MuiCard-root,
+.css-1dxjlht-MuiPaper-root-MuiCard-root {
+    border-radius: 4px;
+}
+
+// input, select 레이아웃
+.css-1a7pcy6-MuiInputBase-root-MuiOutlinedInput-root,
+.css-12wp4uq-MuiInputBase-root-MuiOutlinedInput-root,
+.css-1uqqosz-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+    border-radius: 2px;
+}
+
+// 모든 버튼
+button,
+html [type='button'],
+[type='reset'],
+[type='submit'] {
+    border-radius: 2px;
+}
+
+// 중간에 표부분 title 스타일
+.center--title,
+.css-jalhdk-MuiPaper-root {
+    font-weight: 600;
+    font-size: 1.2rem;
+    line-height: 1.33;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.85);
+    background-color: transparent;
+    box-shadow: none;
+    text-align: left;
+}
+
+// Input 윗 부분 실선
+legend {
+    display: none;
+}
+
+// boarder header 부분
+.css-1g5oyi7-MuiDataGrid-root .MuiDataGrid-columnHeader {
+    height: 55px;
+}
+
+// boarder 게시글
+.css-1g5oyi7-MuiDataGrid-root {
+    font-size: 14px;
+}
+
+.css-1g5oyi7-MuiDataGrid-root .MuiDataGrid-row {
+    cursor: pointer;
+}
+
+// 1024 해상도에서도 width Full로 차도록
 @media (min-width: 1024px) {
     .css-1ol3ns7-MuiGrid-root {
         max-width: 100%;
         flex-basis: 100%;
     }
-}
-
-legend {
-    display: none;
 }

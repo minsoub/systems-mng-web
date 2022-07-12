@@ -4,3 +4,14 @@
         margin-left: 1rem;
     }
 }
+.gridClass {
+    display: flex;
+    .mapping--grid {
+        margin-right: 21px;
+        display: flex;
+    }
+}
+
+.inputLayout {
+    display: flex;
+}

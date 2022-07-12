@@ -100,6 +100,8 @@ const AuthMngRegForm = () => {
 
     const { siteId, roleType, roleId } = useParams();
 
+    const { siteId, roleType, roleId } = useParams();
+
     const [expanded, setExpanded] = useState([]);
     const [selected, setSelected] = useState([]);
     const [menudata, setMenuData] = useState([]); // menu data
@@ -227,8 +229,6 @@ const AuthMngRegForm = () => {
     useEffect(() => {
         // 사이트 구분 리스트 가져오기
         siteSearch(true, '');
-        console.log('RoleType => ');
-        console.log(roleType);
         if (roleType) {
             setInputs({
                 ...inputs, // 기존 input 객체 복사
@@ -418,6 +418,8 @@ const AuthMngRegForm = () => {
         // role에 등록된 사용자 조회
         roleRegisterSearch(role_id, site_id, type);
     };
+    // 저장한다.
+    const saveClick = () => {};
 
     // Site구분, type, role_id 입력 박스 입력 시 호출
     const handleChange = (e) => {
@@ -903,6 +905,21 @@ const AuthMngRegForm = () => {
                                                 height={290}
                                             />
                                         </MainCard>
+                                    </Grid>
+                                </Grid>
+                                <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <Grid item xs={8} sm={0.2}></Grid>
+                                    <Grid item xs={8} sm={2.8}>
+                                        <Stack spacing={5} sx={{ mt: 0 }} justifyContent="left" alignItems="left">
+                                            <Item>메뉴명 : [ 사이트 관리자 ]</Item>
+                                        </Stack>
+                                    </Grid>
+                                    <Grid item xs={8} sm={0.2}></Grid>
+                                    <Grid item xs={8} sm={4.5}>
+                                        <FormControlLabel
+                                            control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={handleChange} />}
+                                            label="Visible"
+                                        />
                                     </Grid>
                                 </Grid>
                                 <Grid container spacing={0} sx={{ mt: 1 }}>

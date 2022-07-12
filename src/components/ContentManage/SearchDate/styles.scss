@@ -8,6 +8,12 @@
         align-items: center;
         margin: 0 10px;
     }
+
+    &.noneChecked {
+        .date-checked {
+            display: none;
+        }
+    }
 }
 
 .result__list--input {

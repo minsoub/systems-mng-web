@@ -1,0 +1,15 @@
+.board--content {
+    display: flex;
+    margin-bottom: 20px;
+    background-color: #fff;
+    td {
+        padding: 10px;
+    }
+    td:nth-child(1) {
+        width: 15%;
+        background-color: rgba(238, 238, 238, 0.7);
+    }
+    td:nth-child(2) {
+        width: 80%;
+    }
+}
