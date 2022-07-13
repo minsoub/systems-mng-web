@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import {
@@ -25,9 +26,9 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
-import RoleApi from 'apis/roles/roleapi';
-import SiteApi from 'apis/site/siteapi';
+import LogsApi from 'apis/servicelogs/index';
 import ErrorScreen from 'components/ErrorScreen';
+import moment from 'moment';
 
 const SiteLogPage = () => {
     let isSubmitting = false;
@@ -40,58 +41,60 @@ const SiteLogPage = () => {
             align: 'center'
         },
         {
-            field: 'name',
+            field: 'email',
             headerName: 'ID',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
-            field: 'type',
+            field: 'ip',
             headerName: '접속 IP',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
-            field: 'is_use',
+            field: 'menu_name',
             headerName: '메뉴',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
-            field: 'valid_start_date',
+            field: 'method',
             headerName: 'CRUD',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            width: 60
         },
         {
-            field: 'valid_end_date',
+            field: 'uri',
             headerName: 'URI',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            width: 200
         },
-        {
-            field: 'parameter',
-            headerName: 'Parameter',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
+        // {
+        //     field: 'parameter',
+        //     headerName: 'Parameter',
+        //     flex: 1,
+        //     headerAlign: 'center',
+        //     align: 'center'
+        // },
         {
             field: 'create_date',
-            headerName: '일시',
+            headerName: '발생일시',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         }
     ];
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { roleList, roleComboSearch }] = RoleApi();
-    const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
+    const { siteId } = useSelector((state) => state.auth);
+    const [responseData, requestError, loading, { logLrcSearch, logExcelDownload }] = LogsApi();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -119,6 +122,10 @@ const SiteLogPage = () => {
     useEffect(() => {
         //siteSearch(true, '');
         //roleList();
+        // 기본 날자 입력
+        setStartDate(moment().format('YYYY-MM-DD'));
+        setEndDate(moment().format('YYYY-MM-DD'));
+        searchClick();
     }, []);
 
     // transaction error 처리
@@ -134,64 +141,37 @@ const SiteLogPage = () => {
         }
     }, [requestError]);
 
-    // Combobox data transaction
-    // 사이트
-    useEffect(() => {
-        if (!resData) {
-            return;
-        }
-        switch (resData.transactionId) {
-            case 'siteList':
-                if (resData.data.data) {
-                    let siteData = resData.data.data;
-                    let list = [];
-                    siteData.map((site, index) => {
-                        const s = { id: site.id, name: site.name };
-                        console.log(s);
-                        list.push(s);
-                    });
-                    setSiteList(list);
-
-                    if (param_site_id) {
-                        console.log('==============called...here ');
-                        console.log(search_site_id);
-                        console.log(search_is_use);
-                        console.log(param_site_id);
-                        console.log(param_is_use);
-                        console.log('================');
-                        setSiteId(param_site_id);
-                        if (param_is_use === 'true') {
-                            setIsUse(true);
-                        } else {
-                            setIsUse(false);
-                        }
-                        roleSearch(param_is_use, search_site_id);
-                        //searchClick();
-                    }
-                }
-                break;
-            default:
-        }
-    }, [resData]);
-
     // Transaction Return
     useEffect(() => {
         if (!responseData) {
             return;
         }
         switch (responseData.transactionId) {
-            case 'roleList':
+            case 'logList':
                 if (responseData.data.data && responseData.data.data.length > 0) {
                     setDataGridRows(responseData.data.data);
                 } else {
                     setDataGridRows([]);
                 }
                 break;
-            case 'deleteData':
-                console.log('deleteData');
-                roleList();
+            case 'logExport':
+                if (responseData.data) {
+                    let res = responseData;
+                    console.log('res data....');
+                    console.log(res);
+                    console.log(res.fileName);
+                    const url = window.URL.createObjectURL(new Blob([res.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', '서비스로그.xlsx');
+                    link.style.cssText = 'display:none';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                }
                 break;
             default:
+                break;
         }
     }, [responseData]);
 
@@ -229,8 +209,7 @@ const SiteLogPage = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            let searchCondition = { site_id: site_id, is_use: is_use, type: type };
-
+            //let searchCondition = { site_id: site_id, is_use: is_use, type: type };
             //navigate(`/authmng/reg/${rowData.id}`);
         }
     };
@@ -242,8 +221,11 @@ const SiteLogPage = () => {
     const searchClick = () => {
         console.log('searchClick called...');
         //roleComboSearch(is_use, type, site_id);
+        logLrcSearch(start_date, end_date, keyword);
     };
-    const excelClick = () => {};
+    const excelClick = () => {
+        logExcelDownload(start_date, end_date, keyword);
+    };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>

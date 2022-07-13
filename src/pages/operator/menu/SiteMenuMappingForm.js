@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import {
@@ -81,6 +82,7 @@ function CloseSquare(props) {
 const SiteMenuMappingForm = () => {
     const navigate = useNavigate();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
+    const { siteId } = useSelector((state) => state.auth);
     const [
         responseData,
         requestError,
@@ -256,6 +258,11 @@ const SiteMenuMappingForm = () => {
                         list.push(s);
                     });
                     setSiteList(list);
+                    setInputs({
+                        ...inputs, // 기존 input 객체 복사
+                        site_id: siteId
+                    });
+                    menumngSearch(siteId, is_use);
                 }
                 break;
             default:
@@ -511,7 +518,7 @@ const SiteMenuMappingForm = () => {
                         <Grid container spacing={0} sx={{ mt: 0 }}>
                             <Grid item xs={8} sm={1}>
                                 <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Site 구분</Stack>
+                                    <Stack spacing={0}>Site 명</Stack>
                                 </FormControl>
                             </Grid>
                             <Grid item xs={8} sm={2.5}>
@@ -520,11 +527,13 @@ const SiteMenuMappingForm = () => {
                                         <MenuItem value="">
                                             <em>Choose a Site Type</em>
                                         </MenuItem>
-                                        {siteList.map((item, index) => (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
-                                            </MenuItem>
-                                        ))}
+                                        {siteList
+                                            .filter((item) => item.id === siteId)
+                                            .map((item, index) => (
+                                                <MenuItem key={index} value={item.id}>
+                                                    {item.name}
+                                                </MenuItem>
+                                            ))}
                                     </Select>
                                 </FormControl>
                             </Grid>

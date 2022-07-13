@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import './styles.scss';
 import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -28,6 +29,7 @@ import { makeStyles, withStyles } from '@mui/styles';
 import SvgIcon from '@mui/material/SvgIcon';
 import RoleApi from 'apis/roles/roleapi';
 import jwt from 'jsonwebtoken';
+import { activeSite } from 'store/reducers/auth';
 // ==============================|| MAIN LAYOUT - HEADER ||============================== //
 
 const useStyles = makeStyles({
@@ -55,6 +57,7 @@ function HomeIcon(props) {
 }
 const Header = ({ open, handleDrawerToggle }) => {
     const theme = useTheme();
+    const dispatch = useDispatch();
     const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
     const classes = useStyles();
     const iconBackColor = 'grey.100';
@@ -100,6 +103,7 @@ const Header = ({ open, handleDrawerToggle }) => {
         authData.siteId = e.target.value;
         localStorage.setItem('authenticated', JSON.stringify(authData)); // 토큰 재저장
         // menu reload
+        dispatch(activeSite({ siteId: e.target.value }));
     };
 
     // common header
@@ -178,7 +182,8 @@ const Header = ({ open, handleDrawerToggle }) => {
 
 Header.propTypes = {
     open: PropTypes.bool,
-    handleDrawerToggle: PropTypes.func
+    handleDrawerToggle: PropTypes.func,
+    changeSite: PropTypes.func
 };
 
 export default Header;

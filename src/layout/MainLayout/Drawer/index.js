@@ -17,8 +17,6 @@ const MainDrawer = ({ open, handleDrawerToggle, window, navigation }) => {
     const theme = useTheme();
     const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
 
-    console.log(`MainDrawer => ${navigation}`);
-
     // responsive drawer container
     const container = window !== undefined ? () => window().document.body : undefined;
 
@@ -63,7 +61,8 @@ MainDrawer.propTypes = {
     open: PropTypes.bool,
     handleDrawerToggle: PropTypes.func,
     window: PropTypes.object,
-    navigation: PropTypes.object
+    navigation: PropTypes.object,
+    site: PropTypes.string
 };
 
 export default MainDrawer;

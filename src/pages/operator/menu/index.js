@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import {
@@ -79,6 +80,8 @@ function CloseSquare(props) {
 
 const SiteMenuRegForm = () => {
     const navigate = useNavigate();
+    const { siteId } = useSelector((state) => state.auth);
+
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
     const [
         responseData,
@@ -143,9 +146,9 @@ const SiteMenuRegForm = () => {
     // TODO: onload
     useEffect(() => {
         // 세션 정보에서 사이트 아이디 정보를 가져온다.
-        setLoginStiteId('62a15f4ae4129b518b133129');
+        setLoginStiteId(siteId);
         // 디폴트 메뉴 조회
-        menumngSearch('62a15f4ae4129b518b133129', true);
+        menumngSearch(siteId, true);
     }, []);
 
     // transaction error 처리

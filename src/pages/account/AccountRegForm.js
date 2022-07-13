@@ -546,7 +546,7 @@ const AccountRegForm = () => {
         let roles = '';
         let found = 0;
         dataGridRegisterRows.map((data, idx) => {
-            if (found === 1) roles = roles + ',';
+            if (found !== 0) roles = roles + ',';
             roles = roles + data.id;
             found++;
         });

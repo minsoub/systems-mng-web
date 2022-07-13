@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -11,24 +12,33 @@ import NavGroup from './NavGroup';
 import { Box, Typography } from '@mui/material';
 import MenuMngApi from 'apis/menu/menumngapi';
 
-export default function FileSystemNavigator(navigation) {
+export default function FileSystemNavigator(navigation, site) {
     const navgate = useNavigate();
+    const { siteId } = useSelector((state) => state.auth);
     const [menuList, setMenuList] = useState([]);
     //const data = menuapi.findmenus({}).items;
     const [responseData, requestError, loading, { menumngSearch }] = MenuMngApi();
-
-    let authData = null;
-    if (localStorage.hasOwnProperty('authenticated')) {
-        //console.log(localStorage.getItem('authenticated'));
-        authData = JSON.parse(localStorage.getItem('authenticated'));
-    }
-    let site_id = authData.siteId; // login site id
+    const [site_id, setSiteId] = useState(siteId);
 
     //const data = menumngSearch(site_id, true);
     //  menuapi.findlist(site_id);
 
     useEffect(() => {
         console.log('menusearch called...');
+        // let local_site_id;
+        // if (!site) {
+        //     console.log('site is null...');
+        //     let authData = null;
+        //     if (localStorage.hasOwnProperty('authenticated')) {
+        //         //console.log(localStorage.getItem('authenticated'));
+        //         authData = JSON.parse(localStorage.getItem('authenticated'));
+        //     }
+        //     local_site_id = authData.siteId;
+        // } else {
+        //     local_site_id = site;
+        // }
+        // console.log(local_site_id);
+        // setSiteId(local_site_id);
         menumngSearch(site_id, true);
     }, []);
 
@@ -40,6 +50,14 @@ export default function FileSystemNavigator(navigation) {
             }
         }
     }, [requestError]);
+    useEffect(() => {
+        console.log(`useEffect site called..${siteId}`);
+        if (siteId) {
+            console.log('site => ' + siteId);
+            setSiteId(siteId);
+            menumngSearch(siteId, true);
+        }
+    }, [siteId]);
 
     useEffect(() => {
         if (!responseData) {

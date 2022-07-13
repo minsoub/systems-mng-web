@@ -282,6 +282,7 @@ const AuthMngRegForm = () => {
                     break;
                 case 'roleMenuSave':
                     if (roleRequestData.data.data) {
+                        console.log(roleRequestData.data.data);
                         alert('저장을 완료하였습니다!!!');
                         // 등록된 메뉴 리스트 조회
                         //menumngSearch(site_id, true);
@@ -501,55 +502,79 @@ const AuthMngRegForm = () => {
             return;
         }
         // 선택된 프로그램 목록을 트리의 메뉴의 프로그램 목록에 반영한다.
+        console.log(selectedProgramRows);
+        let menuList = menudata;
         let found = 0;
-        menudata.map((item, index) => {
+        menuList.map((item, index) => {
             if (item.id === selectedMenuId) {
-                item.program_id = selectedRoleRows;
+                item.program_list = selectedRoleRows;
                 found = 1;
             }
             item.child_menu_resources.map((child, idx) => {
                 if (child.id === selectedMenuId) {
-                    child.program_id = selectedProgramRows;
+                    child.program_list = selectedProgramRows;
                     found = 1;
                 }
                 child.child_menu_resources.map((sub, i) => {
                     if (sub.id === selectedMenuId) {
-                        sub.program_id = selectedProgramRows;
+                        sub.program_list = selectedProgramRows;
                         found = 1;
                     }
                 });
             });
         });
+        console.log(menuList);
+        setMenuData(menuList);
         if (found === 1) alert('적용되었습니다!!!');
     };
 
     // 저장 버튼 클릭
     const programMappingSaveClick = () => {
+        console.log(menudata);
         let saveData = [];
         if (menudata && confirm('저장하시겠습니까?')) {
             menudata.map((item, index) => {
                 // 1차
                 if (item.visible === true) {
-                    saveData.push({ menu_id: item.id, program_id: item.program_list });
+                    let program_list = [];
+                    if (item.program_list.length > 0) {
+                        item.program_list.map((pgm, idx) => {
+                            program_list.push(pgm.id);
+                        });
+                    }
+                    saveData.push({ menu_id: item.id, program_id: program_list });
                 }
                 if (item.child_menu_resources.length > 0) {
                     item.child_menu_resources.map((child, idx) => {
                         if (child.visible === true) {
-                            saveData.push({ menu_id: child.id, program_id: item.program_list });
+                            let program_list = [];
+                            if (child.program_list.length > 0) {
+                                child.program_list.map((pgm, k) => {
+                                    program_list.push(pgm.id);
+                                });
+                            }
+                            saveData.push({ menu_id: child.id, program_id: program_list });
                         }
 
                         if (child.child_menu_resources.length > 0) {
                             child.child_menu_resources.map((sub, i) => {
                                 if (sub.visible == true) {
-                                    saveData.push({ menu_id: sub.id, program_id: item.program_list });
+                                    let program_list = [];
+                                    if (sub.program_list.length > 0) {
+                                        sub.program_list.map((pgm, k) => {
+                                            program_list.push(pgm.id);
+                                        });
+                                    }
+                                    saveData.push({ menu_id: sub.id, program_id: program_list });
                                 }
                             });
                         }
                     });
                 }
             });
-            console.log(saveData);
-            roleMenuSave(roleId, saveData);
+            let requestData = { resources: saveData };
+            console.log(requestData);
+            roleMenuSave(role_id, requestData);
         }
     };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import {
@@ -84,6 +85,7 @@ const SiteAuthManagementPage = () => {
     ];
     const navigate = useNavigate();
     const { search_site_id, search_is_use } = useParams();
+    const { siteId } = useSelector((state) => state.auth);
     const [responseData, requestError, loading, { roleList, roleComboSearch }] = RoleApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
@@ -168,23 +170,8 @@ const SiteAuthManagementPage = () => {
                         list.push(s);
                     });
                     setSiteList(list);
-
-                    if (param_site_id) {
-                        console.log('==============called...here ');
-                        console.log(search_site_id);
-                        console.log(search_is_use);
-                        console.log(param_site_id);
-                        console.log(param_is_use);
-                        console.log('================');
-                        setSiteId(param_site_id);
-                        if (param_is_use === 'true') {
-                            setIsUse(true);
-                        } else {
-                            setIsUse(false);
-                        }
-                        roleSearch(param_is_use, search_site_id);
-                        //searchClick();
-                    }
+                    setSiteId(siteId);
+                    roleComboSearch(true, 'ADMIN', siteId);
                 }
                 break;
             default:
@@ -283,11 +270,13 @@ const SiteAuthManagementPage = () => {
                                         <MenuItem value="">
                                             <em>Choose a Site Type</em>
                                         </MenuItem>
-                                        {siteList.map((item, index) => (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
-                                            </MenuItem>
-                                        ))}
+                                        {siteList
+                                            .filter((item) => item.id === siteId)
+                                            .map((item, index) => (
+                                                <MenuItem key={index} value={item.id}>
+                                                    {item.name}
+                                                </MenuItem>
+                                            ))}
                                     </Select>
                                 </FormControl>
                             </Grid>

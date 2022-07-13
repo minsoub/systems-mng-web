@@ -24,6 +24,7 @@ const MainLayout = () => {
     const dispatch = useDispatch();
 
     const { drawerOpen } = useSelector((state) => state.menu);
+    const { siteId } = useSelector((state) => state.auth);
 
     // drawer toggler
     const [open, setOpen] = useState(drawerOpen);

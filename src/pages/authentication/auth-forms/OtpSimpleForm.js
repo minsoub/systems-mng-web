@@ -35,7 +35,7 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 import useAuthorized from 'apis/auth/auths';
-
+import { activeSite, activeEmail, activeToken, activeLogin, activeLoginDate } from 'store/reducers/auth';
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const OtpSimpleForm = ({ result }) => {
@@ -85,7 +85,12 @@ const OtpSimpleForm = ({ result }) => {
                         isLoggined: true,
                         loginDate: moment().format('YYYY.MM.DD HH:mm:ss')
                     };
-                    dispatch(setAuthData(authData));
+                    //dispatch(setAuthData(authData));
+                    dispatch(activeSite({ siteId: authData.siteId }));
+                    dispatch(activeEmail({ email: authData.email }));
+                    dispatch(activeToken({ accessToken: authData.accessToken }));
+                    dispatch(activeLogin({ isLoggined: authData.isLoggined }));
+                    dispatch(activeLoginDate({ loginDate: authData.loginDate }));
                     localStorage.setItem('authenticated', JSON.stringify(authData));
                     // alert("로그인을 완료하였습니다!!!")
                     navigate('/dashboard');

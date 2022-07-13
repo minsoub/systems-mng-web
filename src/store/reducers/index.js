@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 
 // project import
 import menu from './menu';
-import authsReducer from './auth';
+import auth from './auth';
 import projectSearchReducer from './projectsearch';
 import logSearchReducer from './logsearch';
 
@@ -11,7 +11,7 @@ import logSearchReducer from './logsearch';
 
 const reducers = combineReducers({
     menu,
-    authsReducer,
+    auth,
     projectSearchReducer,
     logSearchReducer
 });
