@@ -43,8 +43,11 @@ const FaqCategoryPage = Loadable(lazy(() => import('pages/lrc/faq/categorylist')
 const FaqContentsPage = Loadable(lazy(() => import('pages/lrc/faq/index')));
 const FaqRegForm = Loadable(lazy(() => import('pages/lrc/faq/faqreg')));
 
+// render - 고객보호센터 - 대시보드
+const CpcDashboard = Loadable(lazy(() => import('pages/cpc/dashboard')));
+
 // render - 고객보호센터 - 메인 관리
-const CpcMainContentsMng = Loadable(lazy(() => import('pages/cpc/main/contents/index')));
+const CpcMainContentsMng = Loadable(lazy(() => import('pages/cpc/main/contents')));
 
 // render - 고객보호센터 - 콘텐츠 관리
 const CpcDamageCaseMng = Loadable(lazy(() => import('pages/cpc/contents/DamageCaseMng')));
@@ -197,6 +200,11 @@ const MainRoutes = [
             {
                 path: 'service/log/:paramId',
                 element: <ServiceDetail />
+            },
+            // 고객보호센터 - 대시보드
+            {
+                path: 'cpc/dashboard',
+                element: <CpcDashboard />
             },
             // 고객보호센터 - 메인 관리
             {
