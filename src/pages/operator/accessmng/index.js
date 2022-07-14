@@ -2,29 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem
-} from '@mui/material';
+import { Button, FormControl, Grid, MenuItem, OutlinedInput, Select } from '@mui/material';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
 import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
 import AccountApis from 'apis/account/accountapis';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from '../../../components/HeaderTitle';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import InputLayout from '../../../components/Common/InputLayout';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import './styles.scss';
+import cx from 'classnames';
 
 const AccessMngPage = () => {
     let isSubmitting = false;
@@ -197,8 +185,8 @@ const AccessMngPage = () => {
             // 선택한 계정에 대해서 삭제를 수행한다.
             let deleteIds = '';
             let idx = 0;
-            selectedRows.map((data, Index) => {
-                if (idx > 0) deleteIdx = deleteIdx + '::';
+            selectedRows.map((data, index) => {
+                if (idx > 0) deleteIds = deleteIdx + '::';
                 deleteIds = deleteIds + data;
                 idx++;
             });
@@ -210,47 +198,39 @@ const AccessMngPage = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">사용자 접근관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 관리 > 사용자 접근관리</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="사용자 접근관리" menuStep01="사이트 관리" menuStep02="사용자 접근관리" />
+
                 <MainCard sx={{ mt: 1 }}>
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={2}>
-                                <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
-                                    <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
-                                        <MenuItem value="true">사용</MenuItem>
-                                        <MenuItem value="false">미사용</MenuItem>
-                                        <MenuItem value="">전체</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <FormControl sx={{ m: 0.5, minWidth: 300, maxHeight: 25 }} size="small">
-                                    <OutlinedInput
-                                        fullWidth
-                                        id="word"
-                                        type="text"
-                                        value={keyword}
-                                        name="word"
-                                        placeholder=""
-                                        onChange={keywordChanged}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.9}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
+                            <TopInputLayout>
+                                <InputLayout>
+                                    <FormControl sx={{ minWidth: 160 }} size="medium" className={cx('layout--blank')}>
+                                        <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
+                                            <MenuItem value="true">사용</MenuItem>
+                                            <MenuItem value="false">미사용</MenuItem>
+                                            <MenuItem value="">전체</MenuItem>
+                                        </Select>
+                                    </FormControl>
+
+                                    <FormControl sx={{ minWidth: 250 }} size="medium">
+                                        <OutlinedInput
+                                            fullWidth
+                                            id="word"
+                                            type="text"
+                                            value={keyword}
+                                            name="word"
+                                            placeholder=""
+                                            onChange={keywordChanged}
+                                        />
+                                    </FormControl>
+                                </InputLayout>
+
+                                <ButtonLayout>
                                     <Button
                                         disableElevation
                                         disabled={isSubmitting}
-                                        size="small"
+                                        size="medium"
                                         type="submit"
                                         variant="contained"
                                         color="primary"
@@ -258,14 +238,9 @@ const AccessMngPage = () => {
                                     >
                                         검색
                                     </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
                                     <Button
                                         disableElevation
-                                        size="small"
+                                        size="medium"
                                         type="submit"
                                         variant="contained"
                                         color="secondary"
@@ -273,14 +248,10 @@ const AccessMngPage = () => {
                                     >
                                         신규
                                     </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
+
                                     <Button
                                         disableElevation
-                                        size="small"
+                                        size="medium"
                                         type="submit"
                                         variant="contained"
                                         color="secondary"
@@ -288,14 +259,10 @@ const AccessMngPage = () => {
                                     >
                                         삭제
                                     </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
+
                                     <Button
                                         disableElevation
-                                        size="small"
+                                        size="medium"
                                         type="submit"
                                         variant="contained"
                                         color="secondary"
@@ -303,8 +270,8 @@ const AccessMngPage = () => {
                                     >
                                         리스트
                                     </Button>
-                                </FormControl>
-                            </Grid>
+                                </ButtonLayout>
+                            </TopInputLayout>
                         </Grid>
                     </Grid>
                 </MainCard>
