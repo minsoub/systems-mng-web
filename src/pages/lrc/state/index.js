@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import './styles.scss';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import {
@@ -24,6 +24,8 @@ import ErrorScreen from 'components/ErrorScreen';
 import StyledTtreeItem from 'components/TreeMenu/StyledTreeItem';
 import { StyledTableCell } from 'components/CustomTableCell';
 import TreeView from '@mui/lab/TreeView';
+import HeaderTitle from '../../../components/HeaderTitle';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
 
 function MinusSquare(props) {
     return (
@@ -53,7 +55,6 @@ function CloseSquare(props) {
 }
 
 const StatusRegForm = () => {
-    const navigate = useNavigate();
     const [resData, reqErr, resLoading, { statusSearch, statusInsert, statusUpdate }] = StatusApi();
 
     const [expanded, setExpanded] = useState([]);
@@ -328,17 +329,10 @@ const StatusRegForm = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
+        <Grid container rowSpacing={4.5} columnSpacing={2.75} className="stateMng">
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">상태값 관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 운영 &gt; 상태값 관리 &gt; 상태값 관리</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="상태값 관리" menuStep01="사이트 운영" menuStep02="상태값 관리" menuStep03="상태값 관리" />
+
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item md={3}>
                         <MainCard sx={{ mt: 2 }} content={false}>
@@ -360,162 +354,98 @@ const StatusRegForm = () => {
                             </Grid>
                         </MainCard>
                     </Grid>
+
                     <Grid item md={8.8}>
-                        <Stack spacing={2}>
-                            <MainCard sx={{ mt: 2, height: 620 }} content={false}>
-                                <Grid container spacing={0} sx={{ mt: 2 }}>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={8}>
-                                        <Typography variant="h4">상태값 등록</Typography>
-                                    </Grid>
-                                </Grid>
-                                <MainCard sx={{ mt: 2 }} content={false}>
-                                    <Grid container spacing={0} sx={{ mt: 1 }}>
-                                        <Grid item xs={8} sm={0.2}></Grid>
-                                        <Grid item xs={8} sm={8}>
-                                            <Table sx={{ width: 800 }} stickyHeader aria-label="simple table">
-                                                <TableBody>
-                                                    <TableRow>
-                                                        <StyledTableCell component="th" scope="row" style={{ width: 120 }}>
-                                                            상태명 <font color="red">*</font>
-                                                        </StyledTableCell>
-                                                        <TableCell component="th" scope="row" style={{ width: 380 }}>
-                                                            <Grid container spacing={0} sx={{ mt: 0 }}>
-                                                                <Grid item xs={8} sm={0.2}></Grid>
-                                                                <Grid item xs={8} sm={9}>
-                                                                    <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                                        <TextField
-                                                                            id="filled-hidden-label-small"
-                                                                            type="text"
-                                                                            size="small"
-                                                                            value={name}
-                                                                            name="name"
-                                                                            onBlur={handleBlur}
-                                                                            onChange={handleChange}
-                                                                            placeholder="Enter the State Name"
-                                                                            fullWidth
-                                                                        />
-                                                                    </FormControl>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                    <TableRow>
-                                                        <StyledTableCell component="th" scope="row" style={{ width: 120 }}>
-                                                            분류 위치 <font color="red">*</font>
-                                                        </StyledTableCell>
-                                                        <TableCell component="th" scope="row" style={{ width: 380 }}>
-                                                            <Grid container spacing={0} sx={{ mt: 0 }}>
-                                                                <Grid item xs={8} sm={0.2}></Grid>
-                                                                <Grid item xs={8} sm={9}>
-                                                                    <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                                        <TextField
-                                                                            id="outlined-multiline-static"
-                                                                            inputProps={{ readOnly: true }}
-                                                                            value={parent_code_name}
-                                                                            name="parent_code_name"
-                                                                        />
-                                                                    </FormControl>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                    <TableRow>
-                                                        <StyledTableCell component="th" scope="row" style={{ width: 120 }}>
-                                                            정렬 순서 <font color="red">*</font>
-                                                        </StyledTableCell>
-                                                        <TableCell component="th" scope="row" style={{ width: 380 }}>
-                                                            <Grid container spacing={0} sx={{ mt: 0 }}>
-                                                                <Grid item xs={8} sm={0.2}></Grid>
-                                                                <Grid item xs={8} sm={9}>
-                                                                    <FormControl sx={{ m: 0, maxWidth: 85, height: 25 }} fullWidth>
-                                                                        <TextField
-                                                                            id="filled-hidden-label-small"
-                                                                            type="number"
-                                                                            size="small"
-                                                                            value={order_no}
-                                                                            name="order_no"
-                                                                            onBlur={handleBlur}
-                                                                            onChange={handleChange}
-                                                                            placeholder="정렬 순서"
-                                                                            fullWidth
-                                                                        />
-                                                                    </FormControl>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                    <TableRow>
-                                                        <StyledTableCell component="th" scope="row" style={{ width: 120 }}>
-                                                            사용 여부 <font color="red">*</font>
-                                                        </StyledTableCell>
-                                                        <TableCell component="th" scope="row" style={{ width: 380 }}>
-                                                            <Grid container spacing={0} sx={{ mt: 0 }}>
-                                                                <Grid item xs={8} sm={0.2}></Grid>
-                                                                <Grid item xs={8} sm={9}>
-                                                                    <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                                        <RadioGroup
-                                                                            row
-                                                                            aria-labelledby="demo-row-radio-buttons-group-label"
-                                                                            name="use_yn"
-                                                                            value={use_yn}
-                                                                            onChange={handleChange}
-                                                                        >
-                                                                            <FormControlLabel
-                                                                                value="true"
-                                                                                control={<Radio />}
-                                                                                label="사용함"
-                                                                            />
-                                                                            <FormControlLabel
-                                                                                value="false"
-                                                                                control={<Radio />}
-                                                                                label="사용안함"
-                                                                            />
-                                                                        </RadioGroup>
-                                                                    </FormControl>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                </TableBody>
-                                            </Table>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container spacing={0} sx={{ mt: 1 }}>
-                                        <Grid item xs={8} sm={9.5}></Grid>
-                                        <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 1 }} size="small">
-                                                <Button
-                                                    disableElevation
-                                                    size="small"
-                                                    type="submit"
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    onClick={saveClick}
-                                                >
-                                                    저장
-                                                </Button>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={0.1}></Grid>
-                                        <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 1 }} size="small">
-                                                <Button
-                                                    disableElevation
-                                                    size="small"
-                                                    type="submit"
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    onClick={cancelClick}
-                                                >
-                                                    취소
-                                                </Button>
-                                            </FormControl>
-                                        </Grid>
-                                    </Grid>
-                                </MainCard>
-                            </MainCard>
-                        </Stack>
+                        <MainCard sx={{ mt: 2, height: 620 }} content={false} className="stateSubmit">
+                            <Typography variant="h4" className="title">
+                                상태값 등록
+                            </Typography>
+
+                            <table>
+                                <tr>
+                                    <th>
+                                        상태명 <font color="red">*</font>
+                                    </th>
+                                    <td>
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="text"
+                                            size="small"
+                                            value={name}
+                                            name="name"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            fullWidth
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        분류 위치 <font color="red">*</font>
+                                    </th>
+                                    <td>
+                                        <TextField
+                                            id="outlined-multiline-static"
+                                            inputProps={{ readOnly: true }}
+                                            value={parent_code_name}
+                                            name="parent_code_name"
+                                            size="small"
+                                            fullWidth
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        정렬 순서 <font color="red">*</font>
+                                    </th>
+                                    <td>
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="number"
+                                            size="small"
+                                            value={order_no}
+                                            name="order_no"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            fullWidth
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        사용 여부 <font color="red">*</font>
+                                    </th>
+                                    <td>
+                                        <RadioGroup
+                                            row
+                                            aria-labelledby="demo-row-radio-buttons-group-label"
+                                            name="use_yn"
+                                            value={use_yn}
+                                            onChange={handleChange}
+                                        >
+                                            <FormControlLabel value="true" control={<Radio />} label="사용함" />
+                                            <FormControlLabel value="false" control={<Radio />} label="사용안함" />
+                                        </RadioGroup>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <ButtonLayout buttonName="rightButton">
+                                <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                                    저장
+                                </Button>
+                                <Button
+                                    disableElevation
+                                    size="medium"
+                                    type="submit"
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={cancelClick}
+                                >
+                                    취소
+                                </Button>
+                            </ButtonLayout>
+                        </MainCard>
                     </Grid>
                 </Grid>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
