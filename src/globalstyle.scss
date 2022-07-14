@@ -135,6 +135,30 @@ legend {
 .css-h6vcjs-MuiFormControlLabel-root {
     margin-left: 0;
 }
+// table이나 기본적인 표
+.css-15oiqrv-MuiPaper-root-MuiCard-root,
+.css-hjn8fk-MuiPaper-root-MuiCard-root,
+.css-1d9nlt3-MuiPaper-root-MuiCard-root,
+.css-xiy5o3-MuiPaper-root-MuiCard-root,
+.css-13mu4hp-MuiPaper-root-MuiCard-root,
+.css-1dxjlht-MuiPaper-root-MuiCard-root {
+    border-radius: 2px !important;
+}
+
+// input, select 레이아웃
+.css-1a7pcy6-MuiInputBase-root-MuiOutlinedInput-root,
+.css-12wp4uq-MuiInputBase-root-MuiOutlinedInput-root,
+.css-1uqqosz-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+    border-radius: 2px !important;
+}
+
+// 모든 버튼
+button,
+html [type='button'],
+[type='reset'],
+[type='submit'] {
+    border-radius: 2px !important;
+}
 
 // 1024 해상도에서도 width Full로 차도록
 @media (min-width: 1024px) {

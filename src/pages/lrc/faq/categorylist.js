@@ -28,6 +28,9 @@ import { Input } from 'antd';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import CategoryApis from 'apis/lrc/faq/categoryapi';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from '../../../components/HeaderTitle';
+import TopInputLayout from "../../../components/Common/TopInputLayout";
+import ButtonLayout from "../../../components/Common/ButtonLayout";
 
 const FaqCategoryPage = () => {
     let isSubmitting = false;
@@ -252,64 +255,27 @@ const FaqCategoryPage = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">카테고리 관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 운영 > FAQ 관리 > 카테고리 관리</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="카테고리 관리" menuStep01="사이트 운영" menuStep02="FAQ 관리" menuStep03="카테고리 관리" />
+
                 <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={2}>
-                                <FormControl sx={{ m: 0, minWidth: 200 }} size="small">
-                                    <Select
-                                        name="search_language"
-                                        label="계얄타입"
-                                        value={search_language}
-                                        onChange={searchLanguageChanged}
-                                    >
-                                        <MenuItem value="KO">국문</MenuItem>
-                                        <MenuItem value="EN">영문</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={8.3}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={searchClick}
-                                    >
-                                        검색
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={newClick}
-                                    >
-                                        신규
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                        </Grid>
-                    </Grid>
+                    <TopInputLayout>
+                        <FormControl size="medium" sx={{ minWidth: 250 }}>
+                            <Select name="search_language" label="계얄타입" value={search_language} onChange={searchLanguageChanged}>
+                                <MenuItem value="KO">국문</MenuItem>
+                                <MenuItem value="EN">영문</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
+                                검색
+                            </Button>
+
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
+                                신규
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
                 </MainCard>
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <DefaultDataGrid

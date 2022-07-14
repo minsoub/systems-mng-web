@@ -562,15 +562,8 @@ const AccountRegForm = () => {
         <>
             <Grid container rowSpacing={4.5} columnSpacing={2.75}>
                 <Grid item xs={12} md={7} lg={12}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid item>
-                            <Typography variant="h3">계정 관리</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography variant="h6">통합 시스템관리 &gt; 계정 관리 &gt; 계정 등록</Typography>
-                        </Grid>
-                        <Grid container spacing={2}></Grid>
-                    </Grid>
+                    <HeaderTitle titleNm="계정 관리" menuStep01="계정 등록" />
+
                     <MainCard sx={{ mt: 2 }}>
                         <Grid container spacing={3}>
                             <Grid item xs={8} sm={1.5}>
