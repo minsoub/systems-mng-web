@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import './styles.scss';
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -58,6 +59,7 @@ function HomeIcon(props) {
 const Header = ({ open, handleDrawerToggle }) => {
     const theme = useTheme();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
     const classes = useStyles();
     const iconBackColor = 'grey.100';
@@ -104,6 +106,12 @@ const Header = ({ open, handleDrawerToggle }) => {
         localStorage.setItem('authenticated', JSON.stringify(authData)); // 토큰 재저장
         // menu reload
         dispatch(activeSite({ siteId: e.target.value }));
+        if (authData.siteId === '62a15f4ae4129b518b133128') {
+            // 투자보호
+            navigate('/cpcdashboard');
+        } else {
+            navigate('/lrcdashboard');
+        }
     };
 
     // common header

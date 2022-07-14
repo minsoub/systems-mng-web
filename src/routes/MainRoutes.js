@@ -105,6 +105,8 @@ const MenuMappingForm = Loadable(lazy(() => import('pages/menumng/MenuMappingFor
 
 const AuthManagementPage = Loadable(lazy(() => import('pages/authmng/index')));
 const AuthMngRegForm = Loadable(lazy(() => import('pages/authmng/AuthMngReg.js')));
+
+const LrcDashboard = Loadable(lazy(() => import('pages/lrc/dashboard/index')));
 // ==============================|| MAIN ROUTING ||==============================  //
 
 const MainRoutes = [
@@ -138,6 +140,10 @@ const MainRoutes = [
         path: '/',
         element: <MainLayout />,
         children: [
+            {
+                path: 'lrcdashboard',
+                element: <LrcDashboard />
+            },
             {
                 path: 'dashboard',
                 element: <DashboardDefault />

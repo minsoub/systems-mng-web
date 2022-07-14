@@ -17,7 +17,13 @@ import {
     Select,
     MenuItem,
     FormControlLabel,
-    Checkbox
+    Checkbox,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
 } from '@mui/material';
 import MainCard from 'components/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
@@ -255,33 +261,66 @@ const ProgramManagementPage = () => {
                     <Grid container spacing={2}></Grid>
                 </Grid>
                 <MainCard sx={{ mt: 1 }}>
-                    <Stack direction="row" spacing={1}>
-                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                            <Stack spacing={0}>Site Name</Stack>
-                        </FormControl>
-                        <FormControl sx={{ m: 0, minWidth: 200, minHeight: 30 }} size="small">
-                            <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
-                                <MenuItem value="">
-                                    <em>Choose a Site Type</em>
-                                </MenuItem>
-                                {siteList.map((item, index) => (
-                                    <MenuItem key={index} value={item.id}>
-                                        {item.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <FormControlLabel
-                            control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
-                            label="사용함"
-                        />
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={searchClick}>
-                            검색
-                        </Button>
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={newClick}>
-                            등록
-                        </Button>
-                    </Stack>
+                    <Table
+                        fixedheader={false}
+                        style={{ border: 1, width: '100%', tableLayout: 'auto' }}
+                        stickyHeader
+                        aria-label="simple table"
+                    >
+                        <TableBody>
+                            <TableRow>
+                                <TableCell style={{ width: '8%' }} align="center">
+                                    Site Name
+                                </TableCell>
+                                <TableCell style={{ width: '15%' }} align="center">
+                                    <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
+                                        <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
+                                            <MenuItem value="">
+                                                <em>Choose a Site Type</em>
+                                            </MenuItem>
+                                            {siteList.map((item, index) => (
+                                                <MenuItem key={index} value={item.id}>
+                                                    {item.name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </TableCell>
+                                <TableCell style={{ width: '10%' }} align="center">
+                                    <FormControlLabel
+                                        control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
+                                        label="사용함"
+                                    />
+                                </TableCell>
+                                <TableCell style={{ width: '65%' }} align="right">
+                                    <FormControl sx={{ m: 1 }} size="small">
+                                        <Button
+                                            disableElevation
+                                            size="small"
+                                            type="submit"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={searchClick}
+                                        >
+                                            검색
+                                        </Button>
+                                    </FormControl>
+                                    <FormControl sx={{ m: 1 }} size="small">
+                                        <Button
+                                            disableElevation
+                                            size="small"
+                                            type="submit"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={newClick}
+                                        >
+                                            등록
+                                        </Button>
+                                    </FormControl>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
                 </MainCard>
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <DefaultDataGrid

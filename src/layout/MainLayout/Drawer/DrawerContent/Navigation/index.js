@@ -11,9 +11,11 @@ import SvgIcon from '@mui/material/SvgIcon';
 import NavGroup from './NavGroup';
 import { Box, Typography } from '@mui/material';
 import MenuMngApi from 'apis/menu/menumngapi';
+import { activeSite, activeEmail, activeToken, activeLogin, activeLoginDate } from 'store/reducers/auth';
 
 export default function FileSystemNavigator(navigation, site) {
     const navgate = useNavigate();
+    const dispatch = useDispatch();
     const { siteId } = useSelector((state) => state.auth);
     const [menuList, setMenuList] = useState([]);
     //const data = menuapi.findmenus({}).items;
@@ -26,19 +28,19 @@ export default function FileSystemNavigator(navigation, site) {
     useEffect(() => {
         console.log('menusearch called...');
         // let local_site_id;
-        // if (!site) {
-        //     console.log('site is null...');
-        //     let authData = null;
-        //     if (localStorage.hasOwnProperty('authenticated')) {
-        //         //console.log(localStorage.getItem('authenticated'));
-        //         authData = JSON.parse(localStorage.getItem('authenticated'));
-        //     }
-        //     local_site_id = authData.siteId;
-        // } else {
-        //     local_site_id = site;
-        // }
-        // console.log(local_site_id);
-        // setSiteId(local_site_id);
+        if (!siteId) {
+            console.log('site is is null => reload');
+            if (localStorage.hasOwnProperty('authenticated')) {
+                let authData = JSON.parse(localStorage.getItem('authenticated'));
+                dispatch(activeSite({ siteId: authData.siteId }));
+                dispatch(activeEmail({ email: authData.email }));
+                dispatch(activeToken({ accessToken: authData.accessToken }));
+                dispatch(activeLogin({ isLoggined: authData.isLoggined }));
+                dispatch(activeLoginDate({ loginDate: authData.loginDate }));
+            } else {
+                navgate('/');
+            }
+        }
         menumngSearch(site_id, true);
     }, []);
 
@@ -47,6 +49,11 @@ export default function FileSystemNavigator(navigation, site) {
             if (requestError.result === 'FAIL') {
                 console.log('error requestError');
                 console.log(requestError);
+                if (requestError.error.code === 909) {
+                    // token expire
+                    alert('토큰이 만료되었습니다!!!');
+                    navgate('/');
+                }
             }
         }
     }, [requestError]);

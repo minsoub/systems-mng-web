@@ -219,9 +219,9 @@ const AuthLogin = () => {
                                 {/* <Divider>
                                     <Typography variant="caption"> Login with</Typography>
                                 </Divider> */}
-                                <Divider>
+                                {/* <Divider>
                                     [<a href="/dashboard">로그인 테스트</a>]
-                                </Divider>
+                                </Divider> */}
                             </Grid>
                             {/* <Grid item xs={12}>
                                 <FirebaseSocial />

@@ -116,7 +116,12 @@ const ProfileUpdateForm = () => {
                 break;
             case 'updatePasswordData':
                 alert('패스워드 수정을 완료하였습니다!!!');
-                navigate('/dashboard');
+                if (authData.siteId === '62a15f4ae4129b518b133128') {
+                    // 투자보호
+                    navigate('/cpcdashboard');
+                } else {
+                    navigate('/lrcdashboard');
+                }
             default:
         }
     }, [responseData]);
@@ -139,7 +144,12 @@ const ProfileUpdateForm = () => {
 
     // delete
     const cancelClick = () => {
-        navigate('/dashboard');
+        if (authData.siteId === '62a15f4ae4129b518b133128') {
+            // 투자보호
+            navigate('/cpcdashboard');
+        } else {
+            navigate('/lrcdashboard');
+        }
     };
 
     const saveClick = () => {

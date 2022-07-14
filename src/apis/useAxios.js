@@ -33,6 +33,7 @@ const useAxios = () => {
             let site_id = authData.siteId; //siteId;
             // Token 처리
             axiosInstance.defaults.headers.Authorization = Authorization;
+            axiosInstance.defaults.headers.my_site_id = site_id;
             // site_id 처리
             //axiosInstance.defaults.headers.site_id = site_id;
             /*

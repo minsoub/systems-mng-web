@@ -1,80 +1,41 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link as RouterLink, Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { setAuthData } from '../../../store/reducers/auth';
+import { useDispatch } from 'react-redux';
 import moment from 'moment';
-// material-ui
-import {
-    Button,
-    Checkbox,
-    Divider,
-    FormControlLabel,
-    FormHelperText,
-    Grid,
-    Link,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    OutlinedInput,
-    Stack,
-    Typography
-} from '@mui/material';
-
-// third party
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-
-// project import
-import FirebaseSocial from './FirebaseSocial';
-import AnimateButton from 'components/@extended/AnimateButton';
-
-// assets
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-
+import { Button, Grid, InputLabel, Stack, Typography } from '@mui/material';
 import useAuthorized from 'apis/auth/auths';
 import { Box } from '../../../../node_modules/@mui/material/index';
-import { activeSite, activeEmail, activeToken, activeLogin, activeLoginDate } from 'store/reducers/auth';
-// ============================|| FIREBASE - LOGIN ||============================ //
+import { activeEmail, activeLogin, activeLoginDate, activeSite, activeToken } from 'store/reducers/auth';
+import OtpInput from 'react-otp-input';
+import { useNavigate } from 'react-router-dom';
+import '../styles.scss';
+import OtpQrCode from 'components/AuthLogin/OtpQrCode';
 
 const OtpForm = ({ result }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const [checked, setChecked] = useState(false);
-
-    const [showPassword, setShowPassword] = useState(false);
+    const [otpNumber, setOtpNumber] = useState('');
+    const [errMsg, setErrMsg] = useState('');
 
     const [responseData, requestError, loading, { actionOtp }] = useAuthorized();
 
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-        console.log('handleMouseDownPassword');
-    };
-
-    // transaction error 처리
+    // 로그인 error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('>> requestError <<');
-            console.log(requestError);
+            console.log('requestError', requestError);
             alert('error');
+            setErrMsg('OTP 번호를 다시 입력해주세요');
         }
     }, [requestError]);
 
-    // Transaction Return
+    // 로그인 성공
     useEffect(() => {
         if (!responseData) {
             return;
         }
         switch (responseData.transactionId) {
             case 'otplogin':
-                console.log('otplogin transaction id => ');
-                console.log(responseData);
+                console.log('otplogin transaction id => ', responseData);
                 if (responseData.data) {
                     // Token 정보 저장
                     const authData = {
@@ -91,249 +52,109 @@ const OtpForm = ({ result }) => {
                     dispatch(activeLogin({ isLoggined: authData.isLoggined }));
                     dispatch(activeLoginDate({ loginDate: authData.loginDate }));
                     localStorage.setItem('authenticated', JSON.stringify(authData));
-                    // alert("로그인을 완료하였습니다!!!")
-                    navigate('/dashboard');
+                    if (authData.siteId === '62a15f4ae4129b518b133128') {
+                        // 투자보호
+                        navigate('/cpcdashboard');
+                    } else {
+                        navigate('/lrcdashboard');
+                    }
                 }
                 break;
             default:
         }
     }, [responseData]);
 
+    // 취소
     const CancelClick = () => {
+        e.preventDefault();
         if (confirm('취소하시겠습니까?')) {
             navigate('/login');
         }
     };
 
+    // 입력시 변경
+    const handleChange = (otpNumber) => {
+        setOtpNumber(otpNumber);
+        console.log('otpNumber', otpNumber);
+    };
+
+    // 확인 버튼 클릭 시
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            let data = {
+                site_id: result.site_id,
+                otp_no: otpNumber,
+                token: result.token,
+                encode_key: result.otp_info.encode_key
+            };
+            actionOtp(data);
+        } catch (err) {
+            console.log(err);
+            setErrMsg('OTP 번호를 다시 입력해주세요');
+        }
+    };
+
+    const keyPress = (e) => {
+        console.log(e);
+        console.log(otpNumber.length);
+        if (e.key === 'Enter' && otpNumber.length === 6) {
+            onSubmit();
+        }
+    };
+
     return (
-        <>
-            <Formik
-                initialValues={{
-                    otp1: '',
-                    otp2: '',
-                    otp3: '',
-                    otp4: '',
-                    otp5: '',
-                    otp6: '',
-                    submit: null
-                }}
-                validationSchema={Yup.object().shape({
-                    otp1: Yup.number().max(9).required('Otp Number is required'),
-                    otp2: Yup.number().max(9).required('Otp Number is required'),
-                    otp3: Yup.number().max(9).required('Otp Number is required'),
-                    otp4: Yup.number().max(9).required('Otp Number is required'),
-                    otp5: Yup.number().max(9).required('Otp Number is required'),
-                    otp6: Yup.number().max(9).required('Otp Number is required')
-                })}
-                onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-                    try {
-                        setStatus({ success: false });
-                        setSubmitting(true);
-                        console.log(values);
-                        let otpNo = '';
-                        let data = {
-                            site_id: result.site_id,
-                            otp_no: otpNo.concat(values.otp1, values.otp2, values.otp3, values.otp4, values.otp5, values.otp6),
-                            token: result.token,
-                            encode_key: result.otp_info.encode_key
-                        };
-                        console.log(data);
-                        actionOtp(data);
-                        console.log(values);
-                    } catch (err) {
-                        console.log(err);
-                        setStatus({ success: false });
-                        setErrors({ submit: err.message });
-                        setSubmitting(false);
-                    }
-                }}
-            >
-                {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
-                    <form noValidate onSubmit={handleSubmit}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>
-                                    <Typography variant="h5">1. OTP 앱을 설치해 주세요</Typography>
-                                    <InputLabel>App Store, Google Play Store에서 Google Authenticator를 다운로드 합니다.</InputLabel>
-                                </Stack>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>
-                                    <Typography variant="h5">2. 바코드를 스캔하고 앱에 표시된 6자리 코드를 입력해 주세요.</Typography>
-                                    <InputLabel>설치된 앱에서 "+" 버튼을 누르고 QR 코드 스캔 메뉴를 통해 바코드를 스캔합니다.</InputLabel>
-                                </Stack>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>
-                                    <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Grid item xs={8} sm={1.7}></Grid>
-                                        <Grid item xs={8} sm={5.0}>
-                                            <Box
-                                                component="img"
-                                                sx={{
-                                                    height: 300,
-                                                    width: 320,
-                                                    maxHeight: { xs: 300, md: 320 },
-                                                    maxWidth: { xs: 300, md: 320 }
-                                                }}
-                                                alt="QR Code"
-                                                src={result.otp_info.url}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.1}></Grid>
-                                    </Grid>
-                                </Stack>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Stack direction="row" spacing={1}>
-                                    <OutlinedInput
-                                        fullWidth
-                                        error={Boolean(touched.otp1 && errors.otp1)}
-                                        id="-password-login"
-                                        type="password"
-                                        value={values.otp1}
-                                        name="otp1"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder=""
-                                    />
-                                    <OutlinedInput
-                                        fullWidth
-                                        error={Boolean(touched.otp2 && errors.otp2)}
-                                        id="-password-login"
-                                        type="password"
-                                        value={values.otp2}
-                                        name="otp2"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder=""
-                                    />
-                                    <OutlinedInput
-                                        fullWidth
-                                        error={Boolean(touched.otp3 && errors.otp3)}
-                                        id="-password-login"
-                                        type="password"
-                                        value={values.otp3}
-                                        name="otp3"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder=""
-                                    />
-                                    <OutlinedInput
-                                        fullWidth
-                                        error={Boolean(touched.otp4 && errors.otp4)}
-                                        id="-password-login"
-                                        type="password"
-                                        value={values.otp4}
-                                        name="otp4"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder=""
-                                    />
-                                    <OutlinedInput
-                                        fullWidth
-                                        error={Boolean(touched.otp5 && errors.otp5)}
-                                        id="-password-login"
-                                        type="password"
-                                        value={values.otp5}
-                                        name="otp5"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder=""
-                                    />
-                                    <OutlinedInput
-                                        fullWidth
-                                        error={Boolean(touched.otp6 && errors.otp6)}
-                                        id="-password-login"
-                                        type="password"
-                                        value={values.otp6}
-                                        name="otp6"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder=""
-                                        inputProps={{ maxLength: 1 }}
-                                    />
-                                </Stack>
-                                <Stack>
-                                    {touched.otp1 && errors.otp1 && (
-                                        <FormHelperText error id="standard-weight-helper-text-password-login">
-                                            {errors.otp1}
-                                        </FormHelperText>
-                                    )}
-                                    {touched.otp2 && errors.otp2 && (
-                                        <FormHelperText error id="standard-weight-helper-text-password-login">
-                                            {errors.otp2}
-                                        </FormHelperText>
-                                    )}
-                                    {touched.otp3 && errors.otp3 && (
-                                        <FormHelperText error id="standard-weight-helper-text-password-login">
-                                            {errors.otp3}
-                                        </FormHelperText>
-                                    )}
-                                    {touched.otp4 && errors.otp4 && (
-                                        <FormHelperText error id="standard-weight-helper-text-password-login">
-                                            {errors.otp4}
-                                        </FormHelperText>
-                                    )}
-                                    {touched.otp5 && errors.otp5 && (
-                                        <FormHelperText error id="standard-weight-helper-text-password-login">
-                                            {errors.otp5}
-                                        </FormHelperText>
-                                    )}
-                                    {touched.otp6 && errors.otp6 && (
-                                        <FormHelperText error id="standard-weight-helper-text-password-login">
-                                            {errors.otp6}
-                                        </FormHelperText>
-                                    )}
-                                </Stack>
-                            </Grid>
-                            {errors.submit && (
-                                <Grid item xs={12}>
-                                    <FormHelperText error>{errors.submit}</FormHelperText>
-                                </Grid>
-                            )}
-                            <Grid item xs={12}>
-                                <Grid container spacing={0} sx={{ mt: 0 }}>
-                                    <Grid item xs={8} sm={1.1}></Grid>
-                                    <Grid item xs={8} sm={5.0}>
-                                        <AnimateButton>
-                                            <Button
-                                                disableElevation
-                                                disabled={isSubmitting}
-                                                fullWidth
-                                                size="large"
-                                                type="button"
-                                                variant="contained"
-                                                color="secondary"
-                                                onClick={CancelClick}
-                                            >
-                                                취소하기
-                                            </Button>
-                                        </AnimateButton>
-                                    </Grid>
-                                    <Grid item xs={8} sm={0.1}></Grid>
-                                    <Grid item xs={8} sm={5.0}>
-                                        <AnimateButton>
-                                            <Button
-                                                disableElevation
-                                                disabled={isSubmitting}
-                                                fullWidth
-                                                size="large"
-                                                type="submit"
-                                                variant="contained"
-                                                color="primary"
-                                            >
-                                                인증하기
-                                            </Button>
-                                        </AnimateButton>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </form>
-                )}
-            </Formik>
-        </>
+        <Grid container spacing={3}>
+            <OtpQrCode />
+
+            <div className="qrcodeBox">
+                <Box
+                    component="img"
+                    sx={{
+                        height: 300,
+                        width: 320,
+                        maxHeight: { xs: 300, md: 320 },
+                        maxWidth: { xs: 300, md: 320 }
+                    }}
+                    alt="QR Code"
+                    src={result.otp_info.url}
+                />
+            </div>
+
+            {/* OTP 번호 입력란 */}
+            <div className="otpAction">
+                <OtpInput
+                    value={otpNumber}
+                    name="otpNumber"
+                    isInputNum={true}
+                    onChange={handleChange}
+                    numInputs={6}
+                    className="otpNumber"
+                    onKeyPress={keyPress}
+                />
+                {/* 에러 메시지 - OTP 번호가 일치하지 않을 때 */}
+                <span className="errorMsg">{errMsg}</span>
+            </div>
+
+            <Grid item xs={12}>
+                <Button disableElevation fullWidth size="large" type="submit" variant="contained" color="secondary" onClick={CancelClick}>
+                    취소
+                </Button>
+                <Button
+                    disableElevation
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={!(otpNumber.length === 6)}
+                    onClick={onSubmit}
+                >
+                    인증하기
+                </Button>
+            </Grid>
+        </Grid>
     );
 };
 

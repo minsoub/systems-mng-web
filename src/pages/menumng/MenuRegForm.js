@@ -607,7 +607,7 @@ const MenuRegForm = () => {
                     >
                         <TableBody>
                             <TableRow>
-                                <TableCell style={{ width: '110' }} align="center">
+                                <TableCell style={{ width: '10%' }} align="center">
                                     Site 구분
                                 </TableCell>
                                 <TableCell style={{ width: '15%' }} align="center">
