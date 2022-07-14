@@ -51,6 +51,7 @@ import ForumIcon from '@mui/icons-material/Forum';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import menu from 'store/reducers/menu';
+import HeaderTitle from '../../components/HeaderTitle';
 
 function MinusSquare(props) {
     return (
@@ -506,15 +507,8 @@ const MenuMappingForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">프로그램 연결</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">통합시스템 관리 &gt; 메뉴 관리 &gt; 프로그램 연결</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="프로그램 연결" menuStep01="통합시스템 관리" menuStep02="메뉴 관리" menuStep03="프로그램 연결" />
+
                 <MainCard sx={{ mt: 1 }}>
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid container spacing={0} sx={{ mt: 0 }}>

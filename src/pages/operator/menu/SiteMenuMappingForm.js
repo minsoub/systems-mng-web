@@ -1,37 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Paper,
-    IconButton
-} from '@mui/material';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Paper, Select, Stack, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
 import SvgIcon from '@mui/material/SvgIcon';
-import { Input } from 'antd';
-import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
 import SiteApi from 'apis/site/siteapi';
 import MenuMngApi from 'apis/menu/menumngapi';
@@ -39,18 +14,12 @@ import ProgramApi from 'apis/programs/programapi';
 import ErrorScreen from 'components/ErrorScreen';
 import CustomTreeItem from 'components/TreeMenu/CustomTreeItem';
 import TreeView from '@mui/lab/TreeView';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem from '@mui/lab/TreeItem';
-
-import MailIcon from '@mui/icons-material/Mail';
-import Label from '@mui/icons-material/Label';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import InfoIcon from '@mui/icons-material/Info';
-import ForumIcon from '@mui/icons-material/Forum';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import menu from 'store/reducers/menu';
+import HeaderTitle from '../../../components/HeaderTitle';
+import cx from 'classnames';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import InputLayout from '../../../components/Common/InputLayout';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import './styles.scss';
 
 function MinusSquare(props) {
     return (
@@ -504,60 +473,42 @@ const SiteMenuMappingForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">프로그램 연결</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 관리 &gt; 메뉴 관리 &gt; 프로그램 연결</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="프로그램 연결" menuStep01="사이트 관리" menuStep02="메뉴 관리" menuStep03="프로그램 연결" />
+
                 <MainCard sx={{ mt: 1 }}>
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Site 명</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
-                                    <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
-                                        <MenuItem value="">
-                                            <em>Choose a Site Type</em>
-                                        </MenuItem>
-                                        {siteList
-                                            .filter((item) => item.id === siteId)
-                                            .map((item, index) => (
-                                                <MenuItem key={index} value={item.id}>
-                                                    {item.name}
-                                                </MenuItem>
-                                            ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControlLabel
-                                    control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={handleChange} />}
-                                    label="사용함"
-                                />
-                            </Grid>
-                            <Grid item xs={8} sm={6.9}></Grid>
-                            <Grid item xs={8} sm={0.6}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={searchClick}
-                                    >
+                            <TopInputLayout>
+                                <InputLayout>
+                                    <Stack spacing={10} className={cx('borderTitle')}>
+                                        사이트명
+                                    </Stack>
+                                    <FormControl sx={{ minWidth: 250 }} size="medium">
+                                        <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
+                                            <MenuItem value="">
+                                                <em>Choose a Site Type</em>
+                                            </MenuItem>
+                                            {siteList
+                                                .filter((item) => item.id === siteId)
+                                                .map((item, index) => (
+                                                    <MenuItem key={index} value={item.id}>
+                                                        {item.name}
+                                                    </MenuItem>
+                                                ))}
+                                        </Select>
+                                    </FormControl>
+
+                                    <FormControlLabel
+                                        control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={handleChange} />}
+                                        label="사용함"
+                                    />
+                                </InputLayout>
+                                <ButtonLayout>
+                                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
                                         검색
                                     </Button>
-                                </FormControl>
-                            </Grid>
+                                </ButtonLayout>
+                            </TopInputLayout>
                         </Grid>
                     </Grid>
                 </MainCard>
@@ -570,7 +521,7 @@ const SiteMenuMappingForm = () => {
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 620, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 694, flexGrow: 1, overflowY: 'auto' }}
                                 //expanded={expanded}
                                 //selected={selected}
                                 onNodeToggle={handleToggle}
@@ -581,121 +532,92 @@ const SiteMenuMappingForm = () => {
                         </MainCard>
                     </Grid>
                     <Grid item md={8.8}>
-                        <Stack spacing={2}>
-                            <MainCard sx={{ mt: 2, height: 620 }} content={false}>
-                                <Grid container spacing={0} sx={{ mt: 2 }}>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={2.8}>
-                                        <Stack spacing={5} sx={{ mt: 0 }} justifyContent="left" alignItems="left">
-                                            <Item>연결된 프로그램 목록</Item>
-                                        </Stack>
-                                    </Grid>
-                                    <Grid item xs={8} sm={8.0}></Grid>
-                                    <Grid item xs={8} sm={1}>
-                                        <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                            <Button
-                                                disableElevation
-                                                size="small"
-                                                type="button"
-                                                variant="contained"
-                                                color="secondary"
-                                                onClick={minusRegister}
-                                            >
-                                                Remove
-                                            </Button>
-                                        </FormControl>
-                                    </Grid>
+                        <MainCard sx={{ mt: 2 }}>
+                            <TopInputLayout>
+                                <Item>연결된 프로그램 목록</Item>
+
+                                <ButtonLayout>
+                                    <Button disableElevation size="medium" type="button" variant="contained" onClick={minusRegister}>
+                                        Remove
+                                    </Button>
+                                </ButtonLayout>
+                            </TopInputLayout>
+
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <Grid item xs={8} sm={12}>
+                                    <MainCard sx={{ mt: 0 }} content={false}>
+                                        <CheckBoxDataGrid
+                                            columns={regColumns}
+                                            rows={dataGridRegisterRows}
+                                            handlePageChange={handlePage}
+                                            handleGridClick={handleClick}
+                                            handleGridDoubleClick={handleDoubleClick}
+                                            selectionChange={handleSelectionRegisterChange}
+                                            height={240}
+                                        />
+                                    </MainCard>
                                 </Grid>
+                            </Grid>
+                            <Grid container spacing={0} sx={{ mt: 2 }}>
+                                <TopInputLayout>
+                                    <Item>프로그램 목록</Item>
+
+                                    <div className="program--list">
+                                        <FormControl sx={{ minWidth: 250 }} size="medium">
+                                            <TextField
+                                                id="filled-hidden-label-small"
+                                                type="text"
+                                                size="medium"
+                                                value={keyword}
+                                                name="keyword"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                onKeyPress={keyPress}
+                                                placeholder="프로그램명 입력"
+                                                fullWidth
+                                            />
+                                        </FormControl>
+
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="button"
+                                            variant="contained"
+                                            onClick={programSearchClick}
+                                            className={cx('layout--blank')}
+                                        >
+                                            검색
+                                        </Button>
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="button"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={plusRegister}
+                                        >
+                                            Add
+                                        </Button>
+                                    </div>
+                                </TopInputLayout>
+
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
                                     <Grid item xs={8} sm={12}>
                                         <MainCard sx={{ mt: 0 }} content={false}>
                                             <CheckBoxDataGrid
-                                                columns={regColumns}
-                                                rows={dataGridRegisterRows}
+                                                columns={searchColumns}
+                                                rows={dataGridSearchRows}
                                                 handlePageChange={handlePage}
                                                 handleGridClick={handleClick}
                                                 handleGridDoubleClick={handleDoubleClick}
-                                                selectionChange={handleSelectionRegisterChange}
+                                                selectionChange={handleSelectionSearchChange}
                                                 height={240}
                                             />
                                         </MainCard>
                                     </Grid>
                                 </Grid>
-                                <Grid container spacing={0} sx={{ mt: 2 }}>
-                                    <Grid container spacing={0} sx={{ mt: 2 }}>
-                                        <Grid item xs={8} sm={0.2}></Grid>
-                                        <Grid item xs={8} sm={2.8}>
-                                            <Stack spacing={5} sx={{ mt: 0 }} justifyContent="left" alignItems="left">
-                                                <Item>프로그램 목록</Item>
-                                            </Stack>
-                                        </Grid>
-                                        <Grid item xs={8} sm={4.5}></Grid>
-                                        <Grid item xs={8} sm={2.3}>
-                                            <Stack spacing={5}>
-                                                <FormControl sx={{ m: 0, maxHeight: 30, maxWidth: 220 }} size="small">
-                                                    <TextField
-                                                        id="filled-hidden-label-small"
-                                                        type="text"
-                                                        size="small"
-                                                        value={keyword}
-                                                        name="keyword"
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        onKeyPress={keyPress}
-                                                        placeholder="프로그램명 입력"
-                                                        fullWidth
-                                                    />
-                                                </FormControl>
-                                            </Stack>
-                                        </Grid>
-                                        <Grid item xs={8} sm={0.2}></Grid>
-                                        <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                <Button
-                                                    disableElevation
-                                                    size="small"
-                                                    type="button"
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    onClick={programSearchClick}
-                                                >
-                                                    검색
-                                                </Button>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                <Button
-                                                    disableElevation
-                                                    size="small"
-                                                    type="button"
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    onClick={plusRegister}
-                                                >
-                                                    Add
-                                                </Button>
-                                            </FormControl>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container spacing={0} sx={{ mt: 1 }}>
-                                        <Grid item xs={8} sm={12}>
-                                            <MainCard sx={{ mt: 0 }} content={false}>
-                                                <CheckBoxDataGrid
-                                                    columns={searchColumns}
-                                                    rows={dataGridSearchRows}
-                                                    handlePageChange={handlePage}
-                                                    handleGridClick={handleClick}
-                                                    handleGridDoubleClick={handleDoubleClick}
-                                                    selectionChange={handleSelectionSearchChange}
-                                                    height={240}
-                                                />
-                                            </MainCard>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </MainCard>
-                        </Stack>
+                            </Grid>
+                        </MainCard>
                     </Grid>
                 </Grid>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
