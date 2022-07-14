@@ -9,6 +9,7 @@ import { activeEmail, activeLogin, activeLoginDate, activeSite, activeToken } fr
 import OtpInput from 'react-otp-input';
 import { useNavigate } from 'react-router-dom';
 import '../styles.scss';
+import OtpQrCode from '../../../components/AuthLogin/OtpQrCode';
 
 const OtpForm = ({ result }) => {
     const navigate = useNavigate();
@@ -92,34 +93,21 @@ const OtpForm = ({ result }) => {
     return (
         <form>
             <Grid container spacing={3}>
-                <Stack spacing={1}>
-                    <Typography variant="h5">1. OTP 앱을 설치해 주세요</Typography>
-                    <InputLabel>App Store, Google Play Store에서 Google Authenticator를 다운로드 합니다.</InputLabel>
-                </Stack>
-                <Stack spacing={1}>
-                    <Typography variant="h5">2. 바코드를 스캔하고 앱에 표시된 6자리 코드를 입력해 주세요.</Typography>
-                    <InputLabel>설치된 앱에서 "+" 버튼을 누르고 QR 코드 스캔 메뉴를 통해 바코드를 스캔합니다.</InputLabel>
-                </Stack>
+                <OtpQrCode />
 
-                <Grid item xs={12}>
-                    <Stack spacing={1}>
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={5.0}>
-                                <Box
-                                    component="img"
-                                    sx={{
-                                        height: 300,
-                                        width: 320,
-                                        maxHeight: { xs: 300, md: 320 },
-                                        maxWidth: { xs: 300, md: 320 }
-                                    }}
-                                    alt="QR Code"
-                                    src={result.otp_info.url}
-                                />
-                            </Grid>
-                        </Grid>
-                    </Stack>
-                </Grid>
+                <div className="qrcodeBox">
+                    <Box
+                        component="img"
+                        sx={{
+                            height: 300,
+                            width: 320,
+                            maxHeight: { xs: 300, md: 320 },
+                            maxWidth: { xs: 300, md: 320 }
+                        }}
+                        alt="QR Code"
+                        src={result.otp_info.url}
+                    />
+                </div>
 
                 {/* OTP 번호 입력란 */}
                 <div className="otpAction">
