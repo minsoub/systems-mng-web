@@ -26,6 +26,10 @@ import { boolean } from '../../../../node_modules/yup/lib/index';
 import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
 import AccountApis from 'apis/account/accountapis';
 import ErrorScreen from 'components/ErrorScreen';
+import ButtonLayout from "../../../components/Common/ButtonLayout";
+import TopInputLayout from "../../../components/Common/TopInputLayout";
+import InputLayout from "../../../components/Common/InputLayout";
+import HeaderTitle from "../../../components/HeaderTitle";
 
 const AccountMng = () => {
     let isSubmitting = false;
@@ -203,8 +207,8 @@ const AccountMng = () => {
             // 선택한 계정에 대해서 삭제를 수행한다.
             let deleteIds = '';
             let idx = 0;
-            selectedRows.map((data, Index) => {
-                if (idx > 0) deleteIdx = deleteIdx + '::';
+            selectedRows.map((data, index) => {
+                if (idx > 0) deleteIds = deleteIdx + '::';
                 deleteIds = deleteIds + data;
                 idx++;
             });
@@ -216,101 +220,64 @@ const AccountMng = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">계정 관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">통합관리 > 계정관리</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
-                <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={2}>
-                                <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
-                                    <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
-                                        <MenuItem value="true">사용</MenuItem>
-                                        <MenuItem value="false">미사용</MenuItem>
-                                        <MenuItem value="">전체</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <FormControl sx={{ m: 0.5, minWidth: 300, maxHeight: 25 }} size="small">
-                                    <OutlinedInput
-                                        fullWidth
-                                        id="word"
-                                        type="text"
-                                        value={keyword}
-                                        name="word"
-                                        placeholder=""
-                                        onChange={keywordChanged}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={3.2}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={searchClick}
-                                    >
-                                        검색
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={newClick}
-                                    >
-                                        신규
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={deleteClick}
-                                    >
-                                        삭제
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={listClick}
-                                    >
-                                        리스트
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                <HeaderTitle titleNm="계정 관리" menuStep01="통합시스템 관리" menuStep02="계정 관리" />
+
+                <MainCard>
+                    <TopInputLayout>
+                        <InputLayout>
+                            <FormControl size="medium" sx={{ minWidth: 100, marginRight: 2 }}>
+                                <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
+                                    <MenuItem value="true">사용</MenuItem>
+                                    <MenuItem value="false">미사용</MenuItem>
+                                    <MenuItem value="">전체</MenuItem>
+                                </Select>
+                            </FormControl>
+
+                            <FormControl sx={{ minWidth: 250 }} size="medium">
+                                <OutlinedInput
+                                    fullWidth
+                                    id="word"
+                                    type="text"
+                                    value={keyword}
+                                    name="word"
+                                    placeholder=""
+                                    onChange={keywordChanged}
+                                />
+                            </FormControl>
+                        </InputLayout>
+
+                        <ButtonLayout>
+                            <Button
+                                disableElevation
+                                disabled={isSubmitting}
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                onClick={searchClick}
+                            >
+                                검색
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
+                                신규
+                            </Button>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={deleteClick}
+                            >
+                                삭제
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                                리스트
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
                 </MainCard>
+
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <CheckBoxDataGrid
                         columns={columns}
