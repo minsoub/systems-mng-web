@@ -412,6 +412,7 @@ const ProjectMng = (props) => {
     };
     const handleChange = (e) => {
         console.log(e.target.name);
+        console.log(e.target.value);
         switch (e.target.name) {
             case 'contract_code':
                 // 진행상태 출력.
@@ -798,7 +799,7 @@ const ProjectMng = (props) => {
                 </Grid>
                 <Grid item xs={8} sm={10.5}>
                     <FormControl sx={{ m: 0, minWidth: 380 }} size="small">
-                        <Select name="proceess_code" label="진행상태" value={process_code} onChange={handleChange}>
+                        <Select name="process_code" label="진행상태" value={process_code} onChange={handleChange}>
                             <MenuItem value="">전체</MenuItem>
                             {processList.map((item, index) => (
                                 <MenuItem key={index} value={item.id}>
@@ -851,7 +852,7 @@ const ProjectMng = (props) => {
                         <TableRow>
                             <TableCell component="th" scope="row">
                                 <FormControl sx={{ m: 0, minWidth: 140 }} size="small">
-                                    <Select name="status" value={business_code} onChange={handleChange}>
+                                    <Select name="business_code" value={business_code} onChange={handleChange}>
                                         <MenuItem value="true">사용</MenuItem>
                                         {businessList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
@@ -863,7 +864,7 @@ const ProjectMng = (props) => {
                             </TableCell>
                             <TableCell component="th" scope="row">
                                 <FormControl sx={{ m: 0, minWidth: 124 }} size="small">
-                                    <Select name="status" value={network_code} onChange={handleChange}>
+                                    <Select name="network_code" value={network_code} onChange={handleChange}>
                                         <MenuItem value="true">사용</MenuItem>
                                         {networkList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
