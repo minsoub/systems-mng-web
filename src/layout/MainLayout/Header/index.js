@@ -108,9 +108,9 @@ const Header = ({ open, handleDrawerToggle }) => {
         dispatch(activeSite({ siteId: e.target.value }));
         if (authData.siteId === '62a15f4ae4129b518b133128') {
             // 투자보호
-            navigate('/cpcdashboard');
+            navigate('/cpc/dashboard');
         } else {
-            navigate('/lrcdashboard');
+            navigate('/lrc/dashboard');
         }
     };
 

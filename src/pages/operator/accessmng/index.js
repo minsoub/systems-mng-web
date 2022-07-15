@@ -65,7 +65,7 @@ const AccessMngPage = () => {
             align: 'center'
         },
         {
-            field: 'valid_start_date',
+            field: 'create_date',
             headerName: '생성날짜',
             flex: 1,
             headerAlign: 'center',
@@ -149,7 +149,7 @@ const AccessMngPage = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/account/reg/${rowData.id}`);
+            navigate(`/access/reg/${rowData.id}`);
         }
     };
 

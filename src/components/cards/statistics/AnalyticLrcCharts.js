@@ -8,7 +8,7 @@ import MainCard from 'components/MainCard';
 
 // assets
 import { RiseOutlined, FallOutlined } from '@ant-design/icons';
-import PieChart, { Series, Label, Connector, Size, Export, Legend } from 'devextreme-react/pie-chart';
+import PieChart, { Legend, Series, Export, HoverStyle } from 'devextreme-react/pie-chart';
 
 // ==============================|| STATISTICS - ECOMMERCE CARD  ||============================== //
 
@@ -27,9 +27,7 @@ const AnalyticLrcCharts = ({ title, data }) => {
                         // onLegendClick={this.legendClickHandler}
                     >
                         <Series argumentField="argument" valueField="value">
-                            <Label visible={true}>
-                                <Connector visible={true} width={1} />
-                            </Label>
+                            <HoverStyle color="#ffd700" />
                         </Series>
                         <Export enabled={true} />
                         <Legend margin={0} horizontalAlignment="right" verticalAlignment="top" />

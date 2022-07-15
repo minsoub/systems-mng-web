@@ -55,9 +55,9 @@ const OtpSimpleForm = ({ result }) => {
                     // alert("로그인을 완료하였습니다!!!")
                     if (authData.siteId === '62a15f4ae4129b518b133128') {
                         // 투자보호
-                        navigate('/cpcdashboard');
+                        navigate('/cpc/dashboard');
                     } else {
-                        navigate('/lrcdashboard');
+                        navigate('/lrc/dashboard');
                     }
                 }
                 break;

@@ -105,7 +105,7 @@ const RoleMappingForm = () => {
     const navigate = useNavigate();
     const [responseData, requestError, loading, { roleSearch, roleRegisterSave, roleRegisterSearch, roleRegisterDelete }] = RoleApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-    const [resAccData, reqAccErr, resAccLoading, { accountSearch }] = AccountApis();
+    const [resAccData, reqAccErr, resAccLoading, { accountUserSearch }] = AccountApis();
 
     // 저장대상 여부 체크
     const [isSave, setIsSave] = useState(false);
@@ -207,6 +207,7 @@ const RoleMappingForm = () => {
         switch (resAccData.transactionId) {
             case 'getList':
                 if (resAccData.data.data && resAccData.data.data.length > 0) {
+                    console.log(resAccData.data.data);
                     setSearchGridRows(resAccData.data.data);
                 } else {
                     setSearchGridRows([]);
@@ -361,7 +362,7 @@ const RoleMappingForm = () => {
         if (!keyword) {
             alert('검색 단어를 입력하세요!!!');
         } else {
-            accountSearch(true, keyword);
+            accountUserSearch(true, keyword);
         }
     };
     // 체크된 사용자 리스트에서 등록된 사용자로 이동.

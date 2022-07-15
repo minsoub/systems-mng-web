@@ -144,7 +144,7 @@ const MainRoutes = [
         element: <MainLayout />,
         children: [
             {
-                path: 'lrcdashboard',
+                path: 'lrc/dashboard',
                 element: <LrcDashboard />
             },
             {
@@ -321,6 +321,10 @@ const MainRoutes = [
             },
             {
                 path: 'access/reg',
+                element: <AccessRegForm />
+            },
+            {
+                path: 'access/reg/:paramId',
                 element: <AccessRegForm />
             },
             {

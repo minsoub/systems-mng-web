@@ -67,8 +67,15 @@ const RoleManagementPage = () => {
             align: 'center'
         },
         {
-            field: 'valid_date',
-            headerName: '유효기간',
+            field: 'valid_start_date',
+            headerName: '유효기간(from)',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'valid_end_date',
+            headerName: '유효기간(to)',
             flex: 1,
             headerAlign: 'center',
             align: 'center'

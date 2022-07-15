@@ -28,49 +28,49 @@ const Chat = (props) => {
     ] = useRSocketClient();
     // 가짜 데이터
     const [messageList, setMessageList] = useState([
-        {
-            createdDt: '2022-05-14T21:48:11.063',
-            message:
-                'Lorem Ipsum refers to text that the DTP (Desktop Publishing) industry use as replacement text when the real text is not',
-            receiver: 'test Team',
-            sender: 'Listing Team'
-        },
-        {
-            createdDt: '2022-05-14T21:48:11.063',
-            message: 'Lorem Ipsum refers tt',
-            receiver: 'receiveUser',
-            sender: 'sendUser'
-        },
-        {
-            createdDt: '2022-05-14T21:48:11.063',
-            message: 'Lorem Ipsum refers1 ',
-            receiver: 'test Team',
-            sender: 'Listing Team'
-        },
-        {
-            createdDt: '2022-05-14T21:48:11.063',
-            message: 'Lorem Ipsum refersdfafasfsadf ',
-            receiver: 'test Team',
-            sender: 'Listing Team'
-        },
-        {
-            createdDt: '2022-05-14T21:48:11.063',
-            message: 'Lorem Ipsum refers ',
-            receiver: 'test Team',
-            sender: 'Listing Team'
-        },
-        {
-            createdDt: '2022-05-14T21:48:11.063',
-            message: 'Lorem Ipsum refers afdasfsafasfsaf',
-            receiver: 'test Team',
-            sender: 'Listing Team'
-        },
-        {
-            createdDt: '2022-05-14T21:48:11.063',
-            message: 'Lorem Ipsum refers afadsfasdfasf',
-            receiver: 'test Team',
-            sender: 'Listing Team'
-        }
+        // {
+        //     createdDt: '2022-05-14T21:48:11.063',
+        //     message:
+        //         'Lorem Ipsum refers to text that the DTP (Desktop Publishing) industry use as replacement text when the real text is not',
+        //     receiver: 'test Team',
+        //     sender: 'Listing Team'
+        // },
+        // {
+        //     createdDt: '2022-05-14T21:48:11.063',
+        //     message: 'Lorem Ipsum refers tt',
+        //     receiver: 'receiveUser',
+        //     sender: 'sendUser'
+        // },
+        // {
+        //     createdDt: '2022-05-14T21:48:11.063',
+        //     message: 'Lorem Ipsum refers1 ',
+        //     receiver: 'test Team',
+        //     sender: 'Listing Team'
+        // },
+        // {
+        //     createdDt: '2022-05-14T21:48:11.063',
+        //     message: 'Lorem Ipsum refersdfafasfsadf ',
+        //     receiver: 'test Team',
+        //     sender: 'Listing Team'
+        // },
+        // {
+        //     createdDt: '2022-05-14T21:48:11.063',
+        //     message: 'Lorem Ipsum refers ',
+        //     receiver: 'test Team',
+        //     sender: 'Listing Team'
+        // },
+        // {
+        //     createdDt: '2022-05-14T21:48:11.063',
+        //     message: 'Lorem Ipsum refers afdasfsafasfsaf',
+        //     receiver: 'test Team',
+        //     sender: 'Listing Team'
+        // },
+        // {
+        //     createdDt: '2022-05-14T21:48:11.063',
+        //     message: 'Lorem Ipsum refers afadsfasdfasf',
+        //     receiver: 'test Team',
+        //     sender: 'Listing Team'
+        // }
     ]);
 
     const domMessage = useRef();

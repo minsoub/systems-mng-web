@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import {
@@ -19,7 +20,8 @@ import {
     Collapse,
     AlertTitle,
     Paper,
-    Typography
+    Typography,
+    MenuItem
 } from '@mui/material';
 // third party
 import * as Yup from 'yup';
@@ -72,6 +74,7 @@ const AccessRegForm = () => {
 
     const navigate = useNavigate();
     const { paramId } = useParams();
+    const { siteId } = useSelector((state) => state.auth);
     const [
         responseData,
         requestError,
@@ -555,10 +558,10 @@ const AccessRegForm = () => {
                 <Grid item xs={12} md={7} lg={12}>
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid item>
-                            <Typography variant="h3">계정 관리</Typography>
+                            <Typography variant="h3">사용자 접근 관리</Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant="h6">통합 시스템관리 &gt; 계정 관리 &gt; 계정 등록</Typography>
+                            <Typography variant="h6">사이트 관리 &gt; 사용자 접근 관리 &gt; 계정 등록</Typography>
                         </Grid>
                         <Grid container spacing={2}></Grid>
                     </Grid>
@@ -697,7 +700,7 @@ const AccessRegForm = () => {
                         <Grid container spacing={3}>
                             <Grid item xs={8} sm={12}>
                                 <Stack spacing={2}>
-                                    <MainCard sx={{ mt: 2, height: 370 }} content={false}>
+                                    <MainCard sx={{ mt: 2, height: 570 }} content={false}>
                                         <Grid container spacing={0} sx={{ mt: 2 }}>
                                             <Grid item xs={8} sm={0.2}></Grid>
                                             <Grid item xs={8} sm={2.8}>
@@ -738,7 +741,7 @@ const AccessRegForm = () => {
                                         </Grid>
                                         <Grid container spacing={0} sx={{ mt: 1 }}>
                                             <Grid item xs={8} sm={12}>
-                                                <MainCard sx={{ mt: 0 }} content={false}>
+                                                <MainCard sx={{ mt: 0, height: 410 }} content={false}>
                                                     <CheckBoxDataGrid
                                                         columns={regColumns}
                                                         rows={dataGridRegisterRows}
@@ -746,7 +749,7 @@ const AccessRegForm = () => {
                                                         handleGridClick={handleClick}
                                                         handleGridDoubleClick={handleDoubleClick}
                                                         selectionChange={handleSelectionRegisterChange}
-                                                        height={240}
+                                                        height={400}
                                                     />
                                                 </MainCard>
                                             </Grid>
@@ -765,11 +768,13 @@ const AccessRegForm = () => {
                                                             <MenuItem value="">
                                                                 <em>Choose a Site Type</em>
                                                             </MenuItem>
-                                                            {itemList.map((item, index) => (
-                                                                <MenuItem key={index} value={item.id}>
-                                                                    {item.name}
-                                                                </MenuItem>
-                                                            ))}
+                                                            {itemList
+                                                                .filter((item) => item.id === siteId)
+                                                                .map((item, index) => (
+                                                                    <MenuItem key={index} value={item.id}>
+                                                                        {item.name}
+                                                                    </MenuItem>
+                                                                ))}
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>

@@ -19,7 +19,8 @@ import {
     Collapse,
     AlertTitle,
     Paper,
-    Typography
+    Typography,
+    MenuItem
 } from '@mui/material';
 // third party
 import * as Yup from 'yup';
@@ -36,8 +37,7 @@ import AccountApis from 'apis/account/accountapis';
 import SiteApi from 'apis/site/siteapi';
 import RoleApi from 'apis/roles/roleapi';
 import { DatePicker } from 'antd';
-import { MenuItem } from '../../../node_modules/@mui/material/index';
-import CheckBoxDataGrid from '../../components/DataGrid/CheckBoxDataGrid';
+import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import ErrorScreen from 'components/ErrorScreen';
 
 const AccountRegForm = () => {
@@ -706,7 +706,7 @@ const AccountRegForm = () => {
                         <Grid container spacing={3}>
                             <Grid item xs={8} sm={12}>
                                 <Stack spacing={2}>
-                                    <MainCard sx={{ mt: 2, height: 370 }} content={false}>
+                                    <MainCard sx={{ mt: 2, height: 570 }} content={false}>
                                         <Grid container spacing={0} sx={{ mt: 2 }}>
                                             <Grid item xs={8} sm={0.2}></Grid>
                                             <Grid item xs={8} sm={2.8}>
@@ -755,7 +755,7 @@ const AccountRegForm = () => {
                                                         handleGridClick={handleClick}
                                                         handleGridDoubleClick={handleDoubleClick}
                                                         selectionChange={handleSelectionRegisterChange}
-                                                        height={240}
+                                                        height={400}
                                                     />
                                                 </MainCard>
                                             </Grid>

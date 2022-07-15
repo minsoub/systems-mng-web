@@ -160,11 +160,13 @@ const LrcDashboard = () => {
             <Grid item xs={12} sx={{ mb: -2.25 }}>
                 <Typography variant="h3">재단 통계</Typography>
             </Grid>
-            {dataLine.map((item, index) => (
-                <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-                    <AnalyticLrcCharts title={item.name} data={item.data} />
-                </Grid>
-            ))}
+            {dataLine
+                .sort((a, b) => (a.order > b.order ? 1 : -1))
+                .map((item, index) => (
+                    <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+                        <AnalyticLrcCharts title={item.name} data={item.data} />
+                    </Grid>
+                ))}
         </Grid>
     );
 };
