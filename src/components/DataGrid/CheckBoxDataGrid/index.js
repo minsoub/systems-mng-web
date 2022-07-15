@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataGrid, gridPageCountSelector, gridPageSelector, useGridApiContext, useGridSelector } from '@mui/x-data-grid';
-import { useDemoData } from '@mui/x-data-grid-generator';
-import { styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-import { alpha } from '@mui/material/styles';
 import './style.scss';
 
 function customCheckbox(theme) {
@@ -76,15 +74,6 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
         backgroundColor: alpha('#eeeeee', 0.7),
         height: 45
     },
-    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-        borderRight: `1px solid '#303030'`
-    },
-    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-        borderLeft: `1px solid '#303030'`
-    },
-    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-        borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'}`
-    },
     '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
         borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'}`
     },
@@ -106,6 +95,7 @@ function CheckBoxPagination() {
     const page = useGridSelector(apiRef, gridPageSelector);
     const pageCount = useGridSelector(apiRef, gridPageCountSelector);
 
+    console.log('pageCount', pageCount, 'page', page);
     return (
         <Pagination
             color="primary"
@@ -131,18 +121,13 @@ export function CheckBoxDataGrid({ columns, rows, handlePageChange, handleGridCl
         selectionChange(selectionModel);
     }, [selectionModel]);
 
-    let mHeight = 600;
-
-    if (height) {
-        mHeight = height;
-    }
     if (rows) {
         return (
-            <div style={{ height: mHeight, width: '100%' }}>
+            <div style={{ height: '100vh', width: '100%' }}>
                 <StyledDataGrid
                     checkboxSelection
                     pageSize={20}
-                    rowsPerPageOptions={[5]}
+                    rowsPerPageOptions={[1]}
                     components={{
                         Pagination: CheckBoxPagination
                     }}

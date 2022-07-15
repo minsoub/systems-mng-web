@@ -36,3 +36,8 @@
 .css-wb57ya-MuiFormControl-root-MuiTextField-root {
     width: 82%;
 }
+
+.img_thumbnail {
+    height: 100% !important;
+    object-fit: cover;
+}
