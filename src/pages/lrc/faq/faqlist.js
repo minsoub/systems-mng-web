@@ -190,7 +190,7 @@ const FaqContent = (props) => {
                             no: idx + 1,
                             id: item.id,
                             user_id: item.user_id,
-                            order: item.order,
+                            order_no: item.order_no,
                             category: item.category,
                             category_code: item.category_code,
                             title: item.title,
@@ -286,7 +286,7 @@ const FaqContent = (props) => {
         if (confirm('저장하시겠습니까?')) {
             let order = [];
             dataGridRows.map((item, index) => {
-                order.push({ id: item.id, order: index });
+                order.push({ id: item.id, order_no: index });
             });
             let data = { order_list: order };
             faqOrderSave(data);
