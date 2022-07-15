@@ -2,16 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem
-} from '@mui/material';
+import { Button, Grid, Stack, TextField, Typography, FormControl, Select, MenuItem } from '@mui/material';
 import MainCard from 'components/MainCard';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
@@ -19,6 +10,9 @@ import ErrorScreen from 'components/ErrorScreen';
 import JoditEditor from 'jodit-react';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
+import HeaderTitle from '../../../components/HeaderTitle';
+import cx from 'classnames';
+import './BoardList.css';
 
 const DamageCaseMngForm = () => {
     const navigate = useNavigate();
@@ -217,24 +211,18 @@ const DamageCaseMngForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">콘텐츠 관리(피해사례)</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 콘텐츠 관리 &gt; 피해사례</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="피해사례" />
+
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
-                            <FormControl size="medium">
-                                <Stack spacing={0}>카테고리</Stack>
-                            </FormControl>
+                            <Stack spacing={10} className={cx('borderTitle')}>
+                                카테고리
+                            </Stack>
                         </Grid>
+
                         <Grid item xs={8} sm={4}>
-                            <FormControl sx={{ minWidth: 100 }} size="medium" required fullWidth>
+                            <FormControl sx={{ maxWidth: 250 }} size="medium" required fullWidth>
                                 <Select name="category" label="카테고리" value={category} onChange={handleChange}>
                                     <MenuItem value="">선택</MenuItem>
                                     <MenuItem value="피싱">피싱</MenuItem>
@@ -242,11 +230,6 @@ const DamageCaseMngForm = () => {
                                     <MenuItem value="스캠">스캠</MenuItem>
                                     <MenuItem value="도용">도용</MenuItem>
                                     <MenuItem value="기타">기타</MenuItem>
-                                    {/* {categories.map((category, index) => {
-                                        <MenuItem key={index} value={category}>
-                                            {category}
-                                        </MenuItem>;
-                                    })} */}
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -254,11 +237,13 @@ const DamageCaseMngForm = () => {
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
                             <FormControl size="medium">
-                                <Stack spacing={0}>제목</Stack>
+                                <Stack spacing={10} className={cx('borderTitle')}>
+                                    제목
+                                </Stack>
                             </FormControl>
                         </Grid>
                         <Grid item xs>
-                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="medium" required fullWidth>
+                            <FormControl sx={{ minWidth: 1507, maxHeight: 30 }} size="medium" required>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -276,16 +261,19 @@ const DamageCaseMngForm = () => {
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
                             <FormControl size="medium">
-                                <Stack spacing={0}>내용</Stack>
+                                <Stack spacing={10} className={cx('borderTitle')}>
+                                    내용
+                                </Stack>
                             </FormControl>
                         </Grid>
                         <Grid item xs>
-                            <FormControl sx={{ m: 0 }} fullWidth>
+                            <FormControl>
                                 <JoditEditor
                                     ref={editorRef}
                                     value={content}
                                     config={config}
                                     onBlur={(newContent) => setContent(newContent)}
+                                    className="editor"
                                 />
                             </FormControl>
                         </Grid>
