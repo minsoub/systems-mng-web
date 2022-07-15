@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import MainCard from 'components/MainCard';
-import { Button, DialogTitle, Dialog, Grid, Alert, AlertTitle, Divider, Typography, Collapse, IconButton } from '@mui/material';
+import { Alert, AlertTitle, Button, Collapse, Dialog, DialogTitle, Divider, Grid, IconButton, Typography } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
-import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import MainContentsApi from 'apis/cpc/mainContents/maincontentsapi';
@@ -14,6 +12,7 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import moment from 'moment';
 import ButtonLayout from 'components/Common/ButtonLayout';
+import './styles.scss';
 
 function BoardSearchDialog(props) {
     const listColumns = [
@@ -330,7 +329,9 @@ function BoardSearchDialog(props) {
 
     return (
         <Dialog onClose={handleClose} open={open} maxWidth={1280}>
-            <DialogTitle>게시글 선택</DialogTitle>
+            <Typography sx={{ mt: 1, mb: 0 }} variant="h4" gutterBottom component="div">
+                게시글 선택
+            </Typography>
             <MainCard>
                 {/* 기간 검색 */}
                 <SearchDate
@@ -355,7 +356,7 @@ function BoardSearchDialog(props) {
                     </Button>
                 </ButtonLayout>
             </Grid>
-            <Typography sx={{ mt: 1, mb: 0 }} variant="h5" gutterBottom component="div">
+            <Typography sx={{ mt: 1, mb: 1 }} variant="h5" gutterBottom component="div">
                 게시글 리스트
             </Typography>
             <MainCard sx={{ mt: 0 }} content={false}>
@@ -370,8 +371,7 @@ function BoardSearchDialog(props) {
                     selectionChange={handleSelectionChange}
                 />
             </MainCard>
-            <Divider />
-            <Typography sx={{ mt: 1, mb: 0 }} variant="h5" gutterBottom component="div">
+            <Typography sx={{ mt: 1, mb: 1 }} variant="h5" gutterBottom component="div">
                 선택된 게시글
             </Typography>
             <MainCard sx={{ mt: 0 }} content={false}>

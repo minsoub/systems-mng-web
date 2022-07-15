@@ -1,13 +1,16 @@
 // 검색 박스 결과 리스트
 .css-okdhzo-MuiDataGrid-columnHeaders {
-    height: 55px;
+    height: 46px !important;
+    min-height: 46px !important;
+    max-height: 46px !important;
+    line-height: 46px !important;
 }
 
 .css-1jbbcbn-MuiDataGrid-columnHeaderTitle {
     font-size: 14px;
 }
 
-.css-ojruc5-MuiDataGrid-root .MuiDataGrid-columnHeader{
+.css-ojruc5-MuiDataGrid-root .MuiDataGrid-columnHeader {
     background-color: rgba(238, 238, 238, 0.7);
     height: 55px;
 }

@@ -16,3 +16,31 @@
     overflow-wrap: break-word;
     white-space: normal;
 }
+.topInputLayout {
+    margin-top: 2rem;
+}
+
+.css-9x2mm1-MuiPaper-root-MuiCard-root {
+    margin-top: 2rem;
+}
+
+.css-zow5z4-MuiGrid-root {
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.jodit-container {
+    margin-bottom: 3rem;
+}
+
+.css-wb57ya-MuiFormControl-root-MuiTextField-root {
+    width: 82%;
+}
+
+.img_thumbnail {
+    height: 100% !important;
+    object-fit: cover;
+}
+.css-1i5ha64-MuiDataGrid-root .MuiDataGrid-row {
+    cursor: pointer;
+}

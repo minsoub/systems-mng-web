@@ -111,3 +111,4 @@ build
 
 #Mac finder file
 .DS_Store
+yarn.lock
