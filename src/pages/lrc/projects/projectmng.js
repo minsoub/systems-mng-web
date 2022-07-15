@@ -677,8 +677,10 @@ const ProjectMng = (props) => {
             const formData = new FormData();
             if (confirm('저장하시겠습니까?')) {
                 reviewList.map((item, index) => {
+                    console.log(item);
+                    console.log(index);
                     formData.append('no', index);
-                    formData.append('id', item.id);
+                    formData.append('id', item.id === '' ? '' : item.id);
                     formData.append('projectId', projectId);
                     formData.append('organization', item.organization);
                     formData.append('result', item.result);
