@@ -7,6 +7,9 @@ import MainContentsApi from 'apis/cpc/mainContents/maincontentsapi';
 import ErrorScreen from 'components/ErrorScreen';
 import HeaderTitle from 'components/HeaderTitle';
 import BoardSearchDialog from './popup/BoardSearchPopup';
+import ButtonLayout from '../../../../components/Common/ButtonLayout';
+import './styles.scss';
+import cx from 'classnames';
 
 const MainContents = () => {
     const [responseData, requestError, resLoading, { searchMainContents }] = MainContentsApi();
@@ -97,7 +100,6 @@ const MainContents = () => {
                                     <TableRow>
                                         <TableCell align="center">번호</TableCell>
                                         <TableCell align="center">제목</TableCell>
-                                        <TableCell />
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -107,11 +109,6 @@ const MainContents = () => {
                                         </TableCell>
                                         <TableCell align="left">
                                             {digital_asset_trends.length > 0 && digital_asset_trends[0].title}
-                                        </TableCell>
-                                        <TableCell rowSpan={3} style={{ width: 160 }} align="center">
-                                            <Button variant="contained" onClick={() => handleClickOpen('CPC_TREND')}>
-                                                게시글 선택
-                                            </Button>
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
@@ -133,6 +130,11 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        <ButtonLayout buttonName="rightButton">
+                            <Button variant="contained" onClick={() => handleClickOpen('CPC_TREND')}>
+                                게시글 선택
+                            </Button>
+                        </ButtonLayout>
                     </TabPanel>
                     {/* 블록체인 뉴스 */}
                     <TabPanel value="2">
@@ -142,7 +144,6 @@ const MainContents = () => {
                                     <TableRow>
                                         <TableCell align="center">번호</TableCell>
                                         <TableCell align="center">제목</TableCell>
-                                        <TableCell />
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -151,11 +152,6 @@ const MainContents = () => {
                                             1
                                         </TableCell>
                                         <TableCell align="left">{blockchain_news.length > 0 && blockchain_news[0].title}</TableCell>
-                                        <TableCell rowSpan={3} style={{ width: 160 }} align="center">
-                                            <Button variant="contained" onClick={() => handleClickOpen('CPC_NEWS')}>
-                                                게시글 선택
-                                            </Button>
-                                        </TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell style={{ width: 160 }} align="center">
@@ -172,6 +168,11 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        <ButtonLayout buttonName="rightButton">
+                            <Button variant="contained" onClick={() => handleClickOpen('CPC_NEWS')}>
+                                게시글 선택
+                            </Button>
+                        </ButtonLayout>
                     </TabPanel>
                     {/* 가상자산의 기초 */}
                     <TabPanel value="3">
@@ -181,7 +182,6 @@ const MainContents = () => {
                                     <TableRow>
                                         <TableCell align="center">번호</TableCell>
                                         <TableCell align="center">제목</TableCell>
-                                        <TableCell />
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -190,11 +190,6 @@ const MainContents = () => {
                                             1
                                         </TableCell>
                                         <TableCell align="left">{digital_asset_basic.length > 0 && digital_asset_basic[0].title}</TableCell>
-                                        <TableCell rowSpan={3} style={{ width: 160 }} align="center">
-                                            <Button variant="contained" onClick={() => handleClickOpen('CPC_DIGITAL_ASSET')}>
-                                                게시글 선택
-                                            </Button>
-                                        </TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell style={{ width: 160 }} align="center">
@@ -211,6 +206,11 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        <ButtonLayout buttonName="rightButton">
+                            <Button variant="contained" onClick={() => handleClickOpen('CPC_DIGITAL_ASSET')}>
+                                게시글 선택
+                            </Button>
+                        </ButtonLayout>
                     </TabPanel>
                     {/* 인사이트 칼럼 */}
                     <TabPanel value="4">
@@ -220,7 +220,6 @@ const MainContents = () => {
                                     <TableRow>
                                         <TableCell align="center">번호</TableCell>
                                         <TableCell align="center">제목</TableCell>
-                                        <TableCell />
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -229,11 +228,6 @@ const MainContents = () => {
                                             1
                                         </TableCell>
                                         <TableCell align="left">{insight_column.length > 0 && insight_column[0].title}</TableCell>
-                                        <TableCell rowSpan={3} style={{ width: 160 }} align="center">
-                                            <Button variant="contained" onClick={() => handleClickOpen('CPC_INSIGHT_COLUMN')}>
-                                                게시글 선택
-                                            </Button>
-                                        </TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell style={{ width: 160 }} align="center">
@@ -250,10 +244,18 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        <ButtonLayout buttonName="rightButton">
+                            <Button variant="contained" onClick={() => handleClickOpen('CPC_INSIGHT_COLUMN')}>
+                                게시글 선택
+                            </Button>
+                        </ButtonLayout>
                     </TabPanel>
                 </TabContext>
+
                 <BoardSearchDialog boardMasterId={boardMasterId} open={openPopup} onClose={handleClose} />
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                <div className={cx(errorMessage ? 'errorBox' : 'errorBoxNoShow')}>
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                </div>
             </Grid>
         </Grid>
     );
