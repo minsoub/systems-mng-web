@@ -131,6 +131,14 @@ legend {
 .css-1g5oyi7-MuiDataGrid-root .MuiDataGrid-row {
     cursor: pointer;
 }
+
+.errorBox {
+    display: block;
+}
+
+.errorBoxNoShow {
+    display: none;
+}
 // 1024 해상도에서도 width Full로 차도록
 @media (min-width: 1024px) {
     .css-1ol3ns7-MuiGrid-root {

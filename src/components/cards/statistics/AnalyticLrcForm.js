@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { Box, Chip, Grid, Stack, Typography, GRid } from '@mui/material';
+import { Grid, Stack, Typography } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
 
 // assets
-import { RiseOutlined, FallOutlined } from '@ant-design/icons';
 
 // ==============================|| STATISTICS - ECOMMERCE CARD  ||============================== //
 
