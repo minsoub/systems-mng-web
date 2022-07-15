@@ -243,19 +243,17 @@ const DamageCaseMngForm = () => {
                             </FormControl>
                         </Grid>
                         <Grid item xs>
-                            <FormControl sx={{ minWidth: 1507, maxHeight: 30 }} size="medium" required>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={title}
-                                    name="title"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="제목을 입력하세요."
-                                    fullWidth
-                                />
-                            </FormControl>
+                            <TextField
+                                id="filled-hidden-label-small"
+                                type="text"
+                                size="medium"
+                                value={title}
+                                name="title"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                placeholder="제목을 입력하세요."
+                                fullWidth
+                            />
                         </Grid>
                     </Grid>
                     <Grid container spacing={3}>
@@ -274,6 +272,7 @@ const DamageCaseMngForm = () => {
                                     config={config}
                                     onBlur={(newContent) => setContent(newContent)}
                                     className="editor"
+                                    fullWidth
                                 />
                             </FormControl>
                         </Grid>
