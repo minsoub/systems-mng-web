@@ -2,14 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Typography,
-    FormControl
-} from '@mui/material';
+import { Button, FormControl, Grid, Stack, TextField, Typography } from '@mui/material';
 import MainCard from 'components/MainCard';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
@@ -18,6 +11,10 @@ import ThumbnailAttach from './ThumbnailAttach';
 import JoditEditor from 'jodit-react';
 import { WithContext as ReactTags } from 'react-tag-input';
 import './ReactTags.css';
+import InputLayout from '../../../components/Common/InputLayout';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import HeaderTitle from '../../../components/HeaderTitle';
 
 const CampaignMngForm = () => {
     const navigate = useNavigate();
@@ -284,15 +281,8 @@ const CampaignMngForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">콘텐츠 관리(안전거래 캠페인)</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 콘텐츠 관리 &gt; 안전거래 캠페인</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="안전거래 캠페인" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="안전거래 캠페인" />
+
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
@@ -409,57 +399,31 @@ const CampaignMngForm = () => {
                         </Grid>
                     )}
                 </MainCard>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item xs={8} sm={0.8}>
-                        <FormControl sx={{ m: 1 }} size="small">
-                            <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
-                                목록
-                            </Button>
-                        </FormControl>
-                    </Grid>
+                <TopInputLayout>
+                    <InputLayout>
+                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            목록
+                        </Button>
+                    </InputLayout>
                     {!id && (
-                        <Grid item xs={8} sm={0.6}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={addClick}>
-                                    등록
-                                </Button>
-                            </FormControl>
-                        </Grid>
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addClick}>
+                                등록
+                            </Button>
+                        </ButtonLayout>
                     )}
                     {id && (
-                        <Grid container xs={8} direction="row" justifyContent="flex-end" alignItems="center">
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={deleteClick}
-                                    >
-                                        삭제
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={saveClick}
-                                    >
-                                        저장
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={deleteClick}>
+                                삭제
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
+                                저장
+                            </Button>
+                        </ButtonLayout>
                     )}
-                </Grid>
+                </TopInputLayout>
+
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>
