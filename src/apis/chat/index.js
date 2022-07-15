@@ -10,13 +10,13 @@ import {
     RSocketClient
 } from 'rsocket-core';
 import RSocketWebsocketClient from 'rsocket-websocket-client';
+import { useDispatch, useSelector } from 'react-redux';
 import { Flowable } from 'rsocket-flowable';
 import { ReactiveSocket } from 'rsocket-types';
 import React, { useEffect, useRef, useState } from 'react';
 //import WebSocket from 'ws';
 //const WebSocket = require('ws');
 
-const siteId = process.env.REACT_APP_DEFAULT_CHAT_SITE_ID ? process.env.REACT_APP_DEFAULT_CHAT_SITE_ID : '';
 const serverURL = process.env.REACT_APP_CHAT_SERVER_URL ? process.env.REACT_APP_CHAT_SERVER_URL : 'ws://localhost:9090';
 let authData = null;
 if (localStorage.hasOwnProperty('authenticated')) {
@@ -32,6 +32,7 @@ const useRScoketClient = () => {
     const [responseData, setResponseData] = useState();
     const [responseError, setResponseError] = useState();
     const [projectId, setProjectId] = useState('');
+    const { siteId } = useSelector((state) => state.auth);
 
     const getMetadata = (route) => {
         const socketAuthProvider = encodeBearerAuthMetadata(

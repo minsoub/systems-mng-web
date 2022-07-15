@@ -1,21 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import useRSocketClient from 'apis/chat/index';
 import ChatApi from 'apis/chat/chatapi';
 import MessageLeft from 'components/Chat/MessageLeft';
 import MessageRight from 'components/Chat/MessageRight';
 import ChattingRoom from 'components/Chat/ChattingRoom';
 
-let authData = null;
-if (localStorage.hasOwnProperty('authenticated')) {
-    //console.log(localStorage.getItem('authenticated'));
-    authData = JSON.parse(localStorage.getItem('authenticated'));
-    console.log(authData.accessToken);
-}
-
 const Chat = (props) => {
     const { projectId, children, tabindex, index, ...other } = props;
     const [resData, reqError, loading, { chatExistsAndSave }] = ChatApi();
-
+    const { siteId } = useSelector((state) => state.auth);
     const [
         clientError,
         rSocket,
@@ -27,51 +21,7 @@ const Chat = (props) => {
         responseError
     ] = useRSocketClient();
     // 가짜 데이터
-    const [messageList, setMessageList] = useState([
-        // {
-        //     createdDt: '2022-05-14T21:48:11.063',
-        //     message:
-        //         'Lorem Ipsum refers to text that the DTP (Desktop Publishing) industry use as replacement text when the real text is not',
-        //     receiver: 'test Team',
-        //     sender: 'Listing Team'
-        // },
-        // {
-        //     createdDt: '2022-05-14T21:48:11.063',
-        //     message: 'Lorem Ipsum refers tt',
-        //     receiver: 'receiveUser',
-        //     sender: 'sendUser'
-        // },
-        // {
-        //     createdDt: '2022-05-14T21:48:11.063',
-        //     message: 'Lorem Ipsum refers1 ',
-        //     receiver: 'test Team',
-        //     sender: 'Listing Team'
-        // },
-        // {
-        //     createdDt: '2022-05-14T21:48:11.063',
-        //     message: 'Lorem Ipsum refersdfafasfsadf ',
-        //     receiver: 'test Team',
-        //     sender: 'Listing Team'
-        // },
-        // {
-        //     createdDt: '2022-05-14T21:48:11.063',
-        //     message: 'Lorem Ipsum refers ',
-        //     receiver: 'test Team',
-        //     sender: 'Listing Team'
-        // },
-        // {
-        //     createdDt: '2022-05-14T21:48:11.063',
-        //     message: 'Lorem Ipsum refers afdasfsafasfsaf',
-        //     receiver: 'test Team',
-        //     sender: 'Listing Team'
-        // },
-        // {
-        //     createdDt: '2022-05-14T21:48:11.063',
-        //     message: 'Lorem Ipsum refers afadsfasdfasf',
-        //     receiver: 'test Team',
-        //     sender: 'Listing Team'
-        // }
-    ]);
+    const [messageList, setMessageList] = useState([]);
 
     const domMessage = useRef();
     const [message, setMessage] = useState('');
@@ -79,7 +29,7 @@ const Chat = (props) => {
     useEffect(() => {
         let data = {
             account_id: '',
-            site_id: authData.siteId,
+            site_id: siteId,
             project_id: projectId
         };
         chatExistsAndSave(data);

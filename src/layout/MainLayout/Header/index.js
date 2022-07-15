@@ -89,6 +89,7 @@ const Header = ({ open, handleDrawerToggle }) => {
     }, []);
     useEffect(() => {
         if (!responseData) return;
+        console.log(responseData);
         console.log(responseData.data);
         console.log(responseData.data.data.site_id);
         console.log(responseData.data.data.name);
@@ -104,6 +105,7 @@ const Header = ({ open, handleDrawerToggle }) => {
         // 변경된 사이트를 통해서 다시 메뉴를 리로드해야 한다.
         authData.siteId = e.target.value;
         localStorage.setItem('authenticated', JSON.stringify(authData)); // 토큰 재저장
+        console.log(authData);
         // menu reload
         dispatch(activeSite({ siteId: e.target.value }));
         if (authData.siteId === '62a15f4ae4129b518b133128') {
