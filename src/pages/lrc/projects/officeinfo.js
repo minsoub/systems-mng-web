@@ -376,6 +376,12 @@ const OfficeInfo = (props) => {
         setValue(value);
     };
 
+    const format = (num, decimals) =>
+        num.toLocaleString('en-US', {
+            minimumFractionDigits: 4,
+            maximumFractionDigits: 4
+        });
+
     return (
         <Grid container alignItems="center" justifyContent="space-between">
             <Grid container spacing={0} sx={{ mt: 0 }}>
@@ -540,7 +546,13 @@ const OfficeInfo = (props) => {
                                     {item.ico_date}
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    <NumberFormat value={item.price} displayType={'text'} thousandSeparator={true} prefix={''} />
+                                    <NumberFormat
+                                        value={item.price}
+                                        allowNegative={true}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        prefix={''}
+                                    />
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -567,10 +579,22 @@ const OfficeInfo = (props) => {
                                     {item.symbol}
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    <NumberFormat value={item.minimum_quantity} displayType={'text'} thousandSeparator={true} prefix={''} />
+                                    <NumberFormat
+                                        value={item.minimum_quantity}
+                                        allowNegative={true}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        prefix={''}
+                                    />
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    <NumberFormat value={item.actual_quantity} displayType={'text'} thousandSeparator={true} prefix={''} />
+                                    <NumberFormat
+                                        value={item.actual_quantity}
+                                        allowNegative={true}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        prefix={''}
+                                    />
                                 </TableCell>
                             </TableRow>
                         ))}

@@ -24,7 +24,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
 import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
 import AccountApis from 'apis/account/accountapis';
-import ErrorScreen from 'components/ErrorScreen';
+//import ErrorScreen from 'components/ErrorScreen';
 
 const AccessMngPage = () => {
     let isSubmitting = false;
@@ -85,11 +85,11 @@ const AccessMngPage = () => {
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const parentErrorClear = () => {
-        setOpen(false);
-        setErrorTitle('');
-        setErrorMessage('');
-    };
+    // const parentErrorClear = () => {
+    //     setOpen(false);
+    //     setErrorTitle('');
+    //     setErrorMessage('');
+    // };
     ////////////////////////////////////////////////////
 
     const [is_use, setIsUsed] = useState('');
@@ -101,9 +101,9 @@ const AccessMngPage = () => {
             if (requestError.result === 'FAIL') {
                 console.log('error requestError');
                 console.log(requestError);
-                setErrorTitle('Error Message');
-                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
-                setOpen(true);
+                // setErrorTitle('Error Message');
+                // setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                // setOpen(true);
             }
         }
     }, [requestError]);
@@ -318,7 +318,7 @@ const AccessMngPage = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </MainCard>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                {/* <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} /> */}
             </Grid>
         </Grid>
     );
