@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import { Button, Grid, Stack, TextField, Typography, FormControl, Select, MenuItem } from '@mui/material';
+import { Button, FormControl, Grid, MenuItem, Select, Stack, TextField } from '@mui/material';
 import MainCard from 'components/MainCard';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
@@ -213,16 +213,11 @@ const DamageCaseMngForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="피해사례" />
 
-                <MainCard sx={{ mt: 2 }} content={false}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <Stack spacing={10} className={cx('borderTitle')}>
-                                카테고리
-                            </Stack>
-                        </Grid>
-
-                        <Grid item xs={8} sm={4}>
-                            <FormControl sx={{ maxWidth: 250 }} size="medium" required fullWidth>
+                <div className={cx('common-grid--layout')}>
+                    <table>
+                        <tr>
+                            <th className={'tb--title'}>카테고리</th>
+                            <td>
                                 <Select name="category" label="카테고리" value={category} onChange={handleChange}>
                                     <MenuItem value="">선택</MenuItem>
                                     <MenuItem value="피싱">피싱</MenuItem>
@@ -231,67 +226,38 @@ const DamageCaseMngForm = () => {
                                     <MenuItem value="도용">도용</MenuItem>
                                     <MenuItem value="기타">기타</MenuItem>
                                 </Select>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl size="medium">
-                                <Stack spacing={10} className={cx('borderTitle')}>
-                                    제목
-                                </Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs>
-                            <TextField
-                                id="filled-hidden-label-small"
-                                type="text"
-                                size="medium"
-                                value={title}
-                                name="title"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                placeholder="제목을 입력하세요."
-                                fullWidth
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl size="medium">
-                                <Stack spacing={10} className={cx('borderTitle')}>
-                                    내용
-                                </Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs>
-                            <FormControl>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>제목</th>
+                            <td>
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="medium"
+                                    value={title}
+                                    name="title"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    placeholder="제목을 입력하세요."
+                                    fullWidth
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>내용</th>
+                            <td>
                                 <JoditEditor
                                     ref={editorRef}
                                     value={content}
                                     config={config}
                                     onBlur={(newContent) => setContent(newContent)}
-                                    className="editor"
-                                    fullWidth
                                 />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    {createAccountName && (
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="medium">
-                                    <Stack spacing={0}>등록자</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs mr={1}>
-                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="medium" required fullWidth>
-                                    {createAccountName}
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    )}
-                </MainCard>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
                 <TopInputLayout>
                     <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
                         목록
@@ -323,6 +289,22 @@ const DamageCaseMngForm = () => {
                         </ButtonLayout>
                     )}
                 </TopInputLayout>
+                <MainCard sx={{ mt: 2 }} content={false}>
+                    {createAccountName && (
+                        <Grid container spacing={3}>
+                            <Grid item xs={8} sm={1.5}>
+                                <FormControl sx={{ m: 1, minHeight: 30 }} size="medium">
+                                    <Stack spacing={0}>등록자</Stack>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs mr={1}>
+                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="medium" required fullWidth>
+                                    {createAccountName}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    )}
+                </MainCard>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>
