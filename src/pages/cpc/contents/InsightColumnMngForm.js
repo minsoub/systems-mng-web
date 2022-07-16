@@ -19,7 +19,7 @@ import ErrorScreen from 'components/ErrorScreen';
 import ThumbnailAttach from './ThumbnailAttach';
 import JoditEditor from 'jodit-react';
 import { WithContext as ReactTags } from 'react-tag-input';
-import './ReactTags.css';
+import './ReactTags.scss';
 
 const InsightColumnMngForm = () => {
     const navigate = useNavigate();

@@ -18,7 +18,7 @@ import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import JoditEditor from 'jodit-react';
 import { Tag, WithContext as ReactTags } from 'react-tag-input';
-import './ReactTags.css';
+import './ReactTags.scss';
 
 const NoticeMngForm = () => {
     const navigate = useNavigate();

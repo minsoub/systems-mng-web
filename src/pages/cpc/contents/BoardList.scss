@@ -1,4 +1,3 @@
-
 .div_thumbnail {
     height: 240px;
     overflow: hidden;
@@ -30,14 +29,33 @@
     margin-left: 0;
 }
 
-.jodit-container {
-    margin-bottom: 3rem;
-}
-
 .img_thumbnail {
     height: 100% !important;
     object-fit: cover;
 }
 .css-1i5ha64-MuiDataGrid-root .MuiDataGrid-row {
     cursor: pointer;
+}
+
+.common-grid--layout {
+    width: 100%;
+    margin-bottom: 3rem;
+    table {
+        width: 100%;
+    }
+    tr {
+        border: 1px solid #f0f0f0;
+        .tb--title {
+            padding: 2rem;
+            background-color: #dcdcdc;
+            width: 10%;
+        }
+        td {
+            width: 90%;
+            border: 1px solid #f0f0f0;
+            input {
+                width: 100%;
+            }
+        }
+    }
 }
