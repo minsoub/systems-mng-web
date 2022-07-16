@@ -22,7 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FoundationApi from 'apis/lrc/project/foundationapi';
 import StatusApi from 'apis/lrc/status/statusapi';
 import LineApis from 'apis/lrc/line/lineapi';
-
+// import ErrorScreen from 'components/ErrorScreen';
 const useStyles = makeStyles({
     tableRow: {
         height: 25
@@ -83,6 +83,11 @@ const ProjectMng = (props) => {
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
     ////////////////////////////////////////////////////
 
     // 출력 정보 조회 데이터
@@ -476,7 +481,7 @@ const ProjectMng = (props) => {
     // };
 
     const numberCheck = (e) => {
-        if (!/[0-9]/.test(e.key)) {
+        if (!/[0-9.]/.test(e.key)) {
             e.preventDefault();
         }
     };
@@ -636,27 +641,47 @@ const ProjectMng = (props) => {
     const icoSave = () => {
         if (confirm('저장하시겠습니까?')) {
             let ico_info_list = [];
-            icoList.map((item, index) => {
-                if (item.market_info === 'KRW') {
-                    let ico = {
-                        id: item.id,
-                        project_id: projectId,
-                        market_info: 'KRW',
-                        price: refPriceKRW.current.value,
-                        ico_date: krw_ico_date
-                    };
-                    ico_info_list.push(ico);
-                } else if (item.market_info === 'BTC') {
-                    let ico = {
-                        id: item.id,
-                        project_id: projectId,
-                        market_info: 'BTC',
-                        price: refPriceBTC.current.value,
-                        ico_date: btc_ico_date
-                    };
-                    ico_info_list.push(ico);
-                }
-            });
+            // 상장정보가 초기에는 데이터가 없다.
+            if (icoList.length === 0) {
+                let ico = {
+                    id: '',
+                    project_id: projectId,
+                    market_info: 'KRW',
+                    price: refPriceKRW.current.value,
+                    ico_date: krw_ico_date
+                };
+                ico_info_list.push(ico);
+                ico = {
+                    id: '',
+                    project_id: projectId,
+                    market_info: 'BTC',
+                    price: refPriceBTC.current.value,
+                    ico_date: btc_ico_date
+                };
+                ico_info_list.push(ico);
+            } else {
+                icoList.map((item, index) => {
+                    if (item.market_info === 'KRW') {
+                        let ico = {
+                            id: item.id,
+                            project_id: projectId,
+                            market_info: 'KRW',
+                            price: refPriceKRW.current.value,
+                            ico_date: krw_ico_date
+                        };
+                        ico_info_list.push(ico);
+                    } else if (item.market_info === 'BTC') {
+                        let ico = {
+                            id: item.id,
+                            project_id: projectId,
+                            market_info: 'BTC',
+                            price: refPriceBTC.current.value,
+                            ico_date: btc_ico_date
+                        };
+                        ico_info_list.push(ico);
+                    }
+                });
+            }
             let saveData = { ico_info_list: ico_info_list };
             console.log(saveData);
             updateIcoList(projectId, saveData);
@@ -855,7 +880,7 @@ const ProjectMng = (props) => {
                             <TableCell component="th" scope="row">
                                 <FormControl sx={{ m: 0, minWidth: 140 }} size="small">
                                     <Select name="business_code" value={business_code} onChange={handleChange}>
-                                        <MenuItem value="true">사용</MenuItem>
+                                        <MenuItem value="">선택</MenuItem>
                                         {businessList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
                                                 {item.name}
@@ -867,7 +892,7 @@ const ProjectMng = (props) => {
                             <TableCell component="th" scope="row">
                                 <FormControl sx={{ m: 0, minWidth: 124 }} size="small">
                                     <Select name="network_code" value={network_code} onChange={handleChange}>
-                                        <MenuItem value="true">사용</MenuItem>
+                                        <MenuItem value="">선택</MenuItem>
                                         {networkList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
                                                 {item.name}
@@ -884,8 +909,8 @@ const ProjectMng = (props) => {
                             <TableCell component="th" scope="row">
                                 <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
                                     <TextField
-                                        id="start_date"
-                                        name="start_date"
+                                        id="create_date"
+                                        name="create_date"
                                         size="small"
                                         value={create_date}
                                         onBlur={handleBlur}
@@ -1377,7 +1402,7 @@ const ProjectMng = (props) => {
                             </Table>
                         )}
                     </MainCard>
-
+                    {/* <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} /> */}
                     {/* <Grid item xs={8} sm={8}>
                         <FormControl sx={{ m: 0 }} fullWidth>
                             <TextField id="outlined-multiline-static" size="small" defaultValue="Default Value" />

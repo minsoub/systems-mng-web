@@ -138,8 +138,7 @@ const ProjectHistory = (props) => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            let searchCondition = { site_id: site_id, is_use: is_use, type: type };
-
+            //let searchCondition = { site_id: site_id, is_use: is_use, type: type };
             //navigate(`/authmng/reg/${rowData.id}`);
         }
     };
