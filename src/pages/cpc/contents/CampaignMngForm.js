@@ -10,11 +10,12 @@ import ErrorScreen from 'components/ErrorScreen';
 import ThumbnailAttach from './ThumbnailAttach';
 import JoditEditor from 'jodit-react';
 import { WithContext as ReactTags } from 'react-tag-input';
-import './ReactTags.css';
+import './ReactTags.scss';
 import InputLayout from '../../../components/Common/InputLayout';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import HeaderTitle from '../../../components/HeaderTitle';
+import cx from 'classnames';
 
 const CampaignMngForm = () => {
     const navigate = useNavigate();
@@ -283,15 +284,11 @@ const CampaignMngForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="안전거래 캠페인" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="안전거래 캠페인" />
 
-                <MainCard sx={{ mt: 2 }} content={false}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>제목</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs>
-                            <FormControl sx={{ m: 0 }} size="small" required fullWidth>
+                <div className={cx('common-grid--layout')}>
+                    <table>
+                        <tr>
+                            <th className={'tb--title'}>제목</th>
+                            <td>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -303,32 +300,22 @@ const CampaignMngForm = () => {
                                     placeholder="제목을 입력하세요."
                                     fullWidth
                                 />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>썸네일 이미지</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs>
-                            <ThumbnailAttach
-                                thumbnail={
-                                    thumbnail && (thumbnail.indexOf('http') === -1 ? `${boardThumbnailUrl}/${thumbnail}` : thumbnail)
-                                }
-                                handleChange={handleFileChange}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>요약 설명</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs>
-                            <FormControl sx={{ mt: 1, mb: 1 }} size="small" required fullWidth>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>썸네일 이미지</th>
+                            <td>
+                                <ThumbnailAttach
+                                    thumbnail={
+                                        thumbnail && (thumbnail.indexOf('http') === -1 ? `${boardThumbnailUrl}/${thumbnail}` : thumbnail)
+                                    }
+                                    handleChange={handleFileChange}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>요약 설명</th>
+                            <td>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -341,34 +328,22 @@ const CampaignMngForm = () => {
                                     fullWidth
                                     multiline
                                 />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Stack spacing={0}>내용</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs>
-                            <FormControl sx={{ m: 0 }} fullWidth>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>내용</th>
+                            <td>
                                 <JoditEditor
                                     ref={editorRef}
                                     value={content}
                                     config={config}
                                     onBlur={(newContent) => setContent(newContent)}
                                 />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>해시태그</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs>
-                            <FormControl sx={{ mt: 1 }} size="small" required fullWidth>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>해시태그</th>
+                            <td>
                                 <ReactTags
                                     tags={tags}
                                     suggestions={suggestions}
@@ -381,9 +356,10 @@ const CampaignMngForm = () => {
                                     placeholder="태그 입력 후 엔터"
                                     autocomplete
                                 />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
+                            </td>
+                        </tr>
+                    </table>
+
                     {createAccountName && (
                         <Grid container spacing={3}>
                             <Grid item xs={8} sm={1.5}>
@@ -398,7 +374,8 @@ const CampaignMngForm = () => {
                             </Grid>
                         </Grid>
                     )}
-                </MainCard>
+                </div>
+
                 <TopInputLayout>
                     <InputLayout>
                         <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>

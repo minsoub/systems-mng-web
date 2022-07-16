@@ -5,6 +5,8 @@ import { Grid, Stack, Typography } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
+import cx from 'classnames';
+import './styles.scss';
 
 // assets
 
@@ -12,7 +14,7 @@ import MainCard from 'components/MainCard';
 
 const AnalyticLrcForm = ({ color, title, count, child, percentage, isLoss, extra }) => (
     <div>
-        <MainCard contentSX={{ p: 2.25 }}>
+        <MainCard contentSX={{ p: 2.25 }} className={cx('gridCardColor')}>
             <Stack spacing={0.5}>
                 <Typography variant="h4" color="textSecondary">
                     {title}
@@ -26,6 +28,7 @@ const AnalyticLrcForm = ({ color, title, count, child, percentage, isLoss, extra
                 </Grid>
             </Stack>
         </MainCard>
+
         <Grid container spacing={0} sx={{ mt: 1 }}></Grid>
         {child.map((item, index) => (
             <div>

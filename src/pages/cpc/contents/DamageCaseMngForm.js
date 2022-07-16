@@ -12,7 +12,7 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from '../../../components/HeaderTitle';
 import cx from 'classnames';
-import './BoardList.css';
+import './BoardList.scss';
 
 const DamageCaseMngForm = () => {
     const navigate = useNavigate();

@@ -106,3 +106,27 @@
 .css-15ezkgb-MuiPaper-root-MuiCard-root {
     box-shadow: none;
 }
+
+.common-grid--layout {
+    width: 100%;
+    margin-bottom: 3rem;
+    table {
+        width: 100%;
+    }
+    tr {
+        border: 1px solid #f0f0f0;
+        .tb--title {
+            padding: 2rem;
+            background-color: #dcdcdc;
+            width: 10%;
+        }
+        td {
+            width: 90%;
+            border: 1px solid #f0f0f0;
+            input {
+                width: 100%;
+                border: none;
+            }
+        }
+    }
+}
