@@ -15,8 +15,14 @@ import {
     Typography,
     FormControl,
     Select,
-    MenuItem
+    MenuItem,
+    Table,
+    TableBody,
+    TableContainer,
+    TableHead,
+    TableRow
 } from '@mui/material';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import MainCard from 'components/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
@@ -34,21 +40,24 @@ const AccessMngPage = () => {
             headerName: 'ID',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 180
         },
         {
             field: 'name',
             headerName: '사용자명',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 100
         },
         {
             field: 'email',
             headerName: '이메일주소',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 220
         },
         {
             field: 'role_management_name',
@@ -62,14 +71,16 @@ const AccessMngPage = () => {
             headerName: '상태',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 150
         },
         {
             field: 'create_date',
             headerName: '생성날짜',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 140
         }
     ];
 
@@ -183,7 +194,7 @@ const AccessMngPage = () => {
     // new
     const newClick = () => {
         console.log('called register form');
-        navigate('/account/reg');
+        navigate('/access/reg');
     };
 
     // delete
@@ -308,7 +319,7 @@ const AccessMngPage = () => {
                         </Grid>
                     </Grid>
                 </MainCard>
-                <MainCard sx={{ mt: 2 }} content={false}>
+                <MainCard sx={{ mt: 2, height: 750 }} content={false}>
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -316,6 +327,7 @@ const AccessMngPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
+                        height={750}
                     />
                 </MainCard>
                 {/* <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} /> */}

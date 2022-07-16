@@ -481,11 +481,11 @@ const RoleMappingForm = () => {
                 </MainCard>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item md={4}>
-                        <MainCard sx={{ mt: 0 }} content={false}>
+                        <MainCard sx={{ mt: 3 }} content={false}>
                             <DefaultDataGrid
                                 columns={columns}
                                 rows={dataGridRows}
-                                height={700}
+                                height={840}
                                 handlePageChange={handlePage}
                                 handleGridClick={handleClick}
                                 handleGridDoubleClick={handleDoubleClick}
@@ -500,7 +500,7 @@ const RoleMappingForm = () => {
                             </Stack>
                         </Grid>
                         <Stack spacing={5}>
-                            <MainCard sx={{ mt: 2 }} content={false}>
+                            <MainCard sx={{ mt: 2, height: 330 }} content={false}>
                                 <CheckBoxDataGrid
                                     columns={regColumns}
                                     rows={dataGridRegisterRows}
@@ -508,7 +508,7 @@ const RoleMappingForm = () => {
                                     //handleGridClick={handleClick}
                                     handleGridDoubleClick={handleDoubleClick}
                                     selectionChange={handleSelectionRegisterChange}
-                                    height={300}
+                                    height={330}
                                 />
                             </MainCard>
                         </Stack>
@@ -562,7 +562,7 @@ const RoleMappingForm = () => {
                             </Grid>
                         </Stack>
                         <Stack spacing={5}>
-                            <MainCard sx={{ mt: 2 }} content={false}>
+                            <MainCard sx={{ mt: 2, height: 330 }} content={false}>
                                 <CheckBoxDataGrid
                                     columns={searchColumns}
                                     rows={dataGridSearchRows}
@@ -570,7 +570,7 @@ const RoleMappingForm = () => {
                                     //handleGridClick={handleClick}
                                     handleGridDoubleClick={handleDoubleClick}
                                     selectionChange={handleSelectionSearchChange}
-                                    height={220}
+                                    height={330}
                                 />
                             </MainCard>
                         </Stack>

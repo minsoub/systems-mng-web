@@ -15,8 +15,14 @@ import {
     Typography,
     FormControl,
     Select,
-    MenuItem
+    MenuItem,
+    Table,
+    TableBody,
+    TableContainer,
+    TableHead,
+    TableRow
 } from '@mui/material';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import MainCard from 'components/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
@@ -35,42 +41,48 @@ const AccountMng = () => {
             headerName: '사용자명',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 120
         },
         {
             field: 'email',
             headerName: '이메일주소',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 220
         },
         {
             field: 'role_management_name',
-            headerName: '구분',
+            headerName: '운영권한',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'left',
+            maxWidth: 800
         },
         {
             field: 'last_login_date',
             headerName: 'Last Login Date',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 160
         },
         {
-            field: 'valid_start_date',
-            headerName: '만료일자',
+            field: 'create_date',
+            headerName: '생성일자',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 160
         },
         {
             field: 'status',
             headerName: '상태',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 150
         }
     ];
 
@@ -225,7 +237,123 @@ const AccountMng = () => {
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
-                <MainCard sx={{ mt: 1 }}>
+                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                    <Table
+                        fixedheader={false}
+                        sx={{
+                            [`& .${tableCellClasses.root}`]: {
+                                borderBottom: 'none'
+                            }
+                        }}
+                        style={{ border: 0, width: '100%', tableLayout: 'auto' }}
+                        aria-label="simple table"
+                    >
+                        <TableRow>
+                            <TableCell style={{ width: '13%' }} align="center" component="th" scope="row">
+                                검색조건
+                            </TableCell>
+                            <TableCell align="center" component="th" scope="row">
+                                <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
+                                    <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
+                                        <MenuItem value="true">사용</MenuItem>
+                                        <MenuItem value="false">미사용</MenuItem>
+                                        <MenuItem value="">전체</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </TableCell>
+                            <TableCell style={{ width: '30%' }} align="left" component="th" scope="row">
+                                <FormControl sx={{ m: 0.5, minWidth: 350, maxHeight: 25 }} size="small">
+                                    <OutlinedInput
+                                        fullWidth
+                                        id="word"
+                                        type="text"
+                                        value={keyword}
+                                        name="word"
+                                        placeholder=""
+                                        onChange={keywordChanged}
+                                    />
+                                </FormControl>
+                            </TableCell>
+                            <TableCell style={{ width: '52%' }} align="left" component="th" scope="row">
+                                &nbsp;
+                            </TableCell>
+                            <TableCell style={{ width: '8%' }} align="right" component="th" scope="row">
+                                <Table
+                                    fixedheader={false}
+                                    sx={{
+                                        [`& .${tableCellClasses.root}`]: {
+                                            borderBottom: 'none'
+                                        }
+                                    }}
+                                    style={{ border: 0, width: '100%', tableLayout: 'auto' }}
+                                    aria-label="simple table"
+                                >
+                                    <TableRow>
+                                        <TableCell align="right" component="th" scope="row">
+                                            <FormControl sx={{ m: 1 }} size="small">
+                                                <Button
+                                                    disableElevation
+                                                    disabled={isSubmitting}
+                                                    size="small"
+                                                    type="submit"
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={searchClick}
+                                                >
+                                                    검색
+                                                </Button>
+                                            </FormControl>
+                                        </TableCell>
+                                        <TableCell align="right" component="th" scope="row">
+                                            <FormControl sx={{ m: 1 }} size="small">
+                                                <Button
+                                                    disableElevation
+                                                    size="small"
+                                                    type="submit"
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={newClick}
+                                                >
+                                                    신규
+                                                </Button>
+                                            </FormControl>
+                                        </TableCell>
+                                        <TableCell align="right" component="th" scope="row">
+                                            <FormControl sx={{ m: 1 }} size="small">
+                                                <Button
+                                                    disableElevation
+                                                    size="small"
+                                                    type="submit"
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={deleteClick}
+                                                >
+                                                    삭제
+                                                </Button>
+                                            </FormControl>
+                                        </TableCell>
+                                        <TableCell align="right" component="th" scope="row">
+                                            <FormControl sx={{ m: 1 }} size="small">
+                                                <Button
+                                                    disableElevation
+                                                    size="small"
+                                                    type="submit"
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={listClick}
+                                                >
+                                                    리스트
+                                                </Button>
+                                            </FormControl>
+                                        </TableCell>
+                                    </TableRow>
+                                </Table>
+                            </TableCell>
+                        </TableRow>
+                    </Table>
+                </MainCard>
+
+                {/* <MainCard sx={{ mt: 1 }}>
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid container spacing={0} sx={{ mt: 0 }}>
                             <Grid item xs={8} sm={2}>
@@ -310,8 +438,8 @@ const AccountMng = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                </MainCard>
-                <MainCard sx={{ mt: 2 }} content={false}>
+                </MainCard> */}
+                <MainCard sx={{ mt: 2, height: 750 }} content={false}>
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -319,6 +447,7 @@ const AccountMng = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
+                        height={750}
                     />
                 </MainCard>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

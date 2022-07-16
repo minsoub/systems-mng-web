@@ -18,8 +18,14 @@ import {
     Select,
     MenuItem,
     FormControlLabel,
-    Checkbox
+    Checkbox,
+    Table,
+    TableBody,
+    TableContainer,
+    TableHead,
+    TableRow
 } from '@mui/material';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import MainCard from 'components/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
@@ -34,32 +40,36 @@ const SiteLogPage = () => {
     let isSubmitting = false;
     const columns = [
         {
-            field: 'id',
+            field: 'no',
             headerName: 'SN',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 60
         },
         {
             field: 'email',
             headerName: 'ID',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 200
         },
         {
             field: 'ip',
             headerName: '접속 IP',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 100
         },
         {
             field: 'menu_name',
             headerName: '메뉴',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 200
         },
         {
             field: 'method',
@@ -67,15 +77,14 @@ const SiteLogPage = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            width: 60
+            maxWidth: 60
         },
         {
             field: 'uri',
             headerName: 'URI',
             flex: 1,
             headerAlign: 'center',
-            align: 'center',
-            width: 200
+            align: 'left'
         },
         // {
         //     field: 'parameter',
@@ -89,7 +98,8 @@ const SiteLogPage = () => {
             headerName: '발생일시',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 140
         }
     ];
     const navigate = useNavigate();
@@ -120,12 +130,10 @@ const SiteLogPage = () => {
 
     // onload
     useEffect(() => {
-        //siteSearch(true, '');
-        //roleList();
-        // 기본 날자 입력
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
-        searchClick();
+        //searchClick();
+        logLrcSearch(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'), '');
     }, []);
 
     // transaction error 처리
@@ -149,7 +157,21 @@ const SiteLogPage = () => {
         switch (responseData.transactionId) {
             case 'logList':
                 if (responseData.data.data && responseData.data.data.length > 0) {
-                    setDataGridRows(responseData.data.data);
+                    let listData = [];
+                    responseData.data.data.map((item, index) => {
+                        let d = {
+                            no: index + 1,
+                            id: item.id,
+                            email: item.email,
+                            ip: item.ip,
+                            menu_name: item.menu_name,
+                            method: item.method,
+                            uri: item.uri,
+                            create_date: item.create_date
+                        };
+                        listData.push(d);
+                    });
+                    setDataGridRows(listData); // responseData.data.data);
                 } else {
                     setDataGridRows([]);
                 }
@@ -239,15 +261,22 @@ const SiteLogPage = () => {
                     </Grid>
                     <Grid container spacing={2}></Grid>
                 </Grid>
-                <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>일시</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
+                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                    <Table
+                        fixedheader={false}
+                        sx={{
+                            [`& .${tableCellClasses.root}`]: {
+                                borderBottom: 'none'
+                            }
+                        }}
+                        style={{ border: 0, width: '100%', tableLayout: 'auto' }}
+                        aria-label="simple table"
+                    >
+                        <TableRow>
+                            <TableCell align="center" component="th" scope="row">
+                                일시
+                            </TableCell>
+                            <TableCell style={{ width: '10%' }} align="left" component="th" scope="row">
                                 <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
                                     <TextField
                                         id="start_date"
@@ -257,14 +286,14 @@ const SiteLogPage = () => {
                                         onChange={handleChange}
                                         type="date"
                                         defaultValue=""
-                                        sx={{ width: 140 }}
+                                        sx={{ width: 160 }}
                                     />
                                 </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.3}>
-                                ~{' '}
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
+                            </TableCell>
+                            <TableCell style={{ width: '5' }} align="left" component="th" scope="row">
+                                ~
+                            </TableCell>
+                            <TableCell align="left" component="th" scope="row">
                                 <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
                                     <TextField
                                         id="end_date"
@@ -274,12 +303,12 @@ const SiteLogPage = () => {
                                         onChange={handleChange}
                                         type="date"
                                         defaultValue=""
-                                        sx={{ width: 140 }}
+                                        sx={{ width: 160 }}
                                     />
                                 </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <FormControl sx={{ m: 0, minHeight: 25, minWidth: 240 }} size="small">
+                            </TableCell>
+                            <TableCell align="left" component="th" scope="row">
+                                <FormControl sx={{ m: 0, minHeight: 25, minWidth: 340 }} size="small">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -292,9 +321,8 @@ const SiteLogPage = () => {
                                         fullWidth
                                     />
                                 </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.7}></Grid>
-                            <Grid item xs={8} sm={0.6}>
+                            </TableCell>
+                            <TableCell style={{ width: '5%' }} align="right" component="th" scope="row">
                                 <FormControl sx={{ m: 1 }} size="small">
                                     <Button
                                         disableElevation
@@ -307,9 +335,8 @@ const SiteLogPage = () => {
                                         검색
                                     </Button>
                                 </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={0.6}>
+                            </TableCell>
+                            <TableCell style={{ width: '5%' }} align="right" component="th" scope="row">
                                 <FormControl sx={{ m: 1 }} size="small">
                                     <Button
                                         disableElevation
@@ -322,11 +349,12 @@ const SiteLogPage = () => {
                                         Excel
                                     </Button>
                                 </FormControl>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                            </TableCell>
+                        </TableRow>
+                    </Table>
                 </MainCard>
-                <MainCard sx={{ mt: 2 }} content={false}>
+
+                <MainCard sx={{ mt: 2, height: 750 }} content={false}>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -334,6 +362,7 @@ const SiteLogPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
+                        height={750}
                     />
                 </MainCard>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

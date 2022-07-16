@@ -632,7 +632,7 @@ const AccountRegForm = () => {
                                 </FormControl>
                             </Grid>
                         </Grid>
-                        <Grid container spacing={4}>
+                        <Grid container spacing={3}>
                             <Grid item xs={8} sm={1.5}>
                                 <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                     <Stack spacing={0}> Password</Stack>
@@ -658,8 +658,8 @@ const AccountRegForm = () => {
                                     <Stack spacing={0}>계정상태</Stack>
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={8} sm={3}>
-                                <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
+                            <Grid item xs={8} sm={5}>
+                                <FormControl sx={{ m: 0, minWidth: 180 }} size="small">
                                     <Select name="status" label="계정상태" value={status} onChange={statusChanged}>
                                         <MenuItem value="NORMAL">정상</MenuItem>
                                         <MenuItem value="INIT_REQUEST">초기화요청</MenuItem>
@@ -667,6 +667,7 @@ const AccountRegForm = () => {
                                         <MenuItem value="INIT_COMPLETE">초기화완료</MenuItem>
                                         <MenuItem value="INIT_REGISTER">신규등록</MenuItem>
                                         <MenuItem value="DENY_ACCESS">중지상태</MenuItem>
+                                        <MenuItem value="CLOSED_ACCOUNT">계정잠금</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>
