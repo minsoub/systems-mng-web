@@ -140,6 +140,30 @@ legend {
     display: none;
 }
 
+// 상세 글쓰기 공통 레이아웃
+.common-grid--layout {
+    width: 100%;
+    margin-bottom: 3rem;
+    table {
+        width: 100%;
+    }
+    tr {
+        border: 1px solid #f0f0f0;
+        th {
+            padding: 2rem;
+            background-color: #dcdcdc;
+            width: 10%;
+        }
+        td {
+            width: 90%;
+            border: 1px solid #f0f0f0;
+            input {
+                width: 100%;
+            }
+        }
+    }
+}
+
 // 1024 해상도에서도 width Full로 차도록
 @media (min-width: 1024px) {
     .css-1ol3ns7-MuiGrid-root {

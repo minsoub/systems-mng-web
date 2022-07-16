@@ -2,17 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Typography,
-    FormControl
-} from '@mui/material';
+import { Button, Grid, Stack, TextField, Typography, FormControl } from '@mui/material';
 import MainCard from 'components/MainCard';
 import BlockChainNewsApi from 'apis/cpc/board/newsapi';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from '../../../components/HeaderTitle';
+import cx from 'classnames';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import InputLayout from '../../../components/Common/InputLayout';
 
 const BlockChainNewsMngForm = () => {
     const navigate = useNavigate();
@@ -189,191 +187,127 @@ const BlockChainNewsMngForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">콘텐츠 관리(블록체인 뉴스)</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 콘텐츠 관리 &gt; 블록체인 뉴스</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
-                <MainCard sx={{ mt: 2 }} content={false}>
-                    <Grid container spacing={3} mt={1}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>언론사</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={newspaper}
-                                    name="newspaper"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="언론사를 입력하세요."
-                                    fullWidth
-                                />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
+                <HeaderTitle titleNm="블록체인 뉴스" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="블록체인 뉴스" />
+
+                <table className={cx('common-grid--layout')}>
+                    <tr>
+                        <th>언론사</th>
+                        <td>
+                            <TextField
+                                id="filled-hidden-label-small"
+                                type="text"
+                                size="small"
+                                value={newspaper}
+                                name="newspaper"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                placeholder="언론사를 입력하세요."
+                                fullWidth
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>뉴스 제목</th>
+                        <td>
+                            <TextField
+                                id="filled-hidden-label-small"
+                                type="text"
+                                size="small"
+                                value={title}
+                                name="title"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                placeholder="뉴스 제목을 입력하세요."
+                                fullWidth
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>썸네일 이미지 링크</th>
+                        <td>
+                            <TextField
+                                id="filled-hidden-label-small"
+                                type="text"
+                                size="small"
+                                value={thumbnail_url}
+                                name="thumbnail_url"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                placeholder="썸네일 이미지 링크를 입력하세요."
+                                fullWidth
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>뉴스 게시일</th>
+                        <td>
+                            <TextField
+                                id="posting_date"
+                                name="posting_date"
+                                value={posting_date}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                type="date"
+                                defaultValue=""
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>뉴스 링크</th>
+                        <td>
+                            <TextField
+                                id="filled-hidden-label-small"
+                                type="text"
+                                size="small"
+                                value={link_url}
+                                name="link_url"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                placeholder="뉴스 링크를 입력하세요."
+                                fullWidth
+                            />
+                        </td>
+                    </tr>
+                </table>
+                {createAccountName && (
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={1.5}>
                             <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>뉴스 제목</Stack>
+                                <Stack spacing={0}>등록자</Stack>
                             </FormControl>
                         </Grid>
                         <Grid item xs mr={1}>
                             <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={title}
-                                    name="title"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="뉴스 제목을 입력하세요."
-                                    fullWidth
-                                />
+                                {createAccountName}
                             </FormControl>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>썸네일 이미지 링크</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={thumbnail_url}
-                                    name="thumbnail_url"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="썸네일 이미지 링크를 입력하세요."
-                                    fullWidth
-                                />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>뉴스 게시일</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
-                                <TextField
-                                    id="posting_date"
-                                    name="posting_date"
-                                    value={posting_date}
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    type="date"
-                                    defaultValue=""
-                                    sx={{ width: 140 }}
-                                />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>뉴스 링크</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs mr={1}>
-                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={link_url}
-                                    name="link_url"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="뉴스 링크를 입력하세요."
-                                    fullWidth
-                                />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    {createAccountName && (
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>등록자</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs mr={1}>
-                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
-                                    {createAccountName}
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    )}
-                </MainCard>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item xs={8} sm={0.8}>
-                        <FormControl sx={{ m: 1 }} size="small">
-                            <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
-                                목록
-                            </Button>
-                        </FormControl>
-                    </Grid>
+                )}
+                <TopInputLayout container alignItems="center" justifyContent="space-between">
+                    <InputLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            목록
+                        </Button>
+                    </InputLayout>
+
                     {!id && (
-                        <Grid item xs={8} sm={0.6}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={addClick}>
-                                    등록
-                                </Button>
-                            </FormControl>
-                        </Grid>
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addClick}>
+                                등록
+                            </Button>
+                        </ButtonLayout>
                     )}
                     {id && (
-                        <Grid container xs={8} direction="row" justifyContent="flex-end" alignItems="center">
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={deleteClick}
-                                    >
-                                        삭제
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={saveClick}
-                                    >
-                                        저장
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={deleteClick}>
+                                삭제
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
+                                저장
+                            </Button>
+                        </ButtonLayout>
                     )}
-                </Grid>
+                </TopInputLayout>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>
