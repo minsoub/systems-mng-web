@@ -5,7 +5,6 @@ import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import './style.scss';
 import cx from 'classnames';
-import { Empty } from 'antd';
 
 function customCheckbox(theme) {
     return {
@@ -126,7 +125,7 @@ export function CheckBoxDataGrid({ columns, rows, handlePageChange, handleGridCl
     // 글 1개 이상이면
     if (rows) {
         return (
-            <div className={cx(rows.length >= 1 ? 'gridLayout' : 'noGridLayout')}>
+            <div className={cx('gridLayout')}>
                 <StyledDataGrid
                     checkboxSelection
                     pageSize={20}
@@ -151,7 +150,7 @@ export function CheckBoxDataGrid({ columns, rows, handlePageChange, handleGridCl
             </div>
         );
     } else {
-        return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+        return null;
     }
 }
 
