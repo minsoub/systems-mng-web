@@ -23,6 +23,10 @@ const OtpSimpleForm = ({ result }) => {
         if (requestError) {
             console.log('>> requestError <<');
             console.log(requestError);
+            if (requestError.message === 'INVALID_OTP_NUMER') {
+                alert('OTP Number가 잘 못되었습니다!!!');
+                return;
+            }
             alert('error');
         }
     }, [requestError]);
@@ -37,6 +41,12 @@ const OtpSimpleForm = ({ result }) => {
                 console.log('otplogin transaction id => ');
                 console.log(responseData);
                 if (responseData.data) {
+                    // 임시 패스워드 접근
+                    if (responseData.data.status === 'INIT_COMPLETE') {
+                        console.log('임시 패스워드로 인한 변경 작업 화면 호출');
+                        navigate('/tmppassword', { state: responseData.data });
+                        return;
+                    }
                     // Token 정보 저장
                     const authData = {
                         siteId: result.site_id,
@@ -106,7 +116,8 @@ const OtpSimpleForm = ({ result }) => {
                 site_id: result.site_id,
                 otp_no: otpNumber,
                 token: result.token,
-                encode_key: result.otp_info.encode_key
+                encode_key: result.otp_info.encode_key,
+                status: result.status
             };
             actionOtp(data);
             // 로그인 실패시

@@ -79,7 +79,7 @@ const AccessRegForm = () => {
         responseData,
         requestError,
         loading,
-        { accountMngDetail, accountSearch, accountUpdate, accountInsert, accountMngRole, accountRoleUpdate }
+        { accountMngDetail, accountSearch, accountUpdate, accountInsert, accountMngRole, accountRolesUpdate }
     ] = AccountApis();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
     const [resRoleData, resRoleError, resRoleLoading, { roleComboSearch }] = RoleApi();
@@ -305,11 +305,11 @@ const AccessRegForm = () => {
                 break;
             case 'insertData':
                 alert('등록을 완료하였습니다!!!');
-                navigate('/account/list');
+                navigate('/access/list');
                 break;
             case 'updateData':
                 alert('수정을 완료하였습니다!!!');
-                navigate('/account/list');
+                navigate('/access/list');
                 break;
             case 'deleteDatas':
                 console.log('deleteData');
@@ -371,7 +371,7 @@ const AccessRegForm = () => {
 
     // list
     const listClick = () => {
-        navigate('/account/list');
+        navigate('/access/list');
     };
     // 입력 데이터를 저장한다.
     const saveClick = () => {
@@ -549,7 +549,7 @@ const AccessRegForm = () => {
             role_management_id: roles
         };
         console.log(requestData);
-        accountRoleUpdate(id, requestData);
+        accountRolesUpdate(id, requestData);
     };
 
     return (
@@ -626,7 +626,7 @@ const AccessRegForm = () => {
                                 </FormControl>
                             </Grid>
                         </Grid>
-                        <Grid container spacing={4}>
+                        <Grid container spacing={3}>
                             <Grid item xs={8} sm={1.5}>
                                 <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
                                     <Stack spacing={0}> Password</Stack>
@@ -652,8 +652,8 @@ const AccessRegForm = () => {
                                     <Stack spacing={0}>계정상태</Stack>
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={8} sm={3}>
-                                <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
+                            <Grid item xs={8} sm={5}>
+                                <FormControl sx={{ m: 0, minWidth: 180 }} size="small">
                                     <Select name="status" label="계정상태" value={status} onChange={statusChanged}>
                                         <MenuItem value="NORMAL">정상</MenuItem>
                                         <MenuItem value="INIT_REQUEST">초기화요청</MenuItem>
@@ -661,6 +661,7 @@ const AccessRegForm = () => {
                                         <MenuItem value="INIT_COMPLETE">초기화완료</MenuItem>
                                         <MenuItem value="INIT_REGISTER">신규등록</MenuItem>
                                         <MenuItem value="DENY_ACCESS">중지상태</MenuItem>
+                                        <MenuItem value="CLOSED_ACCOUNT">계정잠금</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>
@@ -697,6 +698,48 @@ const AccessRegForm = () => {
                                 />
                             </Grid>
                         </Grid>
+                        <Grid container spacing={1} sx={{ m: 0 }}>
+                            <Grid item xs={8} sm={9.5}></Grid>
+                            <Grid item xs={8} sm={2.5}>
+                                <Stack direction="row" spacing={1}>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="small"
+                                        type="button"
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={saveClick}
+                                    >
+                                        저장하기
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="small"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={newClick}
+                                    >
+                                        신규
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="small"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={listClick}
+                                    >
+                                        리스트
+                                    </Button>
+                                </Stack>
+                            </Grid>
+                        </Grid>
+                    </MainCard>
+                    <MainCard sx={{ mt: 2 }}>
                         <Grid container spacing={3}>
                             <Grid item xs={8} sm={12}>
                                 <Stack spacing={2}>
@@ -816,46 +859,6 @@ const AccessRegForm = () => {
                                             </Grid>
                                         </Grid>
                                     </MainCard>
-                                </Stack>
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={3} sx={{ m: 0 }}>
-                            <Grid item xs={8} sm={9.5}></Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <Stack direction="row" spacing={1}>
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        size="small"
-                                        type="button"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={saveClick}
-                                    >
-                                        저장하기
-                                    </Button>
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        size="small"
-                                        type="button"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={newClick}
-                                    >
-                                        신규
-                                    </Button>
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        size="small"
-                                        type="button"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={listClick}
-                                    >
-                                        리스트
-                                    </Button>
                                 </Stack>
                             </Grid>
                         </Grid>

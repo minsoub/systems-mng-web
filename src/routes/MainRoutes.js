@@ -18,6 +18,7 @@ const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
 const OtpLogin = Loadable(lazy(() => import('pages/authentication/OtpLogin')));
 const OtpSimpleLogin = Loadable(lazy(() => import('pages/authentication/OtpSimpleLogin')));
+const TmpPasswordForm = Loadable(lazy(() => import('pages/authentication/TmpPasswordForm')));
 const AuthRegister = Loadable(lazy(() => import('pages/authentication/Register')));
 
 // render - utilities
@@ -132,6 +133,10 @@ const MainRoutes = [
             {
                 path: 'otpsimplelogin',
                 element: <OtpSimpleLogin />
+            },
+            {
+                path: 'tmppassword',
+                element: <TmpPasswordForm />
             },
             {
                 path: 'register',

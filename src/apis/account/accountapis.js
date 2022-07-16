@@ -88,6 +88,16 @@ const AccountApis = () => {
         });
     };
 
+    // 통합시스템 관리 - 접근 관리 수정 (롤정보 업데이트)
+    const updateRolesData = (id, data) => {
+        callApi('updateRoleData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/account/${id}/roles`,
+            requestConfig: data
+        });
+    };
+
     // 데이터 검색
     const getSearchMngData = (is_use, keyword) => {
         if (is_use === null) is_use = '';
@@ -199,6 +209,7 @@ const AccountApis = () => {
             accountMngDeletes: deleteMngAccounts,
             accountMngRole: getDetailRoleMng,
             accountRoleUpdate: updateRoleData,
+            accountRolesUpdate: updateRolesData,
             updatePasswordInfo: updatePasswordInfo,
             getAccessRole: getAccessRole
         }

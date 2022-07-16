@@ -42,6 +42,20 @@ const useAuthorized = () => {
             requestConfig: data
         });
     };
+
+    // 사용자 패스워드 수정
+    const passwordUpdate = (email, password) => {
+        callApi('passupdate', {
+            axiosInstance: axiosInstanceAuth,
+            method: 'post',
+            url: `/adm/passupdate`,
+            requestConfig: {
+                email: doEncrypt(email),
+                passwd: doEncrypt(password),
+                siteId: '628cfe073d11df86c8933a89'
+            }
+        });
+    };
     return [
         responseData,
         requestError,
@@ -49,7 +63,8 @@ const useAuthorized = () => {
         {
             actionLogin: siginIn,
             actionOtp: optLogin,
-            actionClear: otpClear
+            actionClear: otpClear,
+            actionPasswordUpdate: passwordUpdate
         }
     ];
 };
