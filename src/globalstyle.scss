@@ -114,7 +114,7 @@ html [type='button'],
 }
 
 // Input 윗 부분 실선
-legend {
+legend, .css-1in441m {
     display: none;
 }
 
@@ -157,6 +157,7 @@ legend {
         td {
             width: 90%;
             border: 1px solid #f0f0f0;
+            padding: 10px;
             input {
                 width: 100%;
             }

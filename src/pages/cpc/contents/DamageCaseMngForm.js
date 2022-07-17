@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import { Button, FormControl, Grid, MenuItem, Select, Stack, TextField } from '@mui/material';
-import MainCard from 'components/MainCard';
+import { Button, Grid, MenuItem, Select, TextField } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -104,12 +103,12 @@ const DamageCaseMngForm = () => {
                 setCategory(responseData.data.data.category);
                 setTitle(responseData.data.data.title);
                 setContent(responseData.data.data.contents);
-                setCreateAccountName(responseData.data.data.createAccountName);
+                setCreateAccountName(responseData.data.data.create_account_name);
                 break;
             case 'createBoard':
                 alert('등록되었습니다.');
                 setId(responseData.data.data.id);
-                setCreateAccountName(responseData.data.data.createAccountName);
+                setCreateAccountName(responseData.data.data.create_account_name);
                 break;
             case 'updateBoard':
                 alert('저장되었습니다.');
@@ -255,6 +254,14 @@ const DamageCaseMngForm = () => {
                                 />
                             </td>
                         </tr>
+                        {createAccountName && (
+                            <tr>
+                                <th className={'tb--title'}>등록자</th>
+                                <td>
+                                    {createAccountName}
+                                </td>
+                            </tr>
+                        )}
                     </table>
                 </div>
 
@@ -289,22 +296,6 @@ const DamageCaseMngForm = () => {
                         </ButtonLayout>
                     )}
                 </TopInputLayout>
-                <MainCard sx={{ mt: 2 }} content={false}>
-                    {createAccountName && (
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="medium">
-                                    <Stack spacing={0}>등록자</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs mr={1}>
-                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="medium" required fullWidth>
-                                    {createAccountName}
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    )}
-                </MainCard>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>
