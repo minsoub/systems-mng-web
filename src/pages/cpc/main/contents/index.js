@@ -89,7 +89,7 @@ const MainContents = () => {
                             <Tab label="가상자산 동향" value="1" />
                             <Tab label="블록체인 뉴스" value="2" disabled />
                             <Tab label="가상자산의 기초" value="3" />
-                            <Tab label="인사이트 칼럼 칼럼" value="4" />
+                            <Tab label="인사이트 칼럼" value="4" />
                         </TabList>
                     </Box>
                     {/* 가상자산 동향 */}

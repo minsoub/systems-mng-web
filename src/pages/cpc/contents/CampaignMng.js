@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import { Button, Grid } from '@mui/material';
@@ -15,6 +16,7 @@ import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
+import { setSearchData } from 'store/reducers/cpc/CampaignSearch';
 
 const CampaignMng = () => {
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
@@ -77,6 +79,9 @@ const CampaignMng = () => {
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoardList, deleteBoardList }] = BoardApi();
 
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.cpcCampaignSearchReducer);
+    const dispatch = useDispatch();
+
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
     // 그리드 목록 데이터
@@ -95,12 +100,30 @@ const CampaignMng = () => {
     const [period, setPeriod] = useState('1');
     const [keyword, setKeyword] = useState('');
 
+    // 상태 값
+    const [isSearch, setIsSearch] = useState(false);
+
     // onload
     useEffect(() => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
-        searchBoardMaster(boardMasterId);
+        setPeriod(1);
+
+        // reduce 상태값을 사용하여 검색을 수행한다.
+        if (reduceFromDate) setStartDate(reduceFromDate);
+        if (reduceToDate) setEndDate(reduceToDate);
+        if (reduceKeyword) setKeyword(reduceKeyword);
+        if (reducePeriod) setPeriod(reducePeriod);
+
+        setIsSearch(true);
     }, []);
+
+    useEffect(() => {
+        if (isSearch) {
+            searchBoardMaster(boardMasterId);
+            setIsSearch(false);
+        }
+    }, [isSearch]);
 
     // transaction error 처리
     useEffect(() => {
@@ -225,8 +248,8 @@ const CampaignMng = () => {
     // 초기화
     const clearClick = () => {
         console.log('clearClick called...');
-        setStartDate('');
-        setEndDate('');
+        setStartDate(moment().format('YYYY-MM-DD'));
+        setEndDate(moment().format('YYYY-MM-DD'));
         setPeriod('1');
         setKeyword('');
     };
@@ -240,6 +263,15 @@ const CampaignMng = () => {
             keyword
         };
         searchBoardList(boardMasterId, request);
+
+        // 검색 조건에 대해서 상태를 저장한다.
+        const searchData = {
+            reduceFromDate: start_date,
+            reduceToDate: end_date,
+            reducePeriod: period,
+            reduceKeyword: keyword
+        };
+        dispatch(setSearchData(searchData));
     };
 
     // 삭제
