@@ -67,14 +67,14 @@ const FaqRegForm = () => {
     // 입력 데이터 - Default
     const [inputs, setInputs] = useState({
         id: '',
-        order: 1,
+        order_no: 1,
         category_code: '',
         title: '',
         use_yn: true,
         content: '',
         language: paramId
     });
-    const { id, order, category_code, title, content, use_yn, language } = inputs;
+    const { id, order_no, category_code, title, content, use_yn, language } = inputs;
 
     // transaction error 처리
     useEffect(() => {
@@ -146,7 +146,7 @@ const FaqRegForm = () => {
                         use_yn: res.use_yn,
                         title: res.title,
                         content: res.content,
-                        order: res.order,
+                        order_no: res.order_no,
                         language: res.language
                     });
                     setIsUpdate(true);
