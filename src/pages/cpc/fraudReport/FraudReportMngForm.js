@@ -167,7 +167,9 @@ const FraudReportMngForm = () => {
                 <div className={cx('common-grid--layout')}>
                     <table>
                         <tr>
-                            <th className={'tb--title'} style={{minWidth: '250px'}}>상태</th>
+                            <th className={'tb--title'} style={{ minWidth: '250px' }}>
+                                상태
+                            </th>
                             <td>
                                 <>
                                     {status === 'REGISTER' && '접수'}
@@ -178,33 +180,23 @@ const FraudReportMngForm = () => {
                         </tr>
                         <tr>
                             <th className={'tb--title'}>제보자</th>
-                            <td>
-                                {email}
-                            </td>
+                            <td>{email}</td>
                         </tr>
                         <tr>
                             <th className={'tb--title'}>제목</th>
-                            <td>
-                                {title}
-                            </td>
+                            <td>{title}</td>
                         </tr>
                         <tr>
                             <th className={'tb--title'}>내용</th>
-                            <td>
-                                {contents}
-                            </td>
+                            <td>{contents}</td>
                         </tr>
                         <tr>
                             <th className={'tb--title'}>개인정보 취급 동의</th>
-                            <td>
-                                {entrust_privacy === true ? 'Y' : 'N'}
-                            </td>
+                            <td>{entrust_privacy === true ? 'Y' : 'N'}</td>
                         </tr>
                         <tr>
                             <th className={'tb--title'}>개인정보 수집 및 이용 동의</th>
-                            <td>
-                                {terms_privacy === true ? 'Y' : 'N'}
-                            </td>
+                            <td>{terms_privacy === true ? 'Y' : 'N'}</td>
                         </tr>
                         <tr>
                             <th className={'tb--title'}>첨부파일</th>
@@ -245,9 +237,7 @@ const FraudReportMngForm = () => {
                         </tr>
                         <tr>
                             <th className={'tb--title'}>등록일시</th>
-                            <td>
-                                {create_date}
-                            </td>
+                            <td>{create_date}</td>
                         </tr>
                     </table>
                 </div>
@@ -265,7 +255,9 @@ const FraudReportMngForm = () => {
                     </ButtonLayout>
                 </TopInputLayout>
 
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

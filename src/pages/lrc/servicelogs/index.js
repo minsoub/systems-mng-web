@@ -41,6 +41,7 @@ import moment from 'moment';
 import { setSearchData } from 'store/reducers/logsearch';
 import { map } from 'lodash';
 import HeaderTitle from '../../../components/HeaderTitle';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
 
 // Log
 const ServiceLog = () => {
@@ -320,12 +321,7 @@ const ServiceLog = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle
-                    titleNm="서비스 로그 관리"
-                    menuStep01="서비스 로그 관리"
-                    menuStep02="사이트 운영"
-                    menuStep03="서비스 로그 관리"
-                />
+                <HeaderTitle titleNm="서비스 로그 관리" menuStep01="사이트 운영" menuStep02="서비스 로그 관리" />
 
                 <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
                     <Table
@@ -423,51 +419,20 @@ const ServiceLog = () => {
                     aria-label="simple table"
                 >
                     <TableRow>
-                        <TableCell style={{ width: '90%' }}>&nbsp;</TableCell>
-                        <TableCell align="right" component="th" scope="row">
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={searchClick}
-                                >
-                                    검색
-                                </Button>
-                            </FormControl>
-                        </TableCell>
-                        <TableCell align="right" component="th" scope="row">
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={clearClick}
-                                >
-                                    초기화
-                                </Button>
-                            </FormControl>
-                        </TableCell>
-                        <TableCell align="right" component="th" scope="row">
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={excelClick}
-                                >
-                                    Excel
-                                </Button>
-                            </FormControl>
-                        </TableCell>
+                        <ButtonLayout buttonName="rightButton">
+                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                                검색
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                                초기화
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
+                                Excel
+                            </Button>
+                        </ButtonLayout>
                     </TableRow>
                 </Table>
+
                 <MainCard sx={{ mt: 1, height: 650 }} content={false}>
                     <DefaultDataGrid
                         columns={columns}
@@ -480,7 +445,10 @@ const ServiceLog = () => {
                         height={650}
                     />
                 </MainCard>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

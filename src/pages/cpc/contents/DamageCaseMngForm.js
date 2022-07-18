@@ -270,13 +270,11 @@ const DamageCaseMngForm = () => {
                         목록
                     </Button>
                     {!id && (
-                        <Grid item xs={8}>
-                            <ButtonLayout>
-                                <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addClick}>
-                                    등록
-                                </Button>
-                            </ButtonLayout>
-                        </Grid>
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addClick}>
+                                등록
+                            </Button>
+                        </ButtonLayout>
                     )}
                     {id && (
                         <ButtonLayout>
@@ -296,7 +294,10 @@ const DamageCaseMngForm = () => {
                         </ButtonLayout>
                     )}
                 </TopInputLayout>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

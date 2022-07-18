@@ -48,6 +48,7 @@ import ProjectHistory from './history';
 import Chat from './chat';
 import ChatApi from 'apis/chat/chatapi';
 import { FileDownload } from '../../../../node_modules/@mui/icons-material/index';
+import HeaderTitle from "../../../components/HeaderTitle";
 
 const ProjectsDetailPage = () => {
     let isSubmitting = false;
@@ -429,7 +430,10 @@ const ProjectsDetailPage = () => {
                         </Grid>
                     </Grid>
                 </MainCard>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

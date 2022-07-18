@@ -360,9 +360,7 @@ const CampaignMngForm = () => {
                         {createAccountName && (
                             <tr>
                                 <th className={'tb--title'}>등록자</th>
-                                <td>
-                                    {createAccountName}
-                                </td>
+                                <td>{createAccountName}</td>
                             </tr>
                         )}
                     </table>
@@ -393,7 +391,9 @@ const CampaignMngForm = () => {
                     )}
                 </TopInputLayout>
 
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

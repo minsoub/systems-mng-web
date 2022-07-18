@@ -34,15 +34,6 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
         backgroundColor: alpha('#eeeeee', 0.7),
         height: 45
     },
-    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-        borderRight: `1px solid '#303030'`
-    },
-    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-        borderLeft: `1px solid '#303030'`
-    },
-    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-        borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'}`
-    },
     '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
         borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'}`
     },
@@ -83,11 +74,11 @@ export function CustomDataGrid({
     height,
     pageSize
 }) {
+    const [selectionModel, setSelectionModel] = useState([]);
     const handlePage = (page, details) => {
         handlePageChange(page + 1);
     };
 
-    const [selectionModel, setSelectionModel] = useState([]);
     useEffect(() => {
         console.log('change selectionModel:', selectionModel);
         selectionChange(selectionModel);
