@@ -214,52 +214,54 @@ const DamageCaseMngForm = () => {
 
                 <div className={cx('common-grid--layout')}>
                     <table>
-                        <tr>
-                            <th className={'tb--title'}>카테고리</th>
-                            <td>
-                                <Select name="category" label="카테고리" value={category} onChange={handleChange}>
-                                    <MenuItem value="">선택</MenuItem>
-                                    <MenuItem value="피싱">피싱</MenuItem>
-                                    <MenuItem value="폰지">폰지</MenuItem>
-                                    <MenuItem value="스캠">스캠</MenuItem>
-                                    <MenuItem value="도용">도용</MenuItem>
-                                    <MenuItem value="기타">기타</MenuItem>
-                                </Select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>제목</th>
-                            <td>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="medium"
-                                    value={title}
-                                    name="title"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="제목을 입력하세요."
-                                    fullWidth
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>내용</th>
-                            <td>
-                                <JoditEditor
-                                    ref={editorRef}
-                                    value={content}
-                                    config={config}
-                                    onBlur={(newContent) => setContent(newContent)}
-                                />
-                            </td>
-                        </tr>
-                        {createAccountName && (
+                        <tbody>
                             <tr>
-                                <th className={'tb--title'}>등록자</th>
-                                <td>{createAccountName}</td>
+                                <th className={'tb--title'}>카테고리</th>
+                                <td>
+                                    <Select name="category" label="카테고리" value={category} onChange={handleChange}>
+                                        <MenuItem value="">선택</MenuItem>
+                                        <MenuItem value="피싱">피싱</MenuItem>
+                                        <MenuItem value="폰지">폰지</MenuItem>
+                                        <MenuItem value="스캠">스캠</MenuItem>
+                                        <MenuItem value="도용">도용</MenuItem>
+                                        <MenuItem value="기타">기타</MenuItem>
+                                    </Select>
+                                </td>
                             </tr>
-                        )}
+                            <tr>
+                                <th className={'tb--title'}>제목</th>
+                                <td>
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="medium"
+                                        value={title}
+                                        name="title"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="제목을 입력하세요."
+                                        fullWidth
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>내용</th>
+                                <td>
+                                    <JoditEditor
+                                        ref={editorRef}
+                                        value={content}
+                                        config={config}
+                                        onBlur={(newContent) => setContent(newContent)}
+                                    />
+                                </td>
+                            </tr>
+                            {createAccountName && (
+                                <tr>
+                                    <th className={'tb--title'}>등록자</th>
+                                    <td>{createAccountName}</td>
+                                </tr>
+                            )}
+                        </tbody>
                     </table>
                 </div>
 

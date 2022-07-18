@@ -190,90 +190,92 @@ const BlockChainNewsMngForm = () => {
 
                 <div className={cx('common-grid--layout')}>
                     <table>
-                        <tr>
-                            <th className={'tb--title'}>언론사</th>
-                            <td>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={newspaper}
-                                    name="newspaper"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="언론사를 입력하세요."
-                                    fullWidth
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>뉴스 제목</th>
-                            <td>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={title}
-                                    name="title"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="뉴스 제목을 입력하세요."
-                                    fullWidth
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>썸네일 이미지 링크</th>
-                            <td>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={thumbnail_url}
-                                    name="thumbnail_url"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="썸네일 이미지 링크를 입력하세요."
-                                    fullWidth
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>뉴스 게시일</th>
-                            <td>
-                                <TextField
-                                    id="posting_date"
-                                    name="posting_date"
-                                    value={posting_date}
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    type="date"
-                                    defaultValue=""
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>뉴스 링크</th>
-                            <td>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={link_url}
-                                    name="link_url"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="뉴스 링크를 입력하세요."
-                                    fullWidth
-                                />
-                            </td>
-                        </tr>
-                        {createAccountName && (
+                        <tbody>
                             <tr>
-                                <th className={'tb--title'}>등록자</th>
-                                <td>{createAccountName}</td>
+                                <th className={'tb--title'}>언론사</th>
+                                <td>
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="small"
+                                        value={newspaper}
+                                        name="newspaper"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="언론사를 입력하세요."
+                                        fullWidth
+                                    />
+                                </td>
                             </tr>
-                        )}
+                            <tr>
+                                <th className={'tb--title'}>뉴스 제목</th>
+                                <td>
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="small"
+                                        value={title}
+                                        name="title"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="뉴스 제목을 입력하세요."
+                                        fullWidth
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>썸네일 이미지 링크</th>
+                                <td>
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="small"
+                                        value={thumbnail_url}
+                                        name="thumbnail_url"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="썸네일 이미지 링크를 입력하세요."
+                                        fullWidth
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>뉴스 게시일</th>
+                                <td>
+                                    <TextField
+                                        id="posting_date"
+                                        name="posting_date"
+                                        value={posting_date}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        type="date"
+                                        defaultValue=""
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>뉴스 링크</th>
+                                <td>
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="small"
+                                        value={link_url}
+                                        name="link_url"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="뉴스 링크를 입력하세요."
+                                        fullWidth
+                                    />
+                                </td>
+                            </tr>
+                            {createAccountName && (
+                                <tr>
+                                    <th className={'tb--title'}>등록자</th>
+                                    <td>{createAccountName}</td>
+                                </tr>
+                            )}
+                        </tbody>
                     </table>
                 </div>
 

@@ -500,7 +500,7 @@ const ProjectsPage = () => {
                                 </FormControl>
                             </Grid>
                             <Grid item xs={8} sm={0.3}>
-                                ~{' '}
+                                ~
                             </Grid>
                             <Grid item xs={8} sm={1.5}>
                                 <FormControl sx={{ m: 0, minHeight: 25 }} size="small">

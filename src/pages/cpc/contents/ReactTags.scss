@@ -1,3 +1,5 @@
+@import 'src/styles/index';
+
 /* Example Styles for React Tags*/
 .app {
     padding: 40px;
@@ -117,7 +119,7 @@
         border: 1px solid #f0f0f0;
         .tb--title {
             padding: 2rem;
-            background-color: #dcdcdc;
+            background-color: $tableTitle;
             width: 10%;
         }
         td {

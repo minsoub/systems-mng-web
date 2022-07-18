@@ -3,37 +3,32 @@ import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import {
-    Box,
+    Alert,
+    AlertTitle,
     Button,
-    Grid,
-    Stack,
+    Checkbox,
+    Collapse,
+    FormControl,
     FormControlLabel,
     FormHelperText,
-    InputLabel,
-    Checkbox,
+    Grid,
+    MenuItem,
     Select,
-    TextField,
-    FormControl,
-    Alert,
-    Collapse,
-    AlertTitle,
-    Typography,
-    MenuItem
+    Stack,
+    TextField
 } from '@mui/material';
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
-import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
-import { DatePicker } from 'antd';
-import ErrorScreen from 'components/ErrorScreen';
 import HeaderTitle from '../../components/HeaderTitle';
+import ButtonLayout from '../../components/Common/ButtonLayout';
+import cx from 'classnames';
+import './styles.scss';
 
 const RoleRegForm = () => {
     let isSubmitting = false;
@@ -379,14 +374,10 @@ const RoleRegForm = () => {
                                 />
 
                                 <MainCard sx={{ mt: 2 }}>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>Role ID</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={2}>
-                                            <Stack spacing={5}>
+                                    <table>
+                                        <tr>
+                                            <th>Role ID</th>
+                                            <td>
                                                 <FormControl sx={{ m: 0, maxHeight: 30, maxWidth: 220 }} size="small">
                                                     <TextField
                                                         id="filled-hidden-label-small"
@@ -402,10 +393,6 @@ const RoleRegForm = () => {
                                                         error={Boolean(touched.id && errors.id)}
                                                     />
                                                 </FormControl>
-                                            </Stack>
-                                        </Grid>
-                                        <Grid item xs={8} sm={2}>
-                                            <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
                                                 <Button
                                                     disableElevation
                                                     size="small"
@@ -417,198 +404,177 @@ const RoleRegForm = () => {
                                                 >
                                                     중복체크
                                                 </Button>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>Role Name</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={2}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <TextField
-                                                    id="filled-hidden-label-small"
-                                                    type="text"
-                                                    size="small"
-                                                    value={name}
-                                                    name="name"
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                    placeholder="Enter Role Name"
-                                                    fullWidth
-                                                    error={Boolean(touched.name && errors.name)}
-                                                />
-                                            </FormControl>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>유효기간</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <TextField
-                                                id="valid_start_date"
-                                                name="valid_start_date"
-                                                value={valid_start_date}
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                type="date"
-                                                defaultValue=""
-                                                sx={{ width: 140 }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={8} sm={0.5}>
-                                            ~{' '}
-                                        </Grid>
-                                        <Grid item xs={8} sm={2}>
-                                            <TextField
-                                                id="valid_end_date"
-                                                name="valid_end_date"
-                                                value={valid_end_date}
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                type="date"
-                                                defaultValue=""
-                                                sx={{ width: 140 }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>사용여부</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={3}>
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        defaultChecked
-                                                        checked={is_use}
-                                                        name="is_use"
-                                                        value={is_use}
+                                            </td>
+
+                                            <th>Role Name</th>
+                                            <td>
+                                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
+                                                    <TextField
+                                                        id="filled-hidden-label-small"
+                                                        type="text"
+                                                        size="small"
+                                                        value={name}
+                                                        name="name"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
+                                                        placeholder="Enter Role Name"
+                                                        fullWidth
+                                                        error={Boolean(touched.name && errors.name)}
                                                     />
-                                                }
-                                                label="사용함"
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>사이트 구분</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 25 }} size="small">
-                                                <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
-                                                    <MenuItem value="">
-                                                        <em>Choose a Site Type</em>
-                                                    </MenuItem>
-                                                    {siteList.map((item, index) => (
-                                                        <MenuItem key={index} value={item.id}>
-                                                            {item.name}
-                                                        </MenuItem>
-                                                    ))}
-                                                </Select>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>운영구분</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={3}>
-                                            <FormControl sx={{ m: 0, minWidth: 140 }} size="small">
-                                                <Select name="type" label="구분" value={type} onChange={typeChanged}>
-                                                    <MenuItem value="ADMIN">ADMIN</MenuItem>
-                                                    <MenuItem value="USER">USER</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Grid>
-                                    </Grid>
+                                                </FormControl>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>유효기간</th>
+                                            <td className="result__list--input">
+                                                <FormControl size="medium">
+                                                    <TextField
+                                                        id="valid_start_date"
+                                                        name="valid_start_date"
+                                                        value={valid_start_date}
+                                                        onBlur={handleBlur}
+                                                        onChange={handleChange}
+                                                        type="date"
+                                                        sx={{ width: 250 }}
+                                                    />
+                                                </FormControl>
+                                                <span className={cx('center')}> ~ </span>
+                                                <FormControl size="medium">
+                                                    <TextField
+                                                        id="valid_end_date"
+                                                        name="valid_end_date"
+                                                        value={valid_end_date}
+                                                        onBlur={handleBlur}
+                                                        onChange={handleChange}
+                                                        type="date"
+                                                        sx={{ width: 250 }}
+                                                    />
+                                                </FormControl>
+                                            </td>
 
-                                    <Stack direction="row" spacing={3}>
-                                        <Button
-                                            disableElevation
-                                            disabled={isSubmitting}
-                                            size="small"
-                                            type="submit"
-                                            variant="contained"
-                                            color="primary"
-                                        >
-                                            저장하기
-                                        </Button>
-                                        <Button
-                                            disableElevation
-                                            disabled={isDisabled}
-                                            size="small"
-                                            type="button"
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={deleteClick}
-                                        >
-                                            삭제
-                                        </Button>
-                                        <Button
-                                            disableElevation
-                                            disabled={isSubmitting}
-                                            size="small"
-                                            type="button"
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={listClick}
-                                        >
-                                            리스트
-                                        </Button>
-                                    </Stack>
-                                    {errors.submit && (
-                                        <Grid item xs={12}>
-                                            <FormHelperText error>{errors.submit}</FormHelperText>
-                                        </Grid>
-                                    )}
-                                </MainCard>
-                                <MainCard sx={{ mt: 3 }} content={false}>
-                                    <Stack>
-                                        {touched.id && errors.id && (
-                                            <FormHelperText error id="standard-weight-helper-text-password-login">
-                                                <FormControl sx={{ m: 2, minHeight: 20 }} size="small">
-                                                    <li>{errors.id}</li>
+                                            <th>사용여부</th>
+                                            <td>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            defaultChecked
+                                                            checked={is_use}
+                                                            name="is_use"
+                                                            value={is_use}
+                                                            onBlur={handleBlur}
+                                                            onChange={handleChange}
+                                                        />
+                                                    }
+                                                    label="사용함"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>사이트 구분</th>
+                                            <td>
+                                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 25 }} size="small">
+                                                    <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
+                                                        <MenuItem value="">
+                                                            <em>Choose a Site Type</em>
+                                                        </MenuItem>
+                                                        {siteList.map((item, index) => (
+                                                            <MenuItem key={index} value={item.id}>
+                                                                {item.name}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
                                                 </FormControl>
-                                            </FormHelperText>
-                                        )}
-                                        {touched.name && errors.name && (
-                                            <FormHelperText error id="standard-weight-helper-text-password-login">
-                                                <FormControl sx={{ m: 2, minHeight: 20 }} size="small">
-                                                    <li>{errors.name}</li>
+                                            </td>
+
+                                            <th>운영구분</th>
+                                            <td>
+                                                <FormControl sx={{ m: 0, minWidth: 140 }} size="small">
+                                                    <Select name="type" label="구분" value={type} onChange={typeChanged}>
+                                                        <MenuItem value="ADMIN">ADMIN</MenuItem>
+                                                        <MenuItem value="USER">USER</MenuItem>
+                                                    </Select>
                                                 </FormControl>
-                                            </FormHelperText>
-                                        )}
-                                    </Stack>
-                                    <Collapse in={open}>
-                                        <Alert
-                                            severity="error"
-                                            action={
-                                                <IconButton
-                                                    aria-label="close"
-                                                    color="inherit"
-                                                    size="small"
-                                                    onClick={() => {
-                                                        errorClear();
-                                                    }}
-                                                >
-                                                    <CloseIcon fontSize="inherit" />
-                                                </IconButton>
-                                            }
-                                            sx={{ mb: 2 }}
-                                        >
-                                            <AlertTitle>{errorTitle}</AlertTitle>
-                                            {errorMessage}
-                                        </Alert>
-                                    </Collapse>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </MainCard>
+
+                                <ButtonLayout buttonName="rightButton">
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                    >
+                                        저장하기
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isDisabled}
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={deleteClick}
+                                    >
+                                        삭제
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={listClick}
+                                    >
+                                        리스트
+                                    </Button>
+                                </ButtonLayout>
+
+                                {errorMessage ? (
+                                    <MainCard sx={{ mt: 3 }} content={false}>
+                                        <Stack>
+                                            {touched.id && errors.id && (
+                                                <FormHelperText error id="standard-weight-helper-text-password-login">
+                                                    <FormControl sx={{ m: 2, minHeight: 20 }} size="small">
+                                                        <li>{errors.id}</li>
+                                                    </FormControl>
+                                                </FormHelperText>
+                                            )}
+                                            {touched.name && errors.name && (
+                                                <FormHelperText error id="standard-weight-helper-text-password-login">
+                                                    <FormControl sx={{ m: 2, minHeight: 20 }} size="small">
+                                                        <li>{errors.name}</li>
+                                                    </FormControl>
+                                                </FormHelperText>
+                                            )}
+                                        </Stack>
+                                        <Collapse in={open}>
+                                            <Alert
+                                                severity="error"
+                                                action={
+                                                    <IconButton
+                                                        aria-label="close"
+                                                        color="inherit"
+                                                        size="small"
+                                                        onClick={() => {
+                                                            errorClear();
+                                                        }}
+                                                    >
+                                                        <CloseIcon fontSize="inherit" />
+                                                    </IconButton>
+                                                }
+                                                sx={{ mb: 2 }}
+                                            >
+                                                <AlertTitle>{errorTitle}</AlertTitle>
+                                                {errorMessage}
+                                            </Alert>
+                                        </Collapse>
+                                    </MainCard>
+                                ) : null}
                             </Grid>
                         </Grid>
                     </form>

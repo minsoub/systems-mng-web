@@ -1,3 +1,5 @@
+@import 'src/styles/index';
+
 .program--list {
     .css-1g2xkz4-MuiFormControl-root {
         margin-right: 10px;
@@ -41,4 +43,14 @@
 
 .css-7mgabj-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
     width: 100%;
+}
+
+.common-grid-layout {
+    width: 50%;
+    table {
+        width: 100%;
+    }
+    th {
+        background-color: $tableTitle;
+    }
 }

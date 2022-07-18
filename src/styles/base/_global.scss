@@ -1,4 +1,5 @@
 // 전역 스타일 파일
+@import 'commonColor';
 
 // 공통 타이틀
 .borderTitle {
@@ -160,7 +161,7 @@ legend,
 
         th {
             padding: 2rem;
-            background-color: #dcdcdc;
+            background-color: $tableTitle;
             width: 10%;
         }
 

@@ -940,7 +940,6 @@ const MenuRegForm = () => {
                         </Stack>
                     </Grid>
                 </Grid>
-
             </Grid>
         </Grid>
     );
