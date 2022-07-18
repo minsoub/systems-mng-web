@@ -1,34 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    Table,
-    TableBody,
-    TableContainer,
-    TableHead,
-    TableRow
-} from '@mui/material';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { Button, FormControl, Grid, MenuItem, OutlinedInput, Select } from '@mui/material';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
 import AccountApis from 'apis/account/accountapis';
-import ErrorScreen from 'components/ErrorScreen';
 import HeaderTitle from '../../../components/HeaderTitle';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import InputLayout from '../../../components/Common/InputLayout';
@@ -265,11 +240,6 @@ const AccessMngPage = () => {
                                     >
                                         검색
                                     </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
                                     <Button
                                         disableElevation
                                         size="medium"

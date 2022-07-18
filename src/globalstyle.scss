@@ -114,7 +114,8 @@ html [type='button'],
 }
 
 // Input 윗 부분 실선
-legend, .css-1in441m {
+legend,
+.css-1in441m {
     display: none;
 }
 
@@ -144,26 +145,32 @@ legend, .css-1in441m {
 .common-grid--layout {
     width: 100%;
     margin-bottom: 3rem;
+
     table {
         width: 100%;
     }
+
     tr {
         border: 1px solid #f0f0f0;
+
         th {
             padding: 2rem;
             background-color: #dcdcdc;
             width: 10%;
         }
+
         td {
             width: 90%;
             border: 1px solid #f0f0f0;
             padding: 10px;
+
             input {
                 width: 100%;
             }
         }
     }
-    
+}
+
 .css-h6vcjs-MuiFormControlLabel-root {
     margin-left: 0;
 }
