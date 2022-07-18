@@ -482,7 +482,7 @@ const MenuMappingForm = () => {
                             <Stack spacing={10} className={cx('borderTitle')}>
                                 사이트 구분
                             </Stack>
-                            <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
+                            <FormControl sx={{ minWidth: 250 }} size="medium">
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
                                     <MenuItem value="">
                                         <em>Choose a Site Type</em>
