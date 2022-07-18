@@ -499,9 +499,11 @@ const SiteMenuRegForm = () => {
                 <HeaderTitle titleNm="메뉴 등록" menuStep01="사이트 관리" menuStep02="메뉴 관리" menuStep03="메뉴 등록" />
 
                 <ButtonLayout buttonName="rightButton">
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                        저장
-                    </Button>
+                    <div className="menuButton">
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                            저장
+                        </Button>
+                    </div>
                 </ButtonLayout>
 
                 <Grid container alignItems="center" justifyContent="space-between">
