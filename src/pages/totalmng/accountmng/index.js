@@ -289,6 +289,8 @@ const AccountMng = () => {
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
+
+                {/* 표 */}
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <CheckBoxDataGrid
                         columns={columns}
@@ -300,7 +302,10 @@ const AccountMng = () => {
                         height={750}
                     />
                 </MainCard>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

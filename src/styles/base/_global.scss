@@ -1,10 +1,12 @@
 // 전역 스타일 파일
+@import 'commonColor';
 
 // 공통 타이틀
 .borderTitle {
     width: 80px;
     align-items: center;
     display: inline-grid;
+    font-size: 14px;
 }
 
 // 기간 검색 중 카테고리 부분
@@ -159,7 +161,7 @@ legend,
 
         th {
             padding: 2rem;
-            background-color: #dcdcdc;
+            background-color: $tableTitle;
             width: 10%;
         }
 
@@ -206,6 +208,14 @@ html [type='button'],
 // input 창 height 조절
 .css-6wp6pb-MuiOutlinedInput-notchedOutline {
     top: 0;
+}
+
+.css-1wb0zan-MuiFormControl-root {
+    align-items: center;
+    place-content: center;
+    .css-nen11g-MuiStack-root {
+        font-size: 14px;
+    }
 }
 
 // 1024 해상도에서도 width Full로 차도록

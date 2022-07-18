@@ -150,10 +150,10 @@ const Notification = () => {
                                             <ListItemText
                                                 primary={
                                                     <Typography variant="h6">
-                                                        It&apos;s{' '}
+                                                        It&apos;s
                                                         <Typography component="span" variant="subtitle1">
                                                             Cristina danny&apos;s
-                                                        </Typography>{' '}
+                                                        </Typography>
                                                         birthday today.
                                                     </Typography>
                                                 }
@@ -182,7 +182,7 @@ const Notification = () => {
                                                     <Typography variant="h6">
                                                         <Typography component="span" variant="subtitle1">
                                                             Aida Burg
-                                                        </Typography>{' '}
+                                                        </Typography>
                                                         commented your post.
                                                     </Typography>
                                                 }
@@ -212,7 +212,7 @@ const Notification = () => {
                                                         Your Profile is Complete &nbsp;
                                                         <Typography component="span" variant="subtitle1">
                                                             60%
-                                                        </Typography>{' '}
+                                                        </Typography>
                                                     </Typography>
                                                 }
                                                 secondary="7 hours ago"
@@ -240,8 +240,8 @@ const Notification = () => {
                                                     <Typography variant="h6">
                                                         <Typography component="span" variant="subtitle1">
                                                             Cristina Danny
-                                                        </Typography>{' '}
-                                                        invited to join{' '}
+                                                        </Typography>
+                                                        invited to join
                                                         <Typography component="span" variant="subtitle1">
                                                             Meeting.
                                                         </Typography>

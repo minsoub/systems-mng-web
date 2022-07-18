@@ -4,7 +4,8 @@ import './styles.scss';
 
 const SearchDate = ({ start_date, handleBlur, handleChange, end_date, noneChecked, period }) => {
     SearchDate.defaultProps = {
-        noneChecked: null
+        noneChecked: null,
+        period: null
     };
 
     return (

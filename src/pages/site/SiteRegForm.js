@@ -432,7 +432,7 @@ const SiteRegForm = () => {
                                             />
                                         </Grid>
                                         <Grid item xs={8} sm={0.5}>
-                                            ~{' '}
+                                            ~
                                         </Grid>
                                         <Grid item xs={8} sm={2}>
                                             <TextField

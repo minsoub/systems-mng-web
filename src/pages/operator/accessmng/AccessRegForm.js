@@ -863,7 +863,7 @@ const AccessRegForm = () => {
                             </Grid>
                         </Grid>
                     </MainCard>
-                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+
                 </Grid>
             </Grid>
         </>

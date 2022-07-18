@@ -1,0 +1,21 @@
+.result__list--date {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    .center {
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        margin: 0 10px;
+    }
+
+    &.noneChecked {
+        .date-checked {
+            display: none;
+        }
+    }
+}
+
+.result__list--input {
+    margin-right: 20px;
+}

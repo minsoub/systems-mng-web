@@ -41,6 +41,11 @@ function a11yProps(index) {
 const Profile = () => {
     const theme = useTheme();
     const navigate = useNavigate();
+    const anchorRef = useRef(null);
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(0);
+    const iconBackColorOpen = 'grey.300';
+
     const handleLogout = async () => {
         if (confirm('로그아웃 하시겠습니까?')) {
             // logout
@@ -52,8 +57,6 @@ const Profile = () => {
         navigate('/profile/update');
     };
 
-    const anchorRef = useRef(null);
-    const [open, setOpen] = useState(false);
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
     };
@@ -65,13 +68,9 @@ const Profile = () => {
         setOpen(false);
     };
 
-    const [value, setValue] = useState(0);
-
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    const iconBackColorOpen = 'grey.300';
 
     let authData = null;
     if (localStorage.hasOwnProperty('authenticated')) {
@@ -120,20 +119,10 @@ const Profile = () => {
                 {({ TransitionProps }) => (
                     <Transitions type="fade" in={open} {...TransitionProps}>
                         {open && (
-                            <Paper
-                                sx={{
-                                    boxShadow: theme.customShadows.z1,
-                                    width: 290,
-                                    minWidth: 240,
-                                    maxWidth: 290,
-                                    [theme.breakpoints.down('md')]: {
-                                        maxWidth: 250
-                                    }
-                                }}
-                            >
+                            <Paper>
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MainCard elevation={0} border={false} content={false}>
-                                        <CardContent sx={{ px: 2.5, pt: 3 }}>
+                                        <CardContent>
                                             <Grid container justifyContent="space-between" alignItems="center">
                                                 <div className="mypage--userInfo">
                                                     <p className="email">{authData.email}</p>

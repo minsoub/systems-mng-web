@@ -300,118 +300,119 @@ const InsightColumnMngForm = () => {
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="인사이트 칼럼" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="인사이트 칼럼" />
-    
+
                 <div className={cx('common-grid--layout')}>
                     <table>
-                        <tr>
-                            <th className={'tb--title'}>카테고리</th>
-                            <td>
-                                <Select name="category" label="카테고리" value={category} onChange={handleChange}>
-                                    <MenuItem value="">선택</MenuItem>
-                                    <MenuItem value="전문가 칼럼">전문가 칼럼</MenuItem>
-                                    <MenuItem value="오피니언 칼럼">오피니언 칼럼</MenuItem>
-                                    <MenuItem value="빗썸경제연구소">빗썸경제연구소</MenuItem>
-                                    {/* {categories.map((category, index) => {
+                        <tbody>
+                            <tr>
+                                <th className={'tb--title'}>카테고리</th>
+                                <td>
+                                    <Select name="category" label="카테고리" value={category} onChange={handleChange}>
+                                        <MenuItem value="">선택</MenuItem>
+                                        <MenuItem value="전문가 칼럼">전문가 칼럼</MenuItem>
+                                        <MenuItem value="오피니언 칼럼">오피니언 칼럼</MenuItem>
+                                        <MenuItem value="빗썸경제연구소">빗썸경제연구소</MenuItem>
+                                        {/* {categories.map((category, index) => {
                                         <MenuItem key={index} value={category}>
                                             {category}
                                         </MenuItem>;
                                     })} */}
-                                </Select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>제목</th>
-                            <td>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={title}
-                                    name="title"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="제목을 입력하세요."
-                                    fullWidth
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>썸네일 이미지</th>
-                            <td>
-                                <ThumbnailAttach
-                                    thumbnail={
-                                        thumbnail && (thumbnail.indexOf('http') === -1 ? `${boardThumbnailUrl}/${thumbnail}` : thumbnail)
-                                    }
-                                    handleChange={handleFileChange}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>요약 설명</th>
-                            <td>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={description}
-                                    name="description"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="썸네일 하단에 표시될 요약 설명을 입력하세요."
-                                    fullWidth
-                                    multiline
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>내용</th>
-                            <td>
-                                <JoditEditor
-                                    ref={editorRef}
-                                    value={content}
-                                    config={config}
-                                    onBlur={(newContent) => setContent(newContent)}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>해시태그</th>
-                            <td>
-                                <ReactTags
-                                    tags={tags}
-                                    suggestions={suggestions}
-                                    delimiters={delimiters}
-                                    handleDelete={handleDelete}
-                                    handleAddition={handleAddition}
-                                    handleDrag={handleDrag}
-                                    handleTagClick={handleTagClick}
-                                    inputFieldPosition="inline"
-                                    placeholder="태그 입력 후 엔터"
-                                    autocomplete
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>기고자 정보</th>
-                            <td>
-                                <Select name="contributor" label="기고자 정보" value={contributor} onChange={handleChange}>
-                                    <MenuItem value="">선택</MenuItem>
-                                    <MenuItem value="김상겸">김상겸 변호사</MenuItem>
-                                    <MenuItem value="김휘강">김휘강 교수</MenuItem>
-                                    <MenuItem value="박상혁">박상혁 기자</MenuItem>
-                                    <MenuItem value="이정훈">이정훈 이데일리 부국장</MenuItem>
-                                    <MenuItem value="하종은">하종은 병원장</MenuItem>
-                                </Select>
-                            </td>
-                        </tr>
-                        {createAccountName && (
-                            <tr>
-                                <th className={'tb--title'}>등록자</th>
-                                <td>
-                                    {createAccountName}
+                                    </Select>
                                 </td>
                             </tr>
-                        )}
+                            <tr>
+                                <th className={'tb--title'}>제목</th>
+                                <td>
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="small"
+                                        value={title}
+                                        name="title"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="제목을 입력하세요."
+                                        fullWidth
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>썸네일 이미지</th>
+                                <td>
+                                    <ThumbnailAttach
+                                        thumbnail={
+                                            thumbnail &&
+                                            (thumbnail.indexOf('http') === -1 ? `${boardThumbnailUrl}/${thumbnail}` : thumbnail)
+                                        }
+                                        handleChange={handleFileChange}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>요약 설명</th>
+                                <td>
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="small"
+                                        value={description}
+                                        name="description"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="썸네일 하단에 표시될 요약 설명을 입력하세요."
+                                        fullWidth
+                                        multiline
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>내용</th>
+                                <td>
+                                    <JoditEditor
+                                        ref={editorRef}
+                                        value={content}
+                                        config={config}
+                                        onBlur={(newContent) => setContent(newContent)}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>해시태그</th>
+                                <td>
+                                    <ReactTags
+                                        tags={tags}
+                                        suggestions={suggestions}
+                                        delimiters={delimiters}
+                                        handleDelete={handleDelete}
+                                        handleAddition={handleAddition}
+                                        handleDrag={handleDrag}
+                                        handleTagClick={handleTagClick}
+                                        inputFieldPosition="inline"
+                                        placeholder="태그 입력 후 엔터"
+                                        autocomplete
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>기고자 정보</th>
+                                <td>
+                                    <Select name="contributor" label="기고자 정보" value={contributor} onChange={handleChange}>
+                                        <MenuItem value="">선택</MenuItem>
+                                        <MenuItem value="김상겸">김상겸 변호사</MenuItem>
+                                        <MenuItem value="김휘강">김휘강 교수</MenuItem>
+                                        <MenuItem value="박상혁">박상혁 기자</MenuItem>
+                                        <MenuItem value="이정훈">이정훈 이데일리 부국장</MenuItem>
+                                        <MenuItem value="하종은">하종은 병원장</MenuItem>
+                                    </Select>
+                                </td>
+                            </tr>
+                            {createAccountName && (
+                                <tr>
+                                    <th className={'tb--title'}>등록자</th>
+                                    <td>{createAccountName}</td>
+                                </tr>
+                            )}
+                        </tbody>
                     </table>
                 </div>
 
@@ -440,7 +441,9 @@ const InsightColumnMngForm = () => {
                     )}
                 </TopInputLayout>
 
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

@@ -310,7 +310,7 @@ const LineMngPage = () => {
                             <Button
                                 disableElevation
                                 disabled={!isUpdate}
-                                size="small"
+                                size="medium"
                                 type="submit"
                                 variant="contained"
                                 color="secondary"
@@ -321,7 +321,10 @@ const LineMngPage = () => {
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

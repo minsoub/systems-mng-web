@@ -80,7 +80,6 @@ const SiteAuthManagementPage = () => {
     // 그리드 목록 데이터
     const [dataGridRows, setDataGridRows] = useState([]);
 
-    ////////////////////////////////////////////////////
     // 공통 에러 처리
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
@@ -90,7 +89,6 @@ const SiteAuthManagementPage = () => {
         setErrorTitle('');
         setErrorMessage('');
     };
-    ////////////////////////////////////////////////////
 
     const [siteList, setSiteList] = useState([]);
     const [site_id, setSiteId] = useState('');
@@ -296,7 +294,10 @@ const SiteAuthManagementPage = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </MainCard>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

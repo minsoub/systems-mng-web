@@ -366,7 +366,7 @@ const FaqContent = (props) => {
                     등록
                 </Button>
             </TopInputLayout>
-            <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />{' '}
+            <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
         </div>
     );
 };

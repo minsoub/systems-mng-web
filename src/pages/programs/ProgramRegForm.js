@@ -477,7 +477,7 @@ const ProgramRegForm = () => {
                             </Button>
                         </Stack>
                     </MainCard>
-                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+
                 </Grid>
             </Grid>
         </>

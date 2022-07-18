@@ -3,14 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    Button,
-    Grid,
-    Stack,
-    FormControlLabel,
-    Radio,
-    RadioGroup
-} from '@mui/material';
+import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
@@ -97,7 +90,9 @@ const FraudReportMng = () => {
     const navigate = useNavigate();
     const [responseData, requestError, resLoading, { searchFraudReportList, getExcelDownload, getFileDownload }] = FraudReportApi();
 
-    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword, reduceStatus } = useSelector((state) => state.cpcFraudReportSearchReducer);
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword, reduceStatus } = useSelector(
+        (state) => state.cpcFraudReportSearchReducer
+    );
     const dispatch = useDispatch();
 
     // 그리드 선택된 row id
@@ -391,7 +386,10 @@ const FraudReportMng = () => {
                         </Button>
                     </ButtonLayout>
                 </Grid>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

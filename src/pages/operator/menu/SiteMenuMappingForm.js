@@ -620,7 +620,7 @@ const SiteMenuMappingForm = () => {
                         </MainCard>
                     </Grid>
                 </Grid>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+
             </Grid>
         </Grid>
     );

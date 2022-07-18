@@ -374,6 +374,7 @@ const DamageCaseMng = () => {
                         </Button>
                     </ButtonLayout>
                 </Grid>
+
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>
