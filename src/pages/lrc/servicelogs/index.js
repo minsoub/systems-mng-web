@@ -408,16 +408,8 @@ const ServiceLog = () => {
                         </TableRow>
                     </Table>
                 </MainCard>
-                <Table
-                    fixedheader={false}
-                    sx={{
-                        [`& .${tableCellClasses.root}`]: {
-                            borderBottom: 'none'
-                        }
-                    }}
-                    style={{ border: 0, width: '100%', tableLayout: 'auto' }}
-                    aria-label="simple table"
-                >
+
+                <Table>
                     <TableRow>
                         <ButtonLayout buttonName="rightButton">
                             <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
