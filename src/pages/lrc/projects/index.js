@@ -1,39 +1,28 @@
-import React, { lazy, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import {
-    OutlinedInput,
-    Box,
     Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
     FormControl,
-    Select,
-    MenuItem,
     FormControlLabel,
-    Checkbox,
+    Grid,
+    MenuItem,
     Radio,
     RadioGroup,
+    Select,
+    Stack,
     Table,
+    TableBody,
     TableCell,
     TableHead,
+    TablePagination,
     TableRow,
-    TableBody,
-    TablePagination
+    TextField,
+    Typography
 } from '@mui/material';
 import { makeStyles, withStyles } from '@mui/styles';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
-import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import StatusApi from 'apis/lrc/status/statusapi';
 import FoundationApi from 'apis/lrc/project/foundationapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -41,8 +30,9 @@ import { BusinessCheckboxList } from './component/business';
 import { NetworkCheckboxList } from './component/network';
 import StsCategory from './component/stscategory';
 import moment from 'moment';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSearchData } from 'store/reducers/projectsearch';
+import HeaderTitle from '../../../components/HeaderTitle';
 
 const ProjectsPage = () => {
     let isSubmitting = false;
@@ -486,15 +476,8 @@ const ProjectsPage = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">거래지원 관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 운영 &gt; 거래지원 관리</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="거래지원 관리" menuStep01="사이트 운영" menuStep02="거래지원 관리" />
+
                 <MainCard sx={{ mt: 1 }}>
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid container spacing={0} sx={{ mt: 0 }}>

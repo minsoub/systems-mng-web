@@ -53,6 +53,10 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import menu from 'store/reducers/menu';
 import { check } from 'prettier';
+import HeaderTitle from '../../../components/HeaderTitle';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import InputLayout from '../../../components/Common/InputLayout';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
 
 function MinusSquare(props) {
     return (
@@ -785,89 +789,57 @@ const SiteAuthMngRegForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">권한 맵핑</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 관리 &gt; 권한 관리 &gt; 권한 맵핑</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="권한 맵핑" menuStep01="사이트 관리" menuStep02="권한 관리" menuStep03="권한 맵핑" />
+
                 <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Site 구분</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
-                                    <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
-                                        <MenuItem value="">
-                                            <em>Choose a Site Type</em>
-                                        </MenuItem>
-                                        {siteList
-                                            .filter((item) => item.id === siteId)
-                                            .map((item, index) => (
-                                                <MenuItem key={index} value={item.id}>
-                                                    {item.name}
-                                                </MenuItem>
-                                            ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Type</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0.5, minWidth: 200, maxHeight: 25 }} size="small">
-                                    <Select name="type" label="Role Type" value={type} onChange={handleChange}>
-                                        <MenuItem value="ADMIN">ADMIN</MenuItem>
-                                        <MenuItem value="USER">USER</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Role Name</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={3}>
-                                <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
-                                    <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
-                                        <MenuItem value="">
-                                            <em>Choose a Role Name</em>
-                                        </MenuItem>
-                                        {roleList.map((item, index) => (
+                    <TopInputLayout>
+                        <InputLayout>
+                            <Stack spacing={0}>Site 구분</Stack>
+                            <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
+                                <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
+                                    <MenuItem value="">
+                                        <em>Choose a Site Type</em>
+                                    </MenuItem>
+                                    {siteList
+                                        .filter((item) => item.id === siteId)
+                                        .map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
                                                 {item.name}
                                             </MenuItem>
                                         ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
+                                </Select>
+                            </FormControl>
 
-                            <Grid item xs={8} sm={0.4}></Grid>
-                            <Grid item xs={8} sm={0.6}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={searchClick}
-                                    >
-                                        검색
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                            <Stack spacing={0}>Type</Stack>
+                            <FormControl sx={{ m: 0.5, minWidth: 200, maxHeight: 25 }} size="small">
+                                <Select name="type" label="Role Type" value={type} onChange={handleChange}>
+                                    <MenuItem value="ADMIN">ADMIN</MenuItem>
+                                    <MenuItem value="USER">USER</MenuItem>
+                                </Select>
+                            </FormControl>
+
+                            <Stack spacing={0}>Role Name</Stack>
+
+                            <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
+                                <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
+                                    <MenuItem value="">
+                                        <em>Choose a Role Name</em>
+                                    </MenuItem>
+                                    {roleList.map((item, index) => (
+                                        <MenuItem key={index} value={item.id}>
+                                            {item.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </InputLayout>
+
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                                검색
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
                 </MainCard>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item md={3}>
@@ -893,88 +865,67 @@ const SiteAuthMngRegForm = () => {
                     </Grid>
                     <Grid item md={8.8}>
                         <Stack spacing={2}>
-                            <MainCard sx={{ mt: 2, height: 720 }} content={false}>
-                                <Grid container spacing={0} sx={{ mt: 2 }}>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={2.8}>
-                                        <Stack spacing={5} sx={{ mt: 0 }} justifyContent="left" alignItems="left">
-                                            <Item>Role : {role_name}</Item>
-                                        </Stack>
-                                    </Grid>
-                                    <Grid item xs={8} sm={4.5}></Grid>
-                                    <Grid item xs={8} sm={3.5}></Grid>
-                                    <Grid item xs={8} sm={1}>
-                                        <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                            <Button
-                                                disableElevation
-                                                size="small"
-                                                type="button"
-                                                variant="contained"
-                                                color="secondary"
-                                                onClick={programMappingSaveClick}
-                                            >
-                                                저장
-                                            </Button>
-                                        </FormControl>
-                                    </Grid>
+                            <TopInputLayout>
+                                <Item>Role : {role_name}</Item>
+                                <ButtonLayout>
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        onClick={programMappingSaveClick}
+                                    >
+                                        저장
+                                    </Button>
+                                </ButtonLayout>
+                            </TopInputLayout>
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <Grid item xs={8} sm={12}>
+                                    <MainCard sx={{ mt: 0, height: 290 }} content={false}>
+                                        <DefaultDataGrid
+                                            columns={roleColumns}
+                                            rows={dataGridRoleRows}
+                                            handlePageChange={handlePage}
+                                            handleGridClick={handleClick}
+                                            handleGridDoubleClick={handleDoubleClick}
+                                            selectionChange={handleSelectionRoleChange}
+                                            height={290}
+                                        />
+                                    </MainCard>
                                 </Grid>
+                            </Grid>
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <TopInputLayout>
+                                    <Item>프로그램 목록</Item>
+                                    <ButtonLayout>
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="button"
+                                            variant="contained"
+                                            onClick={programMappingSave}
+                                        >
+                                            선택반영
+                                        </Button>
+                                    </ButtonLayout>
+                                </TopInputLayout>
+
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
                                     <Grid item xs={8} sm={12}>
-                                        <MainCard sx={{ mt: 0, height: 290 }} content={false}>
-                                            <DefaultDataGrid
-                                                columns={roleColumns}
-                                                rows={dataGridRoleRows}
+                                        <MainCard sx={{ mt: 0 }} content={false}>
+                                            <CheckBoxDataGrid
+                                                columns={programColumns}
+                                                rows={dataGridProgramRows}
                                                 handlePageChange={handlePage}
                                                 handleGridClick={handleClick}
                                                 handleGridDoubleClick={handleDoubleClick}
-                                                selectionChange={handleSelectionRoleChange}
+                                                selectionChange={handleSelectionProgramChange}
                                                 height={290}
                                             />
                                         </MainCard>
                                     </Grid>
                                 </Grid>
-                                <Grid container spacing={0} sx={{ mt: 1 }}>
-                                    <Grid container spacing={0} sx={{ mt: 1 }}>
-                                        <Grid item xs={8} sm={0.2}></Grid>
-                                        <Grid item xs={8} sm={2.8}>
-                                            <Stack spacing={5} sx={{ mt: 0 }} justifyContent="left" alignItems="left">
-                                                <Item>프로그램 목록</Item>
-                                            </Stack>
-                                        </Grid>
-                                        <Grid item xs={8} sm={4.5}></Grid>
-                                        <Grid item xs={8} sm={3.5}></Grid>
-                                        <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                <Button
-                                                    disableElevation
-                                                    size="small"
-                                                    type="button"
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    onClick={programMappingSave}
-                                                >
-                                                    선택반영
-                                                </Button>
-                                            </FormControl>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container spacing={0} sx={{ mt: 1 }}>
-                                        <Grid item xs={8} sm={12}>
-                                            <MainCard sx={{ mt: 0 }} content={false}>
-                                                <CheckBoxDataGrid
-                                                    columns={programColumns}
-                                                    rows={dataGridProgramRows}
-                                                    handlePageChange={handlePage}
-                                                    handleGridClick={handleClick}
-                                                    handleGridDoubleClick={handleDoubleClick}
-                                                    selectionChange={handleSelectionProgramChange}
-                                                    height={290}
-                                                />
-                                            </MainCard>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </MainCard>
+                            </Grid>
                         </Stack>
                     </Grid>
                 </Grid>

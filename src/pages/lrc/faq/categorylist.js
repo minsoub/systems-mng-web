@@ -2,32 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    Radio,
-    RadioGroup,
-    FormControlLabel
-} from '@mui/material';
+import { Button, FormControl, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import CategoryApis from 'apis/lrc/faq/categoryapi';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from '../../../components/HeaderTitle';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import cx from 'classnames';
+import './styles.scss';
 
 const FaqCategoryPage = () => {
     let isSubmitting = false;
@@ -252,64 +236,27 @@ const FaqCategoryPage = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">카테고리 관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 운영 > FAQ 관리 > 카테고리 관리</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="카테고리 관리" menuStep01="사이트 운영" menuStep02="FAQ 관리" menuStep03="카테고리 관리" />
+
                 <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={2}>
-                                <FormControl sx={{ m: 0, minWidth: 200 }} size="small">
-                                    <Select
-                                        name="search_language"
-                                        label="계얄타입"
-                                        value={search_language}
-                                        onChange={searchLanguageChanged}
-                                    >
-                                        <MenuItem value="KO">국문</MenuItem>
-                                        <MenuItem value="EN">영문</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={8.3}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={searchClick}
-                                    >
-                                        검색
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={newClick}
-                                    >
-                                        신규
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                        </Grid>
-                    </Grid>
+                    <TopInputLayout>
+                        <FormControl size="medium" sx={{ minWidth: 250 }}>
+                            <Select name="search_language" label="계얄타입" value={search_language} onChange={searchLanguageChanged}>
+                                <MenuItem value="KO">국문</MenuItem>
+                                <MenuItem value="EN">영문</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
+                                검색
+                            </Button>
+
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
+                                신규
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
                 </MainCard>
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <DefaultDataGrid
@@ -323,30 +270,19 @@ const FaqCategoryPage = () => {
                     />
                 </MainCard>
                 <MainCard sx={{ mt: 2 }} content={false}>
-                    <Grid container spacing={0} sx={{ mt: 2 }}>
-                        <Grid item xs={8} sm={0.2}></Grid>
-                        <Grid item xs={8} sm={1.3}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>언어 구분</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={2}>
-                            <FormControl sx={{ m: 0, minWidth: 200 }} size="small">
-                                <Select name="language" label="언어선택" value={language} onChange={handleChange}>
-                                    <MenuItem value="KO">국문</MenuItem>
-                                    <MenuItem value="EN">영문</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={1.3}></Grid>
-                        <Grid item xs={8} sm={1.3}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>카테고리명</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={3}>
-                            <Stack spacing={3}>
-                                <FormControl sx={{ m: 0, minWidth: 280, maxHeight: 30 }} size="small">
+                    <table className={cx('layout-table')}>
+                        <tbody>
+                            <tr>
+                                <th>언어 구분</th>
+                                <td>
+                                    <Select name="language" label="언어선택" value={language} onChange={handleChange}>
+                                        <MenuItem value="KO">국문</MenuItem>
+                                        <MenuItem value="EN">영문</MenuItem>
+                                    </Select>
+                                </td>
+
+                                <th>카테고리명</th>
+                                <td>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -358,52 +294,12 @@ const FaqCategoryPage = () => {
                                         placeholder="Enter the Name"
                                         fullWidth
                                     />
-                                </FormControl>
-                            </Stack>
-                        </Grid>
-                        <Grid item xs={8} sm={0.3}></Grid>
-                        <Grid item xs={8} sm={0.7}>
-                            <FormControl sx={{ m: 0 }} size="small">
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={saveClick}
-                                >
-                                    저장
-                                </Button>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={0.1}></Grid>
-                        <Grid item xs={8} sm={0.7}>
-                            <FormControl sx={{ m: 0 }} size="small">
-                                <Button
-                                    disableElevation
-                                    disabled={!isUpdate}
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={deleteClick}
-                                >
-                                    삭제
-                                </Button>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={0.1}></Grid>
-                    </Grid>
-                    <Grid container spacing={0} sx={{ mt: 1 }}>
-                        <Grid item xs={8} sm={0.2}></Grid>
-                        <Grid item xs={8} sm={1.3}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>사용여부</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={2}>
-                            <Stack spacing={3}>
-                                <FormControl sx={{ m: 0, height: 25 }} fullWidth>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>사용여부</th>
+                                <td>
                                     <RadioGroup
                                         row
                                         aria-labelledby="demo-row-radio-buttons-group-label"
@@ -414,18 +310,9 @@ const FaqCategoryPage = () => {
                                         <FormControlLabel value="true" control={<Radio />} label="사용함" />
                                         <FormControlLabel value="false" control={<Radio />} label="사용안함" />
                                     </RadioGroup>
-                                </FormControl>
-                            </Stack>
-                        </Grid>
-                        <Grid item xs={8} sm={1.3}></Grid>
-                        <Grid item xs={8} sm={1.3}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>노출순서</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={2}>
-                            <Stack spacing={3}>
-                                <FormControl sx={{ m: 0, maxWidth: 85, height: 25 }} fullWidth>
+                                </td>
+                                <th>노출순서</th>
+                                <td>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="number"
@@ -437,11 +324,26 @@ const FaqCategoryPage = () => {
                                         placeholder="정렬 순서"
                                         fullWidth
                                     />
-                                </FormControl>
-                            </Stack>
-                        </Grid>
-                        <Grid item xs={8} sm={1.3}></Grid>
-                    </Grid>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ButtonLayout buttonName="rightButton">
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                            저장
+                        </Button>
+                        <Button
+                            disableElevation
+                            disabled={!isUpdate}
+                            size="medium"
+                            type="submit"
+                            variant="contained"
+                            color="secondary"
+                            onClick={deleteClick}
+                        >
+                            삭제
+                        </Button>
+                    </ButtonLayout>
                 </MainCard>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
             </Grid>

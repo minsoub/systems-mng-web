@@ -1,34 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox
-} from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Select, Stack } from '@mui/material';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from '../../../components/HeaderTitle';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import cx from 'classnames';
+import InputLayout from '../../../components/Common/InputLayout';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import './styles.scss';
 
 const SiteAuthManagementPage = () => {
     let isSubmitting = false;
@@ -247,76 +233,59 @@ const SiteAuthManagementPage = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">권한 조회</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 관리 &gt; 권한 관리 &gt; 권한 조회</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="권한 리스트" menuStep01="사이트 관리" menuStep02="권한 관리" menuStep03="권한 리스트" />
+
                 <MainCard sx={{ mt: 1 }}>
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Site Name</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0.5, minWidth: 200, maxHeight: 25 }} size="small">
-                                    <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
-                                        <MenuItem value="">
-                                            <em>Choose a Site Type</em>
-                                        </MenuItem>
-                                        {siteList
-                                            .filter((item) => item.id === siteId)
-                                            .map((item, index) => (
-                                                <MenuItem key={index} value={item.id}>
-                                                    {item.name}
-                                                </MenuItem>
-                                            ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1, maxHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Role Type</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0.5, minWidth: 200, maxHeight: 25 }} size="small">
-                                    <Select name="type" label="Role Type" value={type} onChange={typeChanged}>
-                                        <MenuItem value="ADMIN">ADMIN</MenuItem>
-                                        <MenuItem value="USER">USER</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControlLabel
-                                    control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
-                                    label="사용함"
-                                />
-                            </Grid>
-                            <Grid item xs={8} sm={3.3}></Grid>
-                            <Grid item xs={8} sm={0.6}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={searchClick}
-                                    >
+                            <TopInputLayout>
+                                <InputLayout className={cx('layout-blank')}>
+                                    <Stack spacing={10} className={cx('borderTitle')}>
+                                        사이트명
+                                    </Stack>
+
+                                    <FormControl sx={{ minWidth: 250 }} size="medium">
+                                        <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
+                                            <MenuItem value="">
+                                                <em>Choose a Site Type</em>
+                                            </MenuItem>
+                                            {siteList
+                                                .filter((item) => item.id === siteId)
+                                                .map((item, index) => (
+                                                    <MenuItem key={index} value={item.id}>
+                                                        {item.name}
+                                                    </MenuItem>
+                                                ))}
+                                        </Select>
+                                    </FormControl>
+
+                                    <Stack spacing={10} className={cx('borderTitle ly-blank')}>
+                                        Role Type
+                                    </Stack>
+
+                                    <FormControl sx={{ minWidth: 250 }} size="medium">
+                                        <Select name="type" label="Role Type" value={type} onChange={typeChanged}>
+                                            <MenuItem value="ADMIN">ADMIN</MenuItem>
+                                            <MenuItem value="USER">USER</MenuItem>
+                                        </Select>
+                                    </FormControl>
+
+                                    <FormControlLabel
+                                        control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
+                                        label="사용함"
+                                    />
+                                </InputLayout>
+
+                                <ButtonLayout>
+                                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
                                         검색
                                     </Button>
-                                </FormControl>
-                            </Grid>
+                                </ButtonLayout>
+                            </TopInputLayout>
                         </Grid>
                     </Grid>
                 </MainCard>
+                {/* ------------------------------------- */}
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <DefaultDataGrid
                         columns={columns}
