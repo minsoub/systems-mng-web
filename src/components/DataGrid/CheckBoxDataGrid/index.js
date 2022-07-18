@@ -4,6 +4,7 @@ import { alpha, styled } from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import './style.scss';
+import cx from 'classnames';
 
 function customCheckbox(theme) {
     return {
@@ -121,9 +122,10 @@ export function CheckBoxDataGrid({ columns, rows, handlePageChange, handleGridCl
         selectionChange(selectionModel);
     }, [selectionModel]);
 
+    // 글 1개 이상이면
     if (rows) {
         return (
-            <div style={{ height: '100vh', width: '100%' }}>
+            <div className={cx('gridLayout')}>
                 <StyledDataGrid
                     checkboxSelection
                     pageSize={20}

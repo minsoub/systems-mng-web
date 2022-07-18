@@ -1,0 +1,44 @@
+.program--list {
+    .css-1g2xkz4-MuiFormControl-root {
+        margin-right: 10px;
+    }
+    .layout--blank {
+        margin-right: 10px;
+    }
+}
+
+.css-1oukqxz-MuiGrid-root {
+    align-items: normal;
+}
+.css-25381f-MuiDataGrid-footerContainer {
+    margin: 20px 0;
+}
+
+.rightButton {
+    margin-top: 0;
+}
+.menuButton {
+    margin-top: 2rem;
+}
+.layout-table {
+    margin-top: 3rem;
+    th {
+        text-align: left;
+        width: 150px;
+        font-weight: 500;
+        padding-left: 2rem;
+    }
+    tr {
+        td {
+            width: 40%;
+            padding: 15px;
+            input {
+                width: 90%;
+            }
+        }
+    }
+}
+
+.css-7mgabj-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+    width: 100%;
+}

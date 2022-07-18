@@ -1,4 +1,3 @@
-import { InputLabel, Stack, Typography } from '@mui/material';
 import './styles.scss';
 import cx from 'classnames';
 

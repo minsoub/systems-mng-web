@@ -29,7 +29,17 @@ import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from '../../components/HeaderTitle';
+import * as PropTypes from 'prop-types';
+import ButtonLayout from '../../components/Common/ButtonLayout';
+import InputLayout from '../../components/Common/InputLayout';
+import TopInputLayout from '../../components/Common/TopInputLayout';
 
+function InputTitle(props) {
+    return null;
+}
+
+InputTitle.propTypes = { title: PropTypes.string };
 const AuthManagementPage = () => {
     let isSubmitting = false;
     const columns = [
@@ -265,25 +275,15 @@ const AuthManagementPage = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">권한 관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">통합관리 &gt; 권한 관리 &gt; 권한관리 리스트</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
-                <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Site Name</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0.5, minWidth: 200, maxHeight: 25 }} size="small">
+                <HeaderTitle titleNm="권한 리스트" menuStep01="통합시스템 관리" menuStep02="권한 관리" menuStep03="권한 리스트" />
+
+                <MainCard>
+                    <TopInputLayout>
+                        <InputLayout gridClass="gridClass">
+                            <div className="mapping--grid">
+                                <InputTitle title="사이트명" />
+
+                                <FormControl sx={{ minWidth: 250 }}>
                                     <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                         <MenuItem value="">
                                             <em>Choose a Site Type</em>
@@ -295,43 +295,32 @@ const AuthManagementPage = () => {
                                         ))}
                                     </Select>
                                 </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1, maxHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Role Type</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0.5, minWidth: 200, maxHeight: 25 }} size="small">
+                            </div>
+
+                            <div className="mapping--grid">
+                                <InputTitle title="Role Type" />
+
+                                <FormControl size="medium" sx={{ minWidth: 250 }}>
                                     <Select name="type" label="Role Type" value={type} onChange={typeChanged}>
                                         <MenuItem value="ADMIN">ADMIN</MenuItem>
                                         <MenuItem value="USER">USER</MenuItem>
                                     </Select>
                                 </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControlLabel
-                                    control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
-                                    label="사용함"
-                                />
-                            </Grid>
-                            <Grid item xs={8} sm={3.3}></Grid>
-                            <Grid item xs={8} sm={0.6}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={searchClick}
-                                    >
-                                        검색
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                            </div>
+
+                            <FormControlLabel
+                                control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
+                                label="사용함"
+                                className="checkedBox"
+                            />
+                        </InputLayout>
+
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                                검색
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
                 </MainCard>
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <DefaultDataGrid

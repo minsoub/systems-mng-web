@@ -312,15 +312,8 @@ const ProjectsDetailPage = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">거래지원 관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 운영 &gt; 거래지원 관리 > 재단 정보</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="거래지원 관리" menuStep01="사이트 운영" menuStep02="거래지원 관리" menuStep03="재단 정보" />
+
                 <MainCard sx={{ mt: 1 }}>
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid container spacing={0} sx={{ mt: 0 }}>

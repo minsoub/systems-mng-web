@@ -2,22 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Typography,
-    FormControl
-} from '@mui/material';
-import MainCard from 'components/MainCard';
+import { Button, Grid, TextField } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import ThumbnailAttach from './ThumbnailAttach';
 import JoditEditor from 'jodit-react';
 import { WithContext as ReactTags } from 'react-tag-input';
-import './ReactTags.css';
+import './ReactTags.scss';
+import InputLayout from 'components/Common/InputLayout';
+import ButtonLayout from 'components/Common/ButtonLayout';
+import TopInputLayout from 'components/Common/TopInputLayout';
+import HeaderTitle from 'components/HeaderTitle';
+import cx from 'classnames';
 
 const DigitalAssetTrendMngForm = () => {
     const navigate = useNavigate();
@@ -156,7 +153,7 @@ const DigitalAssetTrendMngForm = () => {
                 setThumbnail(responseData.data.data.thumbnail);
                 setDescription(responseData.data.data.description);
                 setContent(responseData.data.data.contents);
-                setCreateAccountName(responseData.data.data.createAccountName);
+                setCreateAccountName(responseData.data.data.create_account_name);
 
                 if (responseData.data.data.tags) {
                     const tempTags = responseData.data.data.tags.map((tag) => {
@@ -171,7 +168,7 @@ const DigitalAssetTrendMngForm = () => {
             case 'createBoard':
                 alert('등록되었습니다.');
                 setId(responseData.data.data.id);
-                setCreateAccountName(responseData.data.data.createAccountName);
+                setCreateAccountName(responseData.data.data.create_account_name);
                 break;
             case 'updateBoard':
                 alert('저장되었습니다.');
@@ -284,24 +281,13 @@ const DigitalAssetTrendMngForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">콘텐츠 관리(가상자산 동향)</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">Home &gt; 사이트 운영 &gt; 콘텐츠 관리 &gt; 가상자산 동향</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
-                <MainCard sx={{ mt: 2 }} content={false}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>제목</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs>
-                            <FormControl sx={{ m: 0 }} size="small" required fullWidth>
+                <HeaderTitle titleNm="가상자산 동향" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="가상자산 동향" />
+
+                <div className={cx('common-grid--layout')}>
+                    <table>
+                        <tr>
+                            <th className={'tb--title'}>제목</th>
+                            <td>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -313,32 +299,22 @@ const DigitalAssetTrendMngForm = () => {
                                     placeholder="제목을 입력하세요."
                                     fullWidth
                                 />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>썸네일 이미지</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs>
-                            <ThumbnailAttach
-                                thumbnail={
-                                    thumbnail && (thumbnail.indexOf('http') === -1 ? `${boardThumbnailUrl}/${thumbnail}` : thumbnail)
-                                }
-                                handleChange={handleFileChange}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>요약 설명</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs>
-                            <FormControl sx={{ mt: 1, mb: 1 }} size="small" required fullWidth>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>썸네일 이미지</th>
+                            <td>
+                                <ThumbnailAttach
+                                    thumbnail={
+                                        thumbnail && (thumbnail.indexOf('http') === -1 ? `${boardThumbnailUrl}/${thumbnail}` : thumbnail)
+                                    }
+                                    handleChange={handleFileChange}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>요약 설명</th>
+                            <td>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -351,34 +327,22 @@ const DigitalAssetTrendMngForm = () => {
                                     fullWidth
                                     multiline
                                 />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Stack spacing={0}>내용</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs>
-                            <FormControl sx={{ m: 0 }} fullWidth>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>내용</th>
+                            <td>
                                 <JoditEditor
                                     ref={editorRef}
                                     value={content}
                                     config={config}
                                     onBlur={(newContent) => setContent(newContent)}
                                 />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={8} sm={1.5}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>해시태그</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs>
-                            <FormControl sx={{ mt: 1 }} size="small" required fullWidth>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>해시태그</th>
+                            <td>
                                 <ReactTags
                                     tags={tags}
                                     suggestions={suggestions}
@@ -391,75 +355,44 @@ const DigitalAssetTrendMngForm = () => {
                                     placeholder="태그 입력 후 엔터"
                                     autocomplete
                                 />
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    {createAccountName && (
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>등록자</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs mr={1}>
-                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small" required fullWidth>
+                            </td>
+                        </tr>
+                        {createAccountName && (
+                            <tr>
+                                <th className={'tb--title'}>등록자</th>
+                                <td>
                                     {createAccountName}
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    )}
-                </MainCard>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item xs={8} sm={0.8}>
-                        <FormControl sx={{ m: 1 }} size="small">
-                            <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
-                                목록
-                            </Button>
-                        </FormControl>
-                    </Grid>
+                                </td>
+                            </tr>
+                        )}
+                    </table>
+                </div>
+
+                <TopInputLayout>
+                    <InputLayout>
+                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            목록
+                        </Button>
+                    </InputLayout>
                     {!id && (
-                        <Grid item xs={8} sm={0.6}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={addClick}>
-                                    등록
-                                </Button>
-                            </FormControl>
-                        </Grid>
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addClick}>
+                                등록
+                            </Button>
+                        </ButtonLayout>
                     )}
                     {id && (
-                        <Grid container xs={8} direction="row" justifyContent="flex-end" alignItems="center">
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={deleteClick}
-                                    >
-                                        삭제
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={1}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={saveClick}
-                                    >
-                                        저장
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={deleteClick}>
+                                삭제
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
+                                저장
+                            </Button>
+                        </ButtonLayout>
                     )}
-                </Grid>
+                </TopInputLayout>
+
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>

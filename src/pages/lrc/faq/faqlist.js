@@ -35,6 +35,7 @@ import ErrorScreen from 'components/ErrorScreen';
 import FaqApis from 'apis/lrc/faq/faqapi';
 import CategoryApis from 'apis/lrc/faq/categoryapi';
 import CategoryContents from './categorycontents';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
 
 const FaqContent = (props) => {
     let isSubmitting = false;
@@ -340,11 +341,9 @@ const FaqContent = (props) => {
         <div>
             <MainCard sx={{ mt: 1, minHeight: 60 }} content={false}>
                 <Grid container spacing={0} sx={{ mt: 2 }}>
-                    <Grid item xs={8} sm={0.3}></Grid>
                     {categorys.map((item, index) => (
                         <CategoryContents key={index} id={item.id} content={item.name} count={item.count} filterClick={filterClick} />
                     ))}
-                    <Grid item xs={8} sm={0.3}></Grid>
                 </Grid>
             </MainCard>
             <MainCard sx={{ mt: 2 }} content={false}>
@@ -358,26 +357,16 @@ const FaqContent = (props) => {
                     selectionChange={handleSelectionChange}
                 />
             </MainCard>
-            <Grid container spacing={0} sx={{ mt: 0 }}>
-                <Grid item xs={8} sm={0.1}></Grid>
-                <Grid item xs={8} sm={2.5}>
-                    <FormControl sx={{ m: 1 }} size="small">
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={orderClick}>
-                            노출 순서 저장
-                        </Button>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={8} sm={8.7}></Grid>
-                <Grid item xs={8} sm={0.7}>
-                    <FormControl sx={{ m: 1 }} size="small">
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={regClick}>
-                            등록
-                        </Button>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={8} sm={0.1}></Grid>
-            </Grid>
-            <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+            <TopInputLayout className="bottomBlank">
+                <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={orderClick}>
+                    노출 순서 저장
+                </Button>
+
+                <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={regClick}>
+                    등록
+                </Button>
+            </TopInputLayout>
+            <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />{' '}
         </div>
     );
 };

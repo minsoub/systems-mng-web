@@ -33,6 +33,7 @@ import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
 import { DatePicker } from 'antd';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from '../../components/HeaderTitle';
 
 const RoleRegForm = () => {
     let isSubmitting = false;
@@ -370,15 +371,13 @@ const RoleRegForm = () => {
                     <form noValidate onSubmit={handleSubmit}>
                         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
                             <Grid item xs={12} md={7} lg={12}>
-                                <Grid container alignItems="center" justifyContent="space-between">
-                                    <Grid item>
-                                        <Typography variant="h3">Role 등록</Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography variant="h6">통합시스템 관리 &gt; Role 관리 &gt; Role 등록</Typography>
-                                    </Grid>
-                                    <Grid container spacing={2}></Grid>
-                                </Grid>
+                                <HeaderTitle
+                                    titleNm="Role 등록"
+                                    menuStep01="통합시스템 관리"
+                                    menuStep02="Role 관리"
+                                    menuStep03="Role 등록"
+                                />
+
                                 <MainCard sx={{ mt: 2 }}>
                                     <Grid container spacing={3}>
                                         <Grid item xs={8} sm={1.5}>

@@ -1,46 +1,49 @@
 .css-1ci3ki6-MuiInputBase-input-MuiOutlinedInput-input {
-  text-align: center;
+    text-align: center;
 }
 
 .css-zow5z4-MuiGrid-root > .MuiGrid-item {
-  padding-left: 0;
+    padding-left: 0;
 }
 
 .css-5js3un-MuiPaper-root-MuiCard-root {
-  max-width: 500px;
+    max-width: 500px;
 }
 
 .css-zow5z4-MuiGrid-root {
-  width: auto;
-  margin-left: 0;
+    width: auto;
+    margin-left: 0;
 }
 
 .css-jj7e1s-MuiGrid-root {
-  justify-content: center;
+    justify-content: center;
 }
 
 .css-1sbd9j1-MuiFormLabel-root-MuiInputLabel-root {
-  text-align: left;
+    text-align: left;
 }
 
 .css-1rke8zj-MuiButtonBase-root-MuiButton-root {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .label--center {
-  text-align: center;
-  width: 100%;
-  margin-bottom: 20px;
-  span {
-      margin-right: 5px;
-      color: #595959;
-  }
+    text-align: center;
+    width: 100%;
+    span {
+        margin-right: 5px;
+    }
 }
 
 .css-1m7zxfz {
-  padding: 16px 16px 22px 16px;
+    padding: 16px 16px 22px 16px;
 }
 
+.qrcodeBox {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+}
 // OTP 숫자 입력 란
 .otpAction {
   margin: 20px 0 100px 0;  

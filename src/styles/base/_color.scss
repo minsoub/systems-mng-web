@@ -1,0 +1,92 @@
+// color
+:root,
+::before,
+::after {
+    /* gray1 : #fff */
+    --G-bithumb-gray__1: #fff;
+
+    /* gray2 : #000 */
+    --G-bithumb-gray__2: #000;
+
+    /* gray4 : #f6f7f8 */
+    --G-bithumb-gray__4: #f6f7f8;
+
+    /* gray5 : #f2f3f4 */
+    --G-bithumb-gray__5: #f2f3f4;
+
+    /* gray6 : #edeef0 */
+    --G-bithumb-gray__6: #edeef0;
+
+    /* gray8 : #dadde1 */
+    --G-bithumb-gray__8: #dadde1;
+
+    /* gray9 : #bec1c5 */
+    --G-bithumb-gray__9: #bec1c5;
+
+    /* gray10 : #acb0b4 */
+    --G-bithumb-gray__10: #acb0b4;
+
+    /* gray11 : #93989e */
+    --G-bithumb-gray__11: #93989e;
+
+    /* gray12 : #707882 */
+    --G-bithumb-gray__12: #707882;
+
+    /* gray13 : #3d414b */
+    --G-bithumb-gray__13: #3d414b;
+
+    /* gray14 : #1c2028 */
+    --G-bithumb-gray__14: #1c2028;
+
+    /* gray16 : #f4f5f6 */
+    --G-bithumb-gray__16: #f4f5f6;
+
+    /* gray17 : #e6e7e8 */
+    --G-bithumb-gray__17: #e6e7e8;
+
+    /* gray18 : #d7d8d9 */
+    --G-bithumb-gray__18: #d7d8d9;
+
+    /* gray19 : #d3d6d9 */
+    --G-bithumb-gray__19: #d3d6d9;
+
+    /* gray20 : #bbbcbf */
+    --G-bithumb-gray__20: #bbbcbf;
+
+    /* orange1 : #ff6c00 */
+    --G-bithumb-orange__1: #ff6c00;
+
+    /* cyan1 : #3cb4c3 */
+    --G-bithumb-cyan__1: #3cb4c3;
+
+    /* red7 : #f03232 */
+    --G-bithumb-red__7: #f03232;
+
+    /* etc1 : #1b2b3b */
+    --G-bithumb-etc__1: #1b2b3b;
+
+    /* _reset 에서 사용하는 컬러 */
+    //#777
+    --G-color-777__01: #777;
+
+    //#444
+    --G-color-444__02: #444;
+
+    //#a4a4a4
+    --G-color-a4a4a4__01: #a4a4a4;
+
+    //#666
+    --G-color-666__01: #666;
+
+    //#e5e5e5
+    --G-color-e5e5e5__01: #e5e5e5;
+
+    //#f0f0f0
+    --G-color-f0f0f0__01: #f0f0f0;
+
+    //#e0e0e0
+    --G-color-e0e0e0__01: #e0e0e0;
+
+    //#ccc
+    --G-color-ccc__01: #ccc;
+}

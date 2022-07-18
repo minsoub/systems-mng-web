@@ -1,0 +1,35 @@
+.div_thumbnail {
+    height: 240px;
+    overflow: hidden;
+}
+
+.img_thumbnail {
+    max-width: 100%;
+    height: auto !important;
+}
+
+.desc_container {
+    width: 100%;
+}
+
+.overflow-wrap {
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.css-9x2mm1-MuiPaper-root-MuiCard-root {
+    margin-top: 2rem;
+}
+
+.css-zow5z4-MuiGrid-root {
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.img_thumbnail {
+    height: 100% !important;
+    object-fit: cover;
+}
+.css-1i5ha64-MuiDataGrid-root .MuiDataGrid-row {
+    cursor: pointer;
+}

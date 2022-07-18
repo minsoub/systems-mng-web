@@ -6,8 +6,9 @@ import FraudReportApi from 'apis/cpc/fraudReport/fraudreportapi';
 import ErrorScreen from 'components/ErrorScreen';
 import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
-import DetailBoardContent from 'components/DetailBoard/Content';
+import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
+import TopInputLayout from 'components/Common/TopInputLayout';
 
 const FraudReportMngForm = () => {
     const navigate = useNavigate();
@@ -163,34 +164,59 @@ const FraudReportMngForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="사고신고 관리" menuStep01="사이트 운영" menuStep02="사고신고 관리" />
 
-                <table className={cx('content--table')}>
-                    <DetailBoardContent
-                        titleNm="상태"
-                        children={
-                            <>
-                                {status === 'REGISTER' && '접수'}
-                                {status === 'REQUEST' && '답변요청'}
-                                {status === 'COMPLETE' && '답변완료'}
-                            </>
-                        }
-                    />
-                    <DetailBoardContent titleNm="제보자" children={email} />
-                    <DetailBoardContent titleNm="제목" children={title} />
-                    <DetailBoardContent titleNm="내용" children={contents} />
-                    <DetailBoardContent titleNm="개인정보 취급 동의" children={entrust_privacy === true ? 'Y' : 'N'} />
-                    <DetailBoardContent titleNm="개인정보 수집 및 이용 동의" children={terms_privacy === true ? 'Y' : 'N'} />
-                    <DetailBoardContent
-                        titleNm="첨부파일"
-                        children={
-                            <Button onClick={downloadClick} variant="text" color="primary">
-                                {attach_file_name}
-                            </Button>
-                        }
-                    />
-                    <DetailBoardContent
-                        titleNm="답변"
-                        children={
-                            <>
+                <div className={cx('common-grid--layout')}>
+                    <table>
+                        <tr>
+                            <th className={'tb--title'} style={{minWidth: '250px'}}>상태</th>
+                            <td>
+                                <>
+                                    {status === 'REGISTER' && '접수'}
+                                    {status === 'REQUEST' && '답변요청'}
+                                    {status === 'COMPLETE' && '답변완료'}
+                                </>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>제보자</th>
+                            <td>
+                                {email}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>제목</th>
+                            <td>
+                                {title}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>내용</th>
+                            <td>
+                                {contents}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>개인정보 취급 동의</th>
+                            <td>
+                                {entrust_privacy === true ? 'Y' : 'N'}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>개인정보 수집 및 이용 동의</th>
+                            <td>
+                                {terms_privacy === true ? 'Y' : 'N'}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>첨부파일</th>
+                            <td>
+                                <Button onClick={downloadClick} variant="text" color="primary">
+                                    {attach_file_name}
+                                </Button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>답변</th>
+                            <td>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -215,21 +241,30 @@ const FraudReportMngForm = () => {
                                         </FormControl>
                                     </Grid>
                                 )}
-                            </>
-                        }
-                    />
-                    <DetailBoardContent titleNm="등록일시" children={create_date} />
-                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>등록일시</th>
+                            <td>
+                                {create_date}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
-                <ButtonLayout buttonName="content--right__button">
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
-                        목록
-                    </Button>
+                <TopInputLayout>
+                    <InputLayout>
+                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            목록
+                        </Button>
+                    </InputLayout>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
+                            저장
+                        </Button>
+                    </ButtonLayout>
+                </TopInputLayout>
 
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
-                        저장
-                    </Button>
-                </ButtonLayout>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>

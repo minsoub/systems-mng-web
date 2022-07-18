@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
 import {
@@ -16,6 +17,7 @@ import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
+import { setSearchData } from 'store/reducers/cpc/BlockChainNewsSearch';
 
 const BlockChainNewsMng = () => {
     const columns = [
@@ -76,6 +78,9 @@ const BlockChainNewsMng = () => {
     const navigate = useNavigate();
     const [responseData, requestError, resLoading, { searchNewsList, deleteNewsList }] = BlockChainNewsApi();
 
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.cpcBlockChainNewsSearchReducer);
+    const dispatch = useDispatch();
+
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
     // 그리드 목록 데이터
@@ -94,18 +99,30 @@ const BlockChainNewsMng = () => {
     const [period, setPeriod] = useState('1');
     const [keyword, setKeyword] = useState('');
 
+    // 상태 값
+    const [isSearch, setIsSearch] = useState(false);
+
     // onload
     useEffect(() => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
+        setPeriod(1);
 
-        const request = {
-            start_date: moment().format('YYYY-MM-DD'),
-            end_date: moment().format('YYYY-MM-DD'),
-            keyword
-        };
-        searchNewsList(request);
+        // reduce 상태값을 사용하여 검색을 수행한다.
+        if (reduceFromDate) setStartDate(reduceFromDate);
+        if (reduceToDate) setEndDate(reduceToDate);
+        if (reduceKeyword) setKeyword(reduceKeyword);
+        if (reducePeriod) setPeriod(reducePeriod);
+
+        setIsSearch(true);
     }, []);
+
+    useEffect(() => {
+        if (isSearch) {
+            searchClick();
+            setIsSearch(false);
+        }
+    }, [isSearch]);
 
     // transaction error 처리
     useEffect(() => {
@@ -218,8 +235,8 @@ const BlockChainNewsMng = () => {
     // 초기화
     const clearClick = () => {
         console.log('clearClick called...');
-        setStartDate('');
-        setEndDate('');
+        setStartDate(moment().format('YYYY-MM-DD'));
+        setEndDate(moment().format('YYYY-MM-DD'));
         setPeriod('1');
         setKeyword('');
     };
@@ -233,6 +250,15 @@ const BlockChainNewsMng = () => {
             keyword
         };
         searchNewsList(request);
+
+        // 검색 조건에 대해서 상태를 저장한다.
+        const searchData = {
+            reduceFromDate: start_date,
+            reduceToDate: end_date,
+            reducePeriod: period,
+            reduceKeyword: keyword
+        };
+        dispatch(setSearchData(searchData));
     };
 
     // 삭제

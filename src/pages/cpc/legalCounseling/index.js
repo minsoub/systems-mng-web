@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    Button,
-    Grid,
-    Stack,
-    FormControlLabel,
-    Radio,
-    RadioGroup
-} from '@mui/material';
+import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
@@ -21,6 +15,8 @@ import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
+import { setSearchData } from 'store/reducers/cpc/LegalCounselingSearch';
+import './styles.scss';
 
 const LegalCounselingMng = () => {
     const columns = [
@@ -100,6 +96,11 @@ const LegalCounselingMng = () => {
     const navigate = useNavigate();
     const [responseData, requestError, resLoading, { searchLegalCounselingList, getExcelDownload, getFileDownload }] = LegalCounselingApi();
 
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword, reduceStatus } = useSelector(
+        (state) => state.cpcLegalCounselingSearchReducer
+    );
+    const dispatch = useDispatch();
+
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
     // 그리드 목록 데이터
@@ -120,19 +121,31 @@ const LegalCounselingMng = () => {
     const [keyword, setKeyword] = useState('');
     const [downloadFileName, setDownloadFileName] = useState('');
 
+    // 상태 값
+    const [isSearch, setIsSearch] = useState(false);
+
     // onload
     useEffect(() => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
+        setPeriod(1);
 
-        const request = {
-            start_date: moment().format('YYYY-MM-DD'),
-            end_date: moment().format('YYYY-MM-DD'),
-            status,
-            keyword
-        };
-        searchLegalCounselingList(request);
+        // reduce 상태값을 사용하여 검색을 수행한다.
+        if (reduceFromDate) setStartDate(reduceFromDate);
+        if (reduceToDate) setEndDate(reduceToDate);
+        if (reduceKeyword) setKeyword(reduceKeyword);
+        if (reducePeriod) setPeriod(reducePeriod);
+        if (reduceStatus) setStatus(reduceStatus);
+
+        setIsSearch(true);
     }, []);
+
+    useEffect(() => {
+        if (isSearch) {
+            searchClick();
+            setIsSearch(false);
+        }
+    }, [isSearch]);
 
     // transaction error 처리
     useEffect(() => {
@@ -248,8 +261,10 @@ const LegalCounselingMng = () => {
     const handleClick = (rowData) => {
         if (rowData && rowData.field) {
             if (rowData.field === 'attach_file_id') {
-                setDownloadFileName(rowData.row.attach_file_name);
-                getFileDownload(rowData.row.attach_file_id);
+                if (rowData.row.attach_file_id) {
+                    setDownloadFileName(rowData.row.attach_file_name);
+                    getFileDownload(rowData.row.attach_file_id);
+                }
             } else {
                 navigate(`/cpc/legal-counseling/reg/${rowData.id}`);
             }
@@ -262,8 +277,8 @@ const LegalCounselingMng = () => {
     // 초기화
     const clearClick = () => {
         console.log('clearClick called...');
-        setStartDate('');
-        setEndDate('');
+        setStartDate(moment().format('YYYY-MM-DD'));
+        setEndDate(moment().format('YYYY-MM-DD'));
         setPeriod('1');
         setStatus('');
         setKeyword('');
@@ -279,6 +294,16 @@ const LegalCounselingMng = () => {
             keyword
         };
         searchLegalCounselingList(request);
+
+        // 검색 조건에 대해서 상태를 저장한다.
+        const searchData = {
+            reduceFromDate: start_date,
+            reduceToDate: end_date,
+            reducePeriod: period,
+            reduceKeyword: keyword,
+            reduceStatus: status
+        };
+        dispatch(setSearchData(searchData));
     };
 
     // 엑셀 다운로드
@@ -298,7 +323,8 @@ const LegalCounselingMng = () => {
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="법률 상담 관리" menuStep01="사이트 운영" menuStep02="법률 상담 관리" />
-                <MainCard>
+
+                <MainCard className="legalLayout">
                     {/* 기간 검색 */}
                     <SearchDate
                         start_date={start_date}
@@ -309,7 +335,7 @@ const LegalCounselingMng = () => {
                     />
 
                     {/* 카테고리 영역 */}
-                    <div className={cx('category')}>
+                    <div className={cx('legalLayout--category')}>
                         <Stack spacing={10} className={cx('borderTitle')}>
                             상태
                         </Stack>

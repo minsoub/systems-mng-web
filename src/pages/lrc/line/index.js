@@ -2,29 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem
-} from '@mui/material';
+import { Button, FormControl, Grid, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import LineApis from 'apis/lrc/line/lineapi';
 import ErrorScreen from 'components/ErrorScreen';
+import './styles.scss';
+import InputLayout from '../../../components/Common/InputLayout';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import cx from 'classnames';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import HeaderTitle from '../../../components/HeaderTitle';
 
 const LineMngPage = () => {
     let isSubmitting = false;
@@ -239,60 +227,34 @@ const LineMngPage = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">계열 관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 운영 > 상태값 관리 > 계열 관리</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
-                <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={2}>
-                                <FormControl sx={{ m: 0, minWidth: 200 }} size="small">
-                                    <Select name="search_line_type" label="계얄타입" value={search_line_type} onChange={searchLineChanged}>
-                                        <MenuItem value="BUSINESS">사업계열</MenuItem>
-                                        <MenuItem value="NETWORK">네트워크계열</MenuItem>
-                                        <MenuItem value="">전체</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={8.3}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={searchClick}
-                                    >
-                                        검색
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={newClick}
-                                    >
-                                        신규
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                        </Grid>
-                    </Grid>
+                <HeaderTitle titleNm="계열 관리" menuStep01="사이트 운영" menuStep02="상태값 관리" menuStep03="계열 관리" />
+
+                <MainCard>
+                    <TopInputLayout>
+                        <InputLayout>
+                            <Stack spacing={10} className={cx('borderTitle')}>
+                                계열 구분
+                            </Stack>
+
+                            <FormControl sx={{ m: 0, minWidth: 250 }} size="medium">
+                                <Select name="search_line_type" label="계열타입" value={search_line_type} onChange={searchLineChanged}>
+                                    <MenuItem value="BUSINESS">사업계열</MenuItem>
+                                    <MenuItem value="NETWORK">네트워크계열</MenuItem>
+                                    <MenuItem value="">전체</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </InputLayout>
+
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
+                                검색
+                            </Button>
+
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
+                                신규
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
                 </MainCard>
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <DefaultDataGrid
@@ -305,78 +267,59 @@ const LineMngPage = () => {
                         height={350}
                     />
                 </MainCard>
-                <MainCard sx={{ mt: 2 }} content={false}>
-                    <Grid container spacing={0} sx={{ mt: 1 }}>
-                        <Grid item xs={8} sm={0.2}></Grid>
-                        <Grid item xs={8} sm={1.3}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>계열 타입</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={2}>
-                            <FormControl sx={{ m: 0, minWidth: 200 }} size="small">
-                                <Select name="type" label="계얄타입" value={type} onChange={handleChange}>
-                                    <MenuItem value="BUSINESS">사업계열</MenuItem>
-                                    <MenuItem value="NETWORK">네트워크계열</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={1.3}></Grid>
-                        <Grid item xs={8} sm={1.3}>
-                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                <Stack spacing={0}>계열 명칭</Stack>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={3}>
-                            <Stack spacing={3}>
-                                <FormControl sx={{ m: 0, minWidth: 280, maxHeight: 30 }} size="small">
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={name}
-                                        name="name"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="Enter the Name"
-                                        fullWidth
-                                    />
+                <MainCard sx={{ mt: 2 }}>
+                    <TopInputLayout>
+                        <InputLayout>
+                            <div className="layout">
+                                <Stack spacing={10} className={cx('borderTitle')}>
+                                    계열 타입
+                                </Stack>
+                                <FormControl sx={{ minWidth: 250 }} size="medium">
+                                    <Select name="type" label="계얄타입" value={type} onChange={handleChange}>
+                                        <MenuItem value="BUSINESS">사업계열</MenuItem>
+                                        <MenuItem value="NETWORK">네트워크계열</MenuItem>
+                                    </Select>
                                 </FormControl>
-                            </Stack>
-                        </Grid>
-                        <Grid item xs={8} sm={0.3}></Grid>
-                        <Grid item xs={8} sm={0.7}>
-                            <FormControl sx={{ m: 0 }} size="small">
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={saveClick}
-                                >
-                                    저장
-                                </Button>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={0.1}></Grid>
-                        <Grid item xs={8} sm={0.7}>
-                            <FormControl sx={{ m: 0 }} size="small">
-                                <Button
-                                    disableElevation
-                                    disabled={!isUpdate}
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={deleteClick}
-                                >
-                                    삭제
-                                </Button>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={0.1}></Grid>
-                    </Grid>
+                            </div>
+
+                            <div className="layout">
+                                <InputLayout>
+                                    <Stack spacing={10} className={cx('borderTitle')}>
+                                        계열 명칭
+                                    </Stack>
+                                    <FormControl sx={{ minWidth: 250 }} size="medium">
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="medium"
+                                            size="small"
+                                            value={name}
+                                            name="name"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            fullWidth
+                                        />
+                                    </FormControl>
+                                </InputLayout>
+                            </div>
+                        </InputLayout>
+
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                                저장
+                            </Button>
+                            <Button
+                                disableElevation
+                                disabled={!isUpdate}
+                                size="small"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={deleteClick}
+                            >
+                                삭제
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
                 </MainCard>
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
             </Grid>
