@@ -26,6 +26,10 @@ import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import SiteApi from 'apis/site/siteapi';
 import { bool } from 'prop-types';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from '../../components/HeaderTitle';
+import InputLayout from '../../components/Common/InputLayout';
+import ButtonLayout from '../../components/Common/ButtonLayout';
+import TopInputLayout from '../../components/Common/TopInputLayout';
 
 const SiteManagementPage = () => {
     let isSubmitting = false;
@@ -183,83 +187,56 @@ const SiteManagementPage = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">사이트 관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">통합 시스템관리 > 사이트 관리</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="사이트 관리" menuStep01="통합시스템 관리" menuStep02="사이트 관리" />
+
                 <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={2}>
-                                <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
-                                    <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
-                                        <MenuItem value="true">사용</MenuItem>
-                                        <MenuItem value="false">미사용</MenuItem>
-                                        <MenuItem value="">전체</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <FormControl sx={{ m: 0.5, minWidth: 300, maxHeight: 25 }} size="small">
-                                    <OutlinedInput
-                                        fullWidth
-                                        id="word"
-                                        type="text"
-                                        value={keyword}
-                                        name="word"
-                                        placeholder=""
-                                        onChange={keywordChanged}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={3.7}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <Button
-                                    disableElevation
-                                    disabled={isSubmitting}
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={searchClick}
-                                >
-                                    검색
-                                </Button>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={newClick}
-                                >
-                                    신규
-                                </Button>
-                            </Grid>
-                            <Grid item xs={8} sm={0.1}></Grid>
-                            <Grid item xs={8} sm={0.7}>
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={listClick}
-                                >
-                                    리스트
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                    <TopInputLayout>
+                        <InputLayout>
+                            <FormControl sx={{ minWidth: 100, marginRight: 2 }} size="medium">
+                                <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
+                                    <MenuItem value="true">사용</MenuItem>
+                                    <MenuItem value="false">미사용</MenuItem>
+                                    <MenuItem value="">전체</MenuItem>
+                                </Select>
+                            </FormControl>
+
+                            <FormControl sx={{ minWidth: 250 }} size="medium">
+                                <OutlinedInput
+                                    fullWidth
+                                    id="word"
+                                    type="text"
+                                    value={keyword}
+                                    name="word"
+                                    placeholder=""
+                                    onChange={keywordChanged}
+                                />
+                            </FormControl>
+                        </InputLayout>
+
+                        <ButtonLayout>
+                            <Button
+                                disableElevation
+                                disabled={isSubmitting}
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                onClick={searchClick}
+                            >
+                                검색
+                            </Button>
+
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
+                                신규
+                            </Button>
+
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                                리스트
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
                 </MainCard>
+
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <DefaultDataGrid
                         columns={columns}

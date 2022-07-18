@@ -26,6 +26,7 @@ import { StyledTableCell } from 'components/CustomTableCell';
 import TreeView from '@mui/lab/TreeView';
 import HeaderTitle from '../../../components/HeaderTitle';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
+import cx from 'classnames';
 
 function MinusSquare(props) {
     return (
@@ -430,21 +431,23 @@ const StatusRegForm = () => {
                                 </tr>
                             </table>
 
-                            <ButtonLayout buttonName="rightButton">
-                                <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                                    저장
-                                </Button>
-                                <Button
-                                    disableElevation
-                                    size="medium"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={cancelClick}
-                                >
-                                    취소
-                                </Button>
-                            </ButtonLayout>
+                            <div className={cx('stateButton')}>
+                                <ButtonLayout buttonName="rightButton">
+                                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                                        저장
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={cancelClick}
+                                    >
+                                        취소
+                                    </Button>
+                                </ButtonLayout>
+                            </div>
                         </MainCard>
                     </Grid>
                 </Grid>

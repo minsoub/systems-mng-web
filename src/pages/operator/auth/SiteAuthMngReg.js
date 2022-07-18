@@ -57,6 +57,7 @@ import HeaderTitle from '../../../components/HeaderTitle';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import InputLayout from '../../../components/Common/InputLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
+import cx from 'classnames';
 
 function MinusSquare(props) {
     return (
@@ -794,8 +795,10 @@ const SiteAuthMngRegForm = () => {
                 <MainCard sx={{ mt: 1 }}>
                     <TopInputLayout>
                         <InputLayout>
-                            <Stack spacing={0}>Site 구분</Stack>
-                            <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
+                            <Stack spacing={10} className={cx('borderTitle')}>
+                                사이트 구분
+                            </Stack>
+                            <FormControl sx={{ minWidth: 250 }} size="medium">
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
                                     <MenuItem value="">
                                         <em>Choose a Site Type</em>
@@ -810,17 +813,21 @@ const SiteAuthMngRegForm = () => {
                                 </Select>
                             </FormControl>
 
-                            <Stack spacing={0}>Type</Stack>
-                            <FormControl sx={{ m: 0.5, minWidth: 200, maxHeight: 25 }} size="small">
+                            <Stack spacing={10} className={cx('borderTitle')}>
+                                Type
+                            </Stack>
+                            <FormControl sx={{ minWidth: 250 }} size="medium">
                                 <Select name="type" label="Role Type" value={type} onChange={handleChange}>
                                     <MenuItem value="ADMIN">ADMIN</MenuItem>
                                     <MenuItem value="USER">USER</MenuItem>
                                 </Select>
                             </FormControl>
 
-                            <Stack spacing={0}>Role Name</Stack>
+                            <Stack spacing={10} className={cx('borderTitle')}>
+                                Role Name
+                            </Stack>
 
-                            <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
+                            <FormControl sx={{ minWidth: 250 }} size="medium">
                                 <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
                                     <MenuItem value="">
                                         <em>Choose a Role Name</em>

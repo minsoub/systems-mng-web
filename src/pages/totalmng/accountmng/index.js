@@ -32,10 +32,10 @@ import { boolean } from '../../../../node_modules/yup/lib/index';
 import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
 import AccountApis from 'apis/account/accountapis';
 import ErrorScreen from 'components/ErrorScreen';
-import ButtonLayout from "../../../components/Common/ButtonLayout";
-import TopInputLayout from "../../../components/Common/TopInputLayout";
-import InputLayout from "../../../components/Common/InputLayout";
-import HeaderTitle from "../../../components/HeaderTitle";
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import InputLayout from '../../../components/Common/InputLayout';
+import HeaderTitle from '../../../components/HeaderTitle';
 
 const AccountMng = () => {
     let isSubmitting = false;
@@ -289,7 +289,6 @@ const AccountMng = () => {
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
-
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <CheckBoxDataGrid
                         columns={columns}
