@@ -39,6 +39,7 @@ import RoleApi from 'apis/roles/roleapi';
 import { DatePicker } from 'antd';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from 'components/HeaderTitle';
 
 const AccountRegForm = () => {
     let isSubmitting = false;
