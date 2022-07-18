@@ -8,7 +8,9 @@ export const Index = ({ sendChat }) => {
     const [value, setValue] = useState('');
     const sendData = () => {
         if (value) {
-            sendChat(value);
+            let data = value;
+            sendChat(data);
+            setValue('');
         }
     };
     const handleChange = (e) => {

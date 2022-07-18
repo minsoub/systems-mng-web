@@ -1,6 +1,11 @@
 import '../styles.scss';
 
-const MessageRight = ({ message, timestamp, displayName }) => {
+const MessageRight = ({ id, message, timestamp, displayName, deleteChatMessage }) => {
+    const deleteMessage = (id) => {
+        if (confirm('삭재하시겠습니까?')) {
+            deleteChatMessage(id);
+        }
+    };
     return (
         <>
             <div className="msg--right">
@@ -17,7 +22,7 @@ const MessageRight = ({ message, timestamp, displayName }) => {
                     {/* 메시지 내용물 */}
                     <div className="message my-message">{message}</div>
                     <div className="my-message__delete">
-                        <button>삭제</button>
+                        <button onClick={() => deleteMessage(id)}>삭제</button>
                     </div>
                 </div>
             </div>

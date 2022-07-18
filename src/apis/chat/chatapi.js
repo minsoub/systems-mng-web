@@ -46,6 +46,15 @@ const ChatApi = () => {
             requestConfig: {}
         });
     };
+    // 채팅 대화 삭제
+    const deleteChatMessage = (id) => {
+        callApi('deleteChatMessage', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/mng/lrc/service/chat/${id}`,
+            requestConfig: {}
+        });
+    };
     return [
         resData,
         reqError,
@@ -54,7 +63,8 @@ const ChatApi = () => {
             chatExistsAndSave: chatExists,
             insertChatFile: insertFileData,
             getChatFile: getFile,
-            getChatFileList: getFileListData
+            getChatFileList: getFileListData,
+            deleteChat: deleteChatMessage
         }
     ];
 };
