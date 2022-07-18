@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import 'globalstyle.scss';
+import './reset.scss';
 
 // scroll bar
 import 'simplebar/src/simplebar.css';

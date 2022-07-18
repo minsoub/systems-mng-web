@@ -1,33 +1,18 @@
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
-
+import './styles.scss';
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import {
-    Avatar,
-    Box,
-    ButtonBase,
-    CardContent,
-    ClickAwayListener,
-    Grid,
-    IconButton,
-    Paper,
-    Popper,
-    Stack,
-    Tab,
-    Tabs,
-    Typography
-} from '@mui/material';
+import { Box, ButtonBase, CardContent, ClickAwayListener, Grid, Paper, Popper, Stack, Tab, Tabs, Typography } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
 import Transitions from 'components/@extended/Transitions';
 import ProfileTab from './ProfileTab';
-import SettingTab from './SettingTab';
 import { useNavigate } from 'react-router-dom';
 // assets
-import avatar1 from 'assets/images/users/avatar-1.png';
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -111,7 +96,7 @@ const Profile = () => {
             >
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
                     {/* <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} /> */}
-                    <Typography variant="subtitle1">Login by {authData.email}</Typography>
+                    <Avatar size="large" icon={<UserOutlined />} />
                 </Stack>
             </ButtonBase>
             <Popper
@@ -150,35 +135,11 @@ const Profile = () => {
                                     <MainCard elevation={0} border={false} content={false}>
                                         <CardContent sx={{ px: 2.5, pt: 3 }}>
                                             <Grid container justifyContent="space-between" alignItems="center">
-                                                <Grid item>
-                                                    <Stack direction="row" spacing={1.25} alignItems="center">
-                                                        <Avatar
-                                                            alt="profile user"
-                                                            src={process.env.PUBLIC_URL + '/images/users/avatar-01'}
-                                                            sx={{ width: 32, height: 32 }}
-                                                        />
-                                                        <Stack>
-                                                            <Typography variant="h6">{authData.email}</Typography>
-                                                            <Typography variant="body2" color="textSecondary">
-                                                                Smart Admin 관리자
-                                                            </Typography>
-                                                        </Stack>
-                                                    </Stack>
-                                                </Grid>
-                                                <Grid item sx={{ mt: 3 }}>
-                                                    <Stack direction="row" spacing={1.25} alignItems="center">
-                                                        <Stack>
-                                                            <Typography variant="body2" color="textSecondary">
-                                                                ( 접속일시 : {authData.loginDate} )
-                                                            </Typography>
-                                                        </Stack>
-                                                    </Stack>
-                                                </Grid>
-                                                {/* <Grid item>
-                                                    <IconButton size="large" color="secondary" onClick={handleLogout}>
-                                                        <LogoutOutlined />
-                                                    </IconButton>
-                                                </Grid> */}
+                                                <div className="mypage--userInfo">
+                                                    <p className="email">{authData.email}</p>
+                                                    <p className="admin">Smart Admin 관리자</p>
+                                                    <span className="time">( 접속일시 : {authData.loginDate} )</span>
+                                                </div>
                                             </Grid>
                                         </CardContent>
                                         {open && (
@@ -202,26 +163,11 @@ const Profile = () => {
                                                             label="계정 정보 수정"
                                                             {...a11yProps(0)}
                                                         />
-                                                        {/* <Tab
-                                                            sx={{
-                                                                display: 'flex',
-                                                                flexDirection: 'row',
-                                                                justifyContent: 'center',
-                                                                alignItems: 'center',
-                                                                textTransform: 'capitalize'
-                                                            }}
-                                                            icon={<SettingOutlined style={{ marginBottom: 0, marginRight: '10px' }} />}
-                                                            label="Setting"
-                                                            {...a11yProps(1)}
-                                                        /> */}
                                                     </Tabs>
                                                 </Box>
                                                 <TabPanel value={value} index={0} dir={theme.direction}>
                                                     <ProfileTab handleLogout={handleLogout} handleUpdate={handleUpdate} />
                                                 </TabPanel>
-                                                {/* <TabPanel value={value} index={1} dir={theme.direction}>
-                                                    <SettingTab />
-                                                </TabPanel> */}
                                             </>
                                         )}
                                     </MainCard>
