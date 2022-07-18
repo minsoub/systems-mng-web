@@ -289,6 +289,8 @@ const AccountMng = () => {
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
+
+                {/* 표 */}
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <CheckBoxDataGrid
                         columns={columns}

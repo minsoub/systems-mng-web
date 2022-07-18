@@ -271,9 +271,7 @@ const BlockChainNewsMngForm = () => {
                         {createAccountName && (
                             <tr>
                                 <th className={'tb--title'}>등록자</th>
-                                <td>
-                                    {createAccountName}
-                                </td>
+                                <td>{createAccountName}</td>
                             </tr>
                         )}
                     </table>

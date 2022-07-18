@@ -300,7 +300,7 @@ const InsightColumnMngForm = () => {
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="인사이트 칼럼" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="인사이트 칼럼" />
-    
+
                 <div className={cx('common-grid--layout')}>
                     <table>
                         <tr>
@@ -407,9 +407,7 @@ const InsightColumnMngForm = () => {
                         {createAccountName && (
                             <tr>
                                 <th className={'tb--title'}>등록자</th>
-                                <td>
-                                    {createAccountName}
-                                </td>
+                                <td>{createAccountName}</td>
                             </tr>
                         )}
                     </table>
