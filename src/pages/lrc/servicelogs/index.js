@@ -40,6 +40,7 @@ import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import { setSearchData } from 'store/reducers/logsearch';
 import { map } from 'lodash';
+import HeaderTitle from '../../../components/HeaderTitle';
 
 // Log
 const ServiceLog = () => {
@@ -319,15 +320,13 @@ const ServiceLog = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">서비스 로그 관리</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 운영 &gt; 서비스 로그 관리</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle
+                    titleNm="서비스 로그 관리"
+                    menuStep01="서비스 로그 관리"
+                    menuStep02="사이트 운영"
+                    menuStep03="서비스 로그 관리"
+                />
+
                 <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
                     <Table
                         fixedheader={false}

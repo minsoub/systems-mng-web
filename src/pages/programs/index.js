@@ -36,11 +36,11 @@ import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
 import ProgramApi from 'apis/programs/programapi';
 import ErrorScreen from 'components/ErrorScreen';
-import ButtonLayout from "../../components/Common/ButtonLayout";
-import TopInputLayout from "../../components/Common/TopInputLayout";
-import InputLayout from "../../components/Common/InputLayout";
-import HeaderTitle from "../../components/HeaderTitle";
-import cx from "classnames";
+import ButtonLayout from '../../components/Common/ButtonLayout';
+import TopInputLayout from '../../components/Common/TopInputLayout';
+import InputLayout from '../../components/Common/InputLayout';
+import HeaderTitle from '../../components/HeaderTitle';
+import cx from 'classnames';
 
 const ProgramManagementPage = () => {
     let isSubmitting = false;
@@ -270,7 +270,7 @@ const ProgramManagementPage = () => {
                                 사이트명
                             </Stack>
 
-                            <FormControl size="medium" sx={{ minWidth: 250 }}>
+                            <FormControl size="medium" sx={{ minWidth: 250 }} className="mapping--grid">
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged} placeholder="사이트명">
                                     {siteList.map((item, index) => (
                                         <MenuItem key={index} value={item.id}>

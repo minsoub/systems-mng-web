@@ -3,14 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    Button,
-    Grid,
-    Stack,
-    FormControlLabel,
-    Radio,
-    RadioGroup
-} from '@mui/material';
+import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
@@ -23,6 +16,7 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/LegalCounselingSearch';
+import './styles.scss';
 
 const LegalCounselingMng = () => {
     const columns = [
@@ -102,7 +96,9 @@ const LegalCounselingMng = () => {
     const navigate = useNavigate();
     const [responseData, requestError, resLoading, { searchLegalCounselingList, getExcelDownload, getFileDownload }] = LegalCounselingApi();
 
-    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword, reduceStatus } = useSelector((state) => state.cpcLegalCounselingSearchReducer);
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword, reduceStatus } = useSelector(
+        (state) => state.cpcLegalCounselingSearchReducer
+    );
     const dispatch = useDispatch();
 
     // 그리드 선택된 row id
@@ -327,7 +323,8 @@ const LegalCounselingMng = () => {
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="법률 상담 관리" menuStep01="사이트 운영" menuStep02="법률 상담 관리" />
-                <MainCard>
+
+                <MainCard className="legalLayout">
                     {/* 기간 검색 */}
                     <SearchDate
                         start_date={start_date}
@@ -338,7 +335,7 @@ const LegalCounselingMng = () => {
                     />
 
                     {/* 카테고리 영역 */}
-                    <div className={cx('category')}>
+                    <div className={cx('legalLayout--category')}>
                         <Stack spacing={10} className={cx('borderTitle')}>
                             상태
                         </Stack>

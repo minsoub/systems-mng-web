@@ -35,6 +35,8 @@ import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import LogsApi from 'apis/servicelogs/index';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
+import HeaderTitle from '../../../components/HeaderTitle';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
 
 const SiteLogPage = () => {
     let isSubmitting = false;
@@ -252,15 +254,8 @@ const SiteLogPage = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">감사로그 조회</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 관리 &gt; 감사로그 조회</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="감사로그 조회" menuStep01="사이트 관리" menuStep02="감사로그 조회" />
+
                 <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
                     <Table
                         fixedheader={false}
@@ -277,7 +272,7 @@ const SiteLogPage = () => {
                                 일시
                             </TableCell>
                             <TableCell style={{ width: '10%' }} align="left" component="th" scope="row">
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
+                                <FormControl size="medium">
                                     <TextField
                                         id="start_date"
                                         name="start_date"

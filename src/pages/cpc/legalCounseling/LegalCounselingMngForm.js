@@ -174,7 +174,9 @@ const LegalCounselingMngForm = () => {
                 <div className={cx('common-grid--layout')}>
                     <table>
                         <tr>
-                            <th className={'tb--title'} style={{minWidth: '250px'}}>상태</th>
+                            <th className={'tb--title'} style={{ minWidth: '250px' }}>
+                                상태
+                            </th>
                             <td>
                                 <>
                                     {status === 'REGISTER' && '접수'}
@@ -185,39 +187,27 @@ const LegalCounselingMngForm = () => {
                         </tr>
                         <tr>
                             <th className={'tb--title'}>이름</th>
-                            <td>
-                                {name}
-                            </td>
+                            <td>{name}</td>
                         </tr>
                         <tr>
                             <th className={'tb--title'}>이메일주소</th>
-                            <td>
-                                {email}
-                            </td>
+                            <td>{email}</td>
                         </tr>
                         <tr>
                             <th className={'tb--title'}>전화번호</th>
-                            <td>
-                                {cell_phone}
-                            </td>
+                            <td>{cell_phone}</td>
                         </tr>
                         <tr>
                             <th className={'tb--title'}>내용</th>
-                            <td>
-                                {contents}
-                            </td>
+                            <td>{contents}</td>
                         </tr>
                         <tr>
                             <th className={'tb--title'}>개인정보 취급 동의</th>
-                            <td>
-                                {entrust_privacy === true ? 'Y' : 'N'}
-                            </td>
+                            <td>{entrust_privacy === true ? 'Y' : 'N'}</td>
                         </tr>
                         <tr>
                             <th className={'tb--title'}>개인정보 수집 및 이용 동의</th>
-                            <td>
-                                {terms_privacy === true ? 'Y' : 'N'}
-                            </td>
+                            <td>{terms_privacy === true ? 'Y' : 'N'}</td>
                         </tr>
                         <tr>
                             <th className={'tb--title'}>첨부파일</th>
@@ -258,13 +248,10 @@ const LegalCounselingMngForm = () => {
                         </tr>
                         <tr>
                             <th className={'tb--title'}>등록일시</th>
-                            <td>
-                                {create_date}
-                            </td>
+                            <td>{create_date}</td>
                         </tr>
                     </table>
                 </div>
-
                 <TopInputLayout>
                     <InputLayout>
                         <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
@@ -277,7 +264,6 @@ const LegalCounselingMngForm = () => {
                         </Button>
                     </ButtonLayout>
                 </TopInputLayout>
-
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
             </Grid>
         </Grid>

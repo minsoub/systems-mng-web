@@ -168,11 +168,13 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <ButtonLayout buttonName="rightButton">
-                            <Button variant="contained" onClick={() => handleClickOpen('CPC_NEWS')}>
-                                게시글 선택
-                            </Button>
-                        </ButtonLayout>
+                        <div className="mainButton">
+                            <ButtonLayout buttonName="rightButton">
+                                <Button variant="contained" onClick={() => handleClickOpen('CPC_NEWS')}>
+                                    게시글 선택
+                                </Button>
+                            </ButtonLayout>
+                        </div>
                     </TabPanel>
                     {/* 가상자산의 기초 */}
                     <TabPanel value="3">
