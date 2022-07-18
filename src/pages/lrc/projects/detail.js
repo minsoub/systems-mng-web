@@ -47,6 +47,7 @@ import FileMng from './filemng';
 import ProjectHistory from './history';
 import Chat from './chat';
 import ChatApi from 'apis/chat/chatapi';
+import HeaderTitle from 'components/HeaderTitle';
 import { FileDownload } from '../../../../node_modules/@mui/icons-material/index';
 
 const ProjectsDetailPage = () => {
