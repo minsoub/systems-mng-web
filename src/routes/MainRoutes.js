@@ -74,6 +74,10 @@ const CpcFraudReportMngForm = Loadable(lazy(() => import('pages/cpc/fraudReport/
 const CpcLegalCounselingMng = Loadable(lazy(() => import('pages/cpc/legalCounseling/index')));
 const CpcLegalCounselingMngForm = Loadable(lazy(() => import('pages/cpc/legalCounseling/LegalCounselingMngForm')));
 
+// render - 통합 게시판 관리
+const BoardMng = Loadable(lazy(() => import('pages/board/index')));
+const BoardMngRegForm = Loadable(lazy(() => import('pages/board/BoardMngRegForm')));
+
 // render - 사이트 관리
 const AccessMngPage = Loadable(lazy(() => import('pages/operator/accessmng/index')));
 const AccessRegForm = Loadable(lazy(() => import('pages/operator/accessmng/AccessRegForm')));
@@ -393,6 +397,18 @@ const MainRoutes = [
             {
                 path: 'account/reg/:paramId',
                 element: <AccountRegForm />
+            },
+            {
+                path: 'board/list',
+                element: <BoardMng />
+            },
+            {
+                path: 'board/reg/',
+                element: <BoardMngRegForm />
+            },
+            {
+                path: 'board/reg/:boardMasterId',
+                element: <BoardMngRegForm />
             },
             {
                 path: 'roles/list',
