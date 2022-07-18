@@ -8,7 +8,7 @@ import ChattingRoom from 'components/Chat/ChattingRoom';
 
 const Chat = (props) => {
     const { projectId, children, tabindex, index, ...other } = props;
-    const [resData, reqError, loading, { chatExistsAndSave }] = ChatApi();
+    const [resData, reqError, loading, { chatExistsAndSave, deleteChat }] = ChatApi();
     const { siteId } = useSelector((state) => state.auth);
     const [
         clientError,
@@ -52,6 +52,14 @@ const Chat = (props) => {
                     }
                 }
                 break;
+            case 'deleteChatMessage':
+                if (resData.data.data) {
+                    console.log(resData.data.data);
+                    if (resData.data.data.use === true) {
+                        setMessageList([]);
+                        sendJoinChat('join-chat');
+                    }
+                }
         }
     }, [resData]);
 
@@ -71,6 +79,7 @@ const Chat = (props) => {
                     let data = {};
                     if (item.role === 'ADMIN') {
                         data = {
+                            id: item.id,
                             recevier: 'receiveUser',
                             sender: 'Listing Team',
                             message: item.content,
@@ -78,6 +87,7 @@ const Chat = (props) => {
                         };
                     } else {
                         data = {
+                            id: item.id,
                             recevier: 'Listing Team',
                             sender: item.email,
                             message: item.content,
@@ -93,6 +103,7 @@ const Chat = (props) => {
                 let data = {};
                 if (responseData.role === 'ADMIN') {
                     data = {
+                        id: item.id,
                         recevier: 'receiveUser',
                         sender: 'Listing Team',
                         message: responseData.content,
@@ -100,6 +111,7 @@ const Chat = (props) => {
                     };
                 } else {
                     data = {
+                        id: item.id,
                         recevier: 'Listing Team',
                         sender: responseData.email,
                         message: responseData.content,
@@ -128,14 +140,36 @@ const Chat = (props) => {
         sendRequestResponse(route, projectId, data);
     };
 
+    const deleteChatMessage = (id) => {
+        console.log(id);
+        deleteChat(id);
+    };
+
     return (
         <div className="chatting--container">
             <ChattingRoom sendMessage={sendRequest}>
                 {messageList.map((item, idx) => {
                     if (item.sender === 'Listing Team') {
-                        return <MessageRight key={idx} message={item.message} timestamp={item.createdDt} displayName={item.sender} />;
+                        return (
+                            <MessageRight
+                                key={idx}
+                                id={item.id}
+                                message={item.message}
+                                timestamp={item.createdDt}
+                                displayName={item.sender}
+                                deleteChatMessage={deleteChatMessage}
+                            />
+                        );
                     } else {
-                        return <MessageLeft key={idx} message={item.message} timestamp={item.createdDt} displayName={item.sender} />;
+                        return (
+                            <MessageLeft
+                                key={idx}
+                                id={item.id}
+                                message={item.message}
+                                timestamp={item.createdDt}
+                                displayName={item.sender}
+                            />
+                        );
                     }
                 })}
             </ChattingRoom>
