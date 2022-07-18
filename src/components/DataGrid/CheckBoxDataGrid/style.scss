@@ -7,11 +7,6 @@
     padding: 20px !important;
 }
 
-// 검색 결과 리스트
-.css-3yvf2w-MuiDataGrid-root .MuiDataGrid-columnHeader {
-    height: 55px;
-}
-
 .css-25381f-MuiDataGrid-footerContainer {
     display: flex;
     -ms-flex-align: center;
@@ -26,7 +21,7 @@
     font-size: 14px;
 }
 
-.css-1x58jpi-MuiDataGrid-root .MuiDataGrid-columnHeader {
+.MuiDataGrid-columnHeader {
     background-color: rgba(238, 238, 238, 0.7);
     height: 55px;
 }
@@ -45,4 +40,5 @@
 .gridLayout {
     height: 600px;
     width: 100%;
+    color: rgba(0, 0, 0, 0.5);
 }

@@ -339,16 +339,15 @@ const CampaignMng = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
-                            선택 삭제
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
-                            등록
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
+
+                <ButtonLayout buttonName="rightButton">
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
+                        선택 삭제
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
+                        등록
+                    </Button>
+                </ButtonLayout>
 
                 {errorMessage ? (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
