@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import { Button, Grid, Box, Tab, Paper, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import MainContentsApi from 'apis/cpc/mainContents/maincontentsapi';

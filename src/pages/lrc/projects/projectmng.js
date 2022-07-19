@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import {
     Button,
     Grid,

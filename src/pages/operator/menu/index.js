@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Select, Stack, TextField } from '@mui/material';
 import MainCard from 'components/MainCard';
 import SvgIcon from '@mui/material/SvgIcon';

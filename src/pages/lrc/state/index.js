@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './styles.scss';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import {
     Button,
     FormControl,

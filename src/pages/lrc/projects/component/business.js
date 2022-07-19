@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-// material-ui
-// eslint-disable-next-line prettier/prettier
-import {
-    Grid,
-    Stack,
-    FormControl} from '@mui/material';
+import { Grid, Stack, FormControl } from '@mui/material';
 import LineApis from 'apis/lrc/line/lineapi';
 import { StsCheckbox } from './StsCheckbox';
+import cx from 'classnames';
+import './styles.scss';
 
 export const BusinessCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
     const [responseData, requestError, loading, { lineSearch }] = LineApis();
@@ -50,21 +47,18 @@ export const BusinessCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
     return (
         <>
             <Grid container spacing={0} sx={{ mt: 1 }}>
-                <Grid item xs={8} sm={1.2}>
-                    <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                        <Stack spacing={0}>사업 계열</Stack>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={8} sm={10}>
+                <Stack spacing={10} className={cx('borderTitle')}>
+                    사업 계열
+                </Stack>
+                <Grid>
                     {dataGridRows.map((item, index) => (
-                        <StsCheckbox checkedItemHandler={checkedItemHandler} isAllChecked={isAllChecked} item={item} />
-                        // <FormControl key={item.id} sx={{ m: 0 }} size="small">
-                        //     <FormControlLabel
-                        //         key={item.id}
-                        //         control={<Checkbox id={item.id} onChange={(e) => checkHandler(e)} />}
-                        //         label={item.name}
-                        //     />
-                        // </FormControl>
+                        <StsCheckbox
+                            className="checkedBox--width"
+                            checkedItemHandler={checkedItemHandler}
+                            isAllChecked={isAllChecked}
+                            item={item}
+                            key={index}
+                        />
                     ))}
                 </Grid>
             </Grid>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import {
     OutlinedInput,
     Box,
