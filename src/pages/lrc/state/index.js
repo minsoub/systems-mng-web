@@ -1,31 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import './styles.scss';
-
-import {
-    Button,
-    FormControl,
-    FormControlLabel,
-    Grid,
-    Radio,
-    RadioGroup,
-    Stack,
-    Table,
-    TableBody,
-    TableCell,
-    TableRow,
-    TextField,
-    Typography
-} from '@mui/material';
+import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField, Typography } from '@mui/material';
 import MainCard from 'components/MainCard';
 import SvgIcon from '@mui/material/SvgIcon';
 import StatusApi from 'apis/lrc/status/statusapi';
 import ErrorScreen from 'components/ErrorScreen';
 import StyledTtreeItem from 'components/TreeMenu/StyledTreeItem';
-import { StyledTableCell } from 'components/CustomTableCell';
 import TreeView from '@mui/lab/TreeView';
-import HeaderTitle from '../../../components/HeaderTitle';
-import ButtonLayout from '../../../components/Common/ButtonLayout';
+import HeaderTitle from 'components/HeaderTitle';
+import ButtonLayout from 'components/Common/ButtonLayout';
 import cx from 'classnames';
+import './styles.scss';
 
 function MinusSquare(props) {
     return (
