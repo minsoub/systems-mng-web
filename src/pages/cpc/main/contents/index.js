@@ -130,11 +130,13 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <ButtonLayout buttonName="rightButton">
-                            <Button variant="contained" onClick={() => handleClickOpen('CPC_TREND')}>
-                                게시글 선택
-                            </Button>
-                        </ButtonLayout>
+                        <Grid className={cx('outButtons')}>
+                            <ButtonLayout>
+                                <Button variant="contained" onClick={() => handleClickOpen('CPC_TREND')}>
+                                    게시글 선택
+                                </Button>
+                            </ButtonLayout>
+                        </Grid>
                     </TabPanel>
                     {/* 블록체인 뉴스 */}
                     <TabPanel value="2">
@@ -168,13 +170,14 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <div className="mainButton">
-                            <ButtonLayout buttonName="rightButton">
+
+                        <Grid className={cx('outButtons')}>
+                            <ButtonLayout>
                                 <Button variant="contained" onClick={() => handleClickOpen('CPC_NEWS')}>
                                     게시글 선택
                                 </Button>
                             </ButtonLayout>
-                        </div>
+                        </Grid>
                     </TabPanel>
                     {/* 가상자산의 기초 */}
                     <TabPanel value="3">
@@ -208,11 +211,14 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <ButtonLayout buttonName="rightButton">
-                            <Button variant="contained" onClick={() => handleClickOpen('CPC_DIGITAL_ASSET')}>
-                                게시글 선택
-                            </Button>
-                        </ButtonLayout>
+
+                        <Grid className={cx('outButtons')}>
+                            <ButtonLayout>
+                                <Button variant="contained" onClick={() => handleClickOpen('CPC_DIGITAL_ASSET')}>
+                                    게시글 선택
+                                </Button>
+                            </ButtonLayout>
+                        </Grid>
                     </TabPanel>
                     {/* 인사이트 칼럼 */}
                     <TabPanel value="4">
@@ -246,18 +252,21 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <ButtonLayout buttonName="rightButton">
-                            <Button variant="contained" onClick={() => handleClickOpen('CPC_INSIGHT_COLUMN')}>
-                                게시글 선택
-                            </Button>
-                        </ButtonLayout>
+                        <Grid className={cx('outButtons')}>
+                            <ButtonLayout>
+                                <Button variant="contained" onClick={() => handleClickOpen('CPC_INSIGHT_COLUMN')}>
+                                    게시글 선택
+                                </Button>
+                            </ButtonLayout>
+                        </Grid>
                     </TabPanel>
                 </TabContext>
 
                 <BoardSearchDialog boardMasterId={boardMasterId} open={openPopup} onClose={handleClose} />
-                <div className={cx(errorMessage ? 'errorBox' : 'errorBoxNoShow')}>
-                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
-                </div>
+
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

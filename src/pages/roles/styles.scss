@@ -19,3 +19,15 @@
 .result__list--input {
     margin-right: 20px;
 }
+
+.roleLayout {
+    display: flex;
+    margin-bottom: 1.5rem;
+    &.noneBlank,
+    .result__list--date {
+        margin-bottom: 0 !important;
+    }
+    & > div {
+        margin-right: 30px;
+    }
+}

@@ -3,10 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    Button,
-    Grid
-} from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import MainCard from 'components/MainCard';
 import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
@@ -352,7 +349,9 @@ const DigitalAssetTrendMng = () => {
                         </Button>
                     </ButtonLayout>
                 </Grid>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

@@ -1,0 +1,9 @@
+.dropList {
+    display: flex;
+    .drop__list--input {
+        display: flex;
+        & > & {
+            display: flex;
+        }
+    }
+}
