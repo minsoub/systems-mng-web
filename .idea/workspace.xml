@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="충돌 해결" />
+    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="-">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/lrc/projects/component/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/projects/component/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/base/_global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_global.scss" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,13 +25,6 @@
       </list>
     </option>
   </component>
-  <component name="Git.Pull.Settings">
-    <option name="OPTIONS">
-      <set>
-        <option value="FF_ONLY" />
-      </set>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="PUSH_TAGS">
       <GitPushTagMode>
@@ -37,7 +34,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="featuer/LRC-PRJ-LayoutCommonality" />
+        <entry key="$PROJECT_DIR$" value="feature/LRC-PRJ" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -67,7 +64,7 @@
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/mac/Documents/workspace/systems-mng-web/node_modules/prettier&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/mac/Documents/workspace/systems-mng-web/node_modules/typescript/lib&quot;
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -115,20 +112,8 @@
       <workItem from="1658209255350" duration="9533000" />
       <workItem from="1658219631452" duration="1071000" />
       <workItem from="1658220725185" duration="775000" />
-    </task>
-    <task id="LOCAL-00039" summary="채팅구현&#10;상대방 말풍선 위치">
-      <created>1657347706754</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1657347706754</updated>
-    </task>
-    <task id="LOCAL-00040" summary="카테고리 관리 등등 table 스타일 적용">
-      <created>1657680404935</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1657680404935</updated>
+      <workItem from="1658221516452" duration="1345000" />
+      <workItem from="1658228213882" duration="404000" />
     </task>
     <task id="LOCAL-00041" summary="계열관리 페이지 작업">
       <created>1657687522822</created>
@@ -459,7 +444,21 @@
       <option name="project" value="LOCAL" />
       <updated>1658221314493</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="-">
+      <created>1658221572727</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1658221572728</updated>
+    </task>
+    <task id="LOCAL-00089" summary="-">
+      <created>1658221898115</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1658221898115</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -477,7 +476,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="메인 &gt; 콘텐츠 노출 관리 &gt; 게시글 선택 &gt; 팝업창 작업 완료" />
     <MESSAGE value="안전거래 캠페인 작업 완료" />
     <MESSAGE value="안전거래 캠페인 게시글 작성 페이지 작업 완료" />
     <MESSAGE value="사이트 운영 &gt; 메인관리 &gt; 콘텐츠 노출관리 페이지 작업 완료&#10;+ error 문구 숨기기" />
@@ -502,7 +500,8 @@
     <MESSAGE value="미사용 컴포넌트 제거" />
     <MESSAGE value="공백 제거, 충돌 해결" />
     <MESSAGE value="충돌 해결" />
-    <option name="LAST_COMMIT_MESSAGE" value="충돌 해결" />
+    <MESSAGE value="-" />
+    <option name="LAST_COMMIT_MESSAGE" value="-" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
