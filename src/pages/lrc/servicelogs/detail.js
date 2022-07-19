@@ -3,26 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button, FormControl, Grid, Table, TableBody, TableRow } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import MainCard from 'components/MainCard';
 import { makeStyles, withStyles } from '@mui/styles';
 import LogsApi from 'apis/servicelogs/index';
 import HeaderTitle from 'components/HeaderTitle';
-
-const useStyles = makeStyles({
-    tableRow: {
-        height: 36
-    },
-    tableCell: {
-        padding: '0px 16px',
-        height: 36
-    },
-    table: {
-        minWidth: 650,
-        '& .MuiTableCell-root': {
-            borderLeft: '1px solid rgba(224, 224, 224, 1)'
-        }
-    }
-});
+import cx from 'classnames';
+import ButtonLayout from 'components/Common/ButtonLayout';
 
 const StyledTableCell = withStyles((theme) => ({
     root: {
@@ -42,12 +27,6 @@ const ServiceDetail = () => {
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const parentErrorClear = () => {
-        setOpen(false);
-        setErrorTitle('');
-        setErrorMessage('');
-    };
-    ////////////////////////////////////////////////////
     const [logDetail, setLogDetail] = useState({});
     // onload
     useEffect(() => {
@@ -99,104 +78,54 @@ const ServiceDetail = () => {
                     menuStep03="서비스 로그 관리"
                 />
 
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                    <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
-                        <TableBody>
-                            <TableRow>
-                                <StyledTableCell style={{ width: '15%' }} align="right">
-                                    발생일시
-                                </StyledTableCell>
-                                <TableCell style={{ width: '75%' }} align="left">
-                                    {logDetail.create_date}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <StyledTableCell style={{ width: '15%' }} align="right">
-                                    SN
-                                </StyledTableCell>
-                                <TableCell style={{ width: '75%' }} align="left">
-                                    {logDetail.id}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <StyledTableCell style={{ width: '15%' }} align="right">
-                                    ID
-                                </StyledTableCell>
-                                <TableCell style={{ width: '75%' }} align="left">
-                                    {logDetail.email}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <StyledTableCell style={{ width: '15%' }} align="right">
-                                    접속 IP
-                                </StyledTableCell>
-                                <TableCell style={{ width: '75%' }} align="left">
-                                    {logDetail.ip}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <StyledTableCell style={{ width: '15%' }} align="right">
-                                    메뉴
-                                </StyledTableCell>
-                                <TableCell style={{ width: '75%' }} align="left">
-                                    {logDetail.menu_name}&nbsp;
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <StyledTableCell style={{ width: '15%' }} align="right">
-                                    CRUD
-                                </StyledTableCell>
-                                <TableCell style={{ width: '75%' }} align="left">
-                                    {logDetail.method}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <StyledTableCell style={{ width: '15%' }} align="right">
-                                    URI
-                                </StyledTableCell>
-                                <TableCell style={{ width: '75%' }} align="left">
-                                    {logDetail.uri}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <StyledTableCell style={{ width: '15%' }} align="right">
-                                    Parameter
-                                </StyledTableCell>
-                                <TableCell style={{ width: '75%' }} align="left">
-                                    {logDetail.query_params}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <StyledTableCell style={{ width: '15%' }} align="right">
-                                    Parameter Detail
-                                </StyledTableCell>
-                                <TableCell style={{ width: '75%' }} align="left">
-                                    {logDetail.parameter}&nbsp;
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </MainCard>
-                <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
-                    <TableBody>
-                        <TableRow>
-                            <TableCell style={{ width: '100%' }} align="right">
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={listClick}
-                                    >
-                                        목록
-                                    </Button>
-                                </FormControl>
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
+                <div className={cx('common-grid--layout')}>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th className={'tb--title'}>발생일시</th>
+                                <td>{logDetail.create_date}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>SN</th>
+                                <td>{logDetail.id}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>ID</th>
+                                <td>{logDetail.email}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>접속 IP</th>
+                                <td>{logDetail.ip}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>메뉴</th>
+                                <td>{logDetail.menu_name}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>CRUD</th>
+                                <td>{logDetail.method}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>URI</th>
+                                <td>{logDetail.uri}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>Parameter</th>
+                                <td>{logDetail.query_params}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>Parameter Detail</th>
+                                <td>{logDetail.parameter}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <ButtonLayout>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                        목록
+                    </Button>
+                </ButtonLayout>
             </Grid>
         </Grid>
     );
