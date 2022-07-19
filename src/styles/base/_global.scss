@@ -7,7 +7,7 @@
     text-align: left;
     align-items: center;
     display: inline-grid;
-    font-size: 1rem;
+    font-size: 0.93rem;
 }
 
 // 기간 검색 중 카테고리 부분
@@ -67,6 +67,10 @@
     padding-top: 45px;
 }
 
+.css-dasaed-MuiGrid-root {
+    margin-top: 0;
+}
+
 // Login By 유저정보
 .css-w7zj6u-MuiTypography-root {
     font-weight: 400;
@@ -75,16 +79,6 @@
 // 사용함 체크박스
 .checkedBox {
     margin-left: 21px;
-}
-
-// table이나 기본적인 표
-.css-15oiqrv-MuiPaper-root-MuiCard-root,
-.css-hjn8fk-MuiPaper-root-MuiCard-root,
-.css-1d9nlt3-MuiPaper-root-MuiCard-root,
-.css-xiy5o3-MuiPaper-root-MuiCard-root,
-.css-13mu4hp-MuiPaper-root-MuiCard-root,
-.css-1dxjlht-MuiPaper-root-MuiCard-root {
-    border-radius: 4px;
 }
 
 .css-1d9nlt3-MuiPaper-root-MuiCard-root {
@@ -218,6 +212,10 @@ legend,
 .css-13mu4hp-MuiPaper-root-MuiCard-root,
 .css-1dxjlht-MuiPaper-root-MuiCard-root {
     border-radius: 2px !important;
+}
+
+.css-15oiqrv-MuiPaper-root-MuiCard-root {
+    margin-top: 0;
 }
 
 // input, select 레이아웃
