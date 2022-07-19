@@ -817,88 +817,70 @@ const AuthMngRegForm = () => {
                             </TreeView>
                         </MainCard>
                     </Grid>
+
                     <Grid item md={8.8}>
                         <Stack spacing={2}>
-                            <MainCard sx={{ mt: 2, height: 620 }} content={false}>
-                                <Grid container spacing={0} sx={{ mt: 2 }}>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={2.8}>
-                                        <Stack spacing={5} sx={{ mt: 0 }} justifyContent="left" alignItems="left">
-                                            <Item>Role : {role_name}</Item>
-                                        </Stack>
+                            <Item>Role : {role_name}</Item>
+
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <Grid item xs={8} sm={12}>
+                                    <MainCard sx={{ mt: 0 }} content={false}>
+                                        <DefaultDataGrid
+                                            columns={roleColumns}
+                                            rows={dataGridRoleRows}
+                                            handlePageChange={handlePage}
+                                            handleGridClick={handleClick}
+                                            handleGridDoubleClick={handleDoubleClick}
+                                            selectionChange={handleSelectionRoleChange}
+                                            height={240}
+                                        />
+                                    </MainCard>
+                                </Grid>
+                            </Grid>
+
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <Stack spacing={5} sx={{ mt: 0 }} justifyContent="left" alignItems="left">
+                                    메뉴명 : [ 사이트 관리자 ]
+                                </Stack>
+                                <FormControlLabel
+                                    control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={handleChange} />}
+                                    label="Visible"
+                                />
+                            </Grid>
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <Item>프로그램 목록</Item>
+                                    <Grid item xs={8} sm={1}>
+                                        <ButtonLayout>
+                                            <Button
+                                                disableElevation
+                                                size="medium"
+                                                type="submit"
+                                                variant="contained"
+                                                onClick={programMappingSaveClick}
+                                            >
+                                                저장
+                                            </Button>
+                                        </ButtonLayout>
                                     </Grid>
                                 </Grid>
+
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
                                     <Grid item xs={8} sm={12}>
-                                        <MainCard sx={{ mt: 0, height: 240 }} content={false}>
-                                            <DefaultDataGrid
-                                                columns={roleColumns}
-                                                rows={dataGridRoleRows}
+                                        <MainCard sx={{ mt: 0 }} content={false}>
+                                            <CheckBoxDataGrid
+                                                columns={programColumns}
+                                                rows={dataGridProgramRows}
                                                 handlePageChange={handlePage}
                                                 handleGridClick={handleClick}
                                                 handleGridDoubleClick={handleDoubleClick}
-                                                selectionChange={handleSelectionRoleChange}
+                                                selectionChange={handleSelectionProgramChange}
                                                 height={240}
                                             />
                                         </MainCard>
                                     </Grid>
                                 </Grid>
-                                <Grid container spacing={0} sx={{ mt: 1 }}>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={2.8}>
-                                        <Stack spacing={5} sx={{ mt: 0 }} justifyContent="left" alignItems="left">
-                                            <Item>메뉴명 : [ 사이트 관리자 ]</Item>
-                                        </Stack>
-                                    </Grid>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={4.5}>
-                                        <FormControlLabel
-                                            control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={handleChange} />}
-                                            label="Visible"
-                                        />
-                                    </Grid>
-                                </Grid>
-                                <Grid container spacing={0} sx={{ mt: 1 }}>
-                                    <Grid container spacing={0} sx={{ mt: 1 }}>
-                                        <Grid item xs={8} sm={0.2}></Grid>
-                                        <Grid item xs={8} sm={2.8}>
-                                            <Stack spacing={5} sx={{ mt: 0 }} justifyContent="left" alignItems="left">
-                                                <Item>프로그램 목록</Item>
-                                            </Stack>
-                                        </Grid>
-                                        <Grid item xs={8} sm={4.5}></Grid>
-                                        <Grid item xs={8} sm={3.5}></Grid>
-                                        <Grid item xs={8} sm={1}>
-                                            <ButtonLayout>
-                                                <Button
-                                                    disableElevation
-                                                    size="medium"
-                                                    type="submit"
-                                                    variant="contained"
-                                                    onClick={programMappingSaveClick}
-                                                >
-                                                    저장
-                                                </Button>
-                                            </ButtonLayout>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container spacing={0} sx={{ mt: 1 }}>
-                                        <Grid item xs={8} sm={12}>
-                                            <MainCard sx={{ mt: 0 }} content={false}>
-                                                <CheckBoxDataGrid
-                                                    columns={programColumns}
-                                                    rows={dataGridProgramRows}
-                                                    handlePageChange={handlePage}
-                                                    handleGridClick={handleClick}
-                                                    handleGridDoubleClick={handleDoubleClick}
-                                                    selectionChange={handleSelectionProgramChange}
-                                                    height={240}
-                                                />
-                                            </MainCard>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </MainCard>
+                            </Grid>
                         </Stack>
                     </Grid>
                 </Grid>

@@ -360,8 +360,8 @@ const RoleRegForm = () => {
                                     menuStep03="Role 등록"
                                 />
 
-                                <MainCard sx={{ mt: 2 }}>
-                                    <div className="roleLayout">
+                                <MainCard sx={{ mt: 2 }} className="program__layout">
+                                    <Grid container className="program__layout--blank">
                                         <DropInput title="Role ID">
                                             <TopInputLayout>
                                                 <InputLayout>
@@ -386,7 +386,6 @@ const RoleRegForm = () => {
                                                         type="button"
                                                         disabled={isUpdate}
                                                         variant="contained"
-                                                        color="secondary"
                                                         onClick={idDuplicateCheck}
                                                     >
                                                         중복체크
@@ -394,9 +393,9 @@ const RoleRegForm = () => {
                                                 </ButtonLayout>
                                             </TopInputLayout>
                                         </DropInput>
-                                    </div>
+                                    </Grid>
 
-                                    <div className="roleLayout">
+                                    <Grid container>
                                         {/* 기간 검색 */}
                                         <SearchDate
                                             start_date={valid_start_date}
@@ -405,9 +404,9 @@ const RoleRegForm = () => {
                                             handleChange={handleChange}
                                             noneChecked="noneChecked"
                                         />
-                                    </div>
+                                    </Grid>
 
-                                    <div className="roleLayout">
+                                    <Grid container className="program__layout--blank">
                                         <DropInput title="Role Name">
                                             <TextField
                                                 id="filled-hidden-label-small"
@@ -438,9 +437,9 @@ const RoleRegForm = () => {
                                                 label="사용함"
                                             />
                                         </DropInput>
-                                    </div>
+                                    </Grid>
 
-                                    <div className="roleLayout noneBlank">
+                                    <Grid container className="program__layout--blank">
                                         <DropInput title="사이트 구분">
                                             <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                                 <MenuItem value="">
@@ -460,7 +459,7 @@ const RoleRegForm = () => {
                                                 <MenuItem value="USER">USER</MenuItem>
                                             </Select>
                                         </DropInput>
-                                    </div>
+                                    </Grid>
                                 </MainCard>
 
                                 <div className={cx('outButtons')}>

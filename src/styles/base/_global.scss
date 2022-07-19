@@ -3,11 +3,11 @@
 
 // 공통 타이틀
 .borderTitle {
-    width: 85px;
+    width: 100px;
     text-align: left;
     align-items: center;
     display: inline-grid;
-    font-size: 14px;
+    font-size: 1rem;
 }
 
 // 기간 검색 중 카테고리 부분
@@ -251,6 +251,13 @@ html [type='button'],
 // 메인관리 리스트 박스 그림자 제거
 .css-1d64866 {
     box-shadow: none;
+}
+
+// layout 여백
+.program__layout {
+    .program__layout--blank {
+        margin-bottom: 20px;
+    }
 }
 
 // 1024 해상도에서도 width Full로 차도록
