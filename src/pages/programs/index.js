@@ -305,6 +305,7 @@ const ProgramManagementPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
+                        height={800}
                     />
                 </MainCard>
 
