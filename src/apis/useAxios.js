@@ -39,6 +39,7 @@ const useAxios = () => {
                 console.log('AccessToken is invalid...');
                 //setError('Token 정보가 만료되었습니다!!!');
                 //alert('Token 정보가 만료되었습니다!!!');
+                localStorage.clear();
                 navigate('/login');
                 return;
             }

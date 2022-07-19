@@ -36,17 +36,16 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { Input } from 'antd';
-import { boolean } from '../../../node_modules/yup/lib/index';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
 import AccountApis from 'apis/account/accountapis';
 import ErrorScreen from 'components/ErrorScreen';
-import HeaderTitle from '../../components/HeaderTitle';
-import TopInputLayout from '../../components/Common/TopInputLayout';
-import InputLayout from '../../components/Common/InputLayout';
-import ButtonLayout from '../../components/Common/ButtonLayout';
+import HeaderTitle from 'components/HeaderTitle';
+import TopInputLayout from 'components/Common/TopInputLayout';
+import InputLayout from 'components/Common/InputLayout';
+import ButtonLayout from 'components/Common/ButtonLayout';
 import cx from 'classnames';
 
 const RoleMappingForm = () => {

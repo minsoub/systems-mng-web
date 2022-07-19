@@ -36,9 +36,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SvgIcon from '@mui/material/SvgIcon';
 import { Input } from 'antd';
-import { boolean } from '../../../node_modules/yup/lib/index';
-import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
-import CheckBoxDataGrid from '../../components/DataGrid/CheckBoxDataGrid';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
+import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import SiteApi from 'apis/site/siteapi';
 import MenuMngApi from 'apis/menu/menumngapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -56,11 +55,11 @@ import ForumIcon from '@mui/icons-material/Forum';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import menu from 'store/reducers/menu';
-import HeaderTitle from '../../components/HeaderTitle';
-import TopInputLayout from '../../components/Common/TopInputLayout';
-import InputLayout from '../../components/Common/InputLayout';
+import HeaderTitle from 'components/HeaderTitle';
+import TopInputLayout from 'components/Common/TopInputLayout';
+import InputLayout from 'components/Common/InputLayout';
 import cx from 'classnames';
-import ButtonLayout from '../../components/Common/ButtonLayout';
+import ButtonLayout from 'components/Common/ButtonLayout';
 
 function MinusSquare(props) {
     return (

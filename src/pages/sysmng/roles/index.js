@@ -8,11 +8,11 @@ import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
 import ErrorScreen from 'components/ErrorScreen';
-import TopInputLayout from '../../components/Common/TopInputLayout';
-import InputLayout from '../../components/Common/InputLayout';
-import ButtonLayout from '../../components/Common/ButtonLayout';
-import HeaderTitle from '../../components/HeaderTitle';
-import cx from "classnames";
+import TopInputLayout from 'components/Common/TopInputLayout';
+import InputLayout from 'components/Common/InputLayout';
+import ButtonLayout from 'components/Common/ButtonLayout';
+import HeaderTitle from 'components/HeaderTitle';
+import cx from 'classnames';
 
 const RoleManagementPage = () => {
     let isSubmitting = false;

@@ -18,7 +18,8 @@ import {
     Alert,
     Collapse,
     AlertTitle,
-    Typography
+    Typography,
+    MenuItem
 } from '@mui/material';
 // third party
 import * as Yup from 'yup';
@@ -28,11 +29,10 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
-import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import SiteApi from 'apis/site/siteapi';
 import ProgramApi from 'apis/programs/programapi';
 import { DatePicker } from 'antd';
-import { MenuItem } from '../../../node_modules/@mui/material/index';
 import ErrorScreen from 'components/ErrorScreen';
 
 const ProgramRegForm = () => {
@@ -477,7 +477,6 @@ const ProgramRegForm = () => {
                             </Button>
                         </Stack>
                     </MainCard>
-
                 </Grid>
             </Grid>
         </>

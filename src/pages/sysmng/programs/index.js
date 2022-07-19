@@ -17,49 +17,64 @@ import {
     Select,
     MenuItem,
     FormControlLabel,
-    Checkbox
+    Checkbox,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
 } from '@mui/material';
 import MainCard from 'components/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
-import { boolean } from '../../../node_modules/yup/lib/index';
-import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
+import ProgramApi from 'apis/programs/programapi';
 import ErrorScreen from 'components/ErrorScreen';
-import HeaderTitle from '../../components/HeaderTitle';
-import * as PropTypes from 'prop-types';
-import ButtonLayout from '../../components/Common/ButtonLayout';
-import InputLayout from '../../components/Common/InputLayout';
-import TopInputLayout from '../../components/Common/TopInputLayout';
+import ButtonLayout from 'components/Common/ButtonLayout';
+import TopInputLayout from 'components/Common/TopInputLayout';
+import InputLayout from 'components/Common/InputLayout';
+import HeaderTitle from 'components/HeaderTitle';
+import cx from 'classnames';
 
-function InputTitle(props) {
-    return null;
-}
-
-InputTitle.propTypes = { title: PropTypes.string };
-const AuthManagementPage = () => {
+const ProgramManagementPage = () => {
     let isSubmitting = false;
     const columns = [
         {
             field: 'id',
-            headerName: 'Role ID',
+            headerName: '프로그램 ID',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
             field: 'name',
-            headerName: 'Role Name',
+            headerName: '프로그래명',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'kind_name',
+            headerName: '분류',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'action_method',
+            headerName: 'Action Type',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
             field: 'type',
-            headerName: 'Type',
+            headerName: '관리메뉴',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
@@ -67,20 +82,6 @@ const AuthManagementPage = () => {
         {
             field: 'is_use',
             headerName: '사용여부',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'valid_start_date',
-            headerName: '유효기간(From)',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'valid_end_date',
-            headerName: '유효기간(To)',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
@@ -94,8 +95,7 @@ const AuthManagementPage = () => {
         }
     ];
     const navigate = useNavigate();
-    const { search_site_id, search_is_use } = useParams();
-    const [responseData, requestError, loading, { roleList, roleComboSearch }] = RoleApi();
+    const [responseData, requestError, loading, { programSearch, programList }] = ProgramApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
     // 그리드 선택된 row id
@@ -117,36 +117,20 @@ const AuthManagementPage = () => {
 
     const [siteList, setSiteList] = useState([]);
     const [site_id, setSiteId] = useState('');
-    const [type, setType] = useState('ADMIN');
     const [is_use, setIsUse] = useState(true);
-
-    // 파라미터 상태값
-    const [param_site_id, setParamSiteId] = useState(search_site_id);
-    const [param_is_use, setParamIsUse] = useState(search_is_use);
 
     // Change Event
     // site가 변경되었을 때 호출된다.
     const siteChanged = (e) => {
+        console.log('siteChanged called..');
+        console.log(e.target.value);
         setSiteId(e.target.value);
-    };
-    // Role Type인 변경되었을 때 호출된다.
-    const typeChanged = (e) => {
-        setType(e.target.value);
     };
 
     // onload
     useEffect(() => {
         // 사이트 구분 리스트 가져오기
-        console.log('paramter data => ');
-        console.log(search_site_id);
-        console.log(search_is_use);
-        console.log('====================');
-        // if (search_site_id) {
-        //     setParamSiteId(search_site_id);
-        //     setParamIsUse(search_is_use);
-        // }
         siteSearch(true, '');
-        //roleList();
     }, []);
 
     // transaction error 처리
@@ -180,25 +164,12 @@ const AuthManagementPage = () => {
                     });
                     setSiteList(list);
 
-                    if (param_site_id) {
-                        console.log('==============called...here ');
-                        console.log(search_site_id);
-                        console.log(search_is_use);
-                        console.log(param_site_id);
-                        console.log(param_is_use);
-                        console.log('================');
-                        setSiteId(param_site_id);
-                        if (param_is_use === 'true') {
-                            setIsUse(true);
-                        } else {
-                            setIsUse(false);
-                        }
-                        roleComboSearch(param_is_use, search_site_id);
+                    let searchData = JSON.parse(localStorage.getItem('pgmSearchData'));
+                    if (searchData) {
+                        setSiteId(searchData.site_id);
+                        setIsUse(searchData.is_use);
+                        programSearch(searchData.site_id, searchData.is_use);
                         //searchClick();
-                    } else {
-                        setSiteId(list[1].id);
-                        setType('ADMIN');
-                        roleComboSearch(is_use, 'ADMIN', list[1].id);
                     }
                 }
                 break;
@@ -212,7 +183,7 @@ const AuthManagementPage = () => {
             return;
         }
         switch (responseData.transactionId) {
-            case 'roleList':
+            case 'siteList':
                 if (responseData.data.data && responseData.data.data.length > 0) {
                     setDataGridRows(responseData.data.data);
                 } else {
@@ -253,60 +224,60 @@ const AuthManagementPage = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            let searchCondition = { site_id: site_id, is_use: is_use, type: type };
-
-            navigate(`/authmng/reg/${site_id}/${type}/${rowData.id}`);
+            console.log(rowData);
+            // 검색 데이터에 대한 세팅.
+            let searchData = { site_id: site_id, is_use: is_use };
+            localStorage.setItem('pgmSearchData', JSON.stringify(searchData));
+            navigate(`/pgm/reg/${rowData.id}/${rowData.row.site_id}`);
         }
     };
 
     // 그리드 더블 클릭
     const handleDoubleClick = (rowData) => {};
 
-    // search
+    // program 등록 화면
+    const newClick = (e) => {
+        console.log('called register form');
+        navigate('/pgm/reg');
+    };
+
+    // program search
     const searchClick = () => {
         console.log('searchClick called...');
         if (!site_id) {
-            alert('사이트명을 선택하세요!!!');
+            alert('사이트명을 선택하지 않았습니다!!!');
             return;
         }
-        roleComboSearch(is_use, type, site_id);
+        console.log(site_id);
+        programSearch(site_id, true);
     };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="권한 리스트" menuStep01="통합시스템 관리" menuStep02="권한 관리" menuStep03="권한 리스트" />
+                <HeaderTitle
+                    titleNm="프로그램 리스트"
+                    menuStep01="통합시스템 관리"
+                    menuStep02="프로그램 관리"
+                    menuStep03="프로그램 리스트"
+                />
 
                 <MainCard>
                     <TopInputLayout>
-                        <InputLayout gridClass="gridClass">
-                            <div className="mapping--grid">
-                                <InputTitle title="사이트명" />
+                        <InputLayout>
+                            <Stack spacing={10} className={cx('borderTitle')}>
+                                사이트명
+                            </Stack>
 
-                                <FormControl sx={{ minWidth: 250 }}>
-                                    <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
-                                        <MenuItem value="">
-                                            <em>Choose a Site Type</em>
+                            <FormControl size="medium" sx={{ minWidth: 250 }} className="mapping--grid">
+                                <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged} placeholder="사이트명">
+                                    {siteList.map((item, index) => (
+                                        <MenuItem key={index} value={item.id}>
+                                            {item.name}
                                         </MenuItem>
-                                        {siteList.map((item, index) => (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </div>
-
-                            <div className="mapping--grid">
-                                <InputTitle title="Role Type" />
-
-                                <FormControl size="medium" sx={{ minWidth: 250 }}>
-                                    <Select name="type" label="Role Type" value={type} onChange={typeChanged}>
-                                        <MenuItem value="ADMIN">ADMIN</MenuItem>
-                                        <MenuItem value="USER">USER</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </div>
+                                    ))}
+                                </Select>
+                            </FormControl>
 
                             <FormControlLabel
                                 control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
@@ -319,6 +290,9 @@ const AuthManagementPage = () => {
                             <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
                                 검색
                             </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={newClick}>
+                                등록
+                            </Button>
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
@@ -330,15 +304,13 @@ const AuthManagementPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
+                        height={800}
                     />
                 </MainCard>
-
-                {errorMessage ? (
-                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
-                ) : null}
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
             </Grid>
         </Grid>
     );
 };
 
-export default AuthManagementPage;
+export default ProgramManagementPage;

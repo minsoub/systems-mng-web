@@ -46,7 +46,7 @@ const AccountMng = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 120
+            maxWidth: 140
         },
         {
             field: 'email',
@@ -54,15 +54,14 @@ const AccountMng = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 220
+            maxWidth: 280
         },
         {
             field: 'role_management_name',
             headerName: '운영권한',
             flex: 1,
             headerAlign: 'center',
-            align: 'left',
-            maxWidth: 800
+            align: 'left'
         },
         {
             field: 'last_login_date',
@@ -70,7 +69,7 @@ const AccountMng = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 160
+            maxWidth: 180
         },
         {
             field: 'create_date',
@@ -78,7 +77,7 @@ const AccountMng = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 160
+            maxWidth: 180
         },
         {
             field: 'status',
@@ -86,7 +85,7 @@ const AccountMng = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 150
+            maxWidth: 180
         }
     ];
 
@@ -232,7 +231,7 @@ const AccountMng = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="계정 관리" menuStep01="통합시스템 관리" menuStep02="계정 관리" />
+                <HeaderTitle titleNm="계정 관리" menuStep01="통합 관리" menuStep02="계정 관리" />
 
                 <MainCard>
                     <TopInputLayout>
@@ -291,7 +290,7 @@ const AccountMng = () => {
                 </MainCard>
 
                 {/* 표 */}
-                <MainCard sx={{ mt: 2 }} content={false}>
+                <MainCard sx={{ mt: 2, height: 850 }} content={false}>
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -299,7 +298,7 @@ const AccountMng = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
-                        height={750}
+                        height={850}
                     />
                 </MainCard>
 

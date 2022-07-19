@@ -25,8 +25,8 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
-import HeaderTitle from '../../components/HeaderTitle';
-import ButtonLayout from '../../components/Common/ButtonLayout';
+import HeaderTitle from 'components/HeaderTitle';
+import ButtonLayout from 'components/Common/ButtonLayout';
 import cx from 'classnames';
 import './styles.scss';
 

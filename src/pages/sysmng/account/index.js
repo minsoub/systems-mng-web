@@ -15,62 +15,81 @@ import {
     Typography,
     FormControl,
     Select,
-    MenuItem
+    MenuItem,
+    Table,
+    TableBody,
+    TableContainer,
+    TableHead,
+    TableRow
 } from '@mui/material';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import MainCard from 'components/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
-import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
-import SiteApi from 'apis/site/siteapi';
-import { bool } from 'prop-types';
+import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
+import AccountApis from 'apis/account/accountapis';
 import ErrorScreen from 'components/ErrorScreen';
-import HeaderTitle from '../../components/HeaderTitle';
-import InputLayout from '../../components/Common/InputLayout';
-import ButtonLayout from '../../components/Common/ButtonLayout';
-import TopInputLayout from '../../components/Common/TopInputLayout';
+import HeaderTitle from 'components/HeaderTitle';
+import TopInputLayout from 'components/Common/TopInputLayout';
+import InputLayout from 'components/Common/InputLayout';
+import ButtonLayout from 'components/Common/ButtonLayout';
 
-const SiteManagementPage = () => {
+const AccountManagementPage = () => {
     let isSubmitting = false;
     const columns = [
         {
             field: 'id',
-            headerName: 'Site ID',
+            headerName: 'ID',
             flex: 1,
             headerAlign: 'center',
-            headerHeight: 22
+            align: 'center',
+            maxWidth: 220
         },
         {
             field: 'name',
-            headerName: '사이트명',
-            flex: 1,
-            headerAlign: 'center'
-        },
-        {
-            field: 'admin_account_email',
-            headerName: '사이트 관리자',
-            flex: 1,
-            headerAlign: 'center'
-        },
-        {
-            field: 'is_use',
-            headerName: '사용여부',
+            headerName: '사용자명',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 180
+        },
+        {
+            field: 'email',
+            headerName: '이메일주소',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 240
+        },
+        {
+            field: 'role_management_name',
+            headerName: '운영권한',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'left'
+        },
+        {
+            field: 'status',
+            headerName: '상태',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 180
         },
         {
             field: 'create_date',
             headerName: '생성날짜',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            maxWidth: 180
         }
     ];
 
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { siteSearch, siteList }] = SiteApi();
+    const [responseData, requestError, loading, { accountMngSearch, accountList, accountDeletes }] = AccountApis();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -106,9 +125,10 @@ const SiteManagementPage = () => {
 
     // onload
     useEffect(() => {
+        errorClear();
         setIsUsed('true');
         // 리스트 가져오기
-        siteList(true);
+        accountMngSearch(true, '');
     }, []);
 
     // Transaction Return
@@ -117,20 +137,28 @@ const SiteManagementPage = () => {
             return;
         }
         switch (responseData.transactionId) {
-            case 'siteList':
+            case 'getList':
                 if (responseData.data.data) {
                     setDataGridRows(responseData.data.data);
                 } else {
                     setDataGridRows([]);
                 }
                 break;
-            case 'deleteData':
+            case 'deleteDatas':
                 console.log('deleteData');
-                siteList();
+                alert('삭제 처리를 완료하였습니다!');
+                accountMngSearch(is_use, '');
                 break;
             default:
         }
     }, [responseData]);
+
+    // 에러 정보를 클리어 한다.
+    const errorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
 
     //체크박스 선택된 row id 저장
     const handleSelectionChange = (item) => {
@@ -144,7 +172,7 @@ const SiteManagementPage = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/site/reg/${rowData.id}`);
+            navigate(`/account/reg/${rowData.id}`);
         }
     };
 
@@ -160,39 +188,59 @@ const SiteManagementPage = () => {
 
     // list
     const listClick = () => {
+        errorClear();
         let isUse = 'true';
         setKeyword('');
         console.log('listClick called');
         console.log(is_use);
-        siteSearch(is_use, '');
+        accountMngSearch(is_use, '');
     };
     // search
     const searchClick = () => {
+        errorClear();
         if (keyword === '') {
             alert('검색 단어를 입력하세요!');
             return;
         }
-        siteSearch(is_use, keyword);
+        accountMngSearch(is_use, keyword);
     };
 
     // new
     const newClick = () => {
         console.log('called register form');
-        navigate('/site/reg');
+        navigate('/account/reg');
     };
 
     // delete
-    const deleteClick = () => {};
+    const deleteClick = () => {
+        if (selectedRows.length === 0) {
+            alert('삭제 할 계정에 대해서 체크박스를 선택하세요!!!');
+            return;
+        }
+        console.log(selectedRows);
+        if (confirm('선택한 계정에 대해서 삭제를 하시겠습니까?')) {
+            // 선택한 계정에 대해서 삭제를 수행한다.
+            let deleteIds = '';
+            let idx = 0;
+            selectedRows.map((data, Index) => {
+                if (idx > 0) deleteIds = deleteIds + '::';
+                deleteIds = deleteIds + data;
+                idx++;
+            });
+            console.log(deleteIds);
+            accountDeletes(deleteIds);
+        }
+    };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="사이트 관리" menuStep01="통합시스템 관리" menuStep02="사이트 관리" />
+                <HeaderTitle titleNm="계정 관리" menuStep01="통합시스템 관리" menuStep02="계정 관리" />
 
-                <MainCard sx={{ mt: 1 }}>
+                <MainCard>
                     <TopInputLayout>
                         <InputLayout>
-                            <FormControl sx={{ minWidth: 100, marginRight: 2 }} size="medium">
+                            <FormControl size="medium" sx={{ minWidth: 100, marginRight: 2 }}>
                                 <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
                                     <MenuItem value="true">사용</MenuItem>
                                     <MenuItem value="false">미사용</MenuItem>
@@ -225,11 +273,19 @@ const SiteManagementPage = () => {
                             >
                                 검색
                             </Button>
-
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
                                 신규
                             </Button>
-
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={deleteClick}
+                            >
+                                삭제
+                            </Button>
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
                                 리스트
                             </Button>
@@ -237,24 +293,18 @@ const SiteManagementPage = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <MainCard sx={{ mt: 2 }} content={false}>
-                    <DefaultDataGrid
+                <MainCard sx={{ mt: 2, height: 850 }} content={false}>
+                    <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
-                        sx={{
-                            boxShadow: 2,
-                            border: 2,
-                            borderColor: 'primary.light',
-                            '& .MuiDataGrid-cell:hover': {
-                                color: 'primary.main'
-                            }
-                        }}
+                        height={850}
                     />
                 </MainCard>
+
                 {errorMessage ? (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 ) : null}
@@ -263,4 +313,4 @@ const SiteManagementPage = () => {
     );
 };
 
-export default SiteManagementPage;
+export default AccountManagementPage;

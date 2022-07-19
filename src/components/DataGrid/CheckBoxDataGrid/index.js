@@ -101,11 +101,15 @@ export function CheckBoxDataGrid({ columns, rows, handlePageChange, handleGridCl
         console.log('change selectionModel:', selectionModel);
         selectionChange(selectionModel);
     }, [selectionModel]);
+    let mHeight = 600;
 
+    if (height) {
+        mHeight = height;
+    }
     // 글 1개 이상이면
     if (rows) {
         return (
-            <div className={cx('gridLayout')}>
+            <div className={cx('gridLayout')} style={{ height: mHeight, width: '100%' }}>
                 <StyledDataGrid
                     checkboxSelection
                     pageSize={20}

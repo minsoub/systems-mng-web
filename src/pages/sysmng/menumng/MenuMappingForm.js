@@ -6,17 +6,17 @@ import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Paper,
 import { styled } from '@mui/material/styles';
 import MainCard from 'components/MainCard';
 import SvgIcon from '@mui/material/SvgIcon';
-import CheckBoxDataGrid from '../../components/DataGrid/CheckBoxDataGrid';
+import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import SiteApi from 'apis/site/siteapi';
 import MenuMngApi from 'apis/menu/menumngapi';
 import ProgramApi from 'apis/programs/programapi';
 import ErrorScreen from 'components/ErrorScreen';
 import CustomTreeItem from 'components/TreeMenu/CustomTreeItem';
 import TreeView from '@mui/lab/TreeView';
-import HeaderTitle from '../../components/HeaderTitle';
-import ButtonLayout from '../../components/Common/ButtonLayout';
-import TopInputLayout from '../../components/Common/TopInputLayout';
-import InputLayout from '../../components/Common/InputLayout';
+import HeaderTitle from 'components/HeaderTitle';
+import ButtonLayout from 'components/Common/ButtonLayout';
+import TopInputLayout from 'components/Common/TopInputLayout';
+import InputLayout from 'components/Common/InputLayout';
 import cx from 'classnames';
 import './styles.scss';
 
