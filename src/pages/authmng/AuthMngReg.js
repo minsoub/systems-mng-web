@@ -21,6 +21,7 @@ import InputLayout from '../../components/Common/InputLayout';
 import ButtonLayout from '../../components/Common/ButtonLayout';
 import './styles.scss';
 import cx from 'classnames';
+import DropInput from '../../components/Common/DropInput';
 
 function MinusSquare(props) {
     return (
@@ -757,56 +758,38 @@ const AuthMngRegForm = () => {
                 <MainCard>
                     <TopInputLayout>
                         <InputLayout gridClass="gridClass">
-                            <div className="mapping--grid">
-                                <Stack spacing={10} className={cx('borderTitle')}>
-                                    사이트 구분
-                                </Stack>
-
-                                <FormControl size="medium" sx={{ minWidth: 250 }}>
-                                    <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
-                                        <MenuItem value="">
-                                            <em>Choose a Site Type</em>
+                            <DropInput title="사이트 구분">
+                                <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
+                                    <MenuItem value="">
+                                        <em>Choose a Site Type</em>
+                                    </MenuItem>
+                                    {siteList.map((item, index) => (
+                                        <MenuItem key={index} value={item.id}>
+                                            {item.name}
                                         </MenuItem>
-                                        {siteList.map((item, index) => (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </div>
+                                    ))}
+                                </Select>
+                            </DropInput>
 
-                            <div className="mapping--grid">
-                                <Stack spacing={10} className={cx('borderTitle')}>
-                                    Type
-                                </Stack>
+                            <DropInput title="Type">
+                                <Select name="type" label="Role Type" value={type} onChange={handleChange}>
+                                    <MenuItem value="ADMIN">ADMIN</MenuItem>
+                                    <MenuItem value="USER">USER</MenuItem>
+                                </Select>
+                            </DropInput>
 
-                                <FormControl size="medium" sx={{ minWidth: 250 }}>
-                                    <Select name="type" label="Role Type" value={type} onChange={handleChange}>
-                                        <MenuItem value="ADMIN">ADMIN</MenuItem>
-                                        <MenuItem value="USER">USER</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </div>
-
-                            <div className="mapping--grid">
-                                <Stack spacing={10} className={cx('borderTitle')}>
-                                    Role Name
-                                </Stack>
-
-                                <FormControl size="medium" sx={{ minWidth: 250 }}>
-                                    <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
-                                        <MenuItem value="">
-                                            <em>Choose a Role Name</em>
+                            <DropInput title="Role Name">
+                                <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
+                                    <MenuItem value="">
+                                        <em>Choose a Role Name</em>
+                                    </MenuItem>
+                                    {roleList.map((item, index) => (
+                                        <MenuItem key={index} value={item.id}>
+                                            {item.name}
                                         </MenuItem>
-                                        {roleList.map((item, index) => (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </div>
+                                    ))}
+                                </Select>
+                            </DropInput>
                         </InputLayout>
 
                         <ButtonLayout>

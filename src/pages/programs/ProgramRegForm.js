@@ -34,6 +34,9 @@ import ProgramApi from 'apis/programs/programapi';
 import { DatePicker } from 'antd';
 import { MenuItem } from '../../../node_modules/@mui/material/index';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from '../../components/HeaderTitle';
+import cx from 'classnames';
+import ButtonLayout from '../../components/Common/ButtonLayout';
 
 const ProgramRegForm = () => {
     let isSubmitting = false;
@@ -251,15 +254,13 @@ const ProgramRegForm = () => {
         <>
             <Grid container rowSpacing={4.5} columnSpacing={2.75}>
                 <Grid item xs={12} md={7} lg={12}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid item>
-                            <Typography variant="h3">프로그램 등록</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography variant="h6">통합 시스템관리 &gt; 프로그램 관리 &gt; 프로그램 등록</Typography>
-                        </Grid>
-                        <Grid container spacing={2}></Grid>
-                    </Grid>
+                    <HeaderTitle
+                        titleNm="프로그램 등록"
+                        menuStep01="통합시스템 관리"
+                        menuStep02="프로그램 관리"
+                        menuStep03="프로그램 등록"
+                    />
+
                     <MainCard sx={{ mt: 2 }}>
                         <Grid container spacing={3}>
                             <Grid item xs={8} sm={1.5}>
@@ -440,12 +441,14 @@ const ProgramRegForm = () => {
                                 </FormControl>
                             </Grid>
                         </Grid>
+                    </MainCard>
 
-                        <Stack direction="row" spacing={3}>
+                    <div className={cx('outButtons')}>
+                        <ButtonLayout>
                             <Button
                                 disableElevation
                                 disabled={isSubmitting}
-                                size="small"
+                                size="medium"
                                 type="submit"
                                 variant="contained"
                                 color="primary"
@@ -456,7 +459,7 @@ const ProgramRegForm = () => {
                             <Button
                                 disableElevation
                                 disabled={isSubmitting}
-                                size="small"
+                                size="medium"
                                 type="button"
                                 variant="contained"
                                 color="secondary"
@@ -467,7 +470,7 @@ const ProgramRegForm = () => {
                             <Button
                                 disableElevation
                                 disabled={isSubmitting}
-                                size="small"
+                                size="medium"
                                 type="submit"
                                 variant="contained"
                                 color="secondary"
@@ -475,9 +478,8 @@ const ProgramRegForm = () => {
                             >
                                 리스트
                             </Button>
-                        </Stack>
-                    </MainCard>
-
+                        </ButtonLayout>
+                    </div>
                 </Grid>
             </Grid>
         </>
