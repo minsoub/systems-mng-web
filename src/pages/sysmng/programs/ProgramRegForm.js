@@ -1,41 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    FormControlLabel,
-    FormHelperText,
-    InputLabel,
-    Checkbox,
-    Select,
-    TextField,
-    FormControl,
-    Alert,
-    Collapse,
-    AlertTitle,
-    Typography,
-    MenuItem
-} from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Grid, MenuItem, Select, TextField } from '@mui/material';
 // third party
-import * as Yup from 'yup';
-import { Formik } from 'formik';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
-import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import SiteApi from 'apis/site/siteapi';
 import ProgramApi from 'apis/programs/programapi';
-import { DatePicker } from 'antd';
-import ErrorScreen from 'components/ErrorScreen';
-import HeaderTitle from "../../../components/HeaderTitle";
-import cx from "classnames";
-import ButtonLayout from "../../../components/Common/ButtonLayout";
-
+import HeaderTitle from '../../../components/HeaderTitle';
+import cx from 'classnames';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import DropInput from '../../../components/Common/DropInput';
+import './styles.scss';
 const ProgramRegForm = () => {
     let isSubmitting = false;
 
@@ -259,72 +233,45 @@ const ProgramRegForm = () => {
                         menuStep03="프로그램 등록"
                     />
 
-                    <MainCard sx={{ mt: 2 }}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>사이트명</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 25 }} size="small">
-                                    <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
-                                        <MenuItem value="">
-                                            <em>Choose a Site Type</em>
+                    <MainCard sx={{ mt: 2 }} className="program__layout">
+                        <Grid container className="program__layout--blank">
+                            <DropInput title="사이트명">
+                                <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
+                                    <MenuItem value="">
+                                        <em>Choose a Site Type</em>
+                                    </MenuItem>
+                                    {itemList.map((item, index) => (
+                                        <MenuItem key={index} value={item.id}>
+                                            {item.name}
                                         </MenuItem>
-                                        {itemList.map((item, index) => (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>관리메뉴</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={3}>
-                                <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
-                                    <Select name="type" label="관리메뉴" value={type} onChange={handleChange}>
-                                        <MenuItem value="ADMIN">관리자용 메뉴</MenuItem>
-                                        <MenuItem value="USER">사용자용 메뉴</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
+                                    ))}
+                                </Select>
+                            </DropInput>
+                            <DropInput title="관리메뉴">
+                                <Select name="type" label="관리메뉴" value={type} onChange={handleChange}>
+                                    <MenuItem value="ADMIN">관리자용 메뉴</MenuItem>
+                                    <MenuItem value="USER">사용자용 메뉴</MenuItem>
+                                </Select>
+                            </DropInput>
                         </Grid>
 
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>프로그램 ID</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <Stack spacing={4}>
-                                    <FormControl sx={{ m: 0, maxWidth: 220, maxHeight: 30 }} size="small">
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="small"
-                                            value={id}
-                                            name="id"
-                                            inputProps={{ readOnly: true }}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="신규 등록시 자동입력"
-                                            fullWidth
-                                        />
-                                    </FormControl>
-                                </Stack>
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>프로그램명</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
+                        <Grid container className="program__layout--blank">
+                            <DropInput title="프로그램 ID">
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="small"
+                                    value={id}
+                                    name="id"
+                                    inputProps={{ readOnly: true }}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    placeholder="신규 등록시 자동입력"
+                                    fullWidth
+                                />
+                            </DropInput>
+
+                            <DropInput title="프로그램명">
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -336,73 +283,49 @@ const ProgramRegForm = () => {
                                     placeholder="Input the name"
                                     fullWidth
                                 />
-                            </Grid>
+                            </DropInput>
                         </Grid>
 
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>분류명</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <FormControl sx={{ m: 0, maxWidth: 300, maxHeight: 30 }} size="small">
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={kind_name}
-                                        name="kind_name"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="분류명 입력"
-                                        fullWidth
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Action Type</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={3}>
-                                <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
-                                    <Select name="action_method" label="관리메뉴" value={action_method} onChange={handleChange}>
-                                        <MenuItem value="GET">GET</MenuItem>
-                                        <MenuItem value="POST">POST</MenuItem>
-                                        <MenuItem value="PUT">PUT</MenuItem>
-                                        <MenuItem value="DELETE">DELETE</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
+                        <Grid container className="program__layout--blank">
+                            <DropInput title="분류명">
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="small"
+                                    value={kind_name}
+                                    name="kind_name"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    placeholder="분류명 입력"
+                                    fullWidth
+                                />
+                            </DropInput>
+                            <DropInput title="Action Type">
+                                <Select name="action_method" label="관리메뉴" value={action_method} onChange={handleChange}>
+                                    <MenuItem value="GET">GET</MenuItem>
+                                    <MenuItem value="POST">POST</MenuItem>
+                                    <MenuItem value="PUT">PUT</MenuItem>
+                                    <MenuItem value="DELETE">DELETE</MenuItem>
+                                </Select>
+                            </DropInput>
                         </Grid>
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Action URL</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <FormControl sx={{ m: 0, minWidth: 350, maxHeight: 30 }} size="small">
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={action_url}
-                                        name="action_url"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="Action URL 입력"
-                                        fullWidth
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>사용여부</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={3}>
+
+                        <Grid container className="program__layout--blank">
+                            <DropInput title="Action URL">
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="small"
+                                    value={action_url}
+                                    name="action_url"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    placeholder="Action URL 입력"
+                                    fullWidth
+                                />
+                            </DropInput>
+
+                            <DropInput title="사용여부">
                                 <FormControlLabel
                                     control={
                                         <Checkbox
@@ -415,29 +338,23 @@ const ProgramRegForm = () => {
                                     }
                                     label="사용함"
                                 />
-                            </Grid>
+                            </DropInput>
                         </Grid>
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>비고</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={8}>
-                                <FormControl sx={{ m: 0, minWidth: 450, maxHeight: 30 }} size="small">
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={description}
-                                        name="description"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder=""
-                                        fullWidth
-                                    />
-                                </FormControl>
-                            </Grid>
+
+                        <Grid container className="program__layout--blank">
+                            <DropInput title="비고">
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="small"
+                                    value={description}
+                                    name="description"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    placeholder=""
+                                    fullWidth
+                                />
+                            </DropInput>
                         </Grid>
                     </MainCard>
 

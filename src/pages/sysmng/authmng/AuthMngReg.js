@@ -12,11 +12,14 @@ import SiteApi from 'apis/site/siteapi';
 import MenuMngApi from 'apis/menu/menumngapi';
 import ProgramApi from 'apis/programs/programapi';
 import RoleApi from 'apis/roles/roleapi';
+import ErrorScreen from 'components/ErrorScreen';
 import CheckBoxTreeItem from 'components/TreeMenu/CheckBoxTreeItem';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HeaderTitle from 'components/HeaderTitle';
+import TopInputLayout from 'components/Common/TopInputLayout';
+import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import InputLayout from 'components/Common/InputLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
@@ -799,6 +802,7 @@ const AuthMngRegForm = () => {
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
+
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item md={3}>
                         <MainCard sx={{ mt: 2 }} content={false}>
@@ -821,6 +825,7 @@ const AuthMngRegForm = () => {
                             </TreeView>
                         </MainCard>
                     </Grid>
+
                     <Grid item md={8.8}>
                         <Stack spacing={2}>
                             <TopInputLayout>
@@ -850,6 +855,49 @@ const AuthMngRegForm = () => {
                                             height={290}
                                         />
                                     </MainCard>
+                            <Item>Role : {role_name}</Item>
+
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <Grid item xs={8} sm={12}>
+                                    <MainCard sx={{ mt: 0 }} content={false}>
+                                        <DefaultDataGrid
+                                            columns={roleColumns}
+                                            rows={dataGridRoleRows}
+                                            handlePageChange={handlePage}
+                                            handleGridClick={handleClick}
+                                            handleGridDoubleClick={handleDoubleClick}
+                                            selectionChange={handleSelectionRoleChange}
+                                            height={240}
+                                        />
+                                    </MainCard>
+                                </Grid>
+                            </Grid>
+
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <Stack spacing={5} sx={{ mt: 0 }} justifyContent="left" alignItems="left">
+                                    메뉴명 : [ 사이트 관리자 ]
+                                </Stack>
+                                <FormControlLabel
+                                    control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={handleChange} />}
+                                    label="Visible"
+                                />
+                            </Grid>
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <Item>프로그램 목록</Item>
+                                    <Grid item xs={8} sm={1}>
+                                        <ButtonLayout>
+                                            <Button
+                                                disableElevation
+                                                size="medium"
+                                                type="submit"
+                                                variant="contained"
+                                                onClick={programMappingSaveClick}
+                                            >
+                                                저장
+                                            </Button>
+                                        </ButtonLayout>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={0} sx={{ mt: 1 }}>
@@ -878,7 +926,7 @@ const AuthMngRegForm = () => {
                                                 handleGridClick={handleClick}
                                                 handleGridDoubleClick={handleDoubleClick}
                                                 selectionChange={handleSelectionProgramChange}
-                                                height={290}
+                                                height={240}
                                             />
                                         </MainCard>
                                     </Grid>
@@ -887,6 +935,10 @@ const AuthMngRegForm = () => {
                         </Stack>
                     </Grid>
                 </Grid>
+
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );
