@@ -24,6 +24,16 @@ const BoardMasterApis = () => {
         });
     };
 
+    // 게시판 권한 유형 조회
+    const getAuthTypes = () => {
+        callApi('getAuthTypes', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: '/board/auth-types',
+            requestConfig: {}
+        });
+    };
+
     // 게시판 마스터 목록 조회
     const getBoardMasters = (request) => {
         callApi('getBoardMasters', {
@@ -36,7 +46,7 @@ const BoardMasterApis = () => {
 
     // 게시판 마스터 조회
     const getBoardMaster = (id) => {
-        callApi('getBoardMasterInfo', {
+        callApi('getBoardMaster', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
             url: `/board/${id}`,
@@ -56,21 +66,21 @@ const BoardMasterApis = () => {
 
     // 게시판 마스터 수정
     const updateBoardMaster = (data) => {
-        callApi('createBoardMaster', {
+        callApi('updateBoardMaster', {
             axiosInstance: axiosInstanceDefault,
             method: 'put',
-            url: '/board',
+            url: `/board/${data.id}`,
             requestConfig: data
         });
     };
 
     // 게시판 마스터 삭제
     const deleteBoardMaster = (data) => {
-        callApi('createBoardMaster', {
+        callApi('deleteBoardMaster', {
             axiosInstance: axiosInstanceDefault,
-            method: 'put',
-            url: '/board',
-            requestConfig: data
+            method: 'delete',
+            url: `/board/${data.id}`,
+            requestConfig: {}
         });
     };
 
@@ -81,6 +91,7 @@ const BoardMasterApis = () => {
         {
             searchBoardTypes: getBoardTypes,
             searchPaginationTypes: getPaginationTypes,
+            searchAuthTypes: getAuthTypes,
             searchBoardMasterList: getBoardMasters,
             searchBoardMaster: getBoardMaster,
             createBoardMaster: createBoardMaster,

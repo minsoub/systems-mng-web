@@ -177,6 +177,36 @@ legend,
     }
 }
 
+// 상세 글쓰기 공통 레이아웃
+.common-grid--layout2 {
+    width: 100%;
+    margin-bottom: 3rem;
+
+    .two-column-table {
+        width: 100%;
+
+        tr {
+            border: 1px solid #f0f0f0;
+    
+            th {
+                padding: 2rem;
+                background-color: $tableTitle;
+                width: 10%;
+            }
+    
+            td {
+                width: 40%;
+                border: 1px solid #f0f0f0;
+                padding: 10px;
+    
+                input {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
 .css-h6vcjs-MuiFormControlLabel-root {
     margin-left: 0;
 }
