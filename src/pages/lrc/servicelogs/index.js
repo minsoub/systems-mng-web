@@ -320,21 +320,6 @@ const ServiceLog = () => {
                         </Button>
                     </ButtonLayout>
                 </Grid>
-                <Table>
-                    <TableRow>
-                        <ButtonLayout buttonName="rightButton">
-                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                                검색
-                            </Button>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
-                                초기화
-                            </Button>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
-                                Excel
-                            </Button>
-                        </ButtonLayout>
-                    </TableRow>
-                </Table>
 
                 <MainCard sx={{ mt: 1, height: 650 }} content={false}>
                     <DefaultDataGrid

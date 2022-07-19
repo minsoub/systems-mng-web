@@ -272,14 +272,16 @@ const SiteLogPage = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <ButtonLayout buttonName="rightButton">
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                        검색
-                    </Button>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
-                        Excel
-                    </Button>
-                </ButtonLayout>
+                <Grid className={cx('outButtons')}>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                            검색
+                        </Button>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
+                            Excel
+                        </Button>
+                    </ButtonLayout>
+                </Grid>
 
                 <MainCard sx={{ mt: 2, height: 750 }} content={false}>
                     <DefaultDataGrid

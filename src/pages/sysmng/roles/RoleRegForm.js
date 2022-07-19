@@ -15,6 +15,7 @@ import InputLayout from 'components/Common/InputLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { Select } from 'antd';
+import cx from 'classnames';
 
 const RoleRegForm = () => {
     let isSubmitting = false;
@@ -498,41 +499,6 @@ const RoleRegForm = () => {
                                         </Button>
                                     </ButtonLayout>
                                 </div>
-
-                                <ButtonLayout buttonName="rightButton">
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        size="medium"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                    >
-                                        저장하기
-                                    </Button>
-                                    <Button
-                                        disableElevation
-                                        disabled={isDisabled}
-                                        size="medium"
-                                        type="button"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={deleteClick}
-                                    >
-                                        삭제
-                                    </Button>
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        size="medium"
-                                        type="button"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={listClick}
-                                    >
-                                        리스트
-                                    </Button>
-                                </ButtonLayout>
 
                                 {errorMessage ? (
                                     <MainCard sx={{ mt: 3 }} content={false}>
