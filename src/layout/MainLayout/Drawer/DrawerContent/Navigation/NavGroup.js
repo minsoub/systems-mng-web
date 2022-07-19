@@ -14,7 +14,7 @@ const NavGroup = ({ item }) => {
     const menu = useSelector((state) => state.menu);
     const { drawerOpen } = menu;
 
-    const navCollapse = item.child_menu?.map((menuItem) => {
+    const navCollapse = item.child_menu_resources?.map((menuItem) => {
         if (menuItem.type === 'ITEM') {
             return <NavItem key={menuItem.id} item={menuItem} level={1} />;
         } else if (menuItem.type === 'GROUP') {

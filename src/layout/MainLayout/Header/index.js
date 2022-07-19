@@ -30,7 +30,7 @@ import { makeStyles, withStyles } from '@mui/styles';
 import SvgIcon from '@mui/material/SvgIcon';
 import RoleApi from 'apis/roles/roleapi';
 import jwt from 'jsonwebtoken';
-import { activeSite } from 'store/reducers/auth';
+import { activeSite, activeRole } from 'store/reducers/auth';
 // ==============================|| MAIN LAYOUT - HEADER ||============================== //
 
 const useStyles = makeStyles({
@@ -94,8 +94,16 @@ const Header = ({ open, handleDrawerToggle }) => {
         console.log(responseData.data.data.site_id);
         console.log(responseData.data.data.name);
         if (responseData.data.data) {
-            setSiteList((arr) => [...arr, { site_id: responseData.data.data.site_id, name: responseData.data.data.name }]);
+            setSiteList((arr) => [
+                ...arr,
+                { id: responseData.data.data.id, site_id: responseData.data.data.site_id, name: responseData.data.data.name }
+            ]);
             console.log(mySiteList);
+
+            if (responseData.data.data.site_id === mySiteId) {
+                // role과 site_id로 메뉴 조회
+                dispatch(activeRole({ roleId: responseData.data.data.id }));
+            }
         }
     }, [responseData]);
 
@@ -104,6 +112,13 @@ const Header = ({ open, handleDrawerToggle }) => {
         setMySiteId(e.target.value);
         // 변경된 사이트를 통해서 다시 메뉴를 리로드해야 한다.
         authData.siteId = e.target.value;
+        // role define
+        mySiteList.map((item, index) => {
+            if (item.site_id === e.target.value) {
+                authData.roleId = item.id; // Role ID
+                dispatch(activeRole({ roleId: item.id })); // Role ID
+            }
+        });
         localStorage.setItem('authenticated', JSON.stringify(authData)); // 토큰 재저장
         console.log(authData);
         // menu reload
