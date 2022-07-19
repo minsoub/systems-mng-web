@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import {
     Button,
     Grid,
@@ -397,7 +396,10 @@ const InsightColumnMng = () => {
                         </Button>
                     </ButtonLayout>
                 </Grid>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

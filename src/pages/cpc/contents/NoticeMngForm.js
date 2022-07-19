@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
 import { Button, Grid, TextField, FormControlLabel, Checkbox } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
@@ -265,6 +263,59 @@ const NoticeMngForm = () => {
                 <div className={cx('common-grid--layout')}>
                     <table>
                         <tbody>
+                            <tr>
+                                <th className={'tb--title'}>게시글 고정</th>
+                                <td>
+                                    <FormControlLabel
+                                        control={<Checkbox checked={is_set_notice} name="is_set_notice" onChange={handleChange} />}
+                                        label="게시글 최상단에 고정"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>제목</th>
+                                <td>
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="small"
+                                        value={title}
+                                        name="title"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="제목을 입력하세요."
+                                        fullWidth
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>내용</th>
+                                <td>
+                                    <JoditEditor
+                                        ref={editorRef}
+                                        value={content}
+                                        config={config}
+                                        onBlur={(newContent) => setContent(newContent)}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>해시태그</th>
+                                <td>
+                                    <ReactTags
+                                        tags={tags}
+                                        suggestions={suggestions}
+                                        delimiters={delimiters}
+                                        handleDelete={handleDelete}
+                                        handleAddition={handleAddition}
+                                        handleDrag={handleDrag}
+                                        handleTagClick={handleTagClick}
+                                        inputFieldPosition="inline"
+                                        placeholder="태그 입력 후 엔터"
+                                        autocomplete
+                                    />
+                                </td>
+                            </tr>
                             <tr>
                                 <th className={'tb--title'}>게시글 고정</th>
                                 <td>

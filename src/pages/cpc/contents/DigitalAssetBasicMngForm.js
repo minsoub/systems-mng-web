@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import { Button, Grid, TextField } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
@@ -282,7 +281,7 @@ const DigitalAssetBasicMngForm = () => {
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="가상자산의 기초" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="가상자산의 기초" />
-                
+
                 <div className={cx('common-grid--layout')}>
                     <table>
                         <tr>
@@ -327,7 +326,7 @@ const DigitalAssetBasicMngForm = () => {
                                     fullWidth
                                     multiline
                                 />
-                                </td>
+                            </td>
                         </tr>
                         <tr>
                             <th className={'tb--title'}>내용</th>
@@ -360,9 +359,7 @@ const DigitalAssetBasicMngForm = () => {
                         {createAccountName && (
                             <tr>
                                 <th className={'tb--title'}>등록자</th>
-                                <td>
-                                    {createAccountName}
-                                </td>
+                                <td>{createAccountName}</td>
                             </tr>
                         )}
                     </table>
@@ -393,7 +390,9 @@ const DigitalAssetBasicMngForm = () => {
                     )}
                 </TopInputLayout>
 
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

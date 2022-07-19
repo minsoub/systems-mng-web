@@ -1,26 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Radio,
-    RadioGroup
-} from '@mui/material';
+import React, {useEffect, useState} from 'react';
+
+import {Checkbox, FormControl, FormControlLabel} from '@mui/material';
 import LineApis from 'apis/lrc/line/lineapi';
 
 export const StsCheckbox = ({ checkedItemHandler, isAllChecked, item }) => {
@@ -67,11 +47,12 @@ export const StsCheckbox = ({ checkedItemHandler, isAllChecked, item }) => {
     }, [responseData]);
     return (
         <>
-            <FormControl key={item.id} sx={{ m: 0 }} size="small">
+            <FormControl key={item.id} sx={{ m: 0 }} size="medium">
                 <FormControlLabel
                     key={item.id}
                     control={<Checkbox id={item.id} checked={bChecked} onChange={(e) => checkHandler(e)} />}
                     label={item.name}
+                    className="checkedBox--width"
                 />
             </FormControl>
         </>

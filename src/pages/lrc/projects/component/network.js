@@ -1,27 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Radio,
-    RadioGroup
-} from '@mui/material';
+import './styles.scss';
+
+import { Checkbox, FormControlLabel, Grid, Stack } from '@mui/material';
 import LineApis from 'apis/lrc/line/lineapi';
+import cx from 'classnames';
 
 export const NetworkCheckboxList = ({ checkedItemHandler }) => {
     const [responseData, requestError, loading, { lineSearch }] = LineApis();
@@ -58,23 +40,20 @@ export const NetworkCheckboxList = ({ checkedItemHandler }) => {
         }
     }, [responseData]);
     return (
-        <>
-            <Grid container spacing={0} sx={{ mt: 1 }}>
-                <Grid item xs={8} sm={1.2}>
-                    <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                        <Stack spacing={0}>네트워크 계열</Stack>
-                    </FormControl>
-                </Grid>
+        <Grid container spacing={0} sx={{ mt: 1 }}>
+            <Stack spacing={10} className={cx('borderTitle')}>
+                네트워크 계열
+            </Stack>
+            <Grid item xs={8} sm={10}>
                 {dataGridRows.map((item, index) => (
-                    <FormControl key={item.id} sx={{ m: 0 }} size="small">
-                        <FormControlLabel
-                            key={item.id}
-                            control={<Checkbox id={item.id} onChange={(e) => checkHandler(e)} />}
-                            label={item.name}
-                        />
-                    </FormControl>
+                    <FormControlLabel
+                        className="checkedBox--width"
+                        key={index}
+                        control={<Checkbox id={item.id} onChange={(e) => checkHandler(e)} />}
+                        label={item.name}
+                    />
                 ))}
             </Grid>
-        </>
+        </Grid>
     );
 };

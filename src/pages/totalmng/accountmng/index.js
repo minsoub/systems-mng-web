@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
 import {
     OutlinedInput,
     Box,
@@ -231,7 +229,7 @@ const AccountMng = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="계정 관리" menuStep01="통합 관리" menuStep02="계정 관리" />
+                <HeaderTitle titleNm="계정 관리" menuStep01="통합시스템 관리" menuStep02="계정 관리" />
 
                 <MainCard>
                     <TopInputLayout>

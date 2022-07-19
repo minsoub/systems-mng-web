@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
 import { Button, Grid, TextField } from '@mui/material';
 import BlockChainNewsApi from 'apis/cpc/board/newsapi';
 import ErrorScreen from 'components/ErrorScreen';

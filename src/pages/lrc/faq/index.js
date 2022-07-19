@@ -1,6 +1,5 @@
 import React from 'react';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import { Box, Grid, Typography, Tab, Tabs } from '@mui/material';
 import MainCard from 'components/MainCard';
 import TabPanel from 'components/TabPanel';

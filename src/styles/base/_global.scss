@@ -3,7 +3,8 @@
 
 // 공통 타이틀
 .borderTitle {
-    width: 80px;
+    width: 85px;
+    text-align: left;
     align-items: center;
     display: inline-grid;
     font-size: 14px;
@@ -18,8 +19,6 @@
 // 버튼 오른쪽 정렬
 .outButtons {
     width: 100%;
-    text-align: right;
-    display: inline-block;
     margin-top: 16px;
 }
 

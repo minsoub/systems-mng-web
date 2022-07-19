@@ -1,38 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Table,
-    TableHead,
-    TableRow,
-    TableBody
-} from '@mui/material';
+
+import { Button, FormControl, Grid, Table, TableBody, TableRow } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import MainCard from 'components/MainCard';
 import { makeStyles, withStyles } from '@mui/styles';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
-import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import LogsApi from 'apis/servicelogs/index';
-import ErrorScreen from 'components/ErrorScreen';
-import HeaderTitle from "../../../components/HeaderTitle";
+import HeaderTitle from 'components/HeaderTitle';
 
 const useStyles = makeStyles({
     tableRow: {
@@ -223,8 +197,6 @@ const ServiceDetail = () => {
                         </TableRow>
                     </TableBody>
                 </Table>
-
-
             </Grid>
         </Grid>
     );

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Select, Stack } from '@mui/material';
 import MainCard from 'components/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
@@ -15,6 +14,7 @@ import cx from 'classnames';
 import InputLayout from '../../../components/Common/InputLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import './styles.scss';
+import DropInput from '../../../components/Common/DropInput';
 
 const SiteAuthManagementPage = () => {
     let isSubmitting = false;
@@ -237,12 +237,8 @@ const SiteAuthManagementPage = () => {
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid container spacing={0} sx={{ mt: 0 }}>
                             <TopInputLayout>
-                                <InputLayout className={cx('layout-blank')}>
-                                    <Stack spacing={10} className={cx('borderTitle')}>
-                                        사이트명
-                                    </Stack>
-
-                                    <FormControl sx={{ minWidth: 250 }} size="medium">
+                                <InputLayout>
+                                    <DropInput title="사이트명">
                                         <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                             <MenuItem value="">
                                                 <em>Choose a Site Type</em>
@@ -255,19 +251,14 @@ const SiteAuthManagementPage = () => {
                                                     </MenuItem>
                                                 ))}
                                         </Select>
-                                    </FormControl>
+                                    </DropInput>
 
-                                    <Stack spacing={10} className={cx('borderTitle ly-blank')}>
-                                        Role Type
-                                    </Stack>
-
-                                    <FormControl sx={{ minWidth: 250 }} size="medium">
+                                    <DropInput title="Role Type">
                                         <Select name="type" label="Role Type" value={type} onChange={typeChanged}>
                                             <MenuItem value="ADMIN">ADMIN</MenuItem>
                                             <MenuItem value="USER">USER</MenuItem>
                                         </Select>
-                                    </FormControl>
-
+                                    </DropInput>
                                     <FormControlLabel
                                         control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
                                         label="사용함"
