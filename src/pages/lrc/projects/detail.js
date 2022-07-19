@@ -32,6 +32,13 @@ import {
 import MainCard from 'components/MainCard';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
+import AnimateButton from 'components/@extended/AnimateButton';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { Input } from 'antd';
+import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
+import RoleApi from 'apis/roles/roleapi';
+import SiteApi from 'apis/site/siteapi';
 import ErrorScreen from 'components/ErrorScreen';
 import TabPanel from 'components/TabPanel';
 import OfficeInfo from './officeinfo';
@@ -256,6 +263,8 @@ const ProjectsDetailPage = () => {
 
         console.log(formData);
         insertChatFile(formData);
+
+        // 파일에 대한 채팅 메시지 전송
     };
 
     // 입력 박스 입력 시 호출
@@ -423,10 +432,7 @@ const ProjectsDetailPage = () => {
                         </Grid>
                     </Grid>
                 </MainCard>
-
-                {errorMessage ? (
-                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
-                ) : null}
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
             </Grid>
         </Grid>
     );
