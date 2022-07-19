@@ -3,33 +3,10 @@
 
     .title {
         margin-top: 10px;
-    }
-}
-.stateMng {
-    tr {
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-    }
-    th {
-        width: 10%;
-        text-align: left;
-        font-size: 14px;
-        font-weight: 500;
-    }
-    td {
-        width: 90%;
-        margin-bottom: 10px;
-    }
-    table {
-        width: 100%;
-        margin-top: 20px;
+        margin-bottom: 20px;
     }
 }
 
-.stateButton {
-    margin-top: 245px;
-    .rightButton {
-        padding: 0;
-    }
+.css-3jopqd-MuiPaper-root-MuiCard-root {
+    border-radius: 2px !important;
 }
