@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="충돌 해결" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="SCSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Pull.Settings">
+    <option name="OPTIONS">
+      <set>
+        <option value="FF_ONLY" />
+      </set>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="featuer/LRC-PRJ-LayoutCommonality" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProjectId" id="2BK1QrSmq5CM4blstKgnrc4JnfY" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/mac/Documents/workspace/systems-mng-web/src/components/Common/Date&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;SCSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/mac/Documents/workspace/systems-mng-web/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/mac/Documents/workspace/systems-mng-web/node_modules/typescript/lib&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/Common/Date" />
+      <recent name="$PROJECT_DIR$/src/components/Chat/ChattingRoom" />
+      <recent name="$PROJECT_DIR$/src/components/Chat/MessageRight" />
+      <recent name="$PROJECT_DIR$/src/components/Chat" />
+      <recent name="$PROJECT_DIR$/src/components/DataGrid/Default" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/styles/base" />
+      <recent name="$PROJECT_DIR$/src/components/Chat/TextInput" />
+      <recent name="$PROJECT_DIR$/src/components/Chat" />
+      <recent name="$PROJECT_DIR$/src/components/DataGrid/Default" />
+      <recent name="$PROJECT_DIR$/src/pages/cpc/main/contents" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="" />
+      <created>1656639951012</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1656639951012</updated>
+      <workItem from="1656639955326" duration="12650000" />
+      <workItem from="1656668208045" duration="113000" />
+      <workItem from="1656668336696" duration="272000" />
+      <workItem from="1656668613740" duration="88388000" />
+      <workItem from="1657115238810" duration="4703000" />
+      <workItem from="1657170619390" duration="20999000" />
+      <workItem from="1657197105145" duration="946000" />
+      <workItem from="1657198061464" duration="482000" />
+      <workItem from="1657198550065" duration="3826000" />
+      <workItem from="1657203384813" duration="29757000" />
+      <workItem from="1657590572180" duration="45238000" />
+      <workItem from="1657776667446" duration="3807000" />
+      <workItem from="1657780496103" duration="33753000" />
+      <workItem from="1657969087188" duration="2088000" />
+      <workItem from="1658105345658" duration="5458000" />
+      <workItem from="1658114491520" duration="553000" />
+      <workItem from="1658115053336" duration="21432000" />
+      <workItem from="1658198423688" duration="5227000" />
+      <workItem from="1658209255350" duration="9533000" />
+      <workItem from="1658219631452" duration="1071000" />
+      <workItem from="1658220725185" duration="775000" />
+    </task>
+    <task id="LOCAL-00039" summary="채팅구현&#10;상대방 말풍선 위치">
+      <created>1657347706754</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1657347706754</updated>
+    </task>
+    <task id="LOCAL-00040" summary="카테고리 관리 등등 table 스타일 적용">
+      <created>1657680404935</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1657680404935</updated>
+    </task>
+    <task id="LOCAL-00041" summary="계열관리 페이지 작업">
+      <created>1657687522822</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1657687522822</updated>
+    </task>
+    <task id="LOCAL-00042" summary="권한 리스트 페이지 스타일 작업 완료">
+      <created>1657690357720</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1657690357720</updated>
+    </task>
+    <task id="LOCAL-00043" summary="권한 맵핑 페이지 헤더쪽 마크업 완료">
+      <created>1657690776279</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1657690776280</updated>
+    </task>
+    <task id="LOCAL-00044" summary="프로그램 연결 페이지 작업 완료">
+      <created>1657692624490</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1657692624490</updated>
+    </task>
+    <task id="LOCAL-00045" summary="메인 관리 페이지 작업 완료">
+      <created>1657694754353</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1657694754353</updated>
+    </task>
+    <task id="LOCAL-00046" summary="메인 관리 페이지 작업 완료">
+      <created>1657695289271</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1657695289271</updated>
+    </task>
+    <task id="LOCAL-00047" summary="commone components separation">
+      <created>1657699512018</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1657699512018</updated>
+    </task>
+    <task id="LOCAL-00048" summary="프로그램 연결 페이지 작업 완료&#10;boarder 테두리 윗 부분 여백 높이 맞추기">
+      <created>1657763553665</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1657763553665</updated>
+    </task>
+    <task id="LOCAL-00049" summary="메뉴등록 페이지 작업완료">
+      <created>1657766200292</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1657766200292</updated>
+    </task>
+    <task id="LOCAL-00050" summary="사이트관리 &gt; 사용자 접근관리 페이지 작업 완료">
+      <created>1657767377655</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1657767377657</updated>
+    </task>
+    <task id="LOCAL-00051" summary="사이트 운영 &gt; FAQ 관리 &gt; 콘텐츠 관리 &#10;작업 완료">
+      <created>1657769162816</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1657769162818</updated>
+    </task>
+    <task id="LOCAL-00052" summary="사이트 운영 &gt; FAQ 관리 &gt; 카테고리 관리&#10;페이지 작업 완료">
+      <created>1657775226505</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1657775226506</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Role 리스트&#10;프로그램 리스트&#10;권한 리스트&#10;&#10;작업 완료">
+      <created>1657780141679</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1657780141679</updated>
+    </task>
+    <task id="LOCAL-00054" summary="QR 코드 OTP 작업 완료">
+      <created>1657782749054</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1657782749054</updated>
+    </task>
+    <task id="LOCAL-00055" summary="QR 코드 OTP 작업 완료">
+      <created>1657783298258</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1657783298258</updated>
+    </task>
+    <task id="LOCAL-00056" summary="작업 완료">
+      <created>1657852990087</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1657852990087</updated>
+    </task>
+    <task id="LOCAL-00057" summary="사이트 운영 &gt; 콘텐츠 관리 &gt; 피해사례 페이지 작업 완료">
+      <created>1657865279404</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1657865279404</updated>
+    </task>
+    <task id="LOCAL-00058" summary="사이트 운영 &gt; 콘텐츠 관리 &gt; 피해사례 페이지 작업 완료">
+      <created>1657865695755</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1657865695756</updated>
+    </task>
+    <task id="LOCAL-00059" summary="📍메인 &gt; 콘텐츠 노출 관리 &gt; 게시글 선택 &gt; 팝업창 작업 완료">
+      <created>1657866696715</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1657866696716</updated>
+    </task>
+    <task id="LOCAL-00060" summary="📍안전거래 캠페인 작업 완료">
+      <created>1657869883701</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1657869883701</updated>
+    </task>
+    <task id="LOCAL-00061" summary="📍안전거래 캠페인 게시글 작성 페이지 작업 완료">
+      <created>1657872541077</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1657872541077</updated>
+    </task>
+    <task id="LOCAL-00062" summary="사이트 운영 &gt; 메인관리 &gt; 콘텐츠 노출관리 페이지 작업 완료&#10;+ error 문구 숨기기">
+      <created>1657876521521</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1657876521522</updated>
+    </task>
+    <task id="LOCAL-00063" summary="사이트 운영 &gt; 메인관리 &gt; 콘텐츠 노출관리 페이지 작업 완료">
+      <created>1657956339925</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1657956339925</updated>
+    </task>
+    <task id="LOCAL-00064" summary="grid height 값 조정">
+      <created>1657957117906</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1657957117907</updated>
+    </task>
+    <task id="LOCAL-00065" summary="표 그리드 형식 table 형식으로 수정">
+      <created>1657962015048</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1657962015048</updated>
+    </task>
+    <task id="LOCAL-00066" summary="피해사례 게시글 작성란 테이블레이아웃으로 변경">
+      <created>1657963754262</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1657963754263</updated>
+    </task>
+    <task id="LOCAL-00067" summary="블록체인 뉴스 게시글 &amp; 수정 에디터 페이지 테이블 형식으로 수정">
+      <created>1657970161518</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1657970161520</updated>
+    </task>
+    <task id="LOCAL-00068" summary="충돌 해결">
+      <created>1658111206511</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1658111206511</updated>
+    </task>
+    <task id="LOCAL-00069" summary="레이아웃 스타일 적용">
+      <created>1658114201231</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1658114201232</updated>
+    </task>
+    <task id="LOCAL-00070" summary="input 스타일 변경">
+      <created>1658114236477</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1658114236477</updated>
+    </task>
+    <task id="LOCAL-00071" summary="레이아웃 스타일 적용">
+      <created>1658115079547</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1658115079547</updated>
+    </task>
+    <task id="LOCAL-00072" summary="레이아웃 스타일 적용">
+      <created>1658120780628</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1658120780628</updated>
+    </task>
+    <task id="LOCAL-00073" summary="스타일 reset">
+      <created>1658123021977</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1658123021977</updated>
+    </task>
+    <task id="LOCAL-00074" summary="레이아웃 작업">
+      <created>1658127300788</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1658127300788</updated>
+    </task>
+    <task id="LOCAL-00075" summary="파일 경로 이동">
+      <created>1658128566784</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1658128566784</updated>
+    </task>
+    <task id="LOCAL-00076" summary="style">
+      <created>1658131036541</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1658131036541</updated>
+    </task>
+    <task id="LOCAL-00077" summary="error 문구가 있을 때 에러 팝업 박스 컴포넌트 보이도록">
+      <created>1658131677690</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1658131677690</updated>
+    </task>
+    <task id="LOCAL-00078" summary="color 변수로 convert&#10;table layout 적용">
+      <created>1658136982137</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1658136982137</updated>
+    </task>
+    <task id="LOCAL-00079" summary="- 주요 컬러 정리&#10;- 서비스 로그 관리 페이지 작업 완료">
+      <created>1658197340190</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1658197340190</updated>
+    </task>
+    <task id="LOCAL-00080" summary="감시로그 조회 페이지 작업 완료">
+      <created>1658198242683</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1658198242683</updated>
+    </task>
+    <task id="LOCAL-00081" summary="rolo 등록 페이지 작업 완료">
+      <created>1658201961746</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1658201961746</updated>
+    </task>
+    <task id="LOCAL-00082" summary="등록 페이지 Drop 컴포넌트로 변경">
+      <created>1658209223432</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1658209223432</updated>
+    </task>
+    <task id="LOCAL-00083" summary="불필요한 주석 제거&#10;거래지원 관리 페이지 상단 쪽 작업 완료">
+      <created>1658211672726</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1658211672726</updated>
+    </task>
+    <task id="LOCAL-00084" summary="미사용 컴포넌트 제거">
+      <created>1658213255665</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1658213255665</updated>
+    </task>
+    <task id="LOCAL-00085" summary="미사용 컴포넌트 제거">
+      <created>1658213916576</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1658213916576</updated>
+    </task>
+    <task id="LOCAL-00086" summary="공백 제거, 충돌 해결">
+      <created>1658220620321</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1658220620322</updated>
+    </task>
+    <task id="LOCAL-00087" summary="충돌 해결">
+      <created>1658221314493</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1658221314493</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="메인 &gt; 콘텐츠 노출 관리 &gt; 게시글 선택 &gt; 팝업창 작업 완료" />
+    <MESSAGE value="안전거래 캠페인 작업 완료" />
+    <MESSAGE value="안전거래 캠페인 게시글 작성 페이지 작업 완료" />
+    <MESSAGE value="사이트 운영 &gt; 메인관리 &gt; 콘텐츠 노출관리 페이지 작업 완료&#10;+ error 문구 숨기기" />
+    <MESSAGE value="사이트 운영 &gt; 메인관리 &gt; 콘텐츠 노출관리 페이지 작업 완료" />
+    <MESSAGE value="grid height 값 조정" />
+    <MESSAGE value="표 그리드 형식 table 형식으로 수정" />
+    <MESSAGE value="피해사례 게시글 작성란 테이블레이아웃으로 변경" />
+    <MESSAGE value="블록체인 뉴스 게시글 &amp; 수정 에디터 페이지 테이블 형식으로 수정" />
+    <MESSAGE value="input 스타일 변경" />
+    <MESSAGE value="레이아웃 스타일 적용" />
+    <MESSAGE value="스타일 reset" />
+    <MESSAGE value="레이아웃 작업" />
+    <MESSAGE value="파일 경로 이동" />
+    <MESSAGE value="style" />
+    <MESSAGE value="error 문구가 있을 때 에러 팝업 박스 컴포넌트 보이도록" />
+    <MESSAGE value="color 변수로 convert&#10;table layout 적용" />
+    <MESSAGE value="- 주요 컬러 정리&#10;- 서비스 로그 관리 페이지 작업 완료" />
+    <MESSAGE value="감시로그 조회 페이지 작업 완료" />
+    <MESSAGE value="rolo 등록 페이지 작업 완료" />
+    <MESSAGE value="등록 페이지 Drop 컴포넌트로 변경" />
+    <MESSAGE value="불필요한 주석 제거&#10;거래지원 관리 페이지 상단 쪽 작업 완료" />
+    <MESSAGE value="미사용 컴포넌트 제거" />
+    <MESSAGE value="공백 제거, 충돌 해결" />
+    <MESSAGE value="충돌 해결" />
+    <option name="LAST_COMMIT_MESSAGE" value="충돌 해결" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
