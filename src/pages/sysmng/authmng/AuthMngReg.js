@@ -21,8 +21,6 @@ import HeaderTitle from 'components/HeaderTitle';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import InputLayout from 'components/Common/InputLayout';
-import TopInputLayout from 'components/Common/TopInputLayout';
 import DropInput from 'components/Common/DropInput';
 
 function MinusSquare(props) {
