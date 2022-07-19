@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { AxiosInstance } from 'axios';
-import { useSelector } from 'react-redux';
 import jwt from 'jsonwebtoken';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const useAxios = () => {
     const [response, setResponse] = useState();
     const [error, setError] = useState();

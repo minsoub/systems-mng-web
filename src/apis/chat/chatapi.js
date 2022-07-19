@@ -1,9 +1,7 @@
-import React from 'react';
 import axiosInstanceDefault from '../axiosDefault';
 import axiosInstanceUpload from 'apis/axiosUpload';
 import axiosInstanceDownload from 'apis/axiosDownload';
 import useAxios from '../useAxios';
-import { get } from 'lodash';
 
 const ChatApi = () => {
     const [resData, reqError, loading, callApi] = useAxios();

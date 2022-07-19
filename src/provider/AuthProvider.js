@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import { createContext, useState } from 'react';
 
 const AuthContext = createContext({
     state: { userid: null, username: null, loggined: false, token: null },
@@ -10,6 +10,7 @@ const AuthContext = createContext({
     }
 });
 
+// eslint-disable-next-line react/prop-types
 const AuthProvider = ({ chidlren }) => {
     const [userid, setUserid] = useState(null);
     const [username, setUsername] = useState(null);

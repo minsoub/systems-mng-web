@@ -1,4 +1,3 @@
-import React from 'react';
 import axiosInstanceAuth from '../axiosAuth';
 import useAxios from '../useAxios';
 import { doEncrypt } from 'utils/Crypt';
