@@ -37,6 +37,9 @@ import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import HeaderTitle from '../../../components/HeaderTitle';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
+import SearchBar from '../../../components/ContentManage/SearchBar';
+import SearchDate from '../../../components/ContentManage/SearchDate';
+import cx from 'classnames';
 
 const SiteLogPage = () => {
     let isSubmitting = false;
@@ -256,98 +259,28 @@ const SiteLogPage = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="감사로그 조회" menuStep01="사이트 관리" menuStep02="감사로그 조회" />
 
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                    <Table
-                        fixedheader={false}
-                        sx={{
-                            [`& .${tableCellClasses.root}`]: {
-                                borderBottom: 'none'
-                            }
-                        }}
-                        style={{ border: 0, width: '100%', tableLayout: 'auto' }}
-                        aria-label="simple table"
-                    >
-                        <TableRow>
-                            <TableCell align="center" component="th" scope="row">
-                                일시
-                            </TableCell>
-                            <TableCell style={{ width: '10%' }} align="left" component="th" scope="row">
-                                <FormControl size="medium">
-                                    <TextField
-                                        id="start_date"
-                                        name="start_date"
-                                        value={start_date}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        type="date"
-                                        defaultValue=""
-                                        sx={{ width: 160 }}
-                                    />
-                                </FormControl>
-                            </TableCell>
-                            <TableCell style={{ width: '5' }} align="left" component="th" scope="row">
-                                ~
-                            </TableCell>
-                            <TableCell align="left" component="th" scope="row">
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
-                                    <TextField
-                                        id="end_date"
-                                        name="end_date"
-                                        value={end_date}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        type="date"
-                                        defaultValue=""
-                                        sx={{ width: 160 }}
-                                    />
-                                </FormControl>
-                            </TableCell>
-                            <TableCell align="left" component="th" scope="row">
-                                <FormControl sx={{ m: 0, minHeight: 25, minWidth: 340 }} size="small">
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={keyword}
-                                        name="keyword"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="Enter Keyword Name"
-                                        fullWidth
-                                    />
-                                </FormControl>
-                            </TableCell>
-                            <TableCell style={{ width: '5%' }} align="right" component="th" scope="row">
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={searchClick}
-                                    >
-                                        검색
-                                    </Button>
-                                </FormControl>
-                            </TableCell>
-                            <TableCell style={{ width: '5%' }} align="right" component="th" scope="row">
-                                <FormControl sx={{ m: 1 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={excelClick}
-                                    >
-                                        Excel
-                                    </Button>
-                                </FormControl>
-                            </TableCell>
-                        </TableRow>
-                    </Table>
+                <MainCard>
+                    {/* 기간 검색 */}
+                    <SearchDate
+                        start_date={start_date}
+                        end_date={end_date}
+                        handleBlur={handleBlur}
+                        handleChange={handleChange}
+                        noneChecked="noneChecked"
+                    />
+
+                    {/* 검색바 */}
+                    <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
+
+                <ButtonLayout buttonName="rightButton">
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                        검색
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
+                        Excel
+                    </Button>
+                </ButtonLayout>
 
                 <MainCard sx={{ mt: 2, height: 750 }} content={false}>
                     <DefaultDataGrid
