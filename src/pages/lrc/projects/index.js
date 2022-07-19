@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import {
     Button,
-    FormControl,
-    FormControlLabel,
     Grid,
     MenuItem,
-    Radio,
-    RadioGroup,
     Select,
-    Stack,
     Table,
     TableBody,
     TableCell,
     TableHead,
     TablePagination,
     TableRow,
-    TextField,
     Typography
 } from '@mui/material';
 import { makeStyles, withStyles } from '@mui/styles';
@@ -33,6 +26,13 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchData } from 'store/reducers/projectsearch';
 import HeaderTitle from '../../../components/HeaderTitle';
+import SearchDate from '../../../components/ContentManage/SearchDate';
+import DropInput from '../../../components/Common/DropInput';
+import SearchBar from '../../../components/ContentManage/SearchBar';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import cx from 'classnames';
+import InputLayout from '../../../components/Common/InputLayout';
+import './styles.scss';
 
 const ProjectsPage = () => {
     let isSubmitting = false;
@@ -480,156 +480,60 @@ const ProjectsPage = () => {
                 <HeaderTitle titleNm="거래지원 관리" menuStep01="사이트 운영" menuStep02="거래지원 관리" />
 
                 <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Grid item xs={8} sm={1.2}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>등록 기간 검색</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
-                                    <TextField
-                                        id="from_date"
-                                        name="from_date"
-                                        value={from_date}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        type="date"
-                                        sx={{ width: 140 }}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.3}>
-                                ~
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
-                                    <TextField
-                                        id="to_date"
-                                        name="to_date"
-                                        value={to_date}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        type="date"
-                                        sx={{ width: 140 }}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={3.5}>
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
-                                    <RadioGroup
-                                        row
-                                        aria-labelledby="demo-row-radio-buttons-group-label"
-                                        name="period"
-                                        value={period}
-                                        onChange={handleChange}
-                                    >
-                                        <FormControlLabel value="1" control={<Radio />} label="오늘" />
-                                        <FormControlLabel value="2" control={<Radio />} label="어제" />
-                                        <FormControlLabel value="3" control={<Radio />} label="1개월" />
-                                        <FormControlLabel value="4" control={<Radio />} label="3개월" />
-                                    </RadioGroup>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={0} sx={{ mt: 1 }}>
-                            <Grid item xs={8} sm={1.2}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>계약상태</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <FormControl sx={{ m: 0, minWidth: 280 }} size="small">
-                                    <Select name="contract_code" label="계정상태" value={contract_code} onChange={handleChange}>
-                                        <MenuItem value="">전체</MenuItem>
-                                        {statusList.map((item, index) => (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={0.7}></Grid>
-                            <Grid item xs={8} sm={1.2}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>진행상태</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={2}>
-                                <FormControl sx={{ m: 0, minWidth: 280 }} size="small">
-                                    <Select name="process_code" label="계정상태" value={process_code} onChange={handleChange}>
-                                        <MenuItem value="">전체</MenuItem>
-                                        {processList.map((item, index) => (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                        <BusinessCheckboxList checkedItemHandler={checkedBusinessItemHandler} isAllChecked={isAllChecked} />
-                        <NetworkCheckboxList checkedItemHandler={checkedNetworkItemHandler} />
-                        <Grid container spacing={0} sx={{ mt: 1 }}>
-                            <Grid item xs={8} sm={1.2}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>검색어</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <FormControl sx={{ m: 0, minHeight: 25, minWidth: 640 }} size="small">
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={keyword}
-                                        name="keyword"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="Enter Keyword Name"
-                                        fullWidth
-                                    />
-                                </FormControl>
-                            </Grid>
-                        </Grid>
+                    <Grid>
+                        {/* 기간 검색 */}
+                        <SearchDate
+                            start_date={from_date}
+                            end_date={to_date}
+                            period={period}
+                            handleBlur={handleBlur}
+                            handleChange={handleChange}
+                        />
+
+                        <InputLayout>
+                            <DropInput title="계약상태">
+                                <Select name="contract_code" label="계정상태" value={contract_code} onChange={handleChange}>
+                                    <MenuItem value="">전체</MenuItem>
+                                    {statusList.map((item, index) => (
+                                        <MenuItem key={index} value={item.id}>
+                                            {item.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </DropInput>
+
+                            <DropInput title="진행상태">
+                                <Select name="process_code" label="계정상태" value={process_code} onChange={handleChange}>
+                                    <MenuItem value="">전체</MenuItem>
+                                    {processList.map((item, index) => (
+                                        <MenuItem key={index} value={item.id}>
+                                            {item.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </DropInput>
+                        </InputLayout>
+
+                        <div className="orderLayout">
+                            <BusinessCheckboxList checkedItemHandler={checkedBusinessItemHandler} isAllChecked={isAllChecked} />
+                            <NetworkCheckboxList checkedItemHandler={checkedNetworkItemHandler} />
+                        </div>
+
+                        <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={keyword} />
                     </Grid>
                 </MainCard>
-                <Grid container alignItems="right" justifyContent="space-between">
-                    <Grid container spacing={0} sx={{ mt: 0 }}>
-                        <Grid item xs={8} sm={10.5}></Grid>
-                        <Grid item xs={8} sm={0.6}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={searchClick}
-                                >
-                                    검색
-                                </Button>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={0.1}></Grid>
-                        <Grid item xs={8} sm={0.6}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <Button
-                                    disableElevation
-                                    size="small"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={clearClick}
-                                >
-                                    초기화
-                                </Button>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                </Grid>
+
+                <div className={cx('outButtons')}>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                            검색
+                        </Button>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                            초기화
+                        </Button>
+                    </ButtonLayout>
+                </div>
+
                 <MainCard sx={{ mt: 1, minHeight: 60 }} content={false}>
                     <Grid container spacing={0} sx={{ mt: 2 }}>
                         <Grid item xs={8} sm={0.3}></Grid>
@@ -642,21 +546,6 @@ const ProjectsPage = () => {
                         {categoryList.map((item, index) => (
                             <StsCategory key={index} id={item.id} content={item.name} count={item.count} filterClick={filterClick} />
                         ))}
-                        {/* <Grid item xs={8} sm={0.7}>
-                            전체(2)
-                        </Grid>
-                        <Grid item xs={8} sm={0.1}></Grid>
-                        <Grid item xs={8} sm={0.7}>
-                            접수중(2)
-                        </Grid>
-                        <Grid item xs={8} sm={0.1}></Grid>
-                        <Grid item xs={8} sm={0.7}>
-                            심사중(2)
-                        </Grid>
-                        <Grid item xs={8} sm={0.1}></Grid>
-                        <Grid item xs={8} sm={0.7}>
-                            상장완료(2)
-                        </Grid> */}
                     </Grid>
                 </MainCard>
                 <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>

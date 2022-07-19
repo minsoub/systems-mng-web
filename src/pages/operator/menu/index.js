@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-// material-ui
-// eslint-disable-next-line prettier/prettier
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Select, Stack, TextField } from '@mui/material';
 import MainCard from 'components/MainCard';
 import SvgIcon from '@mui/material/SvgIcon';
@@ -13,6 +11,7 @@ import StyledTtreeItem from 'components/TreeMenu/StyledTreeItem';
 import TreeView from '@mui/lab/TreeView';
 import HeaderTitle from '../../../components/HeaderTitle';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
+import cx from 'classnames';
 import './styles.scss';
 
 function MinusSquare(props) {
@@ -59,6 +58,7 @@ const SiteMenuRegForm = () => {
     const [menudata, setMenuData] = useState([]); // menu data
 
     const [isUpdate, setIsUpdate] = useState(false); // input mode
+    const [isButton, setIsButton] = useState(false); // +, - 버튼 모드
 
     const [login_site_id, setLoginStiteId] = useState(''); // 사용자 로그인 - 사이트 ID
 
@@ -495,6 +495,14 @@ const SiteMenuRegForm = () => {
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="메뉴 등록" menuStep01="사이트 관리" menuStep02="메뉴 관리" menuStep03="메뉴 등록" />
+
+                <ButtonLayout buttonName="rightButton">
+                    <div className="menuButton">
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                            저장
+                        </Button>
+                    </div>
+                </ButtonLayout>
 
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item md={3}>

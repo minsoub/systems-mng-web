@@ -1,34 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
-import {
-    Alert,
-    AlertTitle,
-    Button,
-    Checkbox,
-    Collapse,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    Grid,
-    MenuItem,
-    Select,
-    Stack,
-    TextField
-} from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, TextField } from '@mui/material';
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import MainCard from 'components/MainCard';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
+import './styles.scss';
+import SearchDate from 'components/ContentManage/SearchDate';
+import DropInput from 'components/Common/DropInput';
+import TopInputLayout from 'components/Common/TopInputLayout';
+import InputLayout from 'components/Common/InputLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import ButtonLayout from 'components/Common/ButtonLayout';
+import { Select } from 'antd';
 import cx from 'classnames';
-import './styles.scss';
 
 const RoleRegForm = () => {
     let isSubmitting = false;
@@ -374,15 +361,14 @@ const RoleRegForm = () => {
                                 />
 
                                 <MainCard sx={{ mt: 2 }}>
-                                    <table>
-                                        <tr>
-                                            <th>Role ID</th>
-                                            <td>
-                                                <FormControl sx={{ m: 0, maxHeight: 30, maxWidth: 220 }} size="small">
+                                    <div className="roleLayout">
+                                        <DropInput title="Role ID">
+                                            <TopInputLayout>
+                                                <InputLayout>
                                                     <TextField
                                                         id="filled-hidden-label-small"
                                                         type="text"
-                                                        size="small"
+                                                        size="medium"
                                                         value={id}
                                                         name="id"
                                                         inputProps={{ readOnly: idStatus }}
@@ -392,147 +378,127 @@ const RoleRegForm = () => {
                                                         fullWidth
                                                         error={Boolean(touched.id && errors.id)}
                                                     />
-                                                </FormControl>
-                                                <Button
-                                                    disableElevation
-                                                    size="small"
-                                                    type="button"
-                                                    disabled={isUpdate}
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    onClick={idDuplicateCheck}
-                                                >
-                                                    중복체크
-                                                </Button>
-                                            </td>
+                                                </InputLayout>
+                                                <ButtonLayout>
+                                                    <Button
+                                                        disableElevation
+                                                        size="medium"
+                                                        type="button"
+                                                        disabled={isUpdate}
+                                                        variant="contained"
+                                                        color="secondary"
+                                                        onClick={idDuplicateCheck}
+                                                    >
+                                                        중복체크
+                                                    </Button>
+                                                </ButtonLayout>
+                                            </TopInputLayout>
+                                        </DropInput>
+                                    </div>
 
-                                            <th>Role Name</th>
-                                            <td>
-                                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                    <TextField
-                                                        id="filled-hidden-label-small"
-                                                        type="text"
-                                                        size="small"
-                                                        value={name}
-                                                        name="name"
+                                    <div className="roleLayout">
+                                        {/* 기간 검색 */}
+                                        <SearchDate
+                                            start_date={valid_start_date}
+                                            end_date={valid_end_date}
+                                            handleBlur={handleBlur}
+                                            handleChange={handleChange}
+                                            noneChecked="noneChecked"
+                                        />
+                                    </div>
+
+                                    <div className="roleLayout">
+                                        <DropInput title="Role Name">
+                                            <TextField
+                                                id="filled-hidden-label-small"
+                                                type="text"
+                                                size="medium"
+                                                value={name}
+                                                name="name"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                placeholder="Enter Role Name"
+                                                fullWidth
+                                                error={Boolean(touched.name && errors.name)}
+                                            />
+                                        </DropInput>
+
+                                        <DropInput title="사용여부">
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        defaultChecked
+                                                        checked={is_use}
+                                                        name="is_use"
+                                                        value={is_use}
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        placeholder="Enter Role Name"
-                                                        fullWidth
-                                                        error={Boolean(touched.name && errors.name)}
                                                     />
-                                                </FormControl>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>유효기간</th>
-                                            <td className="result__list--input">
-                                                <FormControl size="medium">
-                                                    <TextField
-                                                        id="valid_start_date"
-                                                        name="valid_start_date"
-                                                        value={valid_start_date}
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        type="date"
-                                                        sx={{ width: 250 }}
-                                                    />
-                                                </FormControl>
-                                                <span className={cx('center')}> ~ </span>
-                                                <FormControl size="medium">
-                                                    <TextField
-                                                        id="valid_end_date"
-                                                        name="valid_end_date"
-                                                        value={valid_end_date}
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        type="date"
-                                                        sx={{ width: 250 }}
-                                                    />
-                                                </FormControl>
-                                            </td>
+                                                }
+                                                label="사용함"
+                                            />
+                                        </DropInput>
+                                    </div>
 
-                                            <th>사용여부</th>
-                                            <td>
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox
-                                                            defaultChecked
-                                                            checked={is_use}
-                                                            name="is_use"
-                                                            value={is_use}
-                                                            onBlur={handleBlur}
-                                                            onChange={handleChange}
-                                                        />
-                                                    }
-                                                    label="사용함"
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>사이트 구분</th>
-                                            <td>
-                                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 25 }} size="small">
-                                                    <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
-                                                        <MenuItem value="">
-                                                            <em>Choose a Site Type</em>
-                                                        </MenuItem>
-                                                        {siteList.map((item, index) => (
-                                                            <MenuItem key={index} value={item.id}>
-                                                                {item.name}
-                                                            </MenuItem>
-                                                        ))}
-                                                    </Select>
-                                                </FormControl>
-                                            </td>
+                                    <div className="roleLayout noneBlank">
+                                        <DropInput title="사이트 구분">
+                                            <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
+                                                <MenuItem value="">
+                                                    <em>Choose a Site Type</em>
+                                                </MenuItem>
+                                                {siteList.map((item, index) => (
+                                                    <MenuItem key={index} value={item.id}>
+                                                        {item.name}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </DropInput>
 
-                                            <th>운영구분</th>
-                                            <td>
-                                                <FormControl sx={{ m: 0, minWidth: 140 }} size="small">
-                                                    <Select name="type" label="구분" value={type} onChange={typeChanged}>
-                                                        <MenuItem value="ADMIN">ADMIN</MenuItem>
-                                                        <MenuItem value="USER">USER</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                        <DropInput title="운영 구분">
+                                            <Select name="type" label="구분" value={type} onChange={typeChanged}>
+                                                <MenuItem value="ADMIN">ADMIN</MenuItem>
+                                                <MenuItem value="USER">USER</MenuItem>
+                                            </Select>
+                                        </DropInput>
+                                    </div>
                                 </MainCard>
 
-                                <ButtonLayout buttonName="rightButton">
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        size="medium"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                    >
-                                        저장하기
-                                    </Button>
-                                    <Button
-                                        disableElevation
-                                        disabled={isDisabled}
-                                        size="medium"
-                                        type="button"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={deleteClick}
-                                    >
-                                        삭제
-                                    </Button>
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        size="medium"
-                                        type="button"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={listClick}
-                                    >
-                                        리스트
-                                    </Button>
-                                </ButtonLayout>
+                                <div className={cx('outButtons')}>
+                                    <ButtonLayout>
+                                        <Button
+                                            disableElevation
+                                            disabled={isSubmitting}
+                                            size="medium"
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                        >
+                                            저장하기
+                                        </Button>
+                                        <Button
+                                            disableElevation
+                                            disabled={isDisabled}
+                                            size="medium"
+                                            type="button"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={deleteClick}
+                                        >
+                                            삭제
+                                        </Button>
+                                        <Button
+                                            disableElevation
+                                            disabled={isSubmitting}
+                                            size="medium"
+                                            type="button"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={listClick}
+                                        >
+                                            리스트
+                                        </Button>
+                                    </ButtonLayout>
+                                </div>
 
                                 {errorMessage ? (
                                     <MainCard sx={{ mt: 3 }} content={false}>

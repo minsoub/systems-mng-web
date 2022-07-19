@@ -3,7 +3,8 @@
 
 // 공통 타이틀
 .borderTitle {
-    width: 80px;
+    width: 85px;
+    text-align: left;
     align-items: center;
     display: inline-grid;
     font-size: 14px;
@@ -18,8 +19,6 @@
 // 버튼 오른쪽 정렬
 .outButtons {
     width: 100%;
-    text-align: right;
-    display: inline-block;
     margin-top: 16px;
 }
 
@@ -45,6 +44,7 @@
     border-top: 1px solid rgba(253, 253, 253, 1);
     margin-bottom: 20px;
     min-height: auto;
+    place-content: center;
 }
 
 .css-3yvf2w-MuiDataGrid-root {
@@ -187,18 +187,18 @@ legend,
 
         tr {
             border: 1px solid #f0f0f0;
-    
+
             th {
                 padding: 2rem;
                 background-color: $tableTitle;
                 width: 10%;
             }
-    
+
             td {
                 width: 40%;
                 border: 1px solid #f0f0f0;
                 padding: 10px;
-    
+
                 input {
                     width: 100%;
                 }
@@ -246,6 +246,11 @@ html [type='button'],
     .css-nen11g-MuiStack-root {
         font-size: 14px;
     }
+}
+
+// 메인관리 리스트 박스 그림자 제거
+.css-1d64866 {
+    box-shadow: none;
 }
 
 // 1024 해상도에서도 width Full로 차도록

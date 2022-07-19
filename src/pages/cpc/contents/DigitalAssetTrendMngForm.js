@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import { Button, Grid, TextField } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
@@ -393,7 +392,9 @@ const DigitalAssetTrendMngForm = () => {
                     )}
                 </TopInputLayout>
 
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} />
+                {errorMessage ? (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                ) : null}
             </Grid>
         </Grid>
     );

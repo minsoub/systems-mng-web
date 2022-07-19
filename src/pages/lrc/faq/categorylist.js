@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import { Button, FormControl, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import MainCard from 'components/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';

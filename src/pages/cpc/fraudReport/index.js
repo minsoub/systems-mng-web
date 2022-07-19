@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-// material-ui
-// eslint-disable-next-line prettier/prettier
 import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// material-ui
-// eslint-disable-next-line prettier/prettier
+
 import {
     OutlinedInput,
     Box,
@@ -307,7 +306,7 @@ const ProgramManagementPage = () => {
                         height={800}
                     />
                 </MainCard>
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+
             </Grid>
         </Grid>
     );
