@@ -42,6 +42,9 @@ import { setSearchData } from 'store/reducers/logsearch';
 import { map } from 'lodash';
 import HeaderTitle from '../../../components/HeaderTitle';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
+import SearchDate from '../../../components/ContentManage/SearchDate';
+import SearchBar from '../../../components/ContentManage/SearchBar';
+import cx from 'classnames';
 
 // Log
 const ServiceLog = () => {
@@ -323,107 +326,33 @@ const ServiceLog = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="서비스 로그 관리" menuStep01="사이트 운영" menuStep02="서비스 로그 관리" />
 
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                    <Table
-                        fixedheader={false}
-                        sx={{
-                            [`& .${tableCellClasses.root}`]: {
-                                borderBottom: 'none'
-                            }
-                        }}
-                        style={{ border: 0, width: '100%', tableLayout: 'auto' }}
-                        aria-label="simple table"
-                    >
-                        <TableRow>
-                            <TableCell align="center" component="th" scope="row">
-                                발생기간 검색
-                            </TableCell>
-                            <TableCell style={{ width: '10%' }} align="left" component="th" scope="row">
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
-                                    <TextField
-                                        id="from_date"
-                                        name="from_date"
-                                        size="smail"
-                                        value={from_date}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        type="date"
-                                        sx={{ width: 180 }}
-                                    />
-                                </FormControl>
-                            </TableCell>
-                            <TableCell style={{ width: '5' }} align="left" component="th" scope="row">
-                                ~
-                            </TableCell>
-                            <TableCell align="left" component="th" scope="row">
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
-                                    <TextField
-                                        id="to_date"
-                                        name="to_date"
-                                        size="smail"
-                                        value={to_date}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        type="date"
-                                        sx={{ width: 180 }}
-                                    />
-                                </FormControl>
-                            </TableCell>
-                            <TableCell align="left" component="th" scope="row">
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
-                                    <RadioGroup
-                                        row
-                                        aria-labelledby="demo-row-radio-buttons-group-label"
-                                        name="period"
-                                        value={period}
-                                        onChange={handleChange}
-                                    >
-                                        <FormControlLabel value="1" control={<Radio />} label="오늘" />
-                                        <FormControlLabel value="2" control={<Radio />} label="어제" />
-                                        <FormControlLabel value="3" control={<Radio />} label="1개월" />
-                                        <FormControlLabel value="4" control={<Radio />} label="3개월" />
-                                    </RadioGroup>
-                                </FormControl>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell align="center" component="th" scope="row">
-                                통합검색
-                            </TableCell>
-                            <TableCell align="left" component="th" scope="row" colsPan={4}>
-                                <FormControl sx={{ m: 0, minHeight: 25, minWidth: 640 }} size="small">
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={keyword}
-                                        name="keyword"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="Enter Keyword Name"
-                                        fullWidth
-                                    />
-                                </FormControl>
-                            </TableCell>
-                        </TableRow>
-                    </Table>
+                <MainCard>
+                    {/* 기간 검색 */}
+                    <SearchDate
+                        start_date={from_date}
+                        end_date={to_date}
+                        period={period}
+                        handleBlur={handleBlur}
+                        handleChange={handleChange}
+                    />
+
+                    {/* 검색바 */}
+                    <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <Table>
-                    <TableRow>
-                        <ButtonLayout buttonName="rightButton">
-                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                                검색
-                            </Button>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
-                                초기화
-                            </Button>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
-                                Excel
-                            </Button>
-                        </ButtonLayout>
-                    </TableRow>
-                </Table>
+                <Grid className={cx('outButtons')}>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
+                            검색
+                        </Button>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                            초기화
+                        </Button>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
+                            Excel
+                        </Button>
+                    </ButtonLayout>
+                </Grid>
 
                 <MainCard sx={{ mt: 1, height: 650 }} content={false}>
                     <DefaultDataGrid

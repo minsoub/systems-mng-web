@@ -1,8 +1,10 @@
+@import 'src/styles/index';
+
 .gridCardColor {
-    background-color: #ffaa28;
+    background-color: $dashColor;
 }
 
 .css-p4pzcs-MuiTypography-root {
     font-size: 1.15rem;
-    color: rgba(0, 0, 0, 0.85);
+    color: $titleText;
 }
