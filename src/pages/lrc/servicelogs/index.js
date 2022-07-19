@@ -1,49 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    RadioGroup,
-    Radio,
-    Table,
-    TableBody,
-    TableContainer,
-    TableHead,
-    TableRow
-} from '@mui/material';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Grid, Table, TableRow } from '@mui/material';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import { GridToolbar } from '@mui/x-data-grid';
 import LogsApi from 'apis/servicelogs/index';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import { setSearchData } from 'store/reducers/logsearch';
-import { map } from 'lodash';
-import HeaderTitle from '../../../components/HeaderTitle';
-import ButtonLayout from '../../../components/Common/ButtonLayout';
-import SearchDate from '../../../components/ContentManage/SearchDate';
-import SearchBar from '../../../components/ContentManage/SearchBar';
+import HeaderTitle from 'components/HeaderTitle';
+import ButtonLayout from 'components/Common/ButtonLayout';
+import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
+import SearchDate from 'components/ContentManage/SearchDate';
 
 // Log
 const ServiceLog = () => {
@@ -324,7 +294,6 @@ const ServiceLog = () => {
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="서비스 로그 관리" menuStep01="사이트 운영" menuStep02="서비스 로그 관리" />
-
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate
@@ -338,7 +307,6 @@ const ServiceLog = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-
                 <Grid className={cx('outButtons')}>
                     <ButtonLayout>
                         <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
@@ -352,6 +320,21 @@ const ServiceLog = () => {
                         </Button>
                     </ButtonLayout>
                 </Grid>
+                <Table>
+                    <TableRow>
+                        <ButtonLayout buttonName="rightButton">
+                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                                검색
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                                초기화
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
+                                Excel
+                            </Button>
+                        </ButtonLayout>
+                    </TableRow>
+                </Table>
 
                 <MainCard sx={{ mt: 1, height: 650 }} content={false}>
                     <DefaultDataGrid
@@ -365,7 +348,6 @@ const ServiceLog = () => {
                         height={650}
                     />
                 </MainCard>
-
                 {errorMessage ? (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 ) : null}

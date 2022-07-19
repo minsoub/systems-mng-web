@@ -6,6 +6,7 @@ import menu from './menu';
 import auth from './auth';
 import projectSearchReducer from './projectsearch';
 import logSearchReducer from './logsearch';
+import boardSearchReducer from './boardsearch';
 import cpcBlockChainNewsSearchReducer from './cpc/BlockChainNewsSearch';
 import cpcCampaignSearchReducer from './cpc/CampaignSearch';
 import cpcDamageCaseSearchReducer from './cpc/DamageCaseSearch';
@@ -23,6 +24,7 @@ const reducers = combineReducers({
     auth,
     projectSearchReducer,
     logSearchReducer,
+    boardSearchReducer,
     cpcBlockChainNewsSearchReducer,
     cpcCampaignSearchReducer,
     cpcDamageCaseSearchReducer,

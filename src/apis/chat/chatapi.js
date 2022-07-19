@@ -1,9 +1,7 @@
-import React from 'react';
 import axiosInstanceDefault from '../axiosDefault';
 import axiosInstanceUpload from 'apis/axiosUpload';
 import axiosInstanceDownload from 'apis/axiosDownload';
 import useAxios from '../useAxios';
-import { get } from 'lodash';
 
 const ChatApi = () => {
     const [resData, reqError, loading, callApi] = useAxios();
@@ -46,6 +44,15 @@ const ChatApi = () => {
             requestConfig: {}
         });
     };
+    // 채팅 대화 삭제
+    const deleteChatMessage = (id) => {
+        callApi('deleteChatMessage', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/mng/lrc/service/chat/${id}`,
+            requestConfig: {}
+        });
+    };
     return [
         resData,
         reqError,
@@ -54,7 +61,8 @@ const ChatApi = () => {
             chatExistsAndSave: chatExists,
             insertChatFile: insertFileData,
             getChatFile: getFile,
-            getChatFileList: getFileListData
+            getChatFileList: getFileListData,
+            deleteChat: deleteChatMessage
         }
     ];
 };

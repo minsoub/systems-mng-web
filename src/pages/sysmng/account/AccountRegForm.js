@@ -30,14 +30,14 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
-import { boolean } from '../../../node_modules/yup/lib/index';
-import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import AccountApis from 'apis/account/accountapis';
 import SiteApi from 'apis/site/siteapi';
 import RoleApi from 'apis/roles/roleapi';
 import { DatePicker } from 'antd';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from 'components/HeaderTitle';
 
 const AccountRegForm = () => {
     let isSubmitting = false;
@@ -699,7 +699,7 @@ const AccountRegForm = () => {
                         <Grid container spacing={3}>
                             <Grid item xs={8} sm={12}>
                                 <Stack spacing={2}>
-                                    <MainCard sx={{ mt: 2, height: 570 }} content={false}>
+                                    <MainCard sx={{ mt: 2, height: 760 }} content={false}>
                                         <Grid container spacing={0} sx={{ mt: 2 }}>
                                             <Grid item xs={8} sm={0.2}></Grid>
                                             <Grid item xs={8} sm={2.8}>
@@ -817,8 +817,8 @@ const AccountRegForm = () => {
                             </Grid>
                         </Grid>
                         <Grid container spacing={3} sx={{ m: 0 }}>
-                            <Grid item xs={8} sm={9.5}></Grid>
-                            <Grid item xs={8} sm={2.5}>
+                            <Grid item xs={8} sm={10.5}></Grid>
+                            <Grid item xs={8} sm={1.5}>
                                 <Stack direction="row" spacing={1}>
                                     <Button
                                         disableElevation

@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { AxiosInstance } from 'axios';
-import { useSelector } from 'react-redux';
-
+import jwt from 'jsonwebtoken';
+import { useNavigate } from 'react-router-dom';
 const useAxios = () => {
     const [response, setResponse] = useState();
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
     const [controller, setController] = useState();
+    const navigate = useNavigate();
 
     //const { siteId, email, accessToken, isLoggined } = useSelector((state) => state.authsReducer);
 
@@ -26,9 +26,22 @@ const useAxios = () => {
         if (url.indexOf('adm') === -1) {
             if (authData == null) {
                 console.log('토큰 정보가 존재하지 않습니다!!!');
-                setError('Token 정보가 존재하지 않습니다');
+                navigate('/login');
+                //setError('Token 정보가 존재하지 않습니다');
                 return;
             }
+            let decodePayload = jwt.decode(authData.accessToken);
+            var exp = new Date(decodePayload.exp * 1000).getTime();
+            var now = new Date().getTime();
+            if (now > exp) {
+                console.log('AccessToken is invalid...');
+                //setError('Token 정보가 만료되었습니다!!!');
+                //alert('Token 정보가 만료되었습니다!!!');
+                localStorage.clear();
+                navigate('/login');
+                return;
+            }
+
             let Authorization = `Bearer ${authData.accessToken}`; // `Bearer ${accessToken}`;
             let site_id = authData.siteId; //siteId;
             // Token 처리

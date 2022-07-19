@@ -10,10 +10,9 @@ import {
     RSocketClient
 } from 'rsocket-core';
 import RSocketWebsocketClient from 'rsocket-websocket-client';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Flowable } from 'rsocket-flowable';
-import { ReactiveSocket } from 'rsocket-types';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 //import WebSocket from 'ws';
 //const WebSocket = require('ws');
 

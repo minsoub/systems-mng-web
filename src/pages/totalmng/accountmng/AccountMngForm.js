@@ -234,7 +234,7 @@ const AccountMngForm = () => {
                             return;
                         }
                         // Data 가공
-                        setOpen(true);
+                        setOpen(false);
                         const requestData = {
                             email: email,
                             name: name,
@@ -267,12 +267,7 @@ const AccountMngForm = () => {
                     <form noValidate onSubmit={handleSubmit}>
                         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
                             <Grid item xs={12} md={7} lg={12}>
-                                <HeaderTitle
-                                    titleNm="계정 관리"
-                                    menuStep01="통합관리 계정관리"
-                                    menuStep02="계정 관리"
-                                    menuStep03="계정 등록"
-                                />
+                                <HeaderTitle titleNm="계정 관리" menuStep01="통합관리" menuStep02="계정 관리" menuStep03="계정 등록" />
 
                                 <MainCard sx={{ mt: 2 }}>
                                     <Grid container spacing={3}>
@@ -321,7 +316,7 @@ const AccountMngForm = () => {
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0, minWidth: 160, maxHeight: 25 }} size="small">
+                                            <FormControl sx={{ m: 0, minWidth: 260, maxHeight: 25 }} size="small">
                                                 <TextField
                                                     id="filled-hidden-label-small"
                                                     type="text"
@@ -344,7 +339,7 @@ const AccountMngForm = () => {
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={4.5}>
-                                            <FormControl sx={{ m: 0, minWidth: 100, maxHeight: 25 }} size="small">
+                                            <FormControl sx={{ m: 0, minWidth: 200, maxHeight: 25 }} size="small">
                                                 <TextField
                                                     id="filled-hidden-label-small"
                                                     type="password"

@@ -1,63 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Paper,
-    IconButton
-} from '@mui/material';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Button, Grid, MenuItem, Paper, Select, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
 import SvgIcon from '@mui/material/SvgIcon';
-import { Input } from 'antd';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import SiteApi from 'apis/site/siteapi';
 import MenuMngApi from 'apis/menu/menumngapi';
 import ProgramApi from 'apis/programs/programapi';
 import RoleApi from 'apis/roles/roleapi';
-import ErrorScreen from 'components/ErrorScreen';
 import CheckBoxTreeItem from 'components/TreeMenu/CheckBoxTreeItem';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem from '@mui/lab/TreeItem';
-
-import MailIcon from '@mui/icons-material/Mail';
-import Label from '@mui/icons-material/Label';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import InfoIcon from '@mui/icons-material/Info';
-import ForumIcon from '@mui/icons-material/Forum';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import menu from 'store/reducers/menu';
-import { check } from 'prettier';
-import HeaderTitle from '../../../components/HeaderTitle';
-import ButtonLayout from '../../../components/Common/ButtonLayout';
-import InputLayout from '../../../components/Common/InputLayout';
-import TopInputLayout from '../../../components/Common/TopInputLayout';
-import cx from 'classnames';
-import DropInput from '../../../components/Common/DropInput';
+import HeaderTitle from 'components/HeaderTitle';
+import ButtonLayout from 'components/Common/ButtonLayout';
+import InputLayout from 'components/Common/InputLayout';
+import TopInputLayout from 'components/Common/TopInputLayout';
+import DropInput from 'components/Common/DropInput';
 
 function MinusSquare(props) {
     return (

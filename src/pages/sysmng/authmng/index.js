@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import {
     OutlinedInput,
     Box,
@@ -23,17 +22,15 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Input } from 'antd';
-import { boolean } from '../../../node_modules/yup/lib/index';
-import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
 import ErrorScreen from 'components/ErrorScreen';
-import HeaderTitle from '../../components/HeaderTitle';
+import HeaderTitle from 'components/HeaderTitle';
 import * as PropTypes from 'prop-types';
-import ButtonLayout from '../../components/Common/ButtonLayout';
-import InputLayout from '../../components/Common/InputLayout';
-import TopInputLayout from '../../components/Common/TopInputLayout';
-import DropInput from '../../components/Common/DropInput';
+import ButtonLayout from 'components/Common/ButtonLayout';
+import InputLayout from 'components/Common/InputLayout';
+import TopInputLayout from 'components/Common/TopInputLayout';
 
 function InputTitle(props) {
     return null;

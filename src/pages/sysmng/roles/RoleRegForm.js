@@ -1,37 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
-import {
-    Alert,
-    AlertTitle,
-    Button,
-    Checkbox,
-    Collapse,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    Grid,
-    MenuItem,
-    Select,
-    Stack,
-    TextField
-} from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, TextField } from '@mui/material';
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import MainCard from 'components/MainCard';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
-import HeaderTitle from '../../components/HeaderTitle';
-import ButtonLayout from '../../components/Common/ButtonLayout';
-import cx from 'classnames';
 import './styles.scss';
-import SearchDate from '../../components/ContentManage/SearchDate';
-import DropInput from '../../components/Common/DropInput';
-import TopInputLayout from '../../components/Common/TopInputLayout';
-import InputLayout from '../../components/Common/InputLayout';
+import SearchDate from 'components/ContentManage/SearchDate';
+import DropInput from 'components/Common/DropInput';
+import TopInputLayout from 'components/Common/TopInputLayout';
+import InputLayout from 'components/Common/InputLayout';
+import HeaderTitle from 'components/HeaderTitle';
+import ButtonLayout from 'components/Common/ButtonLayout';
+import { Select } from 'antd';
 
 const RoleRegForm = () => {
     let isSubmitting = false;
@@ -515,6 +498,41 @@ const RoleRegForm = () => {
                                         </Button>
                                     </ButtonLayout>
                                 </div>
+
+                                <ButtonLayout buttonName="rightButton">
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                    >
+                                        저장하기
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isDisabled}
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={deleteClick}
+                                    >
+                                        삭제
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={listClick}
+                                    >
+                                        리스트
+                                    </Button>
+                                </ButtonLayout>
 
                                 {errorMessage ? (
                                     <MainCard sx={{ mt: 3 }} content={false}>
