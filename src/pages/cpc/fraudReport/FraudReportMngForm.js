@@ -162,7 +162,7 @@ const FraudReportMngForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="사고신고 관리" menuStep01="사이트 운영" menuStep02="사고신고 관리" />
+                <HeaderTitle titleNm="사기신고 관리" menuStep01="사이트 운영" menuStep02="사기신고 관리" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>
