@@ -1,3 +1,5 @@
+@import 'src/styles/index';
+
 .program-list {
     display: flex;
     .buttonLayout {
@@ -7,4 +9,8 @@
 
 .topInputLayout {
     padding: 10px;
+}
+
+.common-grid-layout {
+    @include table();
 }

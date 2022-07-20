@@ -22,29 +22,10 @@
 .menuButton {
     margin-top: 2rem;
 }
-.layout-table {
-    margin-top: 3rem;
-    th {
-        text-align: left;
-        width: 150px;
-        font-weight: 500;
-        padding-left: 2rem;
-    }
-    tr {
-        td {
-            width: 40%;
-            padding: 15px;
-            input {
-                width: 90%;
-            }
-        }
-    }
+.common-grid-layout {
+    @include table();
 }
 
 .css-7mgabj-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
     width: 100%;
-}
-
-.common-grid-layout {
-    @include table();
 }

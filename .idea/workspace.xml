@@ -6,54 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="메뉴등록 작업 완료">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataGrid/CheckBoxDataGrid/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataGrid/CheckBoxDataGrid/style.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataGrid/DefaultDataGrid/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataGrid/DefaultDataGrid/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/board/BoardMngRegForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/board/BoardMngRegForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/board/ReactTags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/board/ReactTags.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/BlockChainNewsMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/BlockChainNewsMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/BlockChainNewsMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/BlockChainNewsMngForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/CampaignMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/CampaignMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/CampaignMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/CampaignMngForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DamageCaseMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DamageCaseMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DamageCaseMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DamageCaseMngForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetBasicMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetBasicMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetBasicMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetBasicMngForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetTrendMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetTrendMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetTrendMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetTrendMngForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/InsightColumnMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/InsightColumnMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/InsightColumnMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/InsightColumnMngForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/NoticeMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/NoticeMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/NoticeMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/NoticeMngForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/fraudReport/FraudReportMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/fraudReport/FraudReportMngForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/fraudReport/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/fraudReport/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/LegalCounselingMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/LegalCounselingMngForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/main/contents/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/main/contents/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/faq/categorycontents.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/faq/categorycontents.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/faq/categorylist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/faq/categorylist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/faq/faqlist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/faq/faqlist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/faq/faqreg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/faq/faqreg.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/faq/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/faq/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/line/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/line/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/projects/detail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/projects/detail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/projects/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/projects/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/servicelogs/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/servicelogs/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/state/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/state/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/auth/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/log/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/log/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/menu/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/menu/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/operator/menu/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/menu/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/profile/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/profile/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/account/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/account/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/authmng/AuthMngReg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/authmng/AuthMngReg.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/authmng/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/authmng/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/menumng/MenuMappingForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/menumng/MenuMappingForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/roles/RoleMappingForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/roles/RoleMappingForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/roles/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/roles/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/site/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/site/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/totalmng/accountmng/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/totalmng/accountmng/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/base/_global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_global.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/base/_mixin.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_mixin.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/menumng/MenuRegForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/menumng/MenuRegForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/menumng/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/menumng/styles.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,13 +127,7 @@
       <workItem from="1658228213882" duration="404000" />
       <workItem from="1658235407558" duration="4445000" />
       <workItem from="1658239874130" duration="7032000" />
-    </task>
-    <task id="LOCAL-00045" summary="메인 관리 페이지 작업 완료">
-      <created>1657694754353</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1657694754353</updated>
+      <workItem from="1658286574720" duration="1020000" />
     </task>
     <task id="LOCAL-00046" summary="메인 관리 페이지 작업 완료">
       <created>1657695289271</created>
@@ -516,7 +465,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658242703417</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="메뉴등록 작업 완료">
+      <created>1658286689969</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1658286689969</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

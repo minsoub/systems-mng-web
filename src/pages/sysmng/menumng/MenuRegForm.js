@@ -1,64 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Paper,
-    IconButton,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow
-} from '@mui/material';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Select, Stack, TextField } from '@mui/material';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
 import SvgIcon from '@mui/material/SvgIcon';
-import { Input } from 'antd';
-import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
-import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import SiteApi from 'apis/site/siteapi';
 import MenuMngApi from 'apis/menu/menumngapi';
-import ErrorScreen from 'components/ErrorScreen';
 import StyledTtreeItem from 'components/TreeMenu/StyledTreeItem';
 import TreeView from '@mui/lab/TreeView';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem from '@mui/lab/TreeItem';
-
-import MailIcon from '@mui/icons-material/Mail';
-import Label from '@mui/icons-material/Label';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import InfoIcon from '@mui/icons-material/Info';
-import ForumIcon from '@mui/icons-material/Forum';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import menu from 'store/reducers/menu';
 import HeaderTitle from 'components/HeaderTitle';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
+import './styles.scss';
 
 function MinusSquare(props) {
     return (
@@ -593,6 +547,7 @@ const MenuRegForm = () => {
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="메뉴 등록" menuStep01="통합시스템 관리" menuStep02="메뉴 관리" menuStep03="메뉴 등록" />
+
                 <MainCard>
                     <TopInputLayout>
                         <InputLayout>
@@ -630,65 +585,54 @@ const MenuRegForm = () => {
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item md={3}>
+
+                <Grid xs={12} container spacing={2}>
+                    <Grid item xs={4}>
                         <MainCard sx={{ mt: 2 }} content={false}>
-                            <Grid container spacing={0} sx={{ mt: 1 }}>
-                                <TreeView
-                                    aria-label="controlled"
-                                    //defaultExpanded={expanded}
-                                    defaultCollapseIcon={<MinusSquare />}
-                                    defaultExpandIcon={<PlusSquare />}
-                                    defaultEndIcon={<CloseSquare />}
-                                    sx={{ height: 700, flexGrow: 1, overflowY: 'auto' }}
-                                    //expanded={expanded}
-                                    //selected={selected}
-                                    onNodeToggle={handleToggle}
-                                    //onNodeSelect={handleSelect}
-                                >
-                                    {renderTreeItem(menudata)}
-                                </TreeView>
-                            </Grid>
+                            <TreeView
+                                aria-label="controlled"
+                                //defaultExpanded={expanded}
+                                defaultCollapseIcon={<MinusSquare />}
+                                defaultExpandIcon={<PlusSquare />}
+                                defaultEndIcon={<CloseSquare />}
+                                sx={{ height: 620, flexGrow: 1, overflowY: 'auto' }}
+                                //expanded={expanded}
+                                //selected={selected}
+                                onNodeToggle={handleToggle}
+                                //onNodeSelect={handleSelect}
+                            >
+                                {renderTreeItem(menudata)}
+                            </TreeView>
                         </MainCard>
                     </Grid>
-                    <Grid item md={8.8}>
-                        <Stack spacing={2}>
-                            <MainCard sx={{ mt: 2, height: 710 }} content={false}>
-                                <Grid container spacing={0} sx={{ mt: 4 }}>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={1.5}>
-                                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                            <Stack spacing={0}>메뉴 ID</Stack>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={4}>
-                                        <Stack spacing={4}>
-                                            <FormControl sx={{ m: 0, maxWidth: 220, maxHeight: 30 }} size="small">
-                                                <TextField
-                                                    id="filled-hidden-label-small"
-                                                    type="text"
-                                                    size="small"
-                                                    value={id}
-                                                    name="id"
-                                                    inputProps={{ readOnly: true }}
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                    placeholder="신규 등록시 자동입력"
-                                                    fullWidth
-                                                />
-                                            </FormControl>
-                                        </Stack>
-                                    </Grid>
-                                    <Grid item xs={8} sm={1.5}>
-                                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                            <Stack spacing={0}>메뉴명</Stack>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={4}>
+
+                    <Grid item xs={8}>
+                        <div className="common-grid-layout">
+                            <table>
+                                <tr>
+                                    <th className={'tb--title'}>메뉴 ID</th>
+                                    <td>
                                         <TextField
                                             id="filled-hidden-label-small"
                                             type="text"
-                                            size="small"
+                                            size="medium"
+                                            value={id}
+                                            name="id"
+                                            inputProps={{ readOnly: true }}
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            placeholder="신규 등록시 자동입력"
+                                            fullWidth
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className={'tb--title'}>메뉴명</th>
+                                    <td>
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="text"
+                                            size="medium"
                                             value={name}
                                             name="name"
                                             onBlur={handleBlur}
@@ -696,44 +640,32 @@ const MenuRegForm = () => {
                                             placeholder="Input the name"
                                             fullWidth
                                         />
-                                    </Grid>
-                                </Grid>
-
-                                <Grid container spacing={0} sx={{ mt: 1 }}>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={1.5}>
-                                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                            <Stack spacing={0}>상위 메뉴 ID</Stack>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={4}>
-                                        <Stack spacing={4}>
-                                            <FormControl sx={{ m: 0, maxWidth: 220, maxHeight: 30 }} size="small">
-                                                <TextField
-                                                    id="filled-hidden-label-small"
-                                                    type="text"
-                                                    size="small"
-                                                    value={parents_menu_id}
-                                                    name="parents_menu_id"
-                                                    inputProps={{ readOnly: true }}
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                    placeholder="선택시 자동입력"
-                                                    fullWidth
-                                                />
-                                            </FormControl>
-                                        </Stack>
-                                    </Grid>
-                                    <Grid item xs={8} sm={1.5}>
-                                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                            <Stack spacing={0}>상위 메뉴명</Stack>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={2.5}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className={'tb--title'}>상위 메뉴 ID</th>
+                                    <td>
                                         <TextField
                                             id="filled-hidden-label-small"
                                             type="text"
-                                            size="small"
+                                            size="medium"
+                                            value={parents_menu_id}
+                                            name="parents_menu_id"
+                                            inputProps={{ readOnly: true }}
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            placeholder="선택시 자동입력"
+                                            fullWidth
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className={'tb--title'}>상위 메뉴명</th>
+                                    <td>
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="text"
+                                            size="medium"
                                             value={parents_menu_name}
                                             name="parents_menu_name"
                                             inputProps={{ readOnly: true }}
@@ -742,54 +674,28 @@ const MenuRegForm = () => {
                                             placeholder="선택시 자동입력"
                                             fullWidth
                                         />
-                                    </Grid>
-                                    {/* <Grid item xs={8} sx={{ mt: 0 }} sm={2}>
-                                        <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                            <Button
-                                                disableElevation
-                                                size="small"
-                                                type="button"
-                                                variant="contained"
-                                                color="secondary"
-                                                onClick={menuPopupSearch}
-                                            >
-                                                검색
-                                            </Button>
-                                        </FormControl>
-                                    </Grid> */}
-                                </Grid>
-
-                                <Grid container spacing={0} sx={{ mt: 1 }}>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={1.5}>
-                                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                            <Stack spacing={0}>정렬 순서</Stack>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={4}>
-                                        <Stack spacing={4}>
-                                            <FormControl sx={{ m: 0, maxWidth: 50, maxHeight: 30 }} size="small">
-                                                <TextField
-                                                    id="filled-hidden-label-small"
-                                                    type="text"
-                                                    size="small"
-                                                    value={order}
-                                                    name="order"
-                                                    inputProps={{ readOnly: false }}
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                    placeholder="순서 입력"
-                                                    fullWidth
-                                                />
-                                            </FormControl>
-                                        </Stack>
-                                    </Grid>
-                                    <Grid item xs={8} sm={1.5}>
-                                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                            <Stack spacing={0}>사용 여부</Stack>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={4}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className={'tb--title'}>정렬 순서</th>
+                                    <td>
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="text"
+                                            size="medium"
+                                            value={order}
+                                            name="order"
+                                            inputProps={{ readOnly: false }}
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            placeholder="순서 입력"
+                                            fullWidth
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className={'tb--title'}>사용 여부</th>
+                                    <td>
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
@@ -802,59 +708,37 @@ const MenuRegForm = () => {
                                             }
                                             label="사용함"
                                         />
-                                    </Grid>
-                                </Grid>
-
-                                <Grid container spacing={0} sx={{ mt: 1 }}>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={1.5}>
-                                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                            <Stack spacing={0}>메뉴 URL</Stack>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={8}>
-                                        <Stack spacing={4}>
-                                            <FormControl sx={{ m: 0, maxWidth: 450, maxHeight: 30 }} size="small">
-                                                <TextField
-                                                    id="filled-hidden-label-small"
-                                                    type="text"
-                                                    size="small"
-                                                    value={url}
-                                                    name="url"
-                                                    inputProps={{ readOnly: false }}
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                    placeholder="Menu URL 입력"
-                                                    fullWidth
-                                                />
-                                            </FormControl>
-                                        </Stack>
-                                    </Grid>
-                                </Grid>
-
-                                <Grid container spacing={0} sx={{ mt: 1 }}>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={1.5}>
-                                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                            <Stack spacing={0}>메뉴 타입</Stack>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={4}>
-                                        <Stack spacing={4}>
-                                            <FormControl sx={{ m: 0, maxWidth: 160 }} size="small">
-                                                <Select name="type" label="메뉴 타입" value={type} onChange={handleChange}>
-                                                    <MenuItem value="ITEM">ITEM</MenuItem>
-                                                    <MenuItem value="GROUP">GROUP</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Stack>
-                                    </Grid>
-                                    <Grid item xs={8} sm={1.5}>
-                                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                            <Stack spacing={0}>Target</Stack>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={4}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className={'tb--title'}>메뉴 URL</th>
+                                    <td>
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="text"
+                                            size="medium"
+                                            value={url}
+                                            name="url"
+                                            inputProps={{ readOnly: false }}
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            placeholder="Menu URL 입력"
+                                            fullWidth
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className={'tb--title'}>메뉴 타입</th>
+                                    <td>
+                                        <Select name="type" label="메뉴 타입" value={type} onChange={handleChange}>
+                                            <MenuItem value="ITEM">ITEM</MenuItem>
+                                            <MenuItem value="GROUP">GROUP</MenuItem>
+                                        </Select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className={'tb--title'}>Target</th>
+                                    <td>
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
@@ -867,32 +751,20 @@ const MenuRegForm = () => {
                                             }
                                             label="사용함"
                                         />
-                                    </Grid>
-                                </Grid>
-
-                                <Grid container spacing={0} sx={{ mt: 1 }}>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={1.5}>
-                                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                            <Stack spacing={0}>메뉴 아이콘</Stack>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={4}>
-                                        <Stack spacing={4}>
-                                            <FormControl sx={{ m: 0, maxWidth: 160 }} size="small">
-                                                <Select name="icon" label="메뉴 아이콘" value={icon} onChange={handleChange}>
-                                                    <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
-                                                    <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Stack>
-                                    </Grid>
-                                    <Grid item xs={8} sm={1.5}>
-                                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                            <Stack spacing={0}>External Link</Stack>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={4}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className={'tb--title'}>메뉴 아이콘</th>
+                                    <td>
+                                        <Select name="icon" label="메뉴 아이콘" value={icon} onChange={handleChange}>
+                                            <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
+                                            <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
+                                        </Select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className={'tb--title'}>External Link</th>
+                                    <td>
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
@@ -905,37 +777,27 @@ const MenuRegForm = () => {
                                             }
                                             label="외부링크 사용함"
                                         />
-                                    </Grid>
-                                </Grid>
-
-                                <Grid container spacing={0} sx={{ mt: 1 }}>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={1.5}>
-                                        <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                            <Stack spacing={0}>비고</Stack>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={8}>
-                                        <Stack spacing={4}>
-                                            <FormControl sx={{ m: 0, maxWidth: 450, maxHeight: 30 }} size="small">
-                                                <TextField
-                                                    id="filled-hidden-label-small"
-                                                    type="text"
-                                                    size="small"
-                                                    value={description}
-                                                    name="description"
-                                                    inputProps={{ readOnly: false }}
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                    placeholder="비고 입력"
-                                                    fullWidth
-                                                />
-                                            </FormControl>
-                                        </Stack>
-                                    </Grid>
-                                </Grid>
-                            </MainCard>
-                        </Stack>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className={'tb--title'}>비고</th>
+                                    <td>
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="text"
+                                            size="medium"
+                                            value={description}
+                                            name="description"
+                                            inputProps={{ readOnly: false }}
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            placeholder="비고 입력"
+                                            fullWidth
+                                        />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </Grid>
                 </Grid>
             </Grid>
