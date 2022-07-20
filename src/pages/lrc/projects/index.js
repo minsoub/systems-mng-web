@@ -189,8 +189,8 @@ const ProjectsPage = () => {
     useEffect(() => {
         // setStartDate(moment().format('YYYY-MM-DD'));
         // setEndDate(moment().format('YYYY-MM-DD'));
-        //setDateFromToSet(3);
-        setPeriod(3); // default value
+        setDateFromToSet('3');
+        setPeriod('3'); // default value
         statusSearch(); // 상태 값 모두 조회
         console.log(new Date());
     }, []);
