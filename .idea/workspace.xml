@@ -4,25 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="계열 관리 페이지 작업 완료">
+    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="페이지 레이아웃 동일하게 적용">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ContentManage/SearchDate/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ContentManage/SearchDate/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataGrid/CheckBoxDataGrid/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataGrid/CheckBoxDataGrid/style.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/BlockChainNewsMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/BlockChainNewsMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/CampaignMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/CampaignMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetBasicMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetBasicMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetTrendMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetTrendMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/NoticeMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/NoticeMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/fraudReport/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/fraudReport/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/auth/SiteAuthMngReg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/auth/SiteAuthMngReg.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/auth/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/menu/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/menu/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/authmng/AuthMngReg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/authmng/AuthMngReg.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/authmng/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/authmng/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/programs/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/programs/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/BoardList.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/BoardList.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/styles/base/_global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_global.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/base/_mixin.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_mixin.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +64,7 @@
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/mac/Documents/workspace/systems-mng-web/node_modules/prettier&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;
+    &quot;ts.external.directory.path&quot;: &quot;/Users/mac/Documents/workspace/systems-mng-web/node_modules/typescript/lib&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -144,14 +129,8 @@
       <workItem from="1658286574720" duration="2811000" />
       <workItem from="1658292788463" duration="1090000" />
       <workItem from="1658296940352" duration="3967000" />
-      <workItem from="1658304535402" duration="3581000" />
-    </task>
-    <task id="LOCAL-00050" summary="사이트관리 &gt; 사용자 접근관리 페이지 작업 완료">
-      <created>1657767377655</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1657767377657</updated>
+      <workItem from="1658304535402" duration="4036000" />
+      <workItem from="1658308608101" duration="701000" />
     </task>
     <task id="LOCAL-00051" summary="사이트 운영 &gt; FAQ 관리 &gt; 콘텐츠 관리 &#10;작업 완료">
       <created>1657769162816</created>
@@ -489,7 +468,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658303894087</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="페이지 레이아웃 동일하게 적용">
+      <created>1658308188300</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1658308188301</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -507,7 +493,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="블록체인 뉴스 게시글 &amp; 수정 에디터 페이지 테이블 형식으로 수정" />
     <MESSAGE value="input 스타일 변경" />
     <MESSAGE value="레이아웃 스타일 적용" />
     <MESSAGE value="스타일 reset" />
@@ -532,7 +517,8 @@
     <MESSAGE value="카테고리 관리 페이지 작업 완료" />
     <MESSAGE value="프로그램 연결 페이지 작업 완료" />
     <MESSAGE value="계열 관리 페이지 작업 완료" />
-    <option name="LAST_COMMIT_MESSAGE" value="계열 관리 페이지 작업 완료" />
+    <MESSAGE value="페이지 레이아웃 동일하게 적용" />
+    <option name="LAST_COMMIT_MESSAGE" value="페이지 레이아웃 동일하게 적용" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
