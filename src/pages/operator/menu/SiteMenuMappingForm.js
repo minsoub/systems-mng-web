@@ -474,6 +474,7 @@ const SiteMenuMappingForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="프로그램 연결" menuStep01="사이트 관리" menuStep02="메뉴 관리" menuStep03="프로그램 연결" />
 
+                {/* 상단 */}
                 <MainCard sx={{ mt: 1 }}>
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid container spacing={0} sx={{ mt: 0 }}>
@@ -511,7 +512,9 @@ const SiteMenuMappingForm = () => {
                         </Grid>
                     </Grid>
                 </MainCard>
-                <Grid container alignItems="center" justifyContent="space-between">
+
+                {/* 콘텐츠 영역 */}
+                <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
                     <Grid item md={3}>
                         <MainCard sx={{ mt: 2 }} content={false}>
                             <TreeView
@@ -537,7 +540,7 @@ const SiteMenuMappingForm = () => {
 
                                 <ButtonLayout>
                                     <Button disableElevation size="medium" type="button" variant="contained" onClick={minusRegister}>
-                                        Remove
+                                        삭제
                                     </Button>
                                 </ButtonLayout>
                             </TopInputLayout>
@@ -595,7 +598,7 @@ const SiteMenuMappingForm = () => {
                                             color="secondary"
                                             onClick={plusRegister}
                                         >
-                                            Add
+                                            추가
                                         </Button>
                                     </div>
                                 </TopInputLayout>
@@ -619,7 +622,6 @@ const SiteMenuMappingForm = () => {
                         </MainCard>
                     </Grid>
                 </Grid>
-
             </Grid>
         </Grid>
     );

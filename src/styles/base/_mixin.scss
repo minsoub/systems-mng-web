@@ -44,3 +44,10 @@
 @mixin layoutOutBlank {
     margin: 20px 0;
 }
+
+// 버튼 왼쪽 정렬
+@mixin rightButton {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}

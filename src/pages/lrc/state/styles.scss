@@ -1,10 +1,8 @@
-.stateSubmit {
-    padding: 10px 30px;
+@import 'src/styles/index';
 
-    .title {
-        margin-top: 10px;
-        margin-bottom: 20px;
-    }
+.stateButton {
+    @include layoutOutBlank();
+    @include rightButton();
 }
 
 .css-3jopqd-MuiPaper-root-MuiCard-root {

@@ -1,34 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem
-} from '@mui/material';
+import { Button, FormControl, Grid, MenuItem, OutlinedInput, Select } from '@mui/material';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import SiteApi from 'apis/site/siteapi';
-import { bool } from 'prop-types';
 import ErrorScreen from 'components/ErrorScreen';
 import HeaderTitle from 'components/HeaderTitle';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
+import './styles.scss';
 
 const SiteManagementPage = () => {
     let isSubmitting = false;
@@ -236,7 +217,7 @@ const SiteManagementPage = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <MainCard sx={{ mt: 2 }} content={false}>
+                <MainCard sx={{ mt: 2 }} content={false} className="layout--blank">
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}

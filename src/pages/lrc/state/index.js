@@ -10,6 +10,7 @@ import HeaderTitle from 'components/HeaderTitle';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import cx from 'classnames';
 import './styles.scss';
+import DropInput from '../../../components/Common/DropInput';
 
 function MinusSquare(props) {
     return (
@@ -346,80 +347,64 @@ const StatusRegForm = () => {
                             </Typography>
 
                             <div className="common-grid--layout">
-                                <table>
-                                    <tr>
-                                        <th>상태명</th>
-                                        <td>
-                                            <TextField
-                                                id="filled-hidden-label-small"
-                                                type="text"
-                                                size="small"
-                                                value={name}
-                                                name="name"
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                fullWidth
-                                            />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>분류 위치</th>
-                                        <td>
-                                            <TextField
-                                                id="outlined-multiline-static"
-                                                inputProps={{ readOnly: true }}
-                                                value={parent_code_name}
-                                                name="parent_code_name"
-                                                size="small"
-                                                fullWidth
-                                            />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>정렬 순서</th>
-                                        <td>
-                                            <TextField
-                                                id="filled-hidden-label-small"
-                                                type="number"
-                                                size="small"
-                                                value={order_no}
-                                                name="order_no"
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                fullWidth
-                                            />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>사용 여부</th>
-                                        <td>
-                                            <RadioGroup
-                                                row
-                                                aria-labelledby="demo-row-radio-buttons-group-label"
-                                                name="use_yn"
-                                                value={use_yn}
-                                                onChange={handleChange}
-                                            >
-                                                <FormControlLabel value="true" control={<Radio />} label="사용함" />
-                                                <FormControlLabel value="false" control={<Radio />} label="사용안함" />
-                                            </RadioGroup>
-                                        </td>
-                                    </tr>
-                                </table>
+                                <DropInput title="상태명">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="small"
+                                        value={name}
+                                        name="name"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+                                </DropInput>
+                                <DropInput title="분류 위치">
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        inputProps={{ readOnly: true }}
+                                        value={parent_code_name}
+                                        name="parent_code_name"
+                                        size="small"
+                                        fullWidth
+                                    />
+                                </DropInput>
+                                <DropInput title="정렬 순서">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="number"
+                                        size="small"
+                                        value={order_no}
+                                        name="order_no"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+                                </DropInput>
+                                <DropInput title="사용 여부">
+                                    <RadioGroup
+                                        row
+                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                        name="use_yn"
+                                        value={use_yn}
+                                        onChange={handleChange}
+                                    >
+                                        <FormControlLabel value="true" control={<Radio />} label="사용함" />
+                                        <FormControlLabel value="false" control={<Radio />} label="사용안함" />
+                                    </RadioGroup>
+                                </DropInput>
                             </div>
                         </MainCard>
                     </Grid>
                 </Grid>
 
                 <div className={cx('stateButton')}>
-                    <ButtonLayout buttonName="rightButton">
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                            저장
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={cancelClick}>
-                            취소
-                        </Button>
-                    </ButtonLayout>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                        저장
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={cancelClick}>
+                        취소
+                    </Button>
                 </div>
 
                 {errorMessage && (

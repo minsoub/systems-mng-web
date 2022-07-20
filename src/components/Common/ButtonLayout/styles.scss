@@ -1,3 +1,5 @@
+@import 'src/styles/index';
+
 .buttonLayout {
     display: flex;
     justify-content: end;
@@ -7,17 +9,12 @@
 }
 
 .rightButton {
-    justify-content: end;
-    width: 100%;
-    display: flex;
-    margin-top: 60px;
+    @include rightButton;
 }
 
 .content--right__button {
-    justify-content: end;
-    width: 100%;
-    display: flex;
-    margin-top: 16px;
+    @include rightButton;
+    margin-top: 20px;
 }
 
 .searchPointColor {
