@@ -22,7 +22,6 @@ const SearchDate = ({ start_date, handleBlur, handleChange, end_date, noneChecke
                         onBlur={handleBlur}
                         onChange={handleChange}
                         type="date"
-                        sx={{ minWidth: 250 }}
                     />
                 </FormControl>
                 <span className={cx('center')}> ~ </span>
@@ -34,7 +33,6 @@ const SearchDate = ({ start_date, handleBlur, handleChange, end_date, noneChecke
                         onBlur={handleBlur}
                         onChange={handleChange}
                         type="date"
-                        sx={{ minWidth: 250 }}
                     />
                 </FormControl>
             </div>

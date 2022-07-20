@@ -801,7 +801,8 @@ const SiteAuthMngRegForm = () => {
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
-                <Grid container alignItems="center" justifyContent="space-between">
+
+                <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
                     <Grid item md={3}>
                         <MainCard sx={{ mt: 2 }} content={false}>
                             <TreeView

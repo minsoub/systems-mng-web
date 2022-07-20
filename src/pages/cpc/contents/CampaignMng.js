@@ -328,7 +328,7 @@ const CampaignMng = () => {
                         </Button>
                     </ButtonLayout>
                 </Grid>
-                <MainCard sx={{ mt: 2 }} content={false}>
+                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -340,7 +340,7 @@ const CampaignMng = () => {
                 </MainCard>
 
                 <ButtonLayout buttonName="rightButton">
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={deleteClick}>
                         선택 삭제
                     </Button>
                     <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>

@@ -8,7 +8,7 @@
     text-align: left;
     align-items: center;
     display: inline-grid;
-    font-size: 0.93rem;
+    font-size: 1rem;
 }
 
 // 기간 검색 중 카테고리 부분
@@ -26,21 +26,14 @@
 // 검색 결과 리스트
 .css-3yvf2w-MuiDataGrid-root .MuiDataGrid-columnHeader {
     height: 55px;
+    font-size: 1rem;
 }
 
 .css-25381f-MuiDataGrid-footerContainer {
-    display: flex;
-    -ms-flex-align: center;
-    justify-content: center;
-    align-items: center;
+    @include center;
     border-top: 1px solid rgba(253, 253, 253, 1);
-    margin-bottom: 20px;
+    margin: 20px 0;
     min-height: auto;
-    place-content: center;
-}
-
-.css-3yvf2w-MuiDataGrid-root {
-    font-size: 14px;
 }
 
 // 에러 메시지 박스
@@ -75,21 +68,6 @@
 
 .css-1d9nlt3-MuiPaper-root-MuiCard-root {
     margin-top: 0;
-}
-
-// input, select 레이아웃
-.css-1a7pcy6-MuiInputBase-root-MuiOutlinedInput-root,
-.css-12wp4uq-MuiInputBase-root-MuiOutlinedInput-root,
-.css-1uqqosz-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
-    border-radius: 2px;
-}
-
-// 모든 버튼
-button,
-html [type='button'],
-[type='reset'],
-[type='submit'] {
-    border-radius: 2px;
 }
 
 // 중간에 표부분 title 스타일
@@ -202,27 +180,21 @@ legend,
 .css-1d9nlt3-MuiPaper-root-MuiCard-root,
 .css-xiy5o3-MuiPaper-root-MuiCard-root,
 .css-13mu4hp-MuiPaper-root-MuiCard-root,
-.css-1dxjlht-MuiPaper-root-MuiCard-root {
-    border-radius: 2px !important;
-}
-
-.css-15oiqrv-MuiPaper-root-MuiCard-root {
-    margin-top: 0;
-}
-
-// input, select 레이아웃
+.css-1dxjlht-MuiPaper-root-MuiCard-root,
 .css-1a7pcy6-MuiInputBase-root-MuiOutlinedInput-root,
 .css-12wp4uq-MuiInputBase-root-MuiOutlinedInput-root,
-.css-1uqqosz-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
-    border-radius: 2px !important;
-}
-
-// 모든 버튼
+.css-1uqqosz-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input,
+.css-1nznq0-MuiPaper-root-MuiCard-root,
+.css-7mgabj-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root,
 button,
 html [type='button'],
 [type='reset'],
 [type='submit'] {
     border-radius: 2px !important;
+}
+
+.css-15oiqrv-MuiPaper-root-MuiCard-root {
+    margin-top: 0;
 }
 
 // input 창 height 조절
@@ -234,7 +206,7 @@ html [type='button'],
     align-items: center;
     place-content: center;
     .css-nen11g-MuiStack-root {
-        font-size: 14px;
+        font-size: 1rem;
     }
 }
 
@@ -253,6 +225,12 @@ html [type='button'],
 // 레이아웃 여백
 .layout--out {
     @include layoutOutBlank();
+}
+
+.css-18bz3y-MuiFormControl-root-MuiTextField-root {
+    min-width: 186px;
+    max-width: 250px;
+    width: 186px;
 }
 
 // 1024 해상도에서도 width Full로 차도록

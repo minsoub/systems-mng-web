@@ -364,7 +364,7 @@ const LegalCounselingMng = () => {
                         </Button>
                     </ButtonLayout>
                 </Grid>
-                <MainCard sx={{ mt: 2 }} content={false}>
+                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}

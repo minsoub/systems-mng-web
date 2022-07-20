@@ -4,8 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="프로그램 연결 페이지 작업 완료">
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/line/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/line/index.js" afterDir="false" />
+    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="계열 관리 페이지 작업 완료">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ContentManage/SearchDate/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ContentManage/SearchDate/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DataGrid/CheckBoxDataGrid/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataGrid/CheckBoxDataGrid/style.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/BlockChainNewsMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/BlockChainNewsMng.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/CampaignMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/CampaignMng.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetBasicMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetBasicMng.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetTrendMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetTrendMng.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/NoticeMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/NoticeMng.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/fraudReport/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/fraudReport/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/operator/auth/SiteAuthMngReg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/auth/SiteAuthMngReg.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/operator/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/auth/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/operator/menu/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/menu/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/authmng/AuthMngReg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/authmng/AuthMngReg.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/authmng/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/authmng/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/programs/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/programs/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/base/_global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_global.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/base/_mixin.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_mixin.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,14 +143,8 @@
       <workItem from="1658239874130" duration="7032000" />
       <workItem from="1658286574720" duration="2811000" />
       <workItem from="1658292788463" duration="1090000" />
-      <workItem from="1658296940352" duration="3282000" />
-    </task>
-    <task id="LOCAL-00049" summary="메뉴등록 페이지 작업완료">
-      <created>1657766200292</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1657766200292</updated>
+      <workItem from="1658296940352" duration="3967000" />
+      <workItem from="1658304535402" duration="3581000" />
     </task>
     <task id="LOCAL-00050" summary="사이트관리 &gt; 사용자 접근관리 페이지 작업 완료">
       <created>1657767377655</created>
@@ -471,7 +482,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658303648501</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="계열 관리 페이지 작업 완료">
+      <created>1658303894087</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1658303894087</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -489,7 +507,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="피해사례 게시글 작성란 테이블레이아웃으로 변경" />
     <MESSAGE value="블록체인 뉴스 게시글 &amp; 수정 에디터 페이지 테이블 형식으로 수정" />
     <MESSAGE value="input 스타일 변경" />
     <MESSAGE value="레이아웃 스타일 적용" />
@@ -514,7 +531,8 @@
     <MESSAGE value="메뉴등록 작업 완료" />
     <MESSAGE value="카테고리 관리 페이지 작업 완료" />
     <MESSAGE value="프로그램 연결 페이지 작업 완료" />
-    <option name="LAST_COMMIT_MESSAGE" value="프로그램 연결 페이지 작업 완료" />
+    <MESSAGE value="계열 관리 페이지 작업 완료" />
+    <option name="LAST_COMMIT_MESSAGE" value="계열 관리 페이지 작업 완료" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
