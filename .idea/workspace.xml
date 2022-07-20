@@ -4,19 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="카테고리 관리 페이지 작업 완료">
-      <change afterPath="$PROJECT_DIR$/src/pages/sysmng/site/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Common/ButtonLayout/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/ButtonLayout/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/authentication/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/authentication/auth-forms/AuthLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/auth-forms/AuthLogin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/faq/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/faq/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/state/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/state/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/state/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/state/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/menu/SiteMenuMappingForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/menu/SiteMenuMappingForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/site/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/site/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/base/_global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_global.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/base/_mixin.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_mixin.scss" afterDir="false" />
+    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="프로그램 연결 페이지 작업 완료">
+      <change beforePath="$PROJECT_DIR$/src/pages/lrc/line/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/line/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,14 +126,7 @@
       <workItem from="1658239874130" duration="7032000" />
       <workItem from="1658286574720" duration="2811000" />
       <workItem from="1658292788463" duration="1090000" />
-      <workItem from="1658296940352" duration="2811000" />
-    </task>
-    <task id="LOCAL-00048" summary="프로그램 연결 페이지 작업 완료&#10;boarder 테두리 윗 부분 여백 높이 맞추기">
-      <created>1657763553665</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1657763553665</updated>
+      <workItem from="1658296940352" duration="3282000" />
     </task>
     <task id="LOCAL-00049" summary="메뉴등록 페이지 작업완료">
       <created>1657766200292</created>
@@ -482,7 +464,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658292698960</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="프로그램 연결 페이지 작업 완료">
+      <created>1658303648500</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1658303648501</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -500,7 +489,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="표 그리드 형식 table 형식으로 수정" />
     <MESSAGE value="피해사례 게시글 작성란 테이블레이아웃으로 변경" />
     <MESSAGE value="블록체인 뉴스 게시글 &amp; 수정 에디터 페이지 테이블 형식으로 수정" />
     <MESSAGE value="input 스타일 변경" />
@@ -525,7 +513,8 @@
     <MESSAGE value="상태값 관리 페이지 작업완료" />
     <MESSAGE value="메뉴등록 작업 완료" />
     <MESSAGE value="카테고리 관리 페이지 작업 완료" />
-    <option name="LAST_COMMIT_MESSAGE" value="카테고리 관리 페이지 작업 완료" />
+    <MESSAGE value="프로그램 연결 페이지 작업 완료" />
+    <option name="LAST_COMMIT_MESSAGE" value="프로그램 연결 페이지 작업 완료" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
