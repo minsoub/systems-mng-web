@@ -11,6 +11,7 @@ import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import cx from 'classnames';
 import './styles.scss';
+import DropInput from '../../../components/Common/DropInput';
 
 const FaqCategoryPage = () => {
     let isSubmitting = false;
@@ -257,7 +258,7 @@ const FaqCategoryPage = () => {
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
-                <MainCard sx={{ mt: 2 }} content={false}>
+                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -269,64 +270,58 @@ const FaqCategoryPage = () => {
                     />
                 </MainCard>
                 <MainCard sx={{ mt: 2 }} content={false}>
-                    <table className={cx('layout-table')}>
-                        <tbody>
-                            <tr>
-                                <th>언어 구분</th>
-                                <td>
-                                    <Select name="language" label="언어선택" value={language} onChange={handleChange}>
-                                        <MenuItem value="KO">국문</MenuItem>
-                                        <MenuItem value="EN">영문</MenuItem>
-                                    </Select>
-                                </td>
+                    <div className="leftRight--align">
+                        <DropInput title="언어 구분">
+                            <Select name="language" label="언어선택" value={language} onChange={handleChange}>
+                                <MenuItem value="KO">국문</MenuItem>
+                                <MenuItem value="EN">영문</MenuItem>
+                            </Select>
+                        </DropInput>
 
-                                <th>카테고리명</th>
-                                <td>
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={name}
-                                        name="name"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="Enter the Name"
-                                        fullWidth
-                                    />
-                                </td>
-                            </tr>
+                        <DropInput title="카테고리명">
+                            <TextField
+                                id="filled-hidden-label-small"
+                                type="text"
+                                size="medium"
+                                value={name}
+                                name="name"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                placeholder="Enter the Name"
+                                fullWidth
+                            />
+                        </DropInput>
+                    </div>
 
-                            <tr>
-                                <th>사용여부</th>
-                                <td>
-                                    <RadioGroup
-                                        row
-                                        aria-labelledby="demo-row-radio-buttons-group-label"
-                                        name="use_yn"
-                                        value={use_yn}
-                                        onChange={handleChange}
-                                    >
-                                        <FormControlLabel value="true" control={<Radio />} label="사용함" />
-                                        <FormControlLabel value="false" control={<Radio />} label="사용안함" />
-                                    </RadioGroup>
-                                </td>
-                                <th>노출순서</th>
-                                <td>
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="number"
-                                        size="small"
-                                        value={order_no}
-                                        name="order_no"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="정렬 순서"
-                                        fullWidth
-                                    />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div className="leftRight--align">
+                        <DropInput title="사용여부">
+                            <RadioGroup
+                                row
+                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                name="use_yn"
+                                value={use_yn}
+                                onChange={handleChange}
+                            >
+                                <FormControlLabel value="true" control={<Radio />} label="사용함" />
+                                <FormControlLabel value="false" control={<Radio />} label="사용안함" />
+                            </RadioGroup>
+                        </DropInput>
+
+                        <DropInput title="노출순서">
+                            <TextField
+                                id="filled-hidden-label-small"
+                                type="number"
+                                size="medium"
+                                value={order_no}
+                                name="order_no"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                placeholder="정렬 순서"
+                                fullWidth
+                            />
+                        </DropInput>
+                    </div>
+
                     <ButtonLayout buttonName="rightButton">
                         <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
                             저장

@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="메뉴등록 작업 완료">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/menu/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/menu/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/menumng/MenuRegForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/menumng/MenuRegForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/menumng/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/menumng/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/lrc/faq/categorylist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/faq/categorylist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/lrc/faq/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/faq/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/base/_mixin.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_mixin.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,14 +127,7 @@
       <workItem from="1658228213882" duration="404000" />
       <workItem from="1658235407558" duration="4445000" />
       <workItem from="1658239874130" duration="7032000" />
-      <workItem from="1658286574720" duration="1020000" />
-    </task>
-    <task id="LOCAL-00046" summary="메인 관리 페이지 작업 완료">
-      <created>1657695289271</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1657695289271</updated>
+      <workItem from="1658286574720" duration="2682000" />
     </task>
     <task id="LOCAL-00047" summary="commone components separation">
       <created>1657699512018</created>
@@ -472,7 +465,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658286689969</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="메뉴등록 작업 완료">
+      <created>1658287781896</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1658287781896</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

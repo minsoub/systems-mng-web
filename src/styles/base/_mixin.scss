@@ -26,3 +26,21 @@
         }
     }
 }
+
+// 좌우 배치
+@mixin leftRightAlign($width: 100%) {
+    width: $width;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+// MainCard layout 내부 여백
+@mixin layoutInnerBlank($top: 20px, $left: 20px, $bottom: 20px, $right: 20px) {
+    padding: $top $left $bottom $right;
+}
+
+// MainCard layout 외부 여백
+@mixin layoutOutBlank {
+    margin: 20px 0;
+}
