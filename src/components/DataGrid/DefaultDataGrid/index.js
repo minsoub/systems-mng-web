@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { DataGrid, gridPageCountSelector, gridPageSelector, useGridApiContext, useGridSelector } from '@mui/x-data-grid';
-import { useDemoData } from '@mui/x-data-grid-generator';
-import { styled } from '@mui/material/styles';
+import React, {useEffect, useState} from 'react';
+import {DataGrid, gridPageCountSelector, gridPageSelector, useGridApiContext, useGridSelector} from '@mui/x-data-grid';
+import {styled} from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-import { alpha } from '@mui/material/styles';
 import './style.scss';
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({

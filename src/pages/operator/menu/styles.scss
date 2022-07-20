@@ -46,19 +46,5 @@
 }
 
 .common-grid-layout {
-    width: 100%;
-    table {
-        width: 100%;
-        border: 1px solid red;
-    }
-    th {
-        background-color: $tableTitle;
-        padding: 10px 20px;
-        border: 1px solid $borderLine;
-        width: 30%;
-    }
-    td {
-        border: 1px solid $borderLine;
-        width: 70%;
-    }
+    @include table();
 }

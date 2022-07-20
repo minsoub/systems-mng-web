@@ -32,6 +32,7 @@ const FaqContentsPage = () => {
                                         </Grid>
                                     </Grid>
                                 </Box>
+
                                 <Grid container spacing={0} sx={{ mt: 0 }}>
                                     <Grid item xs={12}>
                                         <TabPanel value={value} index={0}>

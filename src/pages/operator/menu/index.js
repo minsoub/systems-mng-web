@@ -492,39 +492,31 @@ const SiteMenuRegForm = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="메뉴 등록" menuStep01="사이트 관리" menuStep02="메뉴 관리" menuStep03="메뉴 등록" />
+        <>
+            {/* header top */}
+            <HeaderTitle titleNm="메뉴 등록" menuStep01="사이트 관리" menuStep02="메뉴 관리" menuStep03="메뉴 등록" />
 
-                <ButtonLayout buttonName="rightButton">
-                    <div className="menuButton">
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                            저장
-                        </Button>
-                    </div>
-                </ButtonLayout>
+            <Grid xs={12} container spacing={2}>
+                <Grid item xs={4}>
+                    <MainCard>
+                        <TreeView
+                            aria-label="controlled"
+                            //defaultExpanded={expanded}
+                            defaultCollapseIcon={<MinusSquare />}
+                            defaultExpandIcon={<PlusSquare />}
+                            defaultEndIcon={<CloseSquare />}
+                            sx={{ height: 620, flexGrow: 1, overflowY: 'auto' }}
+                            //expanded={expanded}
+                            //selected={selected}
+                            onNodeToggle={handleToggle}
+                            //onNodeSelect={handleSelect}
+                        >
+                            {renderTreeItem(menudata)}
+                        </TreeView>
+                    </MainCard>
+                </Grid>
 
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item md={3}>
-                        <MainCard sx={{ mt: 2 }} content={false}>
-                            <Grid container spacing={0} sx={{ mt: 1 }}>
-                                <TreeView
-                                    aria-label="controlled"
-                                    //defaultExpanded={expanded}
-                                    defaultCollapseIcon={<MinusSquare />}
-                                    defaultExpandIcon={<PlusSquare />}
-                                    defaultEndIcon={<CloseSquare />}
-                                    sx={{ height: 620, flexGrow: 1, overflowY: 'auto' }}
-                                    //expanded={expanded}
-                                    //selected={selected}
-                                    onNodeToggle={handleToggle}
-                                    //onNodeSelect={handleSelect}
-                                >
-                                    {renderTreeItem(menudata)}
-                                </TreeView>
-                            </Grid>
-                        </MainCard>
-                    </Grid>
+                <Grid item xs={8}>
                     <div className="common-grid-layout">
                         <table>
                             <tr>
@@ -543,7 +535,8 @@ const SiteMenuRegForm = () => {
                                         fullWidth
                                     />
                                 </td>
-
+                            </tr>
+                            <tr>
                                 <th className={'tb--title'}>메뉴명</th>
                                 <td>
                                     <TextField
@@ -575,7 +568,8 @@ const SiteMenuRegForm = () => {
                                         fullWidth
                                     />
                                 </td>
-
+                            </tr>
+                            <tr>
                                 <th className={'tb--title'}>상위 메뉴명</th>
                                 <td>
                                     <TextField
@@ -608,7 +602,8 @@ const SiteMenuRegForm = () => {
                                         fullWidth
                                     />
                                 </td>
-
+                            </tr>
+                            <tr>
                                 <th className={'tb--title'}>사용 여부</th>
                                 <td>
                                     <FormControlLabel
@@ -641,7 +636,8 @@ const SiteMenuRegForm = () => {
                                         fullWidth
                                     />
                                 </td>
-
+                            </tr>
+                            <tr>
                                 <th className={'tb--title'}>메뉴 타입</th>
                                 <td>
                                     <Select name="type" label="메뉴 타입" value={type} onChange={handleChange}>
@@ -666,7 +662,8 @@ const SiteMenuRegForm = () => {
                                         label="사용함"
                                     />
                                 </td>
-
+                            </tr>
+                            <tr>
                                 <th className={'tb--title'}>메뉴 아이콘</th>
                                 <td>
                                     <Select name="icon" label="메뉴 아이콘" value={icon} onChange={handleChange}>
@@ -691,7 +688,8 @@ const SiteMenuRegForm = () => {
                                         label="외부링크 사용함"
                                     />
                                 </td>
-
+                            </tr>
+                            <tr>
                                 <th className={'tb--title'}>비고</th>
                                 <td>
                                     <TextField
@@ -711,18 +709,18 @@ const SiteMenuRegForm = () => {
                         </table>
                     </div>
                 </Grid>
-
-                <ButtonLayout buttonName="rightButton">
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                        저장
-                    </Button>
-                </ButtonLayout>
-
-                {errorMessage ? (
-                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
-                ) : null}
             </Grid>
-        </Grid>
+
+            <ButtonLayout buttonName="rightButton">
+                <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                    저장
+                </Button>
+            </ButtonLayout>
+
+            {errorMessage && (
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+            )}
+        </>
     );
 };
 

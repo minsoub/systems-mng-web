@@ -263,9 +263,9 @@ const MainContents = () => {
 
                 <BoardSearchDialog boardMasterId={boardMasterId} open={openPopup} onClose={handleClose} />
 
-                {errorMessage ? (
+                {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
-                ) : null}
+                )}
             </Grid>
         </Grid>
     );

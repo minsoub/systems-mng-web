@@ -34,6 +34,7 @@ import { StyledTableCell, FontTableCell } from 'components/CustomTableCell';
 import ErrorScreen from 'components/ErrorScreen';
 import FaqApis from 'apis/lrc/faq/faqapi';
 import CategoryApis from 'apis/lrc/faq/categoryapi';
+import HeaderTitle from '../../../components/HeaderTitle';
 
 const FaqRegForm = () => {
     let isSubmitting = false;
@@ -218,15 +219,8 @@ const FaqRegForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Typography variant="h3">콘텐츠 관리 등록 ({paramId})</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">사이트 운영 &gt; FAQ 관리 &gt; 콘텐츠 관리</Typography>
-                    </Grid>
-                    <Grid container spacing={2}></Grid>
-                </Grid>
+                <HeaderTitle titleNm="콘텐츠 관리" menuStep01="사이트 운영" menuStep02="FAQ 관리" menuStep03="콘텐츠 관리" />
+
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <Grid container spacing={0} sx={{ mt: 1 }}>
                         <Grid item xs={8} sm={0.2}></Grid>
@@ -350,9 +344,9 @@ const FaqRegForm = () => {
                     </Grid>
                 </MainCard>
 
-                {errorMessage ? (
+                {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
-                ) : null}
+                )}
             </Grid>
         </Grid>
     );

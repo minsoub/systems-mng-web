@@ -326,9 +326,9 @@ const NoticeMng = () => {
                     </ButtonLayout>
                 </Grid>
 
-                {errorMessage ? (
+                {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
-                ) : null}
+                )}
             </Grid>
         </Grid>
     );

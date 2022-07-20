@@ -1,24 +1,4 @@
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Radio,
-    RadioGroup,
-    Tab,
-    Tabs
-} from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const CategoryContents = (props) => {
     const { id, content, count, filterClick } = props;

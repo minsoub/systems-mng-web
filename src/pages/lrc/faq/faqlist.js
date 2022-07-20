@@ -313,14 +313,15 @@ const FaqContent = (props) => {
 
     return (
         <div>
-            <MainCard sx={{ mt: 1, minHeight: 60 }} content={false}>
-                <Grid container spacing={0} sx={{ mt: 2 }}>
+            <MainCard sx={{ mt: 1, minHeight: 60, marginBottom: 2 }} content={false}>
+                <Grid container>
                     {categorys.map((item, index) => (
                         <CategoryContents key={index} id={item.id} content={item.name} count={item.count} filterClick={filterClick} />
                     ))}
                 </Grid>
             </MainCard>
-            <MainCard sx={{ mt: 2 }} content={false}>
+
+            <MainCard xs={8}>
                 <DefaultDataGrid
                     columns={columns}
                     rows={dataGridRows}
@@ -331,6 +332,7 @@ const FaqContent = (props) => {
                     selectionChange={handleSelectionChange}
                 />
             </MainCard>
+
             <TopInputLayout className="bottomBlank">
                 <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={orderClick}>
                     노출 순서 저장
