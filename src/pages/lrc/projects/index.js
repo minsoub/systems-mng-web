@@ -406,6 +406,7 @@ const ProjectsPage = () => {
     // search
     const searchClick = () => {
         console.log('searchClick called...');
+        setDataGridRows([]);
         //roleComboSearch(is_use, type, site_id);
         let business_list = [];
         let network_list = [];
