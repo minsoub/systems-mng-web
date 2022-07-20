@@ -284,7 +284,7 @@ const StatusRegForm = () => {
                     </StyledTtreeItem>
                 );
             } else {
-                console.log(item);
+                //console.log(item);
                 if (item.parent_code === '') {
                     return (
                         <StyledTtreeItem
@@ -350,7 +350,6 @@ const StatusRegForm = () => {
                             <Typography variant="h4" className="title">
                                 상태값 등록
                             </Typography>
-
                             <div className="common-grid--layout">
                                 <table>
                                     <tr>
@@ -362,6 +361,21 @@ const StatusRegForm = () => {
                                                 size="small"
                                                 value={name}
                                                 name="name"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                fullWidth
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>상태명(영문)</th>
+                                        <td>
+                                            <TextField
+                                                id="filled-hidden-label-small"
+                                                type="text"
+                                                size="small"
+                                                value={name_en}
+                                                name="name_en"
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 fullWidth
@@ -413,20 +427,26 @@ const StatusRegForm = () => {
                                     </tr>
                                 </table>
                             </div>
+                            <div className={cx('stateButton')}>
+                                <ButtonLayout buttonName="rightButton">
+                                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                                        저장
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={cancelClick}
+                                    >
+                                        취소
+                                    </Button>
+                                </ButtonLayout>
+                            </div>
                         </MainCard>
                     </Grid>
                 </Grid>
-
-                <div className={cx('stateButton')}>
-                    <ButtonLayout buttonName="rightButton">
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                            저장
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={cancelClick}>
-                            취소
-                        </Button>
-                    </ButtonLayout>
-                </div>
 
                 {errorMessage ? (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
