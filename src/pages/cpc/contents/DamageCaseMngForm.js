@@ -232,36 +232,7 @@ const DamageCaseMngForm = () => {
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
-                                        size="medium"
-                                        value={title}
-                                        name="title"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="제목을 입력하세요."
-                                        fullWidth
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'}>카테고리</th>
-                                <td>
-                                    <Select name="category" label="카테고리" value={category} onChange={handleChange}>
-                                        <MenuItem value="">선택</MenuItem>
-                                        <MenuItem value="피싱">피싱</MenuItem>
-                                        <MenuItem value="폰지">폰지</MenuItem>
-                                        <MenuItem value="스캠">스캠</MenuItem>
-                                        <MenuItem value="도용">도용</MenuItem>
-                                        <MenuItem value="기타">기타</MenuItem>
-                                    </Select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'}>제목</th>
-                                <td>
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="medium"
+                                        size="small"
                                         value={title}
                                         name="title"
                                         onBlur={handleBlur}
