@@ -174,7 +174,7 @@ legend,
 .css-h6vcjs-MuiFormControlLabel-root {
     margin-left: 0;
 }
-// table이나 기본적인 표
+// border-radius 라운딩 픽셀 통일
 .css-15oiqrv-MuiPaper-root-MuiCard-root,
 .css-hjn8fk-MuiPaper-root-MuiCard-root,
 .css-1d9nlt3-MuiPaper-root-MuiCard-root,
@@ -190,6 +190,8 @@ legend,
 .css-4xpfy3-MuiPaper-root-MuiCard-root,
 .css-19coapg-MuiPaper-root-MuiCard-root,
 .css-147vg5q-MuiPaper-root-MuiCard-root,
+.css-djv53s-MuiPaper-root-MuiCard-root,
+.css-14eoleu-MuiPaper-root-MuiCard-root,
 html [type='button'],
 [type='reset'],
 [type='submit'] {
@@ -228,6 +230,7 @@ html [type='button'],
 // 레이아웃 여백
 .layout--out {
     @include layoutOutBlank();
+    align-items: normal;
 }
 
 .layout--inner {
@@ -246,6 +249,10 @@ html [type='button'],
     min-width: 186px;
     max-width: 250px;
     width: 186px;
+}
+
+.inputLayout {
+    display: flex;
 }
 
 // 1024 해상도에서도 width Full로 차도록

@@ -286,7 +286,14 @@ const AuthManagementPage = () => {
                         </InputLayout>
 
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                color="secondary"
+                                type="submit"
+                                variant="contained"
+                                onClick={searchClick}
+                            >
                                 검색
                             </Button>
                         </ButtonLayout>

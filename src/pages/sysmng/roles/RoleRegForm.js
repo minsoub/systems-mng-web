@@ -365,19 +365,21 @@ const RoleRegForm = () => {
                                         <DropInput title="Role ID">
                                             <div className="role--layout">
                                                 <InputLayout>
-                                                    <TextField
-                                                        id="filled-hidden-label-small"
-                                                        type="text"
-                                                        size="medium"
-                                                        value={id}
-                                                        name="id"
-                                                        inputProps={{ readOnly: idStatus }}
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        placeholder="Role ID"
-                                                        fullWidth
-                                                        error={Boolean(touched.id && errors.id)}
-                                                    />
+                                                    <FormControl sx={{ minWidth: 250 }} size="medium">
+                                                        <TextField
+                                                            id="filled-hidden-label-small"
+                                                            type="text"
+                                                            size="medium"
+                                                            value={id}
+                                                            name="id"
+                                                            inputProps={{ readOnly: idStatus }}
+                                                            onBlur={handleBlur}
+                                                            onChange={handleChange}
+                                                            placeholder="Role ID"
+                                                            fullWidth
+                                                            error={Boolean(touched.id && errors.id)}
+                                                        />
+                                                    </FormControl>
                                                 </InputLayout>
                                                 <ButtonLayout>
                                                     <Button

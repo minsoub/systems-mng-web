@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="계정 관리 페이지 작업 완료">
+    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="권한 맵핑 등록 페이지 작업 완료">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/authmng/AuthMngReg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/authmng/AuthMngReg.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/operator/auth/SiteAuthMngReg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/auth/SiteAuthMngReg.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/operator/auth/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/auth/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/operator/menu/SiteMenuMappingForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/menu/SiteMenuMappingForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/site/SiteRegForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/site/SiteRegForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/base/_global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_global.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,28 +138,9 @@
       <workItem from="1658304535402" duration="4036000" />
       <workItem from="1658308608101" duration="11727000" />
       <workItem from="1658381886529" duration="4379000" />
-      <workItem from="1658386831209" duration="1142000" />
-    </task>
-    <task id="LOCAL-00054" summary="QR 코드 OTP 작업 완료">
-      <created>1657782749054</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1657782749054</updated>
-    </task>
-    <task id="LOCAL-00055" summary="QR 코드 OTP 작업 완료">
-      <created>1657783298258</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1657783298258</updated>
-    </task>
-    <task id="LOCAL-00056" summary="작업 완료">
-      <created>1657852990087</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1657852990087</updated>
+      <workItem from="1658386831209" duration="8039000" />
+      <workItem from="1658404650988" duration="2460000" />
+      <workItem from="1658407268505" duration="3099000" />
     </task>
     <task id="LOCAL-00057" summary="사이트 운영 &gt; 콘텐츠 관리 &gt; 피해사례 페이지 작업 완료">
       <created>1657865279404</created>
@@ -479,7 +464,28 @@
       <option name="project" value="LOCAL" />
       <updated>1658386850445</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="계정 관리">
+      <created>1658388254971</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1658388254972</updated>
+    </task>
+    <task id="LOCAL-00104" summary="사용자 맵핑 페이지 작업 완료">
+      <created>1658404502637</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1658404502637</updated>
+    </task>
+    <task id="LOCAL-00105" summary="권한 맵핑 등록 페이지 작업 완료">
+      <created>1658407128544</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1658407128545</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -497,9 +503,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="레이아웃 작업" />
-    <MESSAGE value="파일 경로 이동" />
-    <MESSAGE value="style" />
     <MESSAGE value="error 문구가 있을 때 에러 팝업 박스 컴포넌트 보이도록" />
     <MESSAGE value="color 변수로 convert&#10;table layout 적용" />
     <MESSAGE value="- 주요 컬러 정리&#10;- 서비스 로그 관리 페이지 작업 완료" />
@@ -522,7 +525,10 @@
     <MESSAGE value="border-radius 라운드 2px로 변경" />
     <MESSAGE value="프로그램 등록 페이지 레이아웃 뒤틀림 작업 와료" />
     <MESSAGE value="계정 관리 페이지 작업 완료" />
-    <option name="LAST_COMMIT_MESSAGE" value="계정 관리 페이지 작업 완료" />
+    <MESSAGE value="계정 관리" />
+    <MESSAGE value="사용자 맵핑 페이지 작업 완료" />
+    <MESSAGE value="권한 맵핑 등록 페이지 작업 완료" />
+    <option name="LAST_COMMIT_MESSAGE" value="권한 맵핑 등록 페이지 작업 완료" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
