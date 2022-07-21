@@ -55,6 +55,7 @@ const StatusRegForm = () => {
     const [inputs, setInputs] = useState({
         id: '',
         name: '',
+        name_en: '',
         order_no: '',
         parent_code: '',
         parent_code_name: '',
@@ -108,6 +109,7 @@ const StatusRegForm = () => {
                 break;
             case 'getList':
                 if (resData.data.data && resData.data.data.length > 0) {
+                    console.log(resData.data.data);
                     setStatusData(resData.data.data);
                 } else {
                     setStatusData([]);
@@ -219,10 +221,11 @@ const StatusRegForm = () => {
             } else if (item.children && item.children.length > 0) {
                 item.children.map((sub, index) => {
                     if (sub.id === nodeIds) {
+                        console.log(sub);
                         setInputs({
                             id: sub.id,
                             name: sub.name,
-                            name_en: item.name_en,
+                            name_en: sub.name_en,
                             parent_code: sub.parent_code,
                             parent_code_name: item.name,
                             order_no: sub.order_no,
@@ -359,6 +362,18 @@ const StatusRegForm = () => {
                                         size="small"
                                         value={name}
                                         name="name"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+                                </DropInput>
+                                <DropInput title="상태명(영문)" className="layout--out">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="small"
+                                        value={name_en}
+                                        name="name_en"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         fullWidth
