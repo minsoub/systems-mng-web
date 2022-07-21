@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import './styles.scss';
+import './styles.module.scss';
 import { Button, Grid, TextField, FormControl, Checkbox, FormControlLabel } from '@mui/material';
 import FraudReportApi from 'apis/cpc/fraudReport/fraudreportapi';
 import ErrorScreen from 'components/ErrorScreen';

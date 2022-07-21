@@ -12,7 +12,7 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import moment from 'moment';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import './styles.scss';
+import './styles.module.scss';
 
 function BoardSearchDialog(props) {
     const listColumns = [

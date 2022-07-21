@@ -6,10 +6,6 @@
     margin-bottom: 16px;
 }
 
-// 상태 부분 여백 제거
-.legalLayout {
-    &--category {
-        display: flex;
-        margin-bottom: 0 !important;
-    }
+.legalLayoutCategory {
+    display: flex;
 }

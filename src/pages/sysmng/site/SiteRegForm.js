@@ -26,7 +26,7 @@ import HeaderTitle from '../../../components/HeaderTitle';
 import DropInput from '../../../components/Common/DropInput';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import SearchDate from '../../../components/ContentManage/SearchDate';
-import './styles.scss';
+import './styles.module.scss';
 
 const SiteRegForm = () => {
     let isSubmitting = false;
