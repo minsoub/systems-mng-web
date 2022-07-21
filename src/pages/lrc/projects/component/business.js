@@ -12,8 +12,6 @@ export const BusinessCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
     // checkbox
     const [bChecked, setChecked] = useState(false);
 
-    const allCheckHandler = () => setChecked(isAllChecked);
-
     const checkHandler = (e) => {
         setChecked(!bChecked);
         //handleChange(e);
@@ -26,7 +24,13 @@ export const BusinessCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
         lineSearch('BUSINESS');
     }, []);
 
-    useEffect(() => allCheckHandler(), [isAllChecked]);
+    useEffect(() => {
+        console.log('isAllChecked called...');
+        if (isAllChecked === true) {
+            // clear 수행
+            setChecked(false);
+        }
+    }, [isAllChecked]);
 
     // Transaction Return
     useEffect(() => {

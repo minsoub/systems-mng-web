@@ -364,6 +364,7 @@ const ProjectsPage = () => {
     // Business Checkbox Handler
     const checkedBusinessItemHandler = (id, isChecked) => {
         console.log(id);
+        setIsAllChecked(false);
         if (isChecked) {
             checkedBusinessItems.add(id);
             setCheckedBusinessItems(checkedBusinessItems);
@@ -375,6 +376,7 @@ const ProjectsPage = () => {
     // Network Checkbox Handler
     const checkedNetworkItemHandler = (id, isChecked) => {
         console.log(id);
+        setIsAllChecked(false);
         if (isChecked) {
             checkedNetworkItems.add(id);
             setCheckedNetworkItems(checkedNetworkItems);
@@ -411,10 +413,10 @@ const ProjectsPage = () => {
         let business_list = [];
         let network_list = [];
         Array.from(checkedBusinessItems).map((item, idx) => {
-            business_list.push(item.id);
+            business_list.push(item);
         });
         Array.from(checkedNetworkItems).map((item, idx) => {
-            network_list.push(item.id);
+            network_list.push(item);
         });
         // 검색 조건 세팅
         let data = {
@@ -426,6 +428,7 @@ const ProjectsPage = () => {
             network_list: network_list,
             keyword: keyword
         };
+        console.log(data);
         foundationSearch(data);
         // 검색 조건에 대해서 상태를 저장한다.
         const searchData = {
@@ -451,7 +454,7 @@ const ProjectsPage = () => {
         setCheckedNetworkItems(new Set());
         checkedNetworkItems.clear();
         setKeyword('');
-        setIsAllChecked(false);
+        setIsAllChecked(true);
     };
     // 분류 클릭 시
     const filterClick = (id) => {
@@ -518,7 +521,7 @@ const ProjectsPage = () => {
 
                         <div className="orderLayout">
                             <BusinessCheckboxList checkedItemHandler={checkedBusinessItemHandler} isAllChecked={isAllChecked} />
-                            <NetworkCheckboxList checkedItemHandler={checkedNetworkItemHandler} />
+                            <NetworkCheckboxList checkedItemHandler={checkedNetworkItemHandler} isAllChecked={isAllChecked} />
                         </div>
 
                         <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={keyword} />
@@ -599,7 +602,7 @@ const ProjectsPage = () => {
                         </TableHead>
                         <TableBody>
                             {dataGridRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
-                                <TableRow hover onClick={() => handleClick(item)}>
+                                <TableRow key={index} hover onClick={() => handleClick(item)}>
                                     <TableCell style={{ width: '7%' }} align="center" component="th" scope="row">
                                         {item.project_name}
                                     </TableCell>

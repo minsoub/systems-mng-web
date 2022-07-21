@@ -14,7 +14,7 @@ const FoundationApi = () => {
         var businesslist = '';
         if (data.business_list && data.business_list.length > 0) {
             let found = 0;
-            data.map((item) => {
+            data.business_list.map((item) => {
                 if (found === 1) businesslist += ';';
                 businesslist += item;
                 found++;
@@ -22,7 +22,7 @@ const FoundationApi = () => {
         }
         if (data.network_list && data.network_list.length > 0) {
             let found = 0;
-            data.map((item) => {
+            data.network_list.map((item) => {
                 if (found === 1) networklist += ';';
                 networklist += item;
                 found++;
