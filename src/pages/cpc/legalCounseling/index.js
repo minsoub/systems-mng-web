@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { Button, FormControlLabel, Grid, Radio, RadioGroup, Stack } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
@@ -11,11 +11,10 @@ import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
-import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/LegalCounselingSearch';
-import './styles.scss';
+import styles from './styles.module.scss';
 
 const LegalCounselingMng = () => {
     const columns = [
@@ -334,7 +333,7 @@ const LegalCounselingMng = () => {
                     />
 
                     {/* 카테고리 영역 */}
-                    <div className={cx('legalLayout--category')}>
+                    <div className={styles.legalLayoutCategory}>
                         <Stack spacing={10} className={cx('borderTitle')}>
                             상태
                         </Stack>

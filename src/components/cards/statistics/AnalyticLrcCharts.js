@@ -1,31 +1,14 @@
 import PropTypes from 'prop-types';
-
-// material-ui
-import { Box, Chip, Grid, Stack, Typography, GRid } from '@mui/material';
-
-// project import
+import { Stack } from '@mui/material';
 import MainCard from 'components/MainCard';
-
-// assets
-import { RiseOutlined, FallOutlined } from '@ant-design/icons';
-import PieChart, { Legend, Series, Export, HoverStyle } from 'devextreme-react/pie-chart';
-
-// ==============================|| STATISTICS - ECOMMERCE CARD  ||============================== //
+import PieChart, { Export, HoverStyle, Legend, Series } from 'devextreme-react/pie-chart';
 
 const AnalyticLrcCharts = ({ title, data }) => {
     return (
         <div>
             <MainCard contentSX={{ p: 2.25 }}>
                 <Stack spacing={0.5}>
-                    <PieChart
-                        id="pie"
-                        dataSource={data}
-                        type="doughnut"
-                        palette="Soft Pastel"
-                        title={title}
-                        // onPointClick={this.pointClickHandler}
-                        // onLegendClick={this.legendClickHandler}
-                    >
+                    <PieChart id="pie" dataSource={data} type="doughnut" palette="Soft Pastel" title={title}>
                         <Series argumentField="argument" valueField="value">
                             <HoverStyle color="#ffd700" />
                         </Series>

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { Button, Grid, MenuItem, Select, TextField } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
@@ -8,7 +7,7 @@ import ErrorScreen from 'components/ErrorScreen';
 import ThumbnailAttach from './ThumbnailAttach';
 import JoditEditor from 'jodit-react';
 import { WithContext as ReactTags } from 'react-tag-input';
-import './ReactTags.scss';
+import './ReactTags.module.scss';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';

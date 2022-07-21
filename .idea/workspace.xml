@@ -4,13 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="권한 맵핑 등록 페이지 작업 완료">
+    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="컴포넌트 스타일적용 충돌 예방">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/auth/SiteAuthMngReg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/auth/SiteAuthMngReg.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/auth/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/auth/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/menu/SiteMenuMappingForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/menu/SiteMenuMappingForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Common/ButtonLayout/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/ButtonLayout/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Common/DropInput/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/DropInput/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Common/InputLayout/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/InputLayout/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/cards/statistics/AnalyticLrcCharts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/statistics/AnalyticLrcCharts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/cards/statistics/AnalyticLrcForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/statistics/AnalyticLrcForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/MainLayout/Header/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/layout/MainLayout/Header/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/auth-forms/OtpForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/auth-forms/OtpForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/auth-forms/OtpSimpleForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/auth-forms/OtpSimpleForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/styles.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/board/BoardMngRegForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/board/BoardMngRegForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/board/ReactTags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/board/ReactTags.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/BoardList.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/BoardList.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/BoardList.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/BoardList.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/CampaignMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/CampaignMng.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/CampaignMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/CampaignMngForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DamageCaseMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DamageCaseMngForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetBasicMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetBasicMng.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetBasicMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetBasicMngForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetTrendMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetTrendMng.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetTrendMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/DigitalAssetTrendMngForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/InsightColumnMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/InsightColumnMng.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/InsightColumnMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/InsightColumnMngForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/NoticeMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/NoticeMng.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/NoticeMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/NoticeMngForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/ReactTags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/ReactTags.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/fraudReport/FraudReportMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/fraudReport/FraudReportMngForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/fraudReport/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/fraudReport/styles.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/LegalCounselingMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/LegalCounselingMngForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/legalCounseling/styles.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/main/contents/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/main/contents/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/main/contents/popup/BoardSearchPopup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/main/contents/popup/BoardSearchPopup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/main/contents/popup/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/main/contents/popup/styles.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cpc/main/contents/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/main/contents/styles.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/sysmng/site/SiteRegForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/site/SiteRegForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/base/_global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_global.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/site/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/site/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/site/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/site/styles.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -503,7 +535,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="error 문구가 있을 때 에러 팝업 박스 컴포넌트 보이도록" />
     <MESSAGE value="color 변수로 convert&#10;table layout 적용" />
     <MESSAGE value="- 주요 컬러 정리&#10;- 서비스 로그 관리 페이지 작업 완료" />
     <MESSAGE value="감시로그 조회 페이지 작업 완료" />
@@ -528,7 +559,8 @@
     <MESSAGE value="계정 관리" />
     <MESSAGE value="사용자 맵핑 페이지 작업 완료" />
     <MESSAGE value="권한 맵핑 등록 페이지 작업 완료" />
-    <option name="LAST_COMMIT_MESSAGE" value="권한 맵핑 등록 페이지 작업 완료" />
+    <MESSAGE value="컴포넌트 스타일적용 충돌 예방" />
+    <option name="LAST_COMMIT_MESSAGE" value="컴포넌트 스타일적용 충돌 예방" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

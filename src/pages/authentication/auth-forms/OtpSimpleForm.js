@@ -8,7 +8,7 @@ import { Button, Grid, InputLabel, Stack } from '@mui/material';
 
 import useAuthorized from 'apis/auth/auths';
 import { activeSite, activeEmail, activeToken, activeLogin, activeLoginDate } from 'store/reducers/auth';
-import '../styles.scss';
+import '../styles.module.scss';
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const OtpSimpleForm = ({ result }) => {

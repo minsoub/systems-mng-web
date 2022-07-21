@@ -8,7 +8,7 @@ import { Box } from '../../../../node_modules/@mui/material/index';
 import { activeEmail, activeLogin, activeLoginDate, activeSite, activeToken } from 'store/reducers/auth';
 import OtpInput from 'react-otp-input';
 import { useNavigate } from 'react-router-dom';
-import '../styles.scss';
+import '../styles.module.scss';
 import OtpQrCode from '../../../components/AuthLogin/OtpQrCode';
 
 const OtpForm = ({ result }) => {
