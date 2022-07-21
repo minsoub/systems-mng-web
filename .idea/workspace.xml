@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="계정 관리 페이지 작업 완료">
-      <change afterPath="$PROJECT_DIR$/src/pages/sysmng/account/styles.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/totalmng/accountmng/styles.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/HeaderTitle/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HeaderTitle/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/accessmng/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/accessmng/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/account/AccountRegForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/account/AccountRegForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/roles/RoleMappingForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/roles/RoleMappingForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/roles/RoleRegForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/roles/RoleRegForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/roles/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/roles/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/totalmng/accountmng/AccountMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/totalmng/accountmng/AccountMngForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/authmng/AuthMngReg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/authmng/AuthMngReg.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +23,9 @@
         <option value="SCSS File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/feature/LRC-PRJ" />
   </component>
   <component name="Git.Settings">
     <option name="PUSH_TAGS">
@@ -139,13 +134,7 @@
       <workItem from="1658304535402" duration="4036000" />
       <workItem from="1658308608101" duration="11727000" />
       <workItem from="1658381886529" duration="4379000" />
-    </task>
-    <task id="LOCAL-00053" summary="Role 리스트&#10;프로그램 리스트&#10;권한 리스트&#10;&#10;작업 완료">
-      <created>1657780141679</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1657780141679</updated>
+      <workItem from="1658386831209" duration="1142000" />
     </task>
     <task id="LOCAL-00054" summary="QR 코드 OTP 작업 완료">
       <created>1657782749054</created>
@@ -483,7 +472,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658380834893</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="계정 관리 페이지 작업 완료">
+      <created>1658386850445</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1658386850445</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
