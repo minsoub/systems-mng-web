@@ -509,41 +509,35 @@ const SiteMenuMappingForm = () => {
 
                 {/* 콘텐츠 영역 */}
                 <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
-                    <Grid item md={3}>
+                    <Grid item md={4}>
                         <MainCard sx={{ mt: 2 }} content={false}>
                             <TreeView
                                 aria-label="controlled"
-                                // defaultExpanded={expanded}
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
                                 sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
-                                //expanded={expanded}
-                                //selected={selected}
                                 onNodeToggle={handleToggle}
-                                //onNodeSelect={handleSelect}
                             >
                                 {renderTreeItem(menudata)}
                             </TreeView>
                         </MainCard>
                     </Grid>
-                    <Grid item md={8.8}>
+                    <Grid item md={8}>
                         <MainCard sx={{ mt: 2 }}>
                             <div className="layout--align">
                                 <Item>연결된 프로그램 목록</Item>
 
-                                <ButtonLayout>
-                                    <Button
-                                        disableElevation
-                                        size="medium"
-                                        type="button"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={minusRegister}
-                                    >
-                                        삭제
-                                    </Button>
-                                </ButtonLayout>
+                                <Button
+                                    disableElevation
+                                    size="medium"
+                                    type="button"
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={minusRegister}
+                                >
+                                    삭제
+                                </Button>
                             </div>
 
                             <Grid container spacing={0} sx={{ mt: 1 }}>

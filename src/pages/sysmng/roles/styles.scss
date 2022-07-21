@@ -1,3 +1,5 @@
+@import 'src/styles/index';
+
 .result__list--date {
     display: flex;
     align-items: center;
@@ -22,4 +24,25 @@
 
 .role--layout {
     display: flex;
+}
+
+.role--layout__search {
+    @include leftRightAlign();
+}
+
+.arr--layout {
+    @include center;
+    margin: 1rem 0;
+}
+
+.leftBlank {
+    margin-right: 1rem;
+}
+
+.roleLayout {
+    align-items: flex-end;
+}
+
+.MuiPaper-elevation {
+    cursor: pointer;
 }

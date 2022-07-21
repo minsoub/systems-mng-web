@@ -15,9 +15,9 @@ const AuthFooter = () => {
                 textAlign={matchDownSM ? 'center' : 'inherit'}
             >
                 <Typography variant="subtitle2" color="secondary" component="span">
-                    &copy; @SmartAdmin Dashboard By&nbsp;
+                    &copy; SmartAdmin Dashboard By&nbsp;
                     <Typography component={Link} variant="subtitle2" href="http://bithumbsystems.com" target="_blank" underline="hover">
-                        Bithumbsystem.scom
+                        bithumbsystems.com
                     </Typography>
                 </Typography>
 

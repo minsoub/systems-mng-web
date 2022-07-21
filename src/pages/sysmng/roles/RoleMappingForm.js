@@ -1,40 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 import {
-    OutlinedInput,
-    Box,
     Button,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
     Grid,
+    MenuItem,
+    Paper,
+    Select,
     Stack,
     TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Paper,
-    IconButton,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow
+    Typography
 } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { styled } from '@mui/material/styles';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
-
-import { Input } from 'antd';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import RoleApi from 'apis/roles/roleapi';
@@ -46,6 +28,8 @@ import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import cx from 'classnames';
+import DropInput from '../../../components/Common/DropInput';
+import './styles.scss';
 
 const RoleMappingForm = () => {
     let isSubmitting = false;
@@ -454,7 +438,8 @@ const RoleMappingForm = () => {
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
-                <Grid container alignItems="center" justifyContent="space-between">
+
+                <Grid container alignItems="center" justifyContent="space-between" className="roleLayout">
                     <Grid item md={4}>
                         <MainCard sx={{ mt: 3 }} content={false}>
                             <DefaultDataGrid
@@ -470,11 +455,10 @@ const RoleMappingForm = () => {
                     </Grid>
 
                     <Grid item md={7.8}>
-                        <Grid item xs={8} sm={1.5}>
-                            <Stack spacing={5} sx={{ mt: 2 }} justifyContent="left" alignItems="left">
-                                <Item>등록된 사용자</Item>
-                            </Stack>
-                        </Grid>
+                        <Typography variant="h4" className="title">
+                            등록된 사용자
+                        </Typography>
+
                         <Stack spacing={5}>
                             <MainCard sx={{ mt: 2, height: 330 }} content={false}>
                                 <CheckBoxDataGrid
@@ -488,67 +472,61 @@ const RoleMappingForm = () => {
                                 />
                             </MainCard>
                         </Stack>
-                        <Stack mt={1} spacing={2} direction="row" justifyContent="center" alignItems="center">
-                            <Item>
-                                <ArrowDropUpIcon aria-label=" +" disabled color="primary" onClick={plusRegister}></ArrowDropUpIcon>
+
+                        {/* 화살표 */}
+                        <div className="arr--layout">
+                            <Item className="leftBlank">
+                                <ArrowDropUpIcon aria-label="+" disabled color="primary" onClick={plusRegister} />
                             </Item>
+
                             <Item>
-                                <ArrowDropDownIcon aria-label=" +" disabled color="primary" onClick={minusRegister}></ArrowDropDownIcon>
+                                <ArrowDropDownIcon aria-label="-" disabled color="primary" onClick={minusRegister} />
                             </Item>
-                        </Stack>
-                        <Stack spacing={1} sx={{ mt: 2 }}>
-                            <Grid container spacing={3}>
-                                <Grid item xs={8} sm={2}>
-                                    <Stack spacing={5} sx={{ mt: 0 }} justifyContent="left" alignItems="left">
-                                        <Item>사용자 검색</Item>
-                                    </Stack>
-                                </Grid>
-                                <Grid item xs={8} sm={4}>
-                                    <Stack spacing={5}>
-                                        <FormControl sx={{ m: 0, maxWidth: 220 }} size="small">
-                                            <TextField
-                                                id="filled-hidden-label-small"
-                                                type="text"
-                                                size="small"
-                                                value={keyword}
-                                                name="keyword"
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                placeholder="Role ID"
-                                                fullWidth
-                                            />
-                                        </FormControl>
-                                    </Stack>
-                                </Grid>
-                                <Grid item xs={8} sm={2}>
-                                    <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                        <Button
-                                            disableElevation
-                                            size="small"
-                                            type="button"
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={userSearchClick}
-                                        >
-                                            검색
-                                        </Button>
-                                    </FormControl>
-                                </Grid>
-                            </Grid>
-                        </Stack>
-                        <Stack spacing={5}>
-                            <MainCard sx={{ mt: 2, height: 330 }} content={false}>
-                                <CheckBoxDataGrid
-                                    columns={searchColumns}
-                                    rows={dataGridSearchRows}
-                                    handlePageChange={handlePage}
-                                    //handleGridClick={handleClick}
-                                    handleGridDoubleClick={handleDoubleClick}
-                                    selectionChange={handleSelectionSearchChange}
-                                    height={330}
-                                />
-                            </MainCard>
-                        </Stack>
+                        </div>
+
+                        <div className="role--layout__search">
+                            <Typography variant="h4" className="title">
+                                사용자 검색
+                            </Typography>
+
+                            <div className="role--layout">
+                                <DropInput title="Role ID">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="medium"
+                                        value={keyword}
+                                        name="keyword"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+                                </DropInput>
+
+                                <Button
+                                    disableElevation
+                                    size="medium"
+                                    type="button"
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={userSearchClick}
+                                >
+                                    검색
+                                </Button>
+                            </div>
+                        </div>
+
+                        <MainCard sx={{ mt: 2, height: 330 }} content={false}>
+                            <CheckBoxDataGrid
+                                columns={searchColumns}
+                                rows={dataGridSearchRows}
+                                handlePageChange={handlePage}
+                                //handleGridClick={handleClick}
+                                handleGridDoubleClick={handleDoubleClick}
+                                selectionChange={handleSelectionSearchChange}
+                                height={330}
+                            />
+                        </MainCard>
                     </Grid>
                 </Grid>
 

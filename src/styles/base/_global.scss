@@ -190,6 +190,7 @@ legend,
 .css-4xpfy3-MuiPaper-root-MuiCard-root,
 .css-19coapg-MuiPaper-root-MuiCard-root,
 .css-147vg5q-MuiPaper-root-MuiCard-root,
+.css-djv53s-MuiPaper-root-MuiCard-root,
 html [type='button'],
 [type='reset'],
 [type='submit'] {
@@ -228,6 +229,7 @@ html [type='button'],
 // 레이아웃 여백
 .layout--out {
     @include layoutOutBlank();
+    align-items: normal;
 }
 
 .layout--inner {
