@@ -207,7 +207,7 @@ const AccessMngPage = () => {
                         <Grid container spacing={0} sx={{ mt: 0 }}>
                             <TopInputLayout>
                                 <InputLayout>
-                                    <FormControl sx={{ minWidth: 160 }} size="medium" className={cx('layout--blank')}>
+                                    <FormControl sx={{ minWidth: 160 }} size="medium" className="layout--blank">
                                         <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
                                             <MenuItem value="true">사용</MenuItem>
                                             <MenuItem value="false">미사용</MenuItem>

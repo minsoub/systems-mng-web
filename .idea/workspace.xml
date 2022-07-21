@@ -4,26 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="border-radius 라운드 2px로 변경">
+    <list default="true" id="f65c73e4-c01f-4c2a-bd89-05d3d87a5d3e" name="Changes" comment="계정 관리 페이지 작업 완료">
+      <change afterPath="$PROJECT_DIR$/src/pages/sysmng/account/styles.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/totalmng/accountmng/styles.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Common/DropInput/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/DropInput/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Common/DropInput/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/DropInput/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Common/TopInputLayout/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/TopInputLayout/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cpc/contents/InsightColumnMng.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cpc/contents/InsightColumnMng.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/servicelogs/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/servicelogs/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/state/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/state/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/lrc/state/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/lrc/state/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/menu/SiteMenuMappingForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/menu/SiteMenuMappingForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/menu/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/menu/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/operator/menu/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/menu/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/menumng/MenuMappingForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/menumng/MenuMappingForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/menumng/MenuRegForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/menumng/MenuRegForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/menumng/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/menumng/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/programs/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/programs/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HeaderTitle/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HeaderTitle/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/operator/accessmng/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/operator/accessmng/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/account/AccountRegForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/account/AccountRegForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/sysmng/roles/RoleMappingForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/roles/RoleMappingForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/roles/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/roles/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/base/_global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_global.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/base/_mixin.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/base/_mixin.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/roles/RoleRegForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/roles/RoleRegForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/sysmng/roles/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/sysmng/roles/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/totalmng/accountmng/AccountMngForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/totalmng/accountmng/AccountMngForm.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,14 +137,8 @@
       <workItem from="1658292788463" duration="1090000" />
       <workItem from="1658296940352" duration="3967000" />
       <workItem from="1658304535402" duration="4036000" />
-      <workItem from="1658308608101" duration="10569000" />
-    </task>
-    <task id="LOCAL-00052" summary="사이트 운영 &gt; FAQ 관리 &gt; 카테고리 관리&#10;페이지 작업 완료">
-      <created>1657775226505</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1657775226506</updated>
+      <workItem from="1658308608101" duration="11727000" />
+      <workItem from="1658381886529" duration="4379000" />
     </task>
     <task id="LOCAL-00053" summary="Role 리스트&#10;프로그램 리스트&#10;권한 리스트&#10;&#10;작업 완료">
       <created>1657780141679</created>
@@ -491,7 +476,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658321663464</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="프로그램 등록 페이지 레이아웃 뒤틀림 작업 와료">
+      <created>1658380834893</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1658380834893</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,8 +501,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="레이아웃 스타일 적용" />
-    <MESSAGE value="스타일 reset" />
     <MESSAGE value="레이아웃 작업" />
     <MESSAGE value="파일 경로 이동" />
     <MESSAGE value="style" />
@@ -534,7 +524,9 @@
     <MESSAGE value="계열 관리 페이지 작업 완료" />
     <MESSAGE value="페이지 레이아웃 동일하게 적용" />
     <MESSAGE value="border-radius 라운드 2px로 변경" />
-    <option name="LAST_COMMIT_MESSAGE" value="border-radius 라운드 2px로 변경" />
+    <MESSAGE value="프로그램 등록 페이지 레이아웃 뒤틀림 작업 와료" />
+    <MESSAGE value="계정 관리 페이지 작업 완료" />
+    <option name="LAST_COMMIT_MESSAGE" value="계정 관리 페이지 작업 완료" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

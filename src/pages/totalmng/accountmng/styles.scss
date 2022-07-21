@@ -1,0 +1,13 @@
+@import 'src/styles/index';
+
+.layout--aline {
+    display: flex;
+}
+
+.account--blank {
+    @include layoutOutBlank;
+}
+
+.btnBlank {
+    margin-top: 30px;
+}

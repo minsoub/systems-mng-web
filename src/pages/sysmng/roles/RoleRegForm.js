@@ -363,7 +363,7 @@ const RoleRegForm = () => {
                                 <MainCard sx={{ mt: 2 }} className="program__layout">
                                     <Grid container className="program__layout--blank">
                                         <DropInput title="Role ID">
-                                            <TopInputLayout>
+                                            <div className="role--layout">
                                                 <InputLayout>
                                                     <TextField
                                                         id="filled-hidden-label-small"
@@ -391,7 +391,7 @@ const RoleRegForm = () => {
                                                         중복체크
                                                     </Button>
                                                 </ButtonLayout>
-                                            </TopInputLayout>
+                                            </div>
                                         </DropInput>
                                     </Grid>
 

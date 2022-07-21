@@ -1,0 +1,10 @@
+@import 'src/styles/index';
+
+.account--layout {
+    display: flex;
+    @include layoutOutBlank;
+}
+
+.role--blank {
+    margin-top: 20px;
+}

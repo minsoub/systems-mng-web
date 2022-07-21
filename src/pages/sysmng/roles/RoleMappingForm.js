@@ -394,7 +394,7 @@ const RoleMappingForm = () => {
     // 체크된 등록된 사용자를 뺀다.
     const minusRegister = () => {
         if (selectedRegisterRows.length > 0) {
-            selectedRegisterRows.map((id, Index) => {
+            selectedRegisterRows.map((id, index) => {
                 dataGridRegisterRows.map((regData, idx) => {
                     if (id === regData.id) {
                         setDataGridRegisterRows((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
@@ -468,6 +468,7 @@ const RoleMappingForm = () => {
                             />
                         </MainCard>
                     </Grid>
+
                     <Grid item md={7.8}>
                         <Grid item xs={8} sm={1.5}>
                             <Stack spacing={5} sx={{ mt: 2 }} justifyContent="left" alignItems="left">
@@ -519,7 +520,6 @@ const RoleMappingForm = () => {
                                         </FormControl>
                                     </Stack>
                                 </Grid>
-                                <Grid item xs={8} sm={4}></Grid>
                                 <Grid item xs={8} sm={2}>
                                     <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
                                         <Button

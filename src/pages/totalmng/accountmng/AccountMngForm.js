@@ -2,38 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
-    OutlinedInput,
-    Box,
+    Alert,
+    AlertTitle,
     Button,
-    Grid,
-    Stack,
+    Checkbox,
+    Collapse,
+    FormControl,
     FormControlLabel,
     FormHelperText,
-    InputLabel,
-    Checkbox,
-    Select,
-    TextField,
-    FormControl,
-    Alert,
-    Collapse,
-    AlertTitle,
-    Typography,
-    MenuItem
+    Grid,
+    Stack,
+    TextField
 } from '@mui/material';
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
-import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import AccountApis from 'apis/account/accountapis';
 import SiteApi from 'apis/site/siteapi';
-import { DatePicker } from 'antd';
-import ErrorScreen from 'components/ErrorScreen';
 import HeaderTitle from '../../../components/HeaderTitle';
+import DropInput from '../../../components/Common/DropInput';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import './styles.scss';
+import cx from 'classnames';
 
 const AccountMngForm = () => {
     let isSubmitting = false;
@@ -42,13 +35,6 @@ const AccountMngForm = () => {
     const { paramId } = useParams();
     const [responseData, requestError, loading, { accountSearch, accountMngInsert, accountMngDetail, accountMngUpdate }] = AccountApis();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-
-    // 그리드 선택된 row id
-    const [selectedRows, setSeletedRows] = useState([]);
-
-    // User Search Dialog
-    const [openUserSearch, setOpenUserSearch] = useState(false);
-    const [selectedValue, setSelectedValue] = useState([]);
 
     // Alert Dialog
     const [open, setOpen] = useState(false);
@@ -267,193 +253,170 @@ const AccountMngForm = () => {
                     <form noValidate onSubmit={handleSubmit}>
                         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
                             <Grid item xs={12} md={7} lg={12}>
-                                <HeaderTitle titleNm="계정 관리" menuStep01="통합관리" menuStep02="계정 관리" menuStep03="계정 등록" />
+                                <HeaderTitle titleNm="계정 관리" menuStep01="통합 관리" menuStep02="계정 관리" />
 
                                 <MainCard sx={{ mt: 2 }}>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>이메일 주소</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={3}>
-                                            <Stack spacing={3}>
-                                                <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                    <TextField
-                                                        id="filled-hidden-label-small"
-                                                        type="text"
-                                                        size="small"
-                                                        value={email}
-                                                        name="email"
-                                                        inputProps={{ readOnly: emailStatus }}
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        placeholder="Enter Email ID"
-                                                        fullWidth
-                                                        error={Boolean(touched.email && errors.email)}
-                                                    />
-                                                </FormControl>
-                                            </Stack>
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                <Button
-                                                    disableElevation
-                                                    size="small"
-                                                    type="button"
-                                                    disabled={isUpdate}
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    onClick={emailDuplicateCheck}
-                                                >
-                                                    중복체크
-                                                </Button>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>Name</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0, minWidth: 260, maxHeight: 25 }} size="small">
-                                                <TextField
-                                                    id="filled-hidden-label-small"
-                                                    type="text"
-                                                    size="small"
-                                                    value={name}
-                                                    name="name"
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                    placeholder="Input the name"
-                                                    fullWidth
-                                                    error={Boolean(touched.name && errors.name)}
-                                                />
-                                            </FormControl>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}> Password</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={4.5}>
-                                            <FormControl sx={{ m: 0, minWidth: 200, maxHeight: 25 }} size="small">
-                                                <TextField
-                                                    id="filled-hidden-label-small"
-                                                    type="password"
-                                                    size="small"
-                                                    value={password}
-                                                    name="password"
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                    placeholder="Input the password."
-                                                    fullWidth
-                                                    error={Boolean(touched.password && errors.password)}
-                                                />
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>사용여부</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={3}>
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        name="is_use"
-                                                        checked={is_use}
-                                                        value={is_use}
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                    />
-                                                }
-                                                label="사용함"
+                                    <div className="layout--aline">
+                                        <Stack spacing={10} className={cx('borderTitle')}>
+                                            이메일 주소
+                                        </Stack>
+                                        <FormControl sx={{ minWidth: 250 }} size="medium">
+                                            <TextField
+                                                id="filled-hidden-label-small"
+                                                type="text"
+                                                size="medium"
+                                                value={email}
+                                                name="email"
+                                                inputProps={{ readOnly: emailStatus }}
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                placeholder="Enter Email ID"
+                                                error={Boolean(touched.email && errors.email)}
                                             />
-                                        </Grid>
-                                    </Grid>
+                                        </FormControl>
 
-                                    <Stack direction="row" spacing={3}>
-                                        <Button
-                                            disableElevation
-                                            disabled={isSubmitting}
+                                        <ButtonLayout>
+                                            <Button
+                                                disableElevation
+                                                size="medium"
+                                                type="button"
+                                                disabled={isUpdate}
+                                                variant="contained"
+                                                color="secondary"
+                                                onClick={emailDuplicateCheck}
+                                            >
+                                                중복체크
+                                            </Button>
+                                        </ButtonLayout>
+                                    </div>
+
+                                    <DropInput title="이름" className="account--blank">
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="text"
                                             size="small"
-                                            type="submit"
-                                            variant="contained"
-                                            color="primary"
-                                        >
-                                            저장하기
-                                        </Button>
-                                        <Button
-                                            disableElevation
-                                            disabled={isSubmitting}
+                                            value={name}
+                                            name="name"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            placeholder="Input the name"
+                                            fullWidth
+                                            error={Boolean(touched.name && errors.name)}
+                                        />
+                                    </DropInput>
+
+                                    <DropInput title="비밀번호">
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="password"
                                             size="small"
-                                            type="button"
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={newClick}
-                                        >
-                                            신규
-                                        </Button>
-                                        <Button
-                                            disableElevation
-                                            disabled={isSubmitting}
-                                            size="small"
-                                            type="submit"
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={listClick}
-                                        >
-                                            리스트
-                                        </Button>
-                                    </Stack>
-                                    {errors.submit && (
-                                        <Grid item xs={12}>
-                                            <FormHelperText error>{errors.submit}</FormHelperText>
-                                        </Grid>
-                                    )}
-                                </MainCard>
-                                <MainCard sx={{ mt: 3 }} content={false}>
-                                    <Stack>
-                                        {touched.id && errors.id && (
-                                            <FormHelperText error id="standard-weight-helper-text-password-login">
-                                                <FormControl sx={{ m: 2, minHeight: 20 }} size="small">
-                                                    <li>{errors.id}</li>
-                                                </FormControl>
-                                            </FormHelperText>
-                                        )}
-                                        {touched.name && errors.name && (
-                                            <FormHelperText error id="standard-weight-helper-text-password-login">
-                                                <FormControl sx={{ m: 2, minHeight: 20 }} size="small">
-                                                    <li>{errors.name}</li>
-                                                </FormControl>
-                                            </FormHelperText>
-                                        )}
-                                    </Stack>
-                                    <Collapse in={open}>
-                                        <Alert
-                                            severity="error"
-                                            action={
-                                                <IconButton
-                                                    aria-label="close"
-                                                    color="inherit"
-                                                    size="small"
-                                                    onClick={() => {
-                                                        errorClear();
-                                                    }}
-                                                >
-                                                    <CloseIcon fontSize="inherit" />
-                                                </IconButton>
+                                            value={password}
+                                            name="password"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            placeholder="Input the password."
+                                            fullWidth
+                                            error={Boolean(touched.password && errors.password)}
+                                        />
+                                    </DropInput>
+
+                                    <DropInput title="사용여부" className="account--blank">
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    name="is_use"
+                                                    checked={is_use}
+                                                    value={is_use}
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                />
                                             }
-                                            sx={{ mb: 2 }}
-                                        >
-                                            <AlertTitle>{errorTitle}</AlertTitle>
-                                            {errorMessage}
-                                        </Alert>
-                                    </Collapse>
+                                            label="사용함"
+                                        />
+                                    </DropInput>
                                 </MainCard>
+
+                                <ButtonLayout buttonName="rightButton btnBlank">
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                    >
+                                        저장하기
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={newClick}
+                                    >
+                                        신규
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={listClick}
+                                    >
+                                        리스트
+                                    </Button>
+                                </ButtonLayout>
+                                {errors.submit && (
+                                    <Grid item xs={12}>
+                                        <FormHelperText error>{errors.submit}</FormHelperText>
+                                    </Grid>
+                                )}
+
+                                {errors.submit && (
+                                    <MainCard sx={{ mt: 3 }} content={false}>
+                                        <Stack>
+                                            {touched.id && errors.id && (
+                                                <FormHelperText error id="standard-weight-helper-text-password-login">
+                                                    <FormControl sx={{ m: 2, minHeight: 20 }} size="small">
+                                                        <li>{errors.id}</li>
+                                                    </FormControl>
+                                                </FormHelperText>
+                                            )}
+                                            {touched.name && errors.name && (
+                                                <FormHelperText error id="standard-weight-helper-text-password-login">
+                                                    <FormControl sx={{ m: 2, minHeight: 20 }} size="small">
+                                                        <li>{errors.name}</li>
+                                                    </FormControl>
+                                                </FormHelperText>
+                                            )}
+                                        </Stack>
+                                        <Collapse in={open}>
+                                            <Alert
+                                                severity="error"
+                                                action={
+                                                    <IconButton
+                                                        aria-label="close"
+                                                        color="inherit"
+                                                        size="small"
+                                                        onClick={() => {
+                                                            errorClear();
+                                                        }}
+                                                    >
+                                                        <CloseIcon fontSize="inherit" />
+                                                    </IconButton>
+                                                }
+                                                sx={{ mb: 2 }}
+                                            >
+                                                <AlertTitle>{errorTitle}</AlertTitle>
+                                                {errorMessage}
+                                            </Alert>
+                                        </Collapse>
+                                    </MainCard>
+                                )}
                             </Grid>
                         </Grid>
                     </form>
