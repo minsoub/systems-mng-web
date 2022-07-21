@@ -19,6 +19,7 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import InputLayout from '../../../components/Common/InputLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import './styles.scss';
+import DropInput from '../../../components/Common/DropInput';
 
 function MinusSquare(props) {
     return (
@@ -476,41 +477,34 @@ const SiteMenuMappingForm = () => {
 
                 {/* 상단 */}
                 <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <TopInputLayout>
-                                <InputLayout>
-                                    <Stack spacing={10} className={cx('borderTitle')}>
-                                        사이트명
-                                    </Stack>
-                                    <FormControl sx={{ minWidth: 250 }} size="medium">
-                                        <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
-                                            <MenuItem value="">
-                                                <em>Choose a Site Type</em>
+                    <TopInputLayout>
+                        <InputLayout>
+                            <DropInput title="사이트 구분">
+                                <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
+                                    <MenuItem value="">
+                                        <em>Choose a Site Type</em>
+                                    </MenuItem>
+                                    {siteList
+                                        .filter((item) => item.id === siteId)
+                                        .map((item, index) => (
+                                            <MenuItem key={index} value={item.id}>
+                                                {item.name}
                                             </MenuItem>
-                                            {siteList
-                                                .filter((item) => item.id === siteId)
-                                                .map((item, index) => (
-                                                    <MenuItem key={index} value={item.id}>
-                                                        {item.name}
-                                                    </MenuItem>
-                                                ))}
-                                        </Select>
-                                    </FormControl>
+                                        ))}
+                                </Select>
+                            </DropInput>
 
-                                    <FormControlLabel
-                                        control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={handleChange} />}
-                                        label="사용함"
-                                    />
-                                </InputLayout>
-                                <ButtonLayout>
-                                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                                        검색
-                                    </Button>
-                                </ButtonLayout>
-                            </TopInputLayout>
-                        </Grid>
-                    </Grid>
+                            <FormControlLabel
+                                control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={handleChange} />}
+                                label="사용함"
+                            />
+                        </InputLayout>
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                                검색
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
                 </MainCard>
 
                 {/* 콘텐츠 영역 */}
@@ -523,7 +517,7 @@ const SiteMenuMappingForm = () => {
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 640, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
                                 //expanded={expanded}
                                 //selected={selected}
                                 onNodeToggle={handleToggle}
@@ -535,15 +529,22 @@ const SiteMenuMappingForm = () => {
                     </Grid>
                     <Grid item md={8.8}>
                         <MainCard sx={{ mt: 2 }}>
-                            <TopInputLayout>
+                            <div className="layout--align">
                                 <Item>연결된 프로그램 목록</Item>
 
                                 <ButtonLayout>
-                                    <Button disableElevation size="medium" type="button" variant="contained" onClick={minusRegister}>
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={minusRegister}
+                                    >
                                         삭제
                                     </Button>
                                 </ButtonLayout>
-                            </TopInputLayout>
+                            </div>
 
                             <Grid container spacing={0} sx={{ mt: 1 }}>
                                 <Grid item xs={8} sm={12}>
@@ -560,48 +561,43 @@ const SiteMenuMappingForm = () => {
                                     </MainCard>
                                 </Grid>
                             </Grid>
-                            <Grid container spacing={0} sx={{ mt: 2 }}>
-                                <TopInputLayout>
-                                    <Item>프로그램 목록</Item>
+                            <Grid container spacing={0} sx={{ mt: 2 }} className="layout--align">
+                                <Item>프로그램 목록</Item>
 
-                                    <div className="program--list">
-                                        <FormControl sx={{ minWidth: 250 }} size="medium">
-                                            <TextField
-                                                id="filled-hidden-label-small"
-                                                type="text"
-                                                size="medium"
-                                                value={keyword}
-                                                name="keyword"
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                onKeyPress={keyPress}
-                                                placeholder="프로그램명 입력"
-                                                fullWidth
-                                            />
-                                        </FormControl>
-
+                                <div className="program--list">
+                                    <div className="program--list__align">
+                                        <InputLayout>
+                                            <FormControl sx={{ minWidth: 250 }} size="medium">
+                                                <TextField
+                                                    id="filled-hidden-label-small"
+                                                    type="text"
+                                                    size="medium"
+                                                    value={keyword}
+                                                    name="keyword"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    onKeyPress={keyPress}
+                                                    placeholder="프로그램명 입력"
+                                                    fullWidth
+                                                />
+                                            </FormControl>
+                                        </InputLayout>
                                         <Button
                                             disableElevation
                                             size="medium"
                                             type="button"
                                             variant="contained"
                                             onClick={programSearchClick}
-                                            className={cx('layout--blank')}
+                                            className={cx('layout--button--rightBlank')}
+                                            color="secondary"
                                         >
                                             검색
                                         </Button>
-                                        <Button
-                                            disableElevation
-                                            size="medium"
-                                            type="button"
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={plusRegister}
-                                        >
-                                            추가
+                                        <Button disableElevation size="medium" type="button" variant="contained" onClick={plusRegister}>
+                                            등록
                                         </Button>
                                     </div>
-                                </TopInputLayout>
+                                </div>
 
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
                                     <Grid item xs={8} sm={12}>

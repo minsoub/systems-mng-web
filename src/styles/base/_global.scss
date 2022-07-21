@@ -188,7 +188,8 @@ legend,
 .css-7mgabj-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root,
 .css-9x2mm1-MuiPaper-root-MuiCard-root,
 .css-4xpfy3-MuiPaper-root-MuiCard-root,
-button,
+.css-19coapg-MuiPaper-root-MuiCard-root,
+.css-147vg5q-MuiPaper-root-MuiCard-root,
 html [type='button'],
 [type='reset'],
 [type='submit'] {
@@ -227,6 +228,18 @@ html [type='button'],
 // 레이아웃 여백
 .layout--out {
     @include layoutOutBlank();
+}
+
+.layout--inner {
+    @include layoutInnerBlank();
+}
+
+.layout--button {
+    margin-top: 30px;
+}
+
+.layout--button--rightBlank {
+    margin-right: 10px;
 }
 
 .css-18bz3y-MuiFormControl-root-MuiTextField-root {

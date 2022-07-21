@@ -321,7 +321,7 @@ const ServiceLog = () => {
                     </ButtonLayout>
                 </Grid>
 
-                <MainCard sx={{ mt: 1, height: 650 }} content={false}>
+                <MainCard sx={{ mt: 2, height: 650 }} content={false}>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}

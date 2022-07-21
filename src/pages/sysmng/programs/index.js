@@ -286,7 +286,14 @@ const ProgramManagementPage = () => {
                         </InputLayout>
 
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={searchClick}
+                            >
                                 검색
                             </Button>
                             <Button disableElevation size="medium" type="submit" variant="contained" onClick={newClick}>

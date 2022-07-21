@@ -1,8 +1,8 @@
 @import 'src/styles/index';
 
-.program-list {
+.program--list {
     display: flex;
-    .buttonLayout {
+    &__align {
         display: flex;
     }
 }
@@ -10,7 +10,17 @@
 .topInputLayout {
     padding: 10px;
 }
-
+.css-1oukqxz-MuiGrid-root {
+    align-items: normal;
+}
 .common-grid-layout {
-    @include table();
+    @include table($width: 100%, $titleWidth: 25%, $conWidth: 75%);
+    padding-left: 20px;
+    table {
+        width: 100%;
+    }
+}
+
+.layout--align {
+    @include leftRightAlign;
 }

@@ -320,15 +320,15 @@ const StatusRegForm = () => {
 
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item md={3}>
-                        <MainCard sx={{ mt: 2 }} content={false}>
-                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                        <MainCard content={false}>
+                            <Grid container>
                                 <TreeView
                                     aria-label="controlled"
                                     //defaultExpanded={expanded}
                                     defaultCollapseIcon={<MinusSquare />}
                                     defaultExpandIcon={<PlusSquare />}
                                     defaultEndIcon={<CloseSquare />}
-                                    sx={{ height: 610, flexGrow: 1, overflowY: 'auto' }}
+                                    sx={{ height: 600 }}
                                     //expanded={expanded}
                                     //selected={selected}
                                     onNodeToggle={handleToggle}
@@ -341,13 +341,13 @@ const StatusRegForm = () => {
                     </Grid>
 
                     <Grid item md={8.8}>
-                        <MainCard sx={{ height: 620 }} content={false} className="stateSubmit">
+                        <MainCard sx={{ height: 600 }} content={false} className="stateSubmit layout--inner">
                             <Typography variant="h4" className="title">
                                 상태값 등록
                             </Typography>
 
                             <div className="common-grid--layout">
-                                <DropInput title="상태명">
+                                <DropInput title="상태명" className="layout--out">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -369,7 +369,7 @@ const StatusRegForm = () => {
                                         fullWidth
                                     />
                                 </DropInput>
-                                <DropInput title="정렬 순서">
+                                <DropInput title="정렬 순서" className="layout--out">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="number"
@@ -398,13 +398,15 @@ const StatusRegForm = () => {
                     </Grid>
                 </Grid>
 
-                <div className={cx('stateButton')}>
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                        저장
-                    </Button>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={cancelClick}>
-                        취소
-                    </Button>
+                <div className="layout--button">
+                    <ButtonLayout className={cx('stateButton')}>
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                            저장
+                        </Button>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={cancelClick}>
+                            취소
+                        </Button>
+                    </ButtonLayout>
                 </div>
 
                 {errorMessage && (

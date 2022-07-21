@@ -1,10 +1,9 @@
 @import 'src/styles/index';
 
-.stateButton {
-    @include layoutOutBlank();
-    @include rightButton();
-}
-
 .css-3jopqd-MuiPaper-root-MuiCard-root {
     border-radius: 2px !important;
+    margin-bottom: 30px;
+}
+.css-1bc5sqj-MuiTypography-root {
+    padding-bottom: 10px;
 }

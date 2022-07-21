@@ -575,7 +575,14 @@ const MenuRegForm = () => {
                         </InputLayout>
 
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick} color="primary">
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                onClick={searchClick}
+                                color="secondary"
+                            >
                                 검색
                             </Button>
 
@@ -586,20 +593,16 @@ const MenuRegForm = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <Grid xs={12} container spacing={2}>
+                <Grid xs={12} container className="layout--out">
                     <Grid item xs={4}>
                         <MainCard sx={{ mt: 2 }} content={false}>
                             <TreeView
                                 aria-label="controlled"
-                                //defaultExpanded={expanded}
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 620, flexGrow: 1, overflowY: 'auto' }}
-                                //expanded={expanded}
-                                //selected={selected}
+                                sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
                                 onNodeToggle={handleToggle}
-                                //onNodeSelect={handleSelect}
                             >
                                 {renderTreeItem(menudata)}
                             </TreeView>
@@ -730,10 +733,12 @@ const MenuRegForm = () => {
                                 <tr>
                                     <th className={'tb--title'}>메뉴 타입</th>
                                     <td>
-                                        <Select name="type" label="메뉴 타입" value={type} onChange={handleChange}>
-                                            <MenuItem value="ITEM">ITEM</MenuItem>
-                                            <MenuItem value="GROUP">GROUP</MenuItem>
-                                        </Select>
+                                        <FormControl sx={{ minWidth: 250 }} size="medium">
+                                            <Select name="type" label="메뉴 타입" value={type} onChange={handleChange}>
+                                                <MenuItem value="ITEM">ITEM</MenuItem>
+                                                <MenuItem value="GROUP">GROUP</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                     </td>
                                 </tr>
                                 <tr>
@@ -756,10 +761,12 @@ const MenuRegForm = () => {
                                 <tr>
                                     <th className={'tb--title'}>메뉴 아이콘</th>
                                     <td>
-                                        <Select name="icon" label="메뉴 아이콘" value={icon} onChange={handleChange}>
-                                            <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
-                                            <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
-                                        </Select>
+                                        <FormControl sx={{ minWidth: 250 }} size="medium">
+                                            <Select name="icon" label="메뉴 아이콘" value={icon} onChange={handleChange}>
+                                                <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
+                                                <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                     </td>
                                 </tr>
                                 <tr>

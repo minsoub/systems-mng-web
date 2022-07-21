@@ -2,14 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {
-    Button,
-    Grid,
-    Stack,
-    FormControlLabel,
-    Radio,
-    RadioGroup
-} from '@mui/material';
+import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import MainCard from 'components/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
@@ -93,7 +86,9 @@ const InsightColumnMng = () => {
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoardList, deleteBoardList }] = BoardApi();
 
-    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword, reduceCategory } = useSelector((state) => state.cpcInsightColumnSearchReducer);
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword, reduceCategory } = useSelector(
+        (state) => state.cpcInsightColumnSearchReducer
+    );
     const dispatch = useDispatch();
 
     // 그리드 선택된 row id

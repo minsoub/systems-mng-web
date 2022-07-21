@@ -277,7 +277,14 @@ const RoleManagementPage = () => {
                         </InputLayout>
 
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick} color="primary">
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                onClick={searchClick}
+                                color="secondary"
+                            >
                                 검색
                             </Button>
 
@@ -288,7 +295,7 @@ const RoleManagementPage = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <MainCard sx={{ mt: 2 }} content={false}>
+                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}

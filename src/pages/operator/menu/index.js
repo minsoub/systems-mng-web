@@ -506,7 +506,7 @@ const SiteMenuRegForm = () => {
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 620, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
                                 //expanded={expanded}
                                 //selected={selected}
                                 onNodeToggle={handleToggle}

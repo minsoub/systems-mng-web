@@ -475,7 +475,7 @@ const MenuMappingForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="프로그램 연결" menuStep01="통합시스템 관리" menuStep02="메뉴 관리" menuStep03="프로그램 연결" />
 
-                <MainCard>
+                <MainCard sx={{ mt: 1 }}>
                     <TopInputLayout>
                         <InputLayout>
                             <Stack spacing={10} className={cx('borderTitle')}>
@@ -508,7 +508,8 @@ const MenuMappingForm = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <Grid container alignItems="center" justifyContent="space-between">
+                {/* 콘텐츠 영역 */}
+                <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
                     <Grid item md={3}>
                         <MainCard sx={{ mt: 2 }} content={false}>
                             <TreeView
@@ -517,7 +518,7 @@ const MenuMappingForm = () => {
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 640, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
                                 //expanded={expanded}
                                 //selected={selected}
                                 onNodeToggle={handleToggle}
@@ -529,15 +530,22 @@ const MenuMappingForm = () => {
                     </Grid>
                     <Grid item md={8.8}>
                         <MainCard sx={{ mt: 2 }}>
-                            <TopInputLayout>
+                            <div className="layout--align">
                                 <Item>연결된 프로그램 목록</Item>
 
                                 <ButtonLayout>
-                                    <Button disableElevation size="medium" type="button" variant="contained" onClick={minusRegister}>
-                                        Remove
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={minusRegister}
+                                    >
+                                        삭제
                                     </Button>
                                 </ButtonLayout>
-                            </TopInputLayout>
+                            </div>
 
                             <Grid container spacing={0} sx={{ mt: 1 }}>
                                 <Grid item xs={8} sm={12}>
@@ -554,25 +562,27 @@ const MenuMappingForm = () => {
                                     </MainCard>
                                 </Grid>
                             </Grid>
-                            <Grid container spacing={0} sx={{ mt: 2 }}>
-                                <TopInputLayout>
-                                    <Item>프로그램 목록</Item>
+                            <Grid container spacing={0} sx={{ mt: 2 }} className="layout--align">
+                                <Item>프로그램 목록</Item>
 
-                                    <div className="program--list">
-                                        <FormControl sx={{ minWidth: 250 }} size="medium">
-                                            <TextField
-                                                id="filled-hidden-label-small"
-                                                type="text"
-                                                size="medium"
-                                                value={keyword}
-                                                name="keyword"
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                onKeyPress={keyPress}
-                                                placeholder="프로그램명 입력"
-                                                fullWidth
-                                            />
-                                        </FormControl>
+                                <div className="program--list">
+                                    <div className="program--list__align">
+                                        <InputLayout>
+                                            <FormControl sx={{ minWidth: 250 }} size="medium">
+                                                <TextField
+                                                    id="filled-hidden-label-small"
+                                                    type="text"
+                                                    size="medium"
+                                                    value={keyword}
+                                                    name="keyword"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    onKeyPress={keyPress}
+                                                    placeholder="프로그램명 입력"
+                                                    fullWidth
+                                                />
+                                            </FormControl>
+                                        </InputLayout>
 
                                         <Button
                                             disableElevation
@@ -580,7 +590,9 @@ const MenuMappingForm = () => {
                                             type="button"
                                             variant="contained"
                                             onClick={programSearchClick}
-                                            className={cx('layout--blank')}
+                                            className={cx('layout--button--rightBlank')}
+                                            색
+                                            color="secondary"
                                         >
                                             검색
                                         </Button>
@@ -589,14 +601,13 @@ const MenuMappingForm = () => {
                                             size="medium"
                                             type="button"
                                             variant="contained"
-                                            color="secondary"
+                                            color="primary"
                                             onClick={plusRegister}
                                         >
-                                            Add
+                                            등록
                                         </Button>
                                     </div>
-                                </TopInputLayout>
-
+                                </div>
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
                                     <Grid item xs={8} sm={12}>
                                         <MainCard sx={{ mt: 0 }} content={false}>
