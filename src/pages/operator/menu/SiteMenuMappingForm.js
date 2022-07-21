@@ -516,7 +516,7 @@ const SiteMenuMappingForm = () => {
 
                 {/* 콘텐츠 영역 */}
                 <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
-                    <Grid item md={4}>
+                    <Grid item md={3}>
                         <MainCard sx={{ mt: 2 }} content={false}>
                             <TreeView
                                 aria-label="controlled"
@@ -530,7 +530,7 @@ const SiteMenuMappingForm = () => {
                             </TreeView>
                         </MainCard>
                     </Grid>
-                    <Grid item md={8}>
+                    <Grid item md={8.8}>
                         <MainCard sx={{ mt: 2 }}>
                             <div className="layout--align">
                                 <Item>연결된 프로그램 목록</Item>

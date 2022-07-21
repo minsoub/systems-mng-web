@@ -251,6 +251,10 @@ html [type='button'],
     width: 186px;
 }
 
+.inputLayout {
+    display: flex;
+}
+
 // 1024 해상도에서도 width Full로 차도록
 @media (min-width: 1024px) {
     .css-1ol3ns7-MuiGrid-root {

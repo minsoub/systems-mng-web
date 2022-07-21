@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { Button, Grid, MenuItem, Paper, Select, Stack } from '@mui/material';
+import { Button, Grid, MenuItem, Paper, Select } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MainCard from 'components/MainCard';
 import SvgIcon from '@mui/material/SvgIcon';
@@ -21,6 +21,7 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import InputLayout from 'components/Common/InputLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import DropInput from 'components/Common/DropInput';
+import './styles.scss';
 
 function MinusSquare(props) {
     return (
@@ -823,12 +824,12 @@ const SiteAuthMngRegForm = () => {
                         </MainCard>
                     </Grid>
                     <Grid item md={8.8}>
-                        <TopInputLayout>
+                        <div className="layout--align">
                             <Item>Role : {role_name}</Item>
                             <Button disableElevation size="medium" type="button" variant="contained" onClick={programMappingSaveClick}>
                                 저장
                             </Button>
-                        </TopInputLayout>
+                        </div>
 
                         <Grid container spacing={0} sx={{ mt: 1 }}>
                             <Grid item xs={8} sm={12}>
