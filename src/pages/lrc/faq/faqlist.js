@@ -50,9 +50,7 @@ const FaqContent = (props) => {
             headerName: '제목',
             flex: 1,
             headerAlign: 'center',
-            align: 'center',
-            minWidth: 450,
-            maxWidth: 850
+            align: 'center'
         },
         {
             field: 'use_yn',

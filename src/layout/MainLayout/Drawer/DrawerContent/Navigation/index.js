@@ -11,16 +11,20 @@ import SvgIcon from '@mui/material/SvgIcon';
 import NavGroup from './NavGroup';
 import { Box, Typography } from '@mui/material';
 import MenuMngApi from 'apis/menu/menumngapi';
-import { activeSite, activeEmail, activeToken, activeLogin, activeLoginDate } from 'store/reducers/auth';
+import RoleApi from 'apis/roles/roleapi';
+import { activeSite, activeRole, activeEmail, activeToken, activeLogin, activeLoginDate } from 'store/reducers/auth';
 
 export default function FileSystemNavigator(navigation, site) {
     const navgate = useNavigate();
     const dispatch = useDispatch();
     const { siteId } = useSelector((state) => state.auth);
+    const { roleId } = useSelector((state) => state.auth);
     const [menuList, setMenuList] = useState([]);
     //const data = menuapi.findmenus({}).items;
-    const [responseData, requestError, loading, { menumngSearch }] = MenuMngApi();
+    //const [responseData, requestError, loading, { menumngSearch }] = MenuMngApi();
+    const [responseData, requestError, loading, { roleRegisterTreeList }] = RoleApi();
     const [site_id, setSiteId] = useState(siteId);
+    const [role_id, setRoleId] = useState(roleId);
 
     //const data = menumngSearch(site_id, true);
     //  menuapi.findlist(site_id);
@@ -33,6 +37,7 @@ export default function FileSystemNavigator(navigation, site) {
             if (localStorage.hasOwnProperty('authenticated')) {
                 let authData = JSON.parse(localStorage.getItem('authenticated'));
                 dispatch(activeSite({ siteId: authData.siteId }));
+                dispatch(activeRole({ roleId: authData.roleId })); // Role Id
                 dispatch(activeEmail({ email: authData.email }));
                 dispatch(activeToken({ accessToken: authData.accessToken }));
                 dispatch(activeLogin({ isLoggined: authData.isLoggined }));
@@ -41,7 +46,8 @@ export default function FileSystemNavigator(navigation, site) {
                 navgate('/');
             }
         }
-        menumngSearch(site_id, true);
+        if (siteId && roleId) roleRegisterTreeList(roleId, siteId);
+        //menumngSearch(site_id, true);
     }, []);
 
     useEffect(() => {
@@ -62,9 +68,13 @@ export default function FileSystemNavigator(navigation, site) {
         if (siteId) {
             console.log('site => ' + siteId);
             setSiteId(siteId);
-            menumngSearch(siteId, true);
         }
-    }, [siteId]);
+        if (roleId) {
+            setRoleId(roleId);
+            roleRegisterTreeList(roleId, siteId);
+            //menumngSearch(siteId, true);
+        }
+    }, [siteId, roleId]);
 
     useEffect(() => {
         if (!responseData) {
@@ -73,9 +83,9 @@ export default function FileSystemNavigator(navigation, site) {
         console.log(responseData);
         if (responseData.data) {
             console.log(responseData.data);
-            console.log('menuData:', responseData.data.data);
-            setMenuList(responseData.data.data);
-            makeMenuData(responseData.data.data);
+            console.log('menuData:', responseData.data.data.menu_list);
+            setMenuList(responseData.data.data.menu_list);
+            makeMenuData(responseData.data.data.menu_list);
         }
     }, [responseData]);
 
@@ -83,15 +93,19 @@ export default function FileSystemNavigator(navigation, site) {
     const menuData = [];
     const expendMenuId = [];
     const makeMenuData = (items) => {
+        items.filtering;
         items.forEach((item) => {
-            //console.log('>>', item);
-            menuData.push(item);
-            if (item.type === 'group') {
-                expendMenuId.push(item.id);
-            }
+            if (item.visible === true) {
+                //console.log('>>', item);
+                menuData.push(item);
+                if (item.type === 'GROUP') {
+                    expendMenuId.push(item.id);
+                }
 
-            if (item.children && item.children.length) {
-                makeMenuData(item.children);
+                if (item.children && item.child_menu_resources.length) {
+                    //children.length) {
+                    makeMenuData(item.child_menu_resources); // .children);
+                }
             }
         });
     };
@@ -100,7 +114,7 @@ export default function FileSystemNavigator(navigation, site) {
         console.log('handleMenu called....');
         const selectItem = _.find(menuData, { id: nodeId });
         console.log('selectItem:', selectItem);
-        if (selectItem.type === 'item') {
+        if (selectItem.type === 'ITEM') {
             if (selectItem.external) {
                 //window.location.href = selectItem.url;
                 window.open(selectItem.url, '_blank');
@@ -134,15 +148,17 @@ export default function FileSystemNavigator(navigation, site) {
     //console.log(navigation);
     const navGroups = (menus) => {
         const menu = menus.map((item) => {
-            switch (item.type) {
-                case 'GROUP':
-                    return <NavGroup key={item.id} item={item} />;
-                default:
-                    return (
-                        <Typography key={item.id} variant="h6" color="error" align="center">
-                            Fix - Navigation Group
-                        </Typography>
-                    );
+            if (item.visible === true) {
+                switch (item.type) {
+                    case 'GROUP':
+                        return <NavGroup key={item.id} item={item} />;
+                    default:
+                        return (
+                            <Typography key={item.id} variant="h6" color="error" align="center">
+                                Fix - Navigation Group
+                            </Typography>
+                        );
+                }
             }
         });
         return menu;

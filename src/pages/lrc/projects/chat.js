@@ -103,7 +103,7 @@ const Chat = (props) => {
                 let data = {};
                 if (responseData.role === 'ADMIN') {
                     data = {
-                        id: item.id,
+                        id: responseData.id,
                         recevier: 'receiveUser',
                         sender: 'Listing Team',
                         message: responseData.content,
@@ -111,7 +111,7 @@ const Chat = (props) => {
                     };
                 } else {
                     data = {
-                        id: item.id,
+                        id: responseData.id,
                         recevier: 'Listing Team',
                         sender: responseData.email,
                         message: responseData.content,

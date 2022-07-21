@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
-import {Checkbox, FormControl, FormControlLabel} from '@mui/material';
+import { Checkbox, FormControl, FormControlLabel } from '@mui/material';
 import LineApis from 'apis/lrc/line/lineapi';
 
 export const StsCheckbox = ({ checkedItemHandler, isAllChecked, item }) => {
@@ -9,8 +9,6 @@ export const StsCheckbox = ({ checkedItemHandler, isAllChecked, item }) => {
 
     // checkbox
     const [bChecked, setChecked] = useState(false);
-
-    const allCheckHandler = () => setChecked(isAllChecked);
 
     const checkHandler = (e) => {
         setChecked(!bChecked);
@@ -25,8 +23,9 @@ export const StsCheckbox = ({ checkedItemHandler, isAllChecked, item }) => {
     }, []);
 
     useEffect(() => {
-        allCheckHandler();
-        console.log(isAllChecked);
+        if (isAllChecked == true) {
+            setChecked(false);
+        }
     }, [isAllChecked]);
 
     // Transaction Return

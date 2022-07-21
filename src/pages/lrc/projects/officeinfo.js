@@ -401,7 +401,7 @@ const OfficeInfo = (props) => {
                     <Typography variant="h6">{officeInfo.process_name}</Typography>
                 </Grid>
                 <Grid item xs={8} sm={2} sx={{ m: 0 }}>
-                    <FormControl sx={{ m: 0.5, minWidth: 200, minHeight: 30 }} size="small">
+                    <FormControl sx={{ m: 0.5, minWidth: 184, minHeight: 30 }} size="small">
                         <Select name="project_link" label="연결 프로젝트 선택" onChange={handleChange}>
                             <MenuItem value="">
                                 <em>연결 프로젝트 선택</em>

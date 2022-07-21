@@ -41,8 +41,22 @@ const SiteManagementPage = () => {
             align: 'center'
         },
         {
-            field: 'create_date',
-            headerName: '생성날짜',
+            field: 'valid_start_date',
+            headerName: '유효일자(from)',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'valid_end_date',
+            headerName: '유효일자(to)',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'description',
+            headerName: '비고',
             flex: 1,
             headerAlign: 'center',
             align: 'center'

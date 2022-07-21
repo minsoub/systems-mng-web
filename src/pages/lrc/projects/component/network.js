@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './styles.scss';
 
 import { Checkbox, FormControlLabel, Grid, Stack } from '@mui/material';
+import { StsCheckbox } from './StsCheckbox';
 import LineApis from 'apis/lrc/line/lineapi';
 import cx from 'classnames';
 
-export const NetworkCheckboxList = ({ checkedItemHandler }) => {
+export const NetworkCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
     const [responseData, requestError, loading, { lineSearch }] = LineApis();
     const [dataGridRows, setDataGridRows] = useState([]);
 
@@ -22,6 +23,14 @@ export const NetworkCheckboxList = ({ checkedItemHandler }) => {
         // 리스트 가져오기
         lineSearch('NETWORK');
     }, []);
+
+    useEffect(() => {
+        console.log('isAllChecked called...');
+        if (isAllChecked === true) {
+            // clear 수행
+            setChecked(false);
+        }
+    }, [isAllChecked]);
 
     // Transaction Return
     useEffect(() => {
@@ -46,11 +55,12 @@ export const NetworkCheckboxList = ({ checkedItemHandler }) => {
             </Stack>
             <Grid item xs={8} sm={10}>
                 {dataGridRows.map((item, index) => (
-                    <FormControlLabel
+                    <StsCheckbox
                         className="checkedBox--width"
+                        checkedItemHandler={checkedItemHandler}
+                        isAllChecked={isAllChecked}
+                        item={item}
                         key={index}
-                        control={<Checkbox id={item.id} onChange={(e) => checkHandler(e)} />}
-                        label={item.name}
                     />
                 ))}
             </Grid>

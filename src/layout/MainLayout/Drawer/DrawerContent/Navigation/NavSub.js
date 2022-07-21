@@ -89,7 +89,7 @@ const NavSub = ({ item, level }) => {
 
     const isSelected = openItem.findIndex((id) => id === item.id) > -1;
 
-    const navCollapse = item.child_menu?.map((menuItem) => {
+    const navCollapse = item.child_menu_resources?.map((menuItem) => {
         switch (menuItem.type) {
             case 'ITEM':
                 return <NavItem key={menuItem.id} item={menuItem} level={2} />;

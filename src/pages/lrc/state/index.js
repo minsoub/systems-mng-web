@@ -60,7 +60,7 @@ const StatusRegForm = () => {
         parent_code_name: '',
         use_yn: 'true'
     });
-    const { id, name, order_no, parent_code, parent_code_name, use_yn } = inputs;
+    const { id, name, name_en, order_no, parent_code, parent_code_name, use_yn } = inputs;
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -135,6 +135,7 @@ const StatusRegForm = () => {
         setInputs({
             id: '',
             name: '',
+            name_en: '',
             code: '',
             order_no: '',
             parent_code: '',
@@ -166,6 +167,7 @@ const StatusRegForm = () => {
     // 데이터 초기화
     const cancelClick = () => {
         inputClear();
+        setIsUpdate(false);
     };
 
     // 입력 박스 입력 시 호출
@@ -205,6 +207,7 @@ const StatusRegForm = () => {
                 setInputs({
                     id: item.id,
                     name: item.name,
+                    name_en: item.name_en,
                     parent_code: item.parent_code,
                     parent_code_name: '',
                     order_no: item.order_no,
@@ -219,6 +222,7 @@ const StatusRegForm = () => {
                         setInputs({
                             id: sub.id,
                             name: sub.name,
+                            name_en: item.name_en,
                             parent_code: sub.parent_code,
                             parent_code_name: item.name,
                             order_no: sub.order_no,
@@ -247,6 +251,7 @@ const StatusRegForm = () => {
                     setInputs({
                         id: '',
                         name: '',
+                        name_en: '',
                         parent_code: item.id,
                         parent_code_name: item.name,
                         order_no: '1',
@@ -279,7 +284,7 @@ const StatusRegForm = () => {
                     </StyledTtreeItem>
                 );
             } else {
-                console.log(item);
+                //console.log(item);
                 if (item.parent_code === '') {
                     return (
                         <StyledTtreeItem

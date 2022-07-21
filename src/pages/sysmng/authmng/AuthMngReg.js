@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
-import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Paper, Select, Stack } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { Button, Grid, MenuItem, Paper, Select, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MainCard from 'components/MainCard';
 import SvgIcon from '@mui/material/SvgIcon';
@@ -14,11 +14,12 @@ import RoleApi from 'apis/roles/roleapi';
 import ErrorScreen from 'components/ErrorScreen';
 import CheckBoxTreeItem from 'components/TreeMenu/CheckBoxTreeItem';
 import TreeView from '@mui/lab/TreeView';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HeaderTitle from 'components/HeaderTitle';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import './styles.scss';
 import DropInput from 'components/Common/DropInput';
 
 function MinusSquare(props) {
@@ -50,6 +51,7 @@ function CloseSquare(props) {
 
 const AuthMngRegForm = () => {
     const navigate = useNavigate();
+    const { siteId } = useSelector((state) => state.auth);
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
     const [
         responseData,
@@ -65,7 +67,7 @@ const AuthMngRegForm = () => {
         { roleComboSearch, roleRegisterSearch, roleRegisterTreeList, roleMenuSave }
     ] = RoleApi();
 
-    const { siteId, roleType, roleId } = useParams();
+    const { roleType, roleId } = useParams();
 
     const [expanded, setExpanded] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -804,13 +806,16 @@ const AuthMngRegForm = () => {
                             <TreeView
                                 aria-label="controlled"
                                 // defaultExpanded={expanded}
-                                defaultCollapseIcon={<MinusSquare />}
-                                defaultExpandIcon={<PlusSquare />}
-                                defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 620, flexGrow: 1, overflowY: 'auto' }}
+                                defaultCollapseIcon={<ExpandMoreIcon />}
+                                defaultExpandIcon={<ChevronRightIcon />}
+                                //defaultCollapseIcon={<MinusSquare />}
+                                //defaultExpandIcon={<PlusSquare />}
+                                //defaultEndIcon={<CloseSquare />}
+                                sx={{ height: 720, flexGrow: 1, overflowY: 'auto' }}
                                 //expanded={expanded}
                                 //selected={selected}
-                                onNodeToggle={handleToggle}
+                                //onNodeToggle={handleToggle}
+                                //onDoubleClick={handleToggle}
                                 //onNodeSelect={handleSelect}
                             >
                                 {renderTreeItem(menudata)}
@@ -865,6 +870,85 @@ const AuthMngRegForm = () => {
                                             </ButtonLayout>
                                         </Grid>
                                     </Grid>
+                        <Stack spacing={2}>
+                            <TopInputLayout>
+                                <Item>Role : {role_name}</Item>
+                                <ButtonLayout>
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        onClick={programMappingSaveClick}
+                                    >
+                                        저장
+                                    </Button>
+                                </ButtonLayout>
+                            </TopInputLayout>
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <Grid item xs={8} sm={12}>
+                                    <MainCard sx={{ mt: 0, height: 290 }} content={false}>
+                                        <DefaultDataGrid
+                                            columns={roleColumns}
+                                            rows={dataGridRoleRows}
+                                            handlePageChange={handlePage}
+                                            handleGridClick={handleClick}
+                                            handleGridDoubleClick={handleDoubleClick}
+                                            selectionChange={handleSelectionRoleChange}
+                                            height={290}
+                                        />
+                                    </MainCard>
+                                    <Item>Role : {role_name}</Item>
+                                </Grid>
+
+                                <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <Grid item xs={8} sm={12}>
+                                        <MainCard sx={{ mt: 0 }} content={false}>
+                                            <DefaultDataGrid
+                                                columns={roleColumns}
+                                                rows={dataGridRoleRows}
+                                                handlePageChange={handlePage}
+                                                handleGridClick={handleClick}
+                                                handleGridDoubleClick={handleDoubleClick}
+                                                selectionChange={handleSelectionRoleChange}
+                                                height={240}
+                                            />
+                                        </MainCard>
+                                    </Grid>
+                                </Grid>
+                                <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <Grid container spacing={0} sx={{ mt: 1 }}>
+                                        <Item>프로그램 목록</Item>
+                                        <Grid item xs={8} sm={1}>
+                                            <ButtonLayout>
+                                                <Button
+                                                    disableElevation
+                                                    size="medium"
+                                                    type="submit"
+                                                    variant="contained"
+                                                    onClick={programMappingSaveClick}
+                                                >
+                                                    저장
+                                                </Button>
+                                            </ButtonLayout>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <TopInputLayout>
+                                        <Item>프로그램 목록</Item>
+                                        <ButtonLayout>
+                                            <Button
+                                                disableElevation
+                                                size="medium"
+                                                type="button"
+                                                variant="contained"
+                                                onClick={programMappingSave}
+                                            >
+                                                선택반영
+                                            </Button>
+                                        </ButtonLayout>
+                                    </TopInputLayout>
 
                                     <Grid container spacing={0} sx={{ mt: 1 }}>
                                         <Grid item xs={8} sm={12}>
@@ -882,10 +966,9 @@ const AuthMngRegForm = () => {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                            </Stack>
-                        </MainCard>
+                            </Grid>
+                        </Stack>
                     </Grid>
-                </Grid>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
