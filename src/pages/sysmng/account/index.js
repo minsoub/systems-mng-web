@@ -267,7 +267,7 @@ const AccountManagementPage = () => {
                                 size="medium"
                                 type="submit"
                                 variant="contained"
-                                color="primary"
+                                color="secondary"
                                 onClick={searchClick}
                             >
                                 검색

@@ -794,7 +794,14 @@ const AuthMngRegForm = () => {
                         </InputLayout>
 
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                color="secondary"
+                                variant="contained"
+                                onClick={searchClick}
+                            >
                                 검색
                             </Button>
                         </ButtonLayout>
@@ -802,13 +809,13 @@ const AuthMngRegForm = () => {
                 </MainCard>
 
                 <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
-                    <Grid item md={4}>
+                    <Grid item md={3}>
                         <MainCard sx={{ mt: 2 }} content={false}>
                             <TreeView
                                 aria-label="controlled"
                                 defaultCollapseIcon={<ExpandMoreIcon />}
                                 defaultExpandIcon={<ChevronRightIcon />}
-                                sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 700, flexGrow: 1, overflowY: 'auto' }}
                             >
                                 {renderTreeItem(menudata)}
                             </TreeView>
@@ -816,7 +823,7 @@ const AuthMngRegForm = () => {
                     </Grid>
 
                     {/* 콘텐츠 영역 */}
-                    <Grid item md={8}>
+                    <Grid item md={8.8}>
                         <TopInputLayout>
                             <Item>Role : {role_name}</Item>
                             <Button disableElevation size="medium" type="button" variant="contained" onClick={programMappingSaveClick}>
@@ -826,7 +833,7 @@ const AuthMngRegForm = () => {
 
                         <Grid container spacing={0} sx={{ mt: 1 }}>
                             <Grid item xs={8} sm={12}>
-                                <MainCard sx={{ mt: 0 }} content={false}>
+                                <MainCard sx={{ mt: 0, height: 290 }} content={false}>
                                     <DefaultDataGrid
                                         columns={roleColumns}
                                         rows={dataGridRoleRows}
@@ -834,7 +841,7 @@ const AuthMngRegForm = () => {
                                         handleGridClick={handleClick}
                                         handleGridDoubleClick={handleDoubleClick}
                                         selectionChange={handleSelectionRoleChange}
-                                        height={240}
+                                        height={290}
                                     />
                                 </MainCard>
                             </Grid>
@@ -843,7 +850,6 @@ const AuthMngRegForm = () => {
                             <Grid container spacing={0} sx={{ mt: 1 }}>
                                 <TopInputLayout>
                                     <Item>프로그램 목록</Item>
-
                                     <Button
                                         disableElevation
                                         size="medium"
@@ -858,7 +864,7 @@ const AuthMngRegForm = () => {
 
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
                                     <Grid item xs={8} sm={12}>
-                                        <MainCard sx={{ mt: 0 }} content={false}>
+                                        <MainCard sx={{ mt: 0, height: 290 }} content={false}>
                                             <CheckBoxDataGrid
                                                 columns={programColumns}
                                                 rows={dataGridProgramRows}
@@ -866,7 +872,7 @@ const AuthMngRegForm = () => {
                                                 handleGridClick={handleClick}
                                                 handleGridDoubleClick={handleDoubleClick}
                                                 selectionChange={handleSelectionProgramChange}
-                                                height={240}
+                                                height={290}
                                             />
                                         </MainCard>
                                     </Grid>
