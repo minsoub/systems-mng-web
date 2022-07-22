@@ -9,7 +9,7 @@ import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
-import './BoardList.scss';
+import './BoardList.module.scss';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';

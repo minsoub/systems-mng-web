@@ -326,29 +326,27 @@ const StatusRegForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="상태값 관리" menuStep01="사이트 운영" menuStep02="상태값 관리" menuStep03="상태값 관리" />
 
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item md={3}>
-                        <MainCard content={false}>
-                            <Grid container>
-                                <TreeView
-                                    aria-label="controlled"
-                                    //defaultExpanded={expanded}
-                                    defaultCollapseIcon={<MinusSquare />}
-                                    defaultExpandIcon={<PlusSquare />}
-                                    defaultEndIcon={<CloseSquare />}
-                                    sx={{ height: 600 }}
-                                    //expanded={expanded}
-                                    //selected={selected}
-                                    onNodeToggle={handleToggle}
-                                    //onNodeSelect={handleSelect}
-                                >
-                                    {renderTreeItem(statusdata)}
-                                </TreeView>
-                            </Grid>
+                <Grid container xs={12} className="layout--out">
+                    <Grid item xs={4}>
+                        <MainCard sx={{ mt: 2 }} content={false}>
+                            <TreeView
+                                aria-label="controlled"
+                                //defaultExpanded={expanded}
+                                defaultCollapseIcon={<MinusSquare />}
+                                defaultExpandIcon={<PlusSquare />}
+                                defaultEndIcon={<CloseSquare />}
+                                sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
+                                //expanded={expanded}
+                                //selected={selected}
+                                onNodeToggle={handleToggle}
+                                //onNodeSelect={handleSelect}
+                            >
+                                {renderTreeItem(statusdata)}
+                            </TreeView>
                         </MainCard>
                     </Grid>
 
-                    <Grid item md={8.8}>
+                    <Grid item xs={8} className="state--layout">
                         <MainCard sx={{ height: 600 }} content={false} className="stateSubmit layout--inner">
                             <Typography variant="h4" className="title">
                                 상태값 등록
@@ -359,7 +357,7 @@ const StatusRegForm = () => {
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
-                                        size="small"
+                                        size="medium"
                                         value={name}
                                         name="name"
                                         onBlur={handleBlur}
@@ -371,7 +369,7 @@ const StatusRegForm = () => {
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
-                                        size="small"
+                                        size="medium"
                                         value={name_en}
                                         name="name_en"
                                         onBlur={handleBlur}
@@ -385,7 +383,7 @@ const StatusRegForm = () => {
                                         inputProps={{ readOnly: true }}
                                         value={parent_code_name}
                                         name="parent_code_name"
-                                        size="small"
+                                        size="medium"
                                         fullWidth
                                     />
                                 </DropInput>
@@ -393,7 +391,7 @@ const StatusRegForm = () => {
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="number"
-                                        size="small"
+                                        size="medium"
                                         value={order_no}
                                         name="order_no"
                                         onBlur={handleBlur}

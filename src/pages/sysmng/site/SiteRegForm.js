@@ -2,37 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
-    OutlinedInput,
-    Box,
+    Alert,
+    AlertTitle,
     Button,
-    Grid,
-    Stack,
+    Checkbox,
+    Collapse,
+    FormControl,
     FormControlLabel,
     FormHelperText,
-    InputLabel,
-    Checkbox,
-    Select,
-    TextField,
-    FormControl,
-    Alert,
-    Collapse,
-    AlertTitle,
-    Typography,
-    MenuItem
+    Grid,
+    Stack,
+    TextField
 } from '@mui/material';
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
-import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import SiteApi from 'apis/site/siteapi';
-import { DatePicker } from 'antd';
 import UserSearchDialog from 'pages/popup/UserSearchPopup';
-import { values } from 'lodash';
+import HeaderTitle from '../../../components/HeaderTitle';
+import DropInput from '../../../components/Common/DropInput';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import SearchDate from '../../../components/ContentManage/SearchDate';
+import './styles.module.scss';
 
 const SiteRegForm = () => {
     let isSubmitting = false;
@@ -333,311 +327,234 @@ const SiteRegForm = () => {
                     <form noValidate onSubmit={handleSubmit}>
                         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
                             <Grid item xs={12} md={7} lg={12}>
-                                <Grid container alignItems="center" justifyContent="space-between">
-                                    <Grid item>
-                                        <Typography variant="h3">사이트 등록</Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography variant="h6">통합 시스템관리 &gt; 사이트 관리 &gt; 사이트 등록</Typography>
-                                    </Grid>
-                                    <Grid container spacing={2}></Grid>
-                                </Grid>
+                                <HeaderTitle
+                                    titleNm="사이트 등록"
+                                    menuStep01="통합 시스템관리"
+                                    menuStep02="사이트 관리"
+                                    menuStep03="사이트 등록"
+                                />
+
                                 <MainCard sx={{ mt: 2 }}>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>사이트 ID</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={3}>
-                                            <Stack spacing={3}>
-                                                <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                    <TextField
-                                                        id="filled-hidden-label-small"
-                                                        type="text"
-                                                        size="small"
-                                                        value={id}
-                                                        name="id"
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        inputProps={{ readOnly: readOnlyId }}
-                                                        placeholder="사이트 ID를 등록하세요!!!"
-                                                        fullWidth
-                                                        error={Boolean(touched.id && errors.id)}
-                                                    />
-                                                </FormControl>
-                                            </Stack>
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>사이트명</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={2}>
-                                            <Stack spacing={3}>
-                                                <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                    <TextField
-                                                        id="filled-hidden-label-small"
-                                                        type="text"
-                                                        size="small"
-                                                        value={name}
-                                                        name="name"
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        placeholder="사이트명를 등록하세요!!!"
-                                                        fullWidth
-                                                        error={Boolean(touched.name && errors.name)}
-                                                    />
-                                                </FormControl>
-                                            </Stack>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>사용여부</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={3}>
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        defaultChecked
-                                                        name="is_use"
-                                                        value={is_use}
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                    />
-                                                }
-                                                label="사용함"
-                                            />
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>운영기간</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <TextField
-                                                id="valid_start_date"
-                                                name="valid_start_date"
-                                                value={valid_start_date}
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                type="date"
-                                                defaultValue=""
-                                                sx={{ width: 140 }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={8} sm={0.5}>
-                                            ~
-                                        </Grid>
-                                        <Grid item xs={8} sm={2}>
-                                            <TextField
-                                                id="valid_end_date"
-                                                name="valid_end_date"
-                                                value={valid_end_date}
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                type="date"
-                                                defaultValue=""
-                                                sx={{ width: 140 }}
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>비고</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={8}>
-                                            <Stack spacing={3}>
-                                                <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                    <TextField
-                                                        id="filled-hidden-label-small"
-                                                        type="text"
-                                                        size="small"
-                                                        value={description}
-                                                        name="description"
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        placeholder="Input the Description"
-                                                        fullWidth
-                                                    />
-                                                </FormControl>
-                                            </Stack>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>담당자D</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={2}>
-                                            <Stack spacing={3}>
-                                                <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                    <TextField
-                                                        id="filled-hidden-label-small"
-                                                        type="text"
-                                                        size="small"
-                                                        value={adminId}
-                                                        name="admin_account_name"
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        fullWidth
-                                                        error={Boolean(touched.admin_account_name && errors.admin_account_name)}
-                                                    />
-                                                </FormControl>
-                                            </Stack>
-                                        </Grid>
-                                        <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                <Button
-                                                    disableElevation
-                                                    size="small"
-                                                    type="button"
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    onClick={accountSearch}
-                                                >
-                                                    검색
-                                                </Button>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>전화번호</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={2}>
-                                            <Stack spacing={3}>
-                                                <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                    <TextField
-                                                        id="filled-hidden-label-small"
-                                                        type="text"
-                                                        size="small"
-                                                        value={adminPhone}
-                                                        name="admin_account_phone"
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        fullWidth
-                                                    />
-                                                </FormControl>
-                                            </Stack>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={8} sm={1.5}>
-                                            <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                <Stack spacing={0}>메일주소</Stack>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={6}>
+                                    <div className="inputLayout">
+                                        <DropInput title="사이트 ID">
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
-                                                size="small"
+                                                size="medium"
+                                                value={id}
+                                                name="id"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                inputProps={{ readOnly: readOnlyId }}
+                                                placeholder="사이트 ID를 등록하세요!!!"
+                                                fullWidth
+                                                error={Boolean(touched.id && errors.id)}
+                                            />
+                                        </DropInput>
+                                        <DropInput title="사이트명">
+                                            <TextField
+                                                id="filled-hidden-label-small"
+                                                type="text"
+                                                size="medium"
+                                                value={name}
+                                                name="name"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                placeholder="사이트명를 등록하세요!!!"
+                                                fullWidth
+                                                error={Boolean(touched.name && errors.name)}
+                                            />
+                                        </DropInput>
+
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    defaultChecked
+                                                    name="is_use"
+                                                    value={is_use}
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                />
+                                            }
+                                            label="사용함"
+                                        />
+                                    </div>
+
+                                    <div className="inputLayout layout--out">
+                                        {/* 기간 검색 */}
+                                        <SearchDate
+                                            start_date={valid_start_date}
+                                            end_date={valid_end_date}
+                                            handleBlur={handleBlur}
+                                            handleChange={handleChange}
+                                            noneChecked="noneChecked"
+                                        />
+                                    </div>
+
+                                    <div className="inputLayout layout--out">
+                                        <DropInput title="비고">
+                                            <TextField
+                                                id="filled-hidden-label-small"
+                                                type="text"
+                                                size="medium"
+                                                value={description}
+                                                name="description"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                placeholder="Input the Description"
+                                                fullWidth
+                                            />
+                                        </DropInput>
+                                        <div className="inputLayout">
+                                            <DropInput title="담당자 ID">
+                                                <TextField
+                                                    id="filled-hidden-label-small"
+                                                    type="text"
+                                                    size="medium"
+                                                    value={adminId}
+                                                    name="admin_account_name"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    fullWidth
+                                                    error={Boolean(touched.admin_account_name && errors.admin_account_name)}
+                                                />
+                                            </DropInput>
+                                            <Button
+                                                disableElevation
+                                                size="medium"
+                                                type="button"
+                                                variant="contained"
+                                                color="secondary"
+                                                onClick={accountSearch}
+                                            >
+                                                검색
+                                            </Button>
+                                        </div>
+                                    </div>
+
+                                    <div className="inputLayout">
+                                        <DropInput title="전화번호">
+                                            <TextField
+                                                id="filled-hidden-label-small"
+                                                type="text"
+                                                size="medium"
+                                                value={adminPhone}
+                                                name="admin_account_phone"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                fullWidth
+                                            />
+                                        </DropInput>
+
+                                        <DropInput title="이메일 주소">
+                                            <TextField
+                                                id="filled-hidden-label-small"
+                                                type="text"
+                                                size="medium"
                                                 value={adminEmail}
                                                 name="admin_account_email"
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 fullWidth
                                             />
-                                        </Grid>
-                                    </Grid>
+                                        </DropInput>
+                                    </div>
+                                </MainCard>
 
-                                    <Stack direction="row" spacing={3}>
-                                        <Button
-                                            disableElevation
-                                            disabled={isSubmitting}
-                                            size="small"
-                                            type="submit"
-                                            variant="contained"
-                                            color="primary"
-                                        >
-                                            저장하기
-                                        </Button>
-                                        <Button
-                                            disableElevation
-                                            disabled={isSubmitting}
-                                            size="small"
-                                            type="button"
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={newClick}
-                                        >
-                                            신규
-                                        </Button>
-                                        <Button
-                                            disableElevation
-                                            disabled={isDeleted}
-                                            size="small"
-                                            type="button"
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={deleteClick}
-                                        >
-                                            삭제
-                                        </Button>
-                                        <Button
-                                            disableElevation
-                                            disabled={isSubmitting}
-                                            size="small"
-                                            type="button"
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={listClick}
-                                        >
-                                            리스트
-                                        </Button>
-                                    </Stack>
-                                    {errors.submit && (
-                                        <Grid item xs={12}>
-                                            <FormHelperText error>{errors.submit}</FormHelperText>
-                                        </Grid>
-                                    )}
-                                </MainCard>
-                                <MainCard sx={{ mt: 3 }} content={false}>
-                                    <Stack>
-                                        {touched.id && errors.id && (
-                                            <FormHelperText error id="standard-weight-helper-text-password-login">
-                                                <FormControl sx={{ m: 2, minHeight: 20 }} size="small">
-                                                    <li>{errors.id}</li>
-                                                </FormControl>
-                                            </FormHelperText>
-                                        )}
-                                        {touched.name && errors.name && (
-                                            <FormHelperText error id="standard-weight-helper-text-password-login">
-                                                <FormControl sx={{ m: 2, minHeight: 20 }} size="small">
-                                                    <li>{errors.name}</li>
-                                                </FormControl>
-                                            </FormHelperText>
-                                        )}
-                                    </Stack>
-                                    <Collapse in={open}>
-                                        <Alert
-                                            severity="error"
-                                            action={
-                                                <IconButton
-                                                    aria-label="close"
-                                                    color="inherit"
-                                                    size="small"
-                                                    onClick={() => {
-                                                        errorClear();
-                                                    }}
-                                                >
-                                                    <CloseIcon fontSize="inherit" />
-                                                </IconButton>
-                                            }
-                                            sx={{ mb: 2 }}
-                                        >
-                                            <AlertTitle>{errorTitle}</AlertTitle>
-                                            {errorMessage}
-                                        </Alert>
-                                    </Collapse>
-                                </MainCard>
+                                <ButtonLayout buttonName="layout--button">
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                    >
+                                        저장하기
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={newClick}
+                                    >
+                                        신규
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isDeleted}
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={deleteClick}
+                                    >
+                                        삭제
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={listClick}
+                                    >
+                                        리스트
+                                    </Button>
+                                </ButtonLayout>
+
+                                {/* 에러처리 */}
+                                {errors.submit && (
+                                    <Grid item xs={12}>
+                                        <FormHelperText error>{errors.submit}</FormHelperText>
+                                    </Grid>
+                                )}
+
+                                {errorMessage && (
+                                    <MainCard sx={{ mt: 3 }} content={false}>
+                                        <Stack>
+                                            {touched.id && errors.id && (
+                                                <FormHelperText error id="standard-weight-helper-text-password-login">
+                                                    <FormControl sx={{ m: 2, minHeight: 20 }} size="medium">
+                                                        <li>{errors.id}</li>
+                                                    </FormControl>
+                                                </FormHelperText>
+                                            )}
+                                            {touched.name && errors.name && (
+                                                <FormHelperText error id="standard-weight-helper-text-password-login">
+                                                    <FormControl sx={{ m: 2, minHeight: 20 }} size="medium">
+                                                        <li>{errors.name}</li>
+                                                    </FormControl>
+                                                </FormHelperText>
+                                            )}
+                                        </Stack>
+                                        <Collapse in={open}>
+                                            <Alert
+                                                severity="error"
+                                                action={
+                                                    <IconButton
+                                                        aria-label="close"
+                                                        color="inherit"
+                                                        size="medium"
+                                                        onClick={() => {
+                                                            errorClear();
+                                                        }}
+                                                    >
+                                                        <CloseIcon fontSize="inherit" />
+                                                    </IconButton>
+                                                }
+                                                sx={{ mb: 2 }}
+                                            >
+                                                <AlertTitle>{errorTitle}</AlertTitle>
+                                                {errorMessage}
+                                            </Alert>
+                                        </Collapse>
+                                    </MainCard>
+                                )}
                             </Grid>
                         </Grid>
                         <UserSearchDialog selectedValue={selectedValue} open={openUserSearch} onClose={handleClose} />

@@ -9,7 +9,7 @@ import HeaderTitle from 'components/HeaderTitle';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
-import './styles.scss';
+import './styles.module.scss';
 
 const SiteManagementPage = () => {
     let isSubmitting = false;
@@ -214,7 +214,7 @@ const SiteManagementPage = () => {
                                 size="medium"
                                 type="submit"
                                 variant="contained"
-                                color="primary"
+                                color="secondary"
                                 onClick={searchClick}
                             >
                                 검색

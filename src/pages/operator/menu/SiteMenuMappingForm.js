@@ -500,7 +500,14 @@ const SiteMenuMappingForm = () => {
                             />
                         </InputLayout>
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={searchClick}
+                            >
                                 검색
                             </Button>
                         </ButtonLayout>
@@ -513,15 +520,11 @@ const SiteMenuMappingForm = () => {
                         <MainCard sx={{ mt: 2 }} content={false}>
                             <TreeView
                                 aria-label="controlled"
-                                // defaultExpanded={expanded}
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
                                 sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
-                                //expanded={expanded}
-                                //selected={selected}
                                 onNodeToggle={handleToggle}
-                                //onNodeSelect={handleSelect}
                             >
                                 {renderTreeItem(menudata)}
                             </TreeView>
@@ -532,18 +535,16 @@ const SiteMenuMappingForm = () => {
                             <div className="layout--align">
                                 <Item>연결된 프로그램 목록</Item>
 
-                                <ButtonLayout>
-                                    <Button
-                                        disableElevation
-                                        size="medium"
-                                        type="button"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={minusRegister}
-                                    >
-                                        삭제
-                                    </Button>
-                                </ButtonLayout>
+                                <Button
+                                    disableElevation
+                                    size="medium"
+                                    type="button"
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={minusRegister}
+                                >
+                                    삭제
+                                </Button>
                             </div>
 
                             <Grid container spacing={0} sx={{ mt: 1 }}>

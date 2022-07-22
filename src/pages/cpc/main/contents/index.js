@@ -7,7 +7,7 @@ import ErrorScreen from 'components/ErrorScreen';
 import HeaderTitle from 'components/HeaderTitle';
 import BoardSearchDialog from './popup/BoardSearchPopup';
 import ButtonLayout from '../../../../components/Common/ButtonLayout';
-import './styles.scss';
+import './styles.module.scss';
 import cx from 'classnames';
 
 const MainContents = () => {

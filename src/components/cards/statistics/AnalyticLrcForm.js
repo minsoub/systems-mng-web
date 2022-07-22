@@ -1,16 +1,8 @@
 import PropTypes from 'prop-types';
-
-// material-ui
 import { Grid, Stack, Typography } from '@mui/material';
-
-// project import
 import MainCard from 'components/MainCard';
 import cx from 'classnames';
 import './styles.scss';
-
-// assets
-
-// ==============================|| STATISTICS - ECOMMERCE CARD  ||============================== //
 
 const AnalyticLrcForm = ({ color, title, count, child, percentage, isLoss, extra }) => (
     <div>

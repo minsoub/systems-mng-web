@@ -248,7 +248,7 @@ const FaqCategoryPage = () => {
                         </FormControl>
 
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
                                 검색
                             </Button>
 
