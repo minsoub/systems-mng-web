@@ -11,10 +11,11 @@ import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
-import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/LegalCounselingSearch';
 import styles from './styles.module.scss';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 
 const LegalCounselingMng = () => {
     const columns = [
@@ -333,7 +334,7 @@ const LegalCounselingMng = () => {
                     />
 
                     {/* 카테고리 영역 */}
-                    <div className={styles.legalLayoutCategory}>
+                    <div className={cx('legalLayoutCategory')}>
                         <Stack spacing={10} className={cx('borderTitle')}>
                             상태
                         </Stack>

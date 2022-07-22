@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import moment from 'moment';
-import { Button, Grid, InputLabel, Stack, Typography } from '@mui/material';
+import {Button, Grid} from '@mui/material';
 import useAuthorized from 'apis/auth/auths';
-import { Box } from '../../../../node_modules/@mui/material/index';
-import { activeEmail, activeLogin, activeLoginDate, activeSite, activeToken } from 'store/reducers/auth';
+import {Box} from '@mui/material';
+import {activeEmail, activeLogin, activeLoginDate, activeSite, activeToken} from 'store/reducers/auth';
 import OtpInput from 'react-otp-input';
-import { useNavigate } from 'react-router-dom';
-import '../styles.scss';
-import OtpQrCode from '../../../components/AuthLogin/OtpQrCode';
+import {useNavigate} from 'react-router-dom';
+import OtpQrCode from '../OtpQrCodeText';
+import styles from './styles.module.scss';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 
-const OtpForm = ({ result }) => {
+const OtpQrCodeForm = ({ result }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [otpNumber, setOtpNumber] = useState('');
@@ -71,8 +73,9 @@ const OtpForm = ({ result }) => {
     }, [responseData]);
 
     // 취소
-    const CancelClick = () => {
+    const CancelClick = (e) => {
         e.preventDefault();
+
         if (confirm('취소하시겠습니까?')) {
             navigate('/login');
         }
@@ -81,7 +84,6 @@ const OtpForm = ({ result }) => {
     // 입력시 변경
     const handleChange = (otpNumber) => {
         setOtpNumber(otpNumber);
-        console.log('otpNumber', otpNumber);
     };
 
     // 확인 버튼 클릭 시
@@ -115,22 +117,16 @@ const OtpForm = ({ result }) => {
         <Grid container spacing={3}>
             <OtpQrCode />
 
-            <div className="qrcodeBox">
+            <div className={cx("qrcodeBox")}>
                 <Box
                     component="img"
-                    sx={{
-                        height: 300,
-                        width: 320,
-                        maxHeight: { xs: 300, md: 320 },
-                        maxWidth: { xs: 300, md: 320 }
-                    }}
                     alt="QR Code"
                     src={result.otp_info.url}
                 />
             </div>
 
             {/* OTP 번호 입력란 */}
-            <div className="otpAction">
+            <div className={cx("otpAction")}>
                 <OtpInput
                     value={otpNumber}
                     name="otpNumber"
@@ -141,7 +137,7 @@ const OtpForm = ({ result }) => {
                     onKeyPress={keyPress}
                 />
                 {/* 에러 메시지 - OTP 번호가 일치하지 않을 때 */}
-                <span className="errorMsg">{errMsg}</span>
+                <span className={cx("errorMsg")}>{errMsg}</span>
             </div>
 
             <Grid item xs={12}>
@@ -152,7 +148,7 @@ const OtpForm = ({ result }) => {
                     disableElevation
                     fullWidth
                     size="large"
-                    type="submit"
+                    type="supUpdatePasswordForm.jsbmit"
                     variant="contained"
                     color="primary"
                     disabled={!(otpNumber.length === 6)}
@@ -165,8 +161,8 @@ const OtpForm = ({ result }) => {
     );
 };
 
-OtpForm.propTypes = {
+OtpQrCodeForm.propTypes = {
     result: PropTypes.any
 };
 
-export default OtpForm;
+export default OtpQrCodeForm;

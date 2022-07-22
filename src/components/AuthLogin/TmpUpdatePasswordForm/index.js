@@ -1,34 +1,27 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link as RouterLink, Outlet } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 // material-ui
 import {
     Button,
-    Checkbox,
-    Divider,
-    FormControlLabel,
     FormHelperText,
     Grid,
-    Link,
     IconButton,
     InputAdornment,
     InputLabel,
     OutlinedInput,
-    Stack,
-    Typography
+    Stack
 } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
-import { Formik } from 'formik';
+import {Formik} from 'formik';
 
 // project import
-import FirebaseSocial from './FirebaseSocial';
 import AnimateButton from 'components/@extended/AnimateButton';
 
 // assets
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import {EyeInvisibleOutlined, EyeOutlined} from '@ant-design/icons';
 import jwt from 'jsonwebtoken';
 import useAuthorized from 'apis/auth/auths';
 

@@ -1,0 +1,30 @@
+// OTP 숫자 입력 란
+.otpAction {
+  margin: 20px 0;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+  .otpNumber {
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    input {
+      width: 3rem !important;
+      height: 3rem !important;
+      font-size: 2rem;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.label--center {
+  width: 100%;
+  span {
+    margin-right: 5px;
+  }
+  .label--center--highlight {
+    color: #1890ff;
+    font-weight: 700;
+  }
+}
