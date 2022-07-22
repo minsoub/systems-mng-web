@@ -7,11 +7,11 @@ import MinimalLayout from 'layout/MinimalLayout';
 import SiteRegForm from 'pages/sysmng/site/SiteRegForm';
 
 // render - login
-const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
-const OtpLogin = Loadable(lazy(() => import('pages/authentication/OtpLogin')));
-const OtpSimpleLogin = Loadable(lazy(() => import('pages/authentication/OtpSimpleLogin')));
-const TmpPasswordForm = Loadable(lazy(() => import('pages/authentication/TmpPasswordForm')));
-const AuthRegister = Loadable(lazy(() => import('pages/authentication/Register')));
+const AuthLogin = Loadable(lazy(() => import('pages/auth/login')));
+const OtpLogin = Loadable(lazy(() => import('pages/auth/otpLogin')));
+const OtpSimpleLogin = Loadable(lazy(() => import('pages/auth/otpSimpleLogin')));
+const TmpPasswordForm = Loadable(lazy(() => import('pages/auth/tmpPasswordForm')));
+const SignUp = Loadable(lazy(() => import('pages/auth/signup')));
 
 // profile - updateform
 const ProfileUpdateForm = Loadable(lazy(() => import('pages/profile/index')));
@@ -92,36 +92,41 @@ const AuthManagementPage = Loadable(lazy(() => import('pages/sysmng/authmng/inde
 const AuthMngRegForm = Loadable(lazy(() => import('pages/sysmng/authmng/AuthMngReg.js')));
 
 const LrcDashboard = Loadable(lazy(() => import('pages/lrc/dashboard/index')));
-// ==============================|| MAIN ROUTING ||==============================  //
 
 const MainRoutes = [
     {
         path: '/',
         element: <MinimalLayout />,
         children: [
+            // 로그인 페이지
             {
                 path: '/',
                 element: <AuthLogin />
             },
+            // 로그인 페이지
             {
                 path: 'login',
                 element: <AuthLogin />
             },
+            // otp (QR 코드) 발급 페이지
             {
                 path: 'otplogin',
                 element: <OtpLogin />
             },
+            // otp 인증 페이지
             {
                 path: 'otpsimplelogin',
                 element: <OtpSimpleLogin />
             },
+            // 임시 패스워드 변경 페이지
             {
                 path: 'tmppassword',
                 element: <TmpPasswordForm />
             },
+            // 회원가입 페이지
             {
-                path: 'register',
-                element: <AuthRegister />
+                path: 'signup',
+                element: <SignUp />
             }
         ]
     },

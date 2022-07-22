@@ -1,15 +1,15 @@
-import { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import moment from 'moment';
 import OtpInput from 'react-otp-input';
-import { Button, Grid, InputLabel, Stack } from '@mui/material';
-
+import {Button, Grid, InputLabel, Stack} from '@mui/material';
 import useAuthorized from 'apis/auth/auths';
-import { activeSite, activeEmail, activeToken, activeLogin, activeLoginDate } from 'store/reducers/auth';
-import '../styles.scss';
-// ============================|| FIREBASE - LOGIN ||============================ //
+import {activeEmail, activeLogin, activeLoginDate, activeSite, activeToken} from 'store/reducers/auth';
+import styles from './styles.module.scss';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 
 const OtpSimpleForm = ({ result }) => {
     const [responseData, requestError, loading, { actionOtp, actionClear }] = useAuthorized();
@@ -81,11 +81,6 @@ const OtpSimpleForm = ({ result }) => {
         }
     }, [responseData]);
 
-    // const CancelClick = () => {
-    //     if (confirm('취소하시겠습니까?')) {
-    //         navigate('/login');
-    //     }
-    // };
     const clearOtp = (e) => {
         e.preventDefault();
         console.log('called..');
@@ -136,23 +131,23 @@ const OtpSimpleForm = ({ result }) => {
                     </Stack>
                 </Grid>
 
-                <div className="otpAction">
+                <div className={cx('otpAction')}>
                     <OtpInput
                         value={otpNumber}
                         name="otpNumber"
                         isInputNum={true}
                         onChange={handleChange}
                         numInputs={6}
-                        className="otpNumber"
+                        className={cx('otpNumber')}
                     />
                     {/* 에러 메시지 - OTP 번호가 일치하지 않을 때 */}
-                    <span className="errorMsg">{errMsg}</span>
+                    <span className={cx('errorMsg')}>{errMsg}</span>
                 </div>
 
                 <Grid item xs={12}>
-                    <div className="label--center">
+                    <div className={cx('label--center')}>
                         <span>OTP를 분실했나요?</span>
-                        <a href="#" onClick={clearOtp}>
+                        <a href="components/AuthLogin/OtpSimpleForm/OtpSimpleForm#" onClick={clearOtp} className={cx('label--center--highlight')}>
                             초기화 요청
                         </a>
                     </div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { Button, FormControlLabel, Grid, Radio, RadioGroup, Stack } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';
@@ -16,6 +15,8 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/LegalCounselingSearch';
 import styles from './styles.module.scss';
 import DownloadReason from 'components/Security/DownloadReason';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 
 const LegalCounselingMng = () => {
     const columns = [
@@ -347,7 +348,7 @@ const LegalCounselingMng = () => {
                     />
 
                     {/* 카테고리 영역 */}
-                    <div className={styles.legalLayoutCategory}>
+                    <div className={cx('legalLayoutCategory')}>
                         <Stack spacing={10} className={cx('borderTitle')}>
                             상태
                         </Stack>

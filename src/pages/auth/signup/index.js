@@ -1,22 +1,17 @@
 import { Link } from 'react-router-dom';
-
-// material-ui
 import { Grid, Stack, Typography } from '@mui/material';
+import FirebaseRegister from '../../../components/AuthLogin/SignUpForm';
+import AuthWrapper from '../../../components/AuthLogin/AuthWrapper';
 
-// project import
-import FirebaseRegister from './auth-forms/AuthRegister';
-import AuthWrapper from './AuthWrapper';
-
-// ================================|| REGISTER ||================================ //
-
-const Register = () => (
+// 회원가입 페이지
+const Signup = () => (
     <AuthWrapper>
         <Grid container spacing={3}>
             <Grid item xs={12}>
                 <Stack direction="row" justifyContent="space-between" alignItems="baseline" sx={{ mb: { xs: -0.5, sm: 0.5 } }}>
-                    <Typography variant="h3">Sign up</Typography>
+                    <Typography variant="h3">회원가입</Typography>
                     <Typography component={Link} to="/login" variant="body1" sx={{ textDecoration: 'none' }} color="primary">
-                        Already have an account?
+                        이미 회원 이신가요?
                     </Typography>
                 </Stack>
             </Grid>
@@ -27,4 +22,4 @@ const Register = () => (
     </AuthWrapper>
 );
 
-export default Register;
+export default Signup;
