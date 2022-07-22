@@ -46,10 +46,11 @@ const FraudReportApis = () => {
         const end_date = request.end_date;
         const status = request.status == undefined ? '' : encodeURIComponent(request.status);
         const keyword = request.keyword == undefined ? '' : encodeURIComponent(request.keyword);
+        const reason = request.reason;
         callApi('getExcelDownload', {
             axiosInstance: axiosInstanceDownload,
             method: 'get',
-            url: `/mng/cpc/fraud-report/excel-download?start_date=${start_date}&end_date=${end_date}&status=${status}&query=${keyword}`,
+            url: `/mng/cpc/fraud-report/excel-download?start_date=${start_date}&end_date=${end_date}&status=${status}&query=${keyword}&reason=${reason}`,
             requestConfig: {}
         });
     };
