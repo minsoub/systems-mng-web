@@ -1,17 +1,18 @@
-import cx from 'classnames';
 import { FormControl, Stack } from '@mui/material';
-import './styles.scss';
+import styles from './styles.module.scss';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 
 // 드롭형식 input 박스
 const DropInput = ({ title, children, className }) => {
     return (
-        <div className={className}>
-            <div className="dropList">
+        <div className={cx(`${className}`)}>
+            <div className={cx(`dropList`)}>
                 <Stack spacing={10} className={cx('borderTitle')}>
                     {title}
                 </Stack>
 
-                <div className="drop__list--input">
+                <div className={cx('dropList--input')}>
                     <FormControl sx={{ minWidth: 250 }} size="medium">
                         {children}
                     </FormControl>

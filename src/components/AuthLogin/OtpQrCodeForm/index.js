@@ -1,13 +1,13 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import moment from 'moment';
-import {Button, Grid} from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import useAuthorized from 'apis/auth/auths';
-import {Box} from '@mui/material';
-import {activeEmail, activeLogin, activeLoginDate, activeSite, activeToken} from 'store/reducers/auth';
+import { Box } from '@mui/material';
+import { activeEmail, activeLogin, activeLoginDate, activeSite, activeToken } from 'store/reducers/auth';
 import OtpInput from 'react-otp-input';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import OtpQrCode from '../OtpQrCodeText';
 import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
@@ -117,31 +117,36 @@ const OtpQrCodeForm = ({ result }) => {
         <Grid container spacing={3}>
             <OtpQrCode />
 
-            <div className={cx("qrcodeBox")}>
-                <Box
-                    component="img"
-                    alt="QR Code"
-                    src={result.otp_info.url}
-                />
+            <div className={cx('qrcodeBox')}>
+                <Box component="img" alt="QR Code" src={result.otp_info.url} />
             </div>
 
             {/* OTP 번호 입력란 */}
-            <div className={cx("otpAction")}>
+            <div className={cx('otpAction')}>
                 <OtpInput
                     value={otpNumber}
                     name="otpNumber"
                     isInputNum={true}
                     onChange={handleChange}
                     numInputs={6}
-                    className="otpNumber"
+                    className={cx('otpNumber')}
                     onKeyPress={keyPress}
                 />
                 {/* 에러 메시지 - OTP 번호가 일치하지 않을 때 */}
-                <span className={cx("errorMsg")}>{errMsg}</span>
+                <span className={cx('errorMsg')}>{errMsg}</span>
             </div>
 
             <Grid item xs={12}>
-                <Button disableElevation fullWidth size="large" type="submit" variant="contained" color="secondary" onClick={CancelClick}>
+                <Button
+                    disableElevation
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    color="secondary"
+                    onClick={CancelClick}
+                    className={cx('blank')}
+                >
                     취소
                 </Button>
                 <Button

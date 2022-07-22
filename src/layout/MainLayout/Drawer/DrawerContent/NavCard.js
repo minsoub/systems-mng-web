@@ -2,7 +2,7 @@
 import { Button, CardMedia, Link, Stack, Typography } from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 
 // assets
 import avatar from 'assets/images/users/avatar-group.png';

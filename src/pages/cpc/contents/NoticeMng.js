@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Grid } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
@@ -14,6 +14,7 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/NoticeSearch';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const NoticeMng = () => {
     const columns = [
@@ -293,18 +294,16 @@ const NoticeMng = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
-                            초기화
-                        </Button>
+                <ButtonLayout buttonName="layout--button__bottom">
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={clearClick}>
+                        초기화
+                    </Button>
 
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                            검색
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={searchClick}>
+                        검색
+                    </Button>
+                </ButtonLayout>
+                <ContentLine>
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -313,17 +312,15 @@ const NoticeMng = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
-                            선택 삭제
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
-                            등록
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
+                </ContentLine>
+                <ButtonLayout buttonName="layout__blank--top">
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={deleteClick}>
+                        선택 삭제
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
+                        등록
+                    </Button>
+                </ButtonLayout>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

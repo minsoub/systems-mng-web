@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Paper, Select, Stack, TextField } from '@mui/material';
 // third party
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import { styled } from '@mui/material/styles';
 import AccountApis from 'apis/account/accountapis';
 import SiteApi from 'apis/site/siteapi';

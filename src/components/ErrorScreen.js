@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 // material-ui
-import { Button } from '@mui/material';
-import { SettingsOutlined, SettingsPowerRounded } from '../../node_modules/@mui/icons-material/index';
-import MainCard from './MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
+import { Alert, AlertTitle, Collapse, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButton, Collapse, Alert, AlertTitle } from '@mui/material';
+import ContentLine from './Common/ContentLine';
 
 const ErrorScreen = ({ open, errorTitle, errorMessage, parentErrorClear }) => {
     const [title, setTitle] = useState('');
@@ -37,31 +33,29 @@ const ErrorScreen = ({ open, errorTitle, errorMessage, parentErrorClear }) => {
     }, [errorTitle, errorMessage]);
 
     return (
-        <>
-            <MainCard sx={{ mt: 3 }} content={false}>
-                <Collapse in={isOpen}>
-                    <Alert
-                        severity="error"
-                        action={
-                            <IconButton
-                                aria-label="close"
-                                color="inherit"
-                                size="small"
-                                onClick={() => {
-                                    errorClear();
-                                }}
-                            >
-                                <CloseIcon fontSize="inherit" />
-                            </IconButton>
-                        }
-                        sx={{ mb: 2 }}
-                    >
-                        <AlertTitle>{title}</AlertTitle>
-                        {message}
-                    </Alert>
-                </Collapse>
-            </MainCard>
-        </>
+        <ContentLine>
+            <Collapse in={isOpen}>
+                <Alert
+                    severity="error"
+                    action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                errorClear();
+                            }}
+                        >
+                            <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                >
+                    <AlertTitle>{title}</AlertTitle>
+                    {message}
+                </Alert>
+            </Collapse>
+        </ContentLine>
     );
 };
 

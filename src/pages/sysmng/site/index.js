@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, FormControl, Grid, MenuItem, OutlinedInput, Select } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import SiteApi from 'apis/site/siteapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -10,6 +10,7 @@ import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import './styles.module.scss';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const SiteManagementPage = () => {
     let isSubmitting = false;
@@ -182,7 +183,6 @@ const SiteManagementPage = () => {
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="사이트 관리" menuStep01="통합시스템 관리" menuStep02="사이트 관리" />
-
                 <MainCard sx={{ mt: 1 }}>
                     <TopInputLayout>
                         <InputLayout>
@@ -230,8 +230,7 @@ const SiteManagementPage = () => {
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
-
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--blank">
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -239,16 +238,8 @@ const SiteManagementPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
-                        sx={{
-                            boxShadow: 2,
-                            border: 2,
-                            borderColor: 'primary.light',
-                            '& .MuiDataGrid-cell:hover': {
-                                color: 'primary.main'
-                            }
-                        }}
                     />
-                </MainCard>
+                </ContentLine>
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}

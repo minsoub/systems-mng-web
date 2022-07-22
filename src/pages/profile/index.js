@@ -29,7 +29,7 @@ import {
     MenuItem
 } from '@mui/material';
 
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import { StyledTableCell, FontTableCell } from 'components/CustomTableCell';
 import ErrorScreen from 'components/ErrorScreen';

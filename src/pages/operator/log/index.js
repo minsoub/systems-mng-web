@@ -25,7 +25,7 @@ import {
     TableRow
 } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -39,6 +39,7 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import SearchBar from '../../../components/ContentManage/SearchBar';
 import SearchDate from '../../../components/ContentManage/SearchDate';
 import cx from 'classnames';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const SiteLogPage = () => {
     let isSubmitting = false;
@@ -272,18 +273,16 @@ const SiteLogPage = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <Grid className={cx('outButtons')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                            검색
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
-                            Excel
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
+                <ButtonLayout buttonName="layout--button__bottom">
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                        검색
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
+                        Excel
+                    </Button>
+                </ButtonLayout>
 
-                <MainCard sx={{ mt: 2, height: 750 }} content={false}>
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -293,7 +292,7 @@ const SiteLogPage = () => {
                         selectionChange={handleSelectionChange}
                         height={750}
                     />
-                </MainCard>
+                </ContentLine>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

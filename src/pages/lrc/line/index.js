@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, FormControl, Grid, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import LineApis from 'apis/lrc/line/lineapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -12,6 +12,8 @@ import TopInputLayout from '../../../components/Common/TopInputLayout';
 import cx from 'classnames';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import HeaderTitle from '../../../components/HeaderTitle';
+import ContentLine from '../../../components/Common/ContentLine';
+import DropInput from '../../../components/Common/DropInput';
 
 const LineMngPage = () => {
     let isSubmitting = false;
@@ -230,22 +232,23 @@ const LineMngPage = () => {
 
                 <MainCard>
                     <TopInputLayout>
-                        <InputLayout>
-                            <Stack spacing={10} className={cx('borderTitle')}>
-                                계열 구분
-                            </Stack>
-
-                            <FormControl sx={{ m: 0, minWidth: 250 }} size="medium">
-                                <Select name="search_line_type" label="계열타입" value={search_line_type} onChange={searchLineChanged}>
-                                    <MenuItem value="BUSINESS">사업계열</MenuItem>
-                                    <MenuItem value="NETWORK">네트워크계열</MenuItem>
-                                    <MenuItem value="">전체</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </InputLayout>
+                        <DropInput title="계열 구분">
+                            <Select name="search_line_type" label="계열타입" value={search_line_type} onChange={searchLineChanged}>
+                                <MenuItem value="BUSINESS">사업계열</MenuItem>
+                                <MenuItem value="NETWORK">네트워크계열</MenuItem>
+                                <MenuItem value="">전체</MenuItem>
+                            </Select>
+                        </DropInput>
 
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={searchClick}
+                            >
                                 검색
                             </Button>
 
@@ -256,7 +259,7 @@ const LineMngPage = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -266,41 +269,30 @@ const LineMngPage = () => {
                         selectionChange={handleSelectionChange}
                         height={350}
                     />
-                </MainCard>
+                </ContentLine>
+
                 <MainCard sx={{ mt: 2 }}>
                     <TopInputLayout>
                         <InputLayout>
-                            <div className="layout">
-                                <Stack spacing={10} className={cx('borderTitle')}>
-                                    계열 타입
-                                </Stack>
-                                <FormControl sx={{ minWidth: 250 }} size="medium">
-                                    <Select name="type" label="계얄타입" value={type} onChange={handleChange}>
-                                        <MenuItem value="BUSINESS">사업계열</MenuItem>
-                                        <MenuItem value="NETWORK">네트워크계열</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </div>
+                            <DropInput title="계열 타입">
+                                <Select name="type" label="계얄타입" value={type} onChange={handleChange}>
+                                    <MenuItem value="BUSINESS">사업계열</MenuItem>
+                                    <MenuItem value="NETWORK">네트워크계열</MenuItem>
+                                </Select>
+                            </DropInput>
 
-                            <div className="layout">
-                                <InputLayout>
-                                    <Stack spacing={10} className={cx('borderTitle')}>
-                                        계열 명칭
-                                    </Stack>
-                                    <FormControl sx={{ minWidth: 250 }} size="medium">
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="medium"
-                                            size="small"
-                                            value={name}
-                                            name="name"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            fullWidth
-                                        />
-                                    </FormControl>
-                                </InputLayout>
-                            </div>
+                            <DropInput title="계열 명칭">
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="medium"
+                                    size="small"
+                                    value={name}
+                                    name="name"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    fullWidth
+                                />
+                            </DropInput>
                         </InputLayout>
 
                         <ButtonLayout>

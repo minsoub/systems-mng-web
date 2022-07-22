@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Select, Stack } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
@@ -232,8 +231,7 @@ const RoleManagementPage = () => {
     const handleDoubleClick = (rowData) => {};
 
     // new
-    const newClick = (e) => {
-        console.log('called register form');
+    const newClick = () => {
         navigate('/roles/reg');
     };
 

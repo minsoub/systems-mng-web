@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { Button, Grid, MenuItem, Paper, Select } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import SvgIcon from '@mui/material/SvgIcon';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';

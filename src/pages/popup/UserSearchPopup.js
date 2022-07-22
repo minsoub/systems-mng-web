@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import DefaultDataGrid from '../../components/DataGrid/DefaultDataGrid';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import { blue } from '@mui/material/colors';
 import {
     OutlinedInput,

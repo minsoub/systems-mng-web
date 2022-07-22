@@ -4,7 +4,7 @@ import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, TextFi
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
 import './styles.scss';
@@ -464,7 +464,7 @@ const RoleRegForm = () => {
                                     </Grid>
                                 </MainCard>
 
-                                <div className={cx('outButtons')}>
+                                <div className="layout__blank--top">
                                     <ButtonLayout>
                                         <Button
                                             disableElevation

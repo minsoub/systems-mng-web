@@ -12,7 +12,7 @@ import {
     TableHead,
     TableRow
 } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 import FilesApi from 'apis/lrc/project/filesapi';

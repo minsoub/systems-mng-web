@@ -1,11 +1,6 @@
 import React, { useRef } from 'react';
-// material-ui
-import { Box, FormControl, InputAdornment, OutlinedInput, Grid } from '@mui/material';
-
-// assets
+import { FormControl, InputAdornment, OutlinedInput } from '@mui/material';
 import { SearchOutlined } from '@ant-design/icons';
-import DefaultButton from 'components/button/DefaultButton';
-// ==============================|| HEADER CONTENT - SEARCH ||============================== //
 
 const Search = ({ enterEvent }) => {
     const refOutlinedInput = useRef();

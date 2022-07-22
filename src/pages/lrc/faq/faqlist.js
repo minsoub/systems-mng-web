@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, Grid } from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {Button} from '@mui/material';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import ErrorScreen from 'components/ErrorScreen';
 import FaqApis from 'apis/lrc/faq/faqapi';
 import CategoryApis from 'apis/lrc/faq/categoryapi';
 import CategoryContents from './categorycontents';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const FaqContent = (props) => {
     let isSubmitting = false;
@@ -311,15 +312,13 @@ const FaqContent = (props) => {
 
     return (
         <div>
-            <MainCard sx={{ mt: 1, minHeight: 60, marginBottom: 2 }} content={false}>
-                <Grid container>
-                    {categorys.map((item, index) => (
-                        <CategoryContents key={index} id={item.id} content={item.name} count={item.count} filterClick={filterClick} />
-                    ))}
-                </Grid>
+            <MainCard>
+                {categorys.map((item, index) => (
+                    <CategoryContents key={index} id={item.id} content={item.name} count={item.count} filterClick={filterClick} />
+                ))}
             </MainCard>
 
-            <MainCard xs={8}>
+            <ContentLine>
                 <DefaultDataGrid
                     columns={columns}
                     rows={dataGridRows}
@@ -329,7 +328,7 @@ const FaqContent = (props) => {
                     handleGridDoubleClick={handleDoubleClick}
                     selectionChange={handleSelectionChange}
                 />
-            </MainCard>
+            </ContentLine>
 
             <TopInputLayout className="bottomBlank">
                 <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={orderClick}>

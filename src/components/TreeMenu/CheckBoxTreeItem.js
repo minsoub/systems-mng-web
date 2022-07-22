@@ -1,18 +1,13 @@
-import React, { useEffect, useState, forwardRef } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import TreeView from '@mui/lab/TreeView';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem, { useTreeItem } from '@mui/lab/TreeItem';
 import clsx from 'clsx';
 import Typography from '@mui/material/Typography';
-import { Box, Checkbox, FormControlLabel } from '@mui/material';
+import { Checkbox, FormControlLabel } from '@mui/material';
 
 const CustomContent = forwardRef((props, ref) => {
     const { classes, className, label, nodeId, icon: iconProp, expansionIcon, displayIcon, visible, visibleChange, dataClick } = props;
-
     const { disabled, expanded, selected, focused, handleExpansion, handleSelection, preventSelection } = useTreeItem(nodeId);
-
     const icon = iconProp || expansionIcon || displayIcon;
 
     const handleMouseDown = (event) => {
@@ -28,7 +23,7 @@ const CustomContent = forwardRef((props, ref) => {
         dataClick();
     };
 
-    const [visibleItem, setVisibleItem] = useState(visible);
+
 
     useEffect(() => {
         console.log('visible value => {}', visible);
@@ -75,33 +70,12 @@ const CustomContent = forwardRef((props, ref) => {
 });
 
 CustomContent.propTypes = {
-    /**
-     * Override or extend the styles applied to the component.
-     */
     classes: PropTypes.object.isRequired,
-    /**
-     * className applied to the root element.
-     */
     className: PropTypes.string,
-    /**
-     * The icon to display next to the tree node's label. Either a parent or end icon.
-     */
     displayIcon: PropTypes.node,
-    /**
-     * The icon to display next to the tree node's label. Either an expansion or collapse icon.
-     */
     expansionIcon: PropTypes.node,
-    /**
-     * The icon to display next to the tree node's label.
-     */
     icon: PropTypes.node,
-    /**
-     * The tree node label.
-     */
     label: PropTypes.node,
-    /**
-     * The id of the node.
-     */
     nodeId: PropTypes.string.isRequired,
     visible: PropTypes.bool,
     visibleChange: PropTypes.func
@@ -123,29 +97,3 @@ const CheckBoxTreeItem = (props) => {
 };
 
 export default CheckBoxTreeItem;
-
-// export default function IconExpansionTreeView() {
-//     return (
-//         <TreeView
-//             aria-label="icon expansion"
-//             defaultCollapseIcon={<ExpandMoreIcon />}
-//             defaultExpandIcon={<ChevronRightIcon />}
-//             sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
-//         >
-//             <CustomTreeItem nodeId="1" label="Applications">
-//                 <CustomTreeItem nodeId="2" label="Calendar" />
-//                 <CustomTreeItem nodeId="3" label="Chrome" />
-//                 <CustomTreeItem nodeId="4" label="Webstorm" />
-//             </CustomTreeItem>
-//             <CustomTreeItem nodeId="5" label="Documents">
-//                 <CustomTreeItem nodeId="10" label="OSS" />
-//                 <CustomTreeItem nodeId="6" label="MUI">
-//                     <CustomTreeItem nodeId="7" label="src">
-//                         <CustomTreeItem nodeId="8" label="index.js" />
-//                         <CustomTreeItem nodeId="9" label="tree-view.js" />
-//                     </CustomTreeItem>
-//                 </CustomTreeItem>
-//             </CustomTreeItem>
-//         </TreeView>
-//     );
-// }

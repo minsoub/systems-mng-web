@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, FormControl, Grid, MenuItem, OutlinedInput, Select } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
 import AccountApis from 'apis/account/accountapis';
 import HeaderTitle from '../../../components/HeaderTitle';
@@ -10,6 +10,7 @@ import InputLayout from '../../../components/Common/InputLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import './styles.scss';
 import cx from 'classnames';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const AccessMngPage = () => {
     let isSubmitting = false;
@@ -277,7 +278,8 @@ const AccessMngPage = () => {
                         </Grid>
                     </Grid>
                 </MainCard>
-                <MainCard sx={{ mt: 2, height: 750 }} content={false}>
+
+                <ContentLine>
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -285,9 +287,9 @@ const AccessMngPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
-                        height={750}
+                        height={500}
                     />
-                </MainCard>
+                </ContentLine>
                 {/* <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} /> */}
             </Grid>
         </Grid>

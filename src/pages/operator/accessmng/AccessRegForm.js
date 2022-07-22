@@ -25,7 +25,7 @@ import {
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import { styled } from '@mui/material/styles';
 import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';

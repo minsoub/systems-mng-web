@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import FraudReportApi from 'apis/cpc/fraudReport/fraudreportapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -14,6 +14,7 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/FraudReportSearch';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const FraudReportMng = () => {
     const columns = [
@@ -349,8 +350,8 @@ const FraudReportMng = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <Grid className={cx('outButtons searchPointColor')}>
-                    <ButtonLayout>
+                <Grid className={cx(' searchPointColor')}>
+                    <ButtonLayout buttonName="layout--button__bottom">
                         <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
                             초기화
                         </Button>
@@ -360,7 +361,7 @@ const FraudReportMng = () => {
                         </Button>
                     </ButtonLayout>
                 </Grid>
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -369,8 +370,8 @@ const FraudReportMng = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
+                </ContentLine>
+                <Grid className={cx(' searchPointColor')}>
                     <ButtonLayout>
                         <Button
                             disableElevation

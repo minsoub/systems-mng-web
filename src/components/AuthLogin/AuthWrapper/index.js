@@ -8,25 +8,16 @@ import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
-const AuthWrapper = ({ children }) => (
+const AuthWrapper = ({ children, title }) => (
     <Box sx={{ minHeight: '100vh' }}>
         <AuthBackground />
-        <Grid
-            container
-            direction="column"
-            justifyContent="flex-end"
-        >
+        <Grid container direction="column" justifyContent="flex-end">
             <Grid item xs={12} sx={{ ml: 3, mt: 3 }}>
                 <Logo />
             </Grid>
 
-            <Grid
-                item
-                xs={12}
-                className={cx('layOut')}
-                sx={{ minHeight: { xs: 'calc(100vh - 134px)', md: 'calc(100vh - 112px)' } }}
-            >
-                <AuthCard>{children}</AuthCard>
+            <Grid item xs={12} className={cx('layOut')} sx={{ minHeight: { xs: 'calc(100vh - 134px)', md: 'calc(100vh - 112px)' } }}>
+                <AuthCard title={title}>{children}</AuthCard>
             </Grid>
 
             {/* Footer */}

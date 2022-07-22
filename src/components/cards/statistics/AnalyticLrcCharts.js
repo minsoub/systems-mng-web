@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Stack } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import PieChart, { Export, HoverStyle, Legend, Series } from 'devextreme-react/pie-chart';
 
 const AnalyticLrcCharts = ({ title, data }) => {

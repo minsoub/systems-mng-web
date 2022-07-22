@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Checkbox, FormControlLabel, Grid, MenuItem, Select, TextField } from '@mui/material';
 // third party
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import SiteApi from 'apis/site/siteapi';
 import ProgramApi from 'apis/programs/programapi';
 import HeaderTitle from '../../../components/HeaderTitle';
@@ -358,7 +358,7 @@ const ProgramRegForm = () => {
                         </Grid>
                     </MainCard>
 
-                    <div className={cx('outButtons')}>
+                    <div className="layout__blank--top">
                         <ButtonLayout>
                             <Button
                                 disableElevation

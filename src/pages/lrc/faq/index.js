@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Box, Grid, Typography, Tab, Tabs } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import TabPanel from 'components/TabPanel';
 import FaqContent from './faqlist';
 import HeaderTitle from '../../../components/HeaderTitle';
@@ -20,30 +20,22 @@ const FaqContentsPage = () => {
 
                 <MainCard sx={{ mt: 1 }}>
                     <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Box sx={{ width: '100%' }}>
-                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                    <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Grid item xs={8}>
-                                            <Tabs value={value} onChange={tabChange} aria-label="basic tabs example">
-                                                <Tab label="국문" />
-                                                <Tab label="영문" />
-                                            </Tabs>
-                                        </Grid>
-                                    </Grid>
-                                </Box>
+                        <Grid item xs={8}>
+                            <Tabs value={value} onChange={tabChange} aria-label="basic tabs example">
+                                <Tab label="국문" />
+                                <Tab label="영문" />
+                            </Tabs>
+                        </Grid>
 
-                                <Grid container spacing={0} sx={{ mt: 0 }}>
-                                    <Grid item xs={12}>
-                                        <TabPanel value={value} index={0}>
-                                            <FaqContent language={'KO'} value={value} index={0} />
-                                        </TabPanel>
-                                        <TabPanel value={value} index={1}>
-                                            <FaqContent language={'EN'} value={value} index={1} />
-                                        </TabPanel>
-                                    </Grid>
-                                </Grid>
-                            </Box>
+                        <Grid container spacing={0} sx={{ mt: 0 }}>
+                            <Grid item xs={12}>
+                                <TabPanel value={value} index={0}>
+                                    <FaqContent language={'KO'} value={value} index={0} />
+                                </TabPanel>
+                                <TabPanel value={value} index={1}>
+                                    <FaqContent language={'EN'} value={value} index={1} />
+                                </TabPanel>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </MainCard>

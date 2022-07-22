@@ -10,7 +10,7 @@ import {
     Radio,
     RadioGroup
 } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
@@ -342,7 +342,7 @@ const DamageCaseMng = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
+                <Grid className={cx(' searchPointColor')}>
                     <ButtonLayout>
                         <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
                             초기화
@@ -363,7 +363,7 @@ const DamageCaseMng = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
+                <Grid className={cx(' searchPointColor')}>
                     <ButtonLayout>
                         <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
                             선택 삭제

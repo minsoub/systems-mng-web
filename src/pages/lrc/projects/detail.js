@@ -28,7 +28,7 @@ import {
     TableBody,
     TablePagination
 } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 import AnimateButton from 'components/@extended/AnimateButton';

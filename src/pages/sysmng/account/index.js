@@ -22,7 +22,7 @@ import {
     TableRow
 } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import AnimateButton from 'components/@extended/AnimateButton';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -34,6 +34,7 @@ import HeaderTitle from 'components/HeaderTitle';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const AccountManagementPage = () => {
     let isSubmitting = false;
@@ -292,7 +293,7 @@ const AccountManagementPage = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <MainCard sx={{ mt: 2, height: 850 }} content={false}>
+                <ContentLine>
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -300,9 +301,9 @@ const AccountManagementPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
-                        height={850}
+                        height={500}
                     />
-                </MainCard>
+                </ContentLine>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

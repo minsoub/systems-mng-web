@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Paper, Select, Stack, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import SvgIcon from '@mui/material/SvgIcon';
 import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
 import SiteApi from 'apis/site/siteapi';
@@ -20,6 +20,7 @@ import InputLayout from '../../../components/Common/InputLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import './styles.scss';
 import DropInput from '../../../components/Common/DropInput';
+import ContentLine from '../../../components/Common/ContentLine';
 
 function MinusSquare(props) {
     return (
@@ -52,12 +53,8 @@ const SiteMenuMappingForm = () => {
     const navigate = useNavigate();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
     const { siteId } = useSelector((state) => state.auth);
-    const [
-        responseData,
-        requestError,
-        responseLoading,
-        { menumngSearch, menumngDetail, programMapping, programMappingSearch }
-    ] = MenuMngApi();
+    const [responseData, requestError, responseLoading, { menumngSearch, menumngDetail, programMapping, programMappingSearch }] =
+        MenuMngApi();
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
 
     const [expanded, setExpanded] = useState([]);
@@ -531,92 +528,90 @@ const SiteMenuMappingForm = () => {
                         </MainCard>
                     </Grid>
                     <Grid item md={8.8}>
-                        <MainCard sx={{ mt: 2 }}>
-                            <div className="layout--align">
-                                <Item>연결된 프로그램 목록</Item>
+                        <div className="layout--align">
+                            <Item>연결된 프로그램 목록</Item>
 
-                                <Button
-                                    disableElevation
-                                    size="medium"
-                                    type="button"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={minusRegister}
-                                >
-                                    삭제
-                                </Button>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="button"
+                                variant="contained"
+                                color="secondary"
+                                onClick={minusRegister}
+                            >
+                                삭제
+                            </Button>
+                        </div>
+
+                        <Grid container spacing={0} sx={{ mt: 1 }}>
+                            <Grid item xs={8} sm={12}>
+                                <ContentLine>
+                                    <CheckBoxDataGrid
+                                        columns={regColumns}
+                                        rows={dataGridRegisterRows}
+                                        handlePageChange={handlePage}
+                                        handleGridClick={handleClick}
+                                        handleGridDoubleClick={handleDoubleClick}
+                                        selectionChange={handleSelectionRegisterChange}
+                                        height={240}
+                                    />
+                                </ContentLine>
+                            </Grid>
+                        </Grid>
+                        <Grid container spacing={0} sx={{ mt: 2 }} className="layout--align">
+                            <Item>프로그램 목록</Item>
+
+                            <div className="program--list">
+                                <div className="program--list__align">
+                                    <InputLayout>
+                                        <FormControl sx={{ minWidth: 250 }} size="medium">
+                                            <TextField
+                                                id="filled-hidden-label-small"
+                                                type="text"
+                                                size="medium"
+                                                value={keyword}
+                                                name="keyword"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                onKeyPress={keyPress}
+                                                placeholder="프로그램명 입력"
+                                                fullWidth
+                                            />
+                                        </FormControl>
+                                    </InputLayout>
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        onClick={programSearchClick}
+                                        className={cx('layout--button--rightBlank')}
+                                        color="secondary"
+                                    >
+                                        검색
+                                    </Button>
+                                    <Button disableElevation size="medium" type="button" variant="contained" onClick={plusRegister}>
+                                        등록
+                                    </Button>
+                                </div>
                             </div>
 
                             <Grid container spacing={0} sx={{ mt: 1 }}>
                                 <Grid item xs={8} sm={12}>
-                                    <MainCard sx={{ mt: 0 }} content={false}>
+                                    <ContentLine>
                                         <CheckBoxDataGrid
-                                            columns={regColumns}
-                                            rows={dataGridRegisterRows}
+                                            columns={searchColumns}
+                                            rows={dataGridSearchRows}
                                             handlePageChange={handlePage}
                                             handleGridClick={handleClick}
                                             handleGridDoubleClick={handleDoubleClick}
-                                            selectionChange={handleSelectionRegisterChange}
+                                            selectionChange={handleSelectionSearchChange}
                                             height={240}
                                         />
-                                    </MainCard>
+                                    </ContentLine>
                                 </Grid>
                             </Grid>
-                            <Grid container spacing={0} sx={{ mt: 2 }} className="layout--align">
-                                <Item>프로그램 목록</Item>
-
-                                <div className="program--list">
-                                    <div className="program--list__align">
-                                        <InputLayout>
-                                            <FormControl sx={{ minWidth: 250 }} size="medium">
-                                                <TextField
-                                                    id="filled-hidden-label-small"
-                                                    type="text"
-                                                    size="medium"
-                                                    value={keyword}
-                                                    name="keyword"
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                    onKeyPress={keyPress}
-                                                    placeholder="프로그램명 입력"
-                                                    fullWidth
-                                                />
-                                            </FormControl>
-                                        </InputLayout>
-                                        <Button
-                                            disableElevation
-                                            size="medium"
-                                            type="button"
-                                            variant="contained"
-                                            onClick={programSearchClick}
-                                            className={cx('layout--button--rightBlank')}
-                                            color="secondary"
-                                        >
-                                            검색
-                                        </Button>
-                                        <Button disableElevation size="medium" type="button" variant="contained" onClick={plusRegister}>
-                                            등록
-                                        </Button>
-                                    </div>
-                                </div>
-
-                                <Grid container spacing={0} sx={{ mt: 1 }}>
-                                    <Grid item xs={8} sm={12}>
-                                        <MainCard sx={{ mt: 0 }} content={false}>
-                                            <CheckBoxDataGrid
-                                                columns={searchColumns}
-                                                rows={dataGridSearchRows}
-                                                handlePageChange={handlePage}
-                                                handleGridClick={handleClick}
-                                                handleGridDoubleClick={handleDoubleClick}
-                                                selectionChange={handleSelectionSearchChange}
-                                                height={240}
-                                            />
-                                        </MainCard>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </MainCard>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>

@@ -15,7 +15,7 @@ import {
     Typography
 } from '@mui/material';
 import { makeStyles, withStyles } from '@mui/styles';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import StatusApi from 'apis/lrc/status/statusapi';
 import FoundationApi from 'apis/lrc/project/foundationapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -528,7 +528,7 @@ const ProjectsPage = () => {
                     </Grid>
                 </MainCard>
 
-                <div className={cx('outButtons')}>
+                <div className="layout__blank--top">
                     <ButtonLayout>
                         <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
                             검색
