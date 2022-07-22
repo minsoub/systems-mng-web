@@ -386,6 +386,12 @@ const FraudReportMng = () => {
                         </Button>
                     </ButtonLayout>
                 </Grid>
+                <DownloadReason
+                    open={downloadReasonOpen}
+                    reason={downloadReason}
+                    setReason={setDownloadReason}
+                    handleClose={handleDownloadReasonClose}
+                />
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
