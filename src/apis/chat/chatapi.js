@@ -53,6 +53,16 @@ const ChatApi = () => {
             requestConfig: {}
         });
     };
+    // 채팅 내역 다운로드
+    const chatExcelDownload = (project_id) => {
+        callApi('getExcel', {
+            axiosInstance: axiosInstanceDownload,
+            method: 'get',
+            url: `/mng/lrc/service/chat/excel/export?id=${project_id}`,
+            requestConfig: {}
+        });
+    };
+
     return [
         resData,
         reqError,
@@ -62,7 +72,8 @@ const ChatApi = () => {
             insertChatFile: insertFileData,
             getChatFile: getFile,
             getChatFileList: getFileListData,
-            deleteChat: deleteChatMessage
+            deleteChat: deleteChatMessage,
+            chatExcelDownload: chatExcelDownload
         }
     ];
 };

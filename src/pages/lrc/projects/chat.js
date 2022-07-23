@@ -5,10 +5,11 @@ import ChatApi from 'apis/chat/chatapi';
 import MessageLeft from 'components/Chat/MessageLeft';
 import MessageRight from 'components/Chat/MessageRight';
 import ChattingRoom from 'components/Chat/ChattingRoom';
+import { Box, Button, FormControl, Grid, Tab, Table, TableBody, TableCell, TableRow, Tabs, TextField, Typography } from '@mui/material';
 
 const Chat = (props) => {
     const { projectId, children, tabindex, index, ...other } = props;
-    const [resData, reqError, loading, { chatExistsAndSave, deleteChat }] = ChatApi();
+    const [resData, reqError, loading, { chatExistsAndSave, deleteChat, chatExcelDownload }] = ChatApi();
     const { siteId } = useSelector((state) => state.auth);
     const [
         clientError,
@@ -25,6 +26,8 @@ const Chat = (props) => {
 
     const domMessage = useRef();
     const [message, setMessage] = useState('');
+
+    const refKeyword = useRef(); // < HTMLInputElement > null;
 
     useEffect(() => {
         let data = {
@@ -60,6 +63,23 @@ const Chat = (props) => {
                         sendJoinChat('join-chat');
                     }
                 }
+                break;
+            case 'getExcel':
+                if (resData.data) {
+                    let res = resData;
+                    console.log('res data....');
+                    console.log(res);
+                    console.log(res.fileName);
+                    const url = window.URL.createObjectURL(new Blob([res.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'ChatMessage.xlsx');
+                    link.style.cssText = 'display:none';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                }
+                break;
         }
     }, [resData]);
 
@@ -144,9 +164,34 @@ const Chat = (props) => {
         console.log(id);
         deleteChat(id);
     };
+    const searchClick = () => {};
+
+    // 내역 다운로드
+    const excelDownload = () => {
+        chatExcelDownload(projectId);
+    };
 
     return (
         <div className="chatting--container">
+            <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                <TableRow>
+                    <TableCell component="th" scope="row">
+                        <a href="#" onClick={excelDownload}>
+                            내역 다운로드
+                        </a>
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                        <TextField id="symbol" name="symbol" inputRef={refKeyword} type="text" />
+                    </TableCell>
+                    <TableCell align="right" component="th" scope="row">
+                        <FormControl sx={{ m: 0 }} size="small">
+                            <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                                검색
+                            </Button>
+                        </FormControl>
+                    </TableCell>
+                </TableRow>
+            </Table>
             <ChattingRoom sendMessage={sendRequest}>
                 {messageList.map((item, idx) => {
                     if (item.sender === 'Listing Team') {

@@ -10,6 +10,8 @@ const CustomContent = forwardRef((props, ref) => {
     const { disabled, expanded, selected, focused, handleExpansion, handleSelection, preventSelection } = useTreeItem(nodeId);
     const icon = iconProp || expansionIcon || displayIcon;
 
+    const [visibleItem, setVisibleItem] = useState(visible);
+
     const handleMouseDown = (event) => {
         preventSelection(event);
     };
@@ -22,8 +24,6 @@ const CustomContent = forwardRef((props, ref) => {
         handleSelection(event);
         dataClick();
     };
-
-
 
     useEffect(() => {
         console.log('visible value => {}', visible);

@@ -66,7 +66,7 @@ const useAxios = () => {
                             refresh_token: authData.refreshToken
                         };
                         try {
-                            console.log('call start....');
+                            console.log('refresh token call start....');
                             console.log(requestTokenData);
                             axiosInstanceAuth.defaults.headers.my_site_id = site_id;
                             console.log('api refresh call...');
