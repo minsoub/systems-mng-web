@@ -16,6 +16,7 @@ import styles from './styles.module.scss';
 import DownloadReason from 'components/Security/DownloadReason';
 import classNames from 'classnames/bind';
 import ContentLine from '../../../components/Common/ContentLine';
+import * as PropTypes from 'prop-types';
 const cx = classNames.bind(styles);
 
 const LegalCounselingMng = () => {
@@ -370,7 +371,7 @@ const LegalCounselingMng = () => {
                     </div>
                 </MainCard>
 
-                <ButtonLayout buttonName="layout--button__bottom">
+                <ButtonLayout buttonName="bottom--blank__small">
                     <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
                         초기화
                     </Button>
@@ -390,20 +391,11 @@ const LegalCounselingMng = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </ContentLine>
-                <Grid className={cx(' searchPointColor')}>
-                    <ButtonLayout>
-                        <Button
-                            disableElevation
-                            size="medium"
-                            type="submit"
-                            variant="contained"
-                            color="secondary"
-                            onClick={excelDownloadClick}
-                        >
-                            엑셀 다운로드
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
+                <ButtonLayout>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelDownloadClick}>
+                        엑셀 다운로드
+                    </Button>
+                </ButtonLayout>
                 <DownloadReason
                     open={downloadReasonOpen}
                     reason={downloadReason}
@@ -420,3 +412,10 @@ const LegalCounselingMng = () => {
 };
 
 export default LegalCounselingMng;
+
+DownloadReason.propTypes = {
+    reason: PropTypes.string,
+    setReason: PropTypes.func,
+    handleClose: PropTypes.func,
+    open: PropTypes.bool
+};

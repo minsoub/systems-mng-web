@@ -296,7 +296,7 @@ const NoticeMng = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <ButtonLayout buttonName="layout--button__bottom">
+                <ButtonLayout buttonName="bottom--blank__small">
                     <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={clearClick}>
                         초기화
                     </Button>

@@ -16,6 +16,7 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/FraudReportSearch';
 import DownloadReason from 'components/Security/DownloadReason';
 import ContentLine from '../../../components/Common/ContentLine';
+import * as PropTypes from 'prop-types';
 
 const FraudReportMng = () => {
     const columns = [
@@ -366,7 +367,7 @@ const FraudReportMng = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <ButtonLayout buttonName="layout--button__bottom">
+                <ButtonLayout buttonName="bottom--blank__small">
                     <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
                         초기화
                     </Button>
@@ -416,3 +417,10 @@ const FraudReportMng = () => {
 };
 
 export default FraudReportMng;
+
+DownloadReason.propTypes = {
+    reason: PropTypes.any,
+    setReason: PropTypes.any,
+    handleClose: PropTypes.any,
+    open: PropTypes.any
+};

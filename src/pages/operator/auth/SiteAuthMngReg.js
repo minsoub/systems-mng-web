@@ -751,43 +751,40 @@ const SiteAuthMngRegForm = () => {
                 <HeaderTitle titleNm="권한 맵핑 등록" menuStep01="사이트 관리" menuStep02="권한 관리" menuStep03="권한 맵핑 등록" />
 
                 <MainCard>
-                    <FlexBox>
-                        <DropInput title="사이트 구분">
-                            <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
-                                <MenuItem value="">
-                                    <em>Choose a Site Type</em>
-                                </MenuItem>
-                                {siteList
-                                    .filter((item) => item.id === siteId)
-                                    .map((item, index) => (
+                    <TopInputLayout>
+                        <FlexBox>
+                            <DropInput title="사이트 구분">
+                                <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
+                                    {siteList
+                                        .filter((item) => item.id === siteId)
+                                        .map((item, index) => (
+                                            <MenuItem key={index} value={item.id}>
+                                                {item.name}
+                                            </MenuItem>
+                                        ))}
+                                </Select>
+                            </DropInput>
+
+                            <DropInput title="Type">
+                                <Select name="type" label="Role Type" value={type} onChange={handleChange}>
+                                    <MenuItem value="ADMIN">ADMIN</MenuItem>
+                                    <MenuItem value="USER">USER</MenuItem>
+                                </Select>
+                            </DropInput>
+
+                            <DropInput title="Role Name">
+                                <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
+                                    <MenuItem value="">
+                                        <em>Choose a Role Name</em>
+                                    </MenuItem>
+                                    {roleList.map((item, index) => (
                                         <MenuItem key={index} value={item.id}>
                                             {item.name}
                                         </MenuItem>
                                     ))}
-                            </Select>
-                        </DropInput>
-
-                        <DropInput title="Type">
-                            <Select name="type" label="Role Type" value={type} onChange={handleChange}>
-                                <MenuItem value="ADMIN">ADMIN</MenuItem>
-                                <MenuItem value="USER">USER</MenuItem>
-                            </Select>
-                        </DropInput>
-                    </FlexBox>
-
-                    <TopInputLayout className="bottom--blank__top">
-                        <DropInput title="Role Name">
-                            <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
-                                <MenuItem value="">
-                                    <em>Choose a Role Name</em>
-                                </MenuItem>
-                                {roleList.map((item, index) => (
-                                    <MenuItem key={index} value={item.id}>
-                                        {item.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </DropInput>
+                                </Select>
+                            </DropInput>
+                        </FlexBox>
 
                         <ButtonLayout>
                             <Button

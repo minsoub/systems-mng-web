@@ -15,6 +15,7 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/DamageCaseSearch';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const DamageCaseMng = () => {
     const columns = [
@@ -339,18 +340,18 @@ const DamageCaseMng = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <Grid className={cx(' searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
-                            초기화
-                        </Button>
 
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                            검색
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
-                <MainCard sx={{ mt: 2 }} content={false}>
+                <ButtonLayout buttonName="bottom--blank__small">
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={clearClick}>
+                        초기화
+                    </Button>
+
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={searchClick}>
+                        검색
+                    </Button>
+                </ButtonLayout>
+
+                <ContentLine>
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -359,7 +360,7 @@ const DamageCaseMng = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
+                </ContentLine>
                 <Grid className={cx(' searchPointColor')}>
                     <ButtonLayout>
                         <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>

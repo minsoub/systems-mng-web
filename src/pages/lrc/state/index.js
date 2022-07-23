@@ -11,6 +11,7 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import cx from 'classnames';
 import './styles.scss';
 import DropInput from '../../../components/Common/DropInput';
+import FlexBox from '../../../components/Common/FlexBox';
 
 function MinusSquare(props) {
     return (
@@ -326,6 +327,14 @@ const StatusRegForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="상태값 관리" menuStep01="사이트 운영" menuStep02="상태값 관리" menuStep03="상태값 관리" />
 
+                <ButtonLayout buttonName="bottom--blank__small">
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                        저장
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={cancelClick}>
+                        취소
+                    </Button>
+                </ButtonLayout>
                 <Grid container xs={12}>
                     <Grid item xs={4}>
                         <MainCard>
@@ -348,8 +357,8 @@ const StatusRegForm = () => {
 
                     <Grid item xs={8} className="blank--layout">
                         <MainCard sx={{ height: 400 }} content={false} className="stateSubmit layout--inner" title="상태값 등록">
-                            <div className="common-grid--layout">
-                                <div className="bottom--blank">
+                            <div className="bottom--blank">
+                                <FlexBox>
                                     <DropInput title="상태명">
                                         <TextField
                                             id="filled-hidden-label-small"
@@ -363,8 +372,6 @@ const StatusRegForm = () => {
                                             fullWidth
                                         />
                                     </DropInput>
-                                </div>
-                                <div className="bottom--blank">
                                     <DropInput title="상태명 (영문)">
                                         <TextField
                                             id="filled-hidden-label-small"
@@ -377,8 +384,10 @@ const StatusRegForm = () => {
                                             fullWidth
                                         />
                                     </DropInput>
-                                </div>
-                                <div className="bottom--blank">
+                                </FlexBox>
+                            </div>
+                            <div className="bottom--blank">
+                                <FlexBox>
                                     <DropInput title="분류 위치">
                                         <TextField
                                             id="outlined-multiline-static"
@@ -389,8 +398,6 @@ const StatusRegForm = () => {
                                             fullWidth
                                         />
                                     </DropInput>
-                                </div>
-                                <div className="bottom--blank">
                                     <DropInput title="정렬 순서">
                                         <TextField
                                             id="filled-hidden-label-small"
@@ -403,33 +410,23 @@ const StatusRegForm = () => {
                                             fullWidth
                                         />
                                     </DropInput>
-                                </div>
-
-                                <DropInput title="사용 여부">
-                                    <RadioGroup
-                                        row
-                                        aria-labelledby="demo-row-radio-buttons-group-label"
-                                        name="use_yn"
-                                        value={use_yn}
-                                        onChange={handleChange}
-                                    >
-                                        <FormControlLabel value="true" control={<Radio />} label="사용함" />
-                                        <FormControlLabel value="false" control={<Radio />} label="사용안함" />
-                                    </RadioGroup>
-                                </DropInput>
+                                </FlexBox>
                             </div>
+                            <DropInput title="사용 여부">
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="demo-row-radio-buttons-group-label"
+                                    name="use_yn"
+                                    value={use_yn}
+                                    onChange={handleChange}
+                                >
+                                    <FormControlLabel value="true" control={<Radio />} label="사용함" />
+                                    <FormControlLabel value="false" control={<Radio />} label="사용안함" />
+                                </RadioGroup>
+                            </DropInput>
                         </MainCard>
                     </Grid>
                 </Grid>
-
-                <ButtonLayout>
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                        저장
-                    </Button>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={cancelClick}>
-                        취소
-                    </Button>
-                </ButtonLayout>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

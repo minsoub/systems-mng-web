@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { DataGrid, gridPageCountSelector, gridPageSelector, useGridApiContext, useGridSelector, GridToolbar } from '@mui/x-data-grid';
-import { useDemoData } from '@mui/x-data-grid-generator';
-import { styled } from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
+import { DataGrid, gridPageCountSelector, gridPageSelector, GridToolbar, useGridApiContext, useGridSelector } from '@mui/x-data-grid';
+import { alpha, styled } from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-import { SortByAlpha } from '../../../node_modules/@mui/icons-material/index';
-import { alpha } from '@mui/material/styles';
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     border: 1,
@@ -33,15 +30,6 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     '& .MuiDataGrid-columnHeader': {
         backgroundColor: alpha('#eeeeee', 0.7),
         height: 45
-    },
-    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-        borderRight: `1px solid '#303030'`
-    },
-    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-        borderLeft: `1px solid '#303030'`
-    },
-    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-        borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'}`
     },
     '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
         borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'}`

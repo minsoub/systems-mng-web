@@ -203,81 +203,54 @@ const AccessMngPage = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="사용자 접근관리" menuStep01="사이트 관리" menuStep02="사용자 접근관리" />
 
-                <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <TopInputLayout>
-                                <InputLayout>
-                                    <FormControl sx={{ minWidth: 160 }} size="medium" className="layout--blank">
-                                        <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
-                                            <MenuItem value="true">사용</MenuItem>
-                                            <MenuItem value="false">미사용</MenuItem>
-                                            <MenuItem value="">전체</MenuItem>
-                                        </Select>
-                                    </FormControl>
+                <TopInputLayout className="bottom--blank__small bottom--blank__top">
+                    <InputLayout>
+                        <FormControl sx={{ minWidth: 160 }} size="medium" className="layout--blank">
+                            <Select name="status" label="계정상태" value={is_use} onChange={isUseChanged}>
+                                <MenuItem value="true">사용</MenuItem>
+                                <MenuItem value="false">미사용</MenuItem>
+                                <MenuItem value="">전체</MenuItem>
+                            </Select>
+                        </FormControl>
 
-                                    <FormControl sx={{ minWidth: 250 }} size="medium">
-                                        <OutlinedInput
-                                            fullWidth
-                                            id="word"
-                                            type="text"
-                                            value={keyword}
-                                            name="word"
-                                            placeholder=""
-                                            onChange={keywordChanged}
-                                        />
-                                    </FormControl>
-                                </InputLayout>
+                        <FormControl sx={{ minWidth: 250 }} size="medium">
+                            <OutlinedInput
+                                fullWidth
+                                id="word"
+                                type="text"
+                                value={keyword}
+                                name="word"
+                                placeholder=""
+                                onChange={keywordChanged}
+                            />
+                        </FormControl>
+                    </InputLayout>
 
-                                <ButtonLayout>
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        size="medium"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={searchClick}
-                                    >
-                                        검색
-                                    </Button>
-                                    <Button
-                                        disableElevation
-                                        size="medium"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={newClick}
-                                    >
-                                        신규
-                                    </Button>
+                    <ButtonLayout>
+                        <Button
+                            disableElevation
+                            disabled={isSubmitting}
+                            size="medium"
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            onClick={searchClick}
+                        >
+                            검색
+                        </Button>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
+                            신규
+                        </Button>
 
-                                    <Button
-                                        disableElevation
-                                        size="medium"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={deleteClick}
-                                    >
-                                        삭제
-                                    </Button>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={deleteClick}>
+                            삭제
+                        </Button>
 
-                                    <Button
-                                        disableElevation
-                                        size="medium"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={listClick}
-                                    >
-                                        리스트
-                                    </Button>
-                                </ButtonLayout>
-                            </TopInputLayout>
-                        </Grid>
-                    </Grid>
-                </MainCard>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            리스트
+                        </Button>
+                    </ButtonLayout>
+                </TopInputLayout>
 
                 <ContentLine>
                     <CheckBoxDataGrid

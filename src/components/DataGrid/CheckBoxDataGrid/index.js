@@ -84,7 +84,7 @@ function CheckBoxPagination() {
             shape="rounded"
             page={page + 1}
             count={pageCount}
-            // @ts-expect-error
+            className="pagination"
             renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
             onChange={(event, value) => apiRef.current.setPage(value - 1)}
         />

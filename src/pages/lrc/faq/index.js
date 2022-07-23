@@ -17,24 +17,18 @@ const FaqContentsPage = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="콘텐츠 관리" menuStep01="사이트 운영" menuStep02="FAQ 관리" menuStep03="콘텐츠 관리" />
 
-                <Grid>
-                    <Grid item xs={8}>
-                        <Tabs value={value} onChange={tabChange} aria-label="basic tabs example">
-                            <Tab label="국문" />
-                            <Tab label="영문" />
-                        </Tabs>
-                    </Grid>
+                <Tabs value={value} onChange={tabChange} aria-label="basic tabs example" className="bottom--blank">
+                    <Tab label="국문" />
+                    <Tab label="영문" />
+                </Tabs>
 
-                    <Grid container spacing={0} sx={{ mt: 0 }}>
-                        <Grid item xs={12}>
-                            <TabPanel value={value} index={0}>
-                                <FaqContent language={'KO'} value={value} index={0} />
-                            </TabPanel>
-                            <TabPanel value={value} index={1}>
-                                <FaqContent language={'EN'} value={value} index={1} />
-                            </TabPanel>
-                        </Grid>
-                    </Grid>
+                <Grid item xs={12}>
+                    <TabPanel value={value} index={0}>
+                        <FaqContent language={'KO'} value={value} index={0} />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <FaqContent language={'EN'} value={value} index={1} />
+                    </TabPanel>
                 </Grid>
             </Grid>
         </Grid>

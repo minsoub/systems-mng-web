@@ -10,7 +10,6 @@ import moment from 'moment';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
-import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/BlockChainNewsSearch';
 import ContentLine from '../../../components/Common/ContentLine';
@@ -304,7 +303,7 @@ const BlockChainNewsMng = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <ButtonLayout buttonName="layout--button__bottom">
+                <ButtonLayout buttonName="bottom--blank__small">
                     <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
                         초기화
                     </Button>
