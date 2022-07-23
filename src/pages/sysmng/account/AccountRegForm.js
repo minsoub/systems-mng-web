@@ -536,7 +536,7 @@ const AccountRegForm = () => {
                 <Grid item xs={12} md={7} lg={12}>
                     <HeaderTitle titleNm="계정 관리" menuStep01="통합시스템 관리" menuStep02="계정 관리" />
 
-                    <MainCard>
+                    <MainCard border={false}>
                         <div className="account--layout">
                             <DropInput title="이름">
                                 <TextField

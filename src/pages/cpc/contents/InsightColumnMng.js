@@ -361,17 +361,15 @@ const InsightColumnMng = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <Grid className={cx(' searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
-                            초기화
-                        </Button>
+                <ButtonLayout buttonName="bottom--blank__small">
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
+                        초기화
+                    </Button>
 
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                            검색
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                        검색
+                    </Button>
+                </ButtonLayout>
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <CheckBoxDataGrid
                         columns={columns}

@@ -246,6 +246,9 @@ html [type='button'],
     width: 186px;
 }
 
+.css-1yi3i18 {
+    inset: 0 0 0;
+}
 .inputLayout {
     display: flex;
 }
@@ -263,6 +266,10 @@ html [type='button'],
 
 .bottom--blank__top {
     margin-top: 1.5rem;
+}
+
+.bottom--blank__small {
+    margin-bottom: 0.6rem;
 }
 
 .layout--align {

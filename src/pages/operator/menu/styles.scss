@@ -13,11 +13,9 @@
 .menuButton {
     margin-top: 2rem;
 }
-.common-grid-layout {
-    @include table($width: 100%, $titleWidth: 25%, $conWidth: 75%);
-    table {
-        width: 100%;
-    }
+
+.menu--right {
+    padding-left: 2rem;
 }
 
 .css-7mgabj-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {

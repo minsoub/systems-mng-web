@@ -310,7 +310,7 @@ const ServiceLog = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <Grid className={cx('layout--button__bottom')}>
+                <Grid className={cx('bottom--blank__small')}>
                     <ButtonLayout>
                         <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
                             검색

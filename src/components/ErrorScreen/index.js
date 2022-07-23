@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// material-ui
 import { Alert, AlertTitle, Collapse, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import ContentLine from '../Common/ContentLine';

@@ -13,6 +13,8 @@ import HeaderTitle from '../../../components/HeaderTitle';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import cx from 'classnames';
 import './styles.scss';
+import DropInput from '../../../components/Common/DropInput';
+import FlexBox from '../../../components/Common/FlexBox';
 
 function MinusSquare(props) {
     return (
@@ -480,6 +482,11 @@ const SiteMenuRegForm = () => {
                 {/* header top */}
                 <HeaderTitle titleNm="메뉴 등록" menuStep01="사이트 관리" menuStep02="메뉴 관리" menuStep03="메뉴 등록" />
 
+                <ButtonLayout buttonName="bottom--blank__small bottom--blank__top">
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                        저장
+                    </Button>
+                </ButtonLayout>
                 <Grid xs={12} container>
                     <Grid item xs={4} className="menu--submit">
                         <MainCard>
@@ -500,206 +507,175 @@ const SiteMenuRegForm = () => {
                         </MainCard>
                     </Grid>
 
-                    <Grid item xs={8}>
-                        <div className="common-grid-layout">
-                            <table>
-                                <tr>
-                                    <th className={'tb--title'}>메뉴 ID</th>
-                                    <td>
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="medium"
-                                            value={id}
-                                            name="id"
-                                            inputProps={{ readOnly: true }}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="신규 등록시 자동입력"
-                                            fullWidth
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className={'tb--title'}>메뉴명</th>
-                                    <td>
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="medium"
-                                            value={name}
-                                            name="name"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="Input the name"
-                                            fullWidth
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className={'tb--title'}>상위 메뉴 ID</th>
-                                    <td>
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="medium"
-                                            value={parents_menu_id}
-                                            name="parents_menu_id"
-                                            inputProps={{ readOnly: true }}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="선택시 자동입력"
-                                            fullWidth
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className={'tb--title'}>상위 메뉴명</th>
-                                    <td>
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="medium"
-                                            value={parents_menu_name}
-                                            name="parents_menu_name"
-                                            inputProps={{ readOnly: true }}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="선택시 자동입력"
-                                            fullWidth
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className={'tb--title'}>정렬 순서</th>
-                                    <td>
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="medium"
-                                            value={order}
-                                            name="order"
-                                            inputProps={{ readOnly: false }}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="순서 입력"
-                                            fullWidth
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className={'tb--title'}>사용 여부</th>
-                                    <td>
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    name="is_use"
-                                                    value={is_use}
-                                                    checked={is_use}
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                />
-                                            }
-                                            label="사용함"
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className={'tb--title'}>메뉴 URL</th>
-                                    <td>
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="medium"
-                                            value={url}
-                                            name="url"
-                                            inputProps={{ readOnly: false }}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="Menu URL 입력"
-                                            fullWidth
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className={'tb--title'}>메뉴 타입</th>
-                                    <td>
-                                        <Select name="type" label="메뉴 타입" value={type} onChange={handleChange}>
-                                            <MenuItem value="ITEM">ITEM</MenuItem>
-                                            <MenuItem value="GROUP">GROUP</MenuItem>
-                                        </Select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className={'tb--title'}>Target</th>
-                                    <td>
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    name="target"
-                                                    value={target}
-                                                    checked={target}
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                />
-                                            }
-                                            label="사용함"
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className={'tb--title'}>메뉴 아이콘</th>
-                                    <td>
-                                        <Select name="icon" label="메뉴 아이콘" value={icon} onChange={handleChange}>
-                                            <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
-                                            <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
-                                        </Select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className={'tb--title'}>External Link</th>
-                                    <td>
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    name="external_link"
-                                                    value={external_link}
-                                                    checked={external_link}
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                />
-                                            }
-                                            label="외부링크 사용함"
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className={'tb--title'}>비고</th>
-                                    <td>
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="medium"
-                                            value={description}
-                                            name="description"
-                                            inputProps={{ readOnly: false }}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="비고 입력"
-                                            fullWidth
-                                        />
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                    <Grid item xs={8} className="menu--right">
+                        <MainCard>
+                            <FlexBox>
+                                <DropInput title="메뉴 ID" className="bottom--blank">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="medium"
+                                        value={id}
+                                        name="id"
+                                        inputProps={{ readOnly: true }}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="신규 등록시 자동입력"
+                                        fullWidth
+                                    />
+                                </DropInput>
+
+                                <DropInput title="메뉴명" className="bottom--blank">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="medium"
+                                        value={name}
+                                        name="name"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="Input the name"
+                                        fullWidth
+                                    />
+                                </DropInput>
+                            </FlexBox>
+                            <FlexBox>
+                                <DropInput title="상위 메뉴 ID" className="bottom--blank">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="medium"
+                                        value={parents_menu_id}
+                                        name="parents_menu_id"
+                                        inputProps={{ readOnly: true }}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="선택시 자동입력"
+                                        fullWidth
+                                    />
+                                </DropInput>
+                                <DropInput title="상위 메뉴명" className="bottom--blank">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="medium"
+                                        value={parents_menu_name}
+                                        name="parents_menu_name"
+                                        inputProps={{ readOnly: true }}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="선택시 자동입력"
+                                        fullWidth
+                                    />
+                                </DropInput>
+                            </FlexBox>
+                            <FlexBox>
+                                <DropInput title="정렬 순서" className="bottom--blank">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="medium"
+                                        value={order}
+                                        name="order"
+                                        inputProps={{ readOnly: false }}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="순서 입력"
+                                        fullWidth
+                                    />
+                                </DropInput>
+                                <DropInput title="사용 여부" className="bottom--blank">
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                name="is_use"
+                                                value={is_use}
+                                                checked={is_use}
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                            />
+                                        }
+                                        label="사용함"
+                                    />
+                                </DropInput>
+                            </FlexBox>
+                            <FlexBox>
+                                <DropInput title="메뉴 URL" className="bottom--blank">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="medium"
+                                        value={url}
+                                        name="url"
+                                        inputProps={{ readOnly: false }}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="Menu URL 입력"
+                                        fullWidth
+                                    />
+                                </DropInput>
+                                <DropInput title="메뉴 타입" className="bottom--blank">
+                                    <Select name="type" label="메뉴 타입" value={type} onChange={handleChange}>
+                                        <MenuItem value="ITEM">ITEM</MenuItem>
+                                        <MenuItem value="GROUP">GROUP</MenuItem>
+                                    </Select>
+                                </DropInput>
+                            </FlexBox>
+                            <FlexBox>
+                                <DropInput title="Target" className="bottom--blank">
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                name="target"
+                                                value={target}
+                                                checked={target}
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                            />
+                                        }
+                                        label="사용함"
+                                    />
+                                </DropInput>
+                                <DropInput title="메뉴 아이콘" className="bottom--blank">
+                                    <Select name="icon" label="메뉴 아이콘" value={icon} onChange={handleChange}>
+                                        <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
+                                        <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
+                                    </Select>
+                                </DropInput>
+                            </FlexBox>
+                            <FlexBox>
+                                <DropInput title="External Link" className="bottom--blank">
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                name="external_link"
+                                                value={external_link}
+                                                checked={external_link}
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                            />
+                                        }
+                                        label="외부링크 사용함"
+                                    />
+                                </DropInput>
+                                <DropInput title="비고" className="bottom--blank">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="medium"
+                                        value={description}
+                                        name="description"
+                                        inputProps={{ readOnly: false }}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="비고 입력"
+                                        fullWidth
+                                    />
+                                </DropInput>
+                            </FlexBox>
+                        </MainCard>
                     </Grid>
                 </Grid>
-
-                <ButtonLayout>
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                        저장
-                    </Button>
-                </ButtonLayout>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

@@ -13,6 +13,7 @@ import cx from 'classnames';
 import moment from 'moment';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import './styles.module.scss';
+import ContentLine from '../../../../../components/Common/ContentLine';
 
 function BoardSearchDialog(props) {
     const listColumns = [
@@ -329,8 +330,8 @@ function BoardSearchDialog(props) {
 
     return (
         <Dialog onClose={handleClose} open={open} maxWidth={1280}>
-            <DialogContent style={{height: '1135px'}}>
-                <Typography sx={{ mt: 1, mb: 0 }} variant="h4" gutterBottom component="div">
+            <DialogContent style={{ height: '1135px' }}>
+                <Typography sx={{ mt: 1, mb: 0 }} variant="h4" gutterBottom component="div" className="bottom--blank">
                     게시글 선택
                 </Typography>
                 <MainCard>
@@ -341,28 +342,26 @@ function BoardSearchDialog(props) {
                         period={period}
                         handleBlur={handleBlur}
                         handleChange={handleChange}
-                        startName="from_date"
-                        endName="to_date"
+                        startName="start_date"
+                        endName="end_date"
                     />
 
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
-                            초기화
-                        </Button>
+                <ButtonLayout>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
+                        초기화
+                    </Button>
 
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                            검색
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={searchClick}>
+                        검색
+                    </Button>
+                </ButtonLayout>
                 <Typography sx={{ mt: 1, mb: 1 }} variant="h5" gutterBottom component="div">
                     게시글 리스트
                 </Typography>
-                <MainCard sx={{ mt: 0 }} content={false}>
+                <ContentLine>
                     <DefaultDataGrid
                         height={330}
                         pageSize={4}
@@ -373,11 +372,11 @@ function BoardSearchDialog(props) {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
+                </ContentLine>
                 <Typography sx={{ mt: 1, mb: 1 }} variant="h5" gutterBottom component="div">
                     선택된 게시글
                 </Typography>
-                <MainCard sx={{ mt: 0 }} content={false}>
+                <ContentLine>
                     <DefaultDataGrid
                         height={280}
                         columns={selectedColumns}
@@ -387,40 +386,15 @@ function BoardSearchDialog(props) {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={handleClose}>
-                            닫기
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
-                            저장
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
-                <MainCard sx={{ mt: 1 }} content={false}>
-                    <Collapse in={errorOpen}>
-                        <Alert
-                            severity="error"
-                            action={
-                                <IconButton
-                                    aria-label="close"
-                                    color="inherit"
-                                    size="small"
-                                    onClick={() => {
-                                        errorClear();
-                                    }}
-                                >
-                                    <CloseIcon fontSize="inherit" />
-                                </IconButton>
-                            }
-                            sx={{ mb: 2 }}
-                        >
-                            <AlertTitle>{errorTitle}</AlertTitle>
-                            {errorMessage}
-                        </Alert>
-                    </Collapse>
-                </MainCard>
+                </ContentLine>
+                <ButtonLayout>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={handleClose}>
+                        닫기
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
+                        저장
+                    </Button>
+                </ButtonLayout>
             </DialogContent>
         </Dialog>
     );

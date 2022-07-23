@@ -92,7 +92,7 @@ const MainContents = () => {
                         </TabList>
                     </Box>
                     {/* 가상자산 동향 */}
-                    <TabPanel value="1" className={cx('mainMng')} sx={{ padding: 0 }}>
+                    <TabPanel value="1" className={cx('mainMng')}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
@@ -136,7 +136,7 @@ const MainContents = () => {
                         </ButtonLayout>
                     </TabPanel>
                     {/* 블록체인 뉴스 */}
-                    <TabPanel value="2" sx={{ padding: 0 }}>
+                    <TabPanel value="2" className={cx('mainMng')}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
@@ -174,7 +174,7 @@ const MainContents = () => {
                         </ButtonLayout>
                     </TabPanel>
                     {/* 가상자산의 기초 */}
-                    <TabPanel value="3" sx={{ padding: 0 }}>
+                    <TabPanel value="3" className={cx('mainMng')}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
@@ -213,7 +213,7 @@ const MainContents = () => {
                         </ButtonLayout>
                     </TabPanel>
                     {/* 인사이트 칼럼 */}
-                    <TabPanel value="4" sx={{ padding: 0 }}>
+                    <TabPanel value="4" className={cx('mainMng')}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>

@@ -6,14 +6,14 @@ const cx = classNames.bind(styles);
 // 드롭형식 input 박스
 const DropInput = ({ title, children, className }) => {
     return (
-        <div className={cx(className && { className })}>
+        <div className={cx(className)}>
             <div className={cx(`dropList`)}>
                 <Stack spacing={10} className={cx('borderTitle')}>
                     {title}
                 </Stack>
 
                 <div className={cx('dropList--input')}>
-                    <FormControl sx={{ minWidth: 250 }} size="medium">
+                    <FormControl sx={{ minWidth: 250, boxSizing: 'border-box' }} size="medium">
                         {children}
                     </FormControl>
                 </div>

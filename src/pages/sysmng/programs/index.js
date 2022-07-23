@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import {Button, Checkbox, FormControlLabel, Grid, MenuItem, Select} from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Grid, MenuItem, Select } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import SiteApi from 'apis/site/siteapi';
@@ -234,43 +234,34 @@ const ProgramManagementPage = () => {
                     menuStep03="프로그램 리스트"
                 />
 
-                <MainCard>
-                    <TopInputLayout>
-                        <InputLayout>
-                            <DropInput title="사이트명">
-                                <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged} placeholder="사이트명">
-                                    {siteList.map((item, index) => (
-                                        <MenuItem key={index} value={item.id}>
-                                            {item.name}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </DropInput>
+                <TopInputLayout className="bottom--blank__small bottom--blank__top">
+                    <InputLayout>
+                        <DropInput title="사이트명">
+                            <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged} placeholder="사이트명">
+                                {siteList.map((item, index) => (
+                                    <MenuItem key={index} value={item.id}>
+                                        {item.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </DropInput>
 
-                            <FormControlLabel
-                                control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
-                                label="사용함"
-                                className="checkedBox"
-                            />
-                        </InputLayout>
+                        <FormControlLabel
+                            control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
+                            label="사용함"
+                            className="checkedBox"
+                        />
+                    </InputLayout>
 
-                        <ButtonLayout>
-                            <Button
-                                disableElevation
-                                size="medium"
-                                type="submit"
-                                variant="contained"
-                                color="secondary"
-                                onClick={searchClick}
-                            >
-                                검색
-                            </Button>
-                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={newClick}>
-                                등록
-                            </Button>
-                        </ButtonLayout>
-                    </TopInputLayout>
-                </MainCard>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                            검색
+                        </Button>
+                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={newClick}>
+                            등록
+                        </Button>
+                    </ButtonLayout>
+                </TopInputLayout>
 
                 <ContentLine>
                     <DefaultDataGrid
