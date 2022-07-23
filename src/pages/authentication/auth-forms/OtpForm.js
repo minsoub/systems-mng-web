@@ -48,6 +48,7 @@ const OtpForm = ({ result }) => {
                         siteId: result.site_id,
                         email: result.email,
                         accessToken: responseData.data.access_token,
+                        refreshToken: responseData.data.refresh_token,
                         isLoggined: true,
                         loginDate: moment().format('YYYY.MM.DD HH:mm:ss')
                     };
