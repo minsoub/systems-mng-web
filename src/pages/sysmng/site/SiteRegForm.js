@@ -388,6 +388,8 @@ const SiteRegForm = () => {
                                             handleBlur={handleBlur}
                                             handleChange={handleChange}
                                             noneChecked="noneChecked"
+                                            startName="from_date"
+                                            endName="to_date"
                                         />
                                     </div>
 

@@ -324,6 +324,8 @@ const FraudReportMng = () => {
                         period={period}
                         handleBlur={handleBlur}
                         handleChange={handleChange}
+                        startName="start_date"
+                        endName="end_date"
                     />
 
                     {/* 카테고리 영역 */}
@@ -350,17 +352,16 @@ const FraudReportMng = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <Grid className={cx(' searchPointColor')}>
-                    <ButtonLayout buttonName="layout--button__bottom">
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
-                            초기화
-                        </Button>
+                <ButtonLayout buttonName="layout--button__bottom">
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                        초기화
+                    </Button>
 
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                            검색
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                        검색
+                    </Button>
+                </ButtonLayout>
+
                 <ContentLine>
                     <DefaultDataGrid
                         columns={columns}

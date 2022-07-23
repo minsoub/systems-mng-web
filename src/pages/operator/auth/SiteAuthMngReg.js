@@ -22,6 +22,8 @@ import InputLayout from 'components/Common/InputLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import DropInput from 'components/Common/DropInput';
 import './styles.scss';
+import FlexBox from '../../../components/Common/FlexBox';
+import ContentLine from '../../../components/Common/ContentLine';
 
 function MinusSquare(props) {
     return (
@@ -54,19 +56,11 @@ const SiteAuthMngRegForm = () => {
     const navigate = useNavigate();
     const { siteId } = useSelector((state) => state.auth);
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-    const [
-        responseData,
-        requestError,
-        responseLoading,
-        { menumngSearch, menumngDetail, programMapping, programMappingSearch }
-    ] = MenuMngApi();
+    const [responseData, requestError, responseLoading, { menumngSearch, menumngDetail, programMapping, programMappingSearch }] =
+        MenuMngApi();
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
-    const [
-        roleRequestData,
-        roleRequestError,
-        roleLoading,
-        { roleComboSearch, roleRegisterSearch, roleRegisterTreeList, roleMenuSave }
-    ] = RoleApi();
+    const [roleRequestData, roleRequestError, roleLoading, { roleComboSearch, roleRegisterSearch, roleRegisterTreeList, roleMenuSave }] =
+        RoleApi();
 
     const { roleType, roleId } = useParams();
 
@@ -756,44 +750,44 @@ const SiteAuthMngRegForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="권한 맵핑 등록" menuStep01="사이트 관리" menuStep02="권한 관리" menuStep03="권한 맵핑 등록" />
 
-                <MainCard sx={{ mt: 1 }}>
-                    <TopInputLayout>
-                        <InputLayout>
-                            <DropInput title="사이트 구분">
-                                <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
-                                    <MenuItem value="">
-                                        <em>Choose a Site Type</em>
-                                    </MenuItem>
-                                    {siteList
-                                        .filter((item) => item.id === siteId)
-                                        .map((item, index) => (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
-                                            </MenuItem>
-                                        ))}
-                                </Select>
-                            </DropInput>
-
-                            <DropInput title="Type">
-                                <Select name="type" label="Role Type" value={type} onChange={handleChange}>
-                                    <MenuItem value="ADMIN">ADMIN</MenuItem>
-                                    <MenuItem value="USER">USER</MenuItem>
-                                </Select>
-                            </DropInput>
-
-                            <DropInput title="Role Name">
-                                <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
-                                    <MenuItem value="">
-                                        <em>Choose a Role Name</em>
-                                    </MenuItem>
-                                    {roleList.map((item, index) => (
+                <MainCard>
+                    <FlexBox>
+                        <DropInput title="사이트 구분">
+                            <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
+                                <MenuItem value="">
+                                    <em>Choose a Site Type</em>
+                                </MenuItem>
+                                {siteList
+                                    .filter((item) => item.id === siteId)
+                                    .map((item, index) => (
                                         <MenuItem key={index} value={item.id}>
                                             {item.name}
                                         </MenuItem>
                                     ))}
-                                </Select>
-                            </DropInput>
-                        </InputLayout>
+                            </Select>
+                        </DropInput>
+
+                        <DropInput title="Type">
+                            <Select name="type" label="Role Type" value={type} onChange={handleChange}>
+                                <MenuItem value="ADMIN">ADMIN</MenuItem>
+                                <MenuItem value="USER">USER</MenuItem>
+                            </Select>
+                        </DropInput>
+                    </FlexBox>
+
+                    <TopInputLayout className="bottom--blank__top">
+                        <DropInput title="Role Name">
+                            <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
+                                <MenuItem value="">
+                                    <em>Choose a Role Name</em>
+                                </MenuItem>
+                                {roleList.map((item, index) => (
+                                    <MenuItem key={index} value={item.id}>
+                                        {item.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </DropInput>
 
                         <ButtonLayout>
                             <Button
@@ -810,8 +804,8 @@ const SiteAuthMngRegForm = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
-                    <Grid item md={3}>
+                <Grid container xs={12}>
+                    <Grid item xs={4}>
                         <MainCard sx={{ mt: 2 }} content={false}>
                             <TreeView
                                 aria-label="controlled"
@@ -823,7 +817,9 @@ const SiteAuthMngRegForm = () => {
                             </TreeView>
                         </MainCard>
                     </Grid>
-                    <Grid item md={8.8}>
+
+                    {/* 콘텐츠 영역 */}
+                    <Grid item xs={8} className="blank--layout">
                         <div className="layout--align">
                             <Item>Role : {role_name}</Item>
                             <Button disableElevation size="medium" type="button" variant="contained" onClick={programMappingSaveClick}>
@@ -833,7 +829,7 @@ const SiteAuthMngRegForm = () => {
 
                         <Grid container spacing={0} sx={{ mt: 1 }}>
                             <Grid item xs={8} sm={12}>
-                                <MainCard sx={{ mt: 0, height: 290 }} content={false}>
+                                <ContentLine>
                                     <DefaultDataGrid
                                         columns={roleColumns}
                                         rows={dataGridRoleRows}
@@ -843,37 +839,38 @@ const SiteAuthMngRegForm = () => {
                                         selectionChange={handleSelectionRoleChange}
                                         height={290}
                                     />
-                                </MainCard>
+                                </ContentLine>
                             </Grid>
-                        </Grid>
-                        <Grid container spacing={0} sx={{ mt: 1 }}>
-                            <TopInputLayout>
-                                <Item>프로그램 목록</Item>
-                                <Button
-                                    disableElevation
-                                    size="medium"
-                                    type="button"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={programMappingSave}
-                                >
-                                    선택반영
-                                </Button>
-                            </TopInputLayout>
 
                             <Grid container spacing={0} sx={{ mt: 1 }}>
-                                <Grid item xs={8} sm={12}>
-                                    <MainCard sx={{ mt: 0, height: 290 }} content={false}>
-                                        <CheckBoxDataGrid
-                                            columns={programColumns}
-                                            rows={dataGridProgramRows}
-                                            handlePageChange={handlePage}
-                                            handleGridClick={handleClick}
-                                            handleGridDoubleClick={handleDoubleClick}
-                                            selectionChange={handleSelectionProgramChange}
-                                            height={290}
-                                        />
-                                    </MainCard>
+                                <div className="layout--align">
+                                    <Item>프로그램 목록</Item>
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={programMappingSave}
+                                    >
+                                        선택반영
+                                    </Button>
+                                </div>
+
+                                <Grid container spacing={0} sx={{ mt: 1 }}>
+                                    <Grid item xs={8} sm={12}>
+                                        <ContentLine>
+                                            <CheckBoxDataGrid
+                                                columns={programColumns}
+                                                rows={dataGridProgramRows}
+                                                handlePageChange={handlePage}
+                                                handleGridClick={handleClick}
+                                                handleGridDoubleClick={handleDoubleClick}
+                                                selectionChange={handleSelectionProgramChange}
+                                                height={290}
+                                            />
+                                        </ContentLine>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>

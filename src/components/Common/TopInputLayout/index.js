@@ -5,11 +5,11 @@ import InputLayout from '../InputLayout';
 
 // input과 button을 두루는 레이아웃
 const TopInputLayout = ({ children, className }) => {
-    TopInputLayout.defaultProps = {
-        className: null
-    };
-
-    return <div className={cx(`topInputLayout ${className}`)}>{children}</div>;
+    return (
+        <div className={className && className}>
+            <div className={cx(`topInputLayout`)}>{children}</div>
+        </div>
+    );
 };
 
 export default TopInputLayout;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 // material-ui
 import { Alert, AlertTitle, Collapse, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import ContentLine from './Common/ContentLine';
+import ContentLine from '../Common/ContentLine';
 
 const ErrorScreen = ({ open, errorTitle, errorMessage, parentErrorClear }) => {
     const [title, setTitle] = useState('');

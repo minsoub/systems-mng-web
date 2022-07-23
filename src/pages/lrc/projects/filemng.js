@@ -1,30 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {
-    Button,
-    Grid,
-    TextField,
-    Typography,
-    FormControl,
-    Table,
-    TableBody,
-    TableHead,
-    TableRow
-} from '@mui/material';
+import { Button, Grid, TextField, Typography, FormControl, Table, TableBody, TableHead, TableRow } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 import FilesApi from 'apis/lrc/project/filesapi';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const FileMng = (props) => {
     const navigate = useNavigate();
-    const [
-        responseData,
-        requestError,
-        loading,
-        { fileSearch, urlSearch, urlDocumentSave, fileDocumentSave, fileDocumentDownload }
-    ] = FilesApi();
+    const [responseData, requestError, loading, { fileSearch, urlSearch, urlDocumentSave, fileDocumentSave, fileDocumentDownload }] =
+        FilesApi();
     const { projectId, children, tabindex, index, ...other } = props;
 
     ////////////////////////////////////////////////////
@@ -380,19 +367,14 @@ const FileMng = (props) => {
 
     return (
         <Grid container alignItems="center" justifyContent="space-between">
-            <Grid container spacing={0} sx={{ mt: 0 }}>
-                <Grid item xs={8} sm={3}>
-                    <Typography variant="h4">제출 서류 관리자</Typography>
-                </Grid>
-            </Grid>
+            <Typography variant="h4">제출 서류 관리자</Typography>
 
             <Grid container spacing={0} sx={{ mt: 1 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                <ContentLine>
                     <Table style={{ border: 1, width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell style={{ width: '16%' }} align="center"></TableCell>
-                                <TableCell style={{ width: '42%' }} align="center">
+                                <TableCell style={{ width: '42%' }} align="center" colSpan={2}>
                                     URL
                                 </TableCell>
                                 <TableCell style={{ width: '42%' }} align="center">
@@ -407,60 +389,51 @@ const FileMng = (props) => {
                                 </StyledTableCell>
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Grid item xs={8} sm={9}>
-                                            <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField
-                                                    id="url1"
-                                                    name="url1"
-                                                    size="small"
-                                                    value={url1}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                />
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={0.2}></Grid>
-                                        <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0 }} size="small">
-                                                <Button
-                                                    disableElevation
-                                                    size="small"
-                                                    type="submit"
-                                                    variant="contained"
-                                                    color="primary"
-                                                    onClick={() => urlSave('IPO_APPLICATION', url1)}
-                                                >
-                                                    저장
-                                                </Button>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={8} sm={0.2}></Grid>
+                                        <FormControl sx={{ m: 0, height: 25 }} fullWidth>
+                                            <TextField
+                                                id="url1"
+                                                name="url1"
+                                                size="medium"
+                                                value={url1}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                            />
+                                        </FormControl>
+
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => urlSave('IPO_APPLICATION', url1)}
+                                        >
+                                            저장
+                                        </Button>
                                     </Grid>
-                                    <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
-                                            {docList1.map((item, index) => (
-                                                <TableRow>
-                                                    <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
-                                                        [{item.email}]
-                                                    </FontTableCell>
-                                                    <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
-                                                        {item.url}
-                                                    </FontTableCell>
-                                                    <FontTableCell style={{ width: '28%', lineBreak: 'anywhere' }}>
-                                                        {item.create_date.substring(0, 10)}
-                                                    </FontTableCell>
-                                                </TableRow>
-                                            ))}
-                                        </Table>
-                                    </Grid>
+
+                                    <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
+                                        {docList1.map((item, index) => (
+                                            <TableRow>
+                                                <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
+                                                    [{item.email}]
+                                                </FontTableCell>
+                                                <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>{item.url}</FontTableCell>
+                                                <FontTableCell style={{ width: '28%', lineBreak: 'anywhere' }}>
+                                                    {item.create_date.substring(0, 10)}
+                                                </FontTableCell>
+                                            </TableRow>
+                                        ))}
+                                    </Table>
                                 </TableCell>
+
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="button"
                                                     variant="contained"
                                                     color="primary"
@@ -477,11 +450,10 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file1"
                                                     name="file1"
-                                                    size="small"
+                                                    size="medium"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
-                                                        accept:
-                                                            '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                        accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                                     }}
                                                 />
                                             </FormControl>
@@ -489,7 +461,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {fileList1.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -518,15 +490,15 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url2" name="url2" size="small" value={url2} onChange={handleChange} />
+                                                <TextField id="url2" name="url2" size="medium" value={url2} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="submit"
                                                     variant="contained"
                                                     color="primary"
@@ -539,7 +511,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {docList2.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -559,10 +531,10 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="button"
                                                     variant="contained"
                                                     color="primary"
@@ -579,11 +551,10 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file2"
                                                     name="file2"
-                                                    size="small"
+                                                    size="medium"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
-                                                        accept:
-                                                            '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                        accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                                     }}
                                                 />
                                             </FormControl>
@@ -591,7 +562,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {fileList2.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -620,15 +591,15 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url3" name="url3" size="small" value={url3} onChange={handleChange} />
+                                                <TextField id="url3" name="url3" size="medium" value={url3} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="submit"
                                                     variant="contained"
                                                     color="primary"
@@ -641,7 +612,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {docList3.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -661,10 +632,10 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="button"
                                                     variant="contained"
                                                     color="primary"
@@ -681,11 +652,10 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file3"
                                                     name="file3"
-                                                    size="small"
+                                                    size="medium"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
-                                                        accept:
-                                                            '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                        accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                                     }}
                                                 />
                                             </FormControl>
@@ -693,7 +663,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {fileList3.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -722,15 +692,15 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url4" name="url4" size="small" value={url4} onChange={handleChange} />
+                                                <TextField id="url4" name="url4" size="medium" value={url4} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="submit"
                                                     variant="contained"
                                                     color="primary"
@@ -743,7 +713,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {docList4.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -763,10 +733,10 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="button"
                                                     variant="contained"
                                                     color="primary"
@@ -783,11 +753,10 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file4"
                                                     name="file4"
-                                                    size="small"
+                                                    size="medium"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
-                                                        accept:
-                                                            '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                        accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                                     }}
                                                 />
                                             </FormControl>
@@ -795,7 +764,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {fileList4.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -824,15 +793,15 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url5" name="url5" size="small" value={url5} onChange={handleChange} />
+                                                <TextField id="url5" name="url5" size="medium" value={url5} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="submit"
                                                     variant="contained"
                                                     color="primary"
@@ -845,7 +814,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {docList5.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -865,10 +834,10 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="button"
                                                     variant="contained"
                                                     color="primary"
@@ -885,11 +854,10 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file5"
                                                     name="file5"
-                                                    size="small"
+                                                    size="medium"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
-                                                        accept:
-                                                            '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                        accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                                     }}
                                                 />
                                             </FormControl>
@@ -897,7 +865,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {fileList5.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -926,15 +894,15 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url6" name="url6" size="small" value={url6} onChange={handleChange} />
+                                                <TextField id="url6" name="url6" size="medium" value={url6} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="submit"
                                                     variant="contained"
                                                     color="primary"
@@ -947,7 +915,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {docList6.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -967,10 +935,10 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="button"
                                                     variant="contained"
                                                     color="primary"
@@ -987,11 +955,10 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file6"
                                                     name="file6"
-                                                    size="small"
+                                                    size="medium"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
-                                                        accept:
-                                                            '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                        accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                                     }}
                                                 />
                                             </FormControl>
@@ -999,7 +966,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {fileList6.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -1028,15 +995,15 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url7" name="url7" size="small" value={url7} onChange={handleChange} />
+                                                <TextField id="url7" name="url7" size="medium" value={url7} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="submit"
                                                     variant="contained"
                                                     color="primary"
@@ -1049,7 +1016,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {docList7.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -1069,10 +1036,10 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="button"
                                                     variant="contained"
                                                     color="primary"
@@ -1089,11 +1056,10 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file7"
                                                     name="file7"
-                                                    size="small"
+                                                    size="medium"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
-                                                        accept:
-                                                            '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                        accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                                     }}
                                                 />
                                             </FormControl>
@@ -1101,7 +1067,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {fileList7.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -1130,15 +1096,15 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url8" name="url8" size="small" value={url8} onChange={handleChange} />
+                                                <TextField id="url8" name="url8" size="medium" value={url8} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="submit"
                                                     variant="contained"
                                                     color="primary"
@@ -1151,7 +1117,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {docList8.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -1171,10 +1137,10 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="button"
                                                     variant="contained"
                                                     color="primary"
@@ -1191,11 +1157,10 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file8"
                                                     name="file8"
-                                                    size="small"
+                                                    size="medium"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
-                                                        accept:
-                                                            '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                        accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                                     }}
                                                 />
                                             </FormControl>
@@ -1203,7 +1168,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {fileList8.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -1232,15 +1197,15 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0, height: 25 }} fullWidth>
-                                                <TextField id="url9" name="url9" size="small" value={url9} onChange={handleChange} />
+                                                <TextField id="url9" name="url9" size="medium" value={url9} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="submit"
                                                     variant="contained"
                                                     color="primary"
@@ -1253,7 +1218,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {docList9.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -1273,10 +1238,10 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="button"
                                                     variant="contained"
                                                     color="primary"
@@ -1293,11 +1258,10 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file9"
                                                     name="file9"
-                                                    size="small"
+                                                    size="medium"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
-                                                        accept:
-                                                            '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                        accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                                     }}
                                                 />
                                             </FormControl>
@@ -1305,7 +1269,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {fileList9.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -1334,15 +1298,15 @@ const FileMng = (props) => {
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={9}>
                                             <FormControl sx={{ m: 0 }} fullWidth>
-                                                <TextField id="url10" name="url10" size="small" value={url10} onChange={handleChange} />
+                                                <TextField id="url10" name="url10" size="medium" value={url10} onChange={handleChange} />
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={8} sm={0.2}></Grid>
                                         <Grid item xs={8} sm={1}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="submit"
                                                     variant="contained"
                                                     color="primary"
@@ -1355,7 +1319,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {docList10.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -1375,10 +1339,10 @@ const FileMng = (props) => {
                                 <TableCell component="th" scope="row" style={{ width: '42%', verticalAlign: 'top' }}>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
                                         <Grid item xs={8} sm={4}>
-                                            <FormControl sx={{ m: 0 }} size="small">
+                                            <FormControl sx={{ m: 0 }} size="medium">
                                                 <Button
                                                     disableElevation
-                                                    size="small"
+                                                    size="medium"
                                                     type="button"
                                                     variant="contained"
                                                     color="primary"
@@ -1395,11 +1359,10 @@ const FileMng = (props) => {
                                                     type="file"
                                                     id="file10"
                                                     name="file10"
-                                                    size="small"
+                                                    size="medium"
                                                     onChange={fileHandleChange}
                                                     inputProps={{
-                                                        accept:
-                                                            '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                        accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                                     }}
                                                 />
                                             </FormControl>
@@ -1407,7 +1370,7 @@ const FileMng = (props) => {
                                         <Grid item xs={8} sm={0.2}></Grid>
                                     </Grid>
                                     <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="small" aria-label="a dense table">
+                                        <Table style={{ width: '100%', tableLayout: 'auto' }} size="medium" aria-label="a dense table">
                                             {fileList10.map((item, index) => (
                                                 <TableRow>
                                                     <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
@@ -1429,7 +1392,7 @@ const FileMng = (props) => {
                             </TableRow>
                         </TableBody>
                     </Table>
-                </MainCard>
+                </ContentLine>
             </Grid>
         </Grid>
     );

@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {Button} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import MainCard from 'components/Common/MainCard';
@@ -11,6 +11,9 @@ import CategoryApis from 'apis/lrc/faq/categoryapi';
 import CategoryContents from './categorycontents';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ContentLine from '../../../components/Common/ContentLine';
+import styles from './styles.module.scss';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 
 const FaqContent = (props) => {
     let isSubmitting = false;
@@ -313,9 +316,11 @@ const FaqContent = (props) => {
     return (
         <div>
             <MainCard>
-                {categorys.map((item, index) => (
-                    <CategoryContents key={index} id={item.id} content={item.name} count={item.count} filterClick={filterClick} />
-                ))}
+                <div className={cx('card__row')}>
+                    {categorys.map((item, index) => (
+                        <CategoryContents key={index} id={item.id} content={item.name} count={item.count} filterClick={filterClick} />
+                    ))}
+                </div>
             </MainCard>
 
             <ContentLine>
@@ -330,7 +335,7 @@ const FaqContent = (props) => {
                 />
             </ContentLine>
 
-            <TopInputLayout className="bottomBlank">
+            <TopInputLayout className="bottom--blank">
                 <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={orderClick}>
                     노출 순서 저장
                 </Button>

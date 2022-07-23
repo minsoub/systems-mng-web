@@ -31,7 +31,7 @@ import {
 
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
-import { StyledTableCell, FontTableCell } from 'components/CustomTableCell';
+import { StyledTableCell, FontTableCell } from 'components/CustomTableCell/CustomTableCell';
 import ErrorScreen from 'components/ErrorScreen';
 import AccountApis from 'apis/account/accountapis';
 import { doEncrypt } from 'utils/Crypt';

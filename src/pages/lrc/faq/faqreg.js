@@ -30,7 +30,7 @@ import {
 
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
-import { StyledTableCell, FontTableCell } from 'components/CustomTableCell';
+import { StyledTableCell, FontTableCell } from 'components/CustomTableCell/CustomTableCell';
 import ErrorScreen from 'components/ErrorScreen';
 import FaqApis from 'apis/lrc/faq/faqapi';
 import CategoryApis from 'apis/lrc/faq/categoryapi';

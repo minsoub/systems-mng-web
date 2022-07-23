@@ -279,7 +279,7 @@ const FaqCategoryPage = () => {
                     />
                 </ContentLine>
 
-                <ButtonLayout buttonName="rightButton">
+                <ButtonLayout buttonName="layout--button__bottom">
                     <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
                         저장
                     </Button>
@@ -297,28 +297,30 @@ const FaqCategoryPage = () => {
                 </ButtonLayout>
 
                 <MainCard sx={{ mt: 2 }} content={false}>
-                    <FlexBox>
-                        <DropInput title="언어 구분" className="bottom--blank">
-                            <Select name="language" label="언어선택" value={language} onChange={handleChange}>
-                                <MenuItem value="KO">국문</MenuItem>
-                                <MenuItem value="EN">영문</MenuItem>
-                            </Select>
-                        </DropInput>
+                    <div className="bottom--blank">
+                        <FlexBox>
+                            <DropInput title="언어 구분" className="bottom--blank">
+                                <Select name="language" label="언어선택" value={language} onChange={handleChange}>
+                                    <MenuItem value="KO">국문</MenuItem>
+                                    <MenuItem value="EN">영문</MenuItem>
+                                </Select>
+                            </DropInput>
 
-                        <DropInput title="카테고리명">
-                            <TextField
-                                id="filled-hidden-label-small"
-                                type="text"
-                                size="medium"
-                                value={name}
-                                name="name"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                placeholder="Enter the Name"
-                                fullWidth
-                            />
-                        </DropInput>
-                    </FlexBox>
+                            <DropInput title="카테고리명">
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="medium"
+                                    value={name}
+                                    name="name"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    placeholder="Enter the Name"
+                                    fullWidth
+                                />
+                            </DropInput>
+                        </FlexBox>
+                    </div>
 
                     <FlexBox>
                         <DropInput title="사용여부">

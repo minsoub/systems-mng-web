@@ -1,23 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import {
-    Box,
-    Button,
-    FormControl,
-    Grid,
-    Tab,
-    Table,
-    TableBody,
-    TableCell,
-    TableRow,
-    Tabs,
-    TextField,
-    Typography
-} from '@mui/material';
+import { Box, Button, FormControl, Grid, Tab, Table, TableBody, TableCell, TableRow, Tabs, TextField, Typography } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
-import {tableCellClasses} from '@mui/material/TableCell';
-import {styled} from '@mui/material/styles';
+import { tableCellClasses } from '@mui/material/TableCell';
+import { styled } from '@mui/material/styles';
 import ErrorScreen from 'components/ErrorScreen';
 import TabPanel from 'components/TabPanel';
 import OfficeInfo from './officeinfo';
@@ -295,121 +282,119 @@ const ProjectsDetailPage = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="거래지원 관리" menuStep01="사이트 운영" menuStep02="거래지원 관리" menuStep03="재단 정보" />
 
-                <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <Box sx={{ width: '100%' }}>
-                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                    <Grid container spacing={0} sx={{ mt: 0 }}>
-                                        <Grid item xs={8} sm={8}>
-                                            <Tabs value={value} onChange={tabChange} aria-label="basic tabs example">
-                                                <Tab label="재단 정보" />
-                                                <Tab label="프로젝트 관리" />
-                                                <Tab label="제출 서류 관리" />
-                                                <Tab label="변경 히스토리" />
-                                            </Tabs>
-                                        </Grid>
-                                        <Grid item xs={8} sm={4}>
-                                            <Table
-                                                fixedHeader={false}
-                                                style={{ width: '100%', tableLayout: 'auto' }}
-                                                stickyHeader
-                                                aria-label="simple table"
-                                            >
-                                                <TableRow>
-                                                    <TableCell align="right" component="th" scope="row">
-                                                        <FormControl sx={{ m: 0 }} size="small">
-                                                            <Button
-                                                                disableElevation
-                                                                size="small"
-                                                                type="submit"
-                                                                variant="contained"
-                                                                color="secondary"
-                                                                onClick={listClick}
-                                                            >
-                                                                목록
-                                                            </Button>
-                                                        </FormControl>
-                                                    </TableCell>
-                                                </TableRow>
-                                            </Table>
-                                        </Grid>
-                                    </Grid>
-                                </Box>
+                <Grid container alignItems="center" justifyContent="space-between">
+                    <Grid container spacing={0} sx={{ mt: 0 }}>
+                        <Box sx={{ width: '100%' }}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <Grid container spacing={0} sx={{ mt: 0 }}>
                                     <Grid item xs={8} sm={8}>
-                                        <TabPanel value={value} index={0}>
-                                            <OfficeInfo value={value} projectId={paramId} index={0} />
-                                        </TabPanel>
-                                        <TabPanel value={value} index={1}>
-                                            <ProjectMng value={value} projectId={paramId} index={1} />
-                                        </TabPanel>
-                                        <TabPanel value={value} index={2}>
-                                            <FileMng value={value} projectId={paramId} index={2} />
-                                        </TabPanel>
-                                        <TabPanel value={value} index={3}>
-                                            <ProjectHistory value={value} projectId={paramId} index={3} />
-                                        </TabPanel>
+                                        <Tabs value={value} onChange={tabChange} aria-label="basic tabs example">
+                                            <Tab label="재단 정보" />
+                                            <Tab label="프로젝트 관리" />
+                                            <Tab label="제출 서류 관리" />
+                                            <Tab label="변경 히스토리" />
+                                        </Tabs>
                                     </Grid>
                                     <Grid item xs={8} sm={4}>
-                                        <Chat projectId={paramId} />
-
-                                        <div className="file--upload">
-                                            <Button
-                                                disableElevation
-                                                size="medium"
-                                                type="button"
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={() => fileSave('CHAT', file)}
-                                            >
-                                                파일 업로드
-                                            </Button>
-
-                                            <TextField
-                                                type="file"
-                                                id="file"
-                                                name="file"
-                                                size="small"
-                                                onChange={fileHandleChange}
-                                                inputProps={{
-                                                    accept:
-                                                        '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-                                                }}
-                                            />
-                                        </div>
-
-                                        <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                                            첨부파일 목록
-                                            <Table
-                                                style={{ border: 1, width: '100%', tableLayout: 'auto' }}
-                                                stickyHeader
-                                                aria-label="simple table"
-                                            >
-                                                <TableBody>
-                                                    {fileList.map((item, index) => (
-                                                        <TableRow key={index}>
-                                                            <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
-                                                                [ 사용자 ]
-                                                            </FontTableCell>
-                                                            <FontTableCell style={{ width: '66%', lineBreak: 'anywhere' }}>
-                                                                <a href="#" onClick={() => FileDownload(item.id, item.file_name)}>
-                                                                    {item.file_name}
-                                                                </a>
-                                                                <p></p>
-                                                                {item.file_size}&nbsp;{item.create_date}≈
-                                                            </FontTableCell>
-                                                        </TableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </MainCard>
+                                        <Table
+                                            fixedHeader={false}
+                                            style={{ width: '100%', tableLayout: 'auto' }}
+                                            stickyHeader
+                                            aria-label="simple table"
+                                        >
+                                            <TableRow>
+                                                <TableCell align="right" component="th" scope="row">
+                                                    <FormControl sx={{ m: 0 }} size="small">
+                                                        <Button
+                                                            disableElevation
+                                                            size="small"
+                                                            type="submit"
+                                                            variant="contained"
+                                                            color="secondary"
+                                                            onClick={listClick}
+                                                        >
+                                                            목록
+                                                        </Button>
+                                                    </FormControl>
+                                                </TableCell>
+                                            </TableRow>
+                                        </Table>
                                     </Grid>
                                 </Grid>
                             </Box>
-                        </Grid>
+
+                            <Grid container spacing={0} sx={{ mt: 0 }}>
+                                <Grid item xs={8} sm={8}>
+                                    <TabPanel value={value} index={0}>
+                                        <OfficeInfo value={value} projectId={paramId} index={0} />
+                                    </TabPanel>
+                                    <TabPanel value={value} index={1}>
+                                        <ProjectMng value={value} projectId={paramId} index={1} />
+                                    </TabPanel>
+                                    <TabPanel value={value} index={2}>
+                                        <FileMng value={value} projectId={paramId} index={2} />
+                                    </TabPanel>
+                                    <TabPanel value={value} index={3}>
+                                        <ProjectHistory value={value} projectId={paramId} index={3} />
+                                    </TabPanel>
+                                </Grid>
+                                <Grid item xs={8} sm={4}>
+                                    <Chat projectId={paramId} />
+
+                                    <div className="file--upload">
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="button"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => fileSave('CHAT', file)}
+                                        >
+                                            파일 업로드
+                                        </Button>
+
+                                        <TextField
+                                            type="file"
+                                            id="file"
+                                            name="file"
+                                            size="small"
+                                            onChange={fileHandleChange}
+                                            inputProps={{
+                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                            }}
+                                        />
+                                    </div>
+
+                                    <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                                        첨부파일 목록
+                                        <Table
+                                            style={{ border: 1, width: '100%', tableLayout: 'auto' }}
+                                            stickyHeader
+                                            aria-label="simple table"
+                                        >
+                                            <TableBody>
+                                                {fileList.map((item, index) => (
+                                                    <TableRow key={index}>
+                                                        <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
+                                                            [ 사용자 ]
+                                                        </FontTableCell>
+                                                        <FontTableCell style={{ width: '66%', lineBreak: 'anywhere' }}>
+                                                            <a href="#" onClick={() => FileDownload(item.id, item.file_name)}>
+                                                                {item.file_name}
+                                                            </a>
+                                                            <p></p>
+                                                            {item.file_size}&nbsp;{item.create_date}≈
+                                                        </FontTableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </MainCard>
+                                </Grid>
+                            </Grid>
+                        </Box>
                     </Grid>
-                </MainCard>
+                </Grid>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

@@ -303,6 +303,8 @@ const ServiceLog = () => {
                         period={period}
                         handleBlur={handleBlur}
                         handleChange={handleChange}
+                        startName="from_date"
+                        endName="to_date"
                     />
 
                     {/* 검색바 */}

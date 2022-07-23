@@ -2,7 +2,7 @@ import { FormControl, FormControlLabel, RadioGroup, Radio, Stack, TextField } fr
 import cx from 'classnames';
 import './styles.scss';
 
-const SearchDate = ({ start_date, handleBlur, handleChange, end_date, noneChecked, period }) => {
+const SearchDate = ({ start_date, handleBlur, handleChange, end_date, noneChecked, period, startName, endName }) => {
     SearchDate.defaultProps = {
         noneChecked: null,
         period: null
@@ -15,25 +15,11 @@ const SearchDate = ({ start_date, handleBlur, handleChange, end_date, noneChecke
             </Stack>
             <div className="result__list--input">
                 <FormControl size="medium">
-                    <TextField
-                        id="start_date"
-                        name="start_date"
-                        value={start_date}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        type="date"
-                    />
+                    <TextField name={startName} value={start_date} onBlur={handleBlur} onChange={handleChange} type="date" />
                 </FormControl>
                 <span className={cx('center')}> ~ </span>
                 <FormControl size="medium">
-                    <TextField
-                        id="end_date"
-                        name="end_date"
-                        value={end_date}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        type="date"
-                    />
+                    <TextField name={endName} value={end_date} onBlur={handleBlur} onChange={handleChange} type="date" />{' '}
                 </FormControl>
             </div>
 

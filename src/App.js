@@ -1,14 +1,7 @@
 // project import
-import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-
 import Routes from 'routes';
-import AuthRoute from 'routes/AuthRoute';
 import ThemeCustomization from 'themes';
 import ScrollTop from 'components/ScrollTop';
-import { AuthProvider } from 'provider/AuthProvider';
-
-// ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
 
 function App() {
     //const [user, setUser] = useState(null);

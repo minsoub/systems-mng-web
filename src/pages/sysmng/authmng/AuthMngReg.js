@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { Button, Grid, MenuItem, Paper, Select } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MainCard from 'components/Common/MainCard';
-import SvgIcon from '@mui/material/SvgIcon';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import SiteApi from 'apis/site/siteapi';
@@ -745,7 +744,7 @@ const AuthMngRegForm = () => {
                         </DropInput>
                     </FlexBox>
 
-                    <TopInputLayout>
+                    <TopInputLayout className="bottom--blank__top">
                         <DropInput title="Role Name">
                             <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
                                 <MenuItem value="">
@@ -790,12 +789,12 @@ const AuthMngRegForm = () => {
 
                     {/* 콘텐츠 영역 */}
                     <Grid item xs={8} className="blank--layout">
-                        <TopInputLayout>
+                        <div className="layout--align">
                             <Item>Role : {role_name}</Item>
                             <Button disableElevation size="medium" type="button" variant="contained" onClick={programMappingSaveClick}>
                                 저장
                             </Button>
-                        </TopInputLayout>
+                        </div>
 
                         <Grid container spacing={0} sx={{ mt: 1 }}>
                             <Grid item xs={8} sm={12}>
@@ -812,9 +811,8 @@ const AuthMngRegForm = () => {
                                 </ContentLine>
                             </Grid>
 
-                            {/* 콘텐츠 영역 */}
-                            <Grid container spacing={0}>
-                                <TopInputLayout>
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <div className="layout--align">
                                     <Item>프로그램 목록</Item>
                                     <Button
                                         disableElevation
@@ -826,7 +824,7 @@ const AuthMngRegForm = () => {
                                     >
                                         선택반영
                                     </Button>
-                                </TopInputLayout>
+                                </div>
 
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
                                     <Grid item xs={8} sm={12}>

@@ -313,6 +313,8 @@ const DigitalAssetTrendMng = () => {
                         period={period}
                         handleBlur={handleBlur}
                         handleChange={handleChange}
+                        startName="start_date"
+                        endName="end_date"
                     />
 
                     {/* 검색바 */}

@@ -2,6 +2,12 @@
     display: flex;
 }
 
-.css-1f38lo6-MuiGrid-root {
-    padding-left: 20px;
+.bottom--blank {
+    margin-top: 20px;
+}
+
+.layout--aline {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }

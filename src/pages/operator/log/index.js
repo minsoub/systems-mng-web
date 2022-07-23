@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import {Button, Grid} from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import LogsApi from 'apis/servicelogs/index';
@@ -240,6 +240,8 @@ const SiteLogPage = () => {
                         handleBlur={handleBlur}
                         handleChange={handleChange}
                         noneChecked="noneChecked"
+                        startName="start_date"
+                        endName="end_date"
                     />
 
                     {/* 검색바 */}

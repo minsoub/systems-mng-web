@@ -5,12 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 // material-ui
 import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 import { Grid, Typography } from '@mui/material';
-
-// project imports
-import MainCard from './MainCard/MainCard';
-
-// ==============================|| BREADCRUMBS ||============================== //
-
+import MainCard from '../MainCard';
 const Breadcrumbs = ({ navigation, title, ...others }) => {
     const location = useLocation();
     const [main, setMain] = useState();
