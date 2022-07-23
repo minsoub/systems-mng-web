@@ -1,46 +1,24 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link as RouterLink, Outlet } from 'react-router-dom';
-
-// material-ui
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {
     Button,
-    Checkbox,
-    Divider,
-    FormControlLabel,
     FormHelperText,
     Grid,
-    Link,
     IconButton,
     InputAdornment,
     InputLabel,
     OutlinedInput,
-    Stack,
-    Typography
+    Stack
 } from '@mui/material';
 
-// third party
 import * as Yup from 'yup';
-import { Formik } from 'formik';
-
-// project import
-import FirebaseSocial from './FirebaseSocial';
-import AnimateButton from 'components/@extended/AnimateButton';
-
-// assets
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-
+import {Formik} from 'formik';
+import {EyeInvisibleOutlined, EyeOutlined} from '@ant-design/icons';
 import useAuthorized from 'apis/auth/auths';
-
-// ============================|| FIREBASE - LOGIN ||============================ //
 
 const AuthLogin = () => {
     const navigate = useNavigate();
-
-    const [checked, setChecked] = useState(false);
-
     const [showPassword, setShowPassword] = useState(false);
-
     const [responseData, requestError, loading, { actionLogin }] = useAuthorized();
 
     const handleClickShowPassword = () => {
@@ -106,10 +84,6 @@ const AuthLogin = () => {
                     email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
                     password: Yup.string().max(255).required('Password is required')
                 })}
-                // onSubmit={(values) => {
-                //     console.log(values);
-                //     actionLogin(value.email, value.password);
-                // }}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
                         setStatus({ success: false });
@@ -137,7 +111,7 @@ const AuthLogin = () => {
                                         name="email"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
-                                        placeholder="Enter email address"
+                                        placeholder="이메일 주소를 입력해주세요"
                                         fullWidth
                                         error={Boolean(touched.email && errors.email)}
                                     />
@@ -183,56 +157,26 @@ const AuthLogin = () => {
                                 </Stack>
                             </Grid>
 
-                            <Grid item xs={12} sx={{ mt: -1 }}>
-                                <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                                    {/* <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={checked}
-                                                onChange={(event) => setChecked(event.target.checked)}
-                                                name="checked"
-                                                color="primary"
-                                                size="small"
-                                            />
-                                        }
-                                        label={<Typography variant="h6">Keep me sign in</Typography>}
-                                    /> */}
-                                    {/* <Link variant="h6" component={RouterLink} to="" color="text.primary">
-                                        Forgot Password?
-                                    </Link> */}
-                                </Stack>
-                            </Grid>
+                            {/* 에러 문구 */}
                             {errors.submit && (
                                 <Grid item xs={12}>
                                     <FormHelperText error>{errors.submit}</FormHelperText>
                                 </Grid>
                             )}
+
                             <Grid item xs={12}>
-                                <AnimateButton>
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        fullWidth
-                                        size="large"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                    >
-                                        Login
-                                    </Button>
-                                </AnimateButton>
+                                <Button
+                                    disableElevation
+                                    disabled={isSubmitting}
+                                    fullWidth
+                                    size="large"
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                >
+                                    로그인
+                                </Button>
                             </Grid>
-                            <Grid item xs={12}>
-                                {/* <Divider>
-                                    <Typography variant="caption"> Login with</Typography>
-                                </Divider> */}
-                                {/* <Divider>
-                                    [<a href="/dashboard">로그인 테스트</a>]
-                                </Divider> */}
-                            </Grid>
-                            {/* <Grid item xs={12}>
-                                <FirebaseSocial />
-                            </Grid> */}
                         </Grid>
                     </form>
                 )}

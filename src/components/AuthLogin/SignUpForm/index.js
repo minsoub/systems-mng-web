@@ -1,7 +1,4 @@
-import { useEffect, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-
-// material-ui
+import {useEffect, useState} from 'react';
 import {
     Box,
     Button,
@@ -9,7 +6,6 @@ import {
     FormControl,
     FormHelperText,
     Grid,
-    Link,
     IconButton,
     InputAdornment,
     InputLabel,
@@ -17,22 +13,14 @@ import {
     Stack,
     Typography
 } from '@mui/material';
-
-// third party
 import * as Yup from 'yup';
-import { Formik } from 'formik';
-
-// project import
-import FirebaseSocial from './FirebaseSocial';
+import {Formik} from 'formik';
+import FirebaseSocial from '../FirebaseSocial';
 import AnimateButton from 'components/@extended/AnimateButton';
-import { strengthColor, strengthIndicator } from 'utils/password-strength';
+import {strengthColor, strengthIndicator} from 'utils/password-strength';
+import {EyeInvisibleOutlined, EyeOutlined} from '@ant-design/icons';
 
-// assets
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-
-// ============================|| FIREBASE - REGISTER ||============================ //
-
-const AuthRegister = () => {
+const SignUpForm = () => {
     const [level, setLevel] = useState();
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
@@ -86,7 +74,7 @@ const AuthRegister = () => {
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>
                                 <Stack spacing={1}>
-                                    <InputLabel htmlFor="firstname-signup">First Name*</InputLabel>
+                                    <InputLabel htmlFor="firstname-signup">성*</InputLabel>
                                     <OutlinedInput
                                         id="firstname-login"
                                         type="firstname"
@@ -94,7 +82,6 @@ const AuthRegister = () => {
                                         name="firstname"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
-                                        placeholder="John"
                                         fullWidth
                                         error={Boolean(touched.firstname && errors.firstname)}
                                     />
@@ -107,7 +94,7 @@ const AuthRegister = () => {
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Stack spacing={1}>
-                                    <InputLabel htmlFor="lastname-signup">Last Name*</InputLabel>
+                                    <InputLabel htmlFor="lastname-signup">이름*</InputLabel>
                                     <OutlinedInput
                                         fullWidth
                                         error={Boolean(touched.lastname && errors.lastname)}
@@ -117,7 +104,6 @@ const AuthRegister = () => {
                                         name="lastname"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
-                                        placeholder="Doe"
                                         inputProps={{}}
                                     />
                                     {touched.lastname && errors.lastname && (
@@ -129,7 +115,7 @@ const AuthRegister = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>
-                                    <InputLabel htmlFor="company-signup">Company</InputLabel>
+                                    <InputLabel htmlFor="company-signup">회사명</InputLabel>
                                     <OutlinedInput
                                         fullWidth
                                         error={Boolean(touched.company && errors.company)}
@@ -150,7 +136,7 @@ const AuthRegister = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>
-                                    <InputLabel htmlFor="email-signup">Email Address*</InputLabel>
+                                    <InputLabel htmlFor="email-signup">이메일 주소*</InputLabel>
                                     <OutlinedInput
                                         fullWidth
                                         error={Boolean(touched.email && errors.email)}
@@ -172,7 +158,7 @@ const AuthRegister = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>
-                                    <InputLabel htmlFor="password-signup">Password</InputLabel>
+                                    <InputLabel htmlFor="password-signup">비밀번호</InputLabel>
                                     <OutlinedInput
                                         fullWidth
                                         error={Boolean(touched.password && errors.password)}
@@ -220,18 +206,7 @@ const AuthRegister = () => {
                                     </Grid>
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12}>
-                                <Typography variant="body2">
-                                    By Signing up, you agree to our &nbsp;
-                                    <Link variant="subtitle2" component={RouterLink} to="#">
-                                        Terms of Service
-                                    </Link>
-                                    &nbsp; and &nbsp;
-                                    <Link variant="subtitle2" component={RouterLink} to="#">
-                                        Privacy Policy
-                                    </Link>
-                                </Typography>
-                            </Grid>
+
                             {errors.submit && (
                                 <Grid item xs={12}>
                                     <FormHelperText error>{errors.submit}</FormHelperText>
@@ -248,7 +223,7 @@ const AuthRegister = () => {
                                         variant="contained"
                                         color="primary"
                                     >
-                                        Create Account
+                                     회원가입
                                     </Button>
                                 </AnimateButton>
                             </Grid>
@@ -268,4 +243,4 @@ const AuthRegister = () => {
     );
 };
 
-export default AuthRegister;
+export default SignUpForm;

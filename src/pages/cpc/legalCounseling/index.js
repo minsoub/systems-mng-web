@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { Button, FormControlLabel, Grid, Radio, RadioGroup, Stack } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';
@@ -11,10 +10,12 @@ import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
-import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/LegalCounselingSearch';
 import styles from './styles.module.scss';
+import DownloadReason from 'components/Security/DownloadReason';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 
 const LegalCounselingMng = () => {
     const columns = [
@@ -110,6 +111,25 @@ const LegalCounselingMng = () => {
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     ////////////////////////////////////////////////////
+
+    // 개인정보 다운로드 사유 입력
+    const [downloadReasonOpen, setDownloadReasonOpen] = useState(false);
+    const [downloadReason, setDownloadReason] = useState('');
+    const handleDownloadReasonClose = () => {
+        setDownloadReasonOpen(false);
+
+        if (downloadReason) {
+            const request = {
+                start_date,
+                end_date,
+                status,
+                keyword,
+                reason: downloadReason
+            };
+            setDownloadFileName('법률상담신청_다운로드.xlsx');
+            getExcelDownload(request);
+        }
+    };
 
     // 검색 조건
     const [start_date, setStartDate] = useState('');
@@ -307,14 +327,8 @@ const LegalCounselingMng = () => {
     // 엑셀 다운로드
     const excelDownloadClick = () => {
         console.log('excelDownloadClick called...');
-        const request = {
-            start_date,
-            end_date,
-            status,
-            keyword
-        };
-        setDownloadFileName('법률상담신청_다운로드.xlsx');
-        getExcelDownload(request);
+        setDownloadReason('');
+        setDownloadReasonOpen(true);
     };
 
     return (
@@ -333,7 +347,7 @@ const LegalCounselingMng = () => {
                     />
 
                     {/* 카테고리 영역 */}
-                    <div className={styles.legalLayoutCategory}>
+                    <div className={cx('legalLayoutCategory')}>
                         <Stack spacing={10} className={cx('borderTitle')}>
                             상태
                         </Stack>
@@ -387,6 +401,12 @@ const LegalCounselingMng = () => {
                         </Button>
                     </ButtonLayout>
                 </Grid>
+                <DownloadReason
+                    open={downloadReasonOpen}
+                    reason={downloadReason}
+                    setReason={setDownloadReason}
+                    handleClose={handleDownloadReasonClose}
+                />
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

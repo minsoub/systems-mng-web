@@ -1,18 +1,11 @@
-import { Link } from 'react-router-dom';
-import { useLocation } from '../../../node_modules/react-router/index';
+import {useLocation} from 'react-router';
+import {Grid, Stack, Typography} from '@mui/material';
+import TmpUpdatePasswordForm from '../../../components/AuthLogin/TmpUpdatePasswordForm';
+import AuthWrapper from '../../../components/AuthLogin/AuthWrapper';
 
-// material-ui
-import { Grid, Stack, Typography } from '@mui/material';
-
-// project import
-import TmpUpdatePasswordForm from './auth-forms/TmpUpdatePasswordForm';
-import AuthWrapper from './AuthWrapper';
-
-// ================================|| LOGIN ||================================ //
-
+// 임시 패스워드 변경 페이지
 const TmpPasswordForm = () => {
     const { state } = useLocation();
-    console.log(state);
 
     return (
         <AuthWrapper>

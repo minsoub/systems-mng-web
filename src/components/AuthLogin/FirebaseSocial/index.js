@@ -1,14 +1,10 @@
-// material-ui
-import { useTheme } from '@mui/material/styles';
-import { useMediaQuery, Button, Stack } from '@mui/material';
-
-// assets
+import {useTheme} from '@mui/material/styles';
+import {Button, Stack, useMediaQuery} from '@mui/material';
 import Google from 'assets/images/icons/google.svg';
 import Twitter from 'assets/images/icons/twitter.svg';
 import Facebook from 'assets/images/icons/facebook.svg';
 
-// ==============================|| FIREBASE - SOCIAL BUTTON ||============================== //
-
+// 소셜 로그인
 const FirebaseSocial = () => {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));

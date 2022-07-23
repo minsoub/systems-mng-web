@@ -10,7 +10,6 @@ import Highlighter from './third-party/Highlighter';
 
 // header style
 const headerSX = {
-    p: 2.5,
     '& .MuiCardHeader-action': { m: '0px auto', alignSelf: 'center' }
 };
 
@@ -55,7 +54,6 @@ const MainCard = forwardRef(
                     },
                     '& pre': {
                         m: 0,
-                        p: '16px !important',
                         fontFamily: theme.typography.fontFamily,
                         fontSize: '0.75rem'
                     }
