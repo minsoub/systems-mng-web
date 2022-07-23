@@ -1,42 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import {
-    OutlinedInput,
-    Box,
     Button,
-    Grid,
-    Stack,
-    FormControlLabel,
-    FormHelperText,
-    InputLabel,
     Checkbox,
-    Select,
-    TextField,
     FormControl,
-    Alert,
-    Collapse,
-    AlertTitle,
+    FormControlLabel,
+    Grid,
+    MenuItem,
     Paper,
-    Typography,
-    MenuItem
+    Select,
+    Stack,
+    TextField,
+    Typography
 } from '@mui/material';
 // third party
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import { styled } from '@mui/material/styles';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
-import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import AccountApis from 'apis/account/accountapis';
 import SiteApi from 'apis/site/siteapi';
 import RoleApi from 'apis/roles/roleapi';
 import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
-import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from '../../../components/HeaderTitle';
+import DropInput from '../../../components/Common/DropInput';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import ContentLine from '../../../components/Common/ContentLine';
+import FlexBox from '../../../components/Common/FlexBox';
 
 const AccessRegForm = () => {
     let isSubmitting = false;
@@ -555,24 +546,12 @@ const AccessRegForm = () => {
         <>
             <Grid container rowSpacing={4.5} columnSpacing={2.75}>
                 <Grid item xs={12} md={7} lg={12}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid item>
-                            <Typography variant="h3">사용자 접근 관리</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography variant="h6">사이트 관리 &gt; 사용자 접근 관리 &gt; 계정 등록</Typography>
-                        </Grid>
-                        <Grid container spacing={2}></Grid>
-                    </Grid>
+                    <HeaderTitle titleNm="사용자 접근 관리" menuStep01="사이트 관리" menuStep02="사용자 접근 관리" menuStep03="계정 등록" />
+
                     <MainCard sx={{ mt: 2 }}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>Name</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small">
+                        <div className="bottom--blank">
+                            <FlexBox>
+                                <DropInput title="이름">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -584,16 +563,10 @@ const AccessRegForm = () => {
                                         placeholder="Input the name"
                                         fullWidth
                                     />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>이메일 주소</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={3}>
-                                <Stack spacing={3}>
-                                    <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 30 }} size="small">
+                                </DropInput>
+
+                                <FlexBox>
+                                    <DropInput title="이메일 주소">
                                         <TextField
                                             id="filled-hidden-label-small"
                                             type="text"
@@ -606,33 +579,25 @@ const AccessRegForm = () => {
                                             placeholder="Enter Email ID"
                                             fullWidth
                                         />
-                                    </FormControl>
-                                </Stack>
-                            </Grid>
-                            <Grid item xs={8} sm={2}>
-                                <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                    <Button
-                                        disableElevation
-                                        size="small"
-                                        type="button"
-                                        disabled={isUpdate}
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={emailDuplicateCheck}
-                                    >
-                                        중복체크
-                                    </Button>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}> Password</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
-                                <FormControl sx={{ m: 0, minWidth: 100, maxHeight: 30 }} size="small">
+                                    </DropInput>
+                                </FlexBox>
+                                <Button
+                                    disableElevation
+                                    size="medium"
+                                    type="button"
+                                    disabled={isUpdate}
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={emailDuplicateCheck}
+                                >
+                                    중복체크
+                                </Button>
+                            </FlexBox>
+                        </div>
+
+                        <div className="bottom--blank">
+                            <FlexBox>
+                                <DropInput title="비밀번호">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="password"
@@ -644,15 +609,9 @@ const AccessRegForm = () => {
                                         placeholder="Input the password."
                                         fullWidth
                                     />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>계정상태</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={5}>
-                                <FormControl sx={{ m: 0, minWidth: 180 }} size="small">
+                                </DropInput>
+
+                                <DropInput title="계정상태">
                                     <Select name="status" label="계정상태" value={status} onChange={statusChanged}>
                                         <MenuItem value="NORMAL">정상</MenuItem>
                                         <MenuItem value="INIT_REQUEST">초기화요청</MenuItem>
@@ -662,27 +621,18 @@ const AccessRegForm = () => {
                                         <MenuItem value="DENY_ACCESS">중지상태</MenuItem>
                                         <MenuItem value="CLOSED_ACCOUNT">계정잠금</MenuItem>
                                     </Select>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>전송여부</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={4}>
+                                </DropInput>
+                            </FlexBox>
+                        </div>
+
+                        <FlexBox>
+                            <DropInput title="전송여부">
                                 <FormControlLabel
                                     control={<Checkbox name="send_chk" value={send_chk} onBlur={handleBlur} onChange={handleChange} />}
                                     label="체크시 패스워드 초기화 메일 전송됨."
                                 />
-                            </Grid>
-                            <Grid item xs={8} sm={1.5}>
-                                <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                    <Stack spacing={0}>사용여부</Stack>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={8} sm={3}>
+                            </DropInput>
+                            <DropInput title="사용여부">
                                 <FormControlLabel
                                     control={
                                         <Checkbox
@@ -695,174 +645,131 @@ const AccessRegForm = () => {
                                     }
                                     label="사용함"
                                 />
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={1} sx={{ m: 0 }}>
-                            <Grid item xs={8} sm={9.5}></Grid>
-                            <Grid item xs={8} sm={2.5}>
-                                <Stack direction="row" spacing={1}>
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        size="small"
-                                        type="button"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={saveClick}
-                                    >
-                                        저장하기
-                                    </Button>
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        size="small"
-                                        type="button"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={newClick}
-                                    >
-                                        신규
-                                    </Button>
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        size="small"
-                                        type="button"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={listClick}
-                                    >
-                                        리스트
-                                    </Button>
-                                </Stack>
-                            </Grid>
-                        </Grid>
-                    </MainCard>
-                    <MainCard sx={{ mt: 2 }}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} sm={12}>
-                                <Stack spacing={2}>
-                                    <MainCard sx={{ mt: 2, height: 570 }} content={false}>
-                                        <Grid container spacing={0} sx={{ mt: 2 }}>
-                                            <Grid item xs={8} sm={0.2}></Grid>
-                                            <Grid item xs={8} sm={2.8}>
-                                                <Stack spacing={5} sx={{ mt: 0 }} justifyContent="left" alignItems="left">
-                                                    <Item>Role 등록 목록</Item>
-                                                </Stack>
-                                            </Grid>
-                                            <Grid item xs={8} sm={7.4}></Grid>
-                                            <Grid item xs={8} sm={0.8}>
-                                                <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                    <Button
-                                                        disableElevation
-                                                        size="small"
-                                                        type="button"
-                                                        variant="contained"
-                                                        color="secondary"
-                                                        onClick={minusRegister}
-                                                    >
-                                                        Remove
-                                                    </Button>
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={8} sm={0.8}>
-                                                <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                    <Button
-                                                        disableElevation
-                                                        size="small"
-                                                        type="button"
-                                                        variant="contained"
-                                                        color="secondary"
-                                                        onClick={roleUpdate}
-                                                        disabled={isRoleUpdate}
-                                                    >
-                                                        Role 저장
-                                                    </Button>
-                                                </FormControl>
-                                            </Grid>
-                                        </Grid>
-                                        <Grid container spacing={0} sx={{ mt: 1 }}>
-                                            <Grid item xs={8} sm={12}>
-                                                <MainCard sx={{ mt: 0, height: 410 }} content={false}>
-                                                    <CheckBoxDataGrid
-                                                        columns={regColumns}
-                                                        rows={dataGridRegisterRows}
-                                                        handlePageChange={handlePage}
-                                                        handleGridClick={handleClick}
-                                                        handleGridDoubleClick={handleDoubleClick}
-                                                        selectionChange={handleSelectionRegisterChange}
-                                                        height={400}
-                                                    />
-                                                </MainCard>
-                                            </Grid>
-                                        </Grid>
+                            </DropInput>
+                        </FlexBox>
 
-                                        <Grid container spacing={0} sx={{ mt: 1 }}>
-                                            <Grid container spacing={0} sx={{ mt: 1 }}>
-                                                <Grid item xs={8} sm={1.5}>
-                                                    <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                        <Stack spacing={0}>사이트명</Stack>
-                                                    </FormControl>
-                                                </Grid>
-                                                <Grid item xs={8} sm={4}>
-                                                    <FormControl sx={{ m: 0, minWidth: 180, maxHeight: 25 }} size="small">
-                                                        <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
-                                                            <MenuItem value="">
-                                                                <em>Choose a Site Type</em>
-                                                            </MenuItem>
-                                                            {itemList
-                                                                .filter((item) => item.id === siteId)
-                                                                .map((item, index) => (
-                                                                    <MenuItem key={index} value={item.id}>
-                                                                        {item.name}
-                                                                    </MenuItem>
-                                                                ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid>
-
-                                                <Grid item xs={8} sm={1.5}>
-                                                    <FormControl sx={{ m: 1, minHeight: 30 }} size="small">
-                                                        <Stack spacing={0}>운영권한</Stack>
-                                                    </FormControl>
-                                                </Grid>
-                                                <Grid item xs={8} sm={4}>
-                                                    <FormControl sx={{ m: 0, minWidth: 160 }} size="small">
-                                                        <Select name="role_id" label="운영권한" value={role_id} onChange={roleChanged}>
-                                                            <MenuItem value="">
-                                                                <em>Choose a Role Type</em>
-                                                            </MenuItem>
-                                                            {roleList.map((item, index) => (
-                                                                <MenuItem key={index} value={item.id}>
-                                                                    {item.name}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid>
-
-                                                <Grid item xs={8} sm={1}>
-                                                    <FormControl sx={{ m: 0, maxHeight: 30 }} size="small">
-                                                        <Button
-                                                            disableElevation
-                                                            size="small"
-                                                            type="button"
-                                                            variant="contained"
-                                                            color="secondary"
-                                                            onClick={plusRegister}
-                                                        >
-                                                            Add
-                                                        </Button>
-                                                    </FormControl>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                    </MainCard>
-                                </Stack>
-                            </Grid>
-                        </Grid>
+                        <ButtonLayout>
+                            <Button
+                                disableElevation
+                                disabled={isSubmitting}
+                                size="medium"
+                                type="button"
+                                variant="contained"
+                                color="primary"
+                                onClick={saveClick}
+                            >
+                                저장
+                            </Button>
+                            <Button
+                                disableElevation
+                                disabled={isSubmitting}
+                                size="medium"
+                                type="button"
+                                variant="contained"
+                                color="secondary"
+                                onClick={newClick}
+                            >
+                                신규
+                            </Button>
+                            <Button
+                                disableElevation
+                                disabled={isSubmitting}
+                                size="medium"
+                                type="button"
+                                variant="contained"
+                                color="secondary"
+                                onClick={listClick}
+                            >
+                                리스트
+                            </Button>
+                        </ButtonLayout>
                     </MainCard>
 
+                    <TopInputLayout className="layout--button__bottom">
+                        <Item>Role 등록 리스트</Item>
+                        <ButtonLayout>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="button"
+                                variant="contained"
+                                color="secondary"
+                                onClick={minusRegister}
+                            >
+                                삭제
+                            </Button>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="button"
+                                variant="contained"
+                                color="primary"
+                                onClick={roleUpdate}
+                                disabled={isRoleUpdate}
+                            >
+                                저장
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
+
+                    <ContentLine>
+                        <CheckBoxDataGrid
+                            columns={regColumns}
+                            rows={dataGridRegisterRows}
+                            handlePageChange={handlePage}
+                            handleGridClick={handleClick}
+                            handleGridDoubleClick={handleDoubleClick}
+                            selectionChange={handleSelectionRegisterChange}
+                            height={400}
+                        />
+                    </ContentLine>
+
+                    <MainCard>
+                        <TopInputLayout>
+                            <FlexBox>
+                                <DropInput title="사이트명">
+                                    <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
+                                        <MenuItem value="">
+                                            <em>Choose a Site Type</em>
+                                        </MenuItem>
+                                        {itemList
+                                            .filter((item) => item.id === siteId)
+                                            .map((item, index) => (
+                                                <MenuItem key={index} value={item.id}>
+                                                    {item.name}
+                                                </MenuItem>
+                                            ))}
+                                    </Select>
+                                </DropInput>
+
+                                <DropInput title="운영권한">
+                                    <Select name="role_id" label="운영권한" value={role_id} onChange={roleChanged}>
+                                        <MenuItem value="">
+                                            <em>Choose a Role Type</em>
+                                        </MenuItem>
+                                        {roleList.map((item, index) => (
+                                            <MenuItem key={index} value={item.id}>
+                                                {item.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </DropInput>
+                            </FlexBox>
+
+                            <ButtonLayout>
+                                <Button
+                                    disableElevation
+                                    size="medium"
+                                    type="button"
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={plusRegister}
+                                >
+                                    등록
+                                </Button>
+                            </ButtonLayout>
+                        </TopInputLayout>
+                    </MainCard>
                 </Grid>
             </Grid>
         </>

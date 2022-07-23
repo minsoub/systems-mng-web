@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField, Typography } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import SvgIcon from '@mui/material/SvgIcon';
 import StatusApi from 'apis/lrc/status/statusapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -326,16 +326,16 @@ const StatusRegForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="상태값 관리" menuStep01="사이트 운영" menuStep02="상태값 관리" menuStep03="상태값 관리" />
 
-                <Grid container xs={12} className="layout--out">
+                <Grid container xs={12}>
                     <Grid item xs={4}>
-                        <MainCard sx={{ mt: 2 }} content={false}>
+                        <MainCard>
                             <TreeView
                                 aria-label="controlled"
                                 //defaultExpanded={expanded}
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 400, flexGrow: 1, overflowY: 'auto' }}
                                 //expanded={expanded}
                                 //selected={selected}
                                 onNodeToggle={handleToggle}
@@ -346,59 +346,65 @@ const StatusRegForm = () => {
                         </MainCard>
                     </Grid>
 
-                    <Grid item xs={8} className="state--layout">
-                        <MainCard sx={{ height: 600 }} content={false} className="stateSubmit layout--inner">
-                            <Typography variant="h4" className="title">
-                                상태값 등록
-                            </Typography>
-
+                    <Grid item xs={8} className="blank--layout">
+                        <MainCard sx={{ height: 400 }} content={false} className="stateSubmit layout--inner" title="상태값 등록">
                             <div className="common-grid--layout">
-                                <DropInput title="상태명" className="layout--out">
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="medium"
-                                        value={name}
-                                        name="name"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        fullWidth
-                                    />
-                                </DropInput>
-                                <DropInput title="상태명(영문)" className="layout--out">
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="medium"
-                                        value={name_en}
-                                        name="name_en"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        fullWidth
-                                    />
-                                </DropInput>
-                                <DropInput title="분류 위치">
-                                    <TextField
-                                        id="outlined-multiline-static"
-                                        inputProps={{ readOnly: true }}
-                                        value={parent_code_name}
-                                        name="parent_code_name"
-                                        size="medium"
-                                        fullWidth
-                                    />
-                                </DropInput>
-                                <DropInput title="정렬 순서" className="layout--out">
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="number"
-                                        size="medium"
-                                        value={order_no}
-                                        name="order_no"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        fullWidth
-                                    />
-                                </DropInput>
+                                <div className="bottom--blank">
+                                    <DropInput title="상태명">
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="text"
+                                            s
+                                            size="medium"
+                                            value={name}
+                                            name="name"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            fullWidth
+                                        />
+                                    </DropInput>
+                                </div>
+                                <div className="bottom--blank">
+                                    <DropInput title="상태명 (영문)">
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="text"
+                                            size="medium"
+                                            value={name_en}
+                                            name="name_en"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            fullWidth
+                                        />
+                                    </DropInput>
+                                </div>
+                                <div className="bottom--blank">
+                                    <DropInput title="분류 위치">
+                                        <TextField
+                                            id="outlined-multiline-static"
+                                            inputProps={{ readOnly: true }}
+                                            value={parent_code_name}
+                                            name="parent_code_name"
+                                            size="medium"
+                                            fullWidth
+                                        />
+                                    </DropInput>
+                                </div>
+                                <div className="bottom--blank">
+                                    <DropInput title="정렬 순서">
+                                        <TextField
+                                            id="filled-hidden-label-small"
+                                            type="number"
+                                            size="medium"
+                                            value={order_no}
+                                            name="order_no"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            fullWidth
+                                        />
+                                    </DropInput>
+                                </div>
+
                                 <DropInput title="사용 여부">
                                     <RadioGroup
                                         row
@@ -416,16 +422,14 @@ const StatusRegForm = () => {
                     </Grid>
                 </Grid>
 
-                <div className="layout--button">
-                    <ButtonLayout className={cx('stateButton')}>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                            저장
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={cancelClick}>
-                            취소
-                        </Button>
-                    </ButtonLayout>
-                </div>
+                <ButtonLayout>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                        저장
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={cancelClick}>
+                        취소
+                    </Button>
+                </ButtonLayout>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

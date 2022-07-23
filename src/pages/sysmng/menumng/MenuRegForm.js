@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Select, Stack, TextField } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import SvgIcon from '@mui/material/SvgIcon';
 import SiteApi from 'apis/site/siteapi';
 import MenuMngApi from 'apis/menu/menumngapi';
@@ -44,12 +44,8 @@ function CloseSquare(props) {
 const MenuRegForm = () => {
     const navigate = useNavigate();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-    const [
-        responseData,
-        requestError,
-        responseLoading,
-        { menumngSearch, menumngDetail, menumngInsert, menumngUpdate, menumngDelete }
-    ] = MenuMngApi();
+    const [responseData, requestError, responseLoading, { menumngSearch, menumngDetail, menumngInsert, menumngUpdate, menumngDelete }] =
+        MenuMngApi();
 
     const [expanded, setExpanded] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -74,21 +70,8 @@ const MenuRegForm = () => {
         external_link: false,
         description: ''
     });
-    const {
-        id,
-        name,
-        site_id,
-        parents_menu_id,
-        parents_menu_name,
-        order,
-        is_use,
-        url,
-        type,
-        target,
-        icon,
-        external_link,
-        description
-    } = inputs;
+    const { id, name, site_id, parents_menu_id, parents_menu_name, order, is_use, url, type, target, icon, external_link, description } =
+        inputs;
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -593,9 +576,9 @@ const MenuRegForm = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <Grid xs={12} container className="layout--out">
+                <Grid xs={12} container>
                     <Grid item xs={4}>
-                        <MainCard sx={{ mt: 2 }} content={false}>
+                        <MainCard>
                             <TreeView
                                 aria-label="controlled"
                                 defaultCollapseIcon={<MinusSquare />}

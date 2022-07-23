@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import { Alert, AlertTitle, Button, Collapse, Dialog, DialogContent, Grid, IconButton, Typography } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
@@ -341,6 +341,8 @@ function BoardSearchDialog(props) {
                         period={period}
                         handleBlur={handleBlur}
                         handleChange={handleChange}
+                        startName="from_date"
+                        endName="to_date"
                     />
 
                     {/* 검색바 */}

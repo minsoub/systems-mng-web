@@ -17,7 +17,7 @@ import {
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import SiteApi from 'apis/site/siteapi';
@@ -388,6 +388,8 @@ const SiteRegForm = () => {
                                             handleBlur={handleBlur}
                                             handleChange={handleChange}
                                             noneChecked="noneChecked"
+                                            startName="from_date"
+                                            endName="to_date"
                                         />
                                     </div>
 

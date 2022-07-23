@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Select, Stack, TextField } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import SvgIcon from '@mui/material/SvgIcon';
 import SiteApi from 'apis/site/siteapi';
 import MenuMngApi from 'apis/menu/menumngapi';
@@ -46,12 +46,8 @@ const SiteMenuRegForm = () => {
     const { siteId } = useSelector((state) => state.auth);
 
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-    const [
-        responseData,
-        requestError,
-        responseLoading,
-        { menumngSearch, menumngDetail, menumngInsert, menumngUpdate, menumngDelete }
-    ] = MenuMngApi();
+    const [responseData, requestError, responseLoading, { menumngSearch, menumngDetail, menumngInsert, menumngUpdate, menumngDelete }] =
+        MenuMngApi();
 
     const [expanded, setExpanded] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -78,21 +74,8 @@ const SiteMenuRegForm = () => {
         external_link: false,
         description: ''
     });
-    const {
-        id,
-        name,
-        site_id,
-        parents_menu_id,
-        parents_menu_name,
-        order,
-        is_use,
-        url,
-        type,
-        target,
-        icon,
-        external_link,
-        description
-    } = inputs;
+    const { id, name, site_id, parents_menu_id, parents_menu_name, order, is_use, url, type, target, icon, external_link, description } =
+        inputs;
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -497,8 +480,8 @@ const SiteMenuRegForm = () => {
                 {/* header top */}
                 <HeaderTitle titleNm="메뉴 등록" menuStep01="사이트 관리" menuStep02="메뉴 관리" menuStep03="메뉴 등록" />
 
-                <Grid xs={12} container spacing={2}>
-                    <Grid item xs={4}>
+                <Grid xs={12} container>
+                    <Grid item xs={4} className="menu--submit">
                         <MainCard>
                             <TreeView
                                 aria-label="controlled"
@@ -712,7 +695,7 @@ const SiteMenuRegForm = () => {
                     </Grid>
                 </Grid>
 
-                <ButtonLayout buttonName="rightButton">
+                <ButtonLayout>
                     <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
                         저장
                     </Button>

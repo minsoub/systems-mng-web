@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Select, Stack } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
@@ -12,6 +11,7 @@ import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const RoleManagementPage = () => {
     let isSubmitting = false;
@@ -232,8 +232,7 @@ const RoleManagementPage = () => {
     const handleDoubleClick = (rowData) => {};
 
     // new
-    const newClick = (e) => {
-        console.log('called register form');
+    const newClick = () => {
         navigate('/roles/reg');
     };
 
@@ -295,7 +294,7 @@ const RoleManagementPage = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -304,7 +303,7 @@ const RoleManagementPage = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
+                </ContentLine>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

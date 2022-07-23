@@ -1,43 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 import {
-    OutlinedInput,
-    Box,
     Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
     FormControl,
-    Select,
+    Grid,
     MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Radio,
-    RadioGroup,
+    Select,
+    Stack,
     Table,
-    TableBody,
     TableCell,
-    TableContainer,
     TableHead,
-    TableRow
+    TableRow,
+    TextField,
+    Typography
 } from '@mui/material';
-import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
-import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
-import ErrorScreen from 'components/ErrorScreen';
-import TabPanel from 'components/TabPanel';
 import FoundationApi from 'apis/lrc/project/foundationapi';
 import StatusApi from 'apis/lrc/status/statusapi';
 import NumberFormat from 'react-number-format';
 import moment from 'moment';
+import ContentLine from '../../../components/Common/ContentLine';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import DropInput from '../../../components/Common/DropInput';
+import './styles.scss';
+import cx from 'classnames';
 
 const OfficeInfo = (props) => {
     const navigate = useNavigate();
@@ -383,109 +369,105 @@ const OfficeInfo = (props) => {
 
     return (
         <Grid container alignItems="center" justifyContent="space-between">
-            <Grid container spacing={0} sx={{ mt: 0 }}>
-                <Grid item xs={8} sm={4}>
+            <div className="order__content--width">
+                <TopInputLayout>
                     <Typography variant="h3">
                         {officeInfo.project_name}({officeInfo.symbol})
                     </Typography>
-                </Grid>
-                <Grid item xs={8} sm={1}>
-                    <FormControl sx={{ m: 0 }} size="small">
-                        <Button disableElevation size="small" type="submit" variant="contained" color="primary">
+
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary">
                             {officeInfo.contract_name}
                         </Button>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={8} sm={1}></Grid>
-                <Grid item xs={8} sm={3} sx={{ m: 1 }}>
-                    <Typography variant="h6">{officeInfo.process_name}</Typography>
-                </Grid>
-                <Grid item xs={8} sm={2} sx={{ m: 0 }}>
-                    <FormControl sx={{ m: 0.5, minWidth: 184, minHeight: 30 }} size="small">
-                        <Select name="project_link" label="연결 프로젝트 선택" onChange={handleChange}>
-                            <MenuItem value="">
-                                <em>연결 프로젝트 선택</em>
+                    </ButtonLayout>
+                </TopInputLayout>
+            </div>
+
+            <div>
+                <Stack spacing={10} className={cx('borderTitle')}>
+                    {officeInfo.process_name}
+                </Stack>
+
+                <DropInput>
+                    <Select name="project_link" label="연결 프로젝트 선택" onChange={handleChange}>
+                        <MenuItem value="">
+                            <em>연결 프로젝트 선택</em>
+                        </MenuItem>
+                        {projectLink.map((item, index) => (
+                            <MenuItem key={index} value={item.link_project_id}>
+                                {item.link_project_name} ( {item.link_project_symbol} )
                             </MenuItem>
-                            {projectLink.map((item, index) => (
-                                <MenuItem key={index} value={item.link_project_id}>
-                                    {item.link_project_name} ( {item.link_project_symbol} )
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={8} sm={0.2}></Grid>
-            </Grid>
+                        ))}
+                    </Select>
+                </DropInput>
+            </div>
+
             <Grid container spacing={0} sx={{ mt: 1 }}>
                 <FormControl sx={{ m: 0 }} fullWidth>
                     <TextField id="outlined-multiline-static" multiline rows={3} defaultValue={officeInfo.admin_memo} />
                 </FormControl>
             </Grid>
+
             <Grid container spacing={0} sx={{ mt: 1 }}>
                 <Typography variant="h4">프로젝트 정보</Typography>
             </Grid>
-            <Grid container spacing={0} sx={{ mt: 1 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                    <Table
-                        fixedheader={false}
-                        style={{ border: 1, width: '100%', tableLayout: 'auto' }}
-                        stickyHeader
-                        aria-label="simple table"
-                    >
-                        <TableHead>
-                            <TableRow>
-                                <TableCell style={{ width: '25%' }} align="center">
-                                    사업계열
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center">
-                                    네트워크 계열
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center">
-                                    백서 링크
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center">
-                                    최초 발행일
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        {projecInfo && (
-                            <TableRow>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {projecInfo.business_name}
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {projecInfo.network_name}
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {projecInfo.whitepaper_link}
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {projecInfo.create_date}
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </Table>
-                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center">컨텍스트 주소</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        {projecInfo && (
-                            <TableRow>
-                                <TableCell component="th" scope="row">
-                                    {projecInfo.contract_address}
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </Table>
-                </MainCard>
-            </Grid>
+
+            <ContentLine className="officeinfo__table__width">
+                <Table style={{ width: '100%' }} stickyHeader aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell style={{ width: '25%' }} align="center">
+                                사업계열
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center">
+                                네트워크 계열
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center">
+                                백서 링크
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center">
+                                최초 발행일
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+
+                    {projecInfo && (
+                        <TableRow>
+                            <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                {projecInfo.business_name}
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                {projecInfo.network_name}
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                {projecInfo.whitepaper_link}
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                {projecInfo.create_date}
+                            </TableCell>
+                        </TableRow>
+                    )}
+                </Table>
+                <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center">컨텍스트 주소</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    {projecInfo && (
+                        <TableRow>
+                            <TableCell component="th" scope="row">
+                                {projecInfo.contract_address}
+                            </TableCell>
+                        </TableRow>
+                    )}
+                </Table>
+            </ContentLine>
             <Grid container spacing={0} sx={{ mt: 1 }}>
                 <Typography variant="h4">담당자 정보</Typography>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                <ContentLine className="officeinfo__table__width">
                     <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -506,28 +488,28 @@ const OfficeInfo = (props) => {
                         {userList.map((item, index) => (
                             <TableRow key={index}>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.user_name}
+                                    {item.user_name} 이름
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.phone}
+                                    {item.phone} 핸드폰 번호
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.sns_id}
+                                    {item.sns_id} sns id
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.email}
+                                    {item.email} 이메일
                                 </TableCell>
                             </TableRow>
                         ))}
                     </Table>
-                </MainCard>
+                </ContentLine>
             </Grid>
 
             <Grid container spacing={0} sx={{ mt: 1 }}>
                 <Typography variant="h4">상장 정보</Typography>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                <ContentLine className="officeinfo__table__width">
                     <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -556,14 +538,14 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         ))}
                     </Table>
-                </MainCard>
+                </ContentLine>
             </Grid>
 
             <Grid container spacing={0} sx={{ mt: 1 }}>
                 <Typography variant="h4">마케팅 수량</Typography>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                <ContentLine className="officeinfo__table__width">
                     <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -598,14 +580,14 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         ))}
                     </Table>
-                </MainCard>
+                </ContentLine>
             </Grid>
 
             <Grid container spacing={0} sx={{ mt: 1 }}>
                 <Typography variant="h4">검토 평가</Typography>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                <ContentLine className="officeinfo__table__width">
                     <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -628,14 +610,14 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         ))}
                     </Table>
-                </MainCard>
+                </ContentLine>
             </Grid>
 
             <Grid container spacing={0} sx={{ mt: 1 }}>
                 <Typography variant="h4">서류 제출 현황</Typography>
             </Grid>
             <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+                <ContentLine className="officeinfo__table__width">
                     <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -720,7 +702,7 @@ const OfficeInfo = (props) => {
                             <TableCell component="th" scope="row"></TableCell>
                         </TableRow>
                     </Table>
-                </MainCard>
+                </ContentLine>
             </Grid>
         </Grid>
     );

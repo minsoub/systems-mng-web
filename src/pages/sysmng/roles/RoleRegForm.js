@@ -4,7 +4,7 @@ import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, TextFi
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
 import './styles.scss';
@@ -361,7 +361,7 @@ const RoleRegForm = () => {
                                 />
 
                                 <MainCard sx={{ mt: 2 }} className="program__layout">
-                                    <Grid container className="program__layout--blank">
+                                    <Grid className="role--blank">
                                         <DropInput title="Role ID">
                                             <div className="role--layout">
                                                 <InputLayout>
@@ -396,8 +396,7 @@ const RoleRegForm = () => {
                                             </div>
                                         </DropInput>
                                     </Grid>
-
-                                    <Grid container>
+                                    <Grid>
                                         {/* 기간 검색 */}
                                         <SearchDate
                                             start_date={valid_start_date}
@@ -405,10 +404,12 @@ const RoleRegForm = () => {
                                             handleBlur={handleBlur}
                                             handleChange={handleChange}
                                             noneChecked="noneChecked"
+                                            startName="valid_start_date"
+                                            endName="valid_end_date"
                                         />
                                     </Grid>
 
-                                    <Grid container className="program__layout--blank">
+                                    <Grid className="role--blank">
                                         <DropInput title="Role Name">
                                             <TextField
                                                 id="filled-hidden-label-small"
@@ -441,7 +442,7 @@ const RoleRegForm = () => {
                                         </DropInput>
                                     </Grid>
 
-                                    <Grid container className="program__layout--blank">
+                                    <Grid className="role--layout">
                                         <DropInput title="사이트 구분">
                                             <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                                 <MenuItem value="">
@@ -464,43 +465,40 @@ const RoleRegForm = () => {
                                     </Grid>
                                 </MainCard>
 
-                                <div className={cx('outButtons')}>
-                                    <ButtonLayout>
-                                        <Button
-                                            disableElevation
-                                            disabled={isSubmitting}
-                                            size="medium"
-                                            type="submit"
-                                            variant="contained"
-                                            color="primary"
-                                        >
-                                            저장하기
-                                        </Button>
-                                        <Button
-                                            disableElevation
-                                            disabled={isDisabled}
-                                            size="medium"
-                                            type="button"
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={deleteClick}
-                                        >
-                                            삭제
-                                        </Button>
-                                        <Button
-                                            disableElevation
-                                            disabled={isSubmitting}
-                                            size="medium"
-                                            type="button"
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={listClick}
-                                        >
-                                            리스트
-                                        </Button>
-                                    </ButtonLayout>
-                                </div>
-
+                                <ButtonLayout>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                    >
+                                        저장하기
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isDisabled}
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={deleteClick}
+                                    >
+                                        삭제
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={listClick}
+                                    >
+                                        리스트
+                                    </Button>
+                                </ButtonLayout>
                                 {errorMessage ? (
                                     <MainCard sx={{ mt: 3 }} content={false}>
                                         <Stack>

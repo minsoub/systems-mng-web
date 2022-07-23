@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, FormControl, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, Select, TextField } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import CategoryApis from 'apis/lrc/faq/categoryapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -12,6 +12,8 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import cx from 'classnames';
 import './styles.scss';
 import DropInput from '../../../components/Common/DropInput';
+import ContentLine from '../../../components/Common/ContentLine';
+import FlexBox from '../../../components/Common/FlexBox';
 
 const FaqCategoryPage = () => {
     let isSubmitting = false;
@@ -248,7 +250,14 @@ const FaqCategoryPage = () => {
                         </FormControl>
 
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={searchClick}
+                            >
                                 검색
                             </Button>
 
@@ -258,7 +267,7 @@ const FaqCategoryPage = () => {
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -268,32 +277,52 @@ const FaqCategoryPage = () => {
                         selectionChange={handleSelectionChange}
                         height={350}
                     />
-                </MainCard>
-                <MainCard sx={{ mt: 2 }} content={false}>
-                    <div className="leftRight--align">
-                        <DropInput title="언어 구분">
-                            <Select name="language" label="언어선택" value={language} onChange={handleChange}>
-                                <MenuItem value="KO">국문</MenuItem>
-                                <MenuItem value="EN">영문</MenuItem>
-                            </Select>
-                        </DropInput>
+                </ContentLine>
 
-                        <DropInput title="카테고리명">
-                            <TextField
-                                id="filled-hidden-label-small"
-                                type="text"
-                                size="medium"
-                                value={name}
-                                name="name"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                placeholder="Enter the Name"
-                                fullWidth
-                            />
-                        </DropInput>
+                <ButtonLayout buttonName="layout--button__bottom">
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                        저장
+                    </Button>
+                    <Button
+                        disableElevation
+                        disabled={!isUpdate}
+                        size="medium"
+                        type="submit"
+                        variant="contained"
+                        color="secondary"
+                        onClick={deleteClick}
+                    >
+                        삭제
+                    </Button>
+                </ButtonLayout>
+
+                <MainCard sx={{ mt: 2 }} content={false}>
+                    <div className="bottom--blank">
+                        <FlexBox>
+                            <DropInput title="언어 구분" className="bottom--blank">
+                                <Select name="language" label="언어선택" value={language} onChange={handleChange}>
+                                    <MenuItem value="KO">국문</MenuItem>
+                                    <MenuItem value="EN">영문</MenuItem>
+                                </Select>
+                            </DropInput>
+
+                            <DropInput title="카테고리명">
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="medium"
+                                    value={name}
+                                    name="name"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    placeholder="Enter the Name"
+                                    fullWidth
+                                />
+                            </DropInput>
+                        </FlexBox>
                     </div>
 
-                    <div className="leftRight--align">
+                    <FlexBox>
                         <DropInput title="사용여부">
                             <RadioGroup
                                 row
@@ -320,24 +349,7 @@ const FaqCategoryPage = () => {
                                 fullWidth
                             />
                         </DropInput>
-                    </div>
-
-                    <ButtonLayout buttonName="rightButton">
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                            저장
-                        </Button>
-                        <Button
-                            disableElevation
-                            disabled={!isUpdate}
-                            size="medium"
-                            type="submit"
-                            variant="contained"
-                            color="secondary"
-                            onClick={deleteClick}
-                        >
-                            삭제
-                        </Button>
-                    </ButtonLayout>
+                    </FlexBox>
                 </MainCard>
 
                 {errorMessage && (

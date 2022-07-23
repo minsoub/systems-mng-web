@@ -2,21 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { Box, Checkbox, FormControlLabel } from '@mui/material';
-import TreeView from '@mui/lab/TreeView';
 import TreeItem, { treeItemClasses, useTreeItem } from '@mui/lab/TreeItem';
 import Typography from '@mui/material/Typography';
-import MailIcon from '@mui/icons-material/Mail';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Label from '@mui/icons-material/Label';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import InfoIcon from '@mui/icons-material/Info';
-import ForumIcon from '@mui/icons-material/Forum';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import SvgIcon from '@mui/material/SvgIcon';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -133,6 +120,8 @@ function CheckTreeItem(props) {
     );
 }
 
+export default CheckTreeItem;
+
 CheckTreeItem.propTypes = {
     dataMsg: PropTypes.string,
     bgColor: PropTypes.string,
@@ -140,4 +129,3 @@ CheckTreeItem.propTypes = {
     visible: PropTypes.bool,
     labelText: PropTypes.string.isRequired
 };
-export default CheckTreeItem;

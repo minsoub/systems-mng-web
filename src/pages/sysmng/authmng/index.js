@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Checkbox, FormControlLabel, Grid, MenuItem, Select } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
@@ -12,6 +12,7 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import InputLayout from 'components/Common/InputLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import DropInput from '../../../components/Common/DropInput';
+import ContentLine from '../../../components/Common/ContentLine';
 
 function InputTitle(props) {
     return null;
@@ -299,7 +300,8 @@ const AuthManagementPage = () => {
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -308,7 +310,7 @@ const AuthManagementPage = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
+                </ContentLine>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

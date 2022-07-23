@@ -1,44 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow
-} from '@mui/material';
-import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
+import {Button, Checkbox, FormControlLabel, Grid, MenuItem, Select} from '@mui/material';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
-import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
 import ProgramApi from 'apis/programs/programapi';
-import ErrorScreen from 'components/ErrorScreen';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import HeaderTitle from 'components/HeaderTitle';
-import cx from 'classnames';
+import ContentLine from '../../../components/Common/ContentLine';
+import DropInput from '../../../components/Common/DropInput';
 
 const ProgramManagementPage = () => {
     let isSubmitting = false;
@@ -264,11 +237,7 @@ const ProgramManagementPage = () => {
                 <MainCard>
                     <TopInputLayout>
                         <InputLayout>
-                            <Stack spacing={10} className={cx('borderTitle')}>
-                                사이트명
-                            </Stack>
-
-                            <FormControl size="medium" sx={{ minWidth: 250 }} className="mapping--grid">
+                            <DropInput title="사이트명">
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged} placeholder="사이트명">
                                     {siteList.map((item, index) => (
                                         <MenuItem key={index} value={item.id}>
@@ -276,7 +245,7 @@ const ProgramManagementPage = () => {
                                         </MenuItem>
                                     ))}
                                 </Select>
-                            </FormControl>
+                            </DropInput>
 
                             <FormControlLabel
                                 control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
@@ -303,7 +272,7 @@ const ProgramManagementPage = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -313,7 +282,7 @@ const ProgramManagementPage = () => {
                         selectionChange={handleSelectionChange}
                         height={600}
                     />
-                </MainCard>
+                </ContentLine>
             </Grid>
         </Grid>
     );

@@ -1,14 +1,13 @@
-import { Grid, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import './styles.scss';
 
 const CategoryContents = (props) => {
     const { id, content, count, filterClick } = props;
 
     return (
-        <Grid item xs={8} sm={1}>
-            <Typography variant="caption" color="inherit" onClick={() => filterClick(id)}>
-                {content}({count})
-            </Typography>
-        </Grid>
+        <Typography variant="h6" color="inherit" onClick={() => filterClick(id)} className="content__mng--row">
+            {content}({count})
+        </Typography>
     );
 };
 

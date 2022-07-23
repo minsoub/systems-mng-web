@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Grid, Stack, Typography } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import cx from 'classnames';
 import './styles.scss';
 

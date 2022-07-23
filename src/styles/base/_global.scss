@@ -17,12 +17,6 @@
     margin-bottom: 20px;
 }
 
-// 버튼 오른쪽 정렬
-.outButtons {
-    width: 100%;
-    margin-top: 16px;
-}
-
 // 검색 결과 리스트
 .css-3yvf2w-MuiDataGrid-root .MuiDataGrid-columnHeader {
     height: 55px;
@@ -220,17 +214,14 @@ html [type='button'],
     box-shadow: none;
 }
 
-// layout 여백
-.program__layout {
-    .program__layout--blank {
-        margin-bottom: 20px;
-    }
-}
-
 // 레이아웃 여백
 .layout--out {
     @include layoutOutBlank();
     align-items: normal;
+}
+
+.layout__blank--top {
+    padding-top: 2rem;
 }
 
 .layout--inner {
@@ -238,7 +229,11 @@ html [type='button'],
 }
 
 .layout--button {
-    margin-top: 30px;
+    margin-top: 2rem;
+}
+
+.layout--button__bottom {
+    margin-bottom: 2rem;
 }
 
 .layout--button--rightBlank {
@@ -253,6 +248,28 @@ html [type='button'],
 
 .inputLayout {
     display: flex;
+}
+
+.blank--layout {
+    padding-left: 20px;
+}
+
+.css-brkclh-MuiButtonBase-root-MuiCheckbox-root {
+    padding-left: 0;
+}
+.bottom--blank {
+    margin-bottom: 1.5rem;
+}
+
+.bottom--blank__top {
+    margin-top: 1.5rem;
+}
+
+.layout--align {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
 }
 
 // 1024 해상도에서도 width Full로 차도록

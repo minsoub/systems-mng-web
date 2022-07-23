@@ -1,11 +1,9 @@
 // project import
-import NavCard from './NavCard';
 import Navigation from './Navigation';
 import SimpleBar from 'components/third-party/SimpleBar';
-import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect, useState, useRef } from 'react';
-import jwt from 'jsonwebtoken';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 // ==============================|| DRAWER CONTENT ||============================== //
 
 const DrawerContent = ({ navigation }) => {

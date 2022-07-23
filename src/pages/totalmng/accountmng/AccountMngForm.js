@@ -17,7 +17,7 @@ import {
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import AccountApis from 'apis/account/accountapis';
@@ -256,7 +256,7 @@ const AccountMngForm = () => {
                                 <HeaderTitle titleNm="계정 관리" menuStep01="통합 관리" menuStep02="계정 관리" />
 
                                 <MainCard sx={{ mt: 2 }}>
-                                    <div className="layout--aline">
+                                    <div className="layout--aline account--blank">
                                         <Stack spacing={10} className={cx('borderTitle')}>
                                             이메일 주소
                                         </Stack>
@@ -290,35 +290,39 @@ const AccountMngForm = () => {
                                         </ButtonLayout>
                                     </div>
 
-                                    <DropInput title="이름" className="account--blank">
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="small"
-                                            value={name}
-                                            name="name"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="Input the name"
-                                            fullWidth
-                                            error={Boolean(touched.name && errors.name)}
-                                        />
-                                    </DropInput>
+                                    <div className="account--blank">
+                                        <DropInput title="이름">
+                                            <TextField
+                                                id="filled-hidden-label-small"
+                                                type="text"
+                                                size="small"
+                                                value={name}
+                                                name="name"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                placeholder="Input the name"
+                                                fullWidth
+                                                error={Boolean(touched.name && errors.name)}
+                                            />
+                                        </DropInput>
+                                    </div>
 
-                                    <DropInput title="비밀번호">
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="password"
-                                            size="small"
-                                            value={password}
-                                            name="password"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="Input the password."
-                                            fullWidth
-                                            error={Boolean(touched.password && errors.password)}
-                                        />
-                                    </DropInput>
+                                    <div className="account--blank">
+                                        <DropInput title="비밀번호" className="account--blank">
+                                            <TextField
+                                                id="filled-hidden-label-small"
+                                                type="password"
+                                                size="small"
+                                                value={password}
+                                                name="password"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                placeholder="Input the password."
+                                                fullWidth
+                                                error={Boolean(touched.password && errors.password)}
+                                            />
+                                        </DropInput>
+                                    </div>
 
                                     <DropInput title="사용여부" className="account--blank">
                                         <FormControlLabel
@@ -336,7 +340,7 @@ const AccountMngForm = () => {
                                     </DropInput>
                                 </MainCard>
 
-                                <ButtonLayout buttonName="rightButton btnBlank">
+                                <ButtonLayout>
                                     <Button
                                         disableElevation
                                         disabled={isSubmitting}

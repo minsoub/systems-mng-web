@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Select, Stack } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
 import SiteApi from 'apis/site/siteapi';
@@ -15,6 +15,7 @@ import InputLayout from '../../../components/Common/InputLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import './styles.scss';
 import DropInput from '../../../components/Common/DropInput';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const SiteAuthManagementPage = () => {
     let isSubmitting = false;
@@ -266,7 +267,14 @@ const SiteAuthManagementPage = () => {
                                 </InputLayout>
 
                                 <ButtonLayout>
-                                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={searchClick}
+                                    >
                                         검색
                                     </Button>
                                 </ButtonLayout>
@@ -275,7 +283,7 @@ const SiteAuthManagementPage = () => {
                     </Grid>
                 </MainCard>
 
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -284,7 +292,7 @@ const SiteAuthManagementPage = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
+                </ContentLine>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

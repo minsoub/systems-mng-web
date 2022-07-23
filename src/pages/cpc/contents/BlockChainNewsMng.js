@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Grid } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import BlockChainNewsApi from 'apis/cpc/board/newsapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -13,6 +13,7 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/BlockChainNewsSearch';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const BlockChainNewsMng = () => {
     const columns = [
@@ -295,23 +296,25 @@ const BlockChainNewsMng = () => {
                         period={period}
                         handleBlur={handleBlur}
                         handleChange={handleChange}
+                        startName="start_date"
+                        endName="end_date"
                     />
 
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
-                            초기화
-                        </Button>
 
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                            검색
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+                <ButtonLayout buttonName="layout--button__bottom">
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                        초기화
+                    </Button>
+
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                        검색
+                    </Button>
+                </ButtonLayout>
+
+                <ContentLine>
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -320,17 +323,16 @@ const BlockChainNewsMng = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
-                            선택 삭제
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
-                            등록
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
+                </ContentLine>
+
+                <ButtonLayout buttonName="layout__blank--top">
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={deleteClick}>
+                        선택 삭제
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
+                        등록
+                    </Button>
+                </ButtonLayout>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

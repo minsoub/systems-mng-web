@@ -15,7 +15,7 @@ import {
     Typography
 } from '@mui/material';
 import { makeStyles, withStyles } from '@mui/styles';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import StatusApi from 'apis/lrc/status/statusapi';
 import FoundationApi from 'apis/lrc/project/foundationapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -33,6 +33,7 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import cx from 'classnames';
 import InputLayout from '../../../components/Common/InputLayout';
 import './styles.scss';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const ProjectsPage = () => {
     let isSubmitting = false;
@@ -302,8 +303,9 @@ const ProjectsPage = () => {
             case 'keyword':
                 setKeyword(e.target.value);
                 break;
+            // 시작
             case 'from_date':
-                setStartDate(moment(e.target.value).format('YYYY.MM.DD')); // e.target.value);
+                setStartDate(e.target.value);
                 break;
             case 'to_date':
                 setEndDate(e.target.value);
@@ -487,7 +489,7 @@ const ProjectsPage = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="거래지원 관리" menuStep01="사이트 운영" menuStep02="거래지원 관리" />
 
-                <MainCard sx={{ mt: 1 }}>
+                <MainCard>
                     <Grid>
                         {/* 기간 검색 */}
                         <SearchDate
@@ -496,6 +498,8 @@ const ProjectsPage = () => {
                             period={period}
                             handleBlur={handleBlur}
                             handleChange={handleChange}
+                            startName="from_date"
+                            endName="to_date"
                         />
 
                         <InputLayout>
@@ -531,32 +535,30 @@ const ProjectsPage = () => {
                     </Grid>
                 </MainCard>
 
-                <div className={cx('outButtons')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                            검색
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
-                            초기화
-                        </Button>
-                    </ButtonLayout>
-                </div>
+                <ButtonLayout buttonName="layout--button__bottom layout--button">
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                        검색
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                        초기화
+                    </Button>
+                </ButtonLayout>
 
-                <MainCard sx={{ mt: 1, minHeight: 60 }} content={false}>
-                    <Grid container spacing={0} sx={{ mt: 2 }}>
-                        <Grid item xs={8} sm={0.3}></Grid>
+                <MainCard>
+                    <Grid container spacing={0}>
                         <Grid item xs={8} sm={0.7}>
-                            <Typography variant="caption" color="inherit" onClick={() => filterClick(null)}>
+                            <Typography variant="h6" color="inherit" onClick={() => filterClick(null)}>
                                 전체({totalDataGridRows.length})
                             </Typography>
                         </Grid>
-                        <Grid item xs={8} sm={0.2}></Grid>
+
                         {categoryList.map((item, index) => (
                             <StsCategory key={index} id={item.id} content={item.name} count={item.count} filterClick={filterClick} />
                         ))}
                     </Grid>
                 </MainCard>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
+
+                <ContentLine>
                     <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -652,15 +654,7 @@ const ProjectsPage = () => {
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
                     />
-                    {/* <DefaultDataGrid
-                        columns={columns}
-                        rows={dataGridRows}
-                        handlePageChange={handlePage}
-                        handleGridClick={handleClick}
-                        handleGridDoubleClick={handleDoubleClick}
-                        selectionChange={handleSelectionChange}
-                    /> */}
-                </MainCard>
+                </ContentLine>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

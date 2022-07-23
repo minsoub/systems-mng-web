@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import FraudReportApi from 'apis/cpc/fraudReport/fraudreportapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -15,6 +15,7 @@ import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/FraudReportSearch';
 import DownloadReason from 'components/Security/DownloadReason';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const FraudReportMng = () => {
     const columns = [
@@ -337,6 +338,8 @@ const FraudReportMng = () => {
                         period={period}
                         handleBlur={handleBlur}
                         handleChange={handleChange}
+                        startName="start_date"
+                        endName="end_date"
                     />
 
                     {/* 카테고리 영역 */}
@@ -363,18 +366,17 @@ const FraudReportMng = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <Grid className={cx('outButtons searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
-                            초기화
-                        </Button>
+                <ButtonLayout buttonName="layout--button__bottom">
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                        초기화
+                    </Button>
 
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                            검색
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                        검색
+                    </Button>
+                </ButtonLayout>
+
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -383,8 +385,8 @@ const FraudReportMng = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
+                </ContentLine>
+                <Grid className={cx(' searchPointColor')}>
                     <ButtonLayout>
                         <Button
                             disableElevation

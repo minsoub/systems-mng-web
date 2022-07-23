@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import {
     Box,
     Button,
@@ -14,11 +14,10 @@ import {
     Typography
 } from '@mui/material';
 import * as Yup from 'yup';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import FirebaseSocial from '../FirebaseSocial';
-import AnimateButton from 'components/@extended/AnimateButton';
-import {strengthColor, strengthIndicator} from 'utils/password-strength';
-import {EyeInvisibleOutlined, EyeOutlined} from '@ant-design/icons';
+import { strengthColor, strengthIndicator } from 'utils/password-strength';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 
 const SignUpForm = () => {
     const [level, setLevel] = useState();
@@ -213,19 +212,17 @@ const SignUpForm = () => {
                                 </Grid>
                             )}
                             <Grid item xs={12}>
-                                <AnimateButton>
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        fullWidth
-                                        size="large"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                    >
-                                     회원가입
-                                    </Button>
-                                </AnimateButton>
+                                <Button
+                                    disableElevation
+                                    disabled={isSubmitting}
+                                    fullWidth
+                                    size="large"
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                >
+                                    회원가입
+                                </Button>
                             </Grid>
                             <Grid item xs={12}>
                                 <Divider>

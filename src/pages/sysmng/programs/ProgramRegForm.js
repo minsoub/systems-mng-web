@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Checkbox, FormControlLabel, Grid, MenuItem, Select, TextField } from '@mui/material';
 // third party
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import SiteApi from 'apis/site/siteapi';
 import ProgramApi from 'apis/programs/programapi';
 import HeaderTitle from '../../../components/HeaderTitle';
-import cx from 'classnames';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import DropInput from '../../../components/Common/DropInput';
-import './styles.scss';
+
 const ProgramRegForm = () => {
     let isSubmitting = false;
 
@@ -233,8 +232,8 @@ const ProgramRegForm = () => {
                         menuStep03="프로그램 등록"
                     />
 
-                    <MainCard sx={{ mt: 2 }} className="program__layout">
-                        <Grid container className="program__layout--blank">
+                    <MainCard sx={{ mt: 2 }}>
+                        <Grid container>
                             <DropInput title="사이트명">
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
                                     <MenuItem value="">
@@ -255,7 +254,7 @@ const ProgramRegForm = () => {
                             </DropInput>
                         </Grid>
 
-                        <Grid container className="program__layout--blank">
+                        <Grid container className="bottom--blank__top">
                             <DropInput title="프로그램 ID">
                                 <TextField
                                     id="filled-hidden-label-small"
@@ -286,7 +285,7 @@ const ProgramRegForm = () => {
                             </DropInput>
                         </Grid>
 
-                        <Grid container className="program__layout--blank">
+                        <Grid container className="bottom--blank__top">
                             <DropInput title="분류명">
                                 <TextField
                                     id="filled-hidden-label-small"
@@ -310,7 +309,7 @@ const ProgramRegForm = () => {
                             </DropInput>
                         </Grid>
 
-                        <Grid container className="program__layout--blank">
+                        <Grid container className="bottom--blank__top">
                             <DropInput title="Action URL">
                                 <TextField
                                     id="filled-hidden-label-small"
@@ -341,7 +340,7 @@ const ProgramRegForm = () => {
                             </DropInput>
                         </Grid>
 
-                        <Grid container className="program__layout--blank">
+                        <Grid container className="bottom--blank__top">
                             <DropInput title="비고">
                                 <TextField
                                     id="filled-hidden-label-small"
@@ -358,43 +357,41 @@ const ProgramRegForm = () => {
                         </Grid>
                     </MainCard>
 
-                    <div className={cx('outButtons')}>
-                        <ButtonLayout>
-                            <Button
-                                disableElevation
-                                disabled={isSubmitting}
-                                size="medium"
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                onClick={saveClick}
-                            >
-                                저장하기
-                            </Button>
-                            <Button
-                                disableElevation
-                                disabled={isSubmitting}
-                                size="medium"
-                                type="button"
-                                variant="contained"
-                                color="secondary"
-                                onClick={newClick}
-                            >
-                                신규
-                            </Button>
-                            <Button
-                                disableElevation
-                                disabled={isSubmitting}
-                                size="medium"
-                                type="submit"
-                                variant="contained"
-                                color="secondary"
-                                onClick={listClick}
-                            >
-                                리스트
-                            </Button>
-                        </ButtonLayout>
-                    </div>
+                    <ButtonLayout>
+                        <Button
+                            disableElevation
+                            disabled={isSubmitting}
+                            size="medium"
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            onClick={saveClick}
+                        >
+                            저장하기
+                        </Button>
+                        <Button
+                            disableElevation
+                            disabled={isSubmitting}
+                            size="medium"
+                            type="button"
+                            variant="contained"
+                            color="secondary"
+                            onClick={newClick}
+                        >
+                            신규
+                        </Button>
+                        <Button
+                            disableElevation
+                            disabled={isSubmitting}
+                            size="medium"
+                            type="submit"
+                            variant="contained"
+                            color="secondary"
+                            onClick={listClick}
+                        >
+                            리스트
+                        </Button>
+                    </ButtonLayout>
                 </Grid>
             </Grid>
         </>

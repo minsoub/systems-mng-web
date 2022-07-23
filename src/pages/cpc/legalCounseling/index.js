@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, FormControlLabel, Grid, Radio, RadioGroup, Stack } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import LegalCounselingApi from 'apis/cpc/legalCounseling/regalcounselingapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -15,6 +15,7 @@ import { setSearchData } from 'store/reducers/cpc/LegalCounselingSearch';
 import styles from './styles.module.scss';
 import DownloadReason from 'components/Security/DownloadReason';
 import classNames from 'classnames/bind';
+import ContentLine from '../../../components/Common/ContentLine';
 const cx = classNames.bind(styles);
 
 const LegalCounselingMng = () => {
@@ -344,6 +345,8 @@ const LegalCounselingMng = () => {
                         period={period}
                         handleBlur={handleBlur}
                         handleChange={handleChange}
+                        startName="start_date"
+                        endName="end_date"
                     />
 
                     {/* 카테고리 영역 */}
@@ -366,18 +369,18 @@ const LegalCounselingMng = () => {
                         </RadioGroup>
                     </div>
                 </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
-                            초기화
-                        </Button>
 
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                            검색
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+                <ButtonLayout buttonName="layout--button__bottom">
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                        초기화
+                    </Button>
+
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                        검색
+                    </Button>
+                </ButtonLayout>
+
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -386,8 +389,8 @@ const LegalCounselingMng = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
+                </ContentLine>
+                <Grid className={cx(' searchPointColor')}>
                     <ButtonLayout>
                         <Button
                             disableElevation

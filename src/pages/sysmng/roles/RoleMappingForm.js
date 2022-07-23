@@ -16,7 +16,7 @@ import {
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { styled } from '@mui/material/styles';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import RoleApi from 'apis/roles/roleapi';
@@ -30,6 +30,7 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import cx from 'classnames';
 import DropInput from '../../../components/Common/DropInput';
 import './styles.scss';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const RoleMappingForm = () => {
     let isSubmitting = false;
@@ -441,7 +442,7 @@ const RoleMappingForm = () => {
 
                 <Grid container alignItems="center" justifyContent="space-between" className="roleLayout">
                     <Grid item md={4}>
-                        <MainCard sx={{ mt: 3 }} content={false}>
+                        <ContentLine>
                             <DefaultDataGrid
                                 columns={columns}
                                 rows={dataGridRows}
@@ -451,7 +452,7 @@ const RoleMappingForm = () => {
                                 handleGridDoubleClick={handleDoubleClick}
                                 selectionChange={handleSelectionChange}
                             />
-                        </MainCard>
+                        </ContentLine>
                     </Grid>
 
                     <Grid item md={7.8}>
@@ -460,7 +461,7 @@ const RoleMappingForm = () => {
                         </Typography>
 
                         <Stack spacing={5}>
-                            <MainCard sx={{ mt: 2, height: 330 }} content={false}>
+                            <ContentLine>
                                 <CheckBoxDataGrid
                                     columns={regColumns}
                                     rows={dataGridRegisterRows}
@@ -470,7 +471,7 @@ const RoleMappingForm = () => {
                                     selectionChange={handleSelectionRegisterChange}
                                     height={330}
                                 />
-                            </MainCard>
+                            </ContentLine>
                         </Stack>
 
                         {/* 화살표 */}
@@ -516,7 +517,7 @@ const RoleMappingForm = () => {
                             </div>
                         </div>
 
-                        <MainCard sx={{ mt: 2, height: 330 }} content={false}>
+                        <ContentLine>
                             <CheckBoxDataGrid
                                 columns={searchColumns}
                                 rows={dataGridSearchRows}
@@ -526,7 +527,7 @@ const RoleMappingForm = () => {
                                 selectionChange={handleSelectionSearchChange}
                                 height={330}
                             />
-                        </MainCard>
+                        </ContentLine>
                     </Grid>
                 </Grid>
 

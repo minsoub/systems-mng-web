@@ -3,8 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button, Grid, MenuItem, Paper, Select } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import MainCard from 'components/MainCard';
-import SvgIcon from '@mui/material/SvgIcon';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import SiteApi from 'apis/site/siteapi';
@@ -18,55 +17,21 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HeaderTitle from 'components/HeaderTitle';
 import TopInputLayout from 'components/Common/TopInputLayout';
-import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import DropInput from 'components/Common/DropInput';
 import './styles.scss';
-
-function MinusSquare(props) {
-    return (
-        <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
-            {/* tslint:disable-next-line: max-line-length */}
-            <path d="M22.047 22.074v0 0-20.147 0h-20.12v0 20.147 0h20.12zM22.047 24h-20.12q-.803 0-1.365-.562t-.562-1.365v-20.147q0-.776.562-1.351t1.365-.575h20.147q.776 0 1.351.575t.575 1.351v20.147q0 .803-.575 1.365t-1.378.562v0zM17.873 11.023h-11.826q-.375 0-.669.281t-.294.682v0q0 .401.294 .682t.669.281h11.826q.375 0 .669-.281t.294-.682v0q0-.401-.294-.682t-.669-.281z" />
-        </SvgIcon>
-    );
-}
-
-function PlusSquare(props) {
-    return (
-        <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
-            {/* tslint:disable-next-line: max-line-length */}
-            <path d="M22.047 22.074v0 0-20.147 0h-20.12v0 20.147 0h20.12zM22.047 24h-20.12q-.803 0-1.365-.562t-.562-1.365v-20.147q0-.776.562-1.351t1.365-.575h20.147q.776 0 1.351.575t.575 1.351v20.147q0 .803-.575 1.365t-1.378.562v0zM17.873 12.977h-4.923v4.896q0 .401-.281.682t-.682.281v0q-.375 0-.669-.281t-.294-.682v-4.896h-4.923q-.401 0-.682-.294t-.281-.669v0q0-.401.281-.682t.682-.281h4.923v-4.896q0-.401.294-.682t.669-.281v0q.401 0 .682.281t.281.682v4.896h4.923q.401 0 .682.281t.281.682v0q0 .375-.281.669t-.682.294z" />
-        </SvgIcon>
-    );
-}
-
-function CloseSquare(props) {
-    return (
-        <SvgIcon className="close" fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
-            {/* tslint:disable-next-line: max-line-length */}
-            <path d="M17.485 17.512q-.281.281-.682.281t-.696-.268l-4.12-4.147-4.12 4.147q-.294.268-.696.268t-.682-.281-.281-.682.294-.669l4.12-4.147-4.12-4.147q-.294-.268-.294-.669t.281-.682.682-.281.696 .268l4.12 4.147 4.12-4.147q.294-.268.696-.268t.682.281 .281.669-.294.682l-4.12 4.147 4.12 4.147q.294.268 .294.669t-.281.682zM22.047 22.074v0 0-20.147 0h-20.12v0 20.147 0h20.12zM22.047 24h-20.12q-.803 0-1.365-.562t-.562-1.365v-20.147q0-.776.562-1.351t1.365-.575h20.147q.776 0 1.351.575t.575 1.351v20.147q0 .803-.575 1.365t-1.378.562v0z" />
-        </SvgIcon>
-    );
-}
+import ContentLine from '../../../components/Common/ContentLine';
+import FlexBox from '../../../components/Common/FlexBox';
 
 const AuthMngRegForm = () => {
     const navigate = useNavigate();
     const { siteId } = useSelector((state) => state.auth);
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-    const [
-        responseData,
-        requestError,
-        responseLoading,
-        { menumngSearch, menumngDetail, programMapping, programMappingSearch }
-    ] = MenuMngApi();
+    const [responseData, requestError, responseLoading, { menumngSearch, menumngDetail, programMapping, programMappingSearch }] =
+        MenuMngApi();
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
-    const [
-        roleRequestData,
-        roleRequestError,
-        roleLoading,
-        { roleComboSearch, roleRegisterSearch, roleRegisterTreeList, roleMenuSave }
-    ] = RoleApi();
+    const [roleRequestData, roleRequestError, roleLoading, { roleComboSearch, roleRegisterSearch, roleRegisterTreeList, roleMenuSave }] =
+        RoleApi();
 
     const { roleType, roleId } = useParams();
 
@@ -756,42 +721,42 @@ const AuthMngRegForm = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="권한 맵핑 등록" menuStep01="통합시스템 관리" menuStep02="권한 관리" menuStep03="권한 맵핑 등록" />
 
-                <MainCard sx={{ mt: 1 }}>
-                    <TopInputLayout>
-                        <InputLayout gridClass="gridClass">
-                            <DropInput title="사이트 구분">
-                                <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
-                                    <MenuItem value="">
-                                        <em>Choose a Site Type</em>
+                <MainCard>
+                    <FlexBox>
+                        <DropInput title="사이트 구분">
+                            <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
+                                <MenuItem value="">
+                                    <em>Choose a Site Type</em>
+                                </MenuItem>
+                                {siteList.map((item, index) => (
+                                    <MenuItem key={index} value={item.id}>
+                                        {item.name}
                                     </MenuItem>
-                                    {siteList.map((item, index) => (
-                                        <MenuItem key={index} value={item.id}>
-                                            {item.name}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </DropInput>
+                                ))}
+                            </Select>
+                        </DropInput>
 
-                            <DropInput title="Type">
-                                <Select name="type" label="Role Type" value={type} onChange={handleChange}>
-                                    <MenuItem value="ADMIN">ADMIN</MenuItem>
-                                    <MenuItem value="USER">USER</MenuItem>
-                                </Select>
-                            </DropInput>
+                        <DropInput title="Type">
+                            <Select name="type" label="Role Type" value={type} onChange={handleChange}>
+                                <MenuItem value="ADMIN">ADMIN</MenuItem>
+                                <MenuItem value="USER">USER</MenuItem>
+                            </Select>
+                        </DropInput>
+                    </FlexBox>
 
-                            <DropInput title="Role Name">
-                                <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
-                                    <MenuItem value="">
-                                        <em>Choose a Role Name</em>
+                    <TopInputLayout className="bottom--blank__top">
+                        <DropInput title="Role Name">
+                            <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
+                                <MenuItem value="">
+                                    <em>Choose a Role Name</em>
+                                </MenuItem>
+                                {roleList.map((item, index) => (
+                                    <MenuItem key={index} value={item.id}>
+                                        {item.name}
                                     </MenuItem>
-                                    {roleList.map((item, index) => (
-                                        <MenuItem key={index} value={item.id}>
-                                            {item.name}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </DropInput>
-                        </InputLayout>
+                                ))}
+                            </Select>
+                        </DropInput>
 
                         <ButtonLayout>
                             <Button
@@ -808,9 +773,9 @@ const AuthMngRegForm = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
-                    <Grid item md={3}>
-                        <MainCard sx={{ mt: 2 }} content={false}>
+                <Grid xs={12} container>
+                    <Grid item xs={4}>
+                        <MainCard>
                             <TreeView
                                 aria-label="controlled"
                                 defaultCollapseIcon={<ExpandMoreIcon />}
@@ -823,17 +788,17 @@ const AuthMngRegForm = () => {
                     </Grid>
 
                     {/* 콘텐츠 영역 */}
-                    <Grid item md={8.8}>
-                        <TopInputLayout>
+                    <Grid item xs={8} className="blank--layout">
+                        <div className="layout--align">
                             <Item>Role : {role_name}</Item>
                             <Button disableElevation size="medium" type="button" variant="contained" onClick={programMappingSaveClick}>
                                 저장
                             </Button>
-                        </TopInputLayout>
+                        </div>
 
                         <Grid container spacing={0} sx={{ mt: 1 }}>
                             <Grid item xs={8} sm={12}>
-                                <MainCard sx={{ mt: 0, height: 290 }} content={false}>
+                                <ContentLine>
                                     <DefaultDataGrid
                                         columns={roleColumns}
                                         rows={dataGridRoleRows}
@@ -843,12 +808,11 @@ const AuthMngRegForm = () => {
                                         selectionChange={handleSelectionRoleChange}
                                         height={290}
                                     />
-                                </MainCard>
+                                </ContentLine>
                             </Grid>
 
-                            {/* 콘텐츠 영역 */}
                             <Grid container spacing={0} sx={{ mt: 1 }}>
-                                <TopInputLayout>
+                                <div className="layout--align">
                                     <Item>프로그램 목록</Item>
                                     <Button
                                         disableElevation
@@ -860,11 +824,11 @@ const AuthMngRegForm = () => {
                                     >
                                         선택반영
                                     </Button>
-                                </TopInputLayout>
+                                </div>
 
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
                                     <Grid item xs={8} sm={12}>
-                                        <MainCard sx={{ mt: 0, height: 290 }} content={false}>
+                                        <ContentLine>
                                             <CheckBoxDataGrid
                                                 columns={programColumns}
                                                 rows={dataGridProgramRows}
@@ -874,7 +838,7 @@ const AuthMngRegForm = () => {
                                                 selectionChange={handleSelectionProgramChange}
                                                 height={290}
                                             />
-                                        </MainCard>
+                                        </ContentLine>
                                     </Grid>
                                 </Grid>
                             </Grid>

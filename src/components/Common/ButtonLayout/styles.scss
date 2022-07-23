@@ -7,13 +7,9 @@
     button {
         margin: 0 0.5rem;
         &:last-child {
-            margin: 0;
+            margin-right: 0;
         }
     }
-}
-
-.rightButton {
-    @include rightButton;
 }
 
 .content--right__button {

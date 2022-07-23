@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Button, Grid } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
@@ -16,6 +16,7 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/DigitalAssetBasicSearch';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const DigitalAssetBasicMng = () => {
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
@@ -312,23 +313,23 @@ const DigitalAssetBasicMng = () => {
                         period={period}
                         handleBlur={handleBlur}
                         handleChange={handleChange}
+                        startName="start_date"
+                        endName="end_date"
                     />
 
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
-                            초기화
-                        </Button>
+                <ButtonLayout buttonName="layout--button__bottom">
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                        초기화
+                    </Button>
 
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                            검색
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                        검색
+                    </Button>
+                </ButtonLayout>
+                <ContentLine>
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -337,8 +338,8 @@ const DigitalAssetBasicMng = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
+                </ContentLine>
+                <Grid className={cx(' searchPointColor')}>
                     <ButtonLayout>
                         <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
                             선택 삭제

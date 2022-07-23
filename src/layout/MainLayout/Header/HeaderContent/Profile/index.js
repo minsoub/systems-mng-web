@@ -6,8 +6,8 @@ import { useTheme } from '@mui/material/styles';
 import { Box, ButtonBase, CardContent, ClickAwayListener, Grid, Paper, Popper, Stack, Tab, Tabs, Typography } from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
-import Transitions from 'components/@extended/Transitions';
+import MainCard from 'components/Common/MainCard';
+import Transitions from 'components/Common/Transitions';
 import ProfileTab from './ProfileTab';
 import { useNavigate } from 'react-router-dom';
 // assets

@@ -1,12 +1,12 @@
-import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import OtpInput from 'react-otp-input';
-import {Button, Grid, InputLabel, Stack} from '@mui/material';
+import { Button, Grid, InputLabel, Stack } from '@mui/material';
 import useAuthorized from 'apis/auth/auths';
-import {activeEmail, activeLogin, activeLoginDate, activeSite, activeToken} from 'store/reducers/auth';
+import { activeEmail, activeLogin, activeLoginDate, activeSite, activeToken } from 'store/reducers/auth';
 import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
@@ -21,13 +21,10 @@ const OtpSimpleForm = ({ result }) => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('>> requestError <<');
-            console.log(requestError);
             if (requestError.message === 'INVALID_OTP_NUMER') {
-                alert('OTP Number가 잘 못되었습니다!!!');
+                setErrMsg('OTP 번호를 다시 입력해주세요');
                 return;
             }
-            alert('error');
         }
     }, [requestError]);
 
@@ -126,11 +123,9 @@ const OtpSimpleForm = ({ result }) => {
     return (
         <>
             <form>
-                <Grid item xs={12}>
-                    <Stack spacing={1}>
-                        <InputLabel>Google Authenticator에 표시된 6자리 코드를 입력해 주세요</InputLabel>
-                    </Stack>
-                </Grid>
+                <Stack spacing={1}>
+                    <InputLabel>Google Authenticator에 표시된 6자리 코드를 입력해 주세요</InputLabel>
+                </Stack>
 
                 <div className={cx('otpAction')}>
                     <OtpInput
@@ -145,16 +140,19 @@ const OtpSimpleForm = ({ result }) => {
                     <span className={cx('errorMsg')}>{errMsg}</span>
                 </div>
 
-                <Grid item xs={12}>
+                <Grid item xs={12} className={cx('blank')}>
                     <div className={cx('label--center')}>
                         <span>OTP를 분실했나요?</span>
-                        <a href="components/AuthLogin/OtpSimpleForm/OtpSimpleForm#" onClick={clearOtp} className={cx('label--center--highlight')}>
+                        <a
+                            href="components/AuthLogin/OtpSimpleForm/OtpSimpleForm#"
+                            onClick={clearOtp}
+                            className={cx('label--center--highlight')}
+                        >
                             초기화 요청
                         </a>
                     </div>
 
                     <Button
-                        disableElevation
                         fullWidth
                         size="large"
                         type="submit"

@@ -1,32 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    Table,
-    TableBody,
-    TableContainer,
-    TableHead,
-    TableRow
-} from '@mui/material';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
+import {Button, FormControl, Grid, MenuItem, OutlinedInput, Select} from '@mui/material';
+import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import AccountApis from 'apis/account/accountapis';
 import ErrorScreen from 'components/ErrorScreen';
@@ -34,6 +10,7 @@ import HeaderTitle from 'components/HeaderTitle';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const AccountManagementPage = () => {
     let isSubmitting = false;
@@ -292,7 +269,7 @@ const AccountManagementPage = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <MainCard sx={{ mt: 2, height: 850 }} content={false}>
+                <ContentLine>
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -300,9 +277,9 @@ const AccountManagementPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
-                        height={850}
+                        height={500}
                     />
-                </MainCard>
+                </ContentLine>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

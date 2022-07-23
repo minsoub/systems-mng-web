@@ -18,6 +18,11 @@
     }
 }
 
+.role--blank {
+    margin-bottom: 20px;
+    display: flex;
+}
+
 .result__list--input {
     margin-right: 20px;
 }
@@ -28,6 +33,7 @@
 
 .role--layout__search {
     @include leftRightAlign();
+    margin-bottom: 1.5rem;
 }
 
 .arr--layout {
@@ -40,7 +46,7 @@
 }
 
 .roleLayout {
-    align-items: flex-end;
+    align-items: normal;
 }
 
 .MuiPaper-elevation {

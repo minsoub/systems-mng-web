@@ -12,7 +12,7 @@ import {
     Stack,
     Select
 } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import SiteApi from 'apis/site/siteapi';
 import BoardMasterApi from 'apis/board/boardmasterapi';
@@ -277,7 +277,7 @@ const BoardMasterMng = () => {
                     </div>
                 </MainCard>
 
-                <Grid className={cx('outButtons searchPointColor')}>
+                <Grid className={cx(' searchPointColor')}>
                     <ButtonLayout>
                         <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
                             초기화
@@ -298,7 +298,7 @@ const BoardMasterMng = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </MainCard>
-                <Grid className={cx('outButtons searchPointColor')}>
+                <Grid className={cx(' searchPointColor')}>
                     <ButtonLayout>
                         <Button
                             disableElevation

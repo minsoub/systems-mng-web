@@ -1,35 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Table,
-    TableBody,
-    TableContainer,
-    TableHead,
-    TableRow
-} from '@mui/material';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
+import { Button, Grid } from '@mui/material';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import LogsApi from 'apis/servicelogs/index';
 import ErrorScreen from 'components/ErrorScreen';
@@ -38,7 +12,7 @@ import HeaderTitle from '../../../components/HeaderTitle';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import SearchBar from '../../../components/ContentManage/SearchBar';
 import SearchDate from '../../../components/ContentManage/SearchDate';
-import cx from 'classnames';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const SiteLogPage = () => {
     let isSubmitting = false;
@@ -266,24 +240,24 @@ const SiteLogPage = () => {
                         handleBlur={handleBlur}
                         handleChange={handleChange}
                         noneChecked="noneChecked"
+                        startName="start_date"
+                        endName="end_date"
                     />
 
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <Grid className={cx('outButtons')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
-                            검색
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
-                            Excel
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
+                <ButtonLayout buttonName="layout--button__bottom">
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                        검색
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
+                        Excel
+                    </Button>
+                </ButtonLayout>
 
-                <MainCard sx={{ mt: 2, height: 750 }} content={false}>
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -293,7 +267,7 @@ const SiteLogPage = () => {
                         selectionChange={handleSelectionChange}
                         height={750}
                     />
-                </MainCard>
+                </ContentLine>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

@@ -24,7 +24,7 @@ import IncomeAreaChart from './IncomeAreaChart';
 import MonthlyBarChart from './MonthlyBarChart';
 import ReportAreaChart from './ReportAreaChart';
 import SalesColumnChart from './SalesColumnChart';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import AnalyticLrcForm from 'components/cards/statistics/AnalyticLrcForm';
 
 // assets

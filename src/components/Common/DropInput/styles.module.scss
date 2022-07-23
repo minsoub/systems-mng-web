@@ -1,10 +1,14 @@
 .dropList {
     display: flex;
     margin-right: 1rem;
-    .drop__list--input {
+    .dropList--input {
         display: flex;
         & > & {
             display: flex;
         }
     }
+}
+
+.bottom--blank {
+    margin-bottom: 1.5rem;
 }

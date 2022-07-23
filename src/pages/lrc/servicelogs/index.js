@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Grid, Table, TableRow } from '@mui/material';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import { GridToolbar } from '@mui/x-data-grid';
 import LogsApi from 'apis/servicelogs/index';
@@ -14,6 +14,7 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import SearchDate from 'components/ContentManage/SearchDate';
+import ContentLine from '../../../components/Common/ContentLine';
 
 // Log
 const ServiceLog = () => {
@@ -302,12 +303,14 @@ const ServiceLog = () => {
                         period={period}
                         handleBlur={handleBlur}
                         handleChange={handleChange}
+                        startName="from_date"
+                        endName="to_date"
                     />
 
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <Grid className={cx('outButtons')}>
+                <Grid className={cx('layout--button__bottom')}>
                     <ButtonLayout>
                         <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
                             검색
@@ -321,7 +324,7 @@ const ServiceLog = () => {
                     </ButtonLayout>
                 </Grid>
 
-                <MainCard sx={{ mt: 2, height: 650 }} content={false}>
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -332,7 +335,7 @@ const ServiceLog = () => {
                         components={{ Toolbar: GridToolbar }}
                         height={650}
                     />
-                </MainCard>
+                </ContentLine>
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}

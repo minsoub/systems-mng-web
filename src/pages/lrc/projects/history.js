@@ -1,33 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Radio,
-    RadioGroup
-} from '@mui/material';
-import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, FormControl, Grid, Stack, TextField, Typography } from '@mui/material';
+import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import HistoryApi from 'apis/lrc/project/historyapi';
-import ErrorScreen from 'components/ErrorScreen';
+import ContentLine from '../../../components/Common/ContentLine';
+import cx from 'classnames';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import DropInput from '../../../components/Common/DropInput';
 
 const ProjectHistory = (props) => {
     let isSubmitting = false;
@@ -157,42 +137,29 @@ const ProjectHistory = (props) => {
     };
 
     return (
-        <Grid container alignItems="center" justifyContent="space-between">
-            <Grid container spacing={0} sx={{ mt: 0 }}>
-                <Grid item xs={8} sm={3}>
-                    <Typography variant="h3">변경 히스토리</Typography>
-                </Grid>
-                <Grid item xs={8} sm={2.8}></Grid>
-                <Grid item xs={8} sm={5}>
-                    <FormControl sx={{ m: 0 }} fullWidth>
-                        <TextField size="small" id="outlined-multiline-static" inputRef={refKeyword} />
-                    </FormControl>
-                </Grid>
-                <Grid item xs={8} sm={0.2}></Grid>
-                <Grid item xs={8} sm={1}>
-                    <FormControl sx={{ m: 0 }} size="small">
-                        <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={searchClick}>
-                            검색
-                        </Button>
-                    </FormControl>
-                </Grid>
-            </Grid>
+        <>
+            <TopInputLayout>
+                <Typography variant="h4">변경 히스토리</Typography>
 
-            <Grid container spacing={0} sx={{ mt: 0 }}>
-                <Grid item xs={8} sm={12}>
-                    <MainCard sx={{ mt: 2 }} content={false}>
-                        <DefaultDataGrid
-                            columns={columns}
-                            rows={dataGridRows}
-                            handlePageChange={handlePage}
-                            handleGridClick={handleClick}
-                            handleGridDoubleClick={handleDoubleClick}
-                            selectionChange={handleSelectionChange}
-                        />
-                    </MainCard>
-                </Grid>
-            </Grid>
-        </Grid>
+                <div>
+                    <TextField size="medium" id="outlined-multiline-static" inputRef={refKeyword} />
+                    <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={searchClick}>
+                        검색
+                    </Button>
+                </div>
+            </TopInputLayout>
+
+            <ContentLine sx={{ mt: 2 }} content={false}>
+                <DefaultDataGrid
+                    columns={columns}
+                    rows={dataGridRows}
+                    handlePageChange={handlePage}
+                    handleGridClick={handleClick}
+                    handleGridDoubleClick={handleDoubleClick}
+                    selectionChange={handleSelectionChange}
+                />
+            </ContentLine>
+        </>
     );
 };
 

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Paper, Select, Stack, TextField } from '@mui/material';
 // third party
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import { styled } from '@mui/material/styles';
 import AccountApis from 'apis/account/accountapis';
 import SiteApi from 'apis/site/siteapi';
@@ -15,6 +15,8 @@ import DropInput from '../../../components/Common/DropInput';
 import './styles.scss';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
+import ContentLine from '../../../components/Common/ContentLine';
+import InputLayout from '../../../components/Common/InputLayout';
 
 const AccountRegForm = () => {
     let isSubmitting = false;
@@ -605,7 +607,7 @@ const AccountRegForm = () => {
                             </DropInput>
                         </div>
 
-                        <div className="account--layout">
+                        <div className="inputLayout">
                             <DropInput title="전송여부">
                                 <FormControlLabel
                                     control={<Checkbox name="send_chk" value={send_chk} onBlur={handleBlur} onChange={handleChange} />}
@@ -631,7 +633,7 @@ const AccountRegForm = () => {
 
                     <Grid container spacing={3}>
                         <Grid item xs={8} sm={12}>
-                            <TopInputLayout className="role--blank">
+                            <TopInputLayout className="layout--button__bottom">
                                 <Item>Role 등록 리스트</Item>
 
                                 <ButtonLayout>
@@ -662,7 +664,7 @@ const AccountRegForm = () => {
 
                             <Grid container spacing={0} sx={{ mt: 1 }} className="layout--out">
                                 <Grid item xs={8} sm={12}>
-                                    <MainCard sx={{ mt: 0 }} content={false}>
+                                    <ContentLine sx={{ mt: 0 }} content={false}>
                                         <CheckBoxDataGrid
                                             columns={regColumns}
                                             rows={dataGridRegisterRows}
@@ -672,43 +674,55 @@ const AccountRegForm = () => {
                                             selectionChange={handleSelectionRegisterChange}
                                             height={400}
                                         />
-                                    </MainCard>
+                                    </ContentLine>
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
 
                     <MainCard>
-                        <div className="account--layout">
-                            <DropInput title="사이트명">
-                                <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
-                                    <MenuItem value="">
-                                        <em>Choose a Site Type</em>
-                                    </MenuItem>
-                                    {itemList.map((item, index) => (
-                                        <MenuItem key={index} value={item.id}>
-                                            {item.name}
+                        <TopInputLayout>
+                            <InputLayout>
+                                <DropInput title="사이트명">
+                                    <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
+                                        <MenuItem value="">
+                                            <em>Choose a Site Type</em>
                                         </MenuItem>
-                                    ))}
-                                </Select>
-                            </DropInput>
+                                        {itemList.map((item, index) => (
+                                            <MenuItem key={index} value={item.id}>
+                                                {item.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </DropInput>
 
-                            <DropInput title="운영권한">
-                                <Select name="role_id" label="운영권한" value={role_id} onChange={roleChanged}>
-                                    <MenuItem value="">
-                                        <em>Choose a Role Type</em>
-                                    </MenuItem>
-                                    {roleList.map((item, index) => (
-                                        <MenuItem key={index} value={item.id}>
-                                            {item.name}
+                                <DropInput title="운영권한">
+                                    <Select name="role_id" label="운영권한" value={role_id} onChange={roleChanged}>
+                                        <MenuItem value="">
+                                            <em>Choose a Role Type</em>
                                         </MenuItem>
-                                    ))}
-                                </Select>
-                            </DropInput>
-                            <Button disableElevation size="medium" type="button" variant="contained" color="primary" onClick={plusRegister}>
-                                등록
-                            </Button>
-                        </div>
+                                        {roleList.map((item, index) => (
+                                            <MenuItem key={index} value={item.id}>
+                                                {item.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </DropInput>
+                            </InputLayout>
+
+                            <ButtonLayout>
+                                <Button
+                                    disableElevation
+                                    size="medium"
+                                    type="button"
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={plusRegister}
+                                >
+                                    등록
+                                </Button>
+                            </ButtonLayout>
+                        </TopInputLayout>
                     </MainCard>
 
                     <ButtonLayout buttonName="role--blank">

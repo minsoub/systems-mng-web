@@ -16,7 +16,7 @@ import {
     IconButton
 } from '@mui/material';
 import { makeStyles, withStyles } from '@mui/styles';
-import MainCard from 'components/MainCard';
+import MainCard from 'components/Common/MainCard';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FoundationApi from 'apis/lrc/project/foundationapi';
 import StatusApi from 'apis/lrc/status/statusapi';
