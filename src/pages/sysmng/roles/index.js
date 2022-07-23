@@ -11,6 +11,7 @@ import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
+import ContentLine from '../../../components/Common/ContentLine';
 
 const RoleManagementPage = () => {
     let isSubmitting = false;
@@ -293,7 +294,7 @@ const RoleManagementPage = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <MainCard sx={{ mt: 2 }} content={false} className="layout--out">
+                <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -302,7 +303,7 @@ const RoleManagementPage = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
+                </ContentLine>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

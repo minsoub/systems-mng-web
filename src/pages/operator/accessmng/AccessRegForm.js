@@ -1,42 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 import {
-    OutlinedInput,
-    Box,
     Button,
-    Grid,
-    Stack,
-    FormControlLabel,
-    FormHelperText,
-    InputLabel,
     Checkbox,
-    Select,
-    TextField,
     FormControl,
-    Alert,
-    Collapse,
-    AlertTitle,
+    FormControlLabel,
+    Grid,
+    MenuItem,
     Paper,
-    Typography,
-    MenuItem
+    Select,
+    Stack,
+    TextField,
+    Typography
 } from '@mui/material';
 // third party
-import * as Yup from 'yup';
-import { Formik } from 'formik';
 import MainCard from 'components/Common/MainCard';
-import { styled } from '@mui/material/styles';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
-import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
+import {styled} from '@mui/material/styles';
 import AccountApis from 'apis/account/accountapis';
 import SiteApi from 'apis/site/siteapi';
 import RoleApi from 'apis/roles/roleapi';
 import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
-import ErrorScreen from 'components/ErrorScreen';
 
 const AccessRegForm = () => {
     let isSubmitting = false;

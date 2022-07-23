@@ -1,27 +1,15 @@
-import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // material-ui
-import {
-    Button,
-    FormHelperText,
-    Grid,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    OutlinedInput,
-    Stack
-} from '@mui/material';
+import { Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
-import {Formik} from 'formik';
-
-// project import
-import AnimateButton from 'components/@extended/AnimateButton';
+import { Formik } from 'formik';
 
 // assets
-import {EyeInvisibleOutlined, EyeOutlined} from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import jwt from 'jsonwebtoken';
 import useAuthorized from 'apis/auth/auths';
 
@@ -203,19 +191,17 @@ const TmpUpdatePasswordForm = ({ result }) => {
                             </Grid>
                         )}
                         <Grid item xs={12}>
-                            <AnimateButton>
-                                <Button
-                                    disableElevation
-                                    disabled={isSubmitting}
-                                    fullWidth
-                                    size="large"
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                >
-                                    패스워드 변경
-                                </Button>
-                            </AnimateButton>
+                            <Button
+                                disableElevation
+                                disabled={isSubmitting}
+                                fullWidth
+                                size="large"
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                            >
+                                패스워드 변경
+                            </Button>
                         </Grid>
                         <Grid item xs={12}></Grid>
                     </form>

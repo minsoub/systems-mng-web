@@ -1,33 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, {useEffect, useRef, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Radio,
-    RadioGroup
-} from '@mui/material';
+import {Button, FormControl, Grid, TextField, Typography} from '@mui/material';
 import MainCard from 'components/Common/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import HistoryApi from 'apis/lrc/project/historyapi';
-import ErrorScreen from 'components/ErrorScreen';
 
 const ProjectHistory = (props) => {
     let isSubmitting = false;

@@ -1,35 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
-import {
-    OutlinedInput,
-    Box,
-    Button,
-    Grid,
-    Stack,
-    TextField,
-    Collapse,
-    Alert,
-    AlertTitle,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    Table,
-    TableBody,
-    TableContainer,
-    TableHead,
-    TableRow
-} from '@mui/material';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import {Button, Grid} from '@mui/material';
 import MainCard from 'components/Common/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Input } from 'antd';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import LogsApi from 'apis/servicelogs/index';
 import ErrorScreen from 'components/ErrorScreen';
@@ -38,7 +12,6 @@ import HeaderTitle from '../../../components/HeaderTitle';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import SearchBar from '../../../components/ContentManage/SearchBar';
 import SearchDate from '../../../components/ContentManage/SearchDate';
-import cx from 'classnames';
 import ContentLine from '../../../components/Common/ContentLine';
 
 const SiteLogPage = () => {
