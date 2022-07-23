@@ -14,6 +14,7 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/FraudReportSearch';
+import DownloadReason from 'components/Security/DownloadReason';
 import ContentLine from '../../../components/Common/ContentLine';
 
 const FraudReportMng = () => {
@@ -105,6 +106,25 @@ const FraudReportMng = () => {
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     ////////////////////////////////////////////////////
+
+    // 개인정보 다운로드 사유 입력
+    const [downloadReasonOpen, setDownloadReasonOpen] = useState(false);
+    const [downloadReason, setDownloadReason] = useState('');
+    const handleDownloadReasonClose = () => {
+        setDownloadReasonOpen(false);
+
+        if (downloadReason) {
+            const request = {
+                start_date,
+                end_date,
+                status,
+                keyword,
+                reason: downloadReason
+            };
+            setDownloadFileName('사기신고_다운로드.xlsx');
+            getExcelDownload(request);
+        }
+    };
 
     // 검색 조건
     const [start_date, setStartDate] = useState('');
@@ -302,14 +322,8 @@ const FraudReportMng = () => {
     // 엑셀 다운로드
     const excelDownloadClick = () => {
         console.log('excelDownloadClick called...');
-        const request = {
-            start_date,
-            end_date,
-            status,
-            keyword
-        };
-        setDownloadFileName('사기신고_다운로드.xlsx');
-        getExcelDownload(request);
+        setDownloadReason('');
+        setDownloadReasonOpen(true);
     };
 
     return (

@@ -13,6 +13,7 @@ import SearchDate from 'components/ContentManage/SearchDate';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/LegalCounselingSearch';
 import styles from './styles.module.scss';
+import DownloadReason from 'components/Security/DownloadReason';
 import classNames from 'classnames/bind';
 import ContentLine from '../../../components/Common/ContentLine';
 const cx = classNames.bind(styles);

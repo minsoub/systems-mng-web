@@ -168,8 +168,8 @@ const ProjectsPage = () => {
 
     // 검색 조건
     const [keyword, setKeyword] = useState('');
-    const [from_date, setStartDate] = useState(new Date());
-    const [to_date, setEndDate] = useState(new Date());
+    const [from_date, setStartDate] = useState(''); // new Date());
+    const [to_date, setEndDate] = useState(''); // new Date());
     const [period, setPeriod] = useState('1');
     const [contract_code, setSts] = useState('');
     const [process_code, setProcess] = useState('');
@@ -296,6 +296,9 @@ const ProjectsPage = () => {
         console.log(e);
     };
     const handleChange = (e) => {
+        console.log(e.target.name);
+        console.log(e.target.value);
+        console.log(moment(e.target.value).format('YYYY.MM.DD'));
         switch (e.target.name) {
             case 'keyword':
                 setKeyword(e.target.value);
@@ -303,7 +306,6 @@ const ProjectsPage = () => {
             // 시작
             case 'from_date':
                 setStartDate(e.target.value);
-                // 끝
                 break;
             case 'to_date':
                 setEndDate(e.target.value);

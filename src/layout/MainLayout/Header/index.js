@@ -75,17 +75,19 @@ const Header = ({ open, handleDrawerToggle }) => {
         //console.log(localStorage.getItem('authenticated'));
         authData = JSON.parse(localStorage.getItem('authenticated'));
     }
-    let site_id = authData.siteId; // login site id
+    let site_id = authData ? authData.siteId : null; // login site id
     useEffect(() => {
-        if (!mySiteId) setMySiteId(site_id);
-        // 나의 Role에 관련된 사이트 아이디 조회
-        let tokenData = jwt.decode(authData.accessToken);
-        console.log(tokenData);
-        let ROLE = tokenData.ROLE;
-        setSiteList([]);
-        ROLE.map((item, index) => {
-            roleDetail(item);
-        });
+        if (authData) {
+            if (!mySiteId) setMySiteId(site_id);
+            // 나의 Role에 관련된 사이트 아이디 조회
+            let tokenData = jwt.decode(authData.accessToken);
+            console.log(tokenData);
+            let ROLE = tokenData.ROLE;
+            setSiteList([]);
+            ROLE.map((item, index) => {
+                roleDetail(item);
+            });
+        }
     }, []);
     useEffect(() => {
         if (!responseData) return;
