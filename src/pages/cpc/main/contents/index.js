@@ -86,7 +86,7 @@ const MainContents = () => {
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={handleChange} aria-label="main contents tabs">
                             <Tab label="가상자산 동향" value="1" />
-                            <Tab label="블록체인 뉴스" value="2" disabled />
+                            <Tab label="블록체인 뉴스" value="2" />
                             <Tab label="가상자산의 기초" value="3" />
                             <Tab label="인사이트 칼럼" value="4" />
                         </TabList>
