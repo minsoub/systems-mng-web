@@ -286,3 +286,21 @@ html [type='button'],
         flex-basis: 100%;
     }
 }
+
+// Jodit Editor
+.jodit .jodit-workplace .jodit-wysiwyg,
+.jodit .jodit-workplace .jodit-wysiwyg_iframe,
+.jodit-container .jodit-workplace .jodit-wysiwyg,
+.jodit-container .jodit-workplace .jodit-wysiwyg_iframe,
+.jodit-dialog__content .jodit__preview-box {
+    height: 100%;
+    width: 100%;
+    margin-bottom: 40px;
+    line-height: 1.4;
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.jodit-container:not(.jodit_inline) .jodit-wysiwyg {
+    background: #fff;
+}
