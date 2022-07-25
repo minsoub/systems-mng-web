@@ -26,38 +26,45 @@ const FaqRegForm = Loadable(lazy(() => import('pages/lrc/faq/faqreg')));
 
 // render - 고객보호센터 - 대시보드
 const CpcDashboard = Loadable(lazy(() => import('pages/cpc/dashboard')));
-
+// -----------------------
 // render - 고객보호센터 - 메인 관리
 const CpcMainContentsMng = Loadable(lazy(() => import('pages/cpc/main/contents')));
-
-// render - 고객보호센터 - 콘텐츠 관리
+// -----------------------
+// 사이트 운영/콘텐츠 관리
+// 피해사례
 const CpcDamageCaseMng = Loadable(lazy(() => import('pages/cpc/contents/Damage/view')));
 const CpcDamageCaseMngForm = Loadable(lazy(() => import('pages/cpc/contents/Damage/post')));
+// 안전거래 캠페인
 const CpcCampaignMng = Loadable(lazy(() => import('pages/cpc/contents/Campaign/view')));
 const CpcCampaignMngForm = Loadable(lazy(() => import('pages/cpc/contents/Campaign/post')));
+// 가상자산의 기초
 const CpcDigitalAssetBasicMng = Loadable(lazy(() => import('pages/cpc/contents/AssetBasic/view')));
 const CpcDigitalAssetBasicMngForm = Loadable(lazy(() => import('pages/cpc/contents/AssetBasic/post')));
+// 인사이트 칼럼
 const CpcInsightColumnMng = Loadable(lazy(() => import('pages/cpc/contents/Insight/view')));
 const CpcInsightColumnMngForm = Loadable(lazy(() => import('pages/cpc/contents/Insight/post')));
+// 가상자산 동향
 const CpcDigitalAssetTrendMng = Loadable(lazy(() => import('pages/cpc/contents/AssetTrend/view')));
 const CpcDigitalAssetTrendMngForm = Loadable(lazy(() => import('pages/cpc/contents/AssetTrend/post')));
+// 블록체인 뉴스
 const CpcBlockChainNewsMng = Loadable(lazy(() => import('pages/cpc/contents/BlockChain/view')));
 const CpcBlockChainNewsMngForm = Loadable(lazy(() => import('pages/cpc/contents/BlockChain/post')));
+// 공지사항
 const CpcNoticeMng = Loadable(lazy(() => import('pages/cpc/contents/Notice/view')));
 const CpcNoticeMngForm = Loadable(lazy(() => import('pages/cpc/contents/Notice/post')));
-
+// -----------------------
 // render - 고객보호센터 - 사기신고 관리
-const CpcFraudReportMng = Loadable(lazy(() => import('pages/cpc/fraudReport/index')));
-const CpcFraudReportMngForm = Loadable(lazy(() => import('pages/cpc/fraudReport/FraudReportMngForm')));
-
+const CpcFraudReportMng = Loadable(lazy(() => import('pages/cpc/fraudReport/view')));
+const CpcFraudReportMngForm = Loadable(lazy(() => import('pages/cpc/fraudReport/detail')));
+// -----------------------
 // render - 고객보호센터 - 법률상담 관리
-const CpcLegalCounselingMng = Loadable(lazy(() => import('pages/cpc/legalCounseling/index')));
-const CpcLegalCounselingMngForm = Loadable(lazy(() => import('pages/cpc/legalCounseling/LegalCounselingMngForm')));
-
+const CpcLegalCounselingMng = Loadable(lazy(() => import('pages/cpc/legalCounseling/view')));
+const CpcLegalCounselingMngForm = Loadable(lazy(() => import('pages/cpc/legalCounseling/detail')));
+// -----------------------
 // render - 통합 게시판 관리
 const BoardMng = Loadable(lazy(() => import('pages/board/index')));
 const BoardMngRegForm = Loadable(lazy(() => import('pages/board/BoardMngRegForm')));
-
+// -----------------------
 // render - 사이트 관리
 const AccessMngPage = Loadable(lazy(() => import('pages/operator/accessmng/index')));
 const AccessRegForm = Loadable(lazy(() => import('pages/operator/accessmng/AccessRegForm')));
@@ -68,11 +75,11 @@ const SiteAuthMngRegForm = Loadable(lazy(() => import('pages/operator/auth/SiteA
 const SiteLogPage = Loadable(lazy(() => import('pages/operator/log/index')));
 const ServiceLog = Loadable(lazy(() => import('pages/lrc/servicelogs/index')));
 const ServiceDetail = Loadable(lazy(() => import('pages/lrc/servicelogs/detail')));
-
+// -----------------------
 // render - 통합 관리
 const AccountMng = Loadable(lazy(() => import('pages/totalmng/accountmng/index')));
 const AccountMngForm = Loadable(lazy(() => import('pages/totalmng/accountmng/AccountMngForm')));
-
+// -----------------------
 // render - 통합 시스템 관리
 const SiteManagementPage = Loadable(lazy(() => import('pages/sysmng/site/index')));
 const AccountManagementPage = Loadable(lazy(() => import('pages/sysmng/account/index')));

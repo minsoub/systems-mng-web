@@ -1,6 +1,4 @@
 import { useState } from 'react';
-
-// material-ui
 import {
     Avatar,
     AvatarGroup,
@@ -17,17 +15,13 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-
-// project import
-import OrdersTable from './OrdersTable';
-import IncomeAreaChart from './IncomeAreaChart';
-import MonthlyBarChart from './MonthlyBarChart';
-import ReportAreaChart from './ReportAreaChart';
-import SalesColumnChart from './SalesColumnChart';
+import OrdersTable from '../../components/Dashboard/OrdersTable';
+import IncomeAreaChart from '../../components/Dashboard/IncomeAreaChart';
+import MonthlyBarChart from '../../components/Dashboard/MonthlyBarChart';
+import ReportAreaChart from '../../components/Dashboard/ReportAreaChart';
+import SalesColumnChart from '../../components/Dashboard/SalesColumnChart';
 import MainCard from 'components/Common/MainCard';
 import AnalyticLrcForm from 'components/cards/statistics/AnalyticLrcForm';
-
-// assets
 import { GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
 import avatar1 from 'assets/images/users/avatar-1.png';
 import avatar2 from 'assets/images/users/avatar-2.png';

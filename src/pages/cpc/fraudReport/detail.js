@@ -10,7 +10,7 @@ import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 
-const FraudReportMngForm = () => {
+const Detail = () => {
     const navigate = useNavigate();
     const { applyId } = useParams();
     const [responseData, requestError, resLoading, { searchFraudReport, updateFraudReport, getFileDownload }] = FraudReportApi();
@@ -267,4 +267,4 @@ const FraudReportMngForm = () => {
     );
 };
 
-export default FraudReportMngForm;
+export default Detail;

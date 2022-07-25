@@ -1,40 +1,7 @@
 import { useEffect, useState } from 'react';
-
-// material-ui
-import {
-    Avatar,
-    AvatarGroup,
-    Box,
-    Button,
-    Grid,
-    List,
-    ListItemAvatar,
-    ListItemButton,
-    ListItemSecondaryAction,
-    ListItemText,
-    MenuItem,
-    Stack,
-    TextField,
-    Typography
-} from '@mui/material';
-
-// project import
-import OrdersTable from '../../dashboard/OrdersTable';
-import IncomeAreaChart from '../../dashboard/IncomeAreaChart';
-import MonthlyBarChart from '../../dashboard/MonthlyBarChart';
-import ReportAreaChart from '../../dashboard/ReportAreaChart';
-import SalesColumnChart from '../../dashboard/SalesColumnChart';
-import MainCard from 'components/Common/MainCard';
+import { Grid, Typography } from '@mui/material';
 import AnalyticLrcForm from 'components/cards/statistics/AnalyticLrcForm';
 import AnalyticLrcCharts from 'components/cards/statistics/AnalyticLrcCharts';
-
-// assets
-import { GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
-import avatar1 from 'assets/images/users/avatar-1.png';
-import avatar2 from 'assets/images/users/avatar-2.png';
-import avatar3 from 'assets/images/users/avatar-3.png';
-import avatar4 from 'assets/images/users/avatar-4.png';
-
 import DashboardApi from 'apis/lrc/dashboard/index';
 
 // avatar style

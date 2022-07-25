@@ -5,7 +5,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import MainContentsApi from 'apis/cpc/mainContents/maincontentsapi';
 import ErrorScreen from 'components/ErrorScreen';
 import HeaderTitle from 'components/HeaderTitle';
-import BoardSearchDialog from './popup/BoardSearchPopup';
+import BoardSearchDialog from './popup';
 import ButtonLayout from '../../../../components/Common/ButtonLayout';
 import './styles.module.scss';
 import cx from 'classnames';

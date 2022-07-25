@@ -10,7 +10,7 @@ import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 
-const LegalCounselingMngForm = () => {
+const Detail = () => {
     const navigate = useNavigate();
     const { applyId } = useParams();
     const [
@@ -273,4 +273,4 @@ const LegalCounselingMngForm = () => {
     );
 };
 
-export default LegalCounselingMngForm;
+export default Detail;
