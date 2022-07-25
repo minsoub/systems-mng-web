@@ -16,6 +16,7 @@ import HeaderTitle from 'components/HeaderTitle';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { Select } from 'antd';
 import cx from 'classnames';
+import FlexBox from '../../../components/Common/FlexBox';
 
 const RoleRegForm = () => {
     let isSubmitting = false;
@@ -363,7 +364,7 @@ const RoleRegForm = () => {
                                 <MainCard sx={{ mt: 2 }} className="program__layout">
                                     <Grid className="role--blank">
                                         <DropInput title="Role ID">
-                                            <div className="role--layout">
+                                            <FlexBox>
                                                 <InputLayout>
                                                     <FormControl sx={{ minWidth: 250 }} size="medium">
                                                         <TextField
@@ -393,7 +394,7 @@ const RoleRegForm = () => {
                                                         중복체크
                                                     </Button>
                                                 </ButtonLayout>
-                                            </div>
+                                            </FlexBox>
                                         </DropInput>
                                     </Grid>
                                     <Grid>
@@ -410,39 +411,41 @@ const RoleRegForm = () => {
                                     </Grid>
 
                                     <Grid className="role--blank">
-                                        <DropInput title="Role Name">
-                                            <TextField
-                                                id="filled-hidden-label-small"
-                                                type="text"
-                                                size="medium"
-                                                value={name}
-                                                name="name"
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                placeholder="Enter Role Name"
-                                                fullWidth
-                                                error={Boolean(touched.name && errors.name)}
-                                            />
-                                        </DropInput>
+                                        <FlexBox>
+                                            <DropInput title="Role Name">
+                                                <TextField
+                                                    id="filled-hidden-label-small"
+                                                    type="text"
+                                                    size="medium"
+                                                    value={name}
+                                                    name="name"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    placeholder="Enter Role Name"
+                                                    fullWidth
+                                                    error={Boolean(touched.name && errors.name)}
+                                                />
+                                            </DropInput>
 
-                                        <DropInput title="사용여부">
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        defaultChecked
-                                                        checked={is_use}
-                                                        name="is_use"
-                                                        value={is_use}
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                    />
-                                                }
-                                                label="사용함"
-                                            />
-                                        </DropInput>
+                                            <DropInput title="사용여부">
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            defaultChecked
+                                                            checked={is_use}
+                                                            name="is_use"
+                                                            value={is_use}
+                                                            onBlur={handleBlur}
+                                                            onChange={handleChange}
+                                                        />
+                                                    }
+                                                    label="사용함"
+                                                />
+                                            </DropInput>
+                                        </FlexBox>
                                     </Grid>
 
-                                    <Grid className="role--layout">
+                                    <FlexBox>
                                         <DropInput title="사이트 구분">
                                             <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                                 <MenuItem value="">
@@ -462,7 +465,7 @@ const RoleRegForm = () => {
                                                 <MenuItem value="USER">USER</MenuItem>
                                             </Select>
                                         </DropInput>
-                                    </Grid>
+                                    </FlexBox>
                                 </MainCard>
 
                                 <ButtonLayout>

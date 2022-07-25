@@ -1,27 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
-import { Button, Grid, TextField } from '@mui/material';
+import { Button, Grid, TextField, FormControlLabel, Checkbox } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
-import ThumbnailAttach from './ThumbnailAttach';
 import JoditEditor from 'jodit-react';
 import { WithContext as ReactTags } from 'react-tag-input';
-import './ReactTags.module.scss';
+import '../ReactTags.module.scss';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
 
-const DigitalAssetTrendMngForm = () => {
+const Post = () => {
     const navigate = useNavigate();
     const { boardId } = useParams();
-    const boardMasterId = 'CPC_TREND';
+    const boardMasterId = 'CPC_NOTICE';
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoard, createBoard, updateBoard, deleteBoard }] = BoardApi();
-    const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -32,9 +29,8 @@ const DigitalAssetTrendMngForm = () => {
 
     // 입력 값
     const [id, setId] = useState('');
+    const [is_set_notice, setIsSetNotice] = useState(false);
     const [title, setTitle] = useState('');
-    const [thumbnail, setThumbnail] = useState('');
-    const [description, setDescription] = useState('');
     const [tags, setTags] = useState([]);
     const [createAccountName, setCreateAccountName] = useState('');
 
@@ -43,15 +39,6 @@ const DigitalAssetTrendMngForm = () => {
         authData = JSON.parse(localStorage.getItem('authenticated'));
     }
     let Authorization = `Bearer ${authData.accessToken}`;
-
-    // 파일
-    const [thumbnailFile, setThumbnailFile] = useState('');
-    const handleFileChange = (file) => {
-        console.log(file);
-        if (file != null) {
-            setThumbnailFile(file);
-        }
-    };
 
     // 웹에디터
     const editorRef = useRef(null);
@@ -148,9 +135,8 @@ const DigitalAssetTrendMngForm = () => {
         }
         switch (responseData.transactionId) {
             case 'getBoard':
+                setIsSetNotice(responseData.data.data.is_set_notice);
                 setTitle(responseData.data.data.title);
-                setThumbnail(responseData.data.data.thumbnail);
-                setDescription(responseData.data.data.description);
                 setContent(responseData.data.data.contents);
                 setCreateAccountName(responseData.data.data.create_account_name);
 
@@ -188,11 +174,8 @@ const DigitalAssetTrendMngForm = () => {
     };
     const handleChange = (e) => {
         switch (e.target.name) {
-            case 'thumbnail':
-                setThumbnail(e.target.value);
-                break;
-            case 'description':
-                setDescription(e.target.value);
+            case 'is_set_notice':
+                setIsSetNotice(e.target.checked);
                 break;
             case 'title':
                 setTitle(e.target.value);
@@ -205,7 +188,7 @@ const DigitalAssetTrendMngForm = () => {
     // 목록
     const listClick = () => {
         console.log('listClick called...');
-        navigate('/cpc/contents/digital-asset-trend/list');
+        navigate('/cpc/contents/notice/list');
     };
 
     const isValidate = () => {
@@ -230,16 +213,13 @@ const DigitalAssetTrendMngForm = () => {
                 return tag.text;
             });
             const data = {
+                is_set_notice,
                 title,
-                description,
-                thumbnail,
                 contents: content,
                 tags: inputTags
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-            thumbnailFile && formData.append('file', thumbnailFile, { type: 'multipart/form-data' });
-            console.log(formData);
             createBoard(boardMasterId, formData);
         }
     };
@@ -263,15 +243,13 @@ const DigitalAssetTrendMngForm = () => {
             });
             const data = {
                 id,
+                is_set_notice,
                 title,
-                description,
-                thumbnail,
                 contents: content,
                 tags: inputTags
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-            thumbnailFile && formData.append('file', thumbnailFile, { type: 'multipart/form-data' });
             console.log(formData);
             updateBoard(boardMasterId, data.id, formData);
         }
@@ -280,90 +258,71 @@ const DigitalAssetTrendMngForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="가상자산 동향" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="가상자산 동향" />
+                <HeaderTitle titleNm="공지사항" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="공지사항" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>
-                        <tr>
-                            <th className={'tb--title'}>제목</th>
-                            <td>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={title}
-                                    name="title"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="제목을 입력하세요."
-                                    fullWidth
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>썸네일 이미지</th>
-                            <td>
-                                <ThumbnailAttach
-                                    thumbnail={
-                                        thumbnail && (thumbnail.indexOf('http') === -1 ? `${boardThumbnailUrl}/${thumbnail}` : thumbnail)
-                                    }
-                                    handleChange={handleFileChange}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>요약 설명</th>
-                            <td>
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="small"
-                                    value={description}
-                                    name="description"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="썸네일 하단에 표시될 요약 설명을 입력하세요."
-                                    fullWidth
-                                    multiline
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>내용</th>
-                            <td>
-                                <JoditEditor
-                                    ref={editorRef}
-                                    value={content}
-                                    config={config}
-                                    onBlur={(newContent) => setContent(newContent)}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className={'tb--title'}>해시태그</th>
-                            <td>
-                                <ReactTags
-                                    tags={tags}
-                                    suggestions={suggestions}
-                                    delimiters={delimiters}
-                                    handleDelete={handleDelete}
-                                    handleAddition={handleAddition}
-                                    handleDrag={handleDrag}
-                                    handleTagClick={handleTagClick}
-                                    inputFieldPosition="inline"
-                                    placeholder="태그 입력 후 엔터"
-                                    autocomplete
-                                />
-                            </td>
-                        </tr>
-                        {createAccountName && (
+                        <tbody>
                             <tr>
-                                <th className={'tb--title'}>등록자</th>
+                                <th className={'tb--title'}>게시글 고정</th>
                                 <td>
-                                    {createAccountName}
+                                    <FormControlLabel
+                                        control={<Checkbox checked={is_set_notice} name="is_set_notice" onChange={handleChange} />}
+                                        label="게시글 최상단에 고정"
+                                    />
                                 </td>
                             </tr>
-                        )}
+                            <tr>
+                                <th className={'tb--title'}>제목</th>
+                                <td>
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="small"
+                                        value={title}
+                                        name="title"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="제목을 입력하세요."
+                                        fullWidth
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>내용</th>
+                                <td>
+                                    <JoditEditor
+                                        ref={editorRef}
+                                        value={content}
+                                        config={config}
+                                        onBlur={(newContent) => setContent(newContent)}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>해시태그</th>
+                                <td>
+                                    <ReactTags
+                                        tags={tags}
+                                        suggestions={suggestions}
+                                        delimiters={delimiters}
+                                        handleDelete={handleDelete}
+                                        handleAddition={handleAddition}
+                                        handleDrag={handleDrag}
+                                        handleTagClick={handleTagClick}
+                                        inputFieldPosition="inline"
+                                        placeholder="태그 입력 후 엔터"
+                                        autocomplete
+                                    />
+                                </td>
+                            </tr>
+                            {createAccountName && (
+                                <tr>
+                                    <th className={'tb--title'}>등록자</th>
+                                    <td>{createAccountName}</td>
+                                </tr>
+                            )}
+                        </tbody>
                     </table>
                 </div>
 
@@ -400,4 +359,4 @@ const DigitalAssetTrendMngForm = () => {
     );
 };
 
-export default DigitalAssetTrendMngForm;
+export default Post;

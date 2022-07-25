@@ -9,7 +9,8 @@ import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
 
-const BlockChainNewsMngForm = () => {
+// 블록체인 뉴스 게시물 등록 페이지
+const Post = () => {
     const navigate = useNavigate();
     const { newsId } = useParams();
     const [responseData, requestError, resLoading, { searchNews, createNews, updateNews, deleteNews }] = BlockChainNewsApi();
@@ -310,4 +311,4 @@ const BlockChainNewsMngForm = () => {
     );
 };
 
-export default BlockChainNewsMngForm;
+export default Post;

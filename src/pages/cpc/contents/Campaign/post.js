@@ -1,23 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Grid, MenuItem, Select, TextField } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
+import ThumbnailAttach from '../../../../components/ThumbnailAttach';
 import JoditEditor from 'jodit-react';
+import { WithContext as ReactTags } from 'react-tag-input';
+import '../ReactTags.module.scss';
+import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
-import HeaderTitle from '../../../components/HeaderTitle';
+import HeaderTitle from 'components/HeaderTitle';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 import cx from 'classnames';
-import './BoardList.module.scss';
 
-const DamageCaseMngForm = () => {
+const Post = () => {
     const navigate = useNavigate();
     const { boardId } = useParams();
-    const boardMasterId = 'CPC_DAMAGE_CASE';
+    const boardMasterId = 'CPC_CAMPAIGN';
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoard, createBoard, updateBoard, deleteBoard }] = BoardApi();
-    const [categories, setCategories] = useState([]);
+    const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -28,8 +33,14 @@ const DamageCaseMngForm = () => {
 
     // 입력 값
     const [id, setId] = useState('');
-    const [category, setCategory] = useState('');
+    // 제목
     const [title, setTitle] = useState('');
+    // 썸네일 이미지
+    const [thumbnail, setThumbnail] = useState('');
+    // 설명
+    const [description, setDescription] = useState('');
+    // 태그
+    const [tags, setTags] = useState([]);
     const [createAccountName, setCreateAccountName] = useState('');
 
     let authData = null;
@@ -37,6 +48,15 @@ const DamageCaseMngForm = () => {
         authData = JSON.parse(localStorage.getItem('authenticated'));
     }
     let Authorization = `Bearer ${authData.accessToken}`;
+
+    // 파일
+    const [thumbnailFile, setThumbnailFile] = useState('');
+    const handleFileChange = (file) => {
+        console.log(file);
+        if (file != null) {
+            setThumbnailFile(file);
+        }
+    };
 
     // 웹에디터
     const editorRef = useRef(null);
@@ -57,6 +77,32 @@ const DamageCaseMngForm = () => {
         },
         width: '100%',
         height: 500
+    };
+
+    // 태그
+    const [suggestions, setSuggestions] = useState([]);
+    const KeyCodes = {
+        comma: 188,
+        enter: 13
+    };
+    const delimiters = [KeyCodes.comma, KeyCodes.enter];
+    const handleDelete = (i) => {
+        setTags(tags.filter((tag, index) => index !== i));
+    };
+    const handleAddition = (tag) => {
+        setTags([...tags, tag]);
+    };
+    const handleDrag = (tag, currPos, newPos) => {
+        const newTags = tags.slice();
+
+        newTags.splice(currPos, 1);
+        newTags.splice(newPos, 0, tag);
+
+        // re-render
+        setTags(newTags);
+    };
+    const handleTagClick = (index) => {
+        console.log(`The tag at index ${index} was clicked`);
     };
 
     // onload
@@ -81,8 +127,17 @@ const DamageCaseMngForm = () => {
         if (!resBoardMaster) {
             return;
         }
-        if (resBoardMaster.data.data.is_use_category) {
-            setCategories(resBoardMaster.data.data.categories);
+        if (resBoardMaster.data.data.is_use_tag) {
+            const masterTags = resBoardMaster.data.data.tags;
+            if (masterTags) {
+                const tempSuggestions = masterTags.map((tag) => {
+                    return {
+                        id: tag,
+                        text: tag
+                    };
+                });
+                setSuggestions(tempSuggestions);
+            }
         }
     }, [resBoardMaster]);
 
@@ -98,10 +153,21 @@ const DamageCaseMngForm = () => {
         }
         switch (responseData.transactionId) {
             case 'getBoard':
-                setCategory(responseData.data.data.category);
                 setTitle(responseData.data.data.title);
+                setThumbnail(responseData.data.data.thumbnail);
+                setDescription(responseData.data.data.description);
                 setContent(responseData.data.data.contents);
                 setCreateAccountName(responseData.data.data.create_account_name);
+
+                if (responseData.data.data.tags) {
+                    const tempTags = responseData.data.data.tags.map((tag) => {
+                        return {
+                            id: tag,
+                            text: tag
+                        };
+                    });
+                    setTags(tempTags);
+                }
                 break;
             case 'createBoard':
                 alert('등록되었습니다.');
@@ -127,8 +193,11 @@ const DamageCaseMngForm = () => {
     };
     const handleChange = (e) => {
         switch (e.target.name) {
-            case 'category':
-                setCategory(e.target.value);
+            case 'thumbnail':
+                setThumbnail(e.target.value);
+                break;
+            case 'description':
+                setDescription(e.target.value);
                 break;
             case 'title':
                 setTitle(e.target.value);
@@ -141,14 +210,10 @@ const DamageCaseMngForm = () => {
     // 목록
     const listClick = () => {
         console.log('listClick called...');
-        navigate('/cpc/contents/damage-case/list');
+        navigate('/cpc/contents/campaign/list');
     };
 
     const isValidate = () => {
-        if (!category) {
-            alert('카테고리를 선택해주세요.');
-            return false;
-        }
         if (!title) {
             alert('제목을 입력해주세요.');
             return false;
@@ -166,14 +231,20 @@ const DamageCaseMngForm = () => {
 
         if (!isValidate()) return;
         if (confirm('등록 하시겠습니까?')) {
+            const inputTags = tags.map((tag) => {
+                return tag.text;
+            });
             const data = {
                 title,
+                description,
+                thumbnail,
                 contents: content,
-                category
+                tags: inputTags
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-            console.log(data);
+            thumbnailFile && formData.append('file', thumbnailFile, { type: 'multipart/form-data' });
+            console.log(formData);
             createBoard(boardMasterId, formData);
         }
     };
@@ -192,15 +263,21 @@ const DamageCaseMngForm = () => {
 
         if (!isValidate()) return;
         if (confirm('저장 하시겠습니까?')) {
+            const inputTags = tags.map((tag) => {
+                return tag.text;
+            });
             const data = {
                 id,
                 title,
+                description,
+                thumbnail,
                 contents: content,
-                category
+                tags: inputTags
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-            console.log(data);
+            thumbnailFile && formData.append('file', thumbnailFile, { type: 'multipart/form-data' });
+            console.log(formData);
             updateBoard(boardMasterId, data.id, formData);
         }
     };
@@ -208,24 +285,11 @@ const DamageCaseMngForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="피해사례" />
+                <HeaderTitle titleNm="안전거래 캠페인" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="안전거래 캠페인" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>
                         <tbody>
-                            <tr>
-                                <th className={'tb--title'}>카테고리</th>
-                                <td>
-                                    <Select name="category" label="카테고리" value={category} onChange={handleChange}>
-                                        <MenuItem value="">선택</MenuItem>
-                                        <MenuItem value="피싱">피싱</MenuItem>
-                                        <MenuItem value="폰지">폰지</MenuItem>
-                                        <MenuItem value="스캠">스캠</MenuItem>
-                                        <MenuItem value="도용">도용</MenuItem>
-                                        <MenuItem value="기타">기타</MenuItem>
-                                    </Select>
-                                </td>
-                            </tr>
                             <tr>
                                 <th className={'tb--title'}>제목</th>
                                 <td>
@@ -243,6 +307,35 @@ const DamageCaseMngForm = () => {
                                 </td>
                             </tr>
                             <tr>
+                                <th className={'tb--title'}>썸네일 이미지</th>
+                                <td>
+                                    <ThumbnailAttach
+                                        thumbnail={
+                                            thumbnail &&
+                                            (thumbnail.indexOf('http') === -1 ? `${boardThumbnailUrl}/${thumbnail}` : thumbnail)
+                                        }
+                                        handleChange={handleFileChange}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>요약 설명</th>
+                                <td>
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="small"
+                                        value={description}
+                                        name="description"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="썸네일 하단에 표시될 요약 설명을 입력하세요."
+                                        fullWidth
+                                        multiline
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
                                 <th className={'tb--title'}>내용</th>
                                 <td>
                                     <JoditEditor
@@ -250,6 +343,26 @@ const DamageCaseMngForm = () => {
                                         value={content}
                                         config={config}
                                         onBlur={(newContent) => setContent(newContent)}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>해시태그</th>
+                                <td>
+                                    <ReactTags
+                                        tags={tags}
+                                        suggestions={suggestions}
+                                        delimiters={delimiters}
+                                        handleDelete={handleDelete}
+                                        handleAddition={handleAddition}
+                                        handleDrag={handleDrag}
+                                        handleTagClick={handleTagClick}
+                                        inputFieldPosition="inline"
+                                        placeholder="태그 입력 후 엔터"
+                                        autocomplete
+                                        className={{
+                                            tags: 'tagsClass'
+                                        }}
                                     />
                                 </td>
                             </tr>
@@ -264,9 +377,11 @@ const DamageCaseMngForm = () => {
                 </div>
 
                 <TopInputLayout>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
-                        목록
-                    </Button>
+                    <InputLayout>
+                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            목록
+                        </Button>
+                    </InputLayout>
                     {!id && (
                         <ButtonLayout>
                             <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addClick}>
@@ -301,4 +416,4 @@ const DamageCaseMngForm = () => {
     );
 };
 
-export default DamageCaseMngForm;
+export default Post;

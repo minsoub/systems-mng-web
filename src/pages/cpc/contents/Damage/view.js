@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
@@ -8,27 +9,15 @@ import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
-import './BoardList.module.scss';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { setSearchData } from 'store/reducers/cpc/InsightColumnSearch';
+import { setSearchData } from 'store/reducers/cpc/DamageCaseSearch';
+import ContentLine from '../../../../components/Common/ContentLine';
 
-const InsightColumnMng = () => {
-    const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
-    const getContents = (params) => {
-        return (
-            <div className="desc_container">
-                <h3 className="overflow-wrap">{params.row.title}</h3>
-                <p className="overflow-wrap">{params.row.description}</p>
-                <p className="overflow-wrap">{params.row.tags && params.row.tags.length > 0 && '#'.concat(params.row.tags.join(' #'))}</p>
-                <p>{params.row.create_date}</p>
-            </div>
-        );
-    };
-
+const View = () => {
     const columns = [
         {
             field: 'id',
@@ -47,29 +36,19 @@ const InsightColumnMng = () => {
             maxWidth: 200
         },
         {
-            field: 'thumbnail',
-            headerName: '썸네일 이미지',
+            field: 'title',
+            headerName: '제목',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'left'
+        },
+        {
+            field: 'create_date',
+            headerName: '등록일시',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            renderCell: (params) => (
-                <div className="div_thumbnail">
-                    <img
-                        className="img_thumbnail"
-                        src={params.value && (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)}
-                        alt={`${params.row.title} 썸네일 이미지`}
-                    />
-                </div>
-            ),
-            maxWidth: 240
-        },
-        {
-            field: 'contents',
-            headerName: '콘텐츠',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'left',
-            renderCell: getContents
+            maxWidth: 200
         },
         {
             field: 'create_account_name',
@@ -81,12 +60,12 @@ const InsightColumnMng = () => {
         }
     ];
     const navigate = useNavigate();
-    const boardMasterId = 'CPC_INSIGHT_COLUMN';
+    const boardMasterId = 'CPC_DAMAGE_CASE';
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoardList, deleteBoardList }] = BoardApi();
 
-    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword, reduceCategory } = useSelector(
-        (state) => state.cpcInsightColumnSearchReducer
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceCategory, reduceKeyword } = useSelector(
+        (state) => state.cpcDamageCaseSearchReducer
     );
     const dispatch = useDispatch();
 
@@ -253,7 +232,7 @@ const InsightColumnMng = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/cpc/contents/insight-column/reg/${rowData.id}`);
+            navigate(`/cpc/contents/damage-case/reg/${rowData.id}`);
         }
     };
 
@@ -316,13 +295,13 @@ const InsightColumnMng = () => {
     // 등록
     const addClick = () => {
         console.log('addClick called...');
-        navigate('/cpc/contents/insight-column/reg');
+        navigate('/cpc/contents/damage-case/reg');
     };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="인사이트 칼럼" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="인사이트 칼럼" />
+                <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="피해사례" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate
@@ -361,16 +340,18 @@ const InsightColumnMng = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
+
                 <ButtonLayout buttonName="bottom--blank__small">
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={clearClick}>
                         초기화
                     </Button>
 
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={searchClick}>
                         검색
                     </Button>
                 </ButtonLayout>
-                <MainCard sx={{ mt: 2 }} content={false}>
+
+                <ContentLine>
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -379,7 +360,7 @@ const InsightColumnMng = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
+                </ContentLine>
                 <Grid className={cx(' searchPointColor')}>
                     <ButtonLayout>
                         <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
@@ -399,4 +380,4 @@ const InsightColumnMng = () => {
     );
 };
 
-export default InsightColumnMng;
+export default View;

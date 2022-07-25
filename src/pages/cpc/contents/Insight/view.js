@@ -8,7 +8,7 @@ import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
-import './BoardList.module.scss';
+import '../BoardList.module.scss';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
@@ -16,7 +16,7 @@ import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/InsightColumnSearch';
 
-const InsightColumnMng = () => {
+const View = () => {
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
     const getContents = (params) => {
         return (
@@ -399,4 +399,4 @@ const InsightColumnMng = () => {
     );
 };
 
-export default InsightColumnMng;
+export default View;

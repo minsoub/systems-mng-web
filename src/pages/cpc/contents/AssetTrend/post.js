@@ -1,23 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Grid, MenuItem, Select, TextField } from '@mui/material';
+
+import { Button, Grid, TextField } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
-import ThumbnailAttach from './ThumbnailAttach';
+import ThumbnailAttach from '../../../../components/ThumbnailAttach';
 import JoditEditor from 'jodit-react';
 import { WithContext as ReactTags } from 'react-tag-input';
-import './ReactTags.module.scss';
+import '../ReactTags.module.scss';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
 
-const InsightColumnMngForm = () => {
+const Post = () => {
     const navigate = useNavigate();
     const { boardId } = useParams();
-    const boardMasterId = 'CPC_INSIGHT_COLUMN';
+    const boardMasterId = 'CPC_TREND';
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoard, createBoard, updateBoard, deleteBoard }] = BoardApi();
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
@@ -31,12 +32,10 @@ const InsightColumnMngForm = () => {
 
     // 입력 값
     const [id, setId] = useState('');
-    const [category, setCategory] = useState('');
     const [title, setTitle] = useState('');
     const [thumbnail, setThumbnail] = useState('');
     const [description, setDescription] = useState('');
     const [tags, setTags] = useState([]);
-    const [contributor, setContributor] = useState('');
     const [createAccountName, setCreateAccountName] = useState('');
 
     let authData = null;
@@ -149,12 +148,10 @@ const InsightColumnMngForm = () => {
         }
         switch (responseData.transactionId) {
             case 'getBoard':
-                setCategory(responseData.data.data.category);
                 setTitle(responseData.data.data.title);
                 setThumbnail(responseData.data.data.thumbnail);
                 setDescription(responseData.data.data.description);
                 setContent(responseData.data.data.contents);
-                setContributor(responseData.data.data.contributor);
                 setCreateAccountName(responseData.data.data.create_account_name);
 
                 if (responseData.data.data.tags) {
@@ -191,9 +188,6 @@ const InsightColumnMngForm = () => {
     };
     const handleChange = (e) => {
         switch (e.target.name) {
-            case 'category':
-                setCategory(e.target.value);
-                break;
             case 'thumbnail':
                 setThumbnail(e.target.value);
                 break;
@@ -203,9 +197,6 @@ const InsightColumnMngForm = () => {
             case 'title':
                 setTitle(e.target.value);
                 break;
-            case 'contributor':
-                setContributor(e.target.value);
-                break;
             default:
                 break;
         }
@@ -214,14 +205,10 @@ const InsightColumnMngForm = () => {
     // 목록
     const listClick = () => {
         console.log('listClick called...');
-        navigate('/cpc/contents/insight-column/list');
+        navigate('/cpc/contents/digital-asset-trend/list');
     };
 
     const isValidate = () => {
-        if (!category) {
-            alert('카테고리를 선택해주세요.');
-            return false;
-        }
         if (!title) {
             alert('제목을 입력해주세요.');
             return false;
@@ -243,13 +230,11 @@ const InsightColumnMngForm = () => {
                 return tag.text;
             });
             const data = {
-                category,
                 title,
                 description,
                 thumbnail,
                 contents: content,
-                tags: inputTags,
-                contributor
+                tags: inputTags
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
@@ -278,13 +263,11 @@ const InsightColumnMngForm = () => {
             });
             const data = {
                 id,
-                category,
                 title,
                 description,
                 thumbnail,
                 contents: content,
-                tags: inputTags,
-                contributor
+                tags: inputTags
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
@@ -297,120 +280,89 @@ const InsightColumnMngForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="인사이트 칼럼" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="인사이트 칼럼" />
+                {/* 등록 페이지 */}
+                <HeaderTitle titleNm="가상자산 동향" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="가상자산 동향" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>
-                        <tbody>
+                        <tr>
+                            <th className={'tb--title'}>제목</th>
+                            <td>
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="small"
+                                    value={title}
+                                    name="title"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    placeholder="제목을 입력하세요."
+                                    fullWidth
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>썸네일 이미지</th>
+                            <td>
+                                <ThumbnailAttach
+                                    thumbnail={
+                                        thumbnail && (thumbnail.indexOf('http') === -1 ? `${boardThumbnailUrl}/${thumbnail}` : thumbnail)
+                                    }
+                                    handleChange={handleFileChange}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>요약 설명</th>
+                            <td>
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="small"
+                                    value={description}
+                                    name="description"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    placeholder="썸네일 하단에 표시될 요약 설명을 입력하세요."
+                                    fullWidth
+                                    multiline
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>내용</th>
+                            <td>
+                                <JoditEditor
+                                    ref={editorRef}
+                                    value={content}
+                                    config={config}
+                                    onBlur={(newContent) => setContent(newContent)}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className={'tb--title'}>해시태그</th>
+                            <td>
+                                <ReactTags
+                                    tags={tags}
+                                    suggestions={suggestions}
+                                    delimiters={delimiters}
+                                    handleDelete={handleDelete}
+                                    handleAddition={handleAddition}
+                                    handleDrag={handleDrag}
+                                    handleTagClick={handleTagClick}
+                                    inputFieldPosition="inline"
+                                    placeholder="태그 입력 후 엔터"
+                                    autocomplete
+                                />
+                            </td>
+                        </tr>
+                        {createAccountName && (
                             <tr>
-                                <th className={'tb--title'}>카테고리</th>
-                                <td>
-                                    <Select name="category" label="카테고리" value={category} onChange={handleChange}>
-                                        <MenuItem value="">선택</MenuItem>
-                                        <MenuItem value="전문가 칼럼">전문가 칼럼</MenuItem>
-                                        <MenuItem value="오피니언 칼럼">오피니언 칼럼</MenuItem>
-                                        <MenuItem value="빗썸경제연구소">빗썸경제연구소</MenuItem>
-                                        {/* {categories.map((category, index) => {
-                                        <MenuItem key={index} value={category}>
-                                            {category}
-                                        </MenuItem>;
-                                    })} */}
-                                    </Select>
-                                </td>
+                                <th className={'tb--title'}>등록자</th>
+                                <td>{createAccountName}</td>
                             </tr>
-                            <tr>
-                                <th className={'tb--title'}>제목</th>
-                                <td>
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={title}
-                                        name="title"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="제목을 입력하세요."
-                                        fullWidth
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'}>썸네일 이미지</th>
-                                <td>
-                                    <ThumbnailAttach
-                                        thumbnail={
-                                            thumbnail &&
-                                            (thumbnail.indexOf('http') === -1 ? `${boardThumbnailUrl}/${thumbnail}` : thumbnail)
-                                        }
-                                        handleChange={handleFileChange}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'}>요약 설명</th>
-                                <td>
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={description}
-                                        name="description"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="썸네일 하단에 표시될 요약 설명을 입력하세요."
-                                        fullWidth
-                                        multiline
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'}>내용</th>
-                                <td>
-                                    <JoditEditor
-                                        ref={editorRef}
-                                        value={content}
-                                        config={config}
-                                        onBlur={(newContent) => setContent(newContent)}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'}>해시태그</th>
-                                <td>
-                                    <ReactTags
-                                        tags={tags}
-                                        suggestions={suggestions}
-                                        delimiters={delimiters}
-                                        handleDelete={handleDelete}
-                                        handleAddition={handleAddition}
-                                        handleDrag={handleDrag}
-                                        handleTagClick={handleTagClick}
-                                        inputFieldPosition="inline"
-                                        placeholder="태그 입력 후 엔터"
-                                        autocomplete
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'}>기고자 정보</th>
-                                <td>
-                                    <Select name="contributor" label="기고자 정보" value={contributor} onChange={handleChange}>
-                                        <MenuItem value="">선택</MenuItem>
-                                        <MenuItem value="김상겸">김상겸 변호사</MenuItem>
-                                        <MenuItem value="김휘강">김휘강 교수</MenuItem>
-                                        <MenuItem value="박상혁">박상혁 기자</MenuItem>
-                                        <MenuItem value="이정훈">이정훈 이데일리 부국장</MenuItem>
-                                        <MenuItem value="하종은">하종은 병원장</MenuItem>
-                                    </Select>
-                                </td>
-                            </tr>
-                            {createAccountName && (
-                                <tr>
-                                    <th className={'tb--title'}>등록자</th>
-                                    <td>{createAccountName}</td>
-                                </tr>
-                            )}
-                        </tbody>
+                        )}
                     </table>
                 </div>
 
@@ -429,7 +381,14 @@ const InsightColumnMngForm = () => {
                     )}
                     {id && (
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={deleteClick}>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={deleteClick}
+                            >
                                 삭제
                             </Button>
                             <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
@@ -447,4 +406,4 @@ const InsightColumnMngForm = () => {
     );
 };
 
-export default InsightColumnMngForm;
+export default Post;

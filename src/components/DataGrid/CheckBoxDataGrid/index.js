@@ -3,8 +3,8 @@ import { DataGrid, gridPageCountSelector, gridPageSelector, useGridApiContext, u
 import { alpha, styled } from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-import './style.scss';
 import cx from 'classnames';
+import './style.scss';
 
 function customCheckbox(theme) {
     return {
@@ -91,7 +91,16 @@ function CheckBoxPagination() {
     );
 }
 
-export function CheckBoxDataGrid({ columns, rows, handlePageChange, handleGridClick, handleGridDoubleClick, selectionChange, height }) {
+export function CheckBoxDataGrid({
+    columns,
+    rows,
+    handlePageChange,
+    handleGridClick,
+    handleGridDoubleClick,
+    selectionChange,
+    height,
+    className
+}) {
     const handlePage = (page, details) => {
         handlePageChange(page + 1);
     };
@@ -99,7 +108,7 @@ export function CheckBoxDataGrid({ columns, rows, handlePageChange, handleGridCl
     const [selectionModel, setSelectionModel] = useState([]);
     useEffect(() => {
         console.log('change selectionModel:', selectionModel);
-        selectionChange(selectionModel);
+        setSelectionModel(selectionModel);
     }, [selectionModel]);
     let mHeight = 600;
 
@@ -117,6 +126,7 @@ export function CheckBoxDataGrid({ columns, rows, handlePageChange, handleGridCl
                     components={{
                         Pagination: CheckBoxPagination
                     }}
+                    className={className}
                     rows={rows}
                     columns={columns}
                     onPageChange={handlePage}

@@ -83,7 +83,7 @@ const Profile = () => {
             <ButtonBase
                 sx={{
                     p: 0.25,
-                    bgcolor: open ? iconBackColorOpen : 'transparent',
+                    Ïgcolor: open ? iconBackColorOpen : 'transparent',
                     borderRadius: 1,
                     '&:hover': { bgcolor: 'secondary.lighter' }
                 }}

@@ -1,34 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
-import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
-import BoardApi from 'apis/cpc/board/boardapi';
+import BlockChainNewsApi from 'apis/cpc/board/newsapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
-import './BoardList.module.scss';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
-import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { setSearchData } from 'store/reducers/cpc/InsightColumnSearch';
+import { setSearchData } from 'store/reducers/cpc/BlockChainNewsSearch';
+import ContentLine from '../../../../components/Common/ContentLine';
 
-const InsightColumnMng = () => {
-    const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
-    const getContents = (params) => {
-        return (
-            <div className="desc_container">
-                <h3 className="overflow-wrap">{params.row.title}</h3>
-                <p className="overflow-wrap">{params.row.description}</p>
-                <p className="overflow-wrap">{params.row.tags && params.row.tags.length > 0 && '#'.concat(params.row.tags.join(' #'))}</p>
-                <p>{params.row.create_date}</p>
-            </div>
-        );
-    };
-
+// 블록체인 뉴스 상세 페이지
+const View = () => {
     const columns = [
         {
             field: 'id',
@@ -39,55 +26,55 @@ const InsightColumnMng = () => {
             maxWidth: 100
         },
         {
-            field: 'category',
-            headerName: '카테고리',
+            field: 'newspaper',
+            headerName: '언론사',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'left',
+            maxWidth: 100
+        },
+        {
+            field: 'title',
+            headerName: '뉴스 제목',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'left'
+        },
+        {
+            field: 'link_url',
+            headerName: '뉴스 링크',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'left'
+        },
+        {
+            field: 'posting_date',
+            headerName: '뉴스 게시일',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 100
+        },
+        {
+            field: 'create_date',
+            headerName: '등록일시',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
             maxWidth: 200
         },
         {
-            field: 'thumbnail',
-            headerName: '썸네일 이미지',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            renderCell: (params) => (
-                <div className="div_thumbnail">
-                    <img
-                        className="img_thumbnail"
-                        src={params.value && (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)}
-                        alt={`${params.row.title} 썸네일 이미지`}
-                    />
-                </div>
-            ),
-            maxWidth: 240
-        },
-        {
-            field: 'contents',
-            headerName: '콘텐츠',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'left',
-            renderCell: getContents
-        },
-        {
             field: 'create_account_name',
             headerName: '등록자',
             flex: 1,
             headerAlign: 'center',
-            align: 'center',
-            minWidth: 300
+            align: 'center'
         }
     ];
     const navigate = useNavigate();
-    const boardMasterId = 'CPC_INSIGHT_COLUMN';
-    const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
-    const [responseData, requestError, resLoading, { searchBoardList, deleteBoardList }] = BoardApi();
+    const [responseData, requestError, resLoading, { searchNewsList, deleteNewsList }] = BlockChainNewsApi();
 
-    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword, reduceCategory } = useSelector(
-        (state) => state.cpcInsightColumnSearchReducer
-    );
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.cpcBlockChainNewsSearchReducer);
     const dispatch = useDispatch();
 
     // 그리드 선택된 row id
@@ -106,7 +93,6 @@ const InsightColumnMng = () => {
     const [start_date, setStartDate] = useState('');
     const [end_date, setEndDate] = useState('');
     const [period, setPeriod] = useState('1');
-    const [category, setCategory] = useState('');
     const [keyword, setKeyword] = useState('');
 
     // 상태 값
@@ -123,14 +109,13 @@ const InsightColumnMng = () => {
         if (reduceToDate) setEndDate(reduceToDate);
         if (reduceKeyword) setKeyword(reduceKeyword);
         if (reducePeriod) setPeriod(reducePeriod);
-        if (reduceCategory) setCategory(reduceCategory);
 
         setIsSearch(true);
     }, []);
 
     useEffect(() => {
         if (isSearch) {
-            searchBoardMaster(boardMasterId);
+            searchClick();
             setIsSearch(false);
         }
     }, [isSearch]);
@@ -148,39 +133,25 @@ const InsightColumnMng = () => {
 
     // Transaction Return
     useEffect(() => {
-        if (!resBoardMaster) {
-            return;
-        }
-        const request = {
-            start_date,
-            end_date,
-            keyword,
-            category
-        };
-        searchBoardList(boardMasterId, request);
-    }, [resBoardMaster]);
-
-    useEffect(() => {
         if (!responseData) {
             return;
         }
         switch (responseData.transactionId) {
-            case 'getBoards':
+            case 'getNewss':
                 if (responseData.data.data && responseData.data.data.length > 0) {
                     setDataGridRows(responseData.data.data);
                 } else {
                     setDataGridRows([]);
                 }
                 break;
-            case 'deleteBoards':
+            case 'deleteNewss':
                 alert('삭제되었습니다.');
                 const request = {
                     start_date,
                     end_date,
-                    keyword,
-                    category
+                    keyword
                 };
-                searchBoardList(boardMasterId, request);
+                searchNewsList(request);
                 break;
             default:
         }
@@ -205,9 +176,6 @@ const InsightColumnMng = () => {
             case 'period':
                 setPeriod(e.target.value);
                 setDateFromToSet(e.target.value);
-                break;
-            case 'category':
-                setCategory(e.target.value);
                 break;
             case 'keyword':
                 setKeyword(e.target.value);
@@ -253,7 +221,7 @@ const InsightColumnMng = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/cpc/contents/insight-column/reg/${rowData.id}`);
+            navigate(`/cpc/contents/blockchain-news/reg/${rowData.id}`);
         }
     };
 
@@ -266,7 +234,6 @@ const InsightColumnMng = () => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
         setPeriod('1');
-        setCategory('');
         setKeyword('');
     };
 
@@ -276,18 +243,16 @@ const InsightColumnMng = () => {
         const request = {
             start_date,
             end_date,
-            keyword,
-            category
+            keyword
         };
-        searchBoardList(boardMasterId, request);
+        searchNewsList(request);
 
         // 검색 조건에 대해서 상태를 저장한다.
         const searchData = {
             reduceFromDate: start_date,
             reduceToDate: end_date,
             reducePeriod: period,
-            reduceKeyword: keyword,
-            reduceCategory: category
+            reduceKeyword: keyword
         };
         dispatch(setSearchData(searchData));
     };
@@ -309,20 +274,20 @@ const InsightColumnMng = () => {
                 idx++;
             });
             console.log(deleteIds);
-            deleteBoardList(boardMasterId, deleteIds);
+            deleteNewsList(deleteIds);
         }
     };
 
     // 등록
     const addClick = () => {
         console.log('addClick called...');
-        navigate('/cpc/contents/insight-column/reg');
+        navigate('/cpc/contents/blockchain-news/reg');
     };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="인사이트 칼럼" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="인사이트 칼럼" />
+                <HeaderTitle titleNm="블록체인 뉴스" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="블록체인 뉴스" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate
@@ -335,42 +300,21 @@ const InsightColumnMng = () => {
                         endName="end_date"
                     />
 
-                    {/* 카테고리 영역 */}
-                    <div className={cx('category')}>
-                        <Stack spacing={10} className={cx('borderTitle')}>
-                            카테고리
-                        </Stack>
-
-                        {/* 전체 */}
-                        <RadioGroup
-                            row
-                            aria-labelledby="category-radio-buttons-group-label"
-                            name="category"
-                            value={category}
-                            onChange={handleChange}
-                        >
-                            <FormControlLabel value="" control={<Radio />} label="전체" />
-                            {resBoardMaster &&
-                                resBoardMaster.data.data.is_use_category &&
-                                resBoardMaster.data.data.categories.map((category) => (
-                                    <FormControlLabel value={category} control={<Radio />} label={category} />
-                                ))}
-                        </RadioGroup>
-                    </div>
-
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
+
                 <ButtonLayout buttonName="bottom--blank__small">
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
                         초기화
                     </Button>
 
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
                         검색
                     </Button>
                 </ButtonLayout>
-                <MainCard sx={{ mt: 2 }} content={false}>
+
+                <ContentLine>
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
@@ -379,17 +323,16 @@ const InsightColumnMng = () => {
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
-                </MainCard>
-                <Grid className={cx(' searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
-                            선택 삭제
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
-                            등록
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
+                </ContentLine>
+
+                <ButtonLayout buttonName="layout__blank--top">
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={deleteClick}>
+                        선택 삭제
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
+                        등록
+                    </Button>
+                </ButtonLayout>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
@@ -399,4 +342,4 @@ const InsightColumnMng = () => {
     );
 };
 
-export default InsightColumnMng;
+export default View;
