@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Button, Grid } from '@mui/material';
 import useAuthorized from 'apis/auth/auths';
 import { Box } from '@mui/material';
-import { activeEmail, activeLogin, activeLoginDate, activeSite, activeToken } from 'store/reducers/auth';
+import { activeEmail, activeLogin, activeLoginDate, activeSite, activeToken, activeRefreshToken } from 'store/reducers/auth';
 import OtpInput from 'react-otp-input';
 import { useNavigate } from 'react-router-dom';
 import OtpQrCode from '../OtpQrCodeText';
@@ -58,6 +58,7 @@ const OtpQrCodeForm = ({ result }) => {
                     dispatch(activeSite({ siteId: authData.siteId }));
                     dispatch(activeEmail({ email: authData.email }));
                     dispatch(activeToken({ accessToken: authData.accessToken }));
+                    dispatch(activeRefreshToken({ refreshToken: authData.refreshToken }));
                     dispatch(activeLogin({ isLoggined: authData.isLoggined }));
                     dispatch(activeLoginDate({ loginDate: authData.loginDate }));
                     localStorage.setItem('authenticated', JSON.stringify(authData));

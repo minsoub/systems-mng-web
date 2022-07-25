@@ -18,7 +18,7 @@ const StyledTableCell = withStyles((theme) => ({
         color: theme.palette.common.black
     }
 }))(TableCell);
-const ServiceDetail = () => {
+const SiteLogDetail = () => {
     const navigate = useNavigate();
     const { paramId } = useParams();
     const [responseData, requestError, loading, { logLrcDetail }] = LogsApi();
@@ -54,6 +54,7 @@ const ServiceDetail = () => {
         switch (responseData.transactionId) {
             case 'logDetail':
                 if (responseData.data.data) {
+                    console.log(responseData.data.data);
                     setLogDetail(responseData.data.data);
                 } else {
                     setLogDetail({});
@@ -65,18 +66,13 @@ const ServiceDetail = () => {
     }, [responseData]);
 
     const listClick = () => {
-        navigate('/service/list');
+        navigate('/sitelog/list');
     };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle
-                    titleNm="서비스 로그 관리"
-                    menuStep01="서비스 로그 관리"
-                    menuStep02="사이트 운영"
-                    menuStep03="서비스 로그 관리"
-                />
+                <HeaderTitle titleNm="사이트 관리" menuStep01="감사 로그 관리" menuStep02="감사로그 상세" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>
@@ -102,12 +98,36 @@ const ServiceDetail = () => {
                                 <td>{logDetail.menu_name}</td>
                             </tr>
                             <tr>
+                                <th className={'tb--title'}>프로그램명</th>
+                                <td>{logDetail.program_name}</td>
+                            </tr>
+                            <tr>
                                 <th className={'tb--title'}>CRUD</th>
                                 <td>{logDetail.method}</td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>URI</th>
                                 <td>{logDetail.uri}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>Path</th>
+                                <td>{logDetail.path}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>사이트명</th>
+                                <td>{logDetail.site_name}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>권한코드</th>
+                                <td>{logDetail.roles}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>Refer 정보</th>
+                                <td>{logDetail.referer}</td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>디바이스</th>
+                                <td>{logDetail.device}</td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>Parameter</th>
@@ -131,4 +151,4 @@ const ServiceDetail = () => {
     );
 };
 
-export default ServiceDetail;
+export default SiteLogDetail;

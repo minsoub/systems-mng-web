@@ -211,6 +211,7 @@ const SiteLogPage = () => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
             //let searchCondition = { site_id: site_id, is_use: is_use, type: type };
             //navigate(`/authmng/reg/${rowData.id}`);
+            navigate(`/sitelog/log/${rowData.row.id}`);
         }
     };
 

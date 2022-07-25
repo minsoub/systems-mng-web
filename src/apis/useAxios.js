@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axiosInstanceAuth from './axiosAuth';
-import { activeToken } from 'store/reducers/auth';
+import { activeToken, activeRefreshToken } from 'store/reducers/auth';
 
 const useAxios = () => {
     const dispatch = useDispatch();
@@ -76,6 +76,7 @@ const useAxios = () => {
                                 authData.accessToken = result.data.access_token;
                                 localStorage.setItem('authenticated', JSON.stringify(authData));
                                 dispatch(activeToken({ accessToken: authData.accessToken }));
+                                dispatch(activeRefreshToken({ refreshToken: authData.refreshToken }));
                             }
                             setTokenCheck(false);
                         } catch (err) {

@@ -26,11 +26,11 @@ const CustomContent = forwardRef((props, ref) => {
     };
 
     useEffect(() => {
-        console.log('visible value => {}', visible);
+        //console.log('visible value => {}', visible);
     }, []);
 
     useEffect(() => {
-        console.log(visible);
+        //console.log(visible);
         setVisibleItem(visible);
     }, [visible]);
 

@@ -6,7 +6,7 @@ import moment from 'moment';
 import OtpInput from 'react-otp-input';
 import { Button, Grid, InputLabel, Stack } from '@mui/material';
 import useAuthorized from 'apis/auth/auths';
-import { activeEmail, activeLogin, activeLoginDate, activeSite, activeToken } from 'store/reducers/auth';
+import { activeEmail, activeLogin, activeLoginDate, activeSite, activeToken, activeRefreshToken } from 'store/reducers/auth';
 import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
@@ -57,6 +57,7 @@ const OtpSimpleForm = ({ result }) => {
                     dispatch(activeSite({ siteId: authData.siteId }));
                     dispatch(activeEmail({ email: authData.email }));
                     dispatch(activeToken({ accessToken: authData.accessToken }));
+                    dispatch(activeRefreshToken({ refreshToken: authData.refreshToken }));
                     dispatch(activeLogin({ isLoggined: authData.isLoggined }));
                     dispatch(activeLoginDate({ loginDate: authData.loginDate }));
                     localStorage.setItem('authenticated', JSON.stringify(authData));

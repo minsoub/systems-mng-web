@@ -27,11 +27,19 @@ const AuthMngRegForm = () => {
     const navigate = useNavigate();
     const { siteId } = useSelector((state) => state.auth);
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-    const [responseData, requestError, responseLoading, { menumngSearch, menumngDetail, programMapping, programMappingSearch }] =
-        MenuMngApi();
+    const [
+        responseData,
+        requestError,
+        responseLoading,
+        { menumngSearch, menumngDetail, programMapping, programMappingSearch }
+    ] = MenuMngApi();
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
-    const [roleRequestData, roleRequestError, roleLoading, { roleComboSearch, roleRegisterSearch, roleRegisterTreeList, roleMenuSave }] =
-        RoleApi();
+    const [
+        roleRequestData,
+        roleRequestError,
+        roleLoading,
+        { roleComboSearch, roleRegisterSearch, roleRegisterTreeList, roleMenuSave }
+    ] = RoleApi();
 
     const { roleType, roleId } = useParams();
 
@@ -194,7 +202,7 @@ const AuthMngRegForm = () => {
                                 role_id: roleId
                             });
                             // 등록된 메뉴 리스트 조회
-                            menumngSearch(siteId, true);
+                            roleRegisterTreeList(roleId, siteId);
                             // role에 등록된 사용자 조회
                             roleRegisterSearch(roleId, siteId, roleType);
                         }

@@ -56,11 +56,19 @@ const SiteAuthMngRegForm = () => {
     const navigate = useNavigate();
     const { siteId } = useSelector((state) => state.auth);
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-    const [responseData, requestError, responseLoading, { menumngSearch, menumngDetail, programMapping, programMappingSearch }] =
-        MenuMngApi();
+    const [
+        responseData,
+        requestError,
+        responseLoading,
+        { menumngSearch, menumngDetail, programMapping, programMappingSearch }
+    ] = MenuMngApi();
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
-    const [roleRequestData, roleRequestError, roleLoading, { roleComboSearch, roleRegisterSearch, roleRegisterTreeList, roleMenuSave }] =
-        RoleApi();
+    const [
+        roleRequestData,
+        roleRequestError,
+        roleLoading,
+        { roleComboSearch, roleRegisterSearch, roleRegisterTreeList, roleMenuSave }
+    ] = RoleApi();
 
     const { roleType, roleId } = useParams();
 
@@ -179,7 +187,7 @@ const SiteAuthMngRegForm = () => {
 
     // 입력 데이터 - Default
     const [inputs, setInputs] = useState({
-        site_id: '',
+        site_id: siteId,
         type: 'ADMIN',
         role_id: '',
         role_name: '',
@@ -191,8 +199,8 @@ const SiteAuthMngRegForm = () => {
     useEffect(() => {
         // 사이트 구분 리스트 가져오기
         siteSearch(true, '');
-        console.log('RoleType => ');
-        console.log(roleType);
+        //console.log('RoleType => ');
+        //console.log(roleType);
         if (roleType) {
             setInputs({
                 ...inputs, // 기존 input 객체 복사
@@ -204,6 +212,7 @@ const SiteAuthMngRegForm = () => {
     // Role data
     useEffect(() => {
         if (roleRequestData) {
+            console.log(roleRequestData.transactionId);
             switch (roleRequestData.transactionId) {
                 case 'roleList':
                     if (roleRequestData.data.data) {
@@ -211,10 +220,10 @@ const SiteAuthMngRegForm = () => {
                         let list = [];
                         roleData.map((role, index) => {
                             const s = { id: role.id, name: role.name };
-                            console.log(s);
+                            //console.log(s);
                             list.push(s);
                         });
-                        console.log(list);
+                        //console.log(list);
                         setRoleList(list);
 
                         if (roleId) {
@@ -223,7 +232,7 @@ const SiteAuthMngRegForm = () => {
                                 role_id: roleId
                             });
                             // 등록된 메뉴 리스트 조회
-                            menumngSearch(siteId, true);
+                            roleRegisterTreeList(roleId, siteId);
                             // role에 등록된 사용자 조회
                             roleRegisterSearch(roleId, siteId, roleType);
                         }
@@ -237,7 +246,7 @@ const SiteAuthMngRegForm = () => {
                     }
                     break;
                 case 'roleRegisterTreeList':
-                    console.log(roleRequestData.data.data.menu_list);
+                    console.log(roleRequestData.data.data); // .menu_list);
                     if (roleRequestData.data.data.menu_list && roleRequestData.data.data.menu_list.length > 0) {
                         setMenuData(roleRequestData.data.data.menu_list);
                     } else {
@@ -293,7 +302,7 @@ const SiteAuthMngRegForm = () => {
                     let list = [];
                     siteData.map((site, index) => {
                         const s = { id: site.id, name: site.name };
-                        console.log(s);
+                        //console.log(s);
                         list.push(s);
                     });
                     setSiteList(list);
@@ -417,7 +426,7 @@ const SiteAuthMngRegForm = () => {
         }
     };
     const handleBlur = (e) => {
-        console.log(e);
+        //console.log(e);
     };
 
     //체크박스 선택된 row id 저장
@@ -429,15 +438,15 @@ const SiteAuthMngRegForm = () => {
     // 프로그램 목록에서의 선택
     const handleSelectionProgramChange = (item) => {
         if (item) {
-            console.log(item);
+            //console.log(item);
             setSelectedProgramRows(item);
-            console.log(selectedProgramRows);
+            //console.log(selectedProgramRows);
         }
     };
     // 사용자 리스트 선택
     const handleSelectionRoleChange = (item) => {
         if (item) {
-            console.log(item);
+            //console.log(item);
             setSelectedRoleRows(item);
         }
     };

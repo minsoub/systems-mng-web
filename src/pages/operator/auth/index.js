@@ -212,7 +212,8 @@ const SiteAuthManagementPage = () => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
             let searchCondition = { site_id: site_id, is_use: is_use, type: type };
 
-            navigate(`/siteauth/reg/${rowData.id}`);
+            navigate(`/siteauth/reg/${site_id}/${type}/${rowData.id}`);
+            //navigate(`/siteauth/reg/${rowData.id}`);
         }
     };
 

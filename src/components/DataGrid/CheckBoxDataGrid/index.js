@@ -76,7 +76,7 @@ function CheckBoxPagination() {
     const page = useGridSelector(apiRef, gridPageSelector);
     const pageCount = useGridSelector(apiRef, gridPageCountSelector);
 
-    console.log('pageCount', pageCount, 'page', page);
+    //console.log('pageCount', pageCount, 'page', page);
     return (
         <Pagination
             color="primary"
