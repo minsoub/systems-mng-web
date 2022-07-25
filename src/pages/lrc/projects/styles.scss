@@ -19,11 +19,18 @@
 .officeinfo__table__width {
     width: 100% !important;
 }
-
+.css-13eirs8-MuiTableCell-root.MuiTableCell-body {
+    background-color: #fafafb !important;
+    text-align: center;
+    border-right: 1px solid #f0f0f0;
+}
 .officeinfo__content--box {
     &.top2rem {
         margin-top: 1.5rem;
         margin-bottom: 1rem;
+    }
+    .officeinfo__content--align {
+        width: 100%;
     }
 }
 
@@ -33,7 +40,10 @@
 .chatting--container {
     .list__download {
         text-decoration: underline;
-        margin-left: 20px;
+        margin-right: 30px;
+        display: flex;
+        justify-content: center;
+        place-items: center;
     }
 }
 
@@ -73,4 +83,55 @@
 .css-brfv4x-MuiTableCell-root,
 .css-16kjuag-MuiTableCell-root {
     border-bottom: none;
+}
+
+.common__grid--rowTable {
+    width: 100%;
+    table {
+        width: 100%;
+        th {
+            width: 25%;
+            padding: 1.5rem 0;
+            background-color: #fafafb;
+            border-bottom: 1px solid #f0f0f0;
+            border-right: 1px solid #f0f0f0;
+            font-weight: 600;
+            &:last-child {
+                border-right: none;
+            }
+        }
+        td {
+            padding: 1.5rem 0;
+            text-align: center;
+            border-right: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            &:last-child {
+                border-right: none;
+            }
+        }
+        tr {
+            &:last-child {
+                td {
+                    border-bottom: none;
+                }
+                th {
+                    border-bottom: none;
+                }
+            }
+        }
+        .css-199jxd5-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root,
+        .css-wb57ya-MuiFormControl-root-MuiTextField-root,
+        .css-wb57ya-MuiFormControl-root-MuiTextField-root {
+            width: 85%;
+        }
+        .tg-0lax-left {
+            .css-wb57ya-MuiFormControl-root-MuiTextField-root {
+                width: 100% !important;
+            }
+            border-bottom: none;
+        }
+        .css-o8pmqo-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-o8pmqo-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-o8pmqo-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+            text-align: left;
+        }
+    }
 }

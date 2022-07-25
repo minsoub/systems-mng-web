@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import useRSocketClient from 'apis/chat/index';
 import ChatApi from 'apis/chat/chatapi';
 import MessageLeft from 'components/Chat/MessageLeft';
 import MessageRight from 'components/Chat/MessageRight';
 import ChattingRoom from 'components/Chat/ChattingRoom';
-import { Box, Button, FormControl, Grid, Tab, Table, TableBody, TableCell, TableRow, Tabs, TextField, Typography } from '@mui/material';
-import FlexBox from '../../../components/Common/FlexBox';
-import TopInputLayout from '../../../components/Common/TopInputLayout';
+import { Button, FormControl, TextField } from '@mui/material';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
+import DownloadIcon from '@mui/icons-material/Download';
 
 const Chat = (props) => {
     const { projectId, children, tabindex, index, ...other } = props;
@@ -170,7 +169,7 @@ const Chat = (props) => {
         <div className="chatting--container">
             <ButtonLayout>
                 <button type="button" color="primary" className="list__download" onClick={excelDownload}>
-                    내역 다운로드
+                    <DownloadIcon /> 내역 다운로드
                 </button>
                 <FormControl sx={{ minWidth: 250, boxSizing: 'border-box', marginRight: '0.5rem' }} size="medium">
                     <TextField id="symbol" name="symbol" inputRef={refKeyword} type="text" />

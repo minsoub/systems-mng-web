@@ -8,7 +8,7 @@
 }
 
 // table 스타일. 기본 너비는 100%
-@mixin table($width: 100%, $bgColor: $tableTitle, $borderLine: $borderLine, $titleWidth: 15%, $conWidth: 85%) {
+@mixin table($width: 100%, $bgColor: #fafafb, $borderLine: #f0f0f0, $titleWidth: 15%, $conWidth: 85%) {
     margin-bottom: 2rem;
     tr {
         border: 1px solid $borderLine;
