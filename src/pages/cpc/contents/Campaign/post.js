@@ -12,8 +12,6 @@ import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from 'components/HeaderTitle';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 import cx from 'classnames';
 
 const Post = () => {

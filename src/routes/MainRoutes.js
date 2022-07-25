@@ -41,7 +41,6 @@ const CpcInsightColumnMng = Loadable(lazy(() => import('pages/cpc/contents/Insig
 const CpcInsightColumnMngForm = Loadable(lazy(() => import('pages/cpc/contents/Insight/post')));
 const CpcDigitalAssetTrendMng = Loadable(lazy(() => import('pages/cpc/contents/AssetTrend/view')));
 const CpcDigitalAssetTrendMngForm = Loadable(lazy(() => import('pages/cpc/contents/AssetTrend/post')));
-// 블록체인 뉴스
 const CpcBlockChainNewsMng = Loadable(lazy(() => import('pages/cpc/contents/BlockChain/view')));
 const CpcBlockChainNewsMngForm = Loadable(lazy(() => import('pages/cpc/contents/BlockChain/post')));
 const CpcNoticeMng = Loadable(lazy(() => import('pages/cpc/contents/Notice/view')));
