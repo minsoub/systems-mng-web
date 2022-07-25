@@ -230,25 +230,34 @@ const LineMngPage = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="계열 관리" menuStep01="사이트 운영" menuStep02="상태값 관리" menuStep03="계열 관리" />
 
-                <TopInputLayout className="bottom--blank__small bottom--blank__top">
-                    <DropInput title="계열 구분">
-                        <Select name="search_line_type" label="계열타입" value={search_line_type} onChange={searchLineChanged}>
-                            <MenuItem value="BUSINESS">사업계열</MenuItem>
-                            <MenuItem value="NETWORK">네트워크계열</MenuItem>
-                            <MenuItem value="">전체</MenuItem>
-                        </Select>
-                    </DropInput>
+                <MainCard>
+                    <TopInputLayout>
+                        <DropInput title="계열 구분">
+                            <Select name="search_line_type" label="계열타입" value={search_line_type} onChange={searchLineChanged}>
+                                <MenuItem value="BUSINESS">사업계열</MenuItem>
+                                <MenuItem value="NETWORK">네트워크계열</MenuItem>
+                                <MenuItem value="">전체</MenuItem>
+                            </Select>
+                        </DropInput>
 
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
-                            검색
-                        </Button>
+                        <ButtonLayout>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={searchClick}
+                            >
+                                검색
+                            </Button>
 
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
-                            신규
-                        </Button>
-                    </ButtonLayout>
-                </TopInputLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
+                                신규
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
+                </MainCard>
 
                 <ContentLine>
                     <DefaultDataGrid

@@ -5,8 +5,72 @@
 .order__content--width {
     width: 100%;
     display: block;
+    button {
+        margin: 0 1rem;
+    }
+    .order__content--checkList {
+        background: #f0f0f0;
+        padding: 0.7rem 2rem;
+        border-radius: 2px;
+        margin-right: 1rem;
+    }
 }
 
 .officeinfo__table__width {
     width: 100% !important;
+}
+
+.officeinfo__content--box {
+    &.top2rem {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+}
+
+.catting__layout {
+    padding-left: 2rem;
+}
+.chatting--container {
+    .list__download {
+        text-decoration: underline;
+        margin-left: 20px;
+    }
+}
+
+.project__info {
+    margin: 10px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #e6ebf1;
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.project__info--download {
+    button {
+        text-decoration: underline;
+        margin-bottom: 10px;
+        &:hover {
+            color: #1890ff;
+        }
+    }
+}
+
+.file__upload--box {
+    display: flex;
+    margin: 1rem 0;
+
+    .file__upload--field {
+        width: 85%;
+    }
+
+    button {
+        width: auto;
+    }
+}
+
+.css-6ycgg3-MuiTableCell-root,
+.css-brfv4x-MuiTableCell-root,
+.css-16kjuag-MuiTableCell-root {
+    border-bottom: none;
 }

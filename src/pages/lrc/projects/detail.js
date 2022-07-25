@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
-import { Box, Button, FormControl, Grid, Tab, Table, TableBody, TableCell, TableRow, Tabs, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, Tab, TableCell, Tabs, TextField, Typography } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
@@ -14,6 +13,10 @@ import ProjectHistory from './history';
 import Chat from './chat';
 import ChatApi from 'apis/chat/chatapi';
 import HeaderTitle from 'components/HeaderTitle';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
+import { Empty } from 'antd';
+import './styles.scss';
 
 const ProjectsDetailPage = () => {
     let isSubmitting = false;
@@ -282,66 +285,61 @@ const ProjectsDetailPage = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="거래지원 관리" menuStep01="사이트 운영" menuStep02="거래지원 관리" menuStep03="재단 정보" />
 
+                <TopInputLayout className="layout--button__bottom">
+                    <Tabs value={value} onChange={tabChange} aria-label="basic tabs example">
+                        <Tab label="재단 정보" />
+                        <Tab label="프로젝트 관리" />
+                        <Tab label="제출 서류 관리" />
+                        <Tab label="변경 히스토리" />
+                    </Tabs>
+
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            목록
+                        </Button>
+                    </ButtonLayout>
+                </TopInputLayout>
+
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid container spacing={0} sx={{ mt: 0 }}>
                         <Box sx={{ width: '100%' }}>
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                <Grid container spacing={0} sx={{ mt: 0 }}>
-                                    <Grid item xs={8} sm={8}>
-                                        <Tabs value={value} onChange={tabChange} aria-label="basic tabs example">
-                                            <Tab label="재단 정보" />
-                                            <Tab label="프로젝트 관리" />
-                                            <Tab label="제출 서류 관리" />
-                                            <Tab label="변경 히스토리" />
-                                        </Tabs>
-                                    </Grid>
-                                    <Grid item xs={8} sm={4}>
-                                        <Table
-                                            fixedHeader={false}
-                                            style={{ width: '100%', tableLayout: 'auto' }}
-                                            stickyHeader
-                                            aria-label="simple table"
-                                        >
-                                            <TableRow>
-                                                <TableCell align="right" component="th" scope="row">
-                                                    <FormControl sx={{ m: 0 }} size="small">
-                                                        <Button
-                                                            disableElevation
-                                                            size="small"
-                                                            type="submit"
-                                                            variant="contained"
-                                                            color="secondary"
-                                                            onClick={listClick}
-                                                        >
-                                                            목록
-                                                        </Button>
-                                                    </FormControl>
-                                                </TableCell>
-                                            </TableRow>
-                                        </Table>
-                                    </Grid>
-                                </Grid>
-                            </Box>
-
                             <Grid container spacing={0} sx={{ mt: 0 }}>
                                 <Grid item xs={8} sm={8}>
+                                    {/* 재단 정보 */}
                                     <TabPanel value={value} index={0}>
                                         <OfficeInfo value={value} projectId={paramId} index={0} />
                                     </TabPanel>
+                                    {/* 프로젝트 관리 */}
                                     <TabPanel value={value} index={1}>
                                         <ProjectMng value={value} projectId={paramId} index={1} />
                                     </TabPanel>
+                                    {/* 제출 서류 관리 */}
                                     <TabPanel value={value} index={2}>
                                         <FileMng value={value} projectId={paramId} index={2} />
                                     </TabPanel>
+                                    {/* 변경 히스토리 */}
                                     <TabPanel value={value} index={3}>
                                         <ProjectHistory value={value} projectId={paramId} index={3} />
                                     </TabPanel>
                                 </Grid>
-                                <Grid item xs={8} sm={4}>
+                                <Grid item xs={4} sm={4} className="catting__layout">
+                                    {/* 채팅 영역 */}
                                     <Chat projectId={paramId} />
 
-                                    <div className="file--upload">
+                                    {/* 파일 업로드 */}
+                                    <TopInputLayout className="file__upload--box">
+                                        <TextField
+                                            type="file"
+                                            id="file"
+                                            name="file"
+                                            size="medium"
+                                            className="file__upload--field"
+                                            onChange={fileHandleChange}
+                                            inputProps={{
+                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                            }}
+                                        />
+
                                         <Button
                                             disableElevation
                                             size="medium"
@@ -352,43 +350,30 @@ const ProjectsDetailPage = () => {
                                         >
                                             파일 업로드
                                         </Button>
+                                    </TopInputLayout>
+                                    <MainCard>
+                                        <Typography variant="h4">첨부파일 목록</Typography>
 
-                                        <TextField
-                                            type="file"
-                                            id="file"
-                                            name="file"
-                                            size="small"
-                                            onChange={fileHandleChange}
-                                            inputProps={{
-                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-                                            }}
-                                        />
-                                    </div>
-
-                                    <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                                        첨부파일 목록
-                                        <Table
-                                            style={{ border: 1, width: '100%', tableLayout: 'auto' }}
-                                            stickyHeader
-                                            aria-label="simple table"
-                                        >
-                                            <TableBody>
+                                        {file ? (
+                                            <div className="project__info--box">
                                                 {fileList.map((item, index) => (
-                                                    <TableRow key={index}>
-                                                        <FontTableCell style={{ width: '36%', lineBreak: 'anywhere' }}>
-                                                            [ 사용자 ]
-                                                        </FontTableCell>
-                                                        <FontTableCell style={{ width: '66%', lineBreak: 'anywhere' }}>
-                                                            <a href="#" onClick={() => FileDownload(item.id, item.file_name)}>
+                                                    <TopInputLayout key={index} className="project__info">
+                                                        <h6 style={{ width: '36%', lineBreak: 'anywhere' }}>[사용자]</h6>
+
+                                                        <div className="project__info--download">
+                                                            <button type="button" onClick={() => FileDownload(item.id, item.file_name)}>
                                                                 {item.file_name}
-                                                            </a>
-                                                            <p></p>
-                                                            {item.file_size}&nbsp;{item.create_date}≈
-                                                        </FontTableCell>
-                                                    </TableRow>
+                                                            </button>
+                                                            <p>
+                                                                {item.file_size}&nbsp;{item.create_date}
+                                                            </p>
+                                                        </div>
+                                                    </TopInputLayout>
                                                 ))}
-                                            </TableBody>
-                                        </Table>
+                                            </div>
+                                        ) : (
+                                            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="첨부된 파일이 없습니다." />
+                                        )}
                                     </MainCard>
                                 </Grid>
                             </Grid>

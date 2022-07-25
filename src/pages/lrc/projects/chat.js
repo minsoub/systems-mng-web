@@ -6,21 +6,16 @@ import MessageLeft from 'components/Chat/MessageLeft';
 import MessageRight from 'components/Chat/MessageRight';
 import ChattingRoom from 'components/Chat/ChattingRoom';
 import { Box, Button, FormControl, Grid, Tab, Table, TableBody, TableCell, TableRow, Tabs, TextField, Typography } from '@mui/material';
+import FlexBox from '../../../components/Common/FlexBox';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
 
 const Chat = (props) => {
     const { projectId, children, tabindex, index, ...other } = props;
     const [resData, reqError, loading, { chatExistsAndSave, deleteChat, chatExcelDownload }] = ChatApi();
     const { siteId } = useSelector((state) => state.auth);
-    const [
-        clientError,
-        rSocket,
-        createClient,
-        sendJoinChat,
-        connectionClose,
-        sendRequestResponse,
-        responseData,
-        responseError
-    ] = useRSocketClient();
+    const [clientError, rSocket, createClient, sendJoinChat, connectionClose, sendRequestResponse, responseData, responseError] =
+        useRSocketClient();
     // 가짜 데이터
     const [messageList, setMessageList] = useState([]);
 
@@ -173,25 +168,19 @@ const Chat = (props) => {
 
     return (
         <div className="chatting--container">
-            <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
-                <TableRow>
-                    <TableCell component="th" scope="row">
-                        <a href="#" onClick={excelDownload}>
-                            내역 다운로드
-                        </a>
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                        <TextField id="symbol" name="symbol" inputRef={refKeyword} type="text" />
-                    </TableCell>
-                    <TableCell align="right" component="th" scope="row">
-                        <FormControl sx={{ m: 0 }} size="small">
-                            <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={searchClick}>
-                                검색
-                            </Button>
-                        </FormControl>
-                    </TableCell>
-                </TableRow>
-            </Table>
+            <ButtonLayout>
+                <button type="button" color="primary" className="list__download" onClick={excelDownload}>
+                    내역 다운로드
+                </button>
+                <FormControl sx={{ minWidth: 250, boxSizing: 'border-box', marginRight: '0.5rem' }} size="medium">
+                    <TextField id="symbol" name="symbol" inputRef={refKeyword} type="text" />
+                </FormControl>
+
+                <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
+                    검색
+                </Button>
+            </ButtonLayout>
+
             <ChattingRoom sendMessage={sendRequest}>
                 {messageList.map((item, idx) => {
                     if (item.sender === 'Listing Team') {

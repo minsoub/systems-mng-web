@@ -367,7 +367,7 @@ const ProgramRegForm = () => {
                             color="primary"
                             onClick={saveClick}
                         >
-                            저장하기
+                            저장
                         </Button>
                         <Button
                             disableElevation

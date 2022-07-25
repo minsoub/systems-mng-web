@@ -234,53 +234,49 @@ const SiteAuthManagementPage = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="권한 리스트" menuStep01="사이트 관리" menuStep02="권한 관리" menuStep03="권한 리스트" />
 
-                <MainCard sx={{ mt: 1 }}>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid container spacing={0} sx={{ mt: 0 }}>
-                            <TopInputLayout>
-                                <InputLayout>
-                                    <DropInput title="사이트명">
-                                        <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
-                                            <MenuItem value="">
-                                                <em>Choose a Site Type</em>
+                <MainCard>
+                    <TopInputLayout>
+                        <InputLayout>
+                            <DropInput title="사이트명">
+                                <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
+                                    <MenuItem value="">
+                                        <em>Choose a Site Type</em>
+                                    </MenuItem>
+                                    {siteList
+                                        .filter((item) => item.id === siteId)
+                                        .map((item, index) => (
+                                            <MenuItem key={index} value={item.id}>
+                                                {item.name}
                                             </MenuItem>
-                                            {siteList
-                                                .filter((item) => item.id === siteId)
-                                                .map((item, index) => (
-                                                    <MenuItem key={index} value={item.id}>
-                                                        {item.name}
-                                                    </MenuItem>
-                                                ))}
-                                        </Select>
-                                    </DropInput>
+                                        ))}
+                                </Select>
+                            </DropInput>
 
-                                    <DropInput title="Role Type">
-                                        <Select name="type" label="Role Type" value={type} onChange={typeChanged}>
-                                            <MenuItem value="ADMIN">ADMIN</MenuItem>
-                                            <MenuItem value="USER">USER</MenuItem>
-                                        </Select>
-                                    </DropInput>
-                                    <FormControlLabel
-                                        control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
-                                        label="사용함"
-                                    />
-                                </InputLayout>
+                            <DropInput title="Role Type">
+                                <Select name="type" label="Role Type" value={type} onChange={typeChanged}>
+                                    <MenuItem value="ADMIN">ADMIN</MenuItem>
+                                    <MenuItem value="USER">USER</MenuItem>
+                                </Select>
+                            </DropInput>
+                            <FormControlLabel
+                                control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
+                                label="사용함"
+                            />
+                        </InputLayout>
 
-                                <ButtonLayout>
-                                    <Button
-                                        disableElevation
-                                        size="medium"
-                                        type="submit"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={searchClick}
-                                    >
-                                        검색
-                                    </Button>
-                                </ButtonLayout>
-                            </TopInputLayout>
-                        </Grid>
-                    </Grid>
+                        <ButtonLayout>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={searchClick}
+                            >
+                                검색
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
                 </MainCard>
 
                 <ContentLine>

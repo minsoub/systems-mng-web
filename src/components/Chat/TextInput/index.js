@@ -30,7 +30,7 @@ export const Index = ({ sendChat }) => {
                 <InputLayout>
                     <TextField
                         id="standard-text"
-                        label="채팅입력"
+                        label="텍스트 입력"
                         size="small"
                         className="wrapText"
                         value={value}
@@ -40,7 +40,7 @@ export const Index = ({ sendChat }) => {
                     />
                     <ButtonLayout>
                         <Button variant="contained" color="primary" size="medium" className="button" onClick={sendData}>
-                            전송
+                            전송하기
                         </Button>
                     </ButtonLayout>
                 </InputLayout>

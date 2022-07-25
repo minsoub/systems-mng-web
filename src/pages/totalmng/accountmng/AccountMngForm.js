@@ -349,7 +349,7 @@ const AccountMngForm = () => {
                                         variant="contained"
                                         color="primary"
                                     >
-                                        저장하기
+                                        저장
                                     </Button>
                                     <Button
                                         disableElevation

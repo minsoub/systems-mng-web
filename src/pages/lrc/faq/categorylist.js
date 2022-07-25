@@ -240,24 +240,33 @@ const FaqCategoryPage = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="카테고리 관리" menuStep01="사이트 운영" menuStep02="FAQ 관리" menuStep03="카테고리 관리" />
 
-                <TopInputLayout className="bottom--blank__small bottom--blank__top">
-                    <FormControl size="medium" sx={{ minWidth: 250 }}>
-                        <Select name="search_language" label="계열타입" value={search_language} onChange={searchLanguageChanged}>
-                            <MenuItem value="KO">국문</MenuItem>
-                            <MenuItem value="EN">영문</MenuItem>
-                        </Select>
-                    </FormControl>
+                <MainCard>
+                    <TopInputLayout>
+                        <FormControl size="medium" sx={{ minWidth: 250 }}>
+                            <Select name="search_language" label="계열타입" value={search_language} onChange={searchLanguageChanged}>
+                                <MenuItem value="KO">국문</MenuItem>
+                                <MenuItem value="EN">영문</MenuItem>
+                            </Select>
+                        </FormControl>
 
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
-                            검색
-                        </Button>
+                        <ButtonLayout>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={searchClick}
+                            >
+                                검색
+                            </Button>
 
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
-                            신규
-                        </Button>
-                    </ButtonLayout>
-                </TopInputLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
+                                신규
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
+                </MainCard>
                 <ContentLine>
                     <DefaultDataGrid
                         columns={columns}
