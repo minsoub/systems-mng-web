@@ -5,17 +5,17 @@ import { Button, Grid, TextField } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
-import ThumbnailAttach from './ThumbnailAttach';
+import ThumbnailAttach from '../../../../components/ThumbnailAttach';
 import JoditEditor from 'jodit-react';
 import { WithContext as ReactTags } from 'react-tag-input';
-import './ReactTags.module.scss';
+import '../ReactTags.module.scss';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
 
-const DigitalAssetTrendMngForm = () => {
+const Post = () => {
     const navigate = useNavigate();
     const { boardId } = useParams();
     const boardMasterId = 'CPC_TREND';
@@ -406,4 +406,4 @@ const DigitalAssetTrendMngForm = () => {
     );
 };
 
-export default DigitalAssetTrendMngForm;
+export default Post;

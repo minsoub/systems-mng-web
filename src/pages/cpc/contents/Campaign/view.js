@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { Button, Grid } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
@@ -9,16 +8,17 @@ import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
-import './BoardList.module.scss';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
-import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { setSearchData } from 'store/reducers/cpc/DigitalAssetBasicSearch';
-import ContentLine from '../../../components/Common/ContentLine';
+import { setSearchData } from 'store/reducers/cpc/CampaignSearch';
+import ContentLine from '../../../../components/Common/ContentLine';
+import styles from '../BoardList.module.scss';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 
-const DigitalAssetBasicMng = () => {
+const View = () => {
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
     const getContents = (params) => {
         return (
@@ -75,11 +75,11 @@ const DigitalAssetBasicMng = () => {
         }
     ];
     const navigate = useNavigate();
-    const boardMasterId = 'CPC_DIGITAL_ASSET';
+    const boardMasterId = 'CPC_CAMPAIGN';
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoardList, deleteBoardList }] = BoardApi();
 
-    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.cpcDigitalAssetBasicSearchReducer);
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.cpcCampaignSearchReducer);
     const dispatch = useDispatch();
 
     // 그리드 선택된 row id
@@ -238,7 +238,7 @@ const DigitalAssetBasicMng = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/cpc/contents/digital-asset-basic/reg/${rowData.id}`);
+            navigate(`/cpc/contents/campaign/reg/${rowData.id}`);
         }
     };
 
@@ -298,13 +298,13 @@ const DigitalAssetBasicMng = () => {
     // 등록
     const addClick = () => {
         console.log('addClick called...');
-        navigate('/cpc/contents/digital-asset-basic/reg');
+        navigate('/cpc/contents/campaign/reg');
     };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="가상자산의 기초" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="가상자산의 기초" />
+                <HeaderTitle titleNm="안전거래 캠페인" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="안전거래 캠페인" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate
@@ -320,6 +320,7 @@ const DigitalAssetBasicMng = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
+
                 <ButtonLayout buttonName="bottom--blank__small">
                     <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
                         초기화
@@ -329,6 +330,7 @@ const DigitalAssetBasicMng = () => {
                         검색
                     </Button>
                 </ButtonLayout>
+
                 <ContentLine>
                     <CheckBoxDataGrid
                         columns={columns}
@@ -336,19 +338,20 @@ const DigitalAssetBasicMng = () => {
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
-                        selectionChange={handleSelectionChange}
+                        seSlectionChange={handleSelectionChange}
+                        className={cx('content__mng--img')}
                     />
                 </ContentLine>
-                <Grid className={cx(' searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
-                            선택 삭제
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
-                            등록
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
+
+                <ButtonLayout>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={deleteClick}>
+                        선택 삭제
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
+                        등록
+                    </Button>
+                </ButtonLayout>
+
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}
@@ -357,4 +360,4 @@ const DigitalAssetBasicMng = () => {
     );
 };
 
-export default DigitalAssetBasicMng;
+export default View;

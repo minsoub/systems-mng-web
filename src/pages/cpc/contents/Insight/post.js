@@ -1,25 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Grid, TextField } from '@mui/material';
+import { Button, Grid, MenuItem, Select, TextField } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
-import ThumbnailAttach from './ThumbnailAttach';
+import ThumbnailAttach from '../../../../components/ThumbnailAttach';
 import JoditEditor from 'jodit-react';
 import { WithContext as ReactTags } from 'react-tag-input';
-import './ReactTags.module.scss';
+import '../ReactTags.module.scss';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from 'components/HeaderTitle';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 import cx from 'classnames';
 
-const CampaignMngForm = () => {
+const Post = () => {
     const navigate = useNavigate();
     const { boardId } = useParams();
-    const boardMasterId = 'CPC_CAMPAIGN';
+    const boardMasterId = 'CPC_INSIGHT_COLUMN';
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoard, createBoard, updateBoard, deleteBoard }] = BoardApi();
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
@@ -33,14 +31,12 @@ const CampaignMngForm = () => {
 
     // 입력 값
     const [id, setId] = useState('');
-    // 제목
+    const [category, setCategory] = useState('');
     const [title, setTitle] = useState('');
-    // 썸네일 이미지
     const [thumbnail, setThumbnail] = useState('');
-    // 설명
     const [description, setDescription] = useState('');
-    // 태그
     const [tags, setTags] = useState([]);
+    const [contributor, setContributor] = useState('');
     const [createAccountName, setCreateAccountName] = useState('');
 
     let authData = null;
@@ -153,10 +149,12 @@ const CampaignMngForm = () => {
         }
         switch (responseData.transactionId) {
             case 'getBoard':
+                setCategory(responseData.data.data.category);
                 setTitle(responseData.data.data.title);
                 setThumbnail(responseData.data.data.thumbnail);
                 setDescription(responseData.data.data.description);
                 setContent(responseData.data.data.contents);
+                setContributor(responseData.data.data.contributor);
                 setCreateAccountName(responseData.data.data.create_account_name);
 
                 if (responseData.data.data.tags) {
@@ -193,6 +191,9 @@ const CampaignMngForm = () => {
     };
     const handleChange = (e) => {
         switch (e.target.name) {
+            case 'category':
+                setCategory(e.target.value);
+                break;
             case 'thumbnail':
                 setThumbnail(e.target.value);
                 break;
@@ -202,6 +203,9 @@ const CampaignMngForm = () => {
             case 'title':
                 setTitle(e.target.value);
                 break;
+            case 'contributor':
+                setContributor(e.target.value);
+                break;
             default:
                 break;
         }
@@ -210,10 +214,14 @@ const CampaignMngForm = () => {
     // 목록
     const listClick = () => {
         console.log('listClick called...');
-        navigate('/cpc/contents/campaign/list');
+        navigate('/cpc/contents/insight-column/list');
     };
 
     const isValidate = () => {
+        if (!category) {
+            alert('카테고리를 선택해주세요.');
+            return false;
+        }
         if (!title) {
             alert('제목을 입력해주세요.');
             return false;
@@ -235,11 +243,13 @@ const CampaignMngForm = () => {
                 return tag.text;
             });
             const data = {
+                category,
                 title,
                 description,
                 thumbnail,
                 contents: content,
-                tags: inputTags
+                tags: inputTags,
+                contributor
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
@@ -268,11 +278,13 @@ const CampaignMngForm = () => {
             });
             const data = {
                 id,
+                category,
                 title,
                 description,
                 thumbnail,
                 contents: content,
-                tags: inputTags
+                tags: inputTags,
+                contributor
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
@@ -285,11 +297,27 @@ const CampaignMngForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="안전거래 캠페인" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="안전거래 캠페인" />
+                <HeaderTitle titleNm="인사이트 칼럼" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="인사이트 칼럼" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>
                         <tbody>
+                            <tr>
+                                <th className={'tb--title'}>카테고리</th>
+                                <td>
+                                    <Select name="category" label="카테고리" value={category} onChange={handleChange}>
+                                        <MenuItem value="">선택</MenuItem>
+                                        <MenuItem value="전문가 칼럼">전문가 칼럼</MenuItem>
+                                        <MenuItem value="오피니언 칼럼">오피니언 칼럼</MenuItem>
+                                        <MenuItem value="빗썸경제연구소">빗썸경제연구소</MenuItem>
+                                        {/* {categories.map((category, index) => {
+                                        <MenuItem key={index} value={category}>
+                                            {category}
+                                        </MenuItem>;
+                                    })} */}
+                                    </Select>
+                                </td>
+                            </tr>
                             <tr>
                                 <th className={'tb--title'}>제목</th>
                                 <td>
@@ -360,10 +388,20 @@ const CampaignMngForm = () => {
                                         inputFieldPosition="inline"
                                         placeholder="태그 입력 후 엔터"
                                         autocomplete
-                                        className={{
-                                            tags: 'tagsClass'
-                                        }}
                                     />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>기고자 정보</th>
+                                <td>
+                                    <Select name="contributor" label="기고자 정보" value={contributor} onChange={handleChange}>
+                                        <MenuItem value="">선택</MenuItem>
+                                        <MenuItem value="김상겸">김상겸 변호사</MenuItem>
+                                        <MenuItem value="김휘강">김휘강 교수</MenuItem>
+                                        <MenuItem value="박상혁">박상혁 기자</MenuItem>
+                                        <MenuItem value="이정훈">이정훈 이데일리 부국장</MenuItem>
+                                        <MenuItem value="하종은">하종은 병원장</MenuItem>
+                                    </Select>
                                 </td>
                             </tr>
                             {createAccountName && (
@@ -391,14 +429,7 @@ const CampaignMngForm = () => {
                     )}
                     {id && (
                         <ButtonLayout>
-                            <Button
-                                disableElevation
-                                size="medium"
-                                type="submit"
-                                variant="contained"
-                                color="secondary"
-                                onClick={deleteClick}
-                            >
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={deleteClick}>
                                 삭제
                             </Button>
                             <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
@@ -416,4 +447,4 @@ const CampaignMngForm = () => {
     );
 };
 
-export default CampaignMngForm;
+export default Post;

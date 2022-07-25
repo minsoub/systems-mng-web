@@ -1,23 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Grid, MenuItem, Select, TextField } from '@mui/material';
+import { Button, Grid, TextField, FormControlLabel, Checkbox } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import JoditEditor from 'jodit-react';
+import { WithContext as ReactTags } from 'react-tag-input';
+import '../ReactTags.module.scss';
+import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
-import HeaderTitle from '../../../components/HeaderTitle';
+import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
-import './BoardList.module.scss';
 
-const DamageCaseMngForm = () => {
+const Post = () => {
     const navigate = useNavigate();
     const { boardId } = useParams();
-    const boardMasterId = 'CPC_DAMAGE_CASE';
+    const boardMasterId = 'CPC_NOTICE';
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoard, createBoard, updateBoard, deleteBoard }] = BoardApi();
-    const [categories, setCategories] = useState([]);
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -28,8 +29,9 @@ const DamageCaseMngForm = () => {
 
     // 입력 값
     const [id, setId] = useState('');
-    const [category, setCategory] = useState('');
+    const [is_set_notice, setIsSetNotice] = useState(false);
     const [title, setTitle] = useState('');
+    const [tags, setTags] = useState([]);
     const [createAccountName, setCreateAccountName] = useState('');
 
     let authData = null;
@@ -59,6 +61,32 @@ const DamageCaseMngForm = () => {
         height: 500
     };
 
+    // 태그
+    const [suggestions, setSuggestions] = useState([]);
+    const KeyCodes = {
+        comma: 188,
+        enter: 13
+    };
+    const delimiters = [KeyCodes.comma, KeyCodes.enter];
+    const handleDelete = (i) => {
+        setTags(tags.filter((tag, index) => index !== i));
+    };
+    const handleAddition = (tag) => {
+        setTags([...tags, tag]);
+    };
+    const handleDrag = (tag, currPos, newPos) => {
+        const newTags = tags.slice();
+
+        newTags.splice(currPos, 1);
+        newTags.splice(newPos, 0, tag);
+
+        // re-render
+        setTags(newTags);
+    };
+    const handleTagClick = (index) => {
+        console.log(`The tag at index ${index} was clicked`);
+    };
+
     // onload
     useEffect(() => {
         searchBoardMaster(boardMasterId);
@@ -81,8 +109,17 @@ const DamageCaseMngForm = () => {
         if (!resBoardMaster) {
             return;
         }
-        if (resBoardMaster.data.data.is_use_category) {
-            setCategories(resBoardMaster.data.data.categories);
+        if (resBoardMaster.data.data.is_use_tag) {
+            const masterTags = resBoardMaster.data.data.tags;
+            if (masterTags) {
+                const tempSuggestions = masterTags.map((tag) => {
+                    return {
+                        id: tag,
+                        text: tag
+                    };
+                });
+                setSuggestions(tempSuggestions);
+            }
         }
     }, [resBoardMaster]);
 
@@ -98,10 +135,20 @@ const DamageCaseMngForm = () => {
         }
         switch (responseData.transactionId) {
             case 'getBoard':
-                setCategory(responseData.data.data.category);
+                setIsSetNotice(responseData.data.data.is_set_notice);
                 setTitle(responseData.data.data.title);
                 setContent(responseData.data.data.contents);
                 setCreateAccountName(responseData.data.data.create_account_name);
+
+                if (responseData.data.data.tags) {
+                    const tempTags = responseData.data.data.tags.map((tag) => {
+                        return {
+                            id: tag,
+                            text: tag
+                        };
+                    });
+                    setTags(tempTags);
+                }
                 break;
             case 'createBoard':
                 alert('등록되었습니다.');
@@ -127,8 +174,8 @@ const DamageCaseMngForm = () => {
     };
     const handleChange = (e) => {
         switch (e.target.name) {
-            case 'category':
-                setCategory(e.target.value);
+            case 'is_set_notice':
+                setIsSetNotice(e.target.checked);
                 break;
             case 'title':
                 setTitle(e.target.value);
@@ -141,14 +188,10 @@ const DamageCaseMngForm = () => {
     // 목록
     const listClick = () => {
         console.log('listClick called...');
-        navigate('/cpc/contents/damage-case/list');
+        navigate('/cpc/contents/notice/list');
     };
 
     const isValidate = () => {
-        if (!category) {
-            alert('카테고리를 선택해주세요.');
-            return false;
-        }
         if (!title) {
             alert('제목을 입력해주세요.');
             return false;
@@ -166,14 +209,17 @@ const DamageCaseMngForm = () => {
 
         if (!isValidate()) return;
         if (confirm('등록 하시겠습니까?')) {
+            const inputTags = tags.map((tag) => {
+                return tag.text;
+            });
             const data = {
+                is_set_notice,
                 title,
                 contents: content,
-                category
+                tags: inputTags
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-            console.log(data);
             createBoard(boardMasterId, formData);
         }
     };
@@ -192,15 +238,19 @@ const DamageCaseMngForm = () => {
 
         if (!isValidate()) return;
         if (confirm('저장 하시겠습니까?')) {
+            const inputTags = tags.map((tag) => {
+                return tag.text;
+            });
             const data = {
                 id,
+                is_set_notice,
                 title,
                 contents: content,
-                category
+                tags: inputTags
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-            console.log(data);
+            console.log(formData);
             updateBoard(boardMasterId, data.id, formData);
         }
     };
@@ -208,22 +258,18 @@ const DamageCaseMngForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="피해사례" />
+                <HeaderTitle titleNm="공지사항" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="공지사항" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>
                         <tbody>
                             <tr>
-                                <th className={'tb--title'}>카테고리</th>
+                                <th className={'tb--title'}>게시글 고정</th>
                                 <td>
-                                    <Select name="category" label="카테고리" value={category} onChange={handleChange}>
-                                        <MenuItem value="">선택</MenuItem>
-                                        <MenuItem value="피싱">피싱</MenuItem>
-                                        <MenuItem value="폰지">폰지</MenuItem>
-                                        <MenuItem value="스캠">스캠</MenuItem>
-                                        <MenuItem value="도용">도용</MenuItem>
-                                        <MenuItem value="기타">기타</MenuItem>
-                                    </Select>
+                                    <FormControlLabel
+                                        control={<Checkbox checked={is_set_notice} name="is_set_notice" onChange={handleChange} />}
+                                        label="게시글 최상단에 고정"
+                                    />
                                 </td>
                             </tr>
                             <tr>
@@ -253,6 +299,23 @@ const DamageCaseMngForm = () => {
                                     />
                                 </td>
                             </tr>
+                            <tr>
+                                <th className={'tb--title'}>해시태그</th>
+                                <td>
+                                    <ReactTags
+                                        tags={tags}
+                                        suggestions={suggestions}
+                                        delimiters={delimiters}
+                                        handleDelete={handleDelete}
+                                        handleAddition={handleAddition}
+                                        handleDrag={handleDrag}
+                                        handleTagClick={handleTagClick}
+                                        inputFieldPosition="inline"
+                                        placeholder="태그 입력 후 엔터"
+                                        autocomplete
+                                    />
+                                </td>
+                            </tr>
                             {createAccountName && (
                                 <tr>
                                     <th className={'tb--title'}>등록자</th>
@@ -264,9 +327,11 @@ const DamageCaseMngForm = () => {
                 </div>
 
                 <TopInputLayout>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
-                        목록
-                    </Button>
+                    <InputLayout>
+                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            목록
+                        </Button>
+                    </InputLayout>
                     {!id && (
                         <ButtonLayout>
                             <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addClick}>
@@ -276,14 +341,7 @@ const DamageCaseMngForm = () => {
                     )}
                     {id && (
                         <ButtonLayout>
-                            <Button
-                                disableElevation
-                                size="medium"
-                                type="submit"
-                                variant="contained"
-                                color="secondary"
-                                onClick={deleteClick}
-                            >
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={deleteClick}>
                                 삭제
                             </Button>
                             <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
@@ -301,4 +359,4 @@ const DamageCaseMngForm = () => {
     );
 };
 
-export default DamageCaseMngForm;
+export default Post;

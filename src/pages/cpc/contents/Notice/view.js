@@ -4,17 +4,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, Grid } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
-import BlockChainNewsApi from 'apis/cpc/board/newsapi';
+import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
+import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
+import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { setSearchData } from 'store/reducers/cpc/BlockChainNewsSearch';
-import ContentLine from '../../../components/Common/ContentLine';
+import { setSearchData } from 'store/reducers/cpc/NoticeSearch';
+import ContentLine from '../../../../components/Common/ContentLine';
 
-const BlockChainNewsMng = () => {
+const View = () => {
     const columns = [
         {
             field: 'id',
@@ -25,34 +27,11 @@ const BlockChainNewsMng = () => {
             maxWidth: 100
         },
         {
-            field: 'newspaper',
-            headerName: '언론사',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'left',
-            maxWidth: 100
-        },
-        {
             field: 'title',
-            headerName: '뉴스 제목',
+            headerName: '제목',
             flex: 1,
             headerAlign: 'center',
             align: 'left'
-        },
-        {
-            field: 'link_url',
-            headerName: '뉴스 링크',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'left'
-        },
-        {
-            field: 'posting_date',
-            headerName: '뉴스 게시일',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 100
         },
         {
             field: 'create_date',
@@ -67,13 +46,16 @@ const BlockChainNewsMng = () => {
             headerName: '등록자',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            minWidth: 300
         }
     ];
     const navigate = useNavigate();
-    const [responseData, requestError, resLoading, { searchNewsList, deleteNewsList }] = BlockChainNewsApi();
+    const boardMasterId = 'CPC_NOTICE';
+    const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
+    const [responseData, requestError, resLoading, { searchBoardList, deleteBoardList }] = BoardApi();
 
-    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.cpcBlockChainNewsSearchReducer);
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.cpcNoticeSearchReducer);
     const dispatch = useDispatch();
 
     // 그리드 선택된 row id
@@ -114,7 +96,7 @@ const BlockChainNewsMng = () => {
 
     useEffect(() => {
         if (isSearch) {
-            searchClick();
+            searchBoardMaster(boardMasterId);
             setIsSearch(false);
         }
     }, [isSearch]);
@@ -132,25 +114,37 @@ const BlockChainNewsMng = () => {
 
     // Transaction Return
     useEffect(() => {
+        if (!resBoardMaster) {
+            return;
+        }
+        const request = {
+            start_date,
+            end_date,
+            keyword
+        };
+        searchBoardList(boardMasterId, request);
+    }, [resBoardMaster]);
+
+    useEffect(() => {
         if (!responseData) {
             return;
         }
         switch (responseData.transactionId) {
-            case 'getNewss':
+            case 'getBoards':
                 if (responseData.data.data && responseData.data.data.length > 0) {
                     setDataGridRows(responseData.data.data);
                 } else {
                     setDataGridRows([]);
                 }
                 break;
-            case 'deleteNewss':
+            case 'deleteBoards':
                 alert('삭제되었습니다.');
                 const request = {
                     start_date,
                     end_date,
                     keyword
                 };
-                searchNewsList(request);
+                searchBoardList(boardMasterId, request);
                 break;
             default:
         }
@@ -220,7 +214,7 @@ const BlockChainNewsMng = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/cpc/contents/blockchain-news/reg/${rowData.id}`);
+            navigate(`/cpc/contents/notice/reg/${rowData.id}`);
         }
     };
 
@@ -244,7 +238,7 @@ const BlockChainNewsMng = () => {
             end_date,
             keyword
         };
-        searchNewsList(request);
+        searchBoardList(boardMasterId, request);
 
         // 검색 조건에 대해서 상태를 저장한다.
         const searchData = {
@@ -273,20 +267,20 @@ const BlockChainNewsMng = () => {
                 idx++;
             });
             console.log(deleteIds);
-            deleteNewsList(deleteIds);
+            deleteBoardList(boardMasterId, deleteIds);
         }
     };
 
     // 등록
     const addClick = () => {
         console.log('addClick called...');
-        navigate('/cpc/contents/blockchain-news/reg');
+        navigate('/cpc/contents/notice/reg');
     };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="블록체인 뉴스" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="블록체인 뉴스" />
+                <HeaderTitle titleNm="공지사항" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="공지사항" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate
@@ -302,17 +296,15 @@ const BlockChainNewsMng = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-
                 <ButtonLayout buttonName="bottom--blank__small">
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={clearClick}>
                         초기화
                     </Button>
 
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={searchClick}>
                         검색
                     </Button>
                 </ButtonLayout>
-
                 <ContentLine>
                     <CheckBoxDataGrid
                         columns={columns}
@@ -323,9 +315,8 @@ const BlockChainNewsMng = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </ContentLine>
-
                 <ButtonLayout buttonName="layout__blank--top">
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={deleteClick}>
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={deleteClick}>
                         선택 삭제
                     </Button>
                     <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
@@ -341,4 +332,4 @@ const BlockChainNewsMng = () => {
     );
 };
 
-export default BlockChainNewsMng;
+export default View;

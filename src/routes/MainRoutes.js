@@ -31,20 +31,21 @@ const CpcDashboard = Loadable(lazy(() => import('pages/cpc/dashboard')));
 const CpcMainContentsMng = Loadable(lazy(() => import('pages/cpc/main/contents')));
 
 // render - 고객보호센터 - 콘텐츠 관리
-const CpcDamageCaseMng = Loadable(lazy(() => import('pages/cpc/contents/DamageCaseMng')));
-const CpcDamageCaseMngForm = Loadable(lazy(() => import('pages/cpc/contents/DamageCaseMngForm')));
-const CpcCampaignMng = Loadable(lazy(() => import('pages/cpc/contents/CampaignMng')));
-const CpcCampaignMngForm = Loadable(lazy(() => import('pages/cpc/contents/CampaignMngForm')));
-const CpcDigitalAssetBasicMng = Loadable(lazy(() => import('pages/cpc/contents/DigitalAssetBasicMng')));
-const CpcDigitalAssetBasicMngForm = Loadable(lazy(() => import('pages/cpc/contents/DigitalAssetBasicMngForm')));
-const CpcInsightColumnMng = Loadable(lazy(() => import('pages/cpc/contents/InsightColumnMng')));
-const CpcInsightColumnMngForm = Loadable(lazy(() => import('pages/cpc/contents/InsightColumnMngForm')));
-const CpcDigitalAssetTrendMng = Loadable(lazy(() => import('pages/cpc/contents/DigitalAssetTrendMng')));
-const CpcDigitalAssetTrendMngForm = Loadable(lazy(() => import('pages/cpc/contents/DigitalAssetTrendMngForm')));
-const CpcBlockChainNewsMng = Loadable(lazy(() => import('pages/cpc/contents/BlockChainNewsMng')));
-const CpcBlockChainNewsMngForm = Loadable(lazy(() => import('pages/cpc/contents/BlockChainNewsMngForm')));
-const CpcNoticeMng = Loadable(lazy(() => import('pages/cpc/contents/NoticeMng')));
-const CpcNoticeMngForm = Loadable(lazy(() => import('pages/cpc/contents/NoticeMngForm')));
+const CpcDamageCaseMng = Loadable(lazy(() => import('pages/cpc/contents/Damage/view')));
+const CpcDamageCaseMngForm = Loadable(lazy(() => import('pages/cpc/contents/Damage/post')));
+const CpcCampaignMng = Loadable(lazy(() => import('pages/cpc/contents/Campaign/view')));
+const CpcCampaignMngForm = Loadable(lazy(() => import('pages/cpc/contents/Campaign/post')));
+const CpcDigitalAssetBasicMng = Loadable(lazy(() => import('pages/cpc/contents/AssetBasic/view')));
+const CpcDigitalAssetBasicMngForm = Loadable(lazy(() => import('pages/cpc/contents/AssetBasic/post')));
+const CpcInsightColumnMng = Loadable(lazy(() => import('pages/cpc/contents/Insight/view')));
+const CpcInsightColumnMngForm = Loadable(lazy(() => import('pages/cpc/contents/Insight/post')));
+const CpcDigitalAssetTrendMng = Loadable(lazy(() => import('pages/cpc/contents/AssetTrend/view')));
+const CpcDigitalAssetTrendMngForm = Loadable(lazy(() => import('pages/cpc/contents/AssetTrend/post')));
+// 블록체인 뉴스
+const CpcBlockChainNewsMng = Loadable(lazy(() => import('pages/cpc/contents/BlockChain/view')));
+const CpcBlockChainNewsMngForm = Loadable(lazy(() => import('pages/cpc/contents/BlockChain/post')));
+const CpcNoticeMng = Loadable(lazy(() => import('pages/cpc/contents/Notice/view')));
+const CpcNoticeMngForm = Loadable(lazy(() => import('pages/cpc/contents/Notice/post')));
 
 // render - 고객보호센터 - 사기신고 관리
 const CpcFraudReportMng = Loadable(lazy(() => import('pages/cpc/fraudReport/index')));

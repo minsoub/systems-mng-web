@@ -2,22 +2,35 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
-import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
+import CheckBoxDataGrid from '../../../../components/DataGrid/CheckBoxDataGrid';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
+import '../BoardList.module.scss';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { setSearchData } from 'store/reducers/cpc/DamageCaseSearch';
-import ContentLine from '../../../components/Common/ContentLine';
+import { setSearchData } from 'store/reducers/cpc/DigitalAssetTrendSearch';
+import ContentLine from '../../../../components/Common/ContentLine';
 
-const DamageCaseMng = () => {
+const View = () => {
+    const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
+    const getContents = (params) => {
+        return (
+            <div className="desc_container">
+                <h3 className="overflow-wrap">{params.row.title}</h3>
+                <p className="overflow-wrap">{params.row.description}</p>
+                <p className="overflow-wrap">{params.row.tags && params.row.tags.length > 0 && '#'.concat(params.row.tags.join(' #'))}</p>
+                <p>{params.row.create_date}</p>
+            </div>
+        );
+    };
+
     const columns = [
         {
             field: 'id',
@@ -28,27 +41,29 @@ const DamageCaseMng = () => {
             maxWidth: 100
         },
         {
-            field: 'category',
-            headerName: '카테고리',
+            field: 'thumbnail',
+            headerName: '썸네일 이미지',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 200
+            renderCell: (params) => (
+                <div className="div_thumbnail">
+                    <img
+                        className="img_thumbnail"
+                        src={params.value && (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)}
+                        alt={`${params.row.title} 썸네일 이미지`}
+                    />
+                </div>
+            ),
+            maxWidth: 240
         },
         {
-            field: 'title',
-            headerName: '제목',
+            field: 'contents',
+            headerName: '콘텐츠',
             flex: 1,
             headerAlign: 'center',
-            align: 'left'
-        },
-        {
-            field: 'create_date',
-            headerName: '등록일시',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 200
+            align: 'left',
+            renderCell: getContents
         },
         {
             field: 'create_account_name',
@@ -60,13 +75,11 @@ const DamageCaseMng = () => {
         }
     ];
     const navigate = useNavigate();
-    const boardMasterId = 'CPC_DAMAGE_CASE';
+    const boardMasterId = 'CPC_TREND';
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoardList, deleteBoardList }] = BoardApi();
 
-    const { reduceFromDate, reduceToDate, reducePeriod, reduceCategory, reduceKeyword } = useSelector(
-        (state) => state.cpcDamageCaseSearchReducer
-    );
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.cpcDigitalAssetTrendSearchReducer);
     const dispatch = useDispatch();
 
     // 그리드 선택된 row id
@@ -85,7 +98,6 @@ const DamageCaseMng = () => {
     const [start_date, setStartDate] = useState('');
     const [end_date, setEndDate] = useState('');
     const [period, setPeriod] = useState('1');
-    const [category, setCategory] = useState('');
     const [keyword, setKeyword] = useState('');
 
     // 상태 값
@@ -102,7 +114,6 @@ const DamageCaseMng = () => {
         if (reduceToDate) setEndDate(reduceToDate);
         if (reduceKeyword) setKeyword(reduceKeyword);
         if (reducePeriod) setPeriod(reducePeriod);
-        if (reduceCategory) setCategory(reduceCategory);
 
         setIsSearch(true);
     }, []);
@@ -133,8 +144,7 @@ const DamageCaseMng = () => {
         const request = {
             start_date,
             end_date,
-            keyword,
-            category
+            keyword
         };
         searchBoardList(boardMasterId, request);
     }, [resBoardMaster]);
@@ -156,8 +166,7 @@ const DamageCaseMng = () => {
                 const request = {
                     start_date,
                     end_date,
-                    keyword,
-                    category
+                    keyword
                 };
                 searchBoardList(boardMasterId, request);
                 break;
@@ -184,9 +193,6 @@ const DamageCaseMng = () => {
             case 'period':
                 setPeriod(e.target.value);
                 setDateFromToSet(e.target.value);
-                break;
-            case 'category':
-                setCategory(e.target.value);
                 break;
             case 'keyword':
                 setKeyword(e.target.value);
@@ -232,7 +238,7 @@ const DamageCaseMng = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/cpc/contents/damage-case/reg/${rowData.id}`);
+            navigate(`/cpc/contents/digital-asset-trend/reg/${rowData.id}`);
         }
     };
 
@@ -245,7 +251,6 @@ const DamageCaseMng = () => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
         setPeriod('1');
-        setCategory('');
         setKeyword('');
     };
 
@@ -255,8 +260,7 @@ const DamageCaseMng = () => {
         const request = {
             start_date,
             end_date,
-            keyword,
-            category
+            keyword
         };
         searchBoardList(boardMasterId, request);
 
@@ -265,8 +269,7 @@ const DamageCaseMng = () => {
             reduceFromDate: start_date,
             reduceToDate: end_date,
             reducePeriod: period,
-            reduceKeyword: keyword,
-            reduceCategory: category
+            reduceKeyword: keyword
         };
         dispatch(setSearchData(searchData));
     };
@@ -295,13 +298,13 @@ const DamageCaseMng = () => {
     // 등록
     const addClick = () => {
         console.log('addClick called...');
-        navigate('/cpc/contents/damage-case/reg');
+        navigate('/cpc/contents/digital-asset-trend/reg');
     };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="피해사례" />
+                <HeaderTitle titleNm="가상자산 동향" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="가상자산 동향" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate
@@ -314,39 +317,16 @@ const DamageCaseMng = () => {
                         endName="end_date"
                     />
 
-                    {/* 카테고리 영역 */}
-                    <div className={cx('category')}>
-                        <Stack spacing={10} className={cx('borderTitle')}>
-                            카테고리
-                        </Stack>
-
-                        {/* 전체 */}
-                        <RadioGroup
-                            row
-                            aria-labelledby="category-radio-buttons-group-label"
-                            name="category"
-                            value={category}
-                            onChange={handleChange}
-                        >
-                            <FormControlLabel value="" control={<Radio />} label="전체" />
-                            {resBoardMaster &&
-                                resBoardMaster.data.data.is_use_category &&
-                                resBoardMaster.data.data.categories.map((category) => (
-                                    <FormControlLabel value={category} control={<Radio />} label={category} />
-                                ))}
-                        </RadioGroup>
-                    </div>
-
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
                 <ButtonLayout buttonName="bottom--blank__small">
-                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={clearClick}>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
                         초기화
                     </Button>
 
-                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={searchClick}>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
                         검색
                     </Button>
                 </ButtonLayout>
@@ -371,7 +351,6 @@ const DamageCaseMng = () => {
                         </Button>
                     </ButtonLayout>
                 </Grid>
-
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}
@@ -380,4 +359,4 @@ const DamageCaseMng = () => {
     );
 };
 
-export default DamageCaseMng;
+export default View;
