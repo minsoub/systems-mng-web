@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { Button, Grid } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
@@ -9,14 +8,15 @@ import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
-import './BoardList.module.scss';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
-import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/CampaignSearch';
 import ContentLine from '../../../components/Common/ContentLine';
+import styles from './BoardList.module.scss';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 
 const CampaignMng = () => {
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
@@ -338,7 +338,8 @@ const CampaignMng = () => {
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
-                        selectionChange={handleSelectionChange}
+                        seSlectionChange={handleSelectionChange}
+                        className={cx('content__mng--img')}
                     />
                 </ContentLine>
 
