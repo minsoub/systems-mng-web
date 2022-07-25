@@ -12,6 +12,8 @@ import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from 'components/HeaderTitle';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 import cx from 'classnames';
 
 const CampaignMngForm = () => {
@@ -31,9 +33,13 @@ const CampaignMngForm = () => {
 
     // 입력 값
     const [id, setId] = useState('');
+    // 제목
     const [title, setTitle] = useState('');
+    // 썸네일 이미지
     const [thumbnail, setThumbnail] = useState('');
+    // 설명
     const [description, setDescription] = useState('');
+    // 태그
     const [tags, setTags] = useState([]);
     const [createAccountName, setCreateAccountName] = useState('');
 
@@ -354,6 +360,9 @@ const CampaignMngForm = () => {
                                         inputFieldPosition="inline"
                                         placeholder="태그 입력 후 엔터"
                                         autocomplete
+                                        className={{
+                                            tags: 'tagsClass'
+                                        }}
                                     />
                                 </td>
                             </tr>
@@ -382,7 +391,14 @@ const CampaignMngForm = () => {
                     )}
                     {id && (
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={deleteClick}>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={deleteClick}
+                            >
                                 삭제
                             </Button>
                             <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>

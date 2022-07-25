@@ -282,6 +282,7 @@ html [type='button'],
     justify-content: space-between;
 }
 
+// 게시글 등록 시 썸네일 이미지 크기
 .div_thumbnail {
     width: 250px;
     height: 250px;
@@ -293,6 +294,39 @@ html [type='button'],
     }
 }
 
+// 리액트 해시태그 관련 스타일
+.ReactTags__tag {
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8125rem;
+    border-radius: 16px;
+    color: rgba(0, 0, 0, 0.87);
+    background-color: rgba(0, 0, 0, 0.08);
+    margin-right: 0.5rem;
+    padding: 10px 14px;
+}
+
+.ReactTags__tagInput {
+    margin-top: 1rem;
+    width: 250px;
+    padding: 10px;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.ReactTags__remove {
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.ReactTags__selected {
+    margin-top: 1rem;
+}
+
+.css-15ezkgb-MuiPaper-root-MuiCard-root {
+    box-shadow: none;
+}
 // 1024 해상도에서도 width Full로 차도록
 @media (min-width: 1024px) {
     .css-1ol3ns7-MuiGrid-root {

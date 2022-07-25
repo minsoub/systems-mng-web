@@ -280,6 +280,7 @@ const DigitalAssetTrendMngForm = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
+                {/* 등록 페이지 */}
                 <HeaderTitle titleNm="가상자산 동향" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="가상자산 동향" />
 
                 <div className={cx('common-grid--layout')}>
@@ -359,9 +360,7 @@ const DigitalAssetTrendMngForm = () => {
                         {createAccountName && (
                             <tr>
                                 <th className={'tb--title'}>등록자</th>
-                                <td>
-                                    {createAccountName}
-                                </td>
+                                <td>{createAccountName}</td>
                             </tr>
                         )}
                     </table>
@@ -382,7 +381,14 @@ const DigitalAssetTrendMngForm = () => {
                     )}
                     {id && (
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={deleteClick}>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={deleteClick}
+                            >
                                 삭제
                             </Button>
                             <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
