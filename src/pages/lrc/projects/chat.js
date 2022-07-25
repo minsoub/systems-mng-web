@@ -164,7 +164,23 @@ const Chat = (props) => {
         console.log(id);
         deleteChat(id);
     };
-    const searchClick = () => {};
+    const searchClick = () => {
+        console.log(refKeyword.current.value);
+        if (refKeyword.current.value) {
+            // message에서 단어 포함 검색해서 <b>처리한다.
+            let list = messageList;
+            list.map((item, index) => {
+                if (item.message.includes(refKeyword.current.value) && !item.message.includes('<b>')) {
+                    console.log('find...');
+                    item.message = item.message.replace(refKeyword.current.value, `<b>${refKeyword.current.value}</b>`);
+                    console.log(item.message);
+                }
+            });
+            console.log(list);
+            setMessageList([]);
+            setMessageList(list);
+        }
+    };
 
     // 내역 다운로드
     const excelDownload = () => {
