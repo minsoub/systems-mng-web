@@ -1,10 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {Button, TextField, Typography} from '@mui/material';
+
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, FormControl, TextField, Typography } from '@mui/material';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import HistoryApi from 'apis/lrc/project/historyapi';
 import ContentLine from '../../../components/Common/ContentLine';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
 
 const ProjectHistory = (props) => {
     let isSubmitting = false;
@@ -135,15 +137,18 @@ const ProjectHistory = (props) => {
 
     return (
         <>
-            <TopInputLayout>
+            <TopInputLayout className="bottom--blank__small">
                 <Typography variant="h4">변경 히스토리</Typography>
 
-                <div>
-                    <TextField size="medium" id="outlined-multiline-static" inputRef={refKeyword} />
-                    <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={searchClick}>
+                <ButtonLayout>
+                    <FormControl sx={{ minWidth: 250, boxSizing: 'border-box' }} size="medium">
+                        <TextField size="medium" id="outlined-multiline-static" inputRef={refKeyword} />
+                    </FormControl>
+
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
                         검색
                     </Button>
-                </div>
+                </ButtonLayout>
             </TopInputLayout>
 
             <ContentLine sx={{ mt: 2 }} content={false}>

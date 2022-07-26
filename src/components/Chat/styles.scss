@@ -50,19 +50,17 @@ $gray: #92959e;
     line-height: 26px;
     font-size: 16px;
     border-radius: 7px;
-    margin-bottom: 30px;
     position: relative;
     &:after {
         bottom: 100%;
         right: 29px;
-        border: solid transparent;
+        border: 10px solid transparent;
         content: ' ';
         height: 0;
         width: 0;
         position: absolute;
         pointer-events: none;
         border-bottom-color: $green;
-        border-width: 10px;
         margin-left: -10px;
     }
 }
@@ -85,7 +83,7 @@ $gray: #92959e;
 .msg--right__speechBubble {
     display: grid;
     justify-items: right;
-
+    margin-bottom: 30px;
     .message-data-time {
         width: 100%;
         display: flex;
@@ -94,13 +92,7 @@ $gray: #92959e;
 
     // 삭제하기 버튼
     .my-message__delete {
-        display: none;
-    }
-
-    &:hover {
-        .my-message__delete {
-            display: block;
-        }
+        margin-top: 0.6rem;
     }
 }
 

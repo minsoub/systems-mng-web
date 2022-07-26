@@ -28,6 +28,9 @@
     border-right: 1px solid #f0f0f0;
 }
 .officeinfo__content--box {
+    .styles_flex--layout__Yo3He {
+        justify-content: center;
+    }
     &.top2rem {
         margin-top: 1.5rem;
         margin-bottom: 1rem;
@@ -140,8 +143,24 @@
             text-align: left;
         }
     }
+    .projectmng__evaluation {
+        .tg-0lax {
+            width: 25%;
+        }
+        .tg-1wig {
+            width: 40%;
+        }
+        .tg-0lax__del {
+            width: 50px;
+        }
+    }
 }
 
+.projectmng__select {
+    & > div {
+        justify-content: center;
+    }
+}
 input::file-selector-button {
     display: none;
 }
