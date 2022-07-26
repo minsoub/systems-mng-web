@@ -336,7 +336,8 @@ const ProjectsDetailPage = () => {
                                             className="file__upload--field"
                                             onChange={fileHandleChange}
                                             inputProps={{
-                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
 
@@ -354,7 +355,7 @@ const ProjectsDetailPage = () => {
                                     <MainCard>
                                         <Typography variant="h4">첨부파일 목록</Typography>
 
-                                        {file ? (
+                                        {fileList.length > 0 ? (
                                             <div className="project__info--box">
                                                 {fileList.map((item, index) => (
                                                     <TopInputLayout key={index} className="project__info">
