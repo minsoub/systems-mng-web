@@ -282,12 +282,12 @@ const SiteRegForm = () => {
                 onSubmit={async (values, { setStatus, setSubmitting }) => {
                     try {
                         // Validation check
-                        if (id === '') {
-                            setErrorTitle('입력 오류');
-                            setErrorMessage('Site 아이디를 입력하지 않았습니다');
-                            setOpen(true);
-                            return;
-                        }
+                        // if (id === '') {
+                        //     setErrorTitle('입력 오류');
+                        //     setErrorMessage('Site 아이디를 입력하지 않았습니다');
+                        //     setOpen(true);
+                        //     return;
+                        // }
                         if (name === '') {
                             setErrorTitle('입력 오류');
                             setErrorMessage('Site Name을 입력하지 않았습니다');
@@ -347,10 +347,9 @@ const SiteRegForm = () => {
                                                 name="id"
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
-                                                inputProps={{ readOnly: readOnlyId }}
-                                                placeholder="사이트 ID를 등록하세요!!!"
+                                                inputProps={{ readOnly: true }}
+                                                placeholder="저장 시 자동생성"
                                                 fullWidth
-                                                error={Boolean(touched.id && errors.id)}
                                             />
                                         </DropInput>
                                         <DropInput title="사이트명">

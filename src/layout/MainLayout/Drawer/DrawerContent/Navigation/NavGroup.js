@@ -15,10 +15,14 @@ const NavGroup = ({ item }) => {
     const { drawerOpen } = menu;
 
     const navCollapse = item.child_menu_resources?.map((menuItem) => {
-        if (menuItem.type === 'ITEM') {
-            return <NavItem key={menuItem.id} item={menuItem} level={1} />;
-        } else if (menuItem.type === 'GROUP') {
-            return <NavSub key={menuItem.id} item={menuItem} level={1} />;
+        if (menuItem.visible == true) {
+            if (menuItem.type === 'ITEM') {
+                return <NavItem key={menuItem.id} item={menuItem} level={1} />;
+            } else if (menuItem.type === 'GROUP') {
+                return <NavSub key={menuItem.id} item={menuItem} level={1} />;
+            }
+        } else {
+            return null;
         }
         // switch (menuItem.type) {
         //     case 'collapse': // 서브 메뉴가 있다.
