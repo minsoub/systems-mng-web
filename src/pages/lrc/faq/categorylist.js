@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { Button, FormControl, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
@@ -9,7 +8,6 @@ import ErrorScreen from 'components/ErrorScreen';
 import HeaderTitle from '../../../components/HeaderTitle';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
-import cx from 'classnames';
 import './styles.scss';
 import DropInput from '../../../components/Common/DropInput';
 import ContentLine from '../../../components/Common/ContentLine';

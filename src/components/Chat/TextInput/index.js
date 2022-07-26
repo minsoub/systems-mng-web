@@ -40,7 +40,7 @@ export const Index = ({ sendChat }) => {
                     />
                     <ButtonLayout>
                         <Button variant="contained" color="primary" size="medium" className="button" onClick={sendData}>
-                            전송하기
+                            전송
                         </Button>
                     </ButtonLayout>
                 </InputLayout>

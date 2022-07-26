@@ -13,6 +13,9 @@
         padding: 0.7rem 2rem;
         border-radius: 2px;
         margin-right: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
@@ -87,6 +90,9 @@
 
 .common__grid--rowTable {
     width: 100%;
+    .css-6wp6pb-MuiOutlinedInput-notchedOutline {
+        top: 0 !important;
+    }
     table {
         width: 100%;
         th {
@@ -132,6 +138,44 @@
         }
         .css-o8pmqo-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-o8pmqo-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-o8pmqo-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
             text-align: left;
+        }
+    }
+}
+
+input::file-selector-button {
+    display: none;
+}
+
+.filemng__table {
+    td {
+        padding: 1rem !important;
+        width: 40% !important;
+        vertical-align: baseline;
+    }
+    th {
+        width: 20% !important;
+    }
+}
+.filemng__file--list {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 300;
+    align-items: center;
+    margin-top: 1rem;
+    .filemng__file--id,
+    .filemng__file--url {
+        font-size: 0.8rem;
+    }
+    .filemng__file--date {
+        font-size: 0.65rem;
+    }
+    .filemng__file--con {
+        text-align: right;
+        .filemng__file--downlaod {
+            text-decoration: underline;
+            &:hover {
+                color: #1890ff;
+            }
         }
     }
 }

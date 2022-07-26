@@ -26,12 +26,6 @@ const RoleRegForm = () => {
     const [responseData, requestError, loading, { roleCheck, roleDetail, roleInsert, roleUpdate, roleDelete }] = RoleApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
-    // 그리드 선택된 row id
-    const [selectedRows, setSeletedRows] = useState([]);
-
-    // const [visible, setVisible] = useState(true);
-    // const [errors, setErrors] = useState('');
-
     // 사이트 콤보박스 입력 항목
     const [siteList, setSiteList] = useState([]);
     const [idStatus, setIdStatus] = useState(false);
@@ -56,14 +50,13 @@ const RoleRegForm = () => {
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const siteChanged = (event) => {
-        console.log(event.target.value);
-        setSiteId(event.target.value);
+    const siteChanged = (e) => {
+        console.log(e);
+        setSiteId(e);
     };
 
     const typeChanged = (event) => {
-        console.log(event.target.value);
-        setType(event.target.value);
+        setType(event);
     };
 
     // transaction error 처리
@@ -194,6 +187,7 @@ const RoleRegForm = () => {
     }, [responseData]);
 
     const handleChange = (e) => {
+        console.log(e);
         switch (e.target.name) {
             case 'id':
                 setId(e.target.value);
@@ -211,7 +205,7 @@ const RoleRegForm = () => {
                 setIsUse(e.target.checked);
                 break;
             case 'site_id':
-                setSiteId(e.target.checked);
+                setSiteId(e.target.value);
                 break;
             case 'type':
                 setType(e.target.value);
@@ -407,6 +401,7 @@ const RoleRegForm = () => {
                                             noneChecked="noneChecked"
                                             startName="valid_start_date"
                                             endName="valid_end_date"
+                                            title="유효 기간"
                                         />
                                     </Grid>
 

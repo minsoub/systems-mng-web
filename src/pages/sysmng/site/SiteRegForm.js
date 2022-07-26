@@ -27,6 +27,8 @@ import DropInput from '../../../components/Common/DropInput';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import SearchDate from '../../../components/ContentManage/SearchDate';
 import './styles.module.scss';
+import './styles.scss';
+import FlexBox from '../../../components/Common/FlexBox';
 
 const SiteRegForm = () => {
     let isSubmitting = false;
@@ -335,7 +337,7 @@ const SiteRegForm = () => {
                                 />
 
                                 <MainCard sx={{ mt: 2 }}>
-                                    <div className="inputLayout">
+                                    <FlexBox classNames="siteRegForm__blank">
                                         <DropInput title="사이트 ID">
                                             <TextField
                                                 id="filled-hidden-label-small"
@@ -378,10 +380,10 @@ const SiteRegForm = () => {
                                             }
                                             label="사용함"
                                         />
-                                    </div>
+                                    </FlexBox>
 
-                                    <div className="inputLayout layout--out">
-                                        {/* 기간 검색 */}
+                                    <FlexBox>
+                                        {/* 유효 기간 */}
                                         <SearchDate
                                             start_date={valid_start_date}
                                             end_date={valid_end_date}
@@ -390,10 +392,11 @@ const SiteRegForm = () => {
                                             noneChecked="noneChecked"
                                             startName="from_date"
                                             endName="to_date"
+                                            title="유효 기간"
                                         />
-                                    </div>
+                                    </FlexBox>
 
-                                    <div className="inputLayout layout--out">
+                                    <FlexBox classNames="siteRegForm__blank">
                                         <DropInput title="비고">
                                             <TextField
                                                 id="filled-hidden-label-small"
@@ -432,9 +435,9 @@ const SiteRegForm = () => {
                                                 검색
                                             </Button>
                                         </div>
-                                    </div>
+                                    </FlexBox>
 
-                                    <div className="inputLayout">
+                                    <FlexBox>
                                         <DropInput title="전화번호">
                                             <TextField
                                                 id="filled-hidden-label-small"
@@ -460,7 +463,7 @@ const SiteRegForm = () => {
                                                 fullWidth
                                             />
                                         </DropInput>
-                                    </div>
+                                    </FlexBox>
                                 </MainCard>
 
                                 <ButtonLayout buttonName="layout--button">

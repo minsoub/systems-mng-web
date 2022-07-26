@@ -137,6 +137,7 @@ export const Message = (props) => {
         </>
     );
 };
+
 export const Message = (props) => {
     const classes = useStyles();
     const message = props.message ? props.message : 'no message';

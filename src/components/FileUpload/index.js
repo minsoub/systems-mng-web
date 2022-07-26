@@ -24,7 +24,7 @@ const props = {
 
 const App = () => (
     <Upload {...props}>
-        <Button icon={<UploadOutlined />}>파일 업로드</Button>
+        <Button icon={<UploadOutlined />}>업로드</Button>
     </Upload>
 );
 

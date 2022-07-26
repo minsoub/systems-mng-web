@@ -348,7 +348,7 @@ const ProjectsDetailPage = () => {
                                             color="primary"
                                             onClick={() => fileSave('CHAT', file)}
                                         >
-                                            파일 업로드
+                                            업로드
                                         </Button>
                                     </TopInputLayout>
                                     <MainCard>
