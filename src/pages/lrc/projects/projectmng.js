@@ -16,11 +16,16 @@ import {
     IconButton
 } from '@mui/material';
 import { makeStyles, withStyles } from '@mui/styles';
-import MainCard from 'components/Common/MainCard';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FoundationApi from 'apis/lrc/project/foundationapi';
 import StatusApi from 'apis/lrc/status/statusapi';
 import LineApis from 'apis/lrc/line/lineapi';
+import FlexBox from '../../../components/Common/FlexBox';
+import DropInput from '../../../components/Common/DropInput';
+import ContentLine from '../../../components/Common/ContentLine';
+import { TableColumnProps } from 'antd';
+import TopInputLayout from '../../../components/Common/TopInputLayout';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
 // import ErrorScreen from 'components/ErrorScreen';
 const useStyles = makeStyles({
     tableRow: {
@@ -763,122 +768,97 @@ const ProjectMng = (props) => {
 
     return (
         <Grid container alignItems="center" justifyContent="space-between">
-            <Grid container spacing={0} sx={{ mt: 0 }}>
-                <Grid item xs={8} sm={3}>
+            <Grid container spacing={0} sx={{ mt: 1 }} className="officeinfo__content--box">
+                <TopInputLayout className="officeinfo__content--align bottom--blank__small">
                     <Typography variant="h3">재단정보</Typography>
-                </Grid>
-                <Grid item xs={8} sm={1}>
-                    <FormControl sx={{ m: 0 }} size="small">
-                        <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={foundationSave}>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={foundationSave}>
                             저장
                         </Button>
-                    </FormControl>
-                </Grid>
+                    </ButtonLayout>
+                </TopInputLayout>
+
+                <div className="common-grid--layout">
+                    <table>
+                        <tr>
+                            <th>프로젝트명</th>
+                            <td>
+                                <TextField id="project_name" name="project_name" inputRef={refProject_name} type="text" fullWidth />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>심볼</th>
+                            <td>
+                                <TextField id="symbol" name="symbol" inputRef={refSymbol} type="text" fullWidth />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>계약 상태</th>
+                            <td>
+                                <Select
+                                    name="contract_code"
+                                    label="계약상태"
+                                    //inputRef={refContract_code}
+                                    value={contract_code}
+                                    //defaultValue={refContract_code.current.value}
+                                    onChange={handleChange}
+                                    fullWidth
+                                >
+                                    <MenuItem value="">전체</MenuItem>
+                                    {statusList.map((item, index) => (
+                                        <MenuItem key={index} value={item.id}>
+                                            {item.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>진행 상태</th>
+                            <td>
+                                <Select name="process_code" label="진행상태" value={process_code} onChange={handleChange} fullWidth>
+                                    <MenuItem value="">전체</MenuItem>
+                                    {processList.map((item, index) => (
+                                        <MenuItem key={index} value={item.id}>
+                                            {item.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>관리자 메모</th>
+                            <td>
+                                <TextField id="outlined-multiline-static" multiline rows={3} inputRef={refMemo} fullWidth />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </Grid>
-            <Grid container spacing={0} sx={{ mt: 1 }}>
-                <Grid item xs={8} sm={1.5} sx={{ mt: 1 }} color="text.secondary">
-                    <Typography variant="h5">프로젝트명</Typography>
-                </Grid>
-                <Grid item xs={8} sm={10.5}>
-                    <FormControl sx={{ m: 0 }} fullWidth>
-                        <TextField id="project_name" name="project_name" inputRef={refProject_name} type="text" />
-                    </FormControl>
-                </Grid>
-            </Grid>
-            <Grid container spacing={0} sx={{ mt: 1 }}>
-                <Grid item xs={8} sm={1.5} sx={{ mt: 1 }} color="text.secondary">
-                    <Typography variant="h5">심볼</Typography>
-                </Grid>
-                <Grid item xs={8} sm={10.5}>
-                    <FormControl sx={{ m: 0 }} fullWidth>
-                        <TextField id="symbol" name="symbol" inputRef={refSymbol} type="text" />
-                    </FormControl>
-                </Grid>
-            </Grid>
-            <Grid container spacing={0} sx={{ mt: 1 }}>
-                <Grid item xs={8} sm={1.5} sx={{ mt: 1 }} color="text.secondary">
-                    <Typography variant="h5">계약 상태</Typography>
-                </Grid>
-                <Grid item xs={8} sm={10.5}>
-                    <FormControl sx={{ m: 0, minWidth: 380 }} size="small">
-                        <Select
-                            name="contract_code"
-                            label="계약상태"
-                            //inputRef={refContract_code}
-                            value={contract_code}
-                            //defaultValue={refContract_code.current.value}
-                            onChange={handleChange}
-                        >
-                            <MenuItem value="">전체</MenuItem>
-                            {statusList.map((item, index) => (
-                                <MenuItem key={index} value={item.id}>
-                                    {item.name}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </Grid>
-            </Grid>
-            <Grid container spacing={0} sx={{ mt: 1 }}>
-                <Grid item xs={8} sm={1.5} sx={{ mt: 1 }} color="text.secondary">
-                    <Typography variant="h5">진행 상태</Typography>
-                </Grid>
-                <Grid item xs={8} sm={10.5}>
-                    <FormControl sx={{ m: 0, minWidth: 380 }} size="small">
-                        <Select name="process_code" label="진행상태" value={process_code} onChange={handleChange}>
-                            <MenuItem value="">전체</MenuItem>
-                            {processList.map((item, index) => (
-                                <MenuItem key={index} value={item.id}>
-                                    {item.name}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </Grid>
-            </Grid>
-            <Grid container spacing={0} sx={{ mt: 1 }}>
-                <Grid item xs={8} sm={1.5} sx={{ mt: 1 }} color="text.secondary">
-                    <Typography variant="h5">관리자 메모</Typography>
-                </Grid>
-                <Grid item xs={8} sm={10.5}>
-                    <FormControl sx={{ m: 0 }} fullWidth>
-                        <TextField id="outlined-multiline-static" multiline rows={3} inputRef={refMemo} />
-                    </FormControl>
-                </Grid>
-            </Grid>
-            <Grid container spacing={0} sx={{ mt: 3 }}>
-                <Grid item xs={8} sm={3}>
-                    <Typography variant="h3">프로젝트 정보</Typography>
-                </Grid>
-                <Grid item xs={8} sm={1}>
-                    <FormControl sx={{ m: 0 }} size="small">
-                        <Button disableElevation size="small" type="button" variant="contained" color="primary" onClick={projectSave}>
-                            저장
-                        </Button>
-                    </FormControl>
-                </Grid>
-            </Grid>
-            <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                    <Table
-                        className={classes.table}
-                        fixedHeader={false}
-                        style={{ width: '100%', tableLayout: 'auto' }}
-                        stickyHeader
-                        aria-label="simple table"
-                    >
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell align="center">사업계열</StyledTableCell>
-                                <StyledTableCell align="center">네트워크 계열</StyledTableCell>
-                                <StyledTableCell align="center">백서 링크</StyledTableCell>
-                                <StyledTableCell align="center">최초 발행일</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableRow>
-                            <TableCell component="th" scope="row">
-                                <FormControl sx={{ m: 0, minWidth: 140 }} size="small">
-                                    <Select name="business_code" value={business_code} onChange={handleChange}>
+
+            <Grid container className="officeinfo__content--box">
+                <TopInputLayout className="officeinfo__content--align bottom--blank__small">
+                    <Typography variant="h4">프로젝트 정보</Typography>
+
+                    <Button disableElevation size="medium" type="button" variant="contained" color="primary" onClick={projectSave}>
+                        저장
+                    </Button>
+                </TopInputLayout>
+
+                <ContentLine className="common__grid--rowTable">
+                    <table className="tg">
+                        <thead>
+                            <tr>
+                                <th className="tg-0lax">사업계열</th>
+                                <th className="tg-0lax">네트워크 계열</th>
+                                <th className="tg-0lax">백서 링크</th>
+                                <th className="tg-0lax">최초 발행일</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td className="tg-0lax">
+                                    <Select name="business_code" value={business_code} fullWidth onChange={handleChange}>
                                         <MenuItem value="">선택</MenuItem>
                                         {businessList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
@@ -886,11 +866,9 @@ const ProjectMng = (props) => {
                                             </MenuItem>
                                         ))}
                                     </Select>
-                                </FormControl>
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                <FormControl sx={{ m: 0, minWidth: 124 }} size="small">
-                                    <Select name="network_code" value={network_code} onChange={handleChange}>
+                                </td>
+                                <td className="tg-0lax">
+                                    <Select name="network_code" value={network_code} fullWidth onChange={handleChange}>
                                         <MenuItem value="">선택</MenuItem>
                                         {networkList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
@@ -898,359 +876,290 @@ const ProjectMng = (props) => {
                                             </MenuItem>
                                         ))}
                                     </Select>
-                                </FormControl>
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                <FormControl sx={{ m: 0 }} fullWidth>
-                                    <TextField id="outlined-multiline-static" size="small" inputRef={refWhitepaper_link} />
-                                </FormControl>
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
+                                </td>
+                                <td className="tg-0lax">
+                                    <TextField id="outlined-multiline-static" size="medium" fullWidth inputRef={refWhitepaper_link} />
+                                </td>
+                                <td className="tg-0lax">
                                     <TextField
                                         id="create_date"
                                         name="create_date"
-                                        size="small"
+                                        size="medium"
                                         value={create_date}
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         type="date"
-                                        sx={{ width: 140 }}
+                                        fullWidth
                                     />
-                                </FormControl>
-                            </TableCell>
-                        </TableRow>
-                    </Table>
-                    <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell align="center">컨텍스트 주소</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableRow>
-                            <TableCell component="th" scope="row">
-                                <FormControl sx={{ m: 0 }} fullWidth>
-                                    <TextField id="outlined-multiline-static" size="small" inputRef={refContract_address} />
-                                </FormControl>
-                            </TableCell>
-                        </TableRow>
-                    </Table>
-                </MainCard>
-            </Grid>
-            <Grid container spacing={0} sx={{ mt: 3 }}>
-                <Typography variant="h4">담당자 정보</Typography>
-            </Grid>
-            <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                    <Table
-                        className={classes.table}
-                        fixedHeader={false}
-                        style={{ width: '100%', tableLayout: 'auto' }}
-                        stickyHeader
-                        aria-label="simple table"
-                    >
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell style={{ width: '25%' }} align="center">
-                                    이름
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '25%' }} align="center">
-                                    연락처
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '25%' }} align="center">
-                                    SNS ID
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '25%' }} align="center">
-                                    이메일주소
-                                </StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        {userList.map((item, index) => (
-                            <TableRow>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.user_name}
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.phone}
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.sns_id}
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.email}
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </Table>
-                </MainCard>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className="tg-0lax" colSpan="4">
+                                    컨트랙트 주소
+                                </th>
+                            </tr>
+                            <tr>
+                                <td className="tg-0lax-left" colSpan="4">
+                                    <TextField id="outlined-multiline-static" size="medium" inputRef={refContract_address} fullWidth />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ContentLine>
             </Grid>
 
-            <Grid container spacing={0} sx={{ mt: 3 }}>
-                <Grid item xs={8} sm={3}>
-                    <Typography variant="h3">상장 정보</Typography>
+            <Grid container className="officeinfo__content--box">
+                <Grid className="bottom--blank__small">
+                    <Typography variant="h4">담당자 정보</Typography>
                 </Grid>
-                <Grid item xs={8} sm={1}>
-                    <FormControl sx={{ m: 0 }} size="small">
-                        <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={icoSave}>
+                <ContentLine className="common__grid--rowTable">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>이름</th>
+                                <th>연락처</th>
+                                <th>SNS ID</th>
+                                <th>이메일 주소</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {userList.length > 0 ? (
+                                userList.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>{item.user_name}</td>
+                                        <td>{item.phone}</td>
+                                        <td>{item.sns_id}</td>
+                                        <td>{item.email}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </ContentLine>
+            </Grid>
+
+            <Grid container className="officeinfo__content--box">
+                <TopInputLayout className="officeinfo__content--align bottom--blank__small">
+                    <Typography variant="h4">상장 정보</Typography>
+
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={icoSave}>
                             저장
                         </Button>
-                    </FormControl>
-                </Grid>
-            </Grid>
-            <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                    <Table
-                        className={classes.table}
-                        fixedHeader={false}
-                        style={{ width: '100%', tableLayout: 'auto' }}
-                        stickyHeader
-                        aria-label="simple table"
-                    >
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell align="center">마켓 정보</StyledTableCell>
-                                <StyledTableCell align="center">상장가</StyledTableCell>
-                                <StyledTableCell align="center">상장일</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableRow>
-                            <TableCell align="center" component="th" scope="row">
-                                KRW
-                            </TableCell>
-                            <TableCell align="center" component="th" scope="row">
-                                <FormControl sx={{ m: 0 }} fullWidth>
+                    </ButtonLayout>
+                </TopInputLayout>
+
+                <ContentLine container className="common__grid--rowTable">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>마켓 정보</th>
+                                <th>상장가</th>
+                                <th>상장일</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>KRW</th>
+                                <td>
                                     <TextField
                                         id="outlined-multiline-static"
-                                        size="small"
+                                        size="medium"
                                         inputRef={refPriceKRW}
                                         onKeyPress={numberCheck}
+                                        fullWidth
                                     />
-                                </FormControl>
-                            </TableCell>
-                            <TableCell align="center" component="th" scope="row">
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
+                                </td>
+                                <td>
                                     <TextField
                                         id="krw_ico_date"
                                         name="krw_ico_date"
-                                        size="small"
+                                        size="medium"
                                         value={krw_ico_date}
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         type="date"
-                                        sx={{ width: 140 }}
+                                        fullWidth
                                     />
-                                </FormControl>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell align="center" component="th" scope="row">
-                                BTC
-                            </TableCell>
-                            <TableCell align="center" component="th" scope="row">
-                                <FormControl sx={{ m: 0 }} fullWidth>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>BTC</th>
+                                <td>
                                     <TextField
                                         id="outlined-multiline-static"
-                                        size="small"
+                                        size="medium"
                                         inputRef={refPriceBTC}
                                         onKeyPress={numberCheck}
+                                        fullWidth
                                     />
-                                </FormControl>
-                            </TableCell>
-                            <TableCell align="center" component="th" scope="row">
-                                <FormControl sx={{ m: 0, minHeight: 25 }} size="small">
+                                </td>
+                                <td>
                                     <TextField
                                         id="btc_ico_date"
                                         name="btc_ico_date"
-                                        size="small"
+                                        size="medium"
                                         value={btc_ico_date}
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         type="date"
-                                        sx={{ width: 140 }}
+                                        fullWidth
                                     />
-                                </FormControl>
-                            </TableCell>
-                        </TableRow>
-                    </Table>
-                </MainCard>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ContentLine>
             </Grid>
 
-            <Grid container spacing={0} sx={{ mt: 3 }}>
-                <Grid item xs={8} sm={3}>
+            <Grid container className="officeinfo__content--box">
+                <TopInputLayout className="officeinfo__content--align bottom--blank__small">
                     <Typography variant="h3">마케팅 수량</Typography>
-                </Grid>
-                <Grid item xs={8} sm={6.9}></Grid>
-                <Grid item xs={8} sm={1}>
-                    <FormControl sx={{ m: 0 }} size="small">
-                        <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={addMarketingList}>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addMarketingList}>
                             추가
                         </Button>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={8} sm={0.1}></Grid>
-                <Grid item xs={8} sm={1}>
-                    <FormControl sx={{ m: 0 }} size="small">
-                        <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={saveMarketingList}>
+                        <Button
+                            disableElevation
+                            size="medium"
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            onClick={saveMarketingList}
+                        >
                             저장
                         </Button>
-                    </FormControl>
-                </Grid>
-            </Grid>
-            <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                    <Table
-                        className={classes.table}
-                        fixedHeader={false}
-                        style={{ width: '100%', tableLayout: 'auto' }}
-                        stickyHeader
-                        aria-label="simple table"
-                    >
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell align="center">심볼</StyledTableCell>
-                                <StyledTableCell align="center">최소 지원 수량</StyledTableCell>
-                                <StyledTableCell align="center">실제 상장 지원 수량</StyledTableCell>
-                                <StyledTableCell align="center"></StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        {marketingList.map((item, index) => (
-                            <TableRow>
-                                <TableCell align="center" component="th" scope="row">
-                                    <FormControl sx={{ m: 0 }} fullWidth>
+                    </ButtonLayout>
+                </TopInputLayout>
+
+                <ContentLine container className="common__grid--rowTable">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>심볼</th>
+                                <th>최소 지원 수량</th>
+                                <th>실제 상장 지원 수량</th>
+                                <th>-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {marketingList.map((item, index) => (
+                                <tr>
+                                    <td>
                                         <TextField
                                             id="outlined-multiline-static"
-                                            size="small"
+                                            size="medium"
+                                            fullWidth
                                             onChange={(e) => handleSynbolChange(e, index)}
                                             value={item.symbol}
                                         />
-                                    </FormControl>
-                                </TableCell>
-                                <TableCell align="center" component="th" scope="row">
-                                    <FormControl sx={{ m: 0 }} fullWidth>
+                                    </td>
+                                    <td>
                                         <TextField
                                             id="outlined-multiline-static"
-                                            size="small"
+                                            size="medium"
                                             value={item.minimum_quantity}
                                             onKeyPress={numberCheck}
+                                            fullWidth
                                             onChange={(e) => handleMinimumQuantityChange(e, index)}
                                         />
-                                    </FormControl>
-                                </TableCell>
-                                <TableCell align="center" component="th" scope="row">
-                                    <FormControl sx={{ m: 0 }} fullWidth>
+                                    </td>
+                                    <td>
                                         <TextField
                                             id="outlined-multiline-static"
-                                            size="small"
+                                            size="medium"
                                             value={item.actual_quantity}
                                             onKeyPress={numberCheck}
+                                            fullWidth
                                             onChange={(e) => handleActualQuantityChange(e, index)}
                                         />
-                                    </FormControl>
-                                </TableCell>
-                                <TableCell align="center" component="th" scope="row">
-                                    {item.id === '' && (
-                                        <IconButton aria-label="delete" onClick={(e) => deleteMarketingList(e, index)}>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    )}
-                                    {item.id !== '' && <div>-</div>}
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </Table>
-                </MainCard>
+                                    </td>
+                                    <td>
+                                        {item.id === '' && (
+                                            <IconButton aria-label="delete" onClick={(e) => deleteMarketingList(e, index)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        )}
+                                        {item.id !== '' && <div>-</div>}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </ContentLine>
             </Grid>
 
-            <Grid container spacing={0} sx={{ mt: 3 }}>
-                <Grid item xs={8} sm={3}>
+            <Grid container className="officeinfo__content--box">
+                <TopInputLayout className="officeinfo__content--align bottom--blank__small">
                     <Typography variant="h3">검토 평가</Typography>
-                </Grid>
-                <Grid item xs={8} sm={6.9}></Grid>
-                <Grid item xs={8} sm={1}>
-                    <FormControl sx={{ m: 0 }} size="small">
-                        <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={addReviewgList}>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addReviewgList}>
                             추가
                         </Button>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={8} sm={0.1}></Grid>
-                <Grid item xs={8} sm={1}>
-                    <FormControl sx={{ m: 0 }} size="small">
-                        <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={reviewSaveList}>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={reviewSaveList}>
                             저장
                         </Button>
-                    </FormControl>
-                </Grid>
+                    </ButtonLayout>
+                </TopInputLayout>
             </Grid>
-            <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                    <Table
-                        fixedHeader={false}
-                        style={{ width: '100%', tableLayout: 'auto', border: 1 }}
-                        stickyHeader
-                        aria-label="simple table"
-                        className={classes.table}
-                    >
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center" className={classes.tableCell}>
-                                    평가 기관
-                                </TableCell>
-                                <TableCell align="center" className={classes.tableCell}>
-                                    평가 결과
-                                </TableCell>
-                                <TableCell align="center" className={classes.tableCell} colSpan="2">
-                                    평가 자료
-                                </TableCell>
-                                <TableCell align="center" className={classes.tableCell}>
-                                    &nbsp;
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
+            <ContentLine container className="common__grid--rowTable">
+                <table className="tg">
+                    <thead>
+                        <tr>
+                            <th className="tg-0lax">평가 기관</th>
+                            <th className="tg-0lax">평가 결과</th>
+                            <th className="tg-1wig" colSpan="2">
+                                평가 자료
+                            </th>
+                            <th className="tg-0lax">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {reviewList.map((item, index) => (
-                            <TableRow>
-                                <TableCell align="center" component="th" scope="row">
-                                    <FormControl sx={{ m: 0 }} fullWidth>
-                                        <TextField
-                                            id="outlined-multiline-static"
-                                            size="small"
-                                            value={item.organization}
-                                            onChange={(e) => handleOrganizationChange(e, index)}
-                                        />
-                                    </FormControl>
-                                </TableCell>
-                                <TableCell align="center" component="th" scope="row">
-                                    <FormControl sx={{ m: 0 }} fullWidth>
-                                        <TextField
-                                            id="outlined-multiline-static"
-                                            size="small"
-                                            value={item.result}
-                                            onChange={(e) => handleResultChange(e, index)}
-                                        />
-                                    </FormControl>
-                                </TableCell>
-                                <TableCell align="center" component="th" scope="row">
-                                    <FormControl sx={{ m: 0 }}>
-                                        <TextField
-                                            id="outlined-multiline-static"
-                                            size="small"
-                                            value={item.reference}
-                                            onChange={(e) => handleReferenceChange(e, index)}
-                                        />
-                                    </FormControl>
-                                </TableCell>
-                                <TableCell align="center" component="th" scope="row">
-                                    <FormControl sx={{ m: 0 }}>
-                                        <TextField
-                                            type="file"
-                                            size="small"
-                                            onChange={(e) => fileHandleChange(e, index)}
-                                            inputProps={{
-                                                accept:
-                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-                                            }}
-                                        />
-                                    </FormControl>
+                            <tr>
+                                <td className="tg-0lax">
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        size="medium"
+                                        fullWidth
+                                        value={item.organization}
+                                        onChange={(e) => handleOrganizationChange(e, index)}
+                                    />
+                                </td>
+                                <td className="tg-0lax">
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        size="medium"
+                                        value={item.result}
+                                        fullWidth
+                                        onChange={(e) => handleResultChange(e, index)}
+                                    />
+                                </td>
+                                <td className="tg-0lax">
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        size="medium"
+                                        value={item.reference}
+                                        onChange={(e) => handleReferenceChange(e, index)}
+                                    />
+                                </td>
+                                <td className="tg-0lax">
+                                    <TextField
+                                        type="file"
+                                        size="medium"
+                                        fullWidth
+                                        onChange={(e) => fileHandleChange(e, index)}
+                                        inputProps={{
+                                            accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                        }}
+                                    />
                                     {item.file_name && (
                                         <div>
                                             <a href="#" onClick={() => fileDownload(item.file_key, item.file_name)}>
@@ -1258,172 +1167,105 @@ const ProjectMng = (props) => {
                                             </a>
                                         </div>
                                     )}
-                                </TableCell>
-                                <TableCell align="center" component="th" scope="row">
+                                </td>
+                                <td className="tg-0lax">
                                     {item.id === '' && (
                                         <IconButton aria-label="delete" onClick={(e) => deleteReviewList(e, index)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     )}
                                     {item.id !== '' && <div>-</div>}
-                                </TableCell>
-                            </TableRow>
+                                </td>
+                            </tr>
                         ))}
-                    </Table>
-                </MainCard>
-            </Grid>
+                    </tbody>
+                </table>
+            </ContentLine>
 
-            <Grid container spacing={0} sx={{ mt: 3 }}>
-                <Grid item xs={8} sm={3}>
+            <Grid container className="officeinfo__content--box">
+                <TopInputLayout className="officeinfo__content--align bottom--blank__small">
                     <Typography variant="h3">프로젝트 연결</Typography>
-                </Grid>
-                <Grid item xs={8} sm={6.9}></Grid>
-                {/* <Grid item xs={8} sm={1}>
-                    <FormControl sx={{ m: 0 }} size="small">
-                        <Button disableElevation size="small" type="submit" variant="contained" color="primary">
+
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary">
                             추가
                         </Button>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={8} sm={0.1}></Grid>
-                <Grid item xs={8} sm={1}>
-                    <FormControl sx={{ m: 0 }} size="small">
-                        <Button disableElevation size="small" type="submit" variant="contained" color="primary">
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary">
                             저장
                         </Button>
-                    </FormControl>
-                </Grid> */}
-            </Grid>
-            <Grid container spacing={0} sx={{ mt: 0 }}>
-                <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                    <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell align="center">프로젝트 선택</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableRow>
-                            <TableCell align="center" component="th" scope="row">
-                                <Grid container spacing={0} sx={{ mt: 0 }}>
-                                    <Grid item xs={8} sm={8}>
-                                        <FormControl sx={{ m: 0 }} fullWidth>
-                                            <TextField id="outlined-multiline-static" name="keyword" inputRef={refKeyword} size="small" />
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                    <Grid item xs={8} sm={1}>
-                                        <FormControl sx={{ m: 0 }} size="small">
-                                            <Button
-                                                disableElevation
-                                                size="small"
-                                                type="submit"
-                                                variant="contained"
-                                                color="secondary"
-                                                onClick={symbolSearch}
-                                            >
-                                                검색
-                                            </Button>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8} sm={0.2}></Grid>
-                                </Grid>
-                            </TableCell>
-                        </TableRow>
-                    </Table>
-                </MainCard>
-            </Grid>
-            <Grid container spacing={0} sx={{ mt: 1 }}>
-                <Grid container spacing={0} sx={{ mt: 0 }}>
-                    <MainCard sx={{ mt: 1 }} content={false} style={{ width: '100%' }}>
-                        <Table
-                            fixedHeader={false}
-                            style={{ width: '100%', tableLayout: 'auto', border: 1 }}
-                            stickyHeader
-                            aria-label="simple table"
-                            className={classes.table}
-                        >
-                            {projectSearchList.map((item, index) => (
-                                <TableRow>
-                                    <StyledTableCell style={{ width: '75%', height: 30 }} align="center" component="th" scope="row">
-                                        {item.project_name} ( {item.symbol} )
-                                    </StyledTableCell>
-                                    <StyledTableCell align="center" component="th" scope="row">
-                                        <FormControl sx={{ m: 1 }} size="small">
-                                            <Button
-                                                disableElevation
-                                                size="small"
-                                                type="submit"
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={() => projectConnect(item.project_id, item.symbol)}
-                                            >
-                                                연결
-                                            </Button>
-                                        </FormControl>
-                                    </StyledTableCell>
-                                </TableRow>
-                            ))}
-                            {projectLinkList.map((item, index) => (
-                                <TableRow>
-                                    <StyledTableCell style={{ width: '75%', height: 30 }} align="center" component="th" scope="row">
-                                        {item.link_project_name} ( {item.link_project_symbol} )
-                                    </StyledTableCell>
-                                    <StyledTableCell align="center" component="th" scope="row">
-                                        <FormControl sx={{ m: 1 }} size="small">
-                                            <Button
-                                                disableElevation
-                                                size="small"
-                                                type="submit"
-                                                variant="contained"
-                                                color="secondary"
-                                                onClick={() => projectDisconnect(item.id)}
-                                            >
-                                                연결해제
-                                            </Button>
-                                        </FormControl>
-                                    </StyledTableCell>
-                                </TableRow>
-                            ))}
-                        </Table>
+                    </ButtonLayout>
+                </TopInputLayout>
+                <ContentLine container className="common__grid--rowTable">
+                    <table>
+                        <tr>
+                            <th colSpan={2}>프로젝트 선택</th>
+                        </tr>
+                        <tr>
+                            <td colSpan={2}>
+                                <FlexBox>
+                                    <TextField id="outlined-multiline-static" fullWidth name="keyword" inputRef={refKeyword} size="small" />
+
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={symbolSearch}
+                                    >
+                                        검색
+                                    </Button>
+                                </FlexBox>
+                            </td>
+                        </tr>
+                        {projectSearchList.map((item, index) => (
+                            <tr key={index}>
+                                <td>
+                                    {item.project_name} ( {item.symbol} )
+                                </td>
+                                <td>
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => projectConnect(item.project_id, item.symbol)}
+                                    >
+                                        연결
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+
+                        {projectLinkList.map((item, index) => (
+                            <tr key={index}>
+                                <td>
+                                    {item.link_project_name} ( {item.link_project_symbol} )
+                                </td>
+                                <td>
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={() => projectDisconnect(item.id)}
+                                    >
+                                        연결해제
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+
+                        {/* 검색 실패했을 경우*/}
                         {searchMessage !== '' && (
-                            <Table
-                                fixedHeader={false}
-                                style={{ width: '100%', tableLayout: 'auto', border: 1 }}
-                                stickyHeader
-                                aria-label="simple table"
-                                className={classes.table}
-                            >
-                                <TableRow>
-                                    <StyledTableCell style={{ width: '100%', height: 30 }} align="center" component="th" scope="row">
-                                        {searchMessage}
-                                    </StyledTableCell>
-                                </TableRow>
-                            </Table>
+                            <tr>
+                                <td colSpan={2}>{searchMessage}</td>
+                            </tr>
                         )}
-                    </MainCard>
-                    {/* <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} /> */}
-                    {/* <Grid item xs={8} sm={8}>
-                        <FormControl sx={{ m: 0 }} fullWidth>
-                            <TextField id="outlined-multiline-static" size="small" defaultValue="Default Value" />
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={8} sm={1.6}></Grid>
-                    <Grid item xs={8} sm={1}>
-                        <FormControl sx={{ m: 1 }} size="small">
-                            <Button disableElevation size="small" type="submit" variant="contained" color="primary">
-                                연결
-                            </Button>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={8} sm={0.2}></Grid>
-                    <Grid item xs={8} sm={1}>
-                        <FormControl sx={{ m: 1 }} size="small">
-                            <Button disableElevation size="small" type="submit" variant="contained" color="primary">
-                                연결해제
-                            </Button>
-                        </FormControl>
-                    </Grid> */}
-                </Grid>
+                    </table>
+                </ContentLine>
             </Grid>
         </Grid>
     );

@@ -535,7 +535,7 @@ const ProjectsPage = () => {
                     </Grid>
                 </MainCard>
 
-                <ButtonLayout buttonName="layout--button__bottom layout--button">
+                <ButtonLayout buttonName="bottom--blank__small">
                     <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
                         검색
                     </Button>

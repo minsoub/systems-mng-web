@@ -473,7 +473,7 @@ const SiteMenuMappingForm = () => {
                 <HeaderTitle titleNm="프로그램 연결" menuStep01="사이트 관리" menuStep02="메뉴 관리" menuStep03="프로그램 연결" />
 
                 {/* 상단 */}
-                <MainCard sx={{ mt: 1 }}>
+                <MainCard>
                     <TopInputLayout>
                         <InputLayout>
                             <DropInput title="사이트 구분">
@@ -497,14 +497,7 @@ const SiteMenuMappingForm = () => {
                             />
                         </InputLayout>
                         <ButtonLayout>
-                            <Button
-                                disableElevation
-                                size="medium"
-                                type="submit"
-                                variant="contained"
-                                color="secondary"
-                                onClick={searchClick}
-                            >
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
                                 검색
                             </Button>
                         </ButtonLayout>

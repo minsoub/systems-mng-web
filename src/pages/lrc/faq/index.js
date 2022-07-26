@@ -1,6 +1,5 @@
 import React from 'react';
 import { Grid, Tab, Tabs } from '@mui/material';
-import MainCard from 'components/Common/MainCard';
 import TabPanel from 'components/TabPanel';
 import FaqContent from './faqlist';
 import HeaderTitle from '../../../components/HeaderTitle';

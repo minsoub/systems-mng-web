@@ -108,7 +108,7 @@ legend,
 // 상세 글쓰기 공통 레이아웃
 .common-grid--layout {
     width: 100%;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
 
     table {
         width: 100%;
@@ -119,7 +119,7 @@ legend,
 
         th {
             padding: 2rem;
-            background-color: $tableTitle;
+            background-color: #fafafb;
             width: 10%;
         }
 
@@ -194,11 +194,6 @@ html [type='button'],
 
 .css-15oiqrv-MuiPaper-root-MuiCard-root {
     margin-top: 0;
-}
-
-// input 창 height 조절
-.css-6wp6pb-MuiOutlinedInput-notchedOutline {
-    top: 0;
 }
 
 .css-1wb0zan-MuiFormControl-root {

@@ -17,7 +17,7 @@ const MainCard = forwardRef(({ border = true, children, content = true, elevatio
             ref={ref}
             sx={{
                 border: border && '1px solid #e6ebf1',
-                marginBottom: !title && '2rem'
+                marginBottom: !title && '1.5rem'
             }}
             className={cx('content')}
         >

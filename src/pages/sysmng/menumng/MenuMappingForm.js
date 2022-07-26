@@ -19,6 +19,7 @@ import InputLayout from 'components/Common/InputLayout';
 import cx from 'classnames';
 import './styles.scss';
 import ContentLine from '../../../components/Common/ContentLine';
+import DropInput from '../../../components/Common/DropInput';
 
 function MinusSquare(props) {
     return (
@@ -475,10 +476,7 @@ const MenuMappingForm = () => {
                 <MainCard sx={{ mt: 1 }}>
                     <TopInputLayout>
                         <InputLayout>
-                            <Stack spacing={10} className={cx('borderTitle')}>
-                                사이트 구분
-                            </Stack>
-                            <FormControl sx={{ minWidth: 250 }} size="medium">
+                            <DropInput title="사이트 구분">
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
                                     <MenuItem value="">
                                         <em>Choose a Site Type</em>
@@ -489,7 +487,7 @@ const MenuMappingForm = () => {
                                         </MenuItem>
                                     ))}
                                 </Select>
-                            </FormControl>
+                            </DropInput>
                             <FormControlLabel
                                 control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={handleChange} />}
                                 label="사용함"

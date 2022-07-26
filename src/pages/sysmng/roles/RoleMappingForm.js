@@ -400,11 +400,7 @@ const RoleMappingForm = () => {
                 <MainCard>
                     <TopInputLayout>
                         <InputLayout>
-                            <Stack spacing={10} className={cx('borderTitle')}>
-                                사이트 구분
-                            </Stack>
-
-                            <FormControl size="medium" sx={{ minWidth: 250 }}>
+                            <DropInput title="사이트 구분">
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged} placeholder="사이트명">
                                     {siteList.map((item, index) => (
                                         <MenuItem key={index} value={item.id}>
@@ -412,8 +408,7 @@ const RoleMappingForm = () => {
                                         </MenuItem>
                                     ))}
                                 </Select>
-                            </FormControl>
-
+                            </DropInput>
                             <FormControlLabel
                                 control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
                                 label="사용함"

@@ -12,6 +12,7 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
 import ContentLine from '../../../components/Common/ContentLine';
+import DropInput from '../../../components/Common/DropInput';
 
 const RoleManagementPage = () => {
     let isSubmitting = false;
@@ -251,39 +252,44 @@ const RoleManagementPage = () => {
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="Role 리스트" menuStep01="통합시스템 관리" menuStep02="Role 관리" menuStep03="Role 리스트" />
 
-                <TopInputLayout className="bottom--blank__small bottom--blank__top">
-                    <InputLayout>
-                        <Stack spacing={10} className={cx('borderTitle')}>
-                            사이트 구분
-                        </Stack>
+                <MainCard>
+                    <TopInputLayout>
+                        <InputLayout>
+                            <DropInput title="사이트 구분">
+                                <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged} placeholder="사이트명">
+                                    {siteList.map((item, index) => (
+                                        <MenuItem key={index} value={item.id}>
+                                            {item.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </DropInput>
 
-                        <FormControl size="medium" sx={{ minWidth: 250 }}>
-                            <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged} placeholder="사이트명">
-                                {siteList.map((item, index) => (
-                                    <MenuItem key={index} value={item.id}>
-                                        {item.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                            <FormControlLabel
+                                control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
+                                label="사용함"
+                                className="checkedBox"
+                            />
+                        </InputLayout>
 
-                        <FormControlLabel
-                            control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
-                            label="사용함"
-                            className="checkedBox"
-                        />
-                    </InputLayout>
+                        <ButtonLayout>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                onClick={searchClick}
+                                color="secondary"
+                            >
+                                검색
+                            </Button>
 
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick} color="secondary">
-                            검색
-                        </Button>
-
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={newClick} color="primary">
-                            등록
-                        </Button>
-                    </ButtonLayout>
-                </TopInputLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={newClick} color="primary">
+                                등록
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
+                </MainCard>
 
                 <ContentLine>
                     <DefaultDataGrid

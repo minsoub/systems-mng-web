@@ -2,7 +2,7 @@ import { FormControl, FormControlLabel, RadioGroup, Radio, Stack, TextField } fr
 import cx from 'classnames';
 import './styles.scss';
 
-const SearchDate = ({ start_date, handleBlur, handleChange, end_date, noneChecked, period, startName, endName }) => {
+const SearchDate = ({ start_date, handleBlur, handleChange, end_date, noneChecked, period, startName, endName, title = '기간 검색' }) => {
     SearchDate.defaultProps = {
         noneChecked: null,
         period: null
@@ -11,7 +11,7 @@ const SearchDate = ({ start_date, handleBlur, handleChange, end_date, noneChecke
     return (
         <div className={cx(`result__list--date ${noneChecked}`)}>
             <Stack spacing={10} className={cx('borderTitle')}>
-                기간 검색
+                {title}
             </Stack>
             <div className="result__list--input">
                 <FormControl size="medium">
