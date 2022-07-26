@@ -1,32 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import {
-    Button,
-    Grid,
-    TextField,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    Table,
-    TableCell,
-    TableHead,
-    TableRow,
-    IconButton
-} from '@mui/material';
+import { Button, Grid, IconButton, MenuItem, Select, TableCell, TextField, Typography } from '@mui/material';
 import { makeStyles, withStyles } from '@mui/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FoundationApi from 'apis/lrc/project/foundationapi';
 import StatusApi from 'apis/lrc/status/statusapi';
 import LineApis from 'apis/lrc/line/lineapi';
 import FlexBox from '../../../components/Common/FlexBox';
-import DropInput from '../../../components/Common/DropInput';
 import ContentLine from '../../../components/Common/ContentLine';
-import { TableColumnProps } from 'antd';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
-// import ErrorScreen from 'components/ErrorScreen';
 const useStyles = makeStyles({
     tableRow: {
         height: 25
@@ -1110,7 +1093,7 @@ const ProjectMng = (props) => {
                 </TopInputLayout>
             </Grid>
             <ContentLine container className="common__grid--rowTable">
-                <table className="tg">
+                <table className="projectmng__evaluation">
                     <thead>
                         <tr>
                             <th className="tg-0lax">평가 기관</th>
@@ -1118,7 +1101,7 @@ const ProjectMng = (props) => {
                             <th className="tg-1wig" colSpan="2">
                                 평가 자료
                             </th>
-                            <th className="tg-0lax">&nbsp;</th>
+                            <th className="tg-0lax__del">&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1146,6 +1129,7 @@ const ProjectMng = (props) => {
                                     <TextField
                                         id="outlined-multiline-static"
                                         size="medium"
+                                        fullWidth
                                         value={item.reference}
                                         onChange={(e) => handleReferenceChange(e, index)}
                                     />
@@ -1185,15 +1169,6 @@ const ProjectMng = (props) => {
             <Grid container className="officeinfo__content--box">
                 <TopInputLayout className="officeinfo__content--align bottom--blank__small">
                     <Typography variant="h3">프로젝트 연결</Typography>
-
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary">
-                            추가
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary">
-                            저장
-                        </Button>
-                    </ButtonLayout>
                 </TopInputLayout>
                 <ContentLine container className="common__grid--rowTable">
                     <table>
@@ -1202,7 +1177,7 @@ const ProjectMng = (props) => {
                         </tr>
                         <tr>
                             <td colSpan={2}>
-                                <FlexBox>
+                                <FlexBox classNames="projectmng__select">
                                     <TextField id="outlined-multiline-static" fullWidth name="keyword" inputRef={refKeyword} size="small" />
 
                                     <Button
