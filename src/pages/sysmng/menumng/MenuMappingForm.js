@@ -51,8 +51,12 @@ function CloseSquare(props) {
 const MenuMappingForm = () => {
     const navigate = useNavigate();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-    const [responseData, requestError, responseLoading, { menumngSearch, menumngDetail, programMapping, programMappingSearch }] =
-        MenuMngApi();
+    const [
+        responseData,
+        requestError,
+        responseLoading,
+        { menumngSearch, menumngDetail, programMapping, programMappingSearch }
+    ] = MenuMngApi();
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
 
     const [expanded, setExpanded] = useState([]);
@@ -357,6 +361,8 @@ const MenuMappingForm = () => {
 
     // 선택된 프로그램에 대해서 연결 시킨다.
     const plusRegister = () => {
+        console.log('plusRegister call..');
+        console.log(selectedSearchRows);
         let programs_ids = [];
         if (selectedSearchRows.length > 0) {
             selectedSearchRows.map((id, Index) => {
@@ -388,6 +394,7 @@ const MenuMappingForm = () => {
                     });
                 }
             });
+            console.log(programs_ids);
             if (programs_ids.length) {
                 programMapping(selected, site_id, programs_ids);
             }

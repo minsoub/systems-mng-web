@@ -108,7 +108,8 @@ export function CheckBoxDataGrid({
     const [selectionModel, setSelectionModel] = useState([]);
     useEffect(() => {
         console.log('change selectionModel:', selectionModel);
-        setSelectionModel(selectionModel);
+        //setSelectionModel(selectionModel);
+        selectionChange(selectionModel);
     }, [selectionModel]);
     let mHeight = 600;
 
