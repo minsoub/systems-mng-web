@@ -114,14 +114,16 @@ $gray: #92959e;
 
 .chat-message {
     padding: 30px;
-
+    .css-i44wyl {
+        width: 100%;
+    }
     input {
         width: 100%;
-        border: none;
         padding: 10px 20px;
         border-radius: 5px;
         resize: none;
         background: #ffffff;
+        border: 1px solid #e6ebf1;
     }
 }
 

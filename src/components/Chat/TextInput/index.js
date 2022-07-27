@@ -28,16 +28,8 @@ export const Index = ({ sendChat }) => {
         <>
             <Grid className="chat-message">
                 <InputLayout>
-                    <TextField
-                        id="standard-text"
-                        label="텍스트 입력"
-                        size="small"
-                        className="wrapText"
-                        value={value}
-                        onChange={handleChange}
-                        //margin="normal"
-                        onKeyDown={keyPress}
-                    />
+                    <input id="standard-text" label="텍스트 입력" value={value} onChange={handleChange} onKeyDown={keyPress} />
+
                     <ButtonLayout>
                         <Button variant="contained" color="primary" size="medium" className="button" onClick={sendData}>
                             전송
