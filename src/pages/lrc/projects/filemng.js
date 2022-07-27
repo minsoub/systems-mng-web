@@ -12,8 +12,12 @@ import TopInputLayout from '../../../components/Common/TopInputLayout';
 
 const FileMng = (props) => {
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { fileSearch, urlSearch, urlDocumentSave, fileDocumentSave, fileDocumentDownload }] =
-        FilesApi();
+    const [
+        responseData,
+        requestError,
+        loading,
+        { fileSearch, urlSearch, urlDocumentSave, fileDocumentSave, fileDocumentDownload }
+    ] = FilesApi();
     const { projectId, children, tabindex, index, ...other } = props;
 
     ////////////////////////////////////////////////////
@@ -34,6 +38,8 @@ const FileMng = (props) => {
     const [fileList8, setFileList8] = useState([]);
     const [fileList9, setFileList9] = useState([]);
     const [fileList10, setFileList10] = useState([]);
+    const [fileList11, setFileList11] = useState([]);
+
     // 제출 서류 관련 데이터 리스트 정보 (URL)
     const [docList1, setDocList1] = useState([]);
     const [docList2, setDocList2] = useState([]);
@@ -45,6 +51,7 @@ const FileMng = (props) => {
     const [docList8, setDocList8] = useState([]);
     const [docList9, setDocList9] = useState([]);
     const [docList10, setDocList10] = useState([]);
+    const [docList11, setDocList11] = useState([]);
     const [downloadFileName, setDownloadFileName] = useState('');
 
     const styles = {
@@ -71,6 +78,7 @@ const FileMng = (props) => {
         url8: '',
         url9: '',
         url10: '',
+        url11: '',
         file1: '',
         file2: '',
         file3: '',
@@ -80,7 +88,8 @@ const FileMng = (props) => {
         file7: '',
         file8: '',
         file9: '',
-        file10: ''
+        file10: '',
+        file11: ''
     });
     const {
         url1,
@@ -93,6 +102,7 @@ const FileMng = (props) => {
         url8,
         url9,
         url10,
+        url11,
         file1,
         file2,
         file3,
@@ -102,7 +112,8 @@ const FileMng = (props) => {
         file7,
         file8,
         file9,
-        file10
+        file10,
+        file11
     } = inputs;
     // onload
     useEffect(() => {
@@ -140,6 +151,7 @@ const FileMng = (props) => {
                     let file8 = [];
                     let file9 = [];
                     let file10 = [];
+                    let file11 = [];
                     fileList.map((file, index) => {
                         switch (file.type) {
                             case 'IPO_APPLICATION':
@@ -172,6 +184,9 @@ const FileMng = (props) => {
                             case 'ETC':
                                 file10.push(file);
                                 break;
+                            case 'PERSONAL_INFO_REQ':
+                                file11.push(file);
+                                break;
                             default:
                                 break;
                         }
@@ -186,6 +201,7 @@ const FileMng = (props) => {
                     setFileList8(file8);
                     setFileList9(file9);
                     setFileList10(file10);
+                    setFileList11(file11);
                 }
                 break;
             case 'getUrlList':
@@ -201,6 +217,7 @@ const FileMng = (props) => {
                     let file8 = [];
                     let file9 = [];
                     let file10 = [];
+                    let file11 = [];
                     urlList.map((file, index) => {
                         switch (file.type) {
                             case 'IPO_APPLICATION':
@@ -233,6 +250,9 @@ const FileMng = (props) => {
                             case 'ETC':
                                 file10.push(file);
                                 break;
+                            case 'PERSONAL_INFO_REQ':
+                                file11.push(file);
+                                break;
                             default:
                                 break;
                         }
@@ -247,6 +267,7 @@ const FileMng = (props) => {
                     setDocList8(file8);
                     setDocList9(file9);
                     setDocList10(file10);
+                    setDocList11(file11);
                 }
                 break;
             case 'insertData':
@@ -431,7 +452,8 @@ const FileMng = (props) => {
                                             onChange={fileHandleChange}
                                             placeholder="클릭하여 파일을 선택해주세요"
                                             inputProps={{
-                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
                                         <Button
@@ -463,6 +485,90 @@ const FileMng = (props) => {
                                     ))}
                                 </td>
                             </tr>
+
+                            <tr>
+                                <th className="tg-0pky">별첨-1]개인정보 요청서</th>
+                                <td className="tg-0pky">
+                                    <FlexBox>
+                                        <TextField
+                                            id="url11"
+                                            name="url11"
+                                            size="medium"
+                                            value={url11}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            fullWidth
+                                        />
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => urlSave('PERSONAL_INFO_REQ', url11)}
+                                        >
+                                            저장
+                                        </Button>
+                                    </FlexBox>
+
+                                    {docList11.map((item, index) => (
+                                        <div className="filemng__file--list" key={index}>
+                                            {/* 사용자 아이디 */}
+                                            <h6 className="filemng__file--id">{item.email}</h6>
+                                            <div className="filemng__file--con">
+                                                {/* url 주소 */}
+                                                <p className="filemng__file--url">{item.url}</p>
+                                                {/* 날짜 */}
+                                                <p className="filemng__file--date">{item.create_date.substring(0, 10)}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </td>
+                                <td className="tg-0pky">
+                                    <FlexBox>
+                                        <TextField
+                                            type="file"
+                                            id="file11"
+                                            name="file11"
+                                            size="medium"
+                                            fullWidth
+                                            onChange={fileHandleChange}
+                                            placeholder="클릭하여 파일을 선택해주세요"
+                                            inputProps={{
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                            }}
+                                        />
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="button"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => fileSave('PERSONAL_INFO_REQ', file11)}
+                                        >
+                                            업로드
+                                        </Button>
+                                    </FlexBox>
+
+                                    {fileList11.map((item, index) => (
+                                        <div key={index} className="filemng__file--list">
+                                            <h6 className="filemng__file--id">{item.email}</h6>
+                                            <div className="filemng__file--con">
+                                                <button
+                                                    className="filemng__file--downlaod"
+                                                    type="button"
+                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                >
+                                                    {item.file_name}
+                                                </button>
+                                                <p className="filemng__file--date">{item.create_date.substring(0, 10)}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </td>
+                            </tr>
+
                             <tr>
                                 <th className="tg-0pky">개인정보 수집 및 이용동의서</th>
                                 <td className="tg-0pky">
@@ -503,7 +609,8 @@ const FileMng = (props) => {
                                             fullWidth
                                             onChange={fileHandleChange}
                                             inputProps={{
-                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
 
@@ -575,7 +682,8 @@ const FileMng = (props) => {
                                             fullWidth
                                             onChange={fileHandleChange}
                                             inputProps={{
-                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
                                         <Button
@@ -653,7 +761,8 @@ const FileMng = (props) => {
                                             fullWidth
                                             onChange={fileHandleChange}
                                             inputProps={{
-                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
                                         <Button
@@ -731,7 +840,8 @@ const FileMng = (props) => {
                                             fullWidth
                                             onChange={fileHandleChange}
                                             inputProps={{
-                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
                                         <Button
@@ -809,7 +919,8 @@ const FileMng = (props) => {
                                             fullWidth
                                             onChange={fileHandleChange}
                                             inputProps={{
-                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
                                         <Button
@@ -887,7 +998,8 @@ const FileMng = (props) => {
                                             fullWidth
                                             onChange={fileHandleChange}
                                             inputProps={{
-                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
                                         <Button
@@ -965,7 +1077,8 @@ const FileMng = (props) => {
                                             fullWidth
                                             onChange={fileHandleChange}
                                             inputProps={{
-                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
                                         <Button
@@ -1043,7 +1156,8 @@ const FileMng = (props) => {
                                             fullWidth
                                             onChange={fileHandleChange}
                                             inputProps={{
-                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
                                         <Button
@@ -1121,7 +1235,8 @@ const FileMng = (props) => {
                                             fullWidth
                                             onChange={fileHandleChange}
                                             inputProps={{
-                                                accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
                                         <Button

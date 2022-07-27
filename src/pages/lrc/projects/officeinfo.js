@@ -42,7 +42,8 @@ const OfficeInfo = (props) => {
             officeSearch,
             fileSearch,
             docSearch,
-            projectLinkListSearch
+            projectLinkListSearch,
+            fileReviewDownload
         }
     ] = FoundationApi();
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
@@ -74,7 +75,9 @@ const OfficeInfo = (props) => {
     const [file8, setFile8] = useState({}); // 윤리서약서
     const [file9, setFile9] = useState({}); // 규제준수 확약서
     const [file10, setFile10] = useState({}); // 기타
-
+    const [file11, setFile11] = useState({}); // 별첨
+    // 다운로드 파일명 정의
+    const [downloadFileName, setDownloadFileName] = useState('');
     // onload
     useEffect(() => {
         //siteSearch(true, '');
@@ -116,6 +119,23 @@ const OfficeInfo = (props) => {
             return;
         }
         switch (responseData.transactionId) {
+            case 'getFile':
+                if (responseData.data) {
+                    let res = responseData;
+                    console.log('res data....');
+                    console.log(res);
+                    console.log(res.fileName);
+                    const url = window.URL.createObjectURL(new Blob([res.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `${downloadFileName}`);
+                    link.style.cssText = 'display:none';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    setDownloadFileName('');
+                }
+                break;
             case 'getFoundationInfo':
                 if (responseData.data.data) {
                     setOfficeInfo(responseData.data.data);
@@ -199,6 +219,8 @@ const OfficeInfo = (props) => {
                             if (!file9.item) setFile9(data);
                         } else if (item.type === 'ETC') {
                             if (!file10.item) setFile10(data);
+                        } else if (item.type === 'PERSONAL_INFO_REQ') {
+                            if (!file11.item) setFile11(data);
                         }
                     });
                 }
@@ -295,6 +317,14 @@ const OfficeInfo = (props) => {
                                     setFile10(data);
                                 }
                             }
+                        } else if (item.type === 'PERSONAL_INFO_REQ') {
+                            if (!file11.item) setFile11(data);
+                            else {
+                                // 날짜 비교
+                                if (moment(item.create_date).isAfter(file11.d)) {
+                                    setFile11(data);
+                                }
+                            }
                         }
                     });
                 }
@@ -361,7 +391,11 @@ const OfficeInfo = (props) => {
     const tabChange = (event, value) => {
         setValue(value);
     };
-
+    // 검토 파일 다운로드
+    const fileDownload = (fileKey, fileName) => {
+        setDownloadFileName(fileName);
+        fileReviewDownload(fileKey);
+    };
     const format = (num, decimals) =>
         num.toLocaleString('en-US', {
             minimumFractionDigits: 4,
@@ -599,6 +633,9 @@ const OfficeInfo = (props) => {
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
                                     {item.reference}
+                                    <a href="#" onClick={() => fileDownload(item.file_key, item.file_name)}>
+                                        {item.file_name}
+                                    </a>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -614,9 +651,9 @@ const OfficeInfo = (props) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">거래지원 신청서</TableCell>
+                                <TableCell align="center">별첨-1]개인정보 요청서</TableCell>
                                 <TableCell align="center">개인정보 수집 및 이용동의</TableCell>
                                 <TableCell align="center">프로젝트 백서</TableCell>
-                                <TableCell align="center">기술 검토 보고서</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableRow>
@@ -624,6 +661,11 @@ const OfficeInfo = (props) => {
                                 {file1.item}
                                 <br />
                                 {file1.item1}
+                            </TableCell>
+                            <TableCell component="th" scope="row" align="center">
+                                {file11.item}
+                                <br />
+                                {file11.item1}
                             </TableCell>
                             <TableCell component="th" scope="row" align="center">
                                 {file2.item}
@@ -635,21 +677,21 @@ const OfficeInfo = (props) => {
                                 <br />
                                 {file3.item1}
                             </TableCell>
+                        </TableRow>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="center">기술 검토 보고서</TableCell>
+                                <TableCell align="center">토큰 세일 및 분배 계획서</TableCell>
+                                <TableCell align="center">법률검토의견서</TableCell>
+                                <TableCell align="center">사업자 등록증</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableRow>
                             <TableCell component="th" scope="row" align="center">
                                 {file4.item}
                                 <br />
                                 {file4.item1}
                             </TableCell>
-                        </TableRow>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center">토큰 세일 및 분배 계획서</TableCell>
-                                <TableCell align="center">법률검토의견서</TableCell>
-                                <TableCell align="center">사업자 등록증</TableCell>
-                                <TableCell align="center">윤리서약서</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableRow>
                             <TableCell component="th" scope="row" align="center">
                                 {file5.item}
                                 <br />
@@ -665,21 +707,21 @@ const OfficeInfo = (props) => {
                                 <br />
                                 {file7.item1}
                             </TableCell>
+                        </TableRow>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="center">윤리서약서</TableCell>
+                                <TableCell align="center">규제준수 확약서</TableCell>
+                                <TableCell align="center">기타</TableCell>
+                                <TableCell align="center"></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableRow>
                             <TableCell component="th" scope="row" align="center">
                                 {file8.item}
                                 <br />
                                 {file8.item1}
                             </TableCell>
-                        </TableRow>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center">규제준수 확약서</TableCell>
-                                <TableCell align="center">기타</TableCell>
-                                <TableCell align="center"></TableCell>
-                                <TableCell align="center"></TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableRow>
                             <TableCell component="th" scope="row" align="center">
                                 {file9.item}
                                 <br />
@@ -690,7 +732,6 @@ const OfficeInfo = (props) => {
                                 <br />
                                 {file10.item1}
                             </TableCell>
-                            <TableCell component="th" scope="row"></TableCell>
                             <TableCell component="th" scope="row"></TableCell>
                         </TableRow>
                     </Table>

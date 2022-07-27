@@ -116,6 +116,9 @@ const SiteRoleMappingForm = () => {
     // 저장을 위한 이전 데이터 백업
     const [prevDataGridRows, setPrevDataGridRows] = useState([]);
 
+    const [deleteCount, setDeleteCount] = useState(0);
+    const [deleteProcessCount, setDeleteProcessCount] = useState(0);
+
     ////////////////////////////////////////////////////
     // 공통 에러 처리
     const [open, setOpen] = useState(false);
@@ -198,6 +201,17 @@ const SiteRoleMappingForm = () => {
                     alert('저장을 완료하였습니다!!!');
                     roleRegisterSearch(selectedRole, '', '');
                 }
+                break;
+            case 'registerDeleteRoleData':
+                if (responseData.data.data) {
+                    setDeleteProcessCount(deleteProcessCount + 1);
+                    if (deleteProcessCount + 1 === deleteCount) {
+                        alert('저장을 완료하였습니다!!!');
+                        setDeleteCount(0);
+                        setDeleteProcessCount(0);
+                    }
+                }
+                break;
             default:
         }
     }, [responseData]);
@@ -279,12 +293,29 @@ const SiteRoleMappingForm = () => {
                     }
                 });
                 if (found === 0) {
+                    // 신규 등록
                     saveData.push(data.id);
                 }
             });
-            if (saveData.length === 0) {
-                alert('저장할 사용자가 존재하지 않습니다!!!');
-            } else {
+            // 이전 데이터는 있었지만 현재는 없다면 삭제이다.
+            let deleteIds = [];
+            prevDataGridRows.map((prev, index) => {
+                let found = 0;
+                dataGridRegisterRows.map((data, idx) => {
+                    if (prev.id === data.id) found = 1;
+                });
+                if (found === 0) {
+                    // 삭제건이다.
+                    deleteIds.push(prev.id);
+                }
+            });
+            if (deleteIds.length > 0) {
+                setDeleteCount(deleteIds.length);
+                deleteIds.map((id) => {
+                    roleRegisterDelete(selectedRole, id);
+                });
+            }
+            if (saveData.length > 0) {
                 let data = { accounts: saveData };
                 console.log(selectedRole);
                 console.log(data);
@@ -293,9 +324,16 @@ const SiteRoleMappingForm = () => {
         } else if (dataGridRegisterRows.length === 0 && prevDataGridRows.length > 0) {
             if (confirm('등록 취소한 사용자를 모두 삭제하시겠습니까?')) {
                 // all delete
+                let deleteIds = [];
                 prevDataGridRows.map((prev, index) => {
-                    roleRegisterDelete(selectedRole, prev.id);
+                    deleteIds.push(prev.id);
                 });
+                if (deleteIds.length > 0) {
+                    setDeleteCount(deleteIds.length);
+                    deleteIds.map((id) => {
+                        roleRegisterDelete(selectedRole, id);
+                    });
+                }
             }
         } else {
             alert('등록된 사용자가 없습니다!!!');

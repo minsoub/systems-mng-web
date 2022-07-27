@@ -1,6 +1,6 @@
 import '../styles.scss';
 
-const MessageLeft = ({ message, timestamp, displayName }) => {
+const MessageLeft = ({ key, id, message, timestamp, displayName }) => {
     return (
         <>
             <div className="msg--left">
@@ -14,7 +14,9 @@ const MessageLeft = ({ message, timestamp, displayName }) => {
                 {/* 말풍선 */}
                 <div className="msg--left__speechBubble">
                     {/* 메시지 내용물 */}
-                    <div className="message other-message">{message}</div>
+                    <div className="message other-message" data-message-id={key}>
+                        {message}
+                    </div>
                 </div>
             </div>
         </>

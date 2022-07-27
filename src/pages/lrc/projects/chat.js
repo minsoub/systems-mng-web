@@ -8,13 +8,22 @@ import ChattingRoom from 'components/Chat/ChattingRoom';
 import { Button, FormControl, TextField } from '@mui/material';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import DownloadIcon from '@mui/icons-material/Download';
+import jwt from 'jsonwebtoken';
 
 const Chat = (props) => {
     const { projectId, children, tabindex, index, ...other } = props;
     const [resData, reqError, loading, { chatExistsAndSave, deleteChat, chatExcelDownload }] = ChatApi();
     const { siteId } = useSelector((state) => state.auth);
-    const [clientError, rSocket, createClient, sendJoinChat, connectionClose, sendRequestResponse, responseData, responseError] =
-        useRSocketClient();
+    const [
+        clientError,
+        rSocket,
+        createClient,
+        sendJoinChat,
+        connectionClose,
+        sendRequestResponse,
+        responseData,
+        responseError
+    ] = useRSocketClient();
     // 가짜 데이터
     const [messageList, setMessageList] = useState([]);
 
@@ -24,12 +33,19 @@ const Chat = (props) => {
     const refKeyword = useRef(); // < HTMLInputElement > null;
 
     useEffect(() => {
-        let data = {
-            account_id: '',
-            site_id: siteId,
-            project_id: projectId
-        };
-        chatExistsAndSave(data);
+        let authData = null;
+        if (localStorage.hasOwnProperty('authenticated')) {
+            authData = JSON.parse(localStorage.getItem('authenticated'));
+            let decodePayload = jwt.decode(authData.accessToken);
+            console.log(decodePayload);
+            let data = {
+                account_id: decodePayload.account_id,
+                site_id: siteId,
+                project_id: projectId
+            };
+            console.log(data);
+            chatExistsAndSave(data);
+        }
     }, []);
 
     useEffect(() => {
@@ -160,6 +176,17 @@ const Chat = (props) => {
     };
     const searchClick = () => {
         console.log(refKeyword.current.value);
+
+        const comments = document.querySelectorAll('.message');
+        console.log(comments);
+        comments.forEach((item) => {
+            const comment = item.innerHTML;
+            console.log(comment);
+            if (comment.indexOf(refKeyword.current.value) !== -1) {
+                console.log(item.dataset);
+            }
+        });
+
         if (refKeyword.current.value) {
             // message에서 단어 포함 검색해서 <b>처리한다.
             let list = messageList;
@@ -198,10 +225,11 @@ const Chat = (props) => {
 
             <ChattingRoom sendMessage={sendRequest}>
                 {messageList.map((item, idx) => {
+                    const key = `key_${idx}`;
                     if (item.sender === 'Listing Team') {
                         return (
                             <MessageRight
-                                key={idx}
+                                key={key}
                                 id={item.id}
                                 message={item.message}
                                 timestamp={item.createdDt}
@@ -212,7 +240,7 @@ const Chat = (props) => {
                     } else {
                         return (
                             <MessageLeft
-                                key={idx}
+                                key={key}
                                 id={item.id}
                                 message={item.message}
                                 timestamp={item.createdDt}
