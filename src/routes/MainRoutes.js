@@ -370,6 +370,8 @@ const MainRoutes = [
             {
                 path: 'siteroles/mapping',
                 element: <SiteRoleMappingForm />
+            },
+            {
                 path: '/sitemyprivacy',
                 element: <SitemyprivacyPage />
             },
