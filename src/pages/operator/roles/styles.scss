@@ -1,3 +1,5 @@
+@import 'src/styles/index';
+
 .result__list--date {
     display: flex;
     align-items: center;
@@ -16,18 +18,37 @@
     }
 }
 
+.role--blank {
+    margin-bottom: 20px;
+    display: flex;
+}
+
 .result__list--input {
     margin-right: 20px;
 }
 
-.roleLayout {
+.role--layout {
     display: flex;
+}
+
+.role--layout__search {
+    @include leftRightAlign();
     margin-bottom: 1.5rem;
-    &.noneBlank,
-    .result__list--date {
-        margin-bottom: 0 !important;
-    }
-    & > div {
-        margin-right: 30px;
-    }
+}
+
+.arr--layout {
+    @include center;
+    margin: 1rem 0;
+}
+
+.leftBlank {
+    margin-right: 1rem;
+}
+
+.roleLayout {
+    align-items: normal;
+}
+
+.MuiPaper-elevation {
+    cursor: pointer;
 }
