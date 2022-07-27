@@ -276,7 +276,7 @@ const AccountManagementPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
-                        height={500}
+                        height={700}
                     />
                 </ContentLine>
 

@@ -441,7 +441,7 @@ const RoleMappingForm = () => {
                             <DefaultDataGrid
                                 columns={columns}
                                 rows={dataGridRows}
-                                height={840}
+                                height={855}
                                 handlePageChange={handlePage}
                                 handleGridClick={handleClick}
                                 handleGridDoubleClick={handleDoubleClick}

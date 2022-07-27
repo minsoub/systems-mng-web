@@ -817,7 +817,7 @@ const SiteAuthMngRegForm = () => {
                                 aria-label="controlled"
                                 defaultCollapseIcon={<ExpandMoreIcon />}
                                 defaultExpandIcon={<ChevronRightIcon />}
-                                sx={{ height: 700, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 760, flexGrow: 1, overflowY: 'auto' }}
                             >
                                 {renderTreeItem(menudata)}
                             </TreeView>
@@ -843,7 +843,7 @@ const SiteAuthMngRegForm = () => {
                                         handleGridClick={handleClick}
                                         handleGridDoubleClick={handleDoubleClick}
                                         selectionChange={handleSelectionRoleChange}
-                                        height={290}
+                                        height={340}
                                     />
                                 </ContentLine>
                             </Grid>
@@ -873,7 +873,7 @@ const SiteAuthMngRegForm = () => {
                                                 handleGridClick={handleClick}
                                                 handleGridDoubleClick={handleDoubleClick}
                                                 selectionChange={handleSelectionProgramChange}
-                                                height={290}
+                                                height={340}
                                             />
                                         </ContentLine>
                                     </Grid>

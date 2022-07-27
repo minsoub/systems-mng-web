@@ -48,8 +48,12 @@ const SiteMenuRegForm = () => {
     const { siteId } = useSelector((state) => state.auth);
 
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-    const [responseData, requestError, responseLoading, { menumngSearch, menumngDetail, menumngInsert, menumngUpdate, menumngDelete }] =
-        MenuMngApi();
+    const [
+        responseData,
+        requestError,
+        responseLoading,
+        { menumngSearch, menumngDetail, menumngInsert, menumngUpdate, menumngDelete }
+    ] = MenuMngApi();
 
     const [expanded, setExpanded] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -76,8 +80,21 @@ const SiteMenuRegForm = () => {
         external_link: false,
         description: ''
     });
-    const { id, name, site_id, parents_menu_id, parents_menu_name, order, is_use, url, type, target, icon, external_link, description } =
-        inputs;
+    const {
+        id,
+        name,
+        site_id,
+        parents_menu_id,
+        parents_menu_name,
+        order,
+        is_use,
+        url,
+        type,
+        target,
+        icon,
+        external_link,
+        description
+    } = inputs;
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -496,7 +513,7 @@ const SiteMenuRegForm = () => {
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 700, flexGrow: 1, overflowY: 'auto' }}
                                 //expanded={expanded}
                                 //selected={selected}
                                 onNodeToggle={handleToggle}

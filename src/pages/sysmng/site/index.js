@@ -238,6 +238,7 @@ const SiteManagementPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
+                        height={700}
                     />
                 </ContentLine>
                 {errorMessage && (

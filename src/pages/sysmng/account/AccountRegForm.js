@@ -536,7 +536,7 @@ const AccountRegForm = () => {
                 <Grid item xs={12} md={7} lg={12}>
                     <HeaderTitle titleNm="계정 관리" menuStep01="통합시스템 관리" menuStep02="계정 관리" />
 
-                    <MainCard border={false}>
+                    <MainCard border={true}>
                         <div className="account--layout">
                             <DropInput title="이름">
                                 <TextField
@@ -629,6 +629,41 @@ const AccountRegForm = () => {
                                 />
                             </DropInput>
                         </div>
+                        <ButtonLayout buttonName="role--blank">
+                            <Button
+                                disableElevation
+                                disabled={isSubmitting}
+                                size="medium"
+                                type="button"
+                                variant="contained"
+                                color="primary"
+                                onClick={saveClick}
+                            >
+                                저장
+                            </Button>
+                            <Button
+                                disableElevation
+                                disabled={isSubmitting}
+                                size="medium"
+                                type="button"
+                                variant="contained"
+                                color="secondary"
+                                onClick={newClick}
+                            >
+                                신규
+                            </Button>
+                            <Button
+                                disableElevation
+                                disabled={isSubmitting}
+                                size="medium"
+                                type="button"
+                                variant="contained"
+                                color="secondary"
+                                onClick={listClick}
+                            >
+                                리스트
+                            </Button>
+                        </ButtonLayout>
                     </MainCard>
 
                     <Grid container spacing={3}>
@@ -724,42 +759,6 @@ const AccountRegForm = () => {
                             </ButtonLayout>
                         </TopInputLayout>
                     </MainCard>
-
-                    <ButtonLayout buttonName="role--blank">
-                        <Button
-                            disableElevation
-                            disabled={isSubmitting}
-                            size="medium"
-                            type="button"
-                            variant="contained"
-                            color="primary"
-                            onClick={saveClick}
-                        >
-                            저장
-                        </Button>
-                        <Button
-                            disableElevation
-                            disabled={isSubmitting}
-                            size="medium"
-                            type="button"
-                            variant="contained"
-                            color="secondary"
-                            onClick={newClick}
-                        >
-                            신규
-                        </Button>
-                        <Button
-                            disableElevation
-                            disabled={isSubmitting}
-                            size="medium"
-                            type="button"
-                            variant="contained"
-                            color="secondary"
-                            onClick={listClick}
-                        >
-                            리스트
-                        </Button>
-                    </ButtonLayout>
 
                     {errorMessage ? (
                         <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

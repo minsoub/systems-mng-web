@@ -299,6 +299,7 @@ const RoleManagementPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
+                        height={700}
                     />
                 </ContentLine>
 

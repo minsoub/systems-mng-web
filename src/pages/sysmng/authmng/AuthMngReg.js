@@ -785,7 +785,7 @@ const AuthMngRegForm = () => {
                                 aria-label="controlled"
                                 defaultCollapseIcon={<ExpandMoreIcon />}
                                 defaultExpandIcon={<ChevronRightIcon />}
-                                sx={{ height: 700, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 800, flexGrow: 1, overflowY: 'auto' }}
                             >
                                 {renderTreeItem(menudata)}
                             </TreeView>
@@ -811,7 +811,7 @@ const AuthMngRegForm = () => {
                                         handleGridClick={handleClick}
                                         handleGridDoubleClick={handleDoubleClick}
                                         selectionChange={handleSelectionRoleChange}
-                                        height={290}
+                                        height={355}
                                     />
                                 </ContentLine>
                             </Grid>
@@ -841,7 +841,7 @@ const AuthMngRegForm = () => {
                                                 handleGridClick={handleClick}
                                                 handleGridDoubleClick={handleDoubleClick}
                                                 selectionChange={handleSelectionProgramChange}
-                                                height={290}
+                                                height={357}
                                             />
                                         </ContentLine>
                                     </Grid>

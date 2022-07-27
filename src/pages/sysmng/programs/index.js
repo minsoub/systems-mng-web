@@ -280,7 +280,7 @@ const ProgramManagementPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
-                        height={600}
+                        height={700}
                     />
                 </ContentLine>
             </Grid>

@@ -53,8 +53,12 @@ const SiteMenuMappingForm = () => {
     const navigate = useNavigate();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
     const { siteId } = useSelector((state) => state.auth);
-    const [responseData, requestError, responseLoading, { menumngSearch, menumngDetail, programMapping, programMappingSearch }] =
-        MenuMngApi();
+    const [
+        responseData,
+        requestError,
+        responseLoading,
+        { menumngSearch, menumngDetail, programMapping, programMappingSearch }
+    ] = MenuMngApi();
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
 
     const [expanded, setExpanded] = useState([]);
@@ -513,7 +517,7 @@ const SiteMenuMappingForm = () => {
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 780, flexGrow: 1, overflowY: 'auto' }}
                                 onNodeToggle={handleToggle}
                             >
                                 {renderTreeItem(menudata)}
@@ -546,7 +550,7 @@ const SiteMenuMappingForm = () => {
                                         handleGridClick={handleClick}
                                         handleGridDoubleClick={handleDoubleClick}
                                         selectionChange={handleSelectionRegisterChange}
-                                        height={240}
+                                        height={340}
                                     />
                                 </ContentLine>
                             </Grid>
@@ -599,7 +603,7 @@ const SiteMenuMappingForm = () => {
                                             handleGridClick={handleClick}
                                             handleGridDoubleClick={handleDoubleClick}
                                             selectionChange={handleSelectionSearchChange}
-                                            height={240}
+                                            height={340}
                                         />
                                     </ContentLine>
                                 </Grid>

@@ -527,7 +527,7 @@ const MenuMappingForm = () => {
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 600, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ height: 855, flexGrow: 1, overflowY: 'auto' }}
                                 //expanded={expanded}
                                 //selected={selected}
                                 onNodeToggle={handleToggle}
@@ -565,7 +565,7 @@ const MenuMappingForm = () => {
                                         handleGridClick={handleClick}
                                         handleGridDoubleClick={handleDoubleClick}
                                         selectionChange={handleSelectionRegisterChange}
-                                        height={240}
+                                        height={380}
                                     />
                                 </ContentLine>
                             </Grid>
@@ -626,7 +626,7 @@ const MenuMappingForm = () => {
                                             handleGridClick={handleClick}
                                             handleGridDoubleClick={handleDoubleClick}
                                             selectionChange={handleSelectionSearchChange}
-                                            height={240}
+                                            height={380}
                                         />
                                     </ContentLine>
                                 </Grid>
