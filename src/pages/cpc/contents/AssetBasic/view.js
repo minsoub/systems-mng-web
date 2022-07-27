@@ -339,7 +339,7 @@ const View = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </ContentLine>
-                <Grid className={cx(' searchPointColor')}>
+                <Grid className={cx('searchPointColor')}>
                     <ButtonLayout>
                         <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
                             선택 삭제

@@ -5,6 +5,7 @@ import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
 import MinimalLayout from 'layout/MinimalLayout';
 import SiteRegForm from 'pages/sysmng/site/SiteRegForm';
+import Sitemyprivacy from 'pages/operator/sitemyprivacy';
 
 // render - login
 const AuthLogin = Loadable(lazy(() => import('pages/auth/login')));
@@ -23,6 +24,7 @@ const LineMngPage = Loadable(lazy(() => import('pages/lrc/line/index')));
 const FaqCategoryPage = Loadable(lazy(() => import('pages/lrc/faq/categorylist')));
 const FaqContentsPage = Loadable(lazy(() => import('pages/lrc/faq/index')));
 const FaqRegForm = Loadable(lazy(() => import('pages/lrc/faq/faqreg')));
+
 // render - 고객보호센터 - 대시보드
 const CpcDashboard = Loadable(lazy(() => import('pages/cpc/dashboard')));
 // -----------------------
@@ -78,6 +80,7 @@ const ServiceDetail = Loadable(lazy(() => import('pages/lrc/servicelogs/detail')
 const SiteRoleManagementPage = Loadable(lazy(() => import('pages/operator/roles/index')));
 const SiteRoleRegForm = Loadable(lazy(() => import('pages/operator/roles/RoleRegForm')));
 const SiteRoleMappingForm = Loadable(lazy(() => import('pages/operator/roles/RoleMappingForm')));
+const SitemyprivacyPage = Loadable(lazy(() => import('pages/operator/sitemyprivacy/index')));
 // -----------------------
 // render - 통합 관리
 const AccountMng = Loadable(lazy(() => import('pages/totalmng/accountmng/index')));
@@ -367,6 +370,8 @@ const MainRoutes = [
             {
                 path: 'siteroles/mapping',
                 element: <SiteRoleMappingForm />
+                path: '/sitemyprivacy',
+                element: <SitemyprivacyPage />
             },
             // 통합관리
             {

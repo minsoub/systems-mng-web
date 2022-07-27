@@ -369,6 +369,16 @@ const menus = [
                 icon: icons.ChromeOutlined,
                 breadcrumbs: true,
                 parents_menu_id: 'xxx'
+            },
+            {
+                id: 'sitemyprivacy',
+                title: '감사로그 조회',
+                type: 'item',
+                url: '/sitemyprivacy/list',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
             }
         ]
     },
