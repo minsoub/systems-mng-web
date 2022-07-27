@@ -5,6 +5,7 @@ import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
 import MinimalLayout from 'layout/MinimalLayout';
 import SiteRegForm from 'pages/sysmng/site/SiteRegForm';
+import Sitemyprivacy from 'pages/operator/sitemyprivacy';
 
 // render - login
 const AuthLogin = Loadable(lazy(() => import('pages/auth/login')));
@@ -75,6 +76,7 @@ const SiteAuthMngRegForm = Loadable(lazy(() => import('pages/operator/auth/SiteA
 const SiteLogPage = Loadable(lazy(() => import('pages/operator/log/index')));
 const ServiceLog = Loadable(lazy(() => import('pages/lrc/servicelogs/index')));
 const ServiceDetail = Loadable(lazy(() => import('pages/lrc/servicelogs/detail')));
+const SitemyprivacyPage = Loadable(lazy(() => import('pages/operator/sitemyprivacy/index')));
 // -----------------------
 // render - 통합 관리
 const AccountMng = Loadable(lazy(() => import('pages/totalmng/accountmng/index')));
@@ -344,6 +346,10 @@ const MainRoutes = [
             {
                 path: '/sitelog/list',
                 element: <SiteLogPage />
+            },
+            {
+                path: '/sitemyprivacy',
+                element: <SitemyprivacyPage />
             },
             // 통합관리
             {
