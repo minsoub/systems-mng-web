@@ -390,6 +390,8 @@ const LegalCounselingMng = () => {
                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
+                        pageSize={10}
+                        height={660}
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}

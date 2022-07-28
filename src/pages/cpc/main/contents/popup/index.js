@@ -361,7 +361,7 @@ function BoardSearchDialog(props) {
                 </Typography>
                 <ContentLine>
                     <DefaultDataGrid
-                        height={330}
+                        height={340}
                         pageSize={4}
                         columns={listColumns}
                         rows={dataGridRows}
@@ -376,7 +376,7 @@ function BoardSearchDialog(props) {
                 </Typography>
                 <ContentLine>
                     <DefaultDataGrid
-                        height={280}
+                        height={290}
                         columns={selectedColumns}
                         rows={selectedBoardRows}
                         handlePageChange={handlePage}

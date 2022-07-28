@@ -338,6 +338,8 @@ const View = () => {
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
+                        pageSize={5}
+                        height={1400}
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}

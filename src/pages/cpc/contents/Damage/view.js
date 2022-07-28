@@ -56,7 +56,7 @@ const View = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            minWidth: 300
+            maxWidth: 350
         }
     ];
     const navigate = useNavigate();
@@ -360,6 +360,8 @@ const View = () => {
                     <CheckBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
+                        pageSize={10}
+                        height={660}
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
