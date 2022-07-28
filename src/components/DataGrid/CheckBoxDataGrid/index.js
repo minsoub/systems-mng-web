@@ -99,6 +99,7 @@ export function CheckBoxDataGrid({
     handleGridDoubleClick,
     selectionChange,
     height,
+    pageSize,
     className
 }) {
     const handlePage = (page, details) => {
@@ -122,7 +123,7 @@ export function CheckBoxDataGrid({
             <div className={cx('gridLayout')} style={{ height: mHeight, width: '100%' }}>
                 <StyledDataGrid
                     checkboxSelection
-                    pageSize={20}
+                    pageSize={pageSize || 20}
                     rowsPerPageOptions={[1]}
                     components={{
                         Pagination: CheckBoxPagination
