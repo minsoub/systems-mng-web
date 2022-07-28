@@ -6,12 +6,12 @@ const MessageLeft = ({ id, message, timestamp, displayName, fileList, fileDownlo
             let found = 0;
             fileList.map((item, index) => {
                 if (item.id === data.split(':')[1]) {
+                    found = 1;
                     return (
                         <a href="#" onClick={() => fileDownload(item.id, item.file_name)}>
                             첨부파일 업로드 {item.file_name}
                         </a>
                     );
-                    found = 1;
                 }
             });
         } else {
