@@ -12,7 +12,8 @@ import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/BlockChainNewsSearch';
-import ContentLine from '../../../../components/Common/ContentLine';
+import ContentLine from 'components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 
 // 블록체인 뉴스 상세 페이지
 const View = () => {
@@ -61,7 +62,8 @@ const View = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 200
+            maxWidth: 200,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         },
         {
             field: 'create_account_name',

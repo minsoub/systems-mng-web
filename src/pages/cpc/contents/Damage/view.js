@@ -15,7 +15,8 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/DamageCaseSearch';
-import ContentLine from '../../../../components/Common/ContentLine';
+import ContentLine from 'components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const View = () => {
     const columns = [
@@ -48,7 +49,8 @@ const View = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 200
+            maxWidth: 200,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         },
         {
             field: 'create_account_name',

@@ -7,7 +7,7 @@ import ErrorScreen from 'components/ErrorScreen';
 import JoditEditor from 'jodit-react';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
-import HeaderTitle from '../../../../components/HeaderTitle';
+import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
 import '../BoardList.module.scss';
 

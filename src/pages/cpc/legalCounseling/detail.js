@@ -9,6 +9,7 @@ import cx from 'classnames';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const Detail = () => {
     const navigate = useNavigate();
@@ -89,7 +90,7 @@ const Detail = () => {
                 setAnswer(responseData.data.data.answer);
                 setAttachFileId(responseData.data.data.attach_file_id);
                 setAttachFileName(responseData.data.data.attach_file_name);
-                setCreateDate(responseData.data.data.create_date);
+                setCreateDate(getDateFormat(responseData.data.data.create_date));
                 break;
             case 'updateLegalCounseling':
                 alert('저장되었습니다.');

@@ -4,7 +4,7 @@ import { Button, Grid, MenuItem, Select, TextField } from '@mui/material';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
-import ThumbnailAttach from '../../../../components/ThumbnailAttach';
+import ThumbnailAttach from 'components/ThumbnailAttach';
 import JoditEditor from 'jodit-react';
 import { WithContext as ReactTags } from 'react-tag-input';
 import '../ReactTags.module.scss';

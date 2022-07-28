@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, FormControlLabel, Grid, Radio, RadioGroup, Stack } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/Common/MainCard';
-import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import LegalCounselingApi from 'apis/cpc/legalCounseling/regalcounselingapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
@@ -15,7 +15,8 @@ import { setSearchData } from 'store/reducers/cpc/LegalCounselingSearch';
 import styles from './styles.module.scss';
 import DownloadReason from 'components/Security/DownloadReason';
 import classNames from 'classnames/bind';
-import ContentLine from '../../../components/Common/ContentLine';
+import ContentLine from 'components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 import * as PropTypes from 'prop-types';
 const cx = classNames.bind(styles);
 
@@ -91,7 +92,8 @@ const LegalCounselingMng = () => {
             headerName: '등록일시',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
     const navigate = useNavigate();

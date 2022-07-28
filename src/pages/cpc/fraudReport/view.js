@@ -15,7 +15,8 @@ import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/FraudReportSearch';
 import DownloadReason from 'components/Security/DownloadReason';
-import ContentLine from '../../../components/Common/ContentLine';
+import ContentLine from 'components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 import * as PropTypes from 'prop-types';
 
 const FraudReportMng = () => {
@@ -77,7 +78,8 @@ const FraudReportMng = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 200
+            maxWidth: 200,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         },
         {
             field: 'email',

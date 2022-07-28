@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Button, Grid } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
-import CheckBoxDataGrid from '../../../../components/DataGrid/CheckBoxDataGrid';
+import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
 import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -16,7 +16,8 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/DigitalAssetTrendSearch';
-import ContentLine from '../../../../components/Common/ContentLine';
+import ContentLine from 'components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const View = () => {
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
@@ -26,7 +27,7 @@ const View = () => {
                 <h3 className="overflow-wrap">{params.row.title}</h3>
                 <p className="overflow-wrap">{params.row.description}</p>
                 <p className="overflow-wrap">{params.row.tags && params.row.tags.length > 0 && '#'.concat(params.row.tags.join(' #'))}</p>
-                <p>{params.row.create_date}</p>
+                <p>{getDateFormat(params.row.create_date)}</p>
             </div>
         );
     };

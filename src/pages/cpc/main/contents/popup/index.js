@@ -11,7 +11,8 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import moment from 'moment';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import './styles.module.scss';
-import ContentLine from '../../../../../components/Common/ContentLine';
+import ContentLine from 'components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 
 function BoardSearchDialog(props) {
     const listColumns = [
@@ -35,7 +36,8 @@ function BoardSearchDialog(props) {
             headerAlign: 'center',
             flex: 1,
             align: 'center',
-            maxWidth: 200
+            maxWidth: 200,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         },
         {
             field: 'actions',
@@ -65,7 +67,8 @@ function BoardSearchDialog(props) {
             headerAlign: 'center',
             flex: 1,
             align: 'center',
-            maxWidth: 200
+            maxWidth: 200,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         },
         {
             field: 'actions',

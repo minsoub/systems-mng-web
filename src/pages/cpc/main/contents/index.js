@@ -6,7 +6,7 @@ import MainContentsApi from 'apis/cpc/mainContents/maincontentsapi';
 import ErrorScreen from 'components/ErrorScreen';
 import HeaderTitle from 'components/HeaderTitle';
 import BoardSearchDialog from './popup';
-import ButtonLayout from '../../../../components/Common/ButtonLayout';
+import ButtonLayout from 'components/Common/ButtonLayout';
 import './styles.module.scss';
 import cx from 'classnames';
 

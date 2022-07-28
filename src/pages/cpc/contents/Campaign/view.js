@@ -13,7 +13,8 @@ import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/CampaignSearch';
-import ContentLine from '../../../../components/Common/ContentLine';
+import ContentLine from 'components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 import styles from '../BoardList.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
@@ -26,7 +27,7 @@ const View = () => {
                 <h3 className="overflow-wrap">{params.row.title}</h3>
                 <p className="overflow-wrap">{params.row.description}</p>
                 <p className="overflow-wrap">{params.row.tags && params.row.tags.length > 0 && '#'.concat(params.row.tags.join(' #'))}</p>
-                <p>{params.row.create_date}</p>
+                <p>{getDateFormat(params.row.create_date)}</p>
             </div>
         );
     };
