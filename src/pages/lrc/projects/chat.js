@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import { useSelector } from 'react-redux';
 import useRSocketClient from 'apis/chat/index';
 import ChatApi from 'apis/chat/chatapi';
@@ -10,8 +10,8 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import DownloadIcon from '@mui/icons-material/Download';
 import jwt from 'jsonwebtoken';
 
-const Chat = (props) => {
-    const { projectId, children, tabindex, index, ...other } = props;
+const Chat = forwardRef((props, ref) => {
+    const { projectId, fileList, fileDownload, children, tabindex, index, ...other } = props;
     const [resData, reqError, loading, { chatExistsAndSave, deleteChat, chatExcelDownload }] = ChatApi();
     const { siteId } = useSelector((state) => state.auth);
     const [
@@ -24,6 +24,10 @@ const Chat = (props) => {
         responseData,
         responseError
     ] = useRSocketClient();
+
+    useImperativeHandle(ref, () => ({
+        sendRequest
+    }));
     // 가짜 데이터
     const [messageList, setMessageList] = useState([]);
 
@@ -102,8 +106,10 @@ const Chat = (props) => {
     // response 값 처리
     useEffect(() => {
         console.log('get response data: ', responseData);
+
         if (responseData) {
-            if (responseData.length) {
+            if (responseData.length > 1) {
+                console.log('here');
                 let msg = [];
                 responseData.map((item, index) => {
                     let data = {};
@@ -130,26 +136,29 @@ const Chat = (props) => {
                 });
                 setMessageList(msg);
             } else {
-                let data = {};
-                if (responseData.role === 'ADMIN') {
-                    data = {
-                        id: responseData.id,
-                        recevier: 'receiveUser',
-                        sender: 'Listing Team',
-                        message: responseData.content,
-                        createdDt: responseData.create_date
-                    };
-                } else {
-                    data = {
-                        id: responseData.id,
-                        recevier: 'Listing Team',
-                        sender: responseData.email,
-                        message: responseData.content,
-                        createdDt: responseData.create_date
-                    };
+                if (responseData.id) {
+                    console.log('called....');
+                    let data = {};
+                    if (responseData.role === 'ADMIN') {
+                        data = {
+                            id: responseData.id,
+                            recevier: 'receiveUser',
+                            sender: 'Listing Team',
+                            message: responseData.content,
+                            createdDt: responseData.create_date
+                        };
+                    } else {
+                        data = {
+                            id: responseData.id,
+                            recevier: 'Listing Team',
+                            sender: responseData.email,
+                            message: responseData.content,
+                            createdDt: responseData.create_date
+                        };
+                    }
+                    console.log(data);
+                    setMessageList([...messageList, data]);
                 }
-                console.log(data);
-                setMessageList([...messageList, data]);
             }
         }
     }, [responseData]);
@@ -176,31 +185,48 @@ const Chat = (props) => {
     };
     const searchClick = () => {
         console.log(refKeyword.current.value);
+        if (refKeyword.current.value === '') {
+            alert('검색 단어를 입력하세요!!');
+            return;
+        }
 
         const comments = document.querySelectorAll('.message');
-        console.log(comments);
+        // clear
         comments.forEach((item) => {
+            let key = item.getAttribute('data-message-id');
+            messageList.map((data, index) => {
+                if (data.id === key) {
+                    item.innerHTML = data.message;
+                }
+            });
+        });
+        // find
+        comments.forEach((item) => {
+            console.log(item);
             const comment = item.innerHTML;
-            console.log(comment);
             if (comment.indexOf(refKeyword.current.value) !== -1) {
-                console.log(item.dataset);
+                //console.log(item.getAttribute('data-message-id'));
+                if (comment.indexOf('<em') === -1) {
+                    item.innerHTML = comment.replaceAll(refKeyword.current.value, `<em class="kwd">${refKeyword.current.value}</em>`);
+                }
+                //console.log(item);
             }
         });
 
-        if (refKeyword.current.value) {
-            // message에서 단어 포함 검색해서 <b>처리한다.
-            let list = messageList;
-            list.map((item, index) => {
-                if (item.message.includes(refKeyword.current.value) && !item.message.includes('<b>')) {
-                    console.log('find...');
-                    item.message = item.message.replace(refKeyword.current.value, `<b>${refKeyword.current.value}</b>`);
-                    console.log(item.message);
-                }
-            });
-            console.log(list);
-            setMessageList([]);
-            setMessageList(list);
-        }
+        // if (refKeyword.current.value) {
+        //     // message에서 단어 포함 검색해서 <b>처리한다.
+        //     let list = messageList;
+        //     list.map((item, index) => {
+        //         if (item.message.includes(refKeyword.current.value) && !item.message.includes('<b>')) {
+        //             console.log('find...');
+        //             item.message = item.message.replace(refKeyword.current.value, `<b>${refKeyword.current.value}</b>`);
+        //             console.log(item.message);
+        //         }
+        //     });
+        //     console.log(list);
+        //     setMessageList([]);
+        //     setMessageList(list);
+        // }
     };
 
     // 내역 다운로드
@@ -224,34 +250,39 @@ const Chat = (props) => {
             </ButtonLayout>
 
             <ChattingRoom sendMessage={sendRequest}>
-                {messageList.map((item, idx) => {
-                    const key = `key_${idx}`;
-                    if (item.sender === 'Listing Team') {
-                        return (
-                            <MessageRight
-                                key={key}
-                                id={item.id}
-                                message={item.message}
-                                timestamp={item.createdDt}
-                                displayName={item.sender}
-                                deleteChatMessage={deleteChatMessage}
-                            />
-                        );
-                    } else {
-                        return (
-                            <MessageLeft
-                                key={key}
-                                id={item.id}
-                                message={item.message}
-                                timestamp={item.createdDt}
-                                displayName={item.sender}
-                            />
-                        );
-                    }
-                })}
+                {messageList.length > 0 &&
+                    messageList.map((item, idx) => {
+                        const key = `key_${idx}`;
+                        if (item.sender === 'Listing Team') {
+                            return (
+                                <MessageRight
+                                    key={item.id}
+                                    id={item.id}
+                                    message={item.message}
+                                    timestamp={item.createdDt}
+                                    displayName={item.sender}
+                                    fileList={fileList}
+                                    fileDownload={fileDownload}
+                                    deleteChatMessage={deleteChatMessage}
+                                />
+                            );
+                        } else {
+                            return (
+                                <MessageLeft
+                                    key={item.id}
+                                    id={item.id}
+                                    message={item.message}
+                                    timestamp={item.createdDt}
+                                    displayName={item.sender}
+                                    fileList={fileList}
+                                    fileDownload={fileDownload}
+                                />
+                            );
+                        }
+                    })}
             </ChattingRoom>
         </div>
     );
-};
+});
 
 export default Chat;

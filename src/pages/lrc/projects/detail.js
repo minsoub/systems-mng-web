@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, Grid, Tab, TableCell, Tabs, TextField, Typography } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
@@ -123,6 +123,7 @@ const ProjectsDetailPage = () => {
         setErrorMessage('');
     };
     ////////////////////////////////////////////////////
+    const chatRef = useRef({});
 
     // onload
     useEffect(() => {
@@ -160,6 +161,8 @@ const ProjectsDetailPage = () => {
                 if (resData.data.data) {
                     console.log(resData);
                     getChatFileList(paramId);
+                    // 파일에 대한 채팅 메시지 전송
+                    chatRef.current.sendRequest(`FILE_MESSAGE::${resData.data.data.id}`);
                 }
                 break;
             case 'getFile':
@@ -231,8 +234,6 @@ const ProjectsDetailPage = () => {
 
         console.log(formData);
         insertChatFile(formData);
-
-        // 파일에 대한 채팅 메시지 전송
     };
 
     // 입력 박스 입력 시 호출
@@ -324,7 +325,7 @@ const ProjectsDetailPage = () => {
                                 </Grid>
                                 <Grid item xs={4} sm={4} className="catting__layout">
                                     {/* 채팅 영역 */}
-                                    <Chat projectId={paramId} />
+                                    <Chat projectId={paramId} ref={chatRef} fileList={fileList} fileDownload={FileDownload} />
 
                                     {/* 파일 업로드 */}
                                     <TopInputLayout className="file__upload--box">
@@ -359,7 +360,7 @@ const ProjectsDetailPage = () => {
                                             <div className="project__info--box">
                                                 {fileList.map((item, index) => (
                                                     <TopInputLayout key={index} className="project__info">
-                                                        <h6 style={{ width: '36%', lineBreak: 'anywhere' }}>[사용자]</h6>
+                                                        <h6 style={{ width: '36%', lineBreak: 'anywhere' }}>[{item.user_type_name}]</h6>
 
                                                         <div className="project__info--download">
                                                             <button type="button" onClick={() => FileDownload(item.id, item.file_name)}>

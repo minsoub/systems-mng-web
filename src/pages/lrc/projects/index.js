@@ -308,6 +308,10 @@ const ProjectsPage = () => {
                 setStartDate(e.target.value);
                 break;
             case 'to_date':
+                if (from_date > e.target.value) {
+                    alert('기간 검색에서 종료일이 시작일보다 작을 수 없습니다!!!');
+                    return;
+                }
                 setEndDate(e.target.value);
                 break;
             case 'period':
@@ -449,7 +453,7 @@ const ProjectsPage = () => {
         dispatch(setSearchData(searchData));
     };
     const clearClick = () => {
-        setPeriod('1');
+        setPeriod('3');
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
         setSts('');
@@ -460,6 +464,10 @@ const ProjectsPage = () => {
         checkedNetworkItems.clear();
         setKeyword('');
         setIsAllChecked(true);
+
+        setDataGridRows([]);
+        setTotalDataGridRows([]);
+        setSeletedRows([]);
     };
     // 분류 클릭 시
     const filterClick = (id) => {
@@ -482,6 +490,10 @@ const ProjectsPage = () => {
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
+    };
+
+    const currencyFormat = (num) => {
+        return num.toFixed(4).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     };
 
     return (

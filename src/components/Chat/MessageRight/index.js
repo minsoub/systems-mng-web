@@ -1,9 +1,38 @@
+import { useEffect } from 'react';
 import '../styles.scss';
 
-const MessageRight = ({ key, id, message, timestamp, displayName, deleteChatMessage }) => {
+const MessageRight = ({ id, message, timestamp, displayName, deleteChatMessage, fileList, fileDownload }) => {
     const deleteMessage = (id) => {
         if (confirm('삭재하시겠습니까?')) {
             deleteChatMessage(id);
+        }
+    };
+
+    const checkFile = (data) => {
+        console.log(data);
+        if (data.indexOf('FILE_MESSAGE::') !== -1) {
+            let found = 0;
+            let id, name;
+            fileList.map((item, index) => {
+                if (item.id === data.split('::')[1]) {
+                    found = 1;
+                    console.log('found.........');
+                    console.log(item);
+                    id = item.id;
+                    name = item.file_name;
+                }
+            });
+            if (found === 1) {
+                return (
+                    <a href="#" onClick={() => fileDownload(id, name)}>
+                        첨부파일 업로드 {name}
+                    </a>
+                );
+            } else {
+                return null;
+            }
+        } else {
+            return data;
         }
     };
     return (
@@ -20,8 +49,8 @@ const MessageRight = ({ key, id, message, timestamp, displayName, deleteChatMess
                 {/* 말풍선 */}
                 <div className="msg--right__speechBubble">
                     {/* 메시지 내용물 */}
-                    <div className="message my-message" data-message-id={key}>
-                        {message}
+                    <div key={id} className="message my-message" data-message-id={id}>
+                        {checkFile(message)}
                     </div>
                     <div className="my-message__delete">
                         <button onClick={() => deleteMessage(id)}>삭제</button>

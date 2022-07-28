@@ -214,6 +214,10 @@ const ServiceLog = () => {
                 setStartDate(e.target.value);
                 break;
             case 'to_date':
+                if (from_date > e.target.value) {
+                    alert('종료기간이 시작기간 이전으로 선택할 수 없습니다!!!');
+                    return;
+                }
                 setEndDate(e.target.value);
                 break;
             case 'period':

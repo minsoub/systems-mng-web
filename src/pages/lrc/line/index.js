@@ -114,7 +114,7 @@ const LineMngPage = () => {
                 break;
             case 'insertData':
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장되였습니다!!!');
                     newClick();
                     lineSearch(search_line_type);
                 }
@@ -207,10 +207,12 @@ const LineMngPage = () => {
             alert('계열 타입을 선택하지 않았습니다!!!');
             return;
         }
-        if (!isUpdate) {
-            lineInsert(inputs);
-        } else {
-            lineUpdate(inputs);
+        if (confirm('저장하시겠습니까?')) {
+            if (!isUpdate) {
+                lineInsert(inputs);
+            } else {
+                lineUpdate(inputs);
+            }
         }
     };
     // delete
@@ -219,7 +221,7 @@ const LineMngPage = () => {
             alert('삭제할 데이터가 없습니다!!!');
             return;
         }
-        if (confirm('선택한 데이터에 대해서 삭제를 하시겠습니까?')) {
+        if (confirm('삭제하시겠습니까?')) {
             // 선택한 계정에 대해서 삭제를 수행한다.
             lineDelete(inputs);
         }

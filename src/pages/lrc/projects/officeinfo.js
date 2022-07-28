@@ -475,7 +475,7 @@ const OfficeInfo = (props) => {
                     <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">컨텍스트 주소</TableCell>
+                                <TableCell align="center">컨트렉트 주소</TableCell>
                             </TableRow>
                         </TableHead>
                         {projecInfo && (
@@ -491,7 +491,7 @@ const OfficeInfo = (props) => {
 
             <Grid container className="officeinfo__content--box">
                 <Grid container spacing={0} sx={{ mt: 1 }}>
-                    <Typography variant="h4">상장 정보</Typography>
+                    <Typography variant="h4">담당자 정보</Typography>
                 </Grid>
 
                 <ContentLine className="officeinfo__table__width">
@@ -515,16 +515,16 @@ const OfficeInfo = (props) => {
                         {userList.map((item, index) => (
                             <TableRow key={index}>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.user_name} 이름
+                                    {item.user_name}
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.phone} 핸드폰 번호
+                                    {item.phone}
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.sns_id} sns id
+                                    {item.sns_id}
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.email} 이메일
+                                    {item.email}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -534,7 +534,7 @@ const OfficeInfo = (props) => {
 
             <Grid container className="officeinfo__content--box">
                 <Grid container spacing={0} sx={{ mt: 1 }}>
-                    <Typography variant="h4">담당자 정보</Typography>
+                    <Typography variant="h4">상장 정보</Typography>
                 </Grid>
                 <ContentLine className="officeinfo__table__width">
                     <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">

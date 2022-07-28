@@ -8,13 +8,17 @@ const useAuthorized = () => {
     // 사용자 로그인 1차
     const siginIn = (email, password) => {
         console.log('signIn called...');
+        let e = doEncrypt(email);
+        let c = doEncrypt(password);
+        console.log(e);
+        console.log(c);
         callApi('siginin', {
             axiosInstance: axiosInstanceAuth,
             method: 'post',
             url: `/adm/login`,
             requestConfig: {
-                email: doEncrypt(email),
-                passwd: doEncrypt(password),
+                email: e, //doEncrypt(email),
+                passwd: c, //doEncrypt(password),
                 siteId: '628cfe073d11df86c8933a89'
             }
         });

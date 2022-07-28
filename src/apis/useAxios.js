@@ -41,20 +41,20 @@ const useAxios = () => {
                     return;
                 }
                 let decodePayload = jwt.decode(authData.accessToken);
-                console.log(decodePayload);
+                //console.log(decodePayload);
                 var exp = new Date(decodePayload.exp * 1000).getTime();
                 var now = new Date().getTime();
                 if (now > exp) {
                     console.log('AccessToken is invalid...');
 
                     // refresh Token check
-                    console.log(authData.refreshToken);
+                    //console.log(authData.refreshToken);
                     let decodeRrefshPayload = jwt.decode(authData.refreshToken);
-                    console.log(decodeRrefshPayload);
+                    //console.log(decodeRrefshPayload);
                     var expRefresh = new Date(decodeRrefshPayload.exp * 1000).getTime();
                     if (now > expRefresh) {
-                        console.log(now);
-                        console.log(expRefresh);
+                        //console.log(now);
+                        //console.log(expRefresh);
                         localStorage.clear();
                         setTokenCheck(false);
                         setRequestSubscribers([]);
@@ -68,12 +68,12 @@ const useAxios = () => {
                             refresh_token: authData.refreshToken
                         };
                         try {
-                            console.log('refresh token call start....');
-                            console.log(requestTokenData);
+                            //console.log('refresh token call start....');
+                            //console.log(requestTokenData);
                             axiosInstanceAuth.defaults.headers.my_site_id = site_id;
-                            console.log('api refresh call...');
+                            //console.log('api refresh call...');
                             const result = await axiosInstanceAuth.put('/adm/token', requestTokenData);
-                            console.log(result);
+                            //console.log(result);
                             if (result.data.access_token) {
                                 authData.accessToken = result.data.access_token;
                                 localStorage.setItem('authenticated', JSON.stringify(authData));

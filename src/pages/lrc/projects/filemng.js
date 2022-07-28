@@ -343,7 +343,9 @@ const FileMng = (props) => {
             alert('URL 정보를 입력하지 않았습니다!!!');
             return;
         }
-        urlDocumentSave(type, data, projectId);
+        if (confirm('저장하시겠습니까?')) {
+            urlDocumentSave(type, data, projectId);
+        }
     };
 
     const fileSave = (type, data) => {
@@ -351,13 +353,15 @@ const FileMng = (props) => {
             alert('파일을 업로드 하지 않았습니다!!!');
             return;
         }
-        const formData = new FormData();
-        formData.append('file', file_part);
-        formData.append('projectId', projectId);
-        formData.append('fileName', data);
-        formData.append('type', type);
-        console.log(formData);
-        fileDocumentSave(formData);
+        if (confirm('저장하시겠습니까?')) {
+            const formData = new FormData();
+            formData.append('file', file_part);
+            formData.append('projectId', projectId);
+            formData.append('fileName', data);
+            formData.append('type', type);
+            console.log(formData);
+            fileDocumentSave(formData);
+        }
     };
 
     const fileDownload = (fileKey, fileName) => {

@@ -210,9 +210,9 @@ const FaqRegForm = () => {
             return;
         }
         if (!paramNo) {
-            faqInsert(inputs);
+            if (confirm('등록하시겠습니까?')) faqInsert(inputs);
         } else {
-            faqUpdate(inputs);
+            if (confirm('저장히시겠습니까?')) faqUpdate(inputs);
         }
     };
 

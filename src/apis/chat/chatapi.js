@@ -31,7 +31,7 @@ const ChatApi = () => {
         callApi('getFile', {
             axiosInstance: axiosInstanceDownload,
             method: 'get',
-            url: `/mng/lrc/files/download/s3/${key}`,
+            url: `/mng/lrc/service/chat/file/${key}`,
             requestConfig: {}
         });
     };

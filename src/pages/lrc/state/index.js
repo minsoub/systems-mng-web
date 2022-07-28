@@ -52,6 +52,8 @@ const StatusRegForm = () => {
 
     const [login_site_id, setLoginStiteId] = useState(''); // 사용자 로그인 - 사이트 ID
 
+    const [btnSave, setBtnSave] = useState('등록');
+
     // 입력 데이터 - Default
     const [inputs, setInputs] = useState({
         id: '',
@@ -102,7 +104,7 @@ const StatusRegForm = () => {
         switch (resData.transactionId) {
             case 'insertData':
                 if (resData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('등록을 완료하였습니다!!!');
                     inputClear();
                     // 트리 구조 조회
                     statusSearch();
@@ -145,6 +147,7 @@ const StatusRegForm = () => {
             parent_code_name: '',
             use_yn: 'true'
         });
+        setBtnSave('등록');
     };
 
     // 저장한다.
@@ -152,17 +155,23 @@ const StatusRegForm = () => {
         console.log(inputs);
         // Validation check
         if (!inputs.name) {
-            setError('상태명을 입력하지 않았습니다!');
+            alert('상태명(국문)을 입력하지 않았습니다!');
+            return;
+        }
+        if (!inputs.name_en) {
+            alert('상태명(영문)을 입력하지 않았습니다!');
             return;
         }
         if (!inputs.order_no) {
-            setError('정렬 순서를 입력하지 않았습니다!');
+            alert('정렬 순서를 입력하지 않았습니다!');
             return;
         }
-        if (confirm('저장하시겠습니까?')) {
-            if (!isUpdate) {
+        if (!isUpdate) {
+            if (confirm('등록하시겠습니까?')) {
                 statusInsert(inputs);
-            } else {
+            }
+        } else {
+            if (confirm('저장하시겠습니까?')) {
                 statusUpdate(inputs);
             }
         }
@@ -171,6 +180,7 @@ const StatusRegForm = () => {
     const cancelClick = () => {
         inputClear();
         setIsUpdate(false);
+        setBtnSave('등록');
     };
 
     // 입력 박스 입력 시 호출
@@ -218,6 +228,7 @@ const StatusRegForm = () => {
                 });
                 setSelected(nodeIds);
                 setIsUpdate(true); // 수정모드
+                setBtnSave('저장');
                 return;
             } else if (item.children && item.children.length > 0) {
                 item.children.map((sub, index) => {
@@ -234,6 +245,7 @@ const StatusRegForm = () => {
                         });
                         setSelected(nodeIds);
                         setIsUpdate(true); // 수정모드
+                        setBtnSave('저장');
                         return;
                     }
                 });
@@ -263,6 +275,7 @@ const StatusRegForm = () => {
                     });
                     setSelected(nodeIds);
                     setIsUpdate(false); // 수정모드
+                    setBtnSave('저장');
                     return;
                 }
             });
@@ -328,8 +341,8 @@ const StatusRegForm = () => {
                 <HeaderTitle titleNm="상태값 관리" menuStep01="사이트 운영" menuStep02="상태값 관리" menuStep03="상태값 관리" />
 
                 <ButtonLayout buttonName="bottom--blank__small">
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                        저장
+                    <Button disableElevation size="medium" type="submit" name="saveBtn" variant="contained" onClick={saveClick}>
+                        {btnSave}
                     </Button>
                     <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={cancelClick}>
                         취소

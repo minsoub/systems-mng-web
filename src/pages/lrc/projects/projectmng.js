@@ -572,14 +572,19 @@ const ProjectMng = (props) => {
     };
     // 검토 평가 List 추가
     const addReviewgList = () => {
-        let addRow = {
-            id: '',
-            project_id: projectId,
-            organization: '',
-            result: '',
-            reference: ''
-        };
-        setReviewList((prevRows) => [...prevRows, addRow]);
+        if (reviewList.length === 3) {
+            alert('3개 까지만 입력이 가능합니다!!!');
+            return;
+        } else {
+            let addRow = {
+                id: '',
+                project_id: projectId,
+                organization: '',
+                result: '',
+                reference: ''
+            };
+            setReviewList((prevRows) => [...prevRows, addRow]);
+        }
     };
     // 검토 피리스 삭제
     const deleteReviewList = (evt, idx) => {
@@ -1141,7 +1146,8 @@ const ProjectMng = (props) => {
                                         fullWidth
                                         onChange={(e) => fileHandleChange(e, index)}
                                         inputProps={{
-                                            accept: '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                            accept:
+                                                '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                         }}
                                     />
                                     {item.file_name && (

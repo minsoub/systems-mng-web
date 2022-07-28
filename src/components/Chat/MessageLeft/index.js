@@ -1,6 +1,24 @@
 import '../styles.scss';
 
-const MessageLeft = ({ key, id, message, timestamp, displayName }) => {
+const MessageLeft = ({ id, message, timestamp, displayName, fileList, fileDownload }) => {
+    const checkFile = (data) => {
+        if (data.indexOf('FILE_MESSAGE') !== -1) {
+            let found = 0;
+            fileList.map((item, index) => {
+                if (item.id === data.split(':')[1]) {
+                    return (
+                        <a href="#" onClick={() => fileDownload(item.id, item.file_name)}>
+                            첨부파일 업로드 {item.file_name}
+                        </a>
+                    );
+                    found = 1;
+                }
+            });
+        } else {
+            return data;
+        }
+    };
+
     return (
         <>
             <div className="msg--left">
@@ -14,8 +32,8 @@ const MessageLeft = ({ key, id, message, timestamp, displayName }) => {
                 {/* 말풍선 */}
                 <div className="msg--left__speechBubble">
                     {/* 메시지 내용물 */}
-                    <div className="message other-message" data-message-id={key}>
-                        {message}
+                    <div key={id} className="message other-message" data-message-id={id}>
+                        {checkFile(message)}
                     </div>
                 </div>
             </div>
