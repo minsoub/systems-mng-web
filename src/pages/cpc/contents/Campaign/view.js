@@ -92,6 +92,11 @@ const View = () => {
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
     ////////////////////////////////////////////////////
 
     // 검색 조건
@@ -338,7 +343,7 @@ const View = () => {
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
-                        seSlectionChange={handleSelectionChange}
+                        selectionChange={handleSelectionChange}
                         className={cx('content__mng--img')}
                     />
                 </ContentLine>

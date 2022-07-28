@@ -18,6 +18,11 @@ const MainContents = () => {
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
     ////////////////////////////////////////////////////
     const [tabIndex, setTabIndex] = useState('1');
     const [openPopup, setOpenPopup] = useState(false);

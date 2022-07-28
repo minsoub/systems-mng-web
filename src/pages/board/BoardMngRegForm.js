@@ -3,16 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { experimentalStyled as styled } from '@mui/material/styles';
 // material-ui
 // eslint-disable-next-line prettier/prettier
-import {
-    Button,
-    Checkbox,
-    FormControlLabel,
-    Grid,
-    Paper,
-    MenuItem,
-    Select,
-    TextField
-} from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Grid, Paper, MenuItem, Select, TextField } from '@mui/material';
 import SiteApi from 'apis/site/siteapi';
 import BoardMasterApi from 'apis/board/boardmasterapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -29,21 +20,18 @@ const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
 }));
 
 const BoardMngRegForm = () => {
     const navigate = useNavigate();
     const { boardMasterId } = useParams();
-    const [responseData, requestError, loading,
-        {
-            searchBoardTypes,
-            searchPaginationTypes,
-            searchAuthTypes,
-            searchBoardMaster,
-            createBoardMaster,
-            updateBoardMaster
-        }] = BoardMasterApi();
+    const [
+        responseData,
+        requestError,
+        loading,
+        { searchBoardTypes, searchPaginationTypes, searchAuthTypes, searchBoardMaster, createBoardMaster, updateBoardMaster }
+    ] = BoardMasterApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
     ////////////////////////////////////////////////////
@@ -51,6 +39,11 @@ const BoardMngRegForm = () => {
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
     ////////////////////////////////////////////////////
 
     // 코드 데이터
@@ -73,10 +66,10 @@ const BoardMngRegForm = () => {
 
     const [is_use_category, setIsUseCategory] = useState(false);
     const [categories, setCategories] = useState([]);
-    
+
     const [pagination_type, setPaginationType] = useState('MORE');
     const [count_per_page, setCountPerPage] = useState(6);
-    
+
     const [is_use_tag, setIsUseTag] = useState(true);
     const [tags, setTags] = useState([]);
 
@@ -91,7 +84,7 @@ const BoardMngRegForm = () => {
     const [auth_read, setAuthRead] = useState('ALL_USER');
     const [auth_write, setAuthWrite] = useState('ALL_USER');
     const [auth_comment, setAuthComment] = useState('ALL_USER');
-    
+
     // 카테고리
     const KeyCodes = {
         comma: 188,
@@ -495,7 +488,9 @@ const BoardMngRegForm = () => {
                     <table className={cx('two-column-table')}>
                         <tbody>
                             <tr>
-                                <th className={'tb--title'} style={{minWidth: '150px'}}>사이트명</th>
+                                <th className={'tb--title'} style={{ minWidth: '150px' }}>
+                                    사이트명
+                                </th>
                                 <td>
                                     <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
                                         {siteList.map((item) => (
@@ -514,19 +509,21 @@ const BoardMngRegForm = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <th className={'tb--title'} style={{minWidth: '150px'}}>게시판 ID</th>
+                                <th className={'tb--title'} style={{ minWidth: '150px' }}>
+                                    게시판 ID
+                                </th>
                                 <td>
                                     <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="small"
-                                            value={id}
-                                            name="id"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder=""
-                                            disabled={boardMasterId}
-                                        />
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="small"
+                                        value={id}
+                                        name="id"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder=""
+                                        disabled={boardMasterId}
+                                    />
                                 </td>
                                 <th className={'tb--title'}>게시판명</th>
                                 <td>
@@ -544,7 +541,9 @@ const BoardMngRegForm = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <th className={'tb--title'} style={{minWidth: '150px'}}>게시판 타입</th>
+                                <th className={'tb--title'} style={{ minWidth: '150px' }}>
+                                    게시판 타입
+                                </th>
                                 <td>
                                     <Select name="type" label="타입" value={type} onChange={handleChange}>
                                         {boardTypes.map((item) => (
@@ -565,7 +564,9 @@ const BoardMngRegForm = () => {
                                         label="답변글 사용"
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={is_allow_attach_file} name="is_allow_attach_file" onChange={handleChange} />}
+                                        control={
+                                            <Checkbox checked={is_allow_attach_file} name="is_allow_attach_file" onChange={handleChange} />
+                                        }
                                         label="파일 업로드"
                                     />
                                     <FormControlLabel
@@ -575,7 +576,9 @@ const BoardMngRegForm = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <th className={'tb--title'} style={{minWidth: '150px'}}>페이징 방식</th>
+                                <th className={'tb--title'} style={{ minWidth: '150px' }}>
+                                    페이징 방식
+                                </th>
                                 <td>
                                     <Select name="pagination_type" label="페이징 방식" value={pagination_type} onChange={handleChange}>
                                         {paginationTypes.map((item) => (
@@ -751,6 +754,6 @@ const BoardMngRegForm = () => {
             </Grid>
         </Grid>
     );
-}
+};
 
 export default BoardMngRegForm;
