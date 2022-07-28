@@ -12,6 +12,7 @@ import './styles.scss';
 import DropInput from '../../../components/Common/DropInput';
 import ContentLine from '../../../components/Common/ContentLine';
 import FlexBox from '../../../components/Common/FlexBox';
+import {getDateFormat} from '../../../utils/CommonUtils';
 
 const FaqCategoryPage = () => {
     let isSubmitting = false;
@@ -49,7 +50,8 @@ const FaqCategoryPage = () => {
             headerName: '등록 일시',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
 
