@@ -255,7 +255,7 @@ const AccessMngPage = () => {
                             </Button>
 
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
-                                리스트
+                                초기화
                             </Button>
                         </ButtonLayout>
                     </TopInputLayout>
