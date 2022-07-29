@@ -6,12 +6,12 @@ const RoleApi = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
 
     // 데이터 검색
-    const getSearchData = (is_use, site_id) => {
-        //const encodeKeyword = encodeURIComponent(keyword);
+    const getSearchData = (is_use, site_id, keyword = '') => {
+        const encodeKeyword = encodeURIComponent(keyword);
         callApi('roleList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/roles?isUse=${is_use}&siteId=${site_id}`,
+            url: `/roles?isUse=${is_use}&siteId=${site_id}&searchText=${encodeKeyword}`,
             requestConfig: {}
         });
     };

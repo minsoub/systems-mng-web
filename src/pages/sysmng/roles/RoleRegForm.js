@@ -22,11 +22,9 @@ import SiteApi from 'apis/site/siteapi';
 import './styles.scss';
 import SearchDate from 'components/ContentManage/SearchDate';
 import DropInput from 'components/Common/DropInput';
-import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import cx from 'classnames';
 import FlexBox from '../../../components/Common/FlexBox';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -65,11 +63,11 @@ const RoleRegForm = () => {
 
     const siteChanged = (e) => {
         console.log(e);
-        setSiteId(e);
+        setSiteId(e.target.value);
     };
 
     const typeChanged = (event) => {
-        setType(event);
+        setType(event.target.value);
     };
 
     // transaction error 처리
@@ -160,8 +158,8 @@ const RoleRegForm = () => {
                     let res = responseData.data.data;
                     setId(res.id);
                     setName(res.name);
-                    setValidStartDate(res.valid_start_date);
-                    setValidEndDate(res.valid_end_date);
+                    setValidStartDate(res.role_valid_start_date);
+                    setValidEndDate(res.role_valid_end_date);
                     setIsUse(res.is_use);
                     setSiteId(res.site_id);
                     setType(res.type);
@@ -251,7 +249,7 @@ const RoleRegForm = () => {
 
     // delete
     const deleteClick = () => {
-        if (confirm('삭제를 하시겠습니까')) {
+        if (confirm('삭제를 하시겠습니까?')) {
             const requestData = {
                 id: id,
                 name: name,
@@ -344,9 +342,9 @@ const RoleRegForm = () => {
                         setStatus({ success: false });
                         setSubmitting(true);
                         //console.log(values);
-                        if (paramId) {
+                        if (paramId && confirm('수정 하시겠습니까?')) {
                             roleUpdate(id, requestData);
-                        } else {
+                        } else if(confirm('등록 하시겠습니까?')) {
                             roleInsert(requestData);
                         }
                     } catch (err) {

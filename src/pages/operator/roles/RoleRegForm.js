@@ -64,7 +64,7 @@ const SiteRoleRegForm = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const typeChanged = (event) => {
-        setType(event);
+        setType(event.target.value);
     };
 
     // transaction error 처리
@@ -155,8 +155,8 @@ const SiteRoleRegForm = () => {
                     let res = responseData.data.data;
                     setId(res.id);
                     setName(res.name);
-                    setValidStartDate(res.valid_start_date);
-                    setValidEndDate(res.valid_end_date);
+                    setValidStartDate(res.role_valid_start_date);
+                    setValidEndDate(res.role_valid_end_date);
                     setIsUse(res.is_use);
                     setSiteId(res.site_id);
                     setType(res.type);
@@ -242,7 +242,7 @@ const SiteRoleRegForm = () => {
 
     // delete
     const deleteClick = () => {
-        if (confirm('삭제를 하시겠습니까')) {
+        if (confirm('삭제를 하시겠습니까?')) {
             const requestData = {
                 id: id,
                 name: name,
@@ -335,9 +335,9 @@ const SiteRoleRegForm = () => {
                         setStatus({ success: false });
                         setSubmitting(true);
                         //console.log(values);
-                        if (paramId) {
+                        if (paramId && confirm('수정 하시겠습니까?')) {
                             roleUpdate(id, requestData);
-                        } else {
+                        } else if(confirm('등록 하시겠습니까?')) {
                             roleInsert(requestData);
                         }
                     } catch (err) {

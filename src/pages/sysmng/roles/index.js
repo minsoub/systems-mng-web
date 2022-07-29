@@ -24,6 +24,7 @@ import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
 import ContentLine from '../../../components/Common/ContentLine';
 import DropInput from '../../../components/Common/DropInput';
+import SearchBar from "../../../components/ContentManage/SearchBar";
 
 const RoleManagementPage = () => {
     let isSubmitting = false;
@@ -103,6 +104,7 @@ const RoleManagementPage = () => {
     const [siteList, setSiteList] = useState([]);
     const [site_id, setSiteId] = useState('');
     const [is_use, setIsUse] = useState(true);
+    const [keyword, setKeyword] = useState('');
 
     // 파라미터 상태값
     const [param_site_id, setParamSiteId] = useState(search_site_id);
@@ -246,6 +248,12 @@ const RoleManagementPage = () => {
         navigate('/roles/reg');
     };
 
+    const listClick = () => {
+        setKeyword('');
+        setIsUse(true);
+        siteSearch(true, '');
+    };
+
     // search
     const searchClick = () => {
         console.log('searchClick called...');
@@ -253,8 +261,13 @@ const RoleManagementPage = () => {
             alert('사이트명을 선택하세요!!!');
             return;
         }
-        roleSearch(is_use, site_id);
+        roleSearch(is_use, site_id, keyword);
     };
+
+    const handleChange = (e) => {
+        setKeyword(e.target.value);
+    };
+
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
@@ -262,6 +275,11 @@ const RoleManagementPage = () => {
                 <HeaderTitle titleNm="Role 리스트" menuStep01="통합시스템 관리" menuStep02="Role 관리" menuStep03="Role 리스트" />
 
                 <MainCard>
+                    {/* 검색바 */}
+                    <SearchBar keyword={keyword} handleChange={handleChange} />
+                    <Grid item xs={12}>
+                        <Stack spacing={1}>&nbsp;</Stack>
+                    </Grid>
                     <TopInputLayout>
                         <InputLayout>
                             <DropInput title="사이트 구분">
@@ -302,6 +320,9 @@ const RoleManagementPage = () => {
 
                             <Button disableElevation size="medium" type="submit" variant="contained" onClick={newClick} color="primary">
                                 등록
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                                초기화
                             </Button>
                         </ButtonLayout>
                     </TopInputLayout>

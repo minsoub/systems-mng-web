@@ -33,7 +33,7 @@ const AccountMngForm = () => {
 
     const navigate = useNavigate();
     const { paramId } = useParams();
-    const [responseData, requestError, loading, { accountSearch, accountMngInsert, accountMngDetail, accountMngUpdate }] = AccountApis();
+    const [responseData, requestError, loading, { accountSearch, accountMngInsert, accountMngDetail, accountMngUpdate, accountDeletes }] = AccountApis();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
     // Alert Dialog
@@ -130,6 +130,11 @@ const AccountMngForm = () => {
                     setEmailChk(true);
                 }
                 break;
+            case 'deleteDatas':
+                console.log('deleteData');
+                alert('삭제 처리를 완료하였습니다!');
+                navigate('/accountmng/list');
+                break;
             default:
         }
     }, [responseData]);
@@ -163,6 +168,15 @@ const AccountMngForm = () => {
 
     // new
     const newClick = () => {
+        setEmail('');
+        setName('');
+        setPassword('');
+        setIsUse(true);
+        setId('');
+        setStatus('');
+        setEmailStatus(false);
+        setEmailChk(false);
+        setIsUpdate(false);
         navigate('/accountmng/reg');
     };
 
@@ -171,8 +185,20 @@ const AccountMngForm = () => {
         navigate('/accountmng/list');
     };
 
+    const deleteClick = () => {
+        if (confirm('삭제를 하시겠습니까?')) {
+            // 선택한 계정에 대해서 삭제를 수행한다.
+            accountDeletes(id);
+        }
+    };
+
     // Email Duplicate Check
     const emailDuplicateCheck = () => {
+        const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+        if (regEmail.test(email) === false) {
+            alert('정확한 메일주소를 입력해주세요.');
+            return;
+        }
         // 메일 주소 중복 체크를 한다.
         if (email === '') {
             alert('메일 주소를 입력 후 중복 체크 해주시기 바랍니다!!!');
@@ -196,27 +222,31 @@ const AccountMngForm = () => {
                     try {
                         // Validation check
                         if (email === '') {
-                            setErrorTitle('입력 오류');
-                            setErrorMessage('Email주소를 입력하지 않았습니다');
-                            setOpen(true);
+                            // setErrorTitle('입력 오류');
+                            // setErrorMessage('Email주소를 입력하지 않았습니다');
+                            // setOpen(true);
+                            alert('이메일 주소를 입력해주세요.');
+                            return;
+                        }
+                        if (emailChk === false) {
+                            // setErrorTitle('입력 오류');
+                            // setErrorMessage('Email주소를 입력하지 않았습니다');
+                            // setOpen(true);
+                            alert('이메일 주소 중복체크를 선택해주세요.');
                             return;
                         }
                         if (name === '') {
-                            setErrorTitle('입력 오류');
-                            setErrorMessage('Name을 입력하지 않았습니다');
-                            setOpen(true);
+                            // setErrorTitle('입력 오류');
+                            // setErrorMessage('Name을 입력하지 않았습니다');
+                            // setOpen(true);
+                            alert('이름을 입력해주세요.');
                             return;
                         }
-                        if (password === '') {
-                            setErrorTitle('입력 오류');
-                            setErrorMessage('Password를 입력하지 않았습니다');
-                            setOpen(true);
-                            return;
-                        }
-                        if (!emailChk) {
-                            setErrorTitle('입력 오류');
-                            setErrorMessage('Email 중복체크를 하지 않았습니다!');
-                            setOpen(true);
+                        if (password === '' && !paramId) {
+                            // setErrorTitle('입력 오류');
+                            // setErrorMessage('Password를 입력하지 않았습니다');
+                            // setOpen(true);
+                            alert('비밀번호를 입력해주세요.');
                             return;
                         }
                         // Data 가공
@@ -366,6 +396,17 @@ const AccountMngForm = () => {
                                         disableElevation
                                         disabled={isSubmitting}
                                         size="medium"
+                                        type="button"
+                                        variant="contained"
+                                        color="error"
+                                        onClick={deleteClick}
+                                    >
+                                        삭제
+                                    </Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="medium"
                                         type="submit"
                                         variant="contained"
                                         color="secondary"
@@ -374,53 +415,6 @@ const AccountMngForm = () => {
                                         리스트
                                     </Button>
                                 </ButtonLayout>
-                                {errors.submit && (
-                                    <Grid item xs={12}>
-                                        <FormHelperText error>{errors.submit}</FormHelperText>
-                                    </Grid>
-                                )}
-
-                                {errors.submit && (
-                                    <MainCard sx={{ mt: 3 }} content={false}>
-                                        <Stack>
-                                            {touched.id && errors.id && (
-                                                <FormHelperText error id="standard-weight-helper-text-password-login">
-                                                    <FormControl sx={{ m: 2, minHeight: 20 }} size="small">
-                                                        <li>{errors.id}</li>
-                                                    </FormControl>
-                                                </FormHelperText>
-                                            )}
-                                            {touched.name && errors.name && (
-                                                <FormHelperText error id="standard-weight-helper-text-password-login">
-                                                    <FormControl sx={{ m: 2, minHeight: 20 }} size="small">
-                                                        <li>{errors.name}</li>
-                                                    </FormControl>
-                                                </FormHelperText>
-                                            )}
-                                        </Stack>
-                                        <Collapse in={open}>
-                                            <Alert
-                                                severity="error"
-                                                action={
-                                                    <IconButton
-                                                        aria-label="close"
-                                                        color="inherit"
-                                                        size="small"
-                                                        onClick={() => {
-                                                            errorClear();
-                                                        }}
-                                                    >
-                                                        <CloseIcon fontSize="inherit" />
-                                                    </IconButton>
-                                                }
-                                                sx={{ mb: 2 }}
-                                            >
-                                                <AlertTitle>{errorTitle}</AlertTitle>
-                                                {errorMessage}
-                                            </Alert>
-                                        </Collapse>
-                                    </MainCard>
-                                )}
                             </Grid>
                         </Grid>
                     </form>

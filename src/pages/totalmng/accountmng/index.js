@@ -243,21 +243,21 @@ const AccountMng = () => {
                             >
                                 검색
                             </Button>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
-                                신규
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="info" onClick={newClick}>
+                                등록
                             </Button>
                             <Button
                                 disableElevation
                                 size="medium"
                                 type="submit"
                                 variant="contained"
-                                color="secondary"
+                                color="error"
                                 onClick={deleteClick}
                             >
                                 삭제
                             </Button>
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
-                                리스트
+                                초기화
                             </Button>
                         </ButtonLayout>
                     </TopInputLayout>

@@ -2,7 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Select, Stack } from '@mui/material';
+import {
+    Button,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    Grid,
+    MenuItem, Radio,
+    RadioGroup,
+    Select,
+    Stack
+} from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
@@ -189,13 +199,16 @@ const SiteAuthManagementPage = () => {
     };
 
     const isUseChange = (e) => {
-        switch (e.target.name) {
-            case 'is_use':
-                setIsUse(e.target.checked);
-                break;
-            default:
-                break;
+        let { value } = e.target;
+        if (e.target.type === 'checkbox') {
+            value = e.target.checked;
         }
+        setIsUse(value);
+    };
+
+    const listClick = () => {
+        setIsUse(true);
+        siteSearch(true, '');
     };
 
     //체크박스 선택된 row id 저장
@@ -259,10 +272,18 @@ const SiteAuthManagementPage = () => {
                                     <MenuItem value="USER">USER</MenuItem>
                                 </Select>
                             </DropInput>
-                            <FormControlLabel
-                                control={<Checkbox name="is_use" checked={is_use} value={is_use} onChange={isUseChange} />}
-                                label="사용함"
-                            />
+                            <DropInput title="사용여부">
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="demo-row-radio-buttons-group-label"
+                                    name="is_use"
+                                    value={is_use}
+                                    onChange={isUseChange}
+                                >
+                                    <FormControlLabel value="true" control={<Radio />} label="사용함" />
+                                    <FormControlLabel value="false" control={<Radio />} label="사용안함" />
+                                </RadioGroup>
+                            </DropInput>
                         </InputLayout>
 
                         <ButtonLayout>
@@ -275,6 +296,10 @@ const SiteAuthManagementPage = () => {
                                 onClick={searchClick}
                             >
                                 검색
+                            </Button>
+
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                                초기화
                             </Button>
                         </ButtonLayout>
                     </TopInputLayout>

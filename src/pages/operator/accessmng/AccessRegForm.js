@@ -372,28 +372,32 @@ const AccessRegForm = () => {
             // setErrorTitle('입력 오류');
             // setErrorMessage('Email주소를 입력하지 않았습니다');
             // setOpen(true);
-            alert('Email주소를 입력하지 않았습니다.');
+            alert('이메일 주소를 입력해주세요.');
+            return;
+        }
+        if (emailChk === false) {
+            alert('이메일 주소 중복체크를 선택해주세요.');
             return;
         }
         if (name === '') {
             // setErrorTitle('입력 오류');
             // setErrorMessage('Name을 입력하지 않았습니다');
             // setOpen(true);
-            alert('Name을 입력하지 않았습니다.');
+            alert('이름을 입력해주세요.');
             return;
         }
         if (password === '' && !paramId) {
             setErrorTitle('입력 오류');
             setErrorMessage('Password를 입력하지 않았습니다.');
             setOpen(true);
-            alert('Password를 입력하지 않았습니다');
+            alert('비밀번호를 입력해주세요.');
             return;
         }
         if (status === '') {
             // setErrorTitle('입력 오류');
             // setErrorMessage('계정상태를 입력하지 않았습니다');
             // setOpen(true);
-            alert('계정상태를 입력하지 않았습니다.');
+            alert('계정상태를 입력해주세요.');
             return;
         }
         if (dataGridRegisterRows.length === 0) {
@@ -426,6 +430,11 @@ const AccessRegForm = () => {
 
     // Email Duplicate Check
     const emailDuplicateCheck = () => {
+        const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+        if (regEmail.test(email) === false) {
+            alert('정확한 메일주소를 입력해주세요.');
+            return;
+        }
         // 메일 주소 중복 체크를 한다.
         if (email === '') {
             alert('메일 주소를 입력 후 중복 체크 해주시기 바랍니다!!!');

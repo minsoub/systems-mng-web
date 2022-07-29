@@ -351,30 +351,41 @@ const AccountRegForm = () => {
     const saveClick = () => {
         // Validation check
         if (email === '') {
-            setErrorTitle('입력 오류');
-            setErrorMessage('Email주소를 입력하지 않았습니다');
-            setOpen(true);
+            // setErrorTitle('입력 오류');
+            // setErrorMessage('Email주소를 입력하지 않았습니다');
+            // setOpen(true);
+            alert('이메일 주소를 입력해주세요.');
+            return;
+        }
+        if (emailChk === false) {
+            // setErrorTitle('입력 오류');
+            // setErrorMessage('Email주소를 입력하지 않았습니다');
+            // setOpen(true);
+            alert('이메일 주소 중복체크를 선택해주세요.');
             return;
         }
         if (name === '') {
-            setErrorTitle('입력 오류');
-            setErrorMessage('Name을 입력하지 않았습니다');
-            setOpen(true);
+            // setErrorTitle('입력 오류');
+            // setErrorMessage('Name을 입력하지 않았습니다');
+            // setOpen(true);
+            alert('이름을 입력해주세요.');
             return;
         }
         if (password === '') {
-            setErrorTitle('입력 오류');
-            setErrorMessage('Password를 입력하지 않았습니다');
-            setOpen(true);
+            // setErrorTitle('입력 오류');
+            // setErrorMessage('Password를 입력하지 않았습니다');
+            // setOpen(true);
+            alert('비밀번호를 입력해주세요.');
             return;
         }
         if (status === '') {
-            setErrorTitle('입력 오류');
-            setErrorMessage('계정상태를 입력하지 않았습니다');
-            setOpen(true);
+            // setErrorTitle('입력 오류');
+            // setErrorMessage('계정상태를 입력하지 않았습니다');
+            // setOpen(true);
+            alert('계정상태를 입력해주세요.');
             return;
         }
-        if (dataGridRegisterRows.length == 0) {
+        if (dataGridRegisterRows.length === 0) {
             alert('운영권한을 등록해야 합니다!!!');
             return;
         }
@@ -406,6 +417,11 @@ const AccountRegForm = () => {
     // Email Duplicate Check
     const emailDuplicateCheck = () => {
         // 메일 주소 중복 체크를 한다.
+        const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+        if (regEmail.test(email) === false) {
+            alert('정확한 메일주소를 입력해주세요.');
+            return;
+        }
         if (email === '') {
             alert('메일 주소를 입력 후 중복 체크 해주시기 바랍니다!!!');
             return;

@@ -353,7 +353,7 @@ const AuthMngRegForm = () => {
             return;
         }
         if (!role_id) {
-            alert('롤명을 선택하세요!!!');
+            alert('권한명을 선택하세요!!!');
             return;
         }
         // 등록된 메뉴 리스트 조회

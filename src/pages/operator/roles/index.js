@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Select, Stack } from '@mui/material';
+import {
+    Button,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    Grid,
+    MenuItem, Radio,
+    RadioGroup,
+    Select,
+    Stack
+} from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
@@ -14,6 +24,8 @@ import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
 import ContentLine from '../../../components/Common/ContentLine';
 import DropInput from '../../../components/Common/DropInput';
+import SearchDate from "../../../components/ContentManage/SearchDate";
+import SearchBar from "../../../components/ContentManage/SearchBar";
 
 const SiteRoleManagementPage = () => {
     let isSubmitting = false;
@@ -91,6 +103,8 @@ const SiteRoleManagementPage = () => {
     ////////////////////////////////////////////////////
 
     const [site_id, setSiteId] = useState(siteId);
+    const [is_use, setIsUse] = useState(true);
+    const [keyword, setKeyword] = useState('');
 
     // onload
     useEffect(() => {
@@ -151,6 +165,15 @@ const SiteRoleManagementPage = () => {
         }
     };
 
+    const searchClick = () => {
+        console.log('searchClick called...');
+        if (!site_id) {
+            alert('사이트명을 선택하세요!!!');
+            return;
+        }
+        roleSearch(is_use, site_id, keyword);
+    };
+
     // 그리드 더블 클릭
     const handleDoubleClick = (rowData) => {};
 
@@ -159,16 +182,66 @@ const SiteRoleManagementPage = () => {
         navigate('/siteroles/reg');
     };
 
+    const listClick = () => {
+        setKeyword('');
+        roleSearch(true, siteId);
+    };
+
+    const isUseChange = (e) => {
+        let { value } = e.target;
+        if (e.target.type === 'checkbox') {
+            value = e.target.checked;
+        }
+        setIsUse(value);
+    };
+
+    const handleChange = (e) => {
+        setKeyword(e.target.value);
+    };
+
+
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
                 <HeaderTitle titleNm="Role 리스트" menuStep01="사이트 관리" menuStep02="Role 관리" menuStep03="Role 리스트" />
 
                 <MainCard>
+                    {/* 검색바 */}
+                    <SearchBar keyword={keyword} handleChange={handleChange} />
+                    <Grid item xs={12}>
+                        <Stack spacing={1}>&nbsp;</Stack>
+                    </Grid>
                     <TopInputLayout>
+                        <InputLayout>
+                            <DropInput title="사용여부">
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="demo-row-radio-buttons-group-label"
+                                    name="is_use"
+                                    value={is_use}
+                                    onChange={isUseChange}
+                                >
+                                    <FormControlLabel value="true" control={<Radio />} label="사용함" />
+                                    <FormControlLabel value="false" control={<Radio />} label="사용안함" />
+                                </RadioGroup>
+                            </DropInput>
+                        </InputLayout>
                         <ButtonLayout>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                onClick={searchClick}
+                                color="secondary"
+                            >
+                                검색
+                            </Button>
                             <Button disableElevation size="medium" type="submit" variant="contained" onClick={newClick} color="primary">
                                 등록
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                                초기화
                             </Button>
                         </ButtonLayout>
                     </TopInputLayout>
