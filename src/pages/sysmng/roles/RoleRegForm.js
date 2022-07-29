@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, TextField } from '@mui/material';
+import {
+    Button,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    FormHelperText,
+    Grid,
+    IconButton,
+    MenuItem,
+    Stack,
+    TextField
+} from '@mui/material';
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -14,10 +25,17 @@ import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { Select } from 'antd';
+import { Alert, Collapse, Select } from 'antd';
 import cx from 'classnames';
 import FlexBox from '../../../components/Common/FlexBox';
+import { AlertTitle } from '@mui/lab';
+import * as PropTypes from 'prop-types';
 
+function CloseIcon(props) {
+    return null;
+}
+
+CloseIcon.propTypes = { fontSize: PropTypes.string };
 const RoleRegForm = () => {
     let isSubmitting = false;
 
