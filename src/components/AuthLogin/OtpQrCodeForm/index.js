@@ -40,7 +40,7 @@ const OtpQrCodeForm = ({ result }) => {
                 console.log('otplogin transaction id => ', responseData);
                 if (responseData.data) {
                     // 임시 패스워드 접근
-                    if (responseData.data.status === 'INIT_COMPLETE') {
+                    if (responseData.data.status === 'INIT_COMPLETE' || responseData.data.status === 'CHANGE_PASSWORD' ) {
                         console.log('임시 패스워드로 인한 변경 작업 화면 호출');
                         navigate('/tmppassword', { state: responseData.data });
                         return;

@@ -1,6 +1,6 @@
 # Smart Admin(FE)
 
-## Version infomation
+## Version information
 - node : v16.15.0
 - yarn : v1.22.18
 
