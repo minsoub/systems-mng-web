@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, TextField } from '@mui/material';
-// third party
+import {
+    Alert,
+    AlertTitle,
+    Button,
+    Checkbox,
+    Collapse,
+    FormControl,
+    FormControlLabel,
+    FormHelperText,
+    Grid, MenuItem, Select,
+    Stack,
+    TextField
+} from '@mui/material';// third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import MainCard from 'components/Common/MainCard';
@@ -15,9 +26,9 @@ import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { Select } from 'antd';
-import cx from 'classnames';
 import FlexBox from '../../../components/Common/FlexBox';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 const SiteRoleRegForm = () => {
     let isSubmitting = false;

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
+    Alert,
+    AlertTitle,
     Button,
     Checkbox,
+    Collapse,
     FormControl,
     FormControlLabel,
     FormHelperText,
-    Grid,
-    IconButton,
-    MenuItem,
+    Grid, MenuItem, Select,
     Stack,
     TextField
 } from '@mui/material';
@@ -25,17 +26,11 @@ import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { Alert, Collapse, Select } from 'antd';
 import cx from 'classnames';
 import FlexBox from '../../../components/Common/FlexBox';
-import { AlertTitle } from '@mui/lab';
-import * as PropTypes from 'prop-types';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
-function CloseIcon(props) {
-    return null;
-}
-
-CloseIcon.propTypes = { fontSize: PropTypes.string };
 const RoleRegForm = () => {
     let isSubmitting = false;
 
