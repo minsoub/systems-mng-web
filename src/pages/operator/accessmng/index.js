@@ -55,6 +55,22 @@ const AccessMngPage = () => {
             maxWidth: 150
         },
         {
+            field: 'valid_start_date',
+            headerName: '유효기간(from)',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150
+        },
+        {
+            field: 'valid_end_date',
+            headerName: '유효기간(to)',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150
+        },
+        {
             field: 'create_date',
             headerName: '생성날짜',
             flex: 1,
@@ -68,7 +84,7 @@ const AccessMngPage = () => {
     const [responseData, requestError, loading, { accountMngSearch, accountList, accountDeletes }] = AccountApis();
 
     // 그리드 선택된 row id
-    const [selectedRows, setSeletedRows] = useState([]);
+    const [selectedRows, setSelectedRows] = useState([]);
     // 그리드 목록 데이터
     const [dataGridRows, setDataGridRows] = useState([]);
     ////////////////////////////////////////////////////
@@ -131,7 +147,7 @@ const AccessMngPage = () => {
     //체크박스 선택된 row id 저장
     const handleSelectionChange = (item) => {
         if (item) {
-            setSeletedRows(item);
+            setSelectedRows(item);
         }
     };
     // 페이징 변경 이벤트
@@ -145,8 +161,12 @@ const AccessMngPage = () => {
     };
 
     const isUseChanged = (e) => {
+        if(e.target.value === '') {
+            console.log(e.target.value)
+        }
         setIsUsed(e.target.value);
     };
+
     const keywordChanged = (e) => {
         setKeyword(e.target.value);
     };

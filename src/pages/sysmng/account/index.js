@@ -55,6 +55,22 @@ const AccountManagementPage = () => {
             maxWidth: 180
         },
         {
+            field: 'valid_start_date',
+            headerName: '유효기간(from)',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150
+        },
+        {
+            field: 'valid_end_date',
+            headerName: '유효기간(to)',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150
+        },
+        {
             field: 'create_date',
             headerName: '생성날짜',
             flex: 1,

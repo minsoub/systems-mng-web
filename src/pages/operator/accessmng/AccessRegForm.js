@@ -28,6 +28,7 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ContentLine from '../../../components/Common/ContentLine';
 import FlexBox from '../../../components/Common/FlexBox';
+import SearchDate from "../../../components/ContentManage/SearchDate";
 
 const AccessRegForm = () => {
     let isSubmitting = false;
@@ -113,6 +114,8 @@ const AccessRegForm = () => {
     const [is_use, setIsUse] = useState(true);
     const [status, setStatus] = useState('');
     const [send_chk, setSendChk] = useState(false);
+    const [valid_start_date, setValidStartDate] = useState(new Date());
+    const [valid_end_date, setValidEndDate] = useState('');
 
     // Email 작성 여부
     const [emailStatus, setEmailStatus] = useState(false);
@@ -274,6 +277,8 @@ const AccessRegForm = () => {
                     setEmailStatus(true);
                     setEmailChk(true);
                     setNewHidden(true);
+                    setValidStartDate(res.valid_start_date);
+                    setValidEndDate(res.vaild_end_date);
                     // 수정모드이면 운영권한 콤보박스 데이터를 조회한다.
                     //setRoleList([]);
                     //roleComboSearch(true, 'ADMIN', res.site_id);
@@ -333,6 +338,12 @@ const AccessRegForm = () => {
             case 'send_chk':
                 setSendChk(e.target.checked);
                 break;
+            case 'valid_start_date':
+                setValidStartDate(e.target.value);
+                break;
+            case 'valid_end_date':
+                setValidEndDate(e.target.value);
+                break;
             default:
                 break;
         }
@@ -356,7 +367,13 @@ const AccessRegForm = () => {
         setIsUse(true);
         setDataGridRegisterRows([]);
         setIsRoleUpdate(true);
+        setValidStartDate(currentDate);
     };
+
+    const currentDate = () => {
+        const date = new Date();
+        return `${String(date.getFullYear())}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;
+    }
 
     // delete
     const deleteClick = () => {};
@@ -400,6 +417,10 @@ const AccessRegForm = () => {
             alert('계정상태를 입력해주세요.');
             return;
         }
+        if (valid_start_date === '' || valid_end_date === '') {
+            alert('계정의 유효기간을 선택해주세요.');
+            return;
+        }
         if (dataGridRegisterRows.length === 0) {
             alert('운영권한을 등록해야 합니다!!!');
             return;
@@ -418,7 +439,9 @@ const AccessRegForm = () => {
             roles: roles,
             status: status,
             is_use: is_use,
-            is_send_mail: send_chk
+            is_send_mail: send_chk,
+            valid_start_date: valid_start_date,
+            valid_end_date: valid_end_date
         };
         console.log(requestData);
         if (paramId) {
@@ -625,7 +648,19 @@ const AccessRegForm = () => {
                                         fullWidth
                                     />
                                 </DropInput>
-
+                                <Grid>
+                                    {/* 기간 검색 */}
+                                    <SearchDate
+                                        start_date={valid_start_date}
+                                        end_date={valid_end_date}
+                                        handleBlur={handleBlur}
+                                        handleChange={handleChange}
+                                        noneChecked="noneChecked"
+                                        startName="valid_start_date"
+                                        endName="valid_end_date"
+                                        title="유효 기간"
+                                    />
+                                </Grid>
                                 <DropInput title="계정상태">
                                     <Select name="status" label="계정상태" value={status} onChange={statusChanged}>
                                         <MenuItem value="NORMAL">정상</MenuItem>

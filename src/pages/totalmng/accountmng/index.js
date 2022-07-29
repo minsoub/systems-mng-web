@@ -54,6 +54,22 @@ const AccountMng = () => {
             maxWidth: 180
         },
         {
+            field: 'valid_start_date',
+            headerName: '유효기간(from)',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150
+        },
+        {
+            field: 'valid_end_date',
+            headerName: '유효기간(to)',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150
+        },
+        {
             field: 'status',
             headerName: '상태',
             flex: 1,
@@ -205,7 +221,7 @@ const AccountMng = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
-                <HeaderTitle titleNm="계정 관리" menuStep01="통합시스템 관리" menuStep02="계정 관리" />
+                <HeaderTitle titleNm="계정 관리" menuStep01="통합 관리" menuStep02="계정 관리" />
 
                 <MainCard>
                     <TopInputLayout>

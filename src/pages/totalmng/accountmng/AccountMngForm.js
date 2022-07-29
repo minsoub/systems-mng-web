@@ -27,6 +27,7 @@ import DropInput from '../../../components/Common/DropInput';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import './styles.scss';
 import cx from 'classnames';
+import SearchDate from "../../../components/ContentManage/SearchDate";
 
 const AccountMngForm = () => {
     let isSubmitting = false;
@@ -48,6 +49,8 @@ const AccountMngForm = () => {
     const [is_use, setIsUse] = useState(true);
     const [id, setId] = useState('');
     const [status, setStatus] = useState('');
+    const [valid_start_date, setValidStartDate] = useState('');
+    const [valid_end_date, setValidEndDate] = useState('');
 
     // Email 작성 여부
     const [emailStatus, setEmailStatus] = useState(false);
@@ -154,6 +157,12 @@ const AccountMngForm = () => {
             case 'password':
                 setPassword(e.target.value);
                 break;
+            case 'valid_start_date':
+                setValidStartDate(e.target.value);
+                break;
+            case 'valid_end_date':
+                setValidEndDate(e.target.value);
+                break;
             default:
                 break;
         }
@@ -177,8 +186,14 @@ const AccountMngForm = () => {
         setEmailStatus(false);
         setEmailChk(false);
         setIsUpdate(false);
+        setValidStartDate(currentDate);
         navigate('/accountmng/reg');
     };
+
+    const currentDate = () => {
+        const date = new Date();
+        return `${String(date.getFullYear())}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;
+    }
 
     // list
     const listClick = () => {
@@ -249,6 +264,14 @@ const AccountMngForm = () => {
                             alert('비밀번호를 입력해주세요.');
                             return;
                         }
+                        if (valid_start_date === '' || valid_end_date === '') {
+                            alert('계정의 유효기간을 선택해주세요.');
+                            return;
+                        }
+                        if (valid_start_date > valid_end_date) {
+                            alert('종료 기간을 시작 기간 이전으로 선택할 수 없습니다.');
+                            return;
+                        }
                         // Data 가공
                         setOpen(false);
                         const requestData = {
@@ -256,7 +279,9 @@ const AccountMngForm = () => {
                             name: name,
                             password: password,
                             status: 'INIT_REGISTER',
-                            is_use: is_use
+                            is_use: is_use,
+                            valid_start_date: valid_start_date,
+                            valid_end_date: valid_end_date
                         };
                         console.log(requestData);
                         setSubmitting(true);
@@ -353,7 +378,19 @@ const AccountMngForm = () => {
                                             />
                                         </DropInput>
                                     </div>
-
+                                    <Grid>
+                                        {/* 기간 검색 */}
+                                        <SearchDate
+                                            start_date={valid_start_date}
+                                            end_date={valid_end_date}
+                                            handleBlur={handleBlur}
+                                            handleChange={handleChange}
+                                            noneChecked="noneChecked"
+                                            startName="valid_start_date"
+                                            endName="valid_end_date"
+                                            title="유효 기간"
+                                        />
+                                    </Grid>
                                     <DropInput title="사용여부" className="account--blank">
                                         <FormControlLabel
                                             control={

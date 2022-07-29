@@ -326,6 +326,10 @@ const RoleRegForm = () => {
                             setOpen(true);
                             return;
                         }
+                        if (valid_start_date > valid_end_date) {
+                            alert('종료 기간을 시작 기간 이전으로 선택할 수 없습니다.');
+                            return;
+                        }
                         // Data 가공
                         setOpen(true);
                         const requestData = {
