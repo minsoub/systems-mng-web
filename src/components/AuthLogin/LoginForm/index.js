@@ -35,11 +35,14 @@ const AuthLogin = () => {
         if (requestError) {
             console.log('>> requestError <<');
             console.log(requestError);
-            if (requestError.message === 'INVALID_USER_PASSWORD') {
+            if (requestError.message === 'INVALID_USER_PASSWORD' || requestError.message === 'INVALID_TOKEN') {
                 alert('패스워드가 일치하지 않습니다!!!');
                 return;
             } else if (requestError.message === 'INVALID_ACCOUNT_CLOSED') {
                 alert('패스워드 실패 초과로 인해 계정이 잠겼습니다!!! 관리자에게 문의 해 주시기 바랍니다!!!');
+                return;
+            } else if (requestError.message === 'USER_ACCOUNT_DISABLE') {
+                alert('계정이 잠겼습니다!!! 관리자에게 문의 해 주시기 바랍니다!!!');
                 return;
             }
             alert(requestError.message);

@@ -178,7 +178,7 @@ const AccountMngForm = () => {
             alert('메일 주소를 입력 후 중복 체크 해주시기 바랍니다!!!');
             return;
         }
-        accountSearch(true, email);
+        accountSearch(false, email);
     };
 
     return (

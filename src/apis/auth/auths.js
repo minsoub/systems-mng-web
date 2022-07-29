@@ -51,7 +51,7 @@ const useAuthorized = () => {
         callApi('passupdate', {
             axiosInstance: axiosInstanceAuth,
             method: 'post',
-            url: `/adm/passupdate`,
+            url: `/adm/password`,
             requestConfig: {
                 email: doEncrypt(email),
                 passwd: doEncrypt(password),
