@@ -84,6 +84,7 @@ const AccessRegForm = () => {
     const [roleList, setRoleList] = useState([]);
     const [role_id, setRoleId] = useState('');
     const [site_id, setSiteId] = useState('');
+    const [newHidden, setNewHidden] = useState(false);
 
     // Role Update button
     const [isRoleUpdate, setIsRoleUpdate] = useState(true);
@@ -272,6 +273,7 @@ const AccessRegForm = () => {
                     setIsUpdate(true);
                     setEmailStatus(true);
                     setEmailChk(true);
+                    setNewHidden(true);
                     // 수정모드이면 운영권한 콤보박스 데이터를 조회한다.
                     //setRoleList([]);
                     //roleComboSearch(true, 'ADMIN', res.site_id);
@@ -668,6 +670,7 @@ const AccessRegForm = () => {
                                 variant="contained"
                                 color="secondary"
                                 onClick={newClick}
+                                hidden={newHidden}
                             >
                                 신규
                             </Button>
