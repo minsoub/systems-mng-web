@@ -369,30 +369,34 @@ const AccessRegForm = () => {
     const saveClick = () => {
         // Validation check
         if (email === '') {
-            setErrorTitle('입력 오류');
-            setErrorMessage('Email주소를 입력하지 않았습니다');
-            setOpen(true);
+            // setErrorTitle('입력 오류');
+            // setErrorMessage('Email주소를 입력하지 않았습니다');
+            // setOpen(true);
+            alert('Email주소를 입력하지 않았습니다.');
             return;
         }
         if (name === '') {
-            setErrorTitle('입력 오류');
-            setErrorMessage('Name을 입력하지 않았습니다');
-            setOpen(true);
+            // setErrorTitle('입력 오류');
+            // setErrorMessage('Name을 입력하지 않았습니다');
+            // setOpen(true);
+            alert('Name을 입력하지 않았습니다.');
             return;
         }
-        if (password === '') {
+        if (password === '' && !paramId) {
             setErrorTitle('입력 오류');
-            setErrorMessage('Password를 입력하지 않았습니다');
+            setErrorMessage('Password를 입력하지 않았습니다.');
             setOpen(true);
+            alert('Password를 입력하지 않았습니다');
             return;
         }
         if (status === '') {
-            setErrorTitle('입력 오류');
-            setErrorMessage('계정상태를 입력하지 않았습니다');
-            setOpen(true);
+            // setErrorTitle('입력 오류');
+            // setErrorMessage('계정상태를 입력하지 않았습니다');
+            // setOpen(true);
+            alert('계정상태를 입력하지 않았습니다.');
             return;
         }
-        if (dataGridRegisterRows.length == 0) {
+        if (dataGridRegisterRows.length === 0) {
             alert('운영권한을 등록해야 합니다!!!');
             return;
         }
