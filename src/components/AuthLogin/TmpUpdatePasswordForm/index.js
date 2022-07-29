@@ -106,13 +106,13 @@ const TmpUpdatePasswordForm = ({ result }) => {
                     <form noValidate onSubmit={handleSubmit}>
                         <Grid item xs={12}>
                             <Stack spacing={2}>
-                                <InputLabel>{result.status === 'CHANGE_PASSWORD' ? '비밀번호 변경 후 90일이 경과되었습니다.' : '임시 비밀번호로 접속하였습니다.'}</InputLabel>
+                                <InputLabel>{result.status === 'CHANGE_PASSWORD' ? '비밀번호 변경 후 90일이 경과되었습니다.' : '임시 발급된 비밀번호입니다.'}</InputLabel>
                             </Stack>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>&nbsp;</Stack>
                             </Grid>
                             <Stack spacing={2}>
-                                <InputLabel>개인정보보호를 위하여 비밀번호 변경 후 사용이 가능합니다.</InputLabel>
+                                <InputLabel>개인정보보호를 위하여 새로운 비밀번호로 변경 후 사용이 가능합니다.</InputLabel>
                             </Stack>
                         </Grid>
                         <Grid item xs={12}>
