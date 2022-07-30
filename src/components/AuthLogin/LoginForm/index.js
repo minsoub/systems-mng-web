@@ -35,13 +35,16 @@ const AuthLogin = () => {
         if (requestError) {
             console.log('>> requestError <<');
             console.log(requestError);
-            if (requestError.message === 'INVALID_USER_PASSWORD' || requestError.message === 'INVALID_TOKEN') {
+            if (requestError.message === 'INVALID_USER_PASSWORD') {
                 alert('패스워드가 일치하지 않습니다!!!');
                 return;
-            } else if (requestError.message === 'INVALID_ACCOUNT_CLOSED') {
-                alert('패스워드 실패 초과로 인해 계정이 잠겼습니다!!! 관리자에게 문의 해 주시기 바랍니다!!!');
+            } else if(requestError.message === 'INVALID_USER'){
+                alert('가입되지 않은 사용자 입니다.');
                 return;
-            } else if (requestError.message === 'USER_ACCOUNT_DISABLE') {
+            } else if(requestError.message === 'INVALID_TOKEN'){
+                alert('사용 권한이 없는 사용자 입니다.');
+                return;
+            } else if (requestError.message === 'INVALID_ACCOUNT_CLOSED' || requestError.message === 'USER_ACCOUNT_DISABLE') {
                 alert('계정이 잠겼습니다!!! 관리자에게 문의 해 주시기 바랍니다!!!');
                 return;
             }
@@ -84,8 +87,8 @@ const AuthLogin = () => {
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
-                    email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                    password: Yup.string().max(255).required('Password is required')
+                    email: Yup.string().email('올바른 이메일 주소를 입력해 주세요.').max(255).required('올바른 이메일 주소를 입력해 주세요.'),
+                    password: Yup.string().max(255).required('올바른 비밀번호를 입력해 주세요.')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
@@ -150,7 +153,7 @@ const AuthLogin = () => {
                                                 </IconButton>
                                             </InputAdornment>
                                         }
-                                        placeholder="Enter password"
+                                        placeholder="비밀번호를 입력해 주세요."
                                     />
                                     {touched.password && errors.password && (
                                         <FormHelperText error id="standard-weight-helper-text-password-login">

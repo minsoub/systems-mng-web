@@ -28,7 +28,7 @@ const useAxios = () => {
         console.log(url);
         if (url.indexOf('adm') === -1) {
             if (authData === null) navigate('/login');
-
+            console.log(authData)
             let site_id = authData.siteId;
             // 현재 토큰 체크 진행중이 아니려면.. 아래 로직을 수행한다.
             if (!tokenChecked) {
@@ -42,16 +42,16 @@ const useAxios = () => {
                 }
                 let decodePayload = jwt.decode(authData.accessToken);
                 //console.log(decodePayload);
-                var exp = new Date(decodePayload.exp * 1000).getTime();
-                var now = new Date().getTime();
+                const exp = new Date(decodePayload.exp * 1000).getTime();
+                const now = new Date().getTime();
                 if (now > exp) {
                     console.log('AccessToken is invalid...');
 
                     // refresh Token check
                     //console.log(authData.refreshToken);
-                    let decodeRrefshPayload = jwt.decode(authData.refreshToken);
+                    let decodeRefreshPayload = jwt.decode(authData.refreshToken);
                     //console.log(decodeRrefshPayload);
-                    var expRefresh = new Date(decodeRrefshPayload.exp * 1000).getTime();
+                    const expRefresh = new Date(decodeRefreshPayload.exp * 1000).getTime();
                     if (now > expRefresh) {
                         //console.log(now);
                         //console.log(expRefresh);
