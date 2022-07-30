@@ -139,9 +139,10 @@ const ProjectMng = (props) => {
         if (requestError) {
             console.log('error requestError');
             console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            // setErrorTitle('Error Message');
+            // setErrorMessage(requestError);
+            // setOpen(true);
+            alert(requestError.error.message);
         }
     }, [requestError]);
 
