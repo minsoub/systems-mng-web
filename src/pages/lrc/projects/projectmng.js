@@ -473,7 +473,7 @@ const ProjectMng = (props) => {
         }
     };
     // 마케팅 심볼 관련 항목
-    const handleSynbolChange = (evt, idx) => {
+    const handleSymbolChange = (evt, idx) => {
         const newData = marketingList.map((item, index) => {
             if (idx !== index) return item;
             return { ...item, symbol: evt.target.value };
@@ -631,6 +631,11 @@ const ProjectMng = (props) => {
     };
     // 상장정보 저장
     const icoSave = () => {
+        const pattern = /(^\d+)[.]?\d{1,4}$/;
+        if (!pattern.test(refPriceBTC.current.value) || !pattern.test(refPriceKRW.current.value)) {
+            alert("소수점 네자리까지 입력 가능합니다.");
+            return;
+        }
         if (confirm('저장하시겠습니까?')) {
             let ico_info_list = [];
             // 상장정보가 초기에는 데이터가 없다.
@@ -681,6 +686,14 @@ const ProjectMng = (props) => {
     };
     // 마케팅 수량 리스트 저장
     const saveMarketingList = () => {
+        const pattern = /(^\d+)[.]?\d{1,4}$/;
+        marketingList.map((item) => {
+            const { minimum_quantity, actual_quantity } = item;
+            if(!pattern.test(minimum_quantity) || !pattern.test(actual_quantity)) {
+                alert("소수점 네자리까지 입력 가능합니다.");
+                return;
+            }
+        });
         if (marketingList && marketingList.length > 0) {
             if (confirm('저장하시겠습니까?')) {
                 let saveData = { marketing_list: marketingList };
@@ -1045,7 +1058,7 @@ const ProjectMng = (props) => {
                                             id="outlined-multiline-static"
                                             size="medium"
                                             fullWidth
-                                            onChange={(e) => handleSynbolChange(e, index)}
+                                            onChange={(e) => handleSymbolChange(e, index)}
                                             value={item.symbol}
                                         />
                                     </td>
