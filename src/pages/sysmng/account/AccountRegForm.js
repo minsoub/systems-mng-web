@@ -165,6 +165,7 @@ const AccountRegForm = () => {
         } else {
             setIsUpdate(false);
             setIsRoleUpdate(true);
+            setValidStartDate(currentDate);
         }
     }, []);
 
@@ -259,6 +260,8 @@ const AccountRegForm = () => {
                     setIsUpdate(true);
                     setEmailStatus(true);
                     setEmailChk(true);
+                    setValidStartDate(res.valid_start_date);
+                    setValidEndDate(res.valid_end_date);
                     // 수정모드이면 운영권한 콤보박스 데이터를 조회한다.
                     //setRoleList([]);
                     //roleComboSearch(true, 'ADMIN', res.site_id);
@@ -386,7 +389,7 @@ const AccountRegForm = () => {
             alert('이름을 입력해주세요.');
             return;
         }
-        if (password === '') {
+        if (password === '' && !paramId) {
             // setErrorTitle('입력 오류');
             // setErrorMessage('Password를 입력하지 않았습니다');
             // setOpen(true);

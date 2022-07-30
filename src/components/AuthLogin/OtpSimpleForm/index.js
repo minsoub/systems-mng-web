@@ -1,18 +1,26 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import moment from 'moment';
 import OtpInput from 'react-otp-input';
-import { Button, Grid, InputLabel, Stack } from '@mui/material';
+import {Button, Grid, InputLabel, Stack} from '@mui/material';
 import useAuthorized from 'apis/auth/auths';
-import { activeEmail, activeLogin, activeLoginDate, activeSite, activeToken, activeRefreshToken } from 'store/reducers/auth';
+import {
+    activeEmail,
+    activeLogin,
+    activeLoginDate,
+    activeSite,
+    activeToken,
+    activeRefreshToken
+} from 'store/reducers/auth';
 import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
+
 const cx = classNames.bind(styles);
 
-const OtpSimpleForm = ({ result }) => {
-    const [responseData, requestError, loading, { actionOtp, actionClear }] = useAuthorized();
+const OtpSimpleForm = ({result}) => {
+    const [responseData, requestError, loading, {actionOtp, actionClear}] = useAuthorized();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [otpNumber, setOtpNumber] = useState('');
@@ -21,7 +29,7 @@ const OtpSimpleForm = ({ result }) => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            if (requestError.message === 'INVALID_OTP_NUMER') {
+            if (requestError.message === 'INVALID_OTP_NUMBER') {
                 setErrMsg('OTP 번호를 다시 입력해주세요');
                 return;
             }
@@ -39,9 +47,13 @@ const OtpSimpleForm = ({ result }) => {
                 console.log(responseData);
                 if (responseData.data) {
                     // 임시 패스워드 접근
-                    if (responseData.data.status === 'INIT_COMPLETE') {
+                    // INIT_REQUEST, INIT_CONFIRM, INIT_COMPLETE, INIT_REGISTER
+                    if (responseData.data.status === 'INIT_REQUEST'
+                        || responseData.data.status === 'INIT_REGISTER'
+                        || responseData.data.status === 'INIT_CONFIRM'
+                        || responseData.data.status === 'INIT_COMPLETE') {
                         console.log('임시 패스워드로 인한 변경 작업 화면 호출');
-                        navigate('/tmppassword', { state: responseData.data });
+                        navigate('/tmppassword', {state: responseData.data});
                         return;
                     }
                     // Token 정보 저장
@@ -54,12 +66,12 @@ const OtpSimpleForm = ({ result }) => {
                         loginDate: moment().format('YYYY.MM.DD HH:mm:ss')
                     };
                     //dispatch(setAuthData(authData));
-                    dispatch(activeSite({ siteId: authData.siteId }));
-                    dispatch(activeEmail({ email: authData.email }));
-                    dispatch(activeToken({ accessToken: authData.accessToken }));
-                    dispatch(activeRefreshToken({ refreshToken: authData.refreshToken }));
-                    dispatch(activeLogin({ isLoggined: authData.isLoggined }));
-                    dispatch(activeLoginDate({ loginDate: authData.loginDate }));
+                    dispatch(activeSite({siteId: authData.siteId}));
+                    dispatch(activeEmail({email: authData.email}));
+                    dispatch(activeToken({accessToken: authData.accessToken}));
+                    dispatch(activeRefreshToken({refreshToken: authData.refreshToken}));
+                    dispatch(activeLogin({isLoggined: authData.isLoggined}));
+                    dispatch(activeLoginDate({loginDate: authData.loginDate}));
                     localStorage.setItem('authenticated', JSON.stringify(authData));
                     // alert("로그인을 완료하였습니다!!!")
                     if (authData.siteId === '62a15f4ae4129b518b133128') {

@@ -184,10 +184,10 @@ const AccessMngPage = () => {
     };
     // search
     const searchClick = () => {
-        if (keyword === '') {
-            alert('검색 단어를 입력하세요!');
-            return;
-        }
+        // if (keyword === '') {
+        //     alert('검색 단어를 입력하세요!');
+        //     return;
+        // }
         accountMngSearch(is_use, keyword);
     };
 
@@ -259,8 +259,8 @@ const AccessMngPage = () => {
                             >
                                 검색
                             </Button>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
-                                신규
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="info" onClick={newClick}>
+                                등록
                             </Button>
 
                             <Button
@@ -268,7 +268,7 @@ const AccessMngPage = () => {
                                 size="medium"
                                 type="submit"
                                 variant="contained"
-                                color="secondary"
+                                color="error"
                                 onClick={deleteClick}
                             >
                                 삭제

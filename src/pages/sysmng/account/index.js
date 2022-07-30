@@ -190,10 +190,10 @@ const AccountManagementPage = () => {
     // search
     const searchClick = () => {
         errorClear();
-        if (keyword === '') {
-            alert('검색 단어를 입력하세요!');
-            return;
-        }
+        // if (keyword === '') {
+        //     alert('검색 단어를 입력하세요!');
+        //     return;
+        // }
         accountMngSearch(is_use, keyword);
     };
 

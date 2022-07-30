@@ -82,6 +82,7 @@ const AccountMngForm = () => {
             accountMngDetail(paramId);
         } else {
             setIsUpdate(false);
+            setValidStartDate(currentDate);
         }
     }, []);
 
@@ -131,6 +132,8 @@ const AccountMngForm = () => {
                     setEmailStatus(true);
                     setIsUpdate(true);
                     setEmailChk(true);
+                    setValidStartDate(res.valid_start_date);
+                    setValidEndDate(res.valid_end_date);
                 }
                 break;
             case 'deleteDatas':

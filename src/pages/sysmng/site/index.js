@@ -220,8 +220,8 @@ const SiteManagementPage = () => {
                                 검색
                             </Button>
 
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
-                                신규
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="info" onClick={newClick}>
+                                등록
                             </Button>
 
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>

@@ -25,7 +25,6 @@ const OtpQrCodeForm = ({ result }) => {
     useEffect(() => {
         if (requestError) {
             console.log('requestError', requestError);
-            alert('error');
             setErrMsg('OTP 번호를 다시 입력해주세요');
         }
     }, [requestError]);

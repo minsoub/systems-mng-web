@@ -182,6 +182,7 @@ const AccessRegForm = () => {
         } else {
             setIsUpdate(false);
             setIsRoleUpdate(true);
+            setValidStartDate(currentDate);
         }
     }, []);
 
@@ -278,7 +279,7 @@ const AccessRegForm = () => {
                     setEmailChk(true);
                     setNewHidden(true);
                     setValidStartDate(res.valid_start_date);
-                    setValidEndDate(res.vaild_end_date);
+                    setValidEndDate(res.valid_end_date);
                     // 수정모드이면 운영권한 콤보박스 데이터를 조회한다.
                     //setRoleList([]);
                     //roleComboSearch(true, 'ADMIN', res.site_id);
