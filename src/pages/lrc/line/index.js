@@ -1,7 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, FormControl, Grid, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
+import {
+    Button,
+    FormControl,
+    Grid,
+    MenuItem,
+    Select,
+    Stack,
+    TextField,
+    RadioGroup,
+    Radio,
+    Typography,
+    FormControlLabel
+} from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import LineApis from 'apis/lrc/line/lineapi';
@@ -79,7 +91,7 @@ const LineMngPage = () => {
         type: '',
         use_yn: true
     });
-    const { id, name, type } = inputs;
+    const { id, name, type, use_yn } = inputs;
 
     // transaction error 처리
     useEffect(() => {
@@ -209,6 +221,7 @@ const LineMngPage = () => {
             alert('계열 타입을 선택하지 않았습니다!!!');
             return;
         }
+        console.log(inputs);
         if (confirm('저장하시겠습니까?')) {
             if (!isUpdate) {
                 lineInsert(inputs);
@@ -296,6 +309,19 @@ const LineMngPage = () => {
                                     onChange={handleChange}
                                     fullWidth
                                 />
+                            </DropInput>
+
+                            <DropInput title="사용여부">
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="demo-row-radio-buttons-group-label"
+                                    name="use_yn"
+                                    value={use_yn}
+                                    onChange={handleChange}
+                                >
+                                    <FormControlLabel value="true" control={<Radio />} label="사용함" />
+                                    <FormControlLabel value="false" control={<Radio />} label="사용안함" />
+                                </RadioGroup>
                             </DropInput>
                         </InputLayout>
 
