@@ -13,6 +13,8 @@ import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ContentLine from '../../../components/Common/ContentLine';
 import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
+import { getDateFormat } from 'utils/CommonUtils';
+
 const cx = classNames.bind(styles);
 
 const FaqContent = (props) => {
@@ -78,7 +80,8 @@ const FaqContent = (props) => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 180
+            maxWidth: 180,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
     const navigate = useNavigate();

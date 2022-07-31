@@ -13,6 +13,7 @@ import InputLayout from 'components/Common/InputLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import DropInput from '../../../components/Common/DropInput';
 import ContentLine from '../../../components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 
 function InputTitle(props) {
     return null;
@@ -69,7 +70,8 @@ const AuthManagementPage = () => {
             headerName: '등록일자',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
     const navigate = useNavigate();

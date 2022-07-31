@@ -10,6 +10,7 @@ import TopInputLayout from '../../../components/Common/TopInputLayout';
 import InputLayout from '../../../components/Common/InputLayout';
 import HeaderTitle from '../../../components/HeaderTitle';
 import ContentLine from '../../../components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const AccountMng = () => {
     let isSubmitting = false;
@@ -51,7 +52,8 @@ const AccountMng = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 180
+            maxWidth: 180,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         },
         {
             field: 'valid_start_date',
@@ -262,14 +264,7 @@ const AccountMng = () => {
                             <Button disableElevation size="medium" type="submit" variant="contained" color="info" onClick={newClick}>
                                 등록
                             </Button>
-                            <Button
-                                disableElevation
-                                size="medium"
-                                type="submit"
-                                variant="contained"
-                                color="error"
-                                onClick={deleteClick}
-                            >
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="error" onClick={deleteClick}>
                                 삭제
                             </Button>
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>

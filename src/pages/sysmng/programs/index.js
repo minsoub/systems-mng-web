@@ -12,6 +12,7 @@ import InputLayout from 'components/Common/InputLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import ContentLine from '../../../components/Common/ContentLine';
 import DropInput from '../../../components/Common/DropInput';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const ProgramManagementPage = () => {
     let isSubmitting = false;
@@ -63,7 +64,8 @@ const ProgramManagementPage = () => {
             headerName: '등록일자',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
     const navigate = useNavigate();
