@@ -14,6 +14,7 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import HeaderTitle from '../../../components/HeaderTitle';
 import ContentLine from '../../../components/Common/ContentLine';
 import DropInput from '../../../components/Common/DropInput';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const LineMngPage = () => {
     let isSubmitting = false;
@@ -44,7 +45,8 @@ const LineMngPage = () => {
             headerName: '등록 일시',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
 

@@ -34,6 +34,7 @@ import cx from 'classnames';
 import InputLayout from '../../../components/Common/InputLayout';
 import './styles.scss';
 import ContentLine from '../../../components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const ProjectsPage = () => {
     let isSubmitting = false;
@@ -129,7 +130,8 @@ const ProjectsPage = () => {
             headerName: '등록일시',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
     const navigate = useNavigate();

@@ -1,17 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-    Button,
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    Grid,
-    MenuItem,
-    Radio,
-    RadioGroup,
-    Select,
-    Stack
-} from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, Select, Stack } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
@@ -24,7 +13,8 @@ import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
 import ContentLine from '../../../components/Common/ContentLine';
 import DropInput from '../../../components/Common/DropInput';
-import SearchBar from "../../../components/ContentManage/SearchBar";
+import SearchBar from '../../../components/ContentManage/SearchBar';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const RoleManagementPage = () => {
     let isSubmitting = false;
@@ -76,7 +66,8 @@ const RoleManagementPage = () => {
             headerName: '등록일자',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
     const navigate = useNavigate();
@@ -267,7 +258,6 @@ const RoleManagementPage = () => {
     const handleChange = (e) => {
         setKeyword(e.target.value);
     };
-
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>

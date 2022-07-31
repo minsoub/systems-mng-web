@@ -13,6 +13,7 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import SearchBar from '../../../components/ContentManage/SearchBar';
 import SearchDate from '../../../components/ContentManage/SearchDate';
 import ContentLine from '../../../components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const SiteLogPage = () => {
     let isSubmitting = false;
@@ -77,7 +78,8 @@ const SiteLogPage = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 140
+            maxWidth: 140,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
     const navigate = useNavigate();
