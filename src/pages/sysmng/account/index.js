@@ -206,7 +206,7 @@ const AccountManagementPage = () => {
     // delete
     const deleteClick = () => {
         if (selectedRows.length === 0) {
-            alert('삭제 할 계정에 대해서 체크박스를 선택하세요!!!');
+            alert('삭제할 계정에 대해서 체크박스를 선택하세요!!!');
             return;
         }
         console.log(selectedRows);

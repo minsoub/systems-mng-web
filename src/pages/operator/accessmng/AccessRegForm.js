@@ -672,7 +672,9 @@ const AccessRegForm = () => {
                                 <DropInput title="계정상태">
                                     <Select name="status" label="계정상태" value={status} onChange={statusChanged}>
                                         <MenuItem value="NORMAL">정상</MenuItem>
-                                        <MenuItem value="INIT_REQUEST">초기화요청</MenuItem>
+                                        <MenuItem value="INIT_OTP_REQUEST">초기화요청(OTP)</MenuItem>
+                                        <MenuItem value="INIT_OTP_COMPLETE">초기화완료(OTP)</MenuItem>
+                                        <MenuItem value="INIT_REQUEST">초기화요청(비밀번호)</MenuItem>
                                         {/*<MenuItem value="INIT_CONFIRM">초기화확인</MenuItem>*/}
                                         {/*<MenuItem value="INIT_COMPLETE">초기화완료</MenuItem>*/}
                                         <MenuItem value="INIT_REGISTER">신규등록</MenuItem>
