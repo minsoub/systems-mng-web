@@ -3,7 +3,16 @@ import jwt from 'jsonwebtoken';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axiosInstanceAuth from './axiosAuth';
-import { activeToken, activeRefreshToken } from 'store/reducers/auth';
+import {
+    activeToken,
+    activeRefreshToken,
+    activeSite,
+    activeRole,
+    activeEmail,
+    activeLogin,
+    activeLoginDate
+} from 'store/reducers/auth';
+import {dispatch} from "../store";
 
 const useAxios = () => {
     const dispatch = useDispatch();
@@ -55,6 +64,14 @@ const useAxios = () => {
                     if (now > expRefresh) {
                         //console.log(now);
                         //console.log(expRefresh);
+                        if (localStorage.hasOwnProperty('authenticated')) {
+                            dispatch(activeSite({siteId: ''}));
+                            dispatch(activeRole({roleId: ''})); // Role Id
+                            dispatch(activeEmail({email: ''}));
+                            dispatch(activeToken({accessToken: ''}));
+                            dispatch(activeLogin({isLoggined: ''}));
+                            dispatch(activeLoginDate({loginDate: ''}));
+                        }
                         localStorage.clear();
                         setTokenCheck(false);
                         setRequestSubscribers([]);
@@ -84,6 +101,14 @@ const useAxios = () => {
                         } catch (err) {
                             console.log('catch error....');
                             console.log(err);
+                            if (localStorage.hasOwnProperty('authenticated')) {
+                                dispatch(activeSite({siteId: ''}));
+                                dispatch(activeRole({roleId: ''})); // Role Id
+                                dispatch(activeEmail({email: ''}));
+                                dispatch(activeToken({accessToken: ''}));
+                                dispatch(activeLogin({isLoggined: ''}));
+                                dispatch(activeLoginDate({loginDate: ''}));
+                            }
                             localStorage.clear();
                             setTokenCheck(false);
                             setRequestSubscribers([]);
