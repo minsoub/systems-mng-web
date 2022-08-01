@@ -405,10 +405,17 @@ const AccessRegForm = () => {
             return;
         }
         if (password === '' && !paramId) {
-            setErrorTitle('입력 오류');
-            setErrorMessage('Password를 입력하지 않았습니다.');
-            setOpen(true);
+            // setErrorTitle('입력 오류');
+            // setErrorMessage('Password를 입력하지 않았습니다.');
+            // setOpen(true);
             alert('비밀번호를 입력해주세요.');
+            return;
+        }
+        if ((status === 'INIT_REQUEST' || status === 'INIT_REGISTER' || !paramId) && password === '') {
+            // setErrorTitle('입력 오류');
+            // setErrorMessage('Password를 입력하지 않았습니다.');
+            // setOpen(true);
+            alert('임시 비밀번호를 입력해주세요.');
             return;
         }
         if (status === '') {
@@ -666,8 +673,8 @@ const AccessRegForm = () => {
                                     <Select name="status" label="계정상태" value={status} onChange={statusChanged}>
                                         <MenuItem value="NORMAL">정상</MenuItem>
                                         <MenuItem value="INIT_REQUEST">초기화요청</MenuItem>
-                                        <MenuItem value="INIT_CONFIRM">초기화확인</MenuItem>
-                                        <MenuItem value="INIT_COMPLETE">초기화완료</MenuItem>
+                                        {/*<MenuItem value="INIT_CONFIRM">초기화확인</MenuItem>*/}
+                                        {/*<MenuItem value="INIT_COMPLETE">초기화완료</MenuItem>*/}
                                         <MenuItem value="INIT_REGISTER">신규등록</MenuItem>
                                         <MenuItem value="DENY_ACCESS">중지상태</MenuItem>
                                         <MenuItem value="CLOSED_ACCOUNT">계정잠금</MenuItem>
