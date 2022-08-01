@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 import { Button, Grid } from '@mui/material';
 import useAuthorized from 'apis/auth/auths';
@@ -20,6 +20,19 @@ const OtpQrCodeForm = ({ result }) => {
     const [errMsg, setErrMsg] = useState('');
 
     const [responseData, requestError, loading, { actionOtp }] = useAuthorized();
+    const { isLoggined, siteId, accessToken } = useSelector((state) => state.auth);
+
+
+    useEffect(() => {
+        if(localStorage.hasOwnProperty('authenticated') && isLoggined === true && siteId && accessToken) {
+            if (siteId === '62a15f4ae4129b518b133128') {
+                // 투자보호
+                navigate('/cpc/dashboard');
+            } else {
+                navigate('/lrc/dashboard');
+            }
+        }
+    }, [isLoggined]);
 
     // 로그인 error 처리
     useEffect(() => {

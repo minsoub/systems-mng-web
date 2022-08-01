@@ -15,11 +15,25 @@ import * as Yup from 'yup';
 import {Formik} from 'formik';
 import {EyeInvisibleOutlined, EyeOutlined} from '@ant-design/icons';
 import useAuthorized from 'apis/auth/auths';
+import {useSelector} from "react-redux";
 
 const AuthLogin = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [responseData, requestError, loading, { actionLogin }] = useAuthorized();
+
+    const { isLoggined, siteId, accessToken } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if(localStorage.hasOwnProperty('authenticated') && isLoggined === true && siteId && accessToken) {
+            if (siteId === '62a15f4ae4129b518b133128') {
+                // 투자보호
+                navigate('/cpc/dashboard');
+            } else {
+                navigate('/lrc/dashboard');
+            }
+        }
+    }, [isLoggined]);
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -37,18 +51,15 @@ const AuthLogin = () => {
             console.log(requestError);
             if (requestError.message === 'INVALID_USER_PASSWORD') {
                 alert('패스워드가 일치하지 않습니다!!!');
-                return;
             } else if(requestError.message === 'INVALID_USER'){
                 alert('가입되지 않은 사용자 입니다.');
-                return;
             } else if(requestError.message === 'INVALID_TOKEN'){
                 alert('사용 권한이 없는 사용자 입니다.');
-                return;
             } else if (requestError.message === 'INVALID_ACCOUNT_CLOSED' || requestError.message === 'USER_ACCOUNT_DISABLE') {
                 alert('계정이 잠겼습니다!!! 관리자에게 문의 해 주시기 바랍니다!!!');
-                return;
+            } else {
+                alert(requestError.message);
             }
-            alert(requestError.message);
         }
     }, [requestError]);
 

@@ -13,6 +13,15 @@ import { useNavigate } from 'react-router-dom';
 // assets
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
+import {
+    activeEmail,
+    activeLogin,
+    activeLoginDate,
+    activeRole,
+    activeSite,
+    activeToken
+} from "../../../../../store/reducers/auth";
+import {dispatch} from "../../../../../store";
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -49,6 +58,14 @@ const Profile = () => {
     const handleLogout = async () => {
         if (confirm('로그아웃 하시겠습니까?')) {
             // logout
+            if (localStorage.hasOwnProperty('authenticated')) {
+                dispatch(activeSite({siteId: ''}));
+                dispatch(activeRole({roleId: ''})); // Role Id
+                dispatch(activeEmail({email: ''}));
+                dispatch(activeToken({accessToken: ''}));
+                dispatch(activeLogin({isLoggined: ''}));
+                dispatch(activeLoginDate({loginDate: ''}));
+            }
             localStorage.clear();
             navigate('/login');
         }

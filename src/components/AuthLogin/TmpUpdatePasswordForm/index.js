@@ -38,7 +38,9 @@ const TmpUpdatePasswordForm = ({ result }) => {
         if (requestError) {
             console.log('>> requestError <<');
             console.log(requestError);
-            alert('error');
+            if(requestError.message === 'EQUAL_CURRENT_PASSWORD' || requestError.message === 'EQUAL_OLD_PASSWORD') {
+                alert('이전 비밀번호와 다른 비밀번호를 입력해 주세요.');
+            }
         }
     }, [requestError]);
 
