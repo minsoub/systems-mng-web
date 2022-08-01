@@ -11,7 +11,7 @@ const AuthContext = createContext({
 });
 
 // eslint-disable-next-line react/prop-types
-const AuthProvider = ({ chidlren }) => {
+const AuthProvider = ({ children }) => {
     const [userid, setUserid] = useState(null);
     const [username, setUsername] = useState(null);
     const [loggined, setLoggined] = useState(false);
@@ -22,7 +22,7 @@ const AuthProvider = ({ chidlren }) => {
         actions: { setUserid, setUsername, setLoggined, setToken }
     };
 
-    return <AuthContext.Provider value={login}>{chidlren}</AuthContext.Provider>;
+    return <AuthContext.Provider value={login}>{children}</AuthContext.Provider>;
 };
 
 const { Consumer: AuthConsumer } = AuthContext;

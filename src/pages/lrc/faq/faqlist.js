@@ -14,7 +14,8 @@ import ContentLine from '../../../components/Common/ContentLine';
 import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
 import { getDateFormat } from 'utils/CommonUtils';
-
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 const cx = classNames.bind(styles);
 
 const FaqContent = (props) => {
@@ -37,9 +38,8 @@ const FaqContent = (props) => {
             maxWidth: 100,
             renderCell: (params) => (
                 <strong>
-                    <ArrowCircleUpIcon onClick={() => gridOrderClick('+', params.value)} />
-
-                    <ArrowCircleDownIcon onClick={() => gridOrderClick('-', params.value)} />
+                    <KeyboardArrowUpIcon onClick={() => gridOrderClick('+', params.value)} />
+                    <KeyboardArrowDownIcon onClick={() => gridOrderClick('-', params.value)} />
                 </strong>
             )
         },
@@ -91,7 +91,7 @@ const FaqContent = (props) => {
     const { language, children, tabindex, index, ...other } = props;
 
     // 그리드 선택된 row id
-    const [selectedRows, setSeletedRows] = useState([]);
+    const [selectedRows, setSelectedRows] = useState([]);
     // 그리드 목록 데이터
     const [dataGridRows, setDataGridRows] = useState([]);
     const [totalDataGridRows, setTotalDataGridRows] = useState([]);
@@ -232,7 +232,7 @@ const FaqContent = (props) => {
     //체크박스 선택된 row id 저장
     const handleSelectionChange = (item) => {
         if (item) {
-            setSeletedRows(item);
+            setSelectedRows(item);
         }
     };
     // 페이징 변경 이벤트

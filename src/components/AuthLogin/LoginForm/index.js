@@ -22,10 +22,10 @@ const AuthLogin = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [responseData, requestError, loading, { actionLogin }] = useAuthorized();
 
-    const { isLoggined, siteId } = useSelector((state) => state.auth);
+    const { isLoggined, siteId, accessToken } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        if(isLoggined === true && siteId) {
+        if(localStorage.hasOwnProperty('authenticated') && isLoggined === true && siteId && accessToken) {
             if (siteId === '62a15f4ae4129b518b133128') {
                 // 투자보호
                 navigate('/cpc/dashboard');
