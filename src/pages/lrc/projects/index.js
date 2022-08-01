@@ -418,6 +418,7 @@ const ProjectsPage = () => {
 
     // search
     const searchClick = () => {
+        setPage(1);
         console.log('searchClick called...');
         setDataGridRows([]);
         //roleComboSearch(is_use, type, site_id);
@@ -456,8 +457,9 @@ const ProjectsPage = () => {
     };
     const clearClick = () => {
         setPeriod('3');
-        setStartDate(moment().format('YYYY-MM-DD'));
-        setEndDate(moment().format('YYYY-MM-DD'));
+        setDateFromToSet('3');
+        // setStartDate(moment().format('YYYY-MM-DD'));
+        // setEndDate(moment().format('YYYY-MM-DD'));
         setSts('');
         setProcess('');
         checkedBusinessItems.clear();

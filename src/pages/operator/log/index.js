@@ -14,7 +14,7 @@ import SearchBar from '../../../components/ContentManage/SearchBar';
 import SearchDate from '../../../components/ContentManage/SearchDate';
 import ContentLine from '../../../components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
-
+import ReasonDialog from 'pages/popup/ReasonPopup';
 const SiteLogPage = () => {
     let isSubmitting = false;
     const columns = [
@@ -108,6 +108,10 @@ const SiteLogPage = () => {
     const [start_date, setStartDate] = useState('');
     const [end_date, setEndDate] = useState('');
 
+    // Log reason Dialog
+    const [openReason, setOpenReason] = useState(false);
+    const [selectedValue, setSelectedValue] = useState('');
+
     // onload
     useEffect(() => {
         setStartDate(moment().format('YYYY-MM-DD'));
@@ -165,7 +169,7 @@ const SiteLogPage = () => {
                     const url = window.URL.createObjectURL(new Blob([res.data]));
                     const link = document.createElement('a');
                     link.href = url;
-                    link.setAttribute('download', '서비스로그.xlsx');
+                    link.setAttribute('download', '감사로그.xlsx');
                     link.style.cssText = 'display:none';
                     document.body.appendChild(link);
                     link.click();
@@ -226,8 +230,21 @@ const SiteLogPage = () => {
         //roleComboSearch(is_use, type, site_id);
         logLrcSearch(start_date, end_date, keyword);
     };
+
+    // Excel Download
     const excelClick = () => {
-        logExcelDownload(start_date, end_date, keyword);
+        setOpenReason(true);
+    };
+
+    const handlePopupClose = (returnData) => {
+        setOpenReason(false);
+        // 데이터 처리
+        if (returnData.length !== 0) {
+            // 데이터 처리
+            console.log(returnData);
+            let reason = returnData;
+            logExcelDownload(start_date, end_date, keyword, reason, '2');
+        }
     };
 
     return (
@@ -276,6 +293,7 @@ const SiteLogPage = () => {
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}
             </Grid>
+            <ReasonDialog selectedValue={selectedValue} open={openReason} onClose={handlePopupClose} />
         </Grid>
     );
 };
