@@ -418,9 +418,10 @@ const ProjectsPage = () => {
 
     // search
     const searchClick = () => {
-        setPage(1);
         console.log('searchClick called...');
         setDataGridRows([]);
+        setTotalDataGridRows([]);
+        setSeletedRows([]);
         //roleComboSearch(is_use, type, site_id);
         let business_list = [];
         let network_list = [];
