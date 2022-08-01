@@ -34,6 +34,7 @@ import cx from 'classnames';
 import InputLayout from '../../../components/Common/InputLayout';
 import './styles.scss';
 import ContentLine from '../../../components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const ProjectsPage = () => {
     let isSubmitting = false;
@@ -129,7 +130,8 @@ const ProjectsPage = () => {
             headerName: '등록일시',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
     const navigate = useNavigate();
@@ -418,6 +420,12 @@ const ProjectsPage = () => {
     const searchClick = () => {
         console.log('searchClick called...');
         setDataGridRows([]);
+        setTotalDataGridRows([]);
+        setSeletedRows([]);
+        setPage(0);
+        setRowsPerPage(10);
+        // categorylist clear
+        clearCatetory();
         //roleComboSearch(is_use, type, site_id);
         let business_list = [];
         let network_list = [];
@@ -453,9 +461,13 @@ const ProjectsPage = () => {
         dispatch(setSearchData(searchData));
     };
     const clearClick = () => {
+        setPage(0);
+        setRowsPerPage(10);
         setPeriod('3');
-        setStartDate(moment().format('YYYY-MM-DD'));
-        setEndDate(moment().format('YYYY-MM-DD'));
+        setDateFromToSet('3');
+        clearCatetory();
+        // setStartDate(moment().format('YYYY-MM-DD'));
+        // setEndDate(moment().format('YYYY-MM-DD'));
         setSts('');
         setProcess('');
         checkedBusinessItems.clear();
@@ -469,6 +481,19 @@ const ProjectsPage = () => {
         setTotalDataGridRows([]);
         setSeletedRows([]);
     };
+    const clearCatetory = () => {
+        categoryList.map((category, index) => {
+            setCategoryList((current) =>
+                current.map((obj) => {
+                    if (obj.id === category.id) {
+                        return { ...obj, count: 0 };
+                    }
+                    return obj;
+                })
+            );
+        });
+    };
+
     // 분류 클릭 시
     const filterClick = (id) => {
         if (id) {

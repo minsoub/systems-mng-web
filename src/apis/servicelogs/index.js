@@ -27,12 +27,13 @@ const LogsApi = () => {
         });
     };
 
-    const getLrcLogExcelExport = (fromDate, toDate, keyword) => {
+    const getLrcLogExcelExport = (fromDate, toDate, keyword, reason, type) => {
         const encodeKeyword = encodeURIComponent(keyword);
+        const encodeReason = encodeURIComponent(reason);
         callApi('logExport', {
             axiosInstance: axiosInstanceDownload,
             method: 'get',
-            url: `/mng/lrc/service/logs/excel/export?fromDate=${fromDate}&toDate=${toDate}&keyword=${encodeKeyword}`,
+            url: `/mng/lrc/service/logs/excel/export?type=${type}&fromDate=${fromDate}&toDate=${toDate}&keyword=${encodeKeyword}&reason=${encodeReason}`,
             requestConfig: {}
         });
     };

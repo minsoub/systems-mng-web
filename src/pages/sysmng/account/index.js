@@ -11,6 +11,7 @@ import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import ContentLine from '../../../components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const AccountManagementPage = () => {
     let isSubmitting = false;
@@ -76,7 +77,8 @@ const AccountManagementPage = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 180
+            maxWidth: 180,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
 
@@ -268,14 +270,7 @@ const AccountManagementPage = () => {
                             <Button disableElevation size="medium" type="submit" variant="contained" color="info" onClick={newClick}>
                                 등록
                             </Button>
-                            <Button
-                                disableElevation
-                                size="medium"
-                                type="submit"
-                                variant="contained"
-                                color="error"
-                                onClick={deleteClick}
-                            >
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="error" onClick={deleteClick}>
                                 삭제
                             </Button>
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>

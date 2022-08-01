@@ -15,7 +15,8 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import SearchDate from 'components/ContentManage/SearchDate';
 import ContentLine from '../../../components/Common/ContentLine';
-
+import { getDateFormat } from 'utils/CommonUtils';
+import ReasonDialog from 'pages/popup/ReasonPopup';
 // Log
 const ServiceLog = () => {
     const columns = [
@@ -79,7 +80,8 @@ const ServiceLog = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 140
+            maxWidth: 140,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
     const navigate = useNavigate();
@@ -87,6 +89,10 @@ const ServiceLog = () => {
 
     const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.logSearchReducer);
     const dispatch = useDispatch();
+
+    // Log reason Dialog
+    const [openReason, setOpenReason] = useState(false);
+    const [selectedValue, setSelectedValue] = useState('');
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -292,7 +298,18 @@ const ServiceLog = () => {
     };
     // Excel Download
     const excelClick = () => {
-        logExcelDownload(from_date, to_date, keyword);
+        setOpenReason(true);
+    };
+
+    const handlePopupClose = (returnData) => {
+        setOpenReason(false);
+        // 데이터 처리
+        if (returnData.length !== 0) {
+            // 데이터 처리
+            console.log(returnData);
+            let reason = returnData;
+            logExcelDownload(from_date, to_date, keyword, reason, '1');
+        }
     };
 
     return (
@@ -344,6 +361,7 @@ const ServiceLog = () => {
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}
             </Grid>
+            <ReasonDialog selectedValue={selectedValue} open={openReason} onClose={handlePopupClose} />
         </Grid>
     );
 };
