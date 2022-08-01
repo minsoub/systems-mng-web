@@ -422,6 +422,10 @@ const ProjectsPage = () => {
         setDataGridRows([]);
         setTotalDataGridRows([]);
         setSeletedRows([]);
+        setPage(0);
+        setRowsPerPage(10);
+        // categorylist clear
+        clearCatetory();
         //roleComboSearch(is_use, type, site_id);
         let business_list = [];
         let network_list = [];
@@ -457,8 +461,11 @@ const ProjectsPage = () => {
         dispatch(setSearchData(searchData));
     };
     const clearClick = () => {
+        setPage(0);
+        setRowsPerPage(10);
         setPeriod('3');
         setDateFromToSet('3');
+        clearCatetory();
         // setStartDate(moment().format('YYYY-MM-DD'));
         // setEndDate(moment().format('YYYY-MM-DD'));
         setSts('');
@@ -474,6 +481,19 @@ const ProjectsPage = () => {
         setTotalDataGridRows([]);
         setSeletedRows([]);
     };
+    const clearCatetory = () => {
+        categoryList.map((category, index) => {
+            setCategoryList((current) =>
+                current.map((obj) => {
+                    if (obj.id === category.id) {
+                        return { ...obj, count: 0 };
+                    }
+                    return obj;
+                })
+            );
+        });
+    };
+
     // 분류 클릭 시
     const filterClick = (id) => {
         if (id) {
