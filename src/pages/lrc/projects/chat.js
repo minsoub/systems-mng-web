@@ -9,6 +9,7 @@ import { Button, FormControl, TextField } from '@mui/material';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import DownloadIcon from '@mui/icons-material/Download';
 import jwt from 'jsonwebtoken';
+import { nl2brToString } from 'utils/CommonUtils';
 
 const Chat = forwardRef((props, ref) => {
     const { projectId, fileList, fileDownload, children, tabindex, index, ...other } = props;
@@ -30,11 +31,26 @@ const Chat = forwardRef((props, ref) => {
     }));
     // 가짜 데이터
     const [messageList, setMessageList] = useState([]);
+    const refChatArea = useRef();
 
     const domMessage = useRef();
     const [message, setMessage] = useState('');
 
     const refKeyword = useRef(); // < HTMLInputElement > null;
+
+    let searchPosNow = 0;
+    let prevSearchKeyword = '';
+
+    const initChatScroll = () => {
+        // 채팅영역 스크롤
+        if (refChatArea.current) {
+            refChatArea.current.scrollTop = refChatArea.current.scrollHeight;
+        }
+        // // 첨부파일 스크롤
+        // if (refFileArea.current) {
+        //     refFileArea.current.scrollTop = refFileArea.current.scrollHeight;
+        // }
+    };
 
     useEffect(() => {
         let authData = null;
@@ -50,6 +66,7 @@ const Chat = forwardRef((props, ref) => {
             console.log(data);
             chatExistsAndSave(data);
         }
+        prevSearchKeyword = '';
     }, []);
 
     useEffect(() => {
@@ -168,6 +185,10 @@ const Chat = forwardRef((props, ref) => {
         console.log(responseError);
     }, [responseError]);
 
+    useEffect(() => {
+        initChatScroll();
+    }, [messageList]);
+
     // 메시지 전송 Text 박스
     const sendRequest = (data) => {
         // if (rSocket) {
@@ -185,48 +206,75 @@ const Chat = forwardRef((props, ref) => {
     };
     const searchClick = () => {
         console.log(refKeyword.current.value);
+        const keyword = refKeyword.current.value;
+
         if (refKeyword.current.value === '') {
-            alert('검색 단어를 입력하세요!!');
+            setClearSearchHighlight();
             return;
         }
+        if (prevSearchKeyword === keyword) {
+            searchPosNow += 1;
+        } else {
+            setClearSearchHighlight();
+            searchPosNow = 0;
+            prevSearchKeyword = keyword;
+        }
 
+        setSearchItemPos(keyword);
+    };
+
+    const setSearchItemPos = (keyword) => {
+        let checker = 0;
+        let matchCount = 0;
+
+        const comments = document.querySelectorAll('.message');
+
+        comments.forEach((item) => {
+            //console.log(item);
+            const comment = item.innerHTML;
+            if (comment.indexOf(keyword) !== -1) {
+                //console.log(item.getAttribute('data-message-id'));
+                if (comment.indexOf('<em') === -1) {
+                    item.innerHTML = nl2brToString(comment.replaceAll(keyword, `<em class="kwd">${keyword}</em>`));
+
+                    /* 포커스 이동 처리 */
+                    const article = item.parentElement?.parentElement;
+                    console.log(article);
+                    const top = article.offsetTop;
+                    console.log(top);
+                    console.log(refChatArea);
+                    if (searchPosNow === checker) {
+                        // 해당 위치로 스크롤바 이동
+                        refChatArea.current?.scrollTo(0, top - 130);
+                    }
+                    matchCount += 1;
+                    checker += 1;
+                } else {
+                    item.innerHTML = nl2brToString(comment);
+                }
+            }
+        });
+
+        /* 마지막라인까지 검색이 끝나면 초기화하여 다시 검색할 수 있도록 한다. */
+        if (searchPosNow + 1 >= matchCount) {
+            prevSearchKeyword = '';
+        }
+    };
+
+    // 검색 하일라이트 초기화
+    const setClearSearchHighlight = () => {
         const comments = document.querySelectorAll('.message');
         // clear
         comments.forEach((item) => {
             let key = item.getAttribute('data-message-id');
             messageList.map((data, index) => {
                 if (data.id === key) {
-                    item.innerHTML = data.message;
+                    item.innerHTML = nl2brToString(data.message);
                 }
             });
         });
-        // find
-        comments.forEach((item) => {
-            console.log(item);
-            const comment = item.innerHTML;
-            if (comment.indexOf(refKeyword.current.value) !== -1) {
-                //console.log(item.getAttribute('data-message-id'));
-                if (comment.indexOf('<em') === -1) {
-                    item.innerHTML = comment.replaceAll(refKeyword.current.value, `<em class="kwd">${refKeyword.current.value}</em>`);
-                }
-                //console.log(item);
-            }
-        });
-
-        // if (refKeyword.current.value) {
-        //     // message에서 단어 포함 검색해서 <b>처리한다.
-        //     let list = messageList;
-        //     list.map((item, index) => {
-        //         if (item.message.includes(refKeyword.current.value) && !item.message.includes('<b>')) {
-        //             console.log('find...');
-        //             item.message = item.message.replace(refKeyword.current.value, `<b>${refKeyword.current.value}</b>`);
-        //             console.log(item.message);
-        //         }
-        //     });
-        //     console.log(list);
-        //     setMessageList([]);
-        //     setMessageList(list);
-        // }
+        prevSearchKeyword = '';
+        searchPosNow = 0;
     };
 
     // 내역 다운로드
@@ -249,7 +297,7 @@ const Chat = forwardRef((props, ref) => {
                 </Button>
             </ButtonLayout>
 
-            <ChattingRoom sendMessage={sendRequest}>
+            <ChattingRoom ref={refChatArea} sendMessage={sendRequest}>
                 {messageList.length > 0 &&
                     messageList.map((item, idx) => {
                         const key = `key_${idx}`;

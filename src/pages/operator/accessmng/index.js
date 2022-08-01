@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, FormControl, Grid, MenuItem, OutlinedInput, Select } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
-import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
+import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import AccountApis from 'apis/account/accountapis';
 import HeaderTitle from '../../../components/HeaderTitle';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
@@ -15,14 +15,14 @@ import ContentLine from '../../../components/Common/ContentLine';
 const AccessMngPage = () => {
     let isSubmitting = false;
     const columns = [
-        {
-            field: 'id',
-            headerName: 'ID',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 180
-        },
+        // {
+        //     field: 'id',
+        //     headerName: 'ID',
+        //     flex: 1,
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     maxWidth: 180
+        // },
         {
             field: 'name',
             headerName: '사용자명',
@@ -161,8 +161,8 @@ const AccessMngPage = () => {
     };
 
     const isUseChanged = (e) => {
-        if(e.target.value === '') {
-            console.log(e.target.value)
+        if (e.target.value === '') {
+            console.log(e.target.value);
         }
         setIsUsed(e.target.value);
     };
@@ -259,20 +259,13 @@ const AccessMngPage = () => {
                             >
                                 검색
                             </Button>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="info" onClick={newClick}>
+                            {/* <Button disableElevation size="medium" type="submit" variant="contained" color="info" onClick={newClick}>
                                 등록
                             </Button>
 
-                            <Button
-                                disableElevation
-                                size="medium"
-                                type="submit"
-                                variant="contained"
-                                color="error"
-                                onClick={deleteClick}
-                            >
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="error" onClick={deleteClick}>
                                 삭제
-                            </Button>
+                            </Button> */}
 
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
                                 초기화
@@ -281,7 +274,7 @@ const AccessMngPage = () => {
                     </TopInputLayout>
                 </MainCard>
                 <ContentLine>
-                    <CheckBoxDataGrid
+                    <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
                         handlePageChange={handlePage}

@@ -2,18 +2,28 @@ import '../styles.scss';
 
 const MessageLeft = ({ id, message, timestamp, displayName, fileList, fileDownload }) => {
     const checkFile = (data) => {
-        if (data.indexOf('FILE_MESSAGE') !== -1) {
+        console.log(data);
+        if (data.indexOf('FILE_MESSAGE::') !== -1) {
             let found = 0;
+            let id, name;
             fileList.map((item, index) => {
-                if (item.id === data.split(':')[1]) {
+                if (item.id === data.split('::')[1]) {
                     found = 1;
-                    return (
-                        <a href="#" onClick={() => fileDownload(item.id, item.file_name)}>
-                            첨부파일 업로드 {item.file_name}
-                        </a>
-                    );
+                    console.log('found.........');
+                    console.log(item);
+                    id = item.id;
+                    name = item.file_name;
                 }
             });
+            if (found === 1) {
+                return (
+                    <a href="#" onClick={() => fileDownload(id, name)}>
+                        첨부파일 업로드 {name}
+                    </a>
+                );
+            } else {
+                return null;
+            }
         } else {
             return data;
         }
