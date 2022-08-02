@@ -130,6 +130,7 @@ const Chat = forwardRef((props, ref) => {
                 let msg = [];
                 responseData.map((item, index) => {
                     let data = {};
+
                     if (item.role === 'ADMIN') {
                         data = {
                             id: item.id,
@@ -232,7 +233,8 @@ const Chat = forwardRef((props, ref) => {
         comments.forEach((item) => {
             //console.log(item);
             const comment = item.innerHTML;
-            if (comment.indexOf(keyword) !== -1) {
+            console.log(comment);
+            if (comment.indexOf(keyword) !== -1 && comment.indexOf('FILE_MESSAGE::') === -1) {
                 //console.log(item.getAttribute('data-message-id'));
                 if (comment.indexOf('<em') === -1) {
                     item.innerHTML = nl2brToString(comment.replaceAll(keyword, `<em class="kwd">${keyword}</em>`));
@@ -250,6 +252,7 @@ const Chat = forwardRef((props, ref) => {
                     matchCount += 1;
                     checker += 1;
                 } else {
+                    console.log(comment);
                     item.innerHTML = nl2brToString(comment);
                 }
             }
