@@ -28,7 +28,7 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ContentLine from '../../../components/Common/ContentLine';
 import FlexBox from '../../../components/Common/FlexBox';
-import SearchDate from "../../../components/ContentManage/SearchDate";
+import SearchDate from '../../../components/ContentManage/SearchDate';
 
 const AccessRegForm = () => {
     let isSubmitting = false;
@@ -373,8 +373,8 @@ const AccessRegForm = () => {
 
     const currentDate = () => {
         const date = new Date();
-        return `${String(date.getFullYear())}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;
-    }
+        return `${String(date.getFullYear())}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    };
 
     // delete
     const deleteClick = () => {};
@@ -603,6 +603,7 @@ const AccessRegForm = () => {
                                         type="text"
                                         size="small"
                                         value={name}
+                                        inputProps={{ readOnly: true }}
                                         name="name"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
@@ -619,7 +620,7 @@ const AccessRegForm = () => {
                                             size="small"
                                             value={email}
                                             name="email"
-                                            inputProps={{ readOnly: emailStatus }}
+                                            inputProps={{ readOnly: true }}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
                                             placeholder="Enter Email ID"
@@ -627,7 +628,7 @@ const AccessRegForm = () => {
                                         />
                                     </DropInput>
                                 </FlexBox>
-                                <Button
+                                {/* <Button
                                     disableElevation
                                     size="medium"
                                     type="button"
@@ -637,7 +638,7 @@ const AccessRegForm = () => {
                                     onClick={emailDuplicateCheck}
                                 >
                                     중복체크
-                                </Button>
+                                </Button> */}
                             </FlexBox>
                         </div>
 

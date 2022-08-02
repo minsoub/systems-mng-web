@@ -236,7 +236,7 @@ const ProjectMng = (props) => {
                     setBusiness_code(responseData.data.data.business_code);
                     setNetwork_code(responseData.data.data.network_code);
                     refWhitepaper_link.current.value = responseData.data.data.whitepaper_link;
-                    setCreate_date(responseData.data.data.create_date.substring(0, 10));
+                    if (responseData.data.data.create_date) setCreate_date(responseData.data.data.create_date.substring(0, 10));
                     refContract_address.current.value = responseData.data.data.contract_address;
                 } else {
                     setProjectInfo({});
@@ -256,10 +256,10 @@ const ProjectMng = (props) => {
                     let data = responseData.data.data;
                     data.map((item, indx) => {
                         if (item.market_info === 'KRW') {
-                            setKrw_ico_date(item.ico_date.substring(0, 10));
+                            if (item.ico_date) setKrw_ico_date(item.ico_date.substring(0, 10));
                             refPriceKRW.current.value = item.price;
                         } else {
-                            setBtc_ico_date(item.ico_date.substring(0, 10));
+                            if (item.ico_date) setBtc_ico_date(item.ico_date.substring(0, 10));
                             refPriceBTC.current.value = item.price;
                         }
                     });
@@ -587,7 +587,9 @@ const ProjectMng = (props) => {
                 project_id: projectId,
                 organization: '',
                 result: '',
-                reference: ''
+                reference: '',
+                file_key: '',
+                file_name: ''
             };
             setReviewList((prevRows) => [...prevRows, addRow]);
         }
@@ -639,7 +641,7 @@ const ProjectMng = (props) => {
     const icoSave = () => {
         const pattern = /(^\d+)[.]?\d{1,4}$/;
         if (!pattern.test(refPriceBTC.current.value) || !pattern.test(refPriceKRW.current.value)) {
-            alert("소수점 네자리까지 입력 가능합니다.");
+            alert('소수점 네자리까지 입력 가능합니다.');
             return;
         }
         if (confirm('저장하시겠습니까?')) {
@@ -695,8 +697,8 @@ const ProjectMng = (props) => {
         const pattern = /(^\d+)[.]?\d{1,4}$/;
         marketingList.map((item) => {
             const { minimum_quantity, actual_quantity } = item;
-            if(!pattern.test(minimum_quantity) || !pattern.test(actual_quantity)) {
-                alert("소수점 네자리까지 입력 가능합니다.");
+            if (!pattern.test(minimum_quantity) || !pattern.test(actual_quantity)) {
+                alert('소수점 네자리까지 입력 가능합니다.');
                 return;
             }
         });
@@ -714,7 +716,7 @@ const ProjectMng = (props) => {
             if (confirm('저장하시겠습니까?')) {
                 reviewList.map((item, index) => {
                     console.log(item);
-                    console.log(index);
+                    //console.log(index);
                     formData.append('no', index);
                     formData.append('id', item.id === '' ? '' : item.id);
                     formData.append('projectId', projectId);
