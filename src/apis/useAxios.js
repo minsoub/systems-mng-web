@@ -58,12 +58,7 @@ const useAxios = () => {
                         //console.log(now);
                         //console.log(expRefresh);
                         if (localStorage.hasOwnProperty('authenticated')) {
-                            dispatch(activeSite({ siteId: '' }));
-                            dispatch(activeRole({ roleId: '' })); // Role Id
-                            dispatch(activeEmail({ email: '' }));
-                            dispatch(activeToken({ accessToken: '' }));
-                            dispatch(activeLogin({ isLoggined: '' }));
-                            dispatch(activeLoginDate({ loginDate: '' }));
+                            dispatch(activeLogin({ isLoggined: false }));
                         }
                         localStorage.clear();
                         setTokenCheck(false);
@@ -95,12 +90,7 @@ const useAxios = () => {
                             console.log('catch error....');
                             console.log(err);
                             if (localStorage.hasOwnProperty('authenticated')) {
-                                dispatch(activeSite({ siteId: '' }));
-                                dispatch(activeRole({ roleId: '' })); // Role Id
-                                dispatch(activeEmail({ email: '' }));
-                                dispatch(activeToken({ accessToken: '' }));
-                                dispatch(activeLogin({ isLoggined: '' }));
-                                dispatch(activeLoginDate({ loginDate: '' }));
+                                dispatch(activeLogin({ isLoggined: false }));
                             }
                             localStorage.clear();
                             setTokenCheck(false);
