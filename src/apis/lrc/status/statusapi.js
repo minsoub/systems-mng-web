@@ -6,11 +6,11 @@ const StatusApis = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
 
     // 데이터 조회
-    const getListData = () => {
+    const getListData = (is_use) => {
         callApi('getList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/mng/lrc/statusmanagment/status-code/tree`,
+            url: `/mng/lrc/statusmanagment/status-code/tree?isUse=${is_use}`,
             requestConfig: {}
         });
     };

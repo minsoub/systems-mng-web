@@ -408,7 +408,7 @@ const FileMng = (props) => {
                         </thead>
                         <tbody>
                             <tr>
-                                <th className="tg-0pky">거래지원신청서</th>
+                                <th className="tg-0pky">1. 거래지원신청서</th>
                                 <td className="tg-0pky">
                                     <FlexBox>
                                         <TextField
@@ -491,7 +491,7 @@ const FileMng = (props) => {
                             </tr>
 
                             <tr>
-                                <th className="tg-0pky">별첨-1]개인정보 요청서</th>
+                                <th className="tg-0pky">2. 별첨-1]개인정보 요청서</th>
                                 <td className="tg-0pky">
                                     <FlexBox>
                                         <TextField
@@ -574,7 +574,7 @@ const FileMng = (props) => {
                             </tr>
 
                             <tr>
-                                <th className="tg-0pky">개인정보 수집 및 이용동의서</th>
+                                <th className="tg-0pky">3. 개인정보 수집 및 이용동의서</th>
                                 <td className="tg-0pky">
                                     <FlexBox>
                                         <TextField id="url2" name="url2" fullWidth size="medium" value={url2} onChange={handleChange} />
@@ -647,7 +647,7 @@ const FileMng = (props) => {
                                 </td>
                             </tr>
                             <tr>
-                                <th className="tg-0pky">프로젝트 백서</th>
+                                <th className="tg-0pky">4. 프로젝트 백서</th>
                                 <td className="tg-0pky">
                                     <FlexBox>
                                         <TextField id="url3" name="url3" fullWidth size="medium" value={url3} onChange={handleChange} />
@@ -719,7 +719,7 @@ const FileMng = (props) => {
                                 </td>
                             </tr>
                             <tr>
-                                <th className="tg-0pky">기술검토보고서</th>
+                                <th className="tg-0pky">5. 기술검토보고서</th>
                                 <td className="tg-0pky">
                                     <FlexBox>
                                         <TextField
@@ -798,7 +798,7 @@ const FileMng = (props) => {
                                 </td>
                             </tr>
                             <tr>
-                                <th className="tg-0pky">토큰 세일 및 분배 계획서</th>
+                                <th className="tg-0pky">6. 토큰 분배 계획서(Token matrix)</th>
                                 <td className="tg-0pky">
                                     <FlexBox>
                                         <TextField
@@ -877,7 +877,7 @@ const FileMng = (props) => {
                                 </td>
                             </tr>
                             <tr>
-                                <th className="tg-0pky">법률검토의견서</th>
+                                <th className="tg-0pky">7. 법률 검토 의견서</th>
                                 <td className="tg-0pky">
                                     <FlexBox>
                                         <TextField
@@ -956,7 +956,7 @@ const FileMng = (props) => {
                                 </td>
                             </tr>
                             <tr>
-                                <th className="tg-0pky">사업자등록증</th>
+                                <th className="tg-0pky">8. 사업자등록증</th>
                                 <td className="tg-0pky">
                                     <FlexBox>
                                         <TextField
@@ -1035,86 +1035,7 @@ const FileMng = (props) => {
                                 </td>
                             </tr>
                             <tr>
-                                <th className="tg-0pky">윤리서약서</th>
-                                <td className="tg-0pky">
-                                    <FlexBox>
-                                        <TextField
-                                            id="url8"
-                                            name="url8"
-                                            size="medium"
-                                            value={url8}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            fullWidth
-                                        />
-                                        <Button
-                                            disableElevation
-                                            size="medium"
-                                            type="submit"
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={() => urlSave('ETHICAL_WRITE_AUTH', url8)}
-                                        >
-                                            저장
-                                        </Button>
-                                    </FlexBox>
-                                    {docList8.map((item, index) => (
-                                        <div className="filemng__file--list" key={index}>
-                                            {/* 사용자 아이디 */}
-                                            <h6 className="filemng__file--id">{item.email}</h6>
-                                            <div className="filemng__file--con">
-                                                {/* url 주소 */}
-                                                <p className="filemng__file--url">{item.url}</p>
-                                                {/* 날짜 */}
-                                                <p className="filemng__file--date">{item.create_date.substring(0, 10)}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </td>
-                                <td className="tg-0pky">
-                                    <FlexBox>
-                                        <TextField
-                                            type="file"
-                                            id="file8"
-                                            name="file8"
-                                            size="medium"
-                                            fullWidth
-                                            onChange={fileHandleChange}
-                                            inputProps={{
-                                                accept:
-                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-                                            }}
-                                        />
-                                        <Button
-                                            disableElevation
-                                            size="medium"
-                                            type="button"
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={() => fileSave('ETHICAL_WRITE_AUTH', file8)}
-                                        >
-                                            업로드
-                                        </Button>
-                                    </FlexBox>
-                                    {fileList8.map((item, index) => (
-                                        <div key={index} className="filemng__file--list">
-                                            <h6 className="filemng__file--id">{item.email}</h6>
-                                            <div className="filemng__file--con">
-                                                <button
-                                                    className="filemng__file--downlaod"
-                                                    type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
-                                                >
-                                                    {item.file_name}
-                                                </button>
-                                                <p className="filemng__file--date">{item.create_date.substring(0, 10)}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className="tg-0pky">규제준수 확약서</th>
+                                <th className="tg-0pky">9. 규제준수 확약서</th>
                                 <td className="tg-0pky">
                                     <FlexBox>
                                         <TextField
@@ -1193,7 +1114,87 @@ const FileMng = (props) => {
                                 </td>
                             </tr>
                             <tr>
-                                <th className="tg-0pky">기타</th>
+                                <th className="tg-0pky">10. 윤리서약서</th>
+                                <td className="tg-0pky">
+                                    <FlexBox>
+                                        <TextField
+                                            id="url8"
+                                            name="url8"
+                                            size="medium"
+                                            value={url8}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            fullWidth
+                                        />
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => urlSave('ETHICAL_WRITE_AUTH', url8)}
+                                        >
+                                            저장
+                                        </Button>
+                                    </FlexBox>
+                                    {docList8.map((item, index) => (
+                                        <div className="filemng__file--list" key={index}>
+                                            {/* 사용자 아이디 */}
+                                            <h6 className="filemng__file--id">{item.email}</h6>
+                                            <div className="filemng__file--con">
+                                                {/* url 주소 */}
+                                                <p className="filemng__file--url">{item.url}</p>
+                                                {/* 날짜 */}
+                                                <p className="filemng__file--date">{item.create_date.substring(0, 10)}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </td>
+                                <td className="tg-0pky">
+                                    <FlexBox>
+                                        <TextField
+                                            type="file"
+                                            id="file8"
+                                            name="file8"
+                                            size="medium"
+                                            fullWidth
+                                            onChange={fileHandleChange}
+                                            inputProps={{
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                            }}
+                                        />
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="button"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => fileSave('ETHICAL_WRITE_AUTH', file8)}
+                                        >
+                                            업로드
+                                        </Button>
+                                    </FlexBox>
+                                    {fileList8.map((item, index) => (
+                                        <div key={index} className="filemng__file--list">
+                                            <h6 className="filemng__file--id">{item.email}</h6>
+                                            <div className="filemng__file--con">
+                                                <button
+                                                    className="filemng__file--downlaod"
+                                                    type="button"
+                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                >
+                                                    {item.file_name}
+                                                </button>
+                                                <p className="filemng__file--date">{item.create_date.substring(0, 10)}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th className="tg-0pky">11. 기타</th>
                                 <td className="tg-0pky">
                                     <FlexBox>
                                         <TextField

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField, Typography } from '@mui/material';
+import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField, Typography, Checkbox } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import SvgIcon from '@mui/material/SvgIcon';
 import StatusApi from 'apis/lrc/status/statusapi';
@@ -54,6 +54,8 @@ const StatusRegForm = () => {
 
     const [btnSave, setBtnSave] = useState('등록');
 
+    const [is_use, setIsUse] = useState(false);
+
     // 입력 데이터 - Default
     const [inputs, setInputs] = useState({
         id: '',
@@ -80,7 +82,7 @@ const StatusRegForm = () => {
     // TODO: onload
     useEffect(() => {
         // 디폴트 상태 트리 조회
-        statusSearch();
+        statusSearch(false);
     }, []);
 
     // transaction error 처리
@@ -107,7 +109,7 @@ const StatusRegForm = () => {
                     alert('등록을 완료하였습니다!!!');
                     inputClear();
                     // 트리 구조 조회
-                    statusSearch();
+                    statusSearch(is_use);
                 }
                 break;
             case 'getList':
@@ -123,7 +125,7 @@ const StatusRegForm = () => {
                     alert('저장을 완료하였습니다!!!');
                     inputClear();
                     // 트리 구조 조회
-                    statusSearch();
+                    statusSearch(is_use);
                 }
                 break;
             default:
@@ -194,6 +196,16 @@ const StatusRegForm = () => {
             [name]: value
         });
     };
+
+    const handleCheckboxChange = (e) => {
+        let { value, name } = e.target;
+        if (e.target.type === 'checkbox') {
+            value = e.target.checked;
+        }
+        setIsUse(value);
+
+        statusSearch(value);
+    };
     const handleBlur = (e) => {
         console.log(e);
     };
@@ -220,7 +232,7 @@ const StatusRegForm = () => {
                 setInputs({
                     id: item.id,
                     name: item.name,
-                    name_en: item.name_en,
+                    name_en: item.name_en === null ? '' : item.name_en,
                     parent_code: item.parent_code,
                     parent_code_name: '',
                     order_no: item.order_no,
@@ -237,7 +249,7 @@ const StatusRegForm = () => {
                         setInputs({
                             id: sub.id,
                             name: sub.name,
-                            name_en: sub.name_en,
+                            name_en: sub.name_en === null ? '' : sub.name_en,
                             parent_code: sub.parent_code,
                             parent_code_name: item.name,
                             order_no: sub.order_no,
@@ -349,6 +361,23 @@ const StatusRegForm = () => {
                     </Button>
                 </ButtonLayout>
                 <Grid container xs={12}>
+                    <div align="left">
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    defaultChecked
+                                    checked={is_use}
+                                    name="is_use"
+                                    value={is_use}
+                                    onBlur={handleBlur}
+                                    onChange={handleCheckboxChange}
+                                />
+                            }
+                            label="사용안함 포함"
+                        />
+                    </div>
+                </Grid>
+                <Grid container xs={12}>
                     <Grid item xs={4}>
                         <MainCard>
                             <TreeView
@@ -376,7 +405,6 @@ const StatusRegForm = () => {
                                         <TextField
                                             id="filled-hidden-label-small"
                                             type="text"
-                                            s
                                             size="medium"
                                             value={name}
                                             name="name"

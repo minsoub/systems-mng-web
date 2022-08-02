@@ -620,19 +620,23 @@ const OfficeInfo = (props) => {
                             <TableRow>
                                 <TableCell align="center">평가 기관</TableCell>
                                 <TableCell align="center">평가 결과</TableCell>
-                                <TableCell align="center">평가 자료</TableCell>
+                                <TableCell align="center" colSpan="2">
+                                    평가 자료
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         {reviewList.map((item, index) => (
                             <TableRow key={index}>
-                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
                                     {item.organization}
                                 </TableCell>
-                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
                                     {item.result}
                                 </TableCell>
-                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
                                     {item.reference}
+                                </TableCell>
+                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
                                     <a href="#" onClick={() => fileDownload(item.file_key, item.file_name)}>
                                         {item.file_name}
                                     </a>
@@ -650,10 +654,10 @@ const OfficeInfo = (props) => {
                     <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">거래지원 신청서</TableCell>
-                                <TableCell align="center">별첨-1]개인정보 요청서</TableCell>
-                                <TableCell align="center">개인정보 수집 및 이용동의</TableCell>
-                                <TableCell align="center">프로젝트 백서</TableCell>
+                                <TableCell align="center">1. 거래지원 신청서</TableCell>
+                                <TableCell align="center">2. 별첨-1]개인정보 요청서</TableCell>
+                                <TableCell align="center">3. 개인정보 수집 및 이용동의</TableCell>
+                                <TableCell align="center">4. 프로젝트 백서</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableRow>
@@ -680,10 +684,10 @@ const OfficeInfo = (props) => {
                         </TableRow>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">기술 검토 보고서</TableCell>
-                                <TableCell align="center">토큰 세일 및 분배 계획서</TableCell>
-                                <TableCell align="center">법률검토의견서</TableCell>
-                                <TableCell align="center">사업자 등록증</TableCell>
+                                <TableCell align="center">5. 기술 검토 보고서</TableCell>
+                                <TableCell align="center">6. 토큰 분배 계획서(Token matrix)</TableCell>
+                                <TableCell align="center">7. 법률 검토 의견서</TableCell>
+                                <TableCell align="center">8. 사업자 등록증</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableRow>
@@ -710,23 +714,24 @@ const OfficeInfo = (props) => {
                         </TableRow>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">윤리서약서</TableCell>
-                                <TableCell align="center">규제준수 확약서</TableCell>
-                                <TableCell align="center">기타</TableCell>
+                                <TableCell align="center">9. 규제준수 확약서</TableCell>
+                                <TableCell align="center">10. 윤리서약서</TableCell>
+                                <TableCell align="center">11. 기타</TableCell>
                                 <TableCell align="center"></TableCell>
                             </TableRow>
                         </TableHead>
                         <TableRow>
                             <TableCell component="th" scope="row" align="center">
-                                {file8.item}
-                                <br />
-                                {file8.item1}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="center">
                                 {file9.item}
                                 <br />
                                 {file9.item1}
                             </TableCell>
+                            <TableCell component="th" scope="row" align="center">
+                                {file8.item}
+                                <br />
+                                {file8.item1}
+                            </TableCell>
+
                             <TableCell component="th" scope="row" align="center">
                                 {file10.item}
                                 <br />

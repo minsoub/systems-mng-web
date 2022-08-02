@@ -240,10 +240,14 @@ const FaqContent = (props) => {
 
     // 그리드 클릭
     const handleClick = (rowData) => {
+        console.log(rowData.field);
         // if (rowData && rowData.field && rowData.field !== '__check__') {
         //     //let searchCondition = { site_id: site_id, is_use: is_use, type: type };
         //     navigate(`/faq/reg/${language}/${rowData.id}`);
         // }
+        if (rowData.field !== 'id') {
+            navigate(`/faq/reg/${language}/${rowData.id}`);
+        }
     };
 
     // 그리드 더블 클릭

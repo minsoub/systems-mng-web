@@ -10,10 +10,12 @@ import {
     FormControl,
     FormControlLabel,
     FormHelperText,
-    Grid, MenuItem, Select,
+    Grid,
+    MenuItem,
+    Select,
     Stack,
     TextField
-} from '@mui/material';// third party
+} from '@mui/material'; // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import MainCard from 'components/Common/MainCard';
@@ -341,7 +343,7 @@ const SiteRoleRegForm = () => {
                         //console.log(values);
                         if (paramId && confirm('수정 하시겠습니까?')) {
                             roleUpdate(id, requestData);
-                        } else if(confirm('등록 하시겠습니까?')) {
+                        } else if (confirm('등록 하시겠습니까?')) {
                             roleInsert(requestData);
                         }
                     } catch (err) {

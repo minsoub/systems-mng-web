@@ -327,6 +327,30 @@ const ProjectsDetailPage = () => {
                                     {/* 채팅 영역 */}
                                     <Chat projectId={paramId} ref={chatRef} fileList={fileList} fileDownload={FileDownload} />
 
+                                    <div align="center" style={{ padding: '20px' }}>
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={listClick}
+                                        >
+                                            국문 알림 메일 발송하기
+                                        </Button>
+                                        &nbsp;&nbsp;
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={listClick}
+                                        >
+                                            영문 알림 메일 발송하기
+                                        </Button>
+                                    </div>
+
                                     {/* 파일 업로드 */}
                                     <TopInputLayout className="file__upload--box">
                                         <TextField
