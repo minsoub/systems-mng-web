@@ -35,6 +35,7 @@ import InputLayout from '../../../components/Common/InputLayout';
 import './styles.scss';
 import ContentLine from '../../../components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
+import { stubFalse } from 'lodash';
 
 const ProjectsPage = () => {
     let isSubmitting = false;
@@ -194,7 +195,7 @@ const ProjectsPage = () => {
         // setEndDate(moment().format('YYYY-MM-DD'));
         setDateFromToSet('3');
         setPeriod('3'); // default value
-        statusSearch(); // 상태 값 모두 조회
+        statusSearch(false); // 상태 값 모두 조회
         console.log(new Date());
     }, []);
 
