@@ -555,7 +555,7 @@ const OfficeInfo = (props) => {
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
                                     <NumberFormat
-                                        value={item.price}
+                                        value={item.price.toFixed(4)}
                                         allowNegative={true}
                                         displayType={'text'}
                                         thousandSeparator={true}
@@ -588,7 +588,7 @@ const OfficeInfo = (props) => {
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
                                     <NumberFormat
-                                        value={item.minimum_quantity}
+                                        value={item.minimum_quantity.toFixed(4)}
                                         allowNegative={true}
                                         displayType={'text'}
                                         thousandSeparator={true}
@@ -597,7 +597,7 @@ const OfficeInfo = (props) => {
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
                                     <NumberFormat
-                                        value={item.actual_quantity}
+                                        value={item.actual_quantity.toFixed(4)}
                                         allowNegative={true}
                                         displayType={'text'}
                                         thousandSeparator={true}

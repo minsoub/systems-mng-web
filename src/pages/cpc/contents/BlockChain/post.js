@@ -124,19 +124,19 @@ const Post = () => {
 
     const isValidate = () => {
         if (!newspaper) {
-            alert('언론사를 입력해주세요.');
+            alert('언론사를 입력해 주세요.');
             return false;
         }
         if (!title) {
-            alert('제목을 입력해주세요.');
+            alert('제목을 입력해 주세요.');
             return false;
         }
         if (!posting_date) {
-            alert('뉴스 게시일을 선택해주세요.');
+            alert('뉴스 게시일을 선택해 주세요.');
             return false;
         }
         if (!link_url) {
-            alert('뉴스 링크를 입력해주세요.');
+            alert('뉴스 링크를 입력해 주세요.');
             return false;
         }
         return true;

@@ -3,7 +3,7 @@ import '../styles.scss';
 
 const MessageRight = ({ id, message, timestamp, displayName, deleteChatMessage, fileList, fileDownload }) => {
     const deleteMessage = (id) => {
-        if (confirm('삭재하시겠습니까?')) {
+        if (confirm('삭제하시겠습니까?')) {
             deleteChatMessage(id);
         }
     };

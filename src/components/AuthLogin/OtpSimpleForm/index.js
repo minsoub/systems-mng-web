@@ -30,7 +30,7 @@ const OtpSimpleForm = ({result}) => {
     useEffect(() => {
         if (requestError) {
             if (requestError.message === 'INVALID_OTP_NUMBER') {
-                setErrMsg('OTP 번호를 다시 입력해주세요');
+                setErrMsg('OTP 번호를 다시 입력해 주세요');
                 return;
             }
         }
@@ -129,7 +129,7 @@ const OtpSimpleForm = ({result}) => {
             // 로그인 실패시
         } catch (err) {
             console.log('err', err);
-            setErrMsg('OTP 번호를 다시 입력해주세요');
+            setErrMsg('OTP 번호를 다시 입력해 주세요');
         }
     };
 

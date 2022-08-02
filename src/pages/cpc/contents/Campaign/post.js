@@ -218,11 +218,11 @@ const Post = () => {
 
     const isValidate = () => {
         if (!title) {
-            alert('제목을 입력해주세요.');
+            alert('제목을 입력해 주세요.');
             return false;
         }
         if (!content) {
-            alert('내용을 입력해주세요.');
+            alert('내용을 입력해 주세요.');
             return false;
         }
         return true;

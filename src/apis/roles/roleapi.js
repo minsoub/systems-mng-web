@@ -87,7 +87,7 @@ const RoleApi = () => {
 
     // 데이터 삭제
     const deleteRoleData = (id, data) => {
-        callApi('deleteeData', {
+        callApi('deleteData', {
             axiosInstance: axiosInstanceDefault,
             method: 'put',
             url: `/role/${id}`,

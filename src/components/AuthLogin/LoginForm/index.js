@@ -128,7 +128,7 @@ const AuthLogin = () => {
                                         name="email"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
-                                        placeholder="이메일 주소를 입력해주세요"
+                                        placeholder="이메일 주소를 입력해 주세요"
                                         fullWidth
                                         error={Boolean(touched.email && errors.email)}
                                     />
