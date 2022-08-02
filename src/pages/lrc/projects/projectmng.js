@@ -127,7 +127,7 @@ const ProjectMng = (props) => {
     // onload
     useEffect(() => {
         // 상태값 조회
-        statusSearch(); // 상태 값 모두 조회
+        statusSearch(false); // 상태 값 모두 조회
         // 프로젝트 정보의 사업계열
         lineSearch('BUSINESS');
         // 네트워크 계열
@@ -470,7 +470,7 @@ const ProjectMng = (props) => {
 
     const numberCheck = (e) => {
         const pattern = /(^\d*)(.)\d{0,3}$/;
-        if(!pattern.test(e.target.value) && !(e.target.value === '')){
+        if (!pattern.test(e.target.value) && !(e.target.value === '')) {
             e.preventDefault();
         }
         console.log(e.target.value);
