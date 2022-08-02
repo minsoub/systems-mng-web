@@ -42,7 +42,7 @@ const ProjectsDetailPage = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            rederCell: (params) => {
+            renderCell: (params) => {
                 <div>
                     <Typography>{params.value.name}</Typography>
                     <Typography color="textSecondary">{params.value.title}</Typography>

@@ -185,7 +185,7 @@ const SiteRoleRegForm = () => {
             case 'updateData':
                 alert('수정을 완료하였습니다!!!');
                 break;
-            case 'deleteeData':
+            case 'deleteData':
                 console.log('deleteData');
                 alert('삭제를 완료하였습니다!!!');
                 navigate('/roles/list');
@@ -339,9 +339,9 @@ const SiteRoleRegForm = () => {
                         setStatus({ success: false });
                         setSubmitting(true);
                         //console.log(values);
-                        if (paramId && confirm('수정 하시겠습니까?')) {
+                        if (paramId && confirm('수정하시겠습니까?')) {
                             roleUpdate(id, requestData);
-                        } else if(confirm('등록 하시겠습니까?')) {
+                        } else if(!paramId && confirm('등록하시겠습니까?')) {
                             roleInsert(requestData);
                         }
                     } catch (err) {

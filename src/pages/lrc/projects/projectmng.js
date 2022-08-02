@@ -469,6 +469,11 @@ const ProjectMng = (props) => {
     // };
 
     const numberCheck = (e) => {
+        const pattern = /(^\d*)(.)\d{0,3}$/;
+        if(!pattern.test(e.target.value) && !(e.target.value === '')){
+            e.preventDefault();
+        }
+        console.log(e.target.value);
         if (!/[0-9.]/.test(e.key)) {
             e.preventDefault();
         }

@@ -83,7 +83,7 @@ const ProjectsPage = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            rederCell: (params) => {
+            renderCell: (params) => {
                 <div>
                     <Typography>{params.value.name}</Typography>
                     <Typography color="textSecondary">{params.value.title}</Typography>
@@ -425,7 +425,7 @@ const ProjectsPage = () => {
         setPage(0);
         setRowsPerPage(10);
         // categorylist clear
-        clearCatetory();
+        clearCategory();
         //roleComboSearch(is_use, type, site_id);
         let business_list = [];
         let network_list = [];
@@ -465,7 +465,7 @@ const ProjectsPage = () => {
         setRowsPerPage(10);
         setPeriod('3');
         setDateFromToSet('3');
-        clearCatetory();
+        clearCategory();
         // setStartDate(moment().format('YYYY-MM-DD'));
         // setEndDate(moment().format('YYYY-MM-DD'));
         setSts('');
@@ -481,7 +481,7 @@ const ProjectsPage = () => {
         setTotalDataGridRows([]);
         setSeletedRows([]);
     };
-    const clearCatetory = () => {
+    const clearCategory = () => {
         categoryList.map((category, index) => {
             setCategoryList((current) =>
                 current.map((obj) => {
