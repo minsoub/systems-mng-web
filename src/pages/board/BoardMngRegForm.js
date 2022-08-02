@@ -371,19 +371,19 @@ const BoardMngRegForm = () => {
 
     const isValidate = () => {
         if (!site_id) {
-            alert('사이트명을 선택해주세요.');
+            alert('사이트명을 선택해 주세요.');
             return false;
         }
         if (!id) {
-            alert('게시판 ID를 입력해주세요.');
+            alert('게시판 ID를 입력해 주세요.');
             return false;
         }
         if (!name) {
-            alert('게시판명을 입력해주세요.');
+            alert('게시판명을 입력해 주세요.');
             return false;
         }
         if (!type) {
-            alert('게시판 타입을 선택해주세요.');
+            alert('게시판 타입을 선택해 주세요.');
             return false;
         }
         return true;

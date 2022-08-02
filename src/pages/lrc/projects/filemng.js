@@ -454,7 +454,7 @@ const FileMng = (props) => {
                                             size="medium"
                                             fullWidth
                                             onChange={fileHandleChange}
-                                            placeholder="클릭하여 파일을 선택해주세요"
+                                            placeholder="클릭하여 파일을 선택해 주세요"
                                             inputProps={{
                                                 accept:
                                                     '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
@@ -537,7 +537,7 @@ const FileMng = (props) => {
                                             size="medium"
                                             fullWidth
                                             onChange={fileHandleChange}
-                                            placeholder="클릭하여 파일을 선택해주세요"
+                                            placeholder="클릭하여 파일을 선택해 주세요."
                                             inputProps={{
                                                 accept:
                                                     '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'

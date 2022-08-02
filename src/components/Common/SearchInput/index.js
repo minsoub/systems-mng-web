@@ -4,7 +4,7 @@ import './styles.scss';
 
 const SearchInput = ({ onSearch }) => (
     <Space direction="vertical" className="searchbar">
-        <Search placeholder="검색어를 입력해주세요" onSearch={onSearch} enterButton />
+        <Search placeholder="검색어를 입력해 주세요" onSearch={onSearch} enterButton />
     </Space>
 );
 

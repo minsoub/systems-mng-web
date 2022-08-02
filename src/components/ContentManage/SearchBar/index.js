@@ -19,7 +19,7 @@ const SearchBar = ({ keyword, handleBlur, handleChange }) => {
                     name="keyword"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="검색어를 입력해주세요"
+                    placeholder="검색어를 입력해 주세요"
                     fullWidth
                 />
             </FormControl>

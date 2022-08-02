@@ -38,7 +38,7 @@ const OtpQrCodeForm = ({ result }) => {
     useEffect(() => {
         if (requestError) {
             console.log('requestError', requestError);
-            setErrMsg('OTP 번호를 다시 입력해주세요');
+            setErrMsg('OTP 번호를 다시 입력해 주세요');
         }
     }, [requestError]);
 
@@ -115,7 +115,7 @@ const OtpQrCodeForm = ({ result }) => {
             actionOtp(data);
         } catch (err) {
             console.log(err);
-            setErrMsg('OTP 번호를 다시 입력해주세요');
+            setErrMsg('OTP 번호를 다시 입력해 주세요');
         }
     };
 

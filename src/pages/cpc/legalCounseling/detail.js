@@ -151,7 +151,7 @@ const Detail = () => {
 
     const isValidate = () => {
         if (!answer) {
-            alert('답변을 입력해주세요.');
+            alert('답변을 입력해 주세요.');
             return false;
         }
         return true;

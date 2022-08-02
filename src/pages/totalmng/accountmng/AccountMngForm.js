@@ -214,7 +214,7 @@ const AccountMngForm = () => {
     const emailDuplicateCheck = () => {
         const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
         if (regEmail.test(email) === false) {
-            alert('정확한 메일주소를 입력해주세요.');
+            alert('정확한 메일주소를 입력해 주세요.');
             return;
         }
         // 메일 주소 중복 체크를 한다.
@@ -243,32 +243,32 @@ const AccountMngForm = () => {
                             // setErrorTitle('입력 오류');
                             // setErrorMessage('Email주소를 입력하지 않았습니다');
                             // setOpen(true);
-                            alert('이메일 주소를 입력해주세요.');
+                            alert('이메일 주소를 입력해 주세요.');
                             return;
                         }
                         if (emailChk === false) {
                             // setErrorTitle('입력 오류');
                             // setErrorMessage('Email주소를 입력하지 않았습니다');
                             // setOpen(true);
-                            alert('이메일 주소 중복체크를 선택해주세요.');
+                            alert('이메일 주소 중복체크를 선택해 주세요.');
                             return;
                         }
                         if (name === '') {
                             // setErrorTitle('입력 오류');
                             // setErrorMessage('Name을 입력하지 않았습니다');
                             // setOpen(true);
-                            alert('이름을 입력해주세요.');
+                            alert('이름을 입력해 주세요.');
                             return;
                         }
                         if (password === '' && !paramId) {
                             // setErrorTitle('입력 오류');
                             // setErrorMessage('Password를 입력하지 않았습니다');
                             // setOpen(true);
-                            alert('비밀번호를 입력해주세요.');
+                            alert('비밀번호를 입력해 주세요.');
                             return;
                         }
                         if (valid_start_date === '' || valid_end_date === '') {
-                            alert('계정의 유효기간을 선택해주세요.');
+                            alert('계정의 유효기간을 선택해 주세요.');
                             return;
                         }
                         if (valid_start_date > valid_end_date) {
