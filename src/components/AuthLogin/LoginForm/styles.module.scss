@@ -1,0 +1,17 @@
+.label--center {
+    width: 100%;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 12px;
+    span {
+        margin-right: 5px;
+    }
+    .label--center--highlight {
+        color: #1890ff;
+        font-weight: 700;
+    }
+}
+
+.blank {
+    margin-bottom: 1rem;
+}

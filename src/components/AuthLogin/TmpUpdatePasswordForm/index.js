@@ -12,6 +12,7 @@ import { Formik } from 'formik';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import jwt from 'jsonwebtoken';
 import useAuthorized from 'apis/auth/auths';
+import Dot from "../../Common/Dot";
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -54,7 +55,7 @@ const TmpUpdatePasswordForm = ({ result }) => {
             case 'passupdate':
                 console.log(responseData);
                 if (responseData.data) {
-                    alert('패스워드가 변경되었습니다. 변경된 패스워드로 재로그인 하시기 바립니다.');
+                    alert('비밀번호가 변경되었습니다. 변경된 비밀번호로 재로그인 하시기 바립니다.');
                     //setDataGridRows(responseData.data);
                     // email, otpInfo:encode_key, url
                     // site_id, token
@@ -72,12 +73,12 @@ const TmpUpdatePasswordForm = ({ result }) => {
             <Formik
                 initialValues={{
                     password: '',
-                    password1: '',
+                    confirmPassword: '',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
                     password: Yup.string().max(255).required('Password is required'),
-                    password1: Yup.string().max(255).required('Password is required')
+                    confirmPassword: Yup.string().max(255).required('Password is required')
                 })}
                 // onSubmit={(values) => {
                 //     console.log(values);
@@ -85,8 +86,13 @@ const TmpUpdatePasswordForm = ({ result }) => {
                 // }}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
-                        if (values.password !== values.password1) {
-                            alert('패스워드가 다릅니다.');
+                        if (values.password !== values.confirmPassword) {
+                            alert('비밀번호가 다릅니다.');
+                            return;
+                        }
+                        const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,64}$/; // /^(?=.*\d)(?=.*[a-zA-Z~!@#$%^&*_])[0-9a-zA-Z~!@#$%^&*_]{8,64}$/;
+                        if (!regex.test(values.password)) {
+                            alert('요청한 패스워드 형식에 일치하지 않습니다.');
                             return;
                         }
                         setStatus({ success: false });
@@ -121,8 +127,11 @@ const TmpUpdatePasswordForm = ({ result }) => {
                             <Stack spacing={1}>&nbsp;</Stack>
                         </Grid>
                         <Grid item xs={12}>
+                            <Stack spacing={1}>&nbsp;</Stack>
+                        </Grid>
+                        <Grid item xs={12}>
                             <Stack spacing={1}>
-                                <InputLabel htmlFor="password-login">New Password</InputLabel>
+                                <InputLabel htmlFor="password-login" required="true">신규 비밀번호</InputLabel>
                                 <OutlinedInput
                                     fullWidth
                                     error={Boolean(touched.password && errors.password)}
@@ -159,14 +168,14 @@ const TmpUpdatePasswordForm = ({ result }) => {
                         </Grid>
                         <Grid item xs={12}>
                             <Stack spacing={1}>
-                                <InputLabel htmlFor="password-login">Password 확인</InputLabel>
+                                <InputLabel htmlFor="password-login" required="true">신규 비밀번호 확인</InputLabel>
                                 <OutlinedInput
                                     fullWidth
-                                    error={Boolean(touched.password1 && errors.password1)}
+                                    error={Boolean(touched.confirmPassword && errors.confirmPassword)}
                                     id="-password-login"
                                     type={showPassword ? 'text' : 'password'}
-                                    value={values.password1}
-                                    name="password1"
+                                    value={values.confirmPassword}
+                                    name="confirmPassword"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     endAdornment={
@@ -184,9 +193,9 @@ const TmpUpdatePasswordForm = ({ result }) => {
                                     }
                                     placeholder="Enter password"
                                 />
-                                {touched.password1 && errors.password1 && (
+                                {touched.confirmPassword && errors.confirmPassword && (
                                     <FormHelperText error id="standard-weight-helper-text-password-login">
-                                        {errors.password1}
+                                        {errors.confirmPassword}
                                     </FormHelperText>
                                 )}
                             </Stack>
@@ -203,6 +212,29 @@ const TmpUpdatePasswordForm = ({ result }) => {
                             <Stack spacing={1}>&nbsp;</Stack>
                         </Grid>
                         <Grid item xs={12}>
+                            <Stack spacing={2}>
+                                <InputLabel>- 영문 소문자, 대문자, 특수문자를 포함하여 8자리~64자리로 만들어 주세요. </InputLabel>
+                            </Stack>
+                            <Stack spacing={2}>
+                                <InputLabel>단, 허용되는 특수문자 (~!@#$%^&*_)와 다른 특수문자는 사용할 수 없습니다.</InputLabel>
+                            </Stack>
+                            <Grid item xs={12}>
+                                <Stack spacing={1}>&nbsp;</Stack>
+                            </Grid>
+                            <Stack spacing={2}>
+                                <InputLabel>- 타 사이트와 동일하거나 비슷한 암호를 설정하지 마세요.</InputLabel>
+                            </Stack>
+                            <Stack spacing={2}>
+                                <InputLabel>타 사이트에서 암호가 유출될 경우 제3자가 회원님의 계정에 접근할 위험이 있습니다.</InputLabel>
+                            </Stack>
+                            <Grid item xs={12}>
+                                <Stack spacing={1}>&nbsp;</Stack>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Stack spacing={1}>&nbsp;</Stack>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
                             <Button
                                 disableElevation
                                 disabled={isSubmitting}
@@ -212,7 +244,7 @@ const TmpUpdatePasswordForm = ({ result }) => {
                                 variant="contained"
                                 color="primary"
                             >
-                                패스워드 변경
+                                비밀번호 변경
                             </Button>
                         </Grid>
                         <Grid item xs={12}></Grid>

@@ -55,10 +55,10 @@ export default function FileSystemNavigator(navigation, site) {
             if (requestError.result === 'FAIL') {
                 console.log('error requestError');
                 console.log(requestError);
-                if (requestError.error.code === 909) {
+                if (requestError.error.code === 909 || !localStorage.hasOwnProperty('authenticated')) {
                     // token expire
-                    alert('토큰이 만료되었습니다.');
-                    navgate('/');
+                    alert('로그인 유효기간이 만료되어 로그아웃되었습니다. 재로그인 하시기 바랍니다.');
+                    navgate('/login');
                 }
             }
         }

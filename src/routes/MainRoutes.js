@@ -12,6 +12,8 @@ const AuthLogin = Loadable(lazy(() => import('pages/auth/login')));
 const OtpLogin = Loadable(lazy(() => import('pages/auth/otpLogin')));
 const OtpSimpleLogin = Loadable(lazy(() => import('pages/auth/otpSimpleLogin')));
 const TmpPasswordForm = Loadable(lazy(() => import('pages/auth/tmpPasswordForm')));
+const ResetPasswordForm = Loadable(lazy(() => import('pages/auth/resetPasswordForm')));
+
 const SignUp = Loadable(lazy(() => import('pages/auth/signup')));
 
 // profile - updateform
@@ -135,6 +137,11 @@ const MainRoutes = [
             {
                 path: 'tmppassword',
                 element: <TmpPasswordForm />
+            },
+            // 패스워드 초기화 요청 페이지
+            {
+                path: 'resetpassword',
+                element: <ResetPasswordForm />
             },
             // 회원가입 페이지
             {
