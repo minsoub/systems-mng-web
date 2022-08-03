@@ -76,9 +76,15 @@ const RoleRegForm = () => {
             if (requestError.result === 'FAIL') {
                 console.log('error requestError');
                 console.log(requestError);
-                setErrorTitle('Error Message');
-                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
-                setOpen(true);
+                if(requestError.error.code === 'R500') {
+                    setErrorTitle('Error Message');
+                    setErrorMessage('[' + requestError.error.code + '] ROLE 등록정보를 확인해 주세요');
+                    setOpen(true);
+                } else {
+                    setErrorTitle('Error Message');
+                    setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                    setOpen(true);
+                }
             }
         }
     }, [requestError]);
