@@ -198,7 +198,7 @@ const SiteRoleMappingForm = () => {
                 break;
             case 'registerData':
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장을 완료하였습니다.');
                     roleRegisterSearch(selectedRole, '', '');
                 }
                 break;
@@ -206,7 +206,7 @@ const SiteRoleMappingForm = () => {
                 if (responseData.data.data) {
                     setDeleteProcessCount(deleteProcessCount + 1);
                     if (deleteProcessCount + 1 === deleteCount) {
-                        alert('저장을 완료하였습니다!!!');
+                        alert('저장을 완료하였습니다.');
                         setDeleteCount(0);
                         setDeleteProcessCount(0);
                     }
@@ -336,7 +336,7 @@ const SiteRoleMappingForm = () => {
                 }
             }
         } else {
-            alert('등록된 사용자가 없습니다!!!');
+            alert('등록된 사용자가 없습니다.');
         }
     };
 
@@ -351,7 +351,7 @@ const SiteRoleMappingForm = () => {
     // 사용자 검색
     const userSearchClick = () => {
         if (!keyword) {
-            alert('검색 단어를 입력하세요!!!');
+            alert('검색 단어를 입력하세요.');
         } else {
             accountUserSearch(true, keyword);
         }

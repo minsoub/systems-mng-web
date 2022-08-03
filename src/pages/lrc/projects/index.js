@@ -312,7 +312,7 @@ const ProjectsPage = () => {
                 break;
             case 'to_date':
                 if (from_date > e.target.value) {
-                    alert('기간 검색에서 종료일이 시작일보다 작을 수 없습니다!!!');
+                    alert('기간 검색에서 종료일이 시작일보다 작을 수 없습니다.');
                     return;
                 }
                 setEndDate(e.target.value);

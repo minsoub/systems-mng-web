@@ -238,11 +238,11 @@ const AccountRegForm = () => {
             case 'getList': // Email 중복 체크
                 if (responseData.data.data.length > 0) {
                     // 중복이다.
-                    alert('이미 등록된 메일 주소입니다!!!');
+                    alert('이미 등록된 메일 주소입니다.');
                     setEmailChk(false);
                 } else {
                     // 중복이 아니다.
-                    alert('사용 가능한 이메일 주소입니다!!!');
+                    alert('사용 가능한 이메일 주소입니다.');
                     setEmailChk(true);
                 }
                 break;
@@ -277,23 +277,23 @@ const AccountRegForm = () => {
                 break;
             case 'updateRoleData':
                 if (responseData.data.data) {
-                    alert('등록된 Role을 저장하였습니다!!!');
+                    alert('등록된 Role을 저장하였습니다.');
                     // Role 정보 조회
                     accountMngRole(paramId);
                     setIsRoleUpdate(false);
                 }
                 break;
             case 'insertData':
-                alert('등록을 완료하였습니다!!!');
+                alert('등록을 완료하였습니다.');
                 navigate('/account/list');
                 break;
             case 'updateData':
-                alert('수정을 완료하였습니다!!!');
+                alert('수정을 완료하였습니다.');
                 navigate('/account/list');
                 break;
             case 'deleteDatas':
                 console.log('deleteData');
-                alert('삭제 처리를 완료하였습니다');
+                alert('삭제 처리를 완료하였습니다.');
                 //actionList();
                 break;
             default:
@@ -415,7 +415,7 @@ const AccountRegForm = () => {
             return;
         }
         if (dataGridRegisterRows.length === 0) {
-            alert('운영권한을 등록해야 합니다!!!');
+            alert('운영권한을 등록해야 합니다.');
             return;
         }
         // Data 가공
@@ -454,7 +454,7 @@ const AccountRegForm = () => {
             return;
         }
         if (email === '') {
-            alert('메일 주소를 입력 후 중복 체크 해주시기 바랍니다!!!');
+            alert('메일 주소를 입력 후 중복 체크 해주시기 바랍니다.');
             return;
         }
         accountSearch(null, email);
@@ -502,11 +502,11 @@ const AccountRegForm = () => {
     const plusRegister = () => {
         let programs_ids = [];
         if (site_id === '') {
-            alert('사이트명을 선택하세요!!!');
+            alert('사이트명을 선택하세요.');
             return;
         }
         if (role_id === '') {
-            alert('운영권한을 선택하세요!!!');
+            alert('운영권한을 선택하세요.');
             return;
         }
         // 현재 등록된 Role에 사이트가 등록되어 있는지 확인한다.
@@ -521,7 +521,7 @@ const AccountRegForm = () => {
             });
         }
         if (found === 1) {
-            alert('사이트당 한개의 Role만 등록이 가능합니다!!!');
+            alert('사이트당 한개의 Role만 등록이 가능합니다.');
             return;
         }
         // 등록이 가능하다.
@@ -558,7 +558,7 @@ const AccountRegForm = () => {
     // Role 만 등록한다.
     const roleUpdate = () => {
         if (dataGridRegisterRows.length == 0) {
-            alert('운영권한을 등록해야 합니다!!!');
+            alert('운영권한을 등록해야 합니다.');
             return;
         }
         // Data 가공

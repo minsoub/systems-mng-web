@@ -221,7 +221,7 @@ const ProjectsDetailPage = () => {
 
     const fileSave = (type, data) => {
         if (!file) {
-            alert('파일을 업로드 하지 않았습니다!!!');
+            alert('파일을 업로드 하지 않았습니다.');
             return;
         }
         const formData = new FormData();

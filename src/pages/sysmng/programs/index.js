@@ -219,7 +219,7 @@ const ProgramManagementPage = () => {
     const searchClick = () => {
         console.log('searchClick called...');
         if (!site_id) {
-            alert('사이트명을 선택하지 않았습니다!!!');
+            alert('사이트명을 선택하지 않았습니다.');
             return;
         }
         console.log(site_id);

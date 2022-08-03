@@ -57,7 +57,7 @@ export default function FileSystemNavigator(navigation, site) {
                 console.log(requestError);
                 if (requestError.error.code === 909) {
                     // token expire
-                    alert('토큰이 만료되었습니다!!!');
+                    alert('토큰이 만료되었습니다.');
                     navgate('/');
                 }
             }

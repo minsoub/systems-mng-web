@@ -207,7 +207,7 @@ const FaqContent = (props) => {
                 }
                 break;
             case 'updateOrderData':
-                alert('노출 순서를 저장하였습니다!!!');
+                alert('노출 순서를 저장하였습니다.');
                 // 초기화
                 categorys.map((category, index) => {
                     setCategoryList((current) =>

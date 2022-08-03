@@ -361,7 +361,7 @@ const SiteRegForm = () => {
                                                 name="name"
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
-                                                placeholder="사이트명를 등록하세요!!!"
+                                                placeholder="사이트명를 등록하세요."
                                                 fullWidth
                                                 error={Boolean(touched.name && errors.name)}
                                             />

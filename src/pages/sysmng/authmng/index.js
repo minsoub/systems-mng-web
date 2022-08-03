@@ -247,7 +247,7 @@ const AuthManagementPage = () => {
     const searchClick = () => {
         console.log('searchClick called...');
         if (!site_id) {
-            alert('사이트명을 선택하세요!!!');
+            alert('사이트명을 선택하세요.');
             return;
         }
         roleComboSearch(is_use, type, site_id);

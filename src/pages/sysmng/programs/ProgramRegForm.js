@@ -105,11 +105,11 @@ const ProgramRegForm = () => {
             case 'getList': // Email 중복 체크
                 if (responseData.data.data.length > 0) {
                     // 중복이다.
-                    alert('이미 등록된 메일 주소입니다!!!');
+                    alert('이미 등록된 메일 주소입니다.');
                     setEmailChk(false);
                 } else {
                     // 중복이 아니다.
-                    alert('사용 가능한 이메일 주소입니다!!!');
+                    alert('사용 가능한 이메일 주소입니다.');
                     setEmailChk(true);
                 }
                 break;
@@ -130,15 +130,15 @@ const ProgramRegForm = () => {
                 }
                 break;
             case 'insertData':
-                alert('등록을 완료하였습니다!!!');
+                alert('등록을 완료하였습니다.');
                 setClearData();
                 break;
             case 'updateData':
-                alert('수정을 완료하였습니다!!!');
+                alert('수정을 완료하였습니다.');
                 break;
             case 'deleteDatas':
                 console.log('deleteData');
-                alert('삭제 처리를 완료하였습니다');
+                alert('삭제 처리를 완료하였습니다.');
                 navigate('/pgm/list');
                 break;
             default:
@@ -164,23 +164,23 @@ const ProgramRegForm = () => {
         console.log(inputs);
         // Validation check
         if (!inputs.site_id) {
-            setError('사이트명을 선택하지 않았습니다');
+            setError('사이트명을 선택하지 않았습니다.');
             return;
         }
         if (!inputs.type) {
-            setError('관리 메뉴를 선택하지 않았습니다');
+            setError('관리 메뉴를 선택하지 않았습니다.');
             return;
         }
         if (!inputs.name) {
-            setError('프로그램명을 입력하지 않았습니다!');
+            setError('프로그램명을 입력하지 않았습니다.');
             return;
         }
         if (!inputs.action_method) {
-            setError('Action Type을 선택하지 않았습니다');
+            setError('Action Type을 선택하지 않았습니다.');
             return;
         }
         if (!inputs.action_url) {
-            setError('Action URL을 입력하지 않았습니다');
+            setError('Action URL을 입력하지 않았습니다.');
             return;
         }
         if (confirm('저장하시겠습니까?')) {

@@ -295,7 +295,7 @@ const SiteMenuMappingForm = () => {
         //errorClear();
         console.log('searchClick called...');
         if (!site_id) {
-            alert('사이트명을 선택하세요!!!');
+            alert('사이트명을 선택하세요.');
             return;
         }
         menumngSearch(site_id, is_use);
@@ -418,11 +418,11 @@ const SiteMenuMappingForm = () => {
     // 프로그램 목로 - 검색
     const programSearchClick = () => {
         if (!keyword) {
-            alert('검색 단어를 입력하세요!!!');
+            alert('검색 단어를 입력하세요.');
             return;
         }
         if (!site_id) {
-            alert('사이트 구분을 선택하시고 조회하시기 바랍니다!!!');
+            alert('사이트 구분을 선택하시고 조회하시기 바랍니다.');
             return;
         }
         programTextSearch(site_id, true, keyword);

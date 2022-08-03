@@ -54,7 +54,7 @@ const TmpUpdatePasswordForm = ({ result }) => {
             case 'passupdate':
                 console.log(responseData);
                 if (responseData.data) {
-                    alert('패스워드가 변경되었습니다. 변경된 패스워드로 재로그인 하시기 바립니다!!!');
+                    alert('패스워드가 변경되었습니다. 변경된 패스워드로 재로그인 하시기 바립니다.');
                     //setDataGridRows(responseData.data);
                     // email, otpInfo:encode_key, url
                     // site_id, token
@@ -86,7 +86,7 @@ const TmpUpdatePasswordForm = ({ result }) => {
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
                         if (values.password !== values.password1) {
-                            alert('패스워드가 다릅니다!!!');
+                            alert('패스워드가 다릅니다.');
                             return;
                         }
                         setStatus({ success: false });

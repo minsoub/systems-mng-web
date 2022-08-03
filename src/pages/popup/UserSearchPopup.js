@@ -94,7 +94,7 @@ function UserSearchDialog(props) {
         // 사용자 검색
         console.log(keyword);
         if (keyword === '') {
-            alert('검색단어를 입력하세요');
+            alert('검색단어를 입력하세요.');
         } else {
             accountSearch(keyword);
         }

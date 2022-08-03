@@ -104,20 +104,20 @@ const AccountMngForm = () => {
             case 'getList': // Email 중복 체크
                 if (responseData.data.data.length > 0) {
                     // 중복이다.
-                    alert('이미 등록된 메일 주소입니다!!!');
+                    alert('이미 등록된 메일 주소입니다.');
                     setEmailChk(false);
                 } else {
                     // 중복이 아니다.
-                    alert('사용 가능한 이메일 주소입니다!!!');
+                    alert('사용 가능한 이메일 주소입니다.');
                     setEmailChk(true);
                 }
                 break;
             case 'insertData':
-                alert('등록을 완료하였습니다!!!');
+                alert('등록을 완료하였습니다.');
                 navigate('/accountmng/list');
                 break;
             case 'updateData':
-                alert('수정을 완료하였습니다!!!');
+                alert('수정을 완료하였습니다.');
                 navigate('/accountmng/list');
                 break;
             case 'getData': // 수정 모드
@@ -138,7 +138,7 @@ const AccountMngForm = () => {
                 break;
             case 'deleteDatas':
                 console.log('deleteData');
-                alert('삭제 처리를 완료하였습니다!');
+                alert('삭제 처리를 완료하였습니다.');
                 navigate('/accountmng/list');
                 break;
             default:
@@ -219,7 +219,7 @@ const AccountMngForm = () => {
         }
         // 메일 주소 중복 체크를 한다.
         if (email === '') {
-            alert('메일 주소를 입력 후 중복 체크 해주시기 바랍니다!!!');
+            alert('메일 주소를 입력 후 중복 체크 해주시기 바랍니다.');
             return;
         }
         accountSearch(null, email);

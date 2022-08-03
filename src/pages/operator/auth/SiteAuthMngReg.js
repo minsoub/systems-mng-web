@@ -256,7 +256,7 @@ const SiteAuthMngRegForm = () => {
                 case 'roleMenuSave':
                     if (roleRequestData.data.data) {
                         console.log(roleRequestData.data.data);
-                        alert('저장을 완료하였습니다!!!');
+                        alert('저장을 완료하였습니다.');
                         // 등록된 메뉴 리스트 조회
                         //menumngSearch(site_id, true);
                         roleRegisterTreeList(role_id, site_id);
@@ -379,11 +379,11 @@ const SiteAuthMngRegForm = () => {
         //errorClear();
         console.log('searchClick called...');
         if (!site_id) {
-            alert('사이트명을 선택하세요!!!');
+            alert('사이트명을 선택하세요.');
             return;
         }
         if (!role_id) {
-            alert('권한명을 선택하세요!!!');
+            alert('권한명을 선택하세요.');
             return;
         }
         // 등록된 메뉴 리스트 조회
@@ -471,7 +471,7 @@ const SiteAuthMngRegForm = () => {
     const programMappingSave = () => {
         // 저장한다.
         if (selectedProgramRows.length === 0) {
-            alert('프로그램 목록을 선택하지 않았습니다!!!');
+            alert('프로그램 목록을 선택하지 않았습니다.');
             return;
         }
         // 선택된 프로그램 목록을 트리의 메뉴의 프로그램 목록에 반영한다.
@@ -498,7 +498,7 @@ const SiteAuthMngRegForm = () => {
         });
         console.log(menuList);
         setMenuData(menuList);
-        if (found === 1) alert('적용되었습니다!!!');
+        if (found === 1) alert('적용되었습니다.');
     };
 
     // 저장 버튼 클릭

@@ -50,13 +50,13 @@ const AuthLogin = () => {
             console.log('>> requestError <<');
             console.log(requestError);
             if (requestError.message === 'INVALID_USER_PASSWORD') {
-                alert('패스워드가 일치하지 않습니다!!!');
+                alert('패스워드가 일치하지 않습니다.');
             } else if(requestError.message === 'INVALID_USER'){
                 alert('가입되지 않은 사용자 입니다.');
             } else if(requestError.message === 'INVALID_TOKEN'){
                 alert('사용 권한이 없는 사용자 입니다.');
             } else if (requestError.message === 'INVALID_ACCOUNT_CLOSED' || requestError.message === 'USER_ACCOUNT_DISABLE') {
-                alert('계정이 잠겼습니다!!! 관리자에게 문의 해 주시기 바랍니다!!!');
+                alert('계정이 잠겼습니다. 관리자에게 문의 해 주시기 바랍니다.');
             } else {
                 alert(requestError.message);
             }
@@ -128,7 +128,7 @@ const AuthLogin = () => {
                                         name="email"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
-                                        placeholder="이메일 주소를 입력해 주세요"
+                                        placeholder="이메일 주소를 입력해 주세요."
                                         fullWidth
                                         error={Boolean(touched.email && errors.email)}
                                     />
