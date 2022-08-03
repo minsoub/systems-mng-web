@@ -198,6 +198,9 @@ const ProjectsPage = () => {
         setPeriod('3'); // default value
         statusSearch(false); // 상태 값 모두 조회
         console.log(new Date());
+        if (!paramId1 && !paramId2) {
+            setIsSearch(true);
+        }
     }, []);
 
     // transaction error 처리

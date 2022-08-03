@@ -98,8 +98,8 @@ const Chat = forwardRef((props, ref) => {
                 if (resData.data.data) {
                     console.log(resData.data.data);
                     if (resData.data.data.use === true) {
-                        setMessageList([]);
-                        sendJoinChat('join-chat');
+                        // setMessageList([]);
+                        // sendJoinChat('join-chat');
                     }
                 }
                 break;
@@ -131,6 +131,7 @@ const Chat = forwardRef((props, ref) => {
     // response 값 처리
     useEffect(() => {
         console.log('get response data: ', responseData);
+        if (!responseData) return;
 
         if (responseData) {
             if (responseData.length > 1) {
@@ -258,6 +259,12 @@ const Chat = forwardRef((props, ref) => {
     const deleteChatMessage = (id) => {
         console.log(id);
         deleteChat(id);
+        messageList.map((item, idx) => {
+            if (id === item.id) {
+                setMessageList((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
+                return;
+            }
+        });
     };
     const searchClick = () => {
         console.log(refKeyword.current.value);
