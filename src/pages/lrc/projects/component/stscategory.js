@@ -6,7 +6,9 @@ const StsCategory = (props) => {
     return (
         <Grid item xs={8} sm={1}>
             <Typography variant="h6" color="inherit" onClick={() => filterClick(id)}>
-                {content}({count})
+                <a href="#">
+                    {content}({count})
+                </a>
             </Typography>
         </Grid>
     );

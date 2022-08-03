@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
     Button,
@@ -136,6 +136,7 @@ const ProjectsPage = () => {
         }
     ];
     const navigate = useNavigate();
+    const { paramId1, paramId2 } = useParams();
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
     const [responseData, requestError, Loading, { foundationSearch }] = FoundationApi();
 
@@ -217,6 +218,27 @@ const ProjectsPage = () => {
             setIsSearch(false);
         }
     }, [isSearch]);
+
+    // 계약상태 데이터 변경
+    useEffect(() => {
+        if (paramId1) {
+            setSts(paramId1);
+            processPrint(paramId1);
+            setDateFromToSet('4');
+            setPeriod('4'); // default value
+        }
+    }, [statusList]);
+    // 진행상태 변경
+    useEffect(() => {
+        if (paramId2) {
+            setProcess(paramId2);
+        }
+
+        if (paramId1 || paramId2) {
+            //searchClick();
+            setIsSearch(true);
+        }
+    }, [processList]);
 
     // Combobox data transaction
     useEffect(() => {
@@ -365,7 +387,7 @@ const ProjectsPage = () => {
             if (item.id === id && item.children && item.children.length > 0) {
                 item.children.map((subitem, idx) => {
                     const s = { id: subitem.id, name: subitem.name };
-                    //console.log(s);
+                    console.log(s);
                     list.push(s);
                 });
                 setProcessList(list);
@@ -586,7 +608,7 @@ const ProjectsPage = () => {
                     <Grid container spacing={0}>
                         <Grid item xs={8} sm={0.7}>
                             <Typography variant="h6" color="inherit" onClick={() => filterClick(null)}>
-                                전체({totalDataGridRows.length})
+                                <a href="#">전체({totalDataGridRows.length})</a>
                             </Typography>
                         </Grid>
 

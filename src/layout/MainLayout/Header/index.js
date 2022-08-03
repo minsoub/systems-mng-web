@@ -111,6 +111,9 @@ const Header = ({ open, handleDrawerToggle }) => {
 
     // 입력 박스 입력 시 호출
     const handleChange = (e) => {
+        if (!e.target.value) {
+            return;
+        }
         setMySiteId(e.target.value);
         // 변경된 사이트를 통해서 다시 메뉴를 리로드해야 한다.
         authData.siteId = e.target.value;
