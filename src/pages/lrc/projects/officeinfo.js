@@ -38,6 +38,7 @@ const OfficeInfo = (props) => {
             reviewSearch,
             projectSearch,
             userSearch,
+            createUserSearch,
             icoSearch,
             officeSearch,
             fileSearch,
@@ -158,8 +159,20 @@ const OfficeInfo = (props) => {
                 }
                 break;
             case 'getUserList':
+                console.log('>>getUserList called...<<');
                 if (responseData.data.data && responseData.data.data.length > 0) {
+                    console.log(responseData.data.data);
                     setUserList(responseData.data.data);
+                } else {
+                    setUserList([]);
+                    // 담당자가 없으면
+                    console.log('>>createUserSearch called...<<');
+                    createUserSearch(projectId);
+                }
+                break;
+            case 'getCreateUser':
+                if (responseData.data.data) {
+                    setUserList((prevRows) => [...prevRows, responseData.data.data]);
                 } else {
                     setUserList([]);
                 }
@@ -200,7 +213,6 @@ const OfficeInfo = (props) => {
                         //console.log(data);
                         if (item.type === 'IPO_APPLICATION') {
                             if (!file1.item) setFile1(data);
-                            console.log(file1);
                         } else if (item.type === 'COLLECT_CONFIRM') {
                             if (!file2.item) setFile2(data);
                         } else if (item.type === 'PROJECT_WHITEPAPER') {

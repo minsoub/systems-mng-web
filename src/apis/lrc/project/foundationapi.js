@@ -97,6 +97,15 @@ const FoundationApi = () => {
         });
     };
 
+    const getCreateUserData = (data) => {
+        callApi('getCreateUser', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/create-user-account/${data}`,
+            requestConfig: {}
+        });
+    };
+
     // 상장 정보
     // 상장 정보 조회
     const getIcoListData = (data) => {
@@ -221,6 +230,18 @@ const FoundationApi = () => {
             requestConfig: {}
         });
     };
+
+    // mail send
+    const sendEmail = (email, type) => {
+        let sendAddr = encodeURIComponent(email);
+        callApi('sendEmail', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/mail/send?email=${sendAddr}&type=${type}`,
+            requestConfig: {}
+        });
+    };
+
     return [
         responseData,
         requestError,
@@ -235,6 +256,7 @@ const FoundationApi = () => {
             projectSearch: getProjectListData,
             updateProjectInfo: updateProjectInfo,
             userSearch: getUserListData,
+            createUserSearch: getCreateUserData,
             icoSearch: getIcoListData,
             updateIcoList: updateIcoList,
             officeSearch: getFoundationInfo,
@@ -244,7 +266,8 @@ const FoundationApi = () => {
             symbolKeywordSearch: keywordSimbolSearch,
             projectConnectSave: projectConnectSave,
             projectDisconnectSave: projectDisconnectSave,
-            projectLinkListSearch: projectLinkListSearch
+            projectLinkListSearch: projectLinkListSearch,
+            sendEmail: sendEmail
         }
     ];
 };

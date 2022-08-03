@@ -206,3 +206,48 @@ input::file-selector-button {
         }
     }
 }
+
+.scroll {
+    background: #f2f5f8;
+    &::-webkit-scrollbar {
+        width: 14rem;
+        height: 12rem;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background-color: #f5f5f5;
+    }
+
+    &::-webkit-scrollbar-button {
+        background-color: #ededed;
+        border: #ededed solid 0;
+        border-width: 0 0;
+        display: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        width: 12rem;
+        border-radius: 16rem;
+        background-color: #ededed;
+        border: solid 3rem transparent;
+        border-right-width: 2rem;
+        background-clip: content-box;
+
+        &:hover {
+            background-color: #a3a3a3;
+        }
+    }
+}
+
+.chat--room {
+    background: #f2f5f8;
+    border-radius: 5px;
+    color: #434651;
+    margin-top: 8px;
+    &__box {
+        padding: 30px 30px 20px;
+        border-bottom: 2px solid white;
+        overflow-y: scroll;
+        height: 60vh;
+    }
+}
