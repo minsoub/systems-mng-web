@@ -163,8 +163,8 @@ const SiteRoleRegForm = () => {
                     let res = responseData.data.data;
                     setId(res.id);
                     setName(res.name);
-                    setValidStartDate(res.role_valid_start_date);
-                    setValidEndDate(res.role_valid_end_date);
+                    setValidStartDate(res.valid_start_date);
+                    setValidEndDate(res.valid_end_date);
                     setIsUse(res.is_use);
                     setSiteId(res.site_id);
                     setType(res.type);
