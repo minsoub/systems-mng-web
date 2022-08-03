@@ -76,9 +76,15 @@ const RoleRegForm = () => {
             if (requestError.result === 'FAIL') {
                 console.log('error requestError');
                 console.log(requestError);
-                setErrorTitle('Error Message');
-                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
-                setOpen(true);
+                if(requestError.error.code === 'R500') {
+                    setErrorTitle('Error Message');
+                    setErrorMessage('[' + requestError.error.code + '] ROLE 등록정보를 확인해 주세요');
+                    setOpen(true);
+                } else {
+                    setErrorTitle('Error Message');
+                    setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                    setOpen(true);
+                }
             }
         }
     }, [requestError]);
@@ -158,8 +164,8 @@ const RoleRegForm = () => {
                     let res = responseData.data.data;
                     setId(res.id);
                     setName(res.name);
-                    setValidStartDate(res.role_valid_start_date);
-                    setValidEndDate(res.role_valid_end_date);
+                    setValidStartDate(res.valid_start_date);
+                    setValidEndDate(res.valid_end_date);
                     setIsUse(res.is_use);
                     setSiteId(res.site_id);
                     setType(res.type);
