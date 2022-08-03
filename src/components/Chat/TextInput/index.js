@@ -28,7 +28,7 @@ export const Index = ({ sendChat }) => {
         <>
             <Grid className="chat-message">
                 <InputLayout>
-                    <input id="standard-text" label="텍스트 입력" value={value} onChange={handleChange} onKeyDown={keyPress} />
+                    <textarea rows="5" cols="80" id="standard-text" label="텍스트 입력" value={value} onChange={handleChange} />
 
                     <ButtonLayout>
                         <Button variant="contained" color="primary" size="medium" className="button" onClick={sendData}>

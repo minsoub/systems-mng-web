@@ -8,33 +8,33 @@ const MessageRight = ({ id, message, timestamp, displayName, deleteChatMessage, 
         }
     };
 
-    const checkFile = (data) => {
-        console.log(data);
-        if (data.indexOf('FILE_MESSAGE::') !== -1) {
-            let found = 0;
-            let id, name;
-            fileList.map((item, index) => {
-                if (item.id === data.split('::')[1]) {
-                    found = 1;
-                    console.log('found.........');
-                    console.log(item);
-                    id = item.id;
-                    name = item.file_name;
-                }
-            });
-            if (found === 1) {
-                return (
-                    <a href="#" onClick={() => fileDownload(id, name)}>
-                        첨부파일 업로드 {name}
-                    </a>
-                );
-            } else {
-                return null;
-            }
-        } else {
-            return data;
-        }
-    };
+    // const checkFile = (data) => {
+    //     console.log(data);
+    //     if (data.indexOf('FILE_MESSAGE::') !== -1) {
+    //         let found = 0;
+    //         let id, name;
+    //         fileList.map((item, index) => {
+    //             if (item.id === data.split('::')[1]) {
+    //                 found = 1;
+    //                 console.log('found.........');
+    //                 console.log(item);
+    //                 id = item.id;
+    //                 name = item.file_name;
+    //             }
+    //         });
+    //         if (found === 1) {
+    //             return (
+    //                 <a href="#" onClick={() => fileDownload(id, name)}>
+    //                     첨부파일 업로드 {name}
+    //                 </a>
+    //             );
+    //         } else {
+    //             return null;
+    //         }
+    //     } else {
+    //         return data;
+    //     }
+    // };
     return (
         <>
             <div className="msg--right">
@@ -49,9 +49,17 @@ const MessageRight = ({ id, message, timestamp, displayName, deleteChatMessage, 
                 {/* 말풍선 */}
                 <div className="msg--right__speechBubble">
                     {/* 메시지 내용물 */}
-                    <div key={id} className="message my-message" data-message-id={id}>
-                        {checkFile(message)}
-                    </div>
+                    {message.fileKey ? (
+                        <div key={id} className="message my-message" data-message-id={id}>
+                            <a href="#" onClick={() => fileDownload(message.fileKey, message.fileName)}>
+                                {message.message}
+                            </a>
+                        </div>
+                    ) : (
+                        <div key={id} className="message my-message" data-message-id={id}>
+                            {message.message}
+                        </div>
+                    )}
                     <div className="my-message__delete">
                         <button onClick={() => deleteMessage(id)}>삭제</button>
                     </div>

@@ -12,6 +12,7 @@ import FileMng from './filemng';
 import ProjectHistory from './history';
 import Chat from './chat';
 import ChatApi from 'apis/chat/chatapi';
+import FoundationApi from 'apis/lrc/project/foundationapi';
 import HeaderTitle from 'components/HeaderTitle';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
@@ -97,6 +98,8 @@ const ProjectsDetailPage = () => {
 
     const [resData, reqError, loading, { insertChatFile, getChatFile, getChatFileList }] = ChatApi();
 
+    const [responseData, requestError, loadingData, { sendEmail }] = FoundationApi();
+
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
     // 그리드 목록 데이터
@@ -145,6 +148,20 @@ const ProjectsDetailPage = () => {
             }
         }
     }, [reqError]);
+
+    // 메일전송 결과
+    useEffect(() => {
+        if (!responseData) {
+            return;
+        }
+        switch (responseData.transactionId) {
+            case 'sendEmail':
+                console.log(responseData.data);
+                break;
+            default:
+                break;
+        }
+    }, [responseData]);
 
     useEffect(() => {
         if (!resData) {
@@ -281,6 +298,25 @@ const ProjectsDetailPage = () => {
         }
     }));
 
+    const mailSendKor = () => {
+        if (chatRef.current.getMailSendAddress()) {
+            let mail = chatRef.current.getMailSendAddress();
+            console.log(mail);
+
+            // 메일 전송
+            sendEmail(mail, 'KOR');
+        }
+    };
+
+    const mailSendEn = () => {
+        if (chatRef.current.getMailSendAddress()) {
+            let mail = chatRef.current.getMailSendAddress();
+            console.log(mail);
+
+            // 메일 전송
+            sendEmail(mail, 'EN');
+        }
+    };
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
@@ -334,7 +370,7 @@ const ProjectsDetailPage = () => {
                                             type="submit"
                                             variant="contained"
                                             color="primary"
-                                            onClick={listClick}
+                                            onClick={mailSendKor}
                                         >
                                             국문 알림 메일 발송하기
                                         </Button>
@@ -345,7 +381,7 @@ const ProjectsDetailPage = () => {
                                             type="submit"
                                             variant="contained"
                                             color="primary"
-                                            onClick={listClick}
+                                            onClick={mailSendEn}
                                         >
                                             영문 알림 메일 발송하기
                                         </Button>

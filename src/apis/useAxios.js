@@ -28,7 +28,7 @@ const useAxios = () => {
         // register a synchronous request interceptor
         console.log(url);
         if (url.indexOf('adm') === -1) {
-            if (authData === null) navigate('/login');
+            if (authData === null || !authData.siteId) navigate('/login');
             console.log(authData);
             let site_id = authData.siteId;
             // 현재 토큰 체크 진행중이 아니려면.. 아래 로직을 수행한다.

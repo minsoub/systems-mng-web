@@ -10,7 +10,7 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import DownloadIcon from '@mui/icons-material/Download';
 import jwt from 'jsonwebtoken';
 import { nl2brToString } from 'utils/CommonUtils';
-
+import { Index } from '../../../components/Chat/TextInput';
 const Chat = forwardRef((props, ref) => {
     const { projectId, fileList, fileDownload, children, tabindex, index, ...other } = props;
     const [resData, reqError, loading, { chatExistsAndSave, deleteChat, chatExcelDownload }] = ChatApi();
@@ -27,11 +27,12 @@ const Chat = forwardRef((props, ref) => {
     ] = useRSocketClient();
 
     useImperativeHandle(ref, () => ({
-        sendRequest
+        sendRequest,
+        getMailSendAddress
     }));
     // 가짜 데이터
     const [messageList, setMessageList] = useState([]);
-    const refChatArea = useRef();
+    const refChatArea = useRef(null);
 
     const domMessage = useRef();
     const [message, setMessage] = useState('');
@@ -40,10 +41,17 @@ const Chat = forwardRef((props, ref) => {
 
     let searchPosNow = 0;
     let prevSearchKeyword = '';
+    let sendMailaddress = '';
+
+    const getMailSendAddress = () => {
+        return sendMailaddress;
+    };
 
     const initChatScroll = () => {
         // 채팅영역 스크롤
+        console.log('initChatScroll called...');
         if (refChatArea.current) {
+            console.log('refChatArea current...');
             refChatArea.current.scrollTop = refChatArea.current.scrollHeight;
         }
         // // 첨부파일 스크롤
@@ -128,6 +136,7 @@ const Chat = forwardRef((props, ref) => {
             if (responseData.length > 1) {
                 console.log('here');
                 let msg = [];
+                let data = {};
                 responseData.map((item, index) => {
                     let data = {};
 
@@ -137,7 +146,11 @@ const Chat = forwardRef((props, ref) => {
                             recevier: 'receiveUser',
                             sender: 'Listing Team',
                             message: item.content,
-                            createdDt: item.create_date
+                            createdDt: item.create_date,
+                            fileKey: '',
+                            fileName: '',
+                            fileSize: '',
+                            fileType: ''
                         };
                     } else {
                         data = {
@@ -145,10 +158,28 @@ const Chat = forwardRef((props, ref) => {
                             recevier: 'Listing Team',
                             sender: item.email,
                             message: item.content,
-                            createdDt: item.create_date
+                            createdDt: item.create_date,
+                            fileKey: '',
+                            fileName: '',
+                            fileSize: '',
+                            fileType: ''
                         };
+                        sendMailaddress = item.email;
                     }
                     console.log(data);
+                    if (item.content.indexOf('FILE_MESSAGE::') === 0) {
+                        const fileKey = item.content.replace('FILE_MESSAGE::', '');
+                        const fileInfo = fileList.find((file) => {
+                            return file.id === fileKey;
+                        });
+                        if (fileInfo) {
+                            data.fileKey = fileInfo.id;
+                            data.fileName = fileInfo.file_name;
+                            data.fileSize = fileInfo.file_size;
+                            data.fileType = fileInfo.file_type;
+                            data.message = `첨부파일 : ${data.fileName}`;
+                        }
+                    }
                     msg.push(data);
                     //setMessageList([...messageList, mDataSend]);
                 });
@@ -163,7 +194,11 @@ const Chat = forwardRef((props, ref) => {
                             recevier: 'receiveUser',
                             sender: 'Listing Team',
                             message: responseData.content,
-                            createdDt: responseData.create_date
+                            createdDt: responseData.create_date,
+                            fileKey: '',
+                            fileName: '',
+                            fileSize: '',
+                            fileType: ''
                         };
                     } else {
                         data = {
@@ -171,8 +206,27 @@ const Chat = forwardRef((props, ref) => {
                             recevier: 'Listing Team',
                             sender: responseData.email,
                             message: responseData.content,
-                            createdDt: responseData.create_date
+                            createdDt: responseData.create_date,
+                            fileKey: '',
+                            fileName: '',
+                            fileSize: '',
+                            fileType: ''
                         };
+                        sendMailaddress = item.email;
+                    }
+                    let item = responseData.content;
+                    if (item.indexOf('FILE_MESSAGE::') === 0) {
+                        const fileKey = item.replace('FILE_MESSAGE::', '');
+                        const fileInfo = fileList.find((file) => {
+                            return file.id === fileKey;
+                        });
+                        if (fileInfo) {
+                            data.fileKey = fileInfo.id;
+                            data.fileName = fileInfo.file_name;
+                            data.fileSize = fileInfo.file_size;
+                            data.fileType = fileInfo.file_type;
+                            data.message = `첨부파일 : ${data.fileName}`;
+                        }
                     }
                     console.log(data);
                     setMessageList([...messageList, data]);
@@ -233,28 +287,36 @@ const Chat = forwardRef((props, ref) => {
         comments.forEach((item) => {
             //console.log(item);
             const comment = item.innerHTML;
-            console.log(comment);
-            if (comment.indexOf(keyword) !== -1 && comment.indexOf('FILE_MESSAGE::') === -1) {
+            //console.log(comment);
+            if (comment.indexOf(keyword) !== -1) {
                 //console.log(item.getAttribute('data-message-id'));
+                //console.log('found keyword');
+                //console.log(comment);
                 if (comment.indexOf('<em') === -1) {
                     item.innerHTML = nl2brToString(comment.replaceAll(keyword, `<em class="kwd">${keyword}</em>`));
-
-                    /* 포커스 이동 처리 */
-                    const article = item.parentElement?.parentElement;
-                    console.log(article);
-                    const top = article.offsetTop;
-                    console.log(top);
-                    console.log(refChatArea);
-                    if (searchPosNow === checker) {
-                        // 해당 위치로 스크롤바 이동
-                        refChatArea.current?.scrollTo(0, top - 130);
-                    }
-                    matchCount += 1;
-                    checker += 1;
-                } else {
-                    console.log(comment);
-                    item.innerHTML = nl2brToString(comment);
                 }
+
+                /* 포커스 이동 처리 */
+                const article = item.parentElement; // ?.parentElement.parentElement.parentElement;
+                console.log(article);
+                const top = article.offsetTop;
+                console.log(refChatArea.current);
+                console.log(
+                    'top : %s, current scrollHeight : %s, current scrollTop : %s',
+                    top,
+                    refChatArea.current.scrollHeight,
+                    refChatArea.current.scrollTop
+                );
+                if (searchPosNow === checker) {
+                    // 해당 위치로 스크롤바 이동
+                    console.log('found here...');
+                    refChatArea.current.scrollTo(0, top - 300);
+                }
+                matchCount += 1;
+                checker += 1;
+            } else {
+                console.log(comment);
+                item.innerHTML = nl2brToString(comment);
             }
         });
 
@@ -285,6 +347,12 @@ const Chat = forwardRef((props, ref) => {
         chatExcelDownload(projectId);
     };
 
+    // 메시지 전송 Text 박스
+    const handleSendChat = (data) => {
+        console.log(data);
+        sendRequest(data);
+    };
+
     return (
         <div className="chatting--container">
             <ButtonLayout>
@@ -299,39 +367,43 @@ const Chat = forwardRef((props, ref) => {
                     검색
                 </Button>
             </ButtonLayout>
-
-            <ChattingRoom ref={refChatArea} sendMessage={sendRequest}>
-                {messageList.length > 0 &&
-                    messageList.map((item, idx) => {
-                        const key = `key_${idx}`;
-                        if (item.sender === 'Listing Team') {
-                            return (
-                                <MessageRight
-                                    key={item.id}
-                                    id={item.id}
-                                    message={item.message}
-                                    timestamp={item.createdDt}
-                                    displayName={item.sender}
-                                    fileList={fileList}
-                                    fileDownload={fileDownload}
-                                    deleteChatMessage={deleteChatMessage}
-                                />
-                            );
-                        } else {
-                            return (
-                                <MessageLeft
-                                    key={item.id}
-                                    id={item.id}
-                                    message={item.message}
-                                    timestamp={item.createdDt}
-                                    displayName={item.sender}
-                                    fileList={fileList}
-                                    fileDownload={fileDownload}
-                                />
-                            );
-                        }
-                    })}
-            </ChattingRoom>
+            <div className="chat--room">
+                <div className="chat--room__box" id="scrollId" ref={refChatArea}>
+                    <ChattingRoom>
+                        {messageList.length > 0 &&
+                            messageList.map((item, idx) => {
+                                const key = `key_${idx}`;
+                                if (item.sender === 'Listing Team') {
+                                    return (
+                                        <MessageRight
+                                            key={item.id}
+                                            id={item.id}
+                                            message={item}
+                                            timestamp={item.createdDt}
+                                            displayName={item.sender}
+                                            fileList={fileList}
+                                            fileDownload={fileDownload}
+                                            deleteChatMessage={deleteChatMessage}
+                                        />
+                                    );
+                                } else {
+                                    return (
+                                        <MessageLeft
+                                            key={item.id}
+                                            id={item.id}
+                                            message={item}
+                                            timestamp={item.createdDt}
+                                            displayName={item.sender}
+                                            fileList={fileList}
+                                            fileDownload={fileDownload}
+                                        />
+                                    );
+                                }
+                            })}
+                    </ChattingRoom>
+                </div>
+                <Index sendChat={handleSendChat} />
+            </div>
         </div>
     );
 });
