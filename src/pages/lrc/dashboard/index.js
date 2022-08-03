@@ -59,9 +59,6 @@ const LrcDashboard = () => {
             if (requestError.result === 'FAIL') {
                 console.log('error requestError');
                 console.log(requestError);
-                // setErrorTitle('Error Message');
-                // setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
-                // setOpen(true);
             }
         }
     }, [requestError]);
@@ -118,7 +115,7 @@ const LrcDashboard = () => {
             </Grid>
             {dataStatus.map((item, index) => (
                 <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-                    <AnalyticLrcForm title={item.name} count={item.count} child={item.children} />
+                    <AnalyticLrcForm id={item.id} title={item.name} count={item.count} child={item.children} />
                 </Grid>
             ))}
 

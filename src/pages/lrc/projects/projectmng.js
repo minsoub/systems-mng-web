@@ -51,6 +51,7 @@ const ProjectMng = (props) => {
             projectSearch,
             updateProjectInfo,
             userSearch,
+            createUserSearch,
             icoSearch,
             updateIcoList,
             officeSearch,
@@ -243,8 +244,20 @@ const ProjectMng = (props) => {
                 }
                 break;
             case 'getUserList': // 사용자 정보
+                console.log('>>getUserList called...<<');
                 if (responseData.data.data && responseData.data.data.length > 0) {
+                    console.log(responseData.data.data);
                     setUserList(responseData.data.data);
+                } else {
+                    setUserList([]);
+                    // 담당자가 없으면
+                    console.log('>>createUserSearch called...<<');
+                    createUserSearch(projectId);
+                }
+                break;
+            case 'getCreateUser':
+                if (responseData.data.data) {
+                    setUserList((prevRows) => [...prevRows, responseData.data.data]);
                 } else {
                     setUserList([]);
                 }

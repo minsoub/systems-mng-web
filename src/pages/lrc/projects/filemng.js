@@ -491,7 +491,7 @@ const FileMng = (props) => {
                             </tr>
 
                             <tr>
-                                <th className="tg-0pky">2. 별첨-1]개인정보 요청서</th>
+                                <th className="tg-0pky">2. [별첨-1]개인정보 요청서</th>
                                 <td className="tg-0pky">
                                     <FlexBox>
                                         <TextField

@@ -169,6 +169,14 @@ const MainRoutes = [
                 element: <ProjectsPage />
             },
             {
+                path: 'projects/list/:paramId1',
+                element: <ProjectsPage />
+            },
+            {
+                path: 'projects/list/:paramId1/:paramId2',
+                element: <ProjectsPage />
+            },
+            {
                 path: 'projects/detail',
                 element: <ProjectsDetailPage />
             },

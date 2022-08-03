@@ -667,8 +667,8 @@ const OfficeInfo = (props) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">1. 거래지원 신청서</TableCell>
-                                <TableCell align="center">2. 별첨-1]개인정보 요청서</TableCell>
-                                <TableCell align="center">3. 개인정보 수집 및 이용동의</TableCell>
+                                <TableCell align="center">2. [별첨-1]개인정보 요청서</TableCell>
+                                <TableCell align="center">3. 개인정보 수집 및 이용동의서</TableCell>
                                 <TableCell align="center">4. 프로젝트 백서</TableCell>
                             </TableRow>
                         </TableHead>
