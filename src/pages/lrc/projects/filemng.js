@@ -272,7 +272,7 @@ const FileMng = (props) => {
                 break;
             case 'insertData':
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!');
+                    alert('저장을 완료하였습니다.');
                 }
                 realodData();
                 break;
@@ -340,7 +340,7 @@ const FileMng = (props) => {
     // URL Save
     const urlSave = (type, data) => {
         if (!data) {
-            alert('URL 정보를 입력하지 않았습니다!!!');
+            alert('URL 정보를 입력하지 않았습니다.');
             return;
         }
         if (confirm('저장하시겠습니까?')) {
@@ -350,7 +350,7 @@ const FileMng = (props) => {
 
     const fileSave = (type, data) => {
         if (!data) {
-            alert('파일을 업로드 하지 않았습니다!!!');
+            alert('파일을 업로드 하지 않았습니다.');
             return;
         }
         if (confirm('저장하시겠습니까?')) {

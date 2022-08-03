@@ -168,7 +168,7 @@ const SiteRoleManagementPage = () => {
     const searchClick = () => {
         console.log('searchClick called...');
         if (!site_id) {
-            alert('사이트명을 선택하세요!!!');
+            alert('사이트명을 선택하세요.');
             return;
         }
         roleSearch(is_use, site_id, keyword);

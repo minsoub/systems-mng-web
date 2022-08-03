@@ -268,7 +268,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 콘텐츠를 체크하세요!');
+            alert('삭제 할 콘텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);

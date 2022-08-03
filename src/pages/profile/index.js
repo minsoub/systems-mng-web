@@ -83,7 +83,7 @@ const ProfileUpdateForm = () => {
         switch (responseData.transactionId) {
             case 'insertData':
                 if (responseData.data) {
-                    alert('저장을 완료하였습니다');
+                    alert('저장을 완료하였습니다.');
                     listClick();
                 }
                 break;
@@ -105,16 +105,16 @@ const ProfileUpdateForm = () => {
                 break;
             case 'updateData':
                 if (responseData.data.data) {
-                    alert('수정을 완료하였습니다');
+                    alert('수정을 완료하였습니다.');
                     listClick();
                 }
                 break;
             case 'deleteData':
-                alert('삭제를 완료하였습니다!!!');
+                alert('삭제를 완료하였습니다.');
                 navigate('/faq/list');
                 break;
             case 'updatePasswordData':
-                alert('패스워드 수정을 완료하였습니다!!!');
+                alert('패스워드 수정을 완료하였습니다.');
                 if (authData.siteId === '62a15f4ae4129b518b133128') {
                     // 투자보호
                     navigate('/cpc/dashboard');
@@ -153,25 +153,25 @@ const ProfileUpdateForm = () => {
 
     const saveClick = () => {
         if (!current_password) {
-            alert('현재 비밀번호를 입력하세요!!!');
+            alert('현재 비밀번호를 입력하세요.');
             return;
         }
         if (!new_password) {
-            alert('신규 비밀번호를 입력하세요!!!');
+            alert('신규 비밀번호를 입력하세요.');
             return;
         }
         if (!confirm_password) {
-            alert('신규 비밀번호 확인을 입력하세요!!!');
+            alert('신규 비밀번호 확인을 입력하세요.');
             return;
         }
         if (new_password !== confirm_password) {
-            alert('신규 비밀번호와 신규 비밀번호 확인이 일치하지 않습니다!!!');
+            alert('신규 비밀번호와 신규 비밀번호 확인이 일치하지 않습니다.');
             return;
         }
         // 패스워드 로직 검증
         const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,64}$/; // /^(?=.*\d)(?=.*[a-zA-Z~!@#$%^&*_])[0-9a-zA-Z~!@#$%^&*_]{8,64}$/;
         if (!regex.test(new_password)) {
-            alert('요청한 패스워드 형식에 일치하지 않습니다!!!');
+            alert('요청한 패스워드 형식에 일치하지 않습니다.');
             return;
         }
         let send_data = {

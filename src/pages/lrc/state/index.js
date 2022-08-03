@@ -106,7 +106,7 @@ const StatusRegForm = () => {
         switch (resData.transactionId) {
             case 'insertData':
                 if (resData.data.data) {
-                    alert('등록을 완료하였습니다!!!');
+                    alert('등록을 완료하였습니다.');
                     inputClear();
                     // 트리 구조 조회
                     statusSearch(is_use);
@@ -122,7 +122,7 @@ const StatusRegForm = () => {
                 break;
             case 'updateData':
                 if (resData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장을 완료하였습니다.');
                     inputClear();
                     // 트리 구조 조회
                     statusSearch(is_use);
@@ -157,15 +157,15 @@ const StatusRegForm = () => {
         console.log(inputs);
         // Validation check
         if (!inputs.name) {
-            alert('상태명(국문)을 입력하지 않았습니다!');
+            alert('상태명(국문)을 입력하지 않았습니다.');
             return;
         }
         if (!inputs.name_en) {
-            alert('상태명(영문)을 입력하지 않았습니다!');
+            alert('상태명(영문)을 입력하지 않았습니다.');
             return;
         }
         if (!inputs.order_no) {
-            alert('정렬 순서를 입력하지 않았습니다!');
+            alert('정렬 순서를 입력하지 않았습니다.');
             return;
         }
         if (!isUpdate) {

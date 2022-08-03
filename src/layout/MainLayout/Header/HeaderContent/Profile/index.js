@@ -16,7 +16,7 @@ import { Avatar } from 'antd';
 import {
     activeEmail,
     activeLogin,
-    activeLoginDate,
+    activeLoginDate, activeRefreshToken,
     activeRole,
     activeSite,
     activeToken
@@ -59,12 +59,13 @@ const Profile = () => {
         if (confirm('로그아웃 하시겠습니까?')) {
             // logout
             if (localStorage.hasOwnProperty('authenticated')) {
-                dispatch(activeSite({siteId: ''}));
-                dispatch(activeRole({roleId: ''})); // Role Id
-                dispatch(activeEmail({email: ''}));
-                dispatch(activeToken({accessToken: ''}));
-                dispatch(activeLogin({isLoggined: ''}));
-                dispatch(activeLoginDate({loginDate: ''}));
+                dispatch(activeSite({ siteId: '' }));
+                dispatch(activeRole({ roleId: '' })); // Role Id
+                dispatch(activeEmail({ email: '' }));
+                dispatch(activeToken({ accessToken: '' }));
+                dispatch(activeRefreshToken({ refreshToken: '' }));
+                dispatch(activeLoginDate({ loginDate: '' }));
+                dispatch(activeLogin({ isLoggined: false }));
             }
             localStorage.clear();
             navigate('/login');

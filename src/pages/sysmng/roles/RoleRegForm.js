@@ -111,7 +111,7 @@ const RoleRegForm = () => {
     const idDuplicateCheck = () => {
         // ID 중복 체크를 한다.
         if (id === '') {
-            alert('ID를 입력 후 중복 체크 해주시기 바랍니다!!!');
+            alert('ID를 입력 후 중복 체크 해주시기 바랍니다.');
             return;
         }
         roleCheck(id);
@@ -174,23 +174,23 @@ const RoleRegForm = () => {
                 break;
             case 'duplicateData':
                 if (responseData.data.data) {
-                    alert('이미 등록된 아이디입니다!!!');
+                    alert('이미 등록된 아이디입니다.');
                     setIdChk(false);
                 } else {
-                    alert('사용 가능한 아이디입니다!!!');
+                    alert('사용 가능한 아이디입니다.');
                     setIdChk(true);
                 }
                 break;
             case 'insertData':
-                alert('등록을 완료하였습니다!!!');
+                alert('등록을 완료하였습니다.');
                 navigate('/roles/list');
                 break;
             case 'updateData':
-                alert('수정을 완료하였습니다!!!');
+                alert('수정을 완료하였습니다.');
                 break;
             case 'deleteData':
                 console.log('deleteData');
-                alert('삭제를 완료하였습니다!!!');
+                alert('삭제를 완료하였습니다.');
                 navigate('/roles/list');
                 break;
             default:
@@ -304,25 +304,25 @@ const RoleRegForm = () => {
                         }
                         if (valid_end_date === '') {
                             setErrorTitle('입력 오류');
-                            setErrorMessage('유효기간을 입력하지 않았습니다');
+                            setErrorMessage('유효기간을 입력하지 않았습니다.');
                             setOpen(true);
                             return;
                         }
                         if (site_id === '') {
                             setErrorTitle('입력 오류');
-                            setErrorMessage('사이트 구분을 선택하지 않았습니다!!!');
+                            setErrorMessage('사이트 구분을 선택하지 않았습니다.');
                             setOpen(true);
                             return;
                         }
                         if (type === '') {
                             setErrorTitle('입력 오류');
-                            setErrorMessage('운영구분을 선택하지 않았습니다!!!');
+                            setErrorMessage('운영구분을 선택하지 않았습니다.');
                             setOpen(true);
                             return;
                         }
                         if (!idChk) {
                             setErrorTitle('입력 오류');
-                            setErrorMessage('ID 중복 체크를 하지 않았습니다!!!');
+                            setErrorMessage('ID 중복 체크를 하지 않았습니다.');
                             setOpen(true);
                             return;
                         }

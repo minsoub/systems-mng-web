@@ -165,7 +165,7 @@ const SiteMenuRegForm = () => {
                 break;
             case 'insertData':
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장을 완료하였습니다.');
                     let res = responseData.data.data;
                     setInputs({
                         id: res.id,
@@ -188,7 +188,7 @@ const SiteMenuRegForm = () => {
                 break;
             case 'updateData':
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장을 완료하였습니다.');
                     let res = responseData.data.data;
                     setInputs({
                         id: res.id,
@@ -211,7 +211,7 @@ const SiteMenuRegForm = () => {
                 break;
             case 'deleteData':
                 if (responseData.data.data) {
-                    alert('삭제를 완료하였습니다!!!');
+                    alert('삭제를 완료하였습니다.');
                     inputClear();
                     menumngSearch(login_site_id, true);
                 }

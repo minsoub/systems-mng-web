@@ -51,7 +51,8 @@ const OtpSimpleForm = ({result}) => {
                     if (responseData.data.status === 'INIT_REQUEST'
                         || responseData.data.status === 'INIT_REGISTER'
                         || responseData.data.status === 'INIT_CONFIRM'
-                        || responseData.data.status === 'INIT_COMPLETE') {
+                        || responseData.data.status === 'INIT_COMPLETE'
+                        || responseData.data.status === 'CHANGE_PASSWORD') {
                         console.log('임시 패스워드로 인한 변경 작업 화면 호출');
                         navigate('/tmppassword', {state: responseData.data});
                         return;
@@ -155,7 +156,7 @@ const OtpSimpleForm = ({result}) => {
 
                 <Grid item xs={12} className={cx('blank')}>
                     <div className={cx('label--center')}>
-                        <span>OTP를 분실했나요?</span>
+                        <span>OTP를 분실하셨나요?</span>
                         <a
                             href="components/AuthLogin/OtpSimpleForm/OtpSimpleForm#"
                             onClick={clearOtp}

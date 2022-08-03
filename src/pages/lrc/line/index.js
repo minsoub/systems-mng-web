@@ -128,21 +128,21 @@ const LineMngPage = () => {
                 break;
             case 'insertData':
                 if (responseData.data.data) {
-                    alert('저장되였습니다!!!');
+                    alert('저장되였습니다.');
                     newClick();
                     lineSearch(search_line_type);
                 }
                 break;
             case 'updateData':
                 if (responseData.data.data) {
-                    alert('수정을 완료하였습니다!!!');
+                    alert('수정을 완료하였습니다.');
                     newClick();
                     lineSearch(search_line_type);
                 }
                 break;
             case 'deleteData':
                 console.log('deleteData');
-                alert('삭제 처리를 완료하였습니다!');
+                alert('삭제 처리를 완료하였습니다.');
                 newClick();
                 lineSearch(search_line_type);
                 break;
@@ -214,11 +214,11 @@ const LineMngPage = () => {
     // save
     const saveClick = () => {
         if (!name) {
-            alert('계열 명칭을 입력하지 않았습니다!!!');
+            alert('계열 명칭을 입력하지 않았습니다.');
             return;
         }
         if (!type) {
-            alert('계열 타입을 선택하지 않았습니다!!!');
+            alert('계열 타입을 선택하지 않았습니다.');
             return;
         }
         console.log(inputs);
@@ -233,7 +233,7 @@ const LineMngPage = () => {
     // delete
     const deleteClick = () => {
         if (!isUpdate) {
-            alert('삭제할 데이터가 없습니다!!!');
+            alert('삭제할 데이터가 없습니다.');
             return;
         }
         if (confirm('삭제하시겠습니까?')) {

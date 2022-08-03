@@ -175,7 +175,7 @@ const MenuRegForm = () => {
                 break;
             case 'insertData':
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장을 완료하였습니다.');
                     let res = responseData.data.data;
                     setInputs({
                         id: res.id,
@@ -198,7 +198,7 @@ const MenuRegForm = () => {
                 break;
             case 'updateData':
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장을 완료하였습니다.');
                     let res = responseData.data.data;
                     setInputs({
                         id: res.id,
@@ -221,7 +221,7 @@ const MenuRegForm = () => {
                 break;
             case 'deleteData':
                 if (responseData.data.data) {
-                    alert('삭제를 완료하였습니다!!!');
+                    alert('삭제를 완료하였습니다.');
                     inputClear();
                     menumngSearch(inputs.site_id, search_is_use);
                 }
@@ -267,7 +267,7 @@ const MenuRegForm = () => {
     // search
     const searchClick = () => {
         if (!inputs.site_id) {
-            alert('사이트명을 선택하세요!!!');
+            alert('사이트명을 선택하세요.');
             return;
         }
         menumngSearch(inputs.site_id, search_is_use);
@@ -277,19 +277,19 @@ const MenuRegForm = () => {
         console.log(inputs);
         // Validation check
         if (!inputs.site_id) {
-            setError('사이트명을 선택하지 않았습니다');
+            setError('사이트명을 선택하지 않았습니다.');
             return;
         }
         if (!inputs.name) {
-            setError('메뉴명을 입력하지 않았습니다!');
+            setError('메뉴명을 입력하지 않았습니다.');
             return;
         }
         if (!inputs.order) {
-            setError('정렬 순서를 입력하지 않았습니다');
+            setError('정렬 순서를 입력하지 않았습니다.');
             return;
         }
         if (!inputs.type) {
-            setError('메뉴타입을 선택하지 않았습니다');
+            setError('메뉴타입을 선택하지 않았습니다.');
             return;
         }
         if (confirm('저장하시겠습니까?')) {

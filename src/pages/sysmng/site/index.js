@@ -164,7 +164,7 @@ const SiteManagementPage = () => {
     // search
     const searchClick = () => {
         if (keyword === '') {
-            alert('검색 단어를 입력하세요!');
+            alert('검색 단어를 입력하세요.');
             return;
         }
         siteSearch(is_use, keyword);

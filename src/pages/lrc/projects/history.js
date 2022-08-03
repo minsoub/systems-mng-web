@@ -129,7 +129,7 @@ const ProjectHistory = (props) => {
         console.log('searchClick called...');
         //roleComboSearch(is_use, type, site_id);
         if (refKeyword.current.value === '') {
-            alert('검색 단어를 입력하세요!!!');
+            alert('검색 단어를 입력하세요.');
             return;
         }
         historySearch(projectId, refKeyword.current.value);

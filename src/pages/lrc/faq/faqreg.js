@@ -131,7 +131,7 @@ const FaqRegForm = () => {
         switch (responseData.transactionId) {
             case 'insertData':
                 if (responseData.data) {
-                    alert('저장을 완료하였습니다');
+                    alert('저장을 완료하였습니다.');
                     listClick();
                 }
                 break;
@@ -153,12 +153,12 @@ const FaqRegForm = () => {
                 break;
             case 'updateData':
                 if (responseData.data.data) {
-                    alert('수정을 완료하였습니다');
+                    alert('수정을 완료하였습니다.');
                     listClick();
                 }
                 break;
             case 'deleteData':
-                alert('삭제를 완료하였습니다!!!');
+                alert('삭제를 완료하였습니다.');
                 navigate('/faq/list');
                 break;
             default:
@@ -198,15 +198,15 @@ const FaqRegForm = () => {
     };
     const saveClick = () => {
         if (!category_code) {
-            alert('카테고리를 선택하세요!!!');
+            alert('카테고리를 선택하세요.');
             return;
         }
         if (!title) {
-            alert('제목을 입력하세요!!!');
+            alert('제목을 입력하세요.');
             return;
         }
         if (!content) {
-            alert('내용을 입력하세요!!!');
+            alert('내용을 입력하세요.');
             return;
         }
         if (!paramNo) {

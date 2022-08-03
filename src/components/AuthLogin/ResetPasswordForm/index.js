@@ -1,31 +1,21 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 import {
     Button,
     FormHelperText,
     Grid,
-    IconButton,
-    InputAdornment,
     InputLabel,
     OutlinedInput,
     Stack
 } from '@mui/material';
-
-import * as Yup from 'yup';
-import {Formik} from 'formik';
-import {EyeInvisibleOutlined, EyeOutlined} from '@ant-design/icons';
 import useAuthorized from 'apis/auth/auths';
-import {useSelector} from "react-redux";
+import {Formik} from "formik";
+import * as Yup from "yup";
 
-import styles from './styles.module.scss';
-import classNames from 'classnames/bind';
-
-const cx = classNames.bind(styles);
-
-const AuthLogin = () => {
+const ResetPasswordForm = () => {
     const navigate = useNavigate();
-    const [showPassword, setShowPassword] = useState(false);
-    const [responseData, requestError, loading, { actionLogin }] = useAuthorized();
+    const [responseData, requestError, { actionLogin }] = useAuthorized();
 
     const { isLoggined, siteId, accessToken } = useSelector((state) => state.auth);
 
@@ -40,14 +30,6 @@ const AuthLogin = () => {
         }
     }, [isLoggined]);
 
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-        console.log('handleMouseDownPassword');
-    };
 
     // transaction error 처리
     useEffect(() => {
@@ -99,12 +81,10 @@ const AuthLogin = () => {
             <Formik
                 initialValues={{
                     email: '',
-                    password: '',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
-                    email: Yup.string().email('올바른 이메일 주소를 입력해 주세요.').max(255).required('올바른 이메일 주소를 입력해 주세요.'),
-                    password: Yup.string().max(255).required('올바른 비밀번호를 입력해 주세요.')
+                    email: Yup.string().email('올바른 이메일 주소를 입력해 주세요.').max(255).required('올바른 이메일 주소를 입력해 주세요.')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
@@ -144,40 +124,6 @@ const AuthLogin = () => {
                                     )}
                                 </Stack>
                             </Grid>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>
-                                    <InputLabel htmlFor="password-login">비밀번호</InputLabel>
-                                    <OutlinedInput
-                                        fullWidth
-                                        error={Boolean(touched.password && errors.password)}
-                                        id="-password-login"
-                                        type={showPassword ? 'text' : 'password'}
-                                        value={values.password}
-                                        name="password"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                    size="large"
-                                                >
-                                                    {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        }
-                                        placeholder="비밀번호를 입력해 주세요."
-                                    />
-                                    {touched.password && errors.password && (
-                                        <FormHelperText error id="standard-weight-helper-text-password-login">
-                                            {errors.password}
-                                        </FormHelperText>
-                                    )}
-                                </Stack>
-                            </Grid>
 
                             {/* 에러 문구 */}
                             {errors.submit && (
@@ -196,20 +142,8 @@ const AuthLogin = () => {
                                     variant="contained"
                                     color="primary"
                                 >
-                                    로그인
+                                    임시 비밀번호 발급
                                 </Button>
-                            </Grid>
-
-                            <Grid item xs={12} className={cx('blank')}>
-                                <div className={cx('label--center')}>
-                                    <span>비밀번호를 분실하셨나요?</span>
-                                    <a
-                                        href="/resetpassword"
-                                        className={cx('label--center--highlight')}
-                                    >
-                                        초기화 요청
-                                    </a>
-                                </div>
                             </Grid>
                         </Grid>
                     </form>
@@ -219,4 +153,4 @@ const AuthLogin = () => {
     );
 };
 
-export default AuthLogin;
+export default ResetPasswordForm;

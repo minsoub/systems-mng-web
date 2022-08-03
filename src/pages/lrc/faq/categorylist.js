@@ -122,21 +122,21 @@ const FaqCategoryPage = () => {
                 break;
             case 'insertData':
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장을 완료하였습니다.');
                     newClick();
                     categorySearch(search_language);
                 }
                 break;
             case 'updateData':
                 if (responseData.data.data) {
-                    alert('수정을 완료하였습니다!!!');
+                    alert('수정을 완료하였습니다.');
                     newClick();
                     categorySearch(search_language);
                 }
                 break;
             case 'deleteData':
                 console.log('deleteData');
-                alert('삭제 처리를 완료하였습니다!');
+                alert('삭제 처리를 완료하였습니다.');
                 newClick();
                 categorySearch(search_language);
                 break;
@@ -210,11 +210,11 @@ const FaqCategoryPage = () => {
     // save
     const saveClick = () => {
         if (!name) {
-            alert('명칭을 입력하지 않았습니다!!!');
+            alert('명칭을 입력하지 않았습니다.');
             return;
         }
         if (!order_no) {
-            alert('노출 순서를 입력하지 않았습니다!!!');
+            alert('노출 순서를 입력하지 않았습니다.');
             return;
         }
         if (!isUpdate) {
@@ -226,7 +226,7 @@ const FaqCategoryPage = () => {
     // delete
     const deleteClick = () => {
         if (!isUpdate) {
-            alert('삭제할 데이터가 없습니다!!!');
+            alert('삭제할 데이터가 없습니다.');
             return;
         }
         if (confirm('선택한 데이터에 대해서 삭제를 하시겠습니까?')) {

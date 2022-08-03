@@ -34,7 +34,7 @@ const useAxios = () => {
             // 현재 토큰 체크 진행중이 아니려면.. 아래 로직을 수행한다.
             if (!tokenChecked) {
                 if (authData == null) {
-                    console.log('토큰 정보가 존재하지 않습니다!!!');
+                    console.log('토큰 정보가 존재하지 않습니다.');
                     setTokenCheck(false);
                     setRequestSubscribers([]);
                     navigate('/login');
@@ -52,12 +52,17 @@ const useAxios = () => {
                     console.log(authData.refreshToken);
 
                     let decodeRefreshPayload = jwt.decode(authData.refreshToken);
-                    //console.log(decodeRrefshPayload);
                     const expRefresh = new Date(decodeRefreshPayload.exp * 1000).getTime();
                     if (now > expRefresh) {
                         //console.log(now);
                         //console.log(expRefresh);
                         if (localStorage.hasOwnProperty('authenticated')) {
+                            dispatch(activeSite({ siteId: '' }));
+                            dispatch(activeRole({ roleId: '' })); // Role Id
+                            dispatch(activeEmail({ email: '' }));
+                            dispatch(activeToken({ accessToken: '' }));
+                            dispatch(activeRefreshToken({ refreshToken: '' }));
+                            dispatch(activeLoginDate({ loginDate: '' }));
                             dispatch(activeLogin({ isLoggined: false }));
                         }
                         localStorage.clear();
@@ -90,6 +95,12 @@ const useAxios = () => {
                             console.log('catch error....');
                             console.log(err);
                             if (localStorage.hasOwnProperty('authenticated')) {
+                                dispatch(activeSite({ siteId: '' }));
+                                dispatch(activeRole({ roleId: '' })); // Role Id
+                                dispatch(activeEmail({ email: '' }));
+                                dispatch(activeToken({ accessToken: '' }));
+                                dispatch(activeRefreshToken({ refreshToken: '' }));
+                                dispatch(activeLoginDate({ loginDate: '' }));
                                 dispatch(activeLogin({ isLoggined: false }));
                             }
                             localStorage.clear();

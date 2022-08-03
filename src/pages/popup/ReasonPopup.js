@@ -33,7 +33,7 @@ function ReasonDialog(props) {
     const handleClose = () => {
         console.log('handleClose called..');
         if (keyword === '') {
-            alert('다운로드 사유를 입력하세요!!!');
+            alert('다운로드 사유를 입력하세요.');
             return;
         }
         onClose(keyword);

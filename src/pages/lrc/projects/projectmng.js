@@ -296,31 +296,31 @@ const ProjectMng = (props) => {
                 break;
             case 'updateFoundationInfo': // 재단 정보 업데이트
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장을 완료하였습니다.');
                     officeSearch(projectId);
                 }
                 break;
             case 'updateProjectInfo': // 프로젝트 정보 업데이트
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장을 완료하였습니다.');
                     projectSearch(projectId);
                 }
                 break;
             case 'updateIcoList': // 상장정보 업데이트
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장을 완료하였습니다.');
                     icoSearch(projectId);
                 }
                 break;
             case 'updateMarketingList': // 마켓팅 정보 업데이트
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장을 완료하였습니다.');
                     marketingSearch(projectId);
                 }
                 break;
             case 'updateReviewList': // 검토 평가 리스트 업데이트
                 if (responseData.data.data) {
-                    alert('저장을 완료하였습니다!!!');
+                    alert('저장을 완료하였습니다.');
                     reviewSearch(projectId);
                 }
                 break;
@@ -369,14 +369,14 @@ const ProjectMng = (props) => {
                 break;
             case 'projectConnect':
                 if (responseData.data.data) {
-                    alert('프로젝트 연결을 완료하였습니다!!!');
+                    alert('프로젝트 연결을 완료하였습니다.');
                     projectLinkListSearch(projectId);
                     setProjectSearchList([]);
                 }
                 break;
             case 'projectDisconnect':
                 if (responseData.data.data) {
-                    alert('프로젝트 연결 해제를 완료하였습니다!!!');
+                    alert('프로젝트 연결 해제를 완료하였습니다.');
                     projectLinkListSearch(projectId);
                     setProjectSearchList([]);
                 }
@@ -592,7 +592,7 @@ const ProjectMng = (props) => {
     // 검토 평가 List 추가
     const addReviewgList = () => {
         if (reviewList.length === 3) {
-            alert('3개 까지만 입력이 가능합니다!!!');
+            alert('3개 까지만 입력이 가능합니다!.');
             return;
         } else {
             let addRow = {
@@ -760,7 +760,7 @@ const ProjectMng = (props) => {
     // 프로젝트 (심볼) 검색
     const symbolSearch = () => {
         if (!refKeyword.current.value) {
-            alert('검색 단어를 입력하세요!!!');
+            alert('검색 단어를 입력하세요.');
             return;
         }
         setSearchMessage('');
