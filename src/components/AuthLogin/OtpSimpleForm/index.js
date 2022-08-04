@@ -85,7 +85,7 @@ const OtpSimpleForm = ({result}) => {
                 break;
             case 'otpClear':
                 if (responseData.data) {
-                    alert('OTP 초기화 신청을 완료하였습니다. 관리자 승인 후 OPT 설정이 가능합니다.');
+                    alert('OTP 초기화 신청을 완료하였습니다. 관리자 승인 후 OTP 설정이 가능합니다.');
                     navigate('/login');
                 }
                 break;
