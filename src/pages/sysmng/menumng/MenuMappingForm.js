@@ -403,13 +403,17 @@ const MenuMappingForm = () => {
     // 연결 프로그램 목록에서 프로그램을 제거한다.
     const minusRegister = () => {
         if (selectedRegisterRows.length > 0) {
+            let newList = dataGridRegisterRows;
             selectedRegisterRows.map((id, Index) => {
-                dataGridRegisterRows.map((regData, idx) => {
-                    if (id === regData.id) {
-                        setDataGridRegisterRows((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
-                        setIsSave(true);
-                    }
-                });
+                newList = newList.filter((item) => item.id !== id);
+                setDataGridRegisterRows(newList);
+                setIsSave(true);
+                // dataGridRegisterRows.map((regData, idx) => {
+                //     if (id === regData.id) {
+                //         setDataGridRegisterRows((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
+                //         setIsSave(true);
+                //     }
+                // });
                 // let selectedData = { id: data.id, name: data.name, email: data.email };
                 // // 등록된 데이터가 없으면 등록해야 한다.
                 // dataGridRegisterRows.pop(selectedData);

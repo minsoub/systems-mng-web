@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import {
     Button,
@@ -9,7 +9,9 @@ import {
     FormControlLabel,
     Grid,
     MenuItem,
-    Paper, Radio, RadioGroup,
+    Paper,
+    Radio,
+    RadioGroup,
     Select,
     Stack,
     TextField,
@@ -17,7 +19,7 @@ import {
 } from '@mui/material';
 // third party
 import MainCard from 'components/Common/MainCard';
-import {styled} from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import AccountApis from 'apis/account/accountapis';
 import SiteApi from 'apis/site/siteapi';
 import RoleApi from 'apis/roles/roleapi';
@@ -29,7 +31,7 @@ import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ContentLine from '../../../components/Common/ContentLine';
 import FlexBox from '../../../components/Common/FlexBox';
 import SearchDate from '../../../components/ContentManage/SearchDate';
-import cx from "classnames";
+import cx from 'classnames';
 
 const AccessRegForm = () => {
     let isSubmitting = false;
@@ -65,16 +67,16 @@ const AccessRegForm = () => {
     ];
 
     const navigate = useNavigate();
-    const {paramId} = useParams();
-    const {siteId} = useSelector((state) => state.auth);
+    const { paramId } = useParams();
+    const { siteId } = useSelector((state) => state.auth);
     const [
         responseData,
         requestError,
         loading,
-        {accountMngDetail, accountSearch, accountUpdate, accountInsert, accountMngRole, accountRolesUpdate}
+        { accountMngDetail, accountSearch, accountUpdate, accountInsert, accountMngRole, accountRolesUpdate }
     ] = AccountApis();
-    const [resData, reqErr, resLoading, {siteSearch}] = SiteApi();
-    const [resRoleData, resRoleError, resRoleLoading, {roleComboSearch}] = RoleApi();
+    const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
+    const [resRoleData, resRoleError, resRoleLoading, { roleComboSearch }] = RoleApi();
 
     // Grid
     const [dataGridRegisterRows, setDataGridRegisterRows] = useState([]);
@@ -124,7 +126,7 @@ const AccessRegForm = () => {
     // 중복 체크 버튼 제어
     const [isUpdate, setIsUpdate] = useState(false);
 
-    const Item = styled(Paper)(({theme}) => ({
+    const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: '#1A2027',
         ...theme.typography.body2,
         padding: theme.spacing(1),
@@ -158,6 +160,9 @@ const AccessRegForm = () => {
             let err = requestError ? requestError : reqErr;
             if (resRoleError) err = resRoleError;
             if (err.result === 'FAIL') {
+                if (err.error.code === 'R501') {
+                    alert('Role은 사이트당 한개만 등록이 가능합니다.');
+                }
                 console.log('error requestError');
                 console.log(err);
                 setErrorTitle('Error Message');
@@ -205,7 +210,7 @@ const AccessRegForm = () => {
                     let siteData = resData.data.data;
                     let siteList = [];
                     siteData.map((site, index) => {
-                        const s = {id: site.id, name: site.name};
+                        const s = { id: site.id, name: site.name };
                         console.log(s);
                         siteList.push(s);
                     });
@@ -228,7 +233,7 @@ const AccessRegForm = () => {
                     let roleList = [];
                     //roleList.push({ id: 'ALL', name: '통합시스템 관리자' });
                     roleData.map((role, index) => {
-                        const s = {id: role.id, name: role.name};
+                        const s = { id: role.id, name: role.name };
                         console.log(s);
                         roleList.push(s);
                     });
@@ -273,8 +278,8 @@ const AccessRegForm = () => {
                     //setRoleId(res.role_id);
                     //setPassword(res.password);
                     setIsUse(res.is_use);
-                    console.log(checkChangeable(res.status))
-                    if(checkChangeable(res.status)) {
+                    console.log(checkChangeable(res.status));
+                    if (checkChangeable(res.status)) {
                         setStatus(res.status);
                     } else {
                         setStatus('INIT');
@@ -382,27 +387,42 @@ const AccessRegForm = () => {
 
     // getStatusText
     const getStatusText = (value) => {
-        switch (value){
-            case 'NORMAL': return '정상';
-            case 'INIT_OTP_REQUEST': return '초기화요청(OTP)';
-            case 'INIT_OTP_COMPLETE': return '초기화완료(OTP)';
-            case 'CHANGE_PASSWORD': return '비밀번호 변경필요';
-            case 'INIT_REQUEST': return '초기화요청(비밀번호)';
-            case 'INIT_CONFIRM': return '초기화확인';
-            case 'INIT_COMPLETE': return '초기화완료';
-            case 'INIT_REGISTER': return '신규등록';
-            case 'DENY_ACCESS': return '중지상태';
-            case 'CLOSED_ACCOUNT': return '계정잠금';
+        switch (value) {
+            case 'NORMAL':
+                return '정상';
+            case 'INIT_OTP_REQUEST':
+                return '초기화요청(OTP)';
+            case 'INIT_OTP_COMPLETE':
+                return '초기화완료(OTP)';
+            case 'CHANGE_PASSWORD':
+                return '비밀번호 변경필요';
+            case 'INIT_REQUEST':
+                return '초기화요청(비밀번호)';
+            case 'INIT_CONFIRM':
+                return '초기화확인';
+            case 'INIT_COMPLETE':
+                return '초기화완료';
+            case 'INIT_REGISTER':
+                return '신규등록';
+            case 'DENY_ACCESS':
+                return '중지상태';
+            case 'CLOSED_ACCOUNT':
+                return '계정잠금';
         }
     };
 
     const checkChangeable = (value) => {
-        switch (value){
-            case 'NORMAL': return true;
-            case 'INIT_OTP_COMPLETE': return true;
-            case 'DENY_ACCESS': return true;
-            case 'CLOSED_ACCOUNT': return true;
-            default: return false;
+        switch (value) {
+            case 'NORMAL':
+                return true;
+            case 'INIT_OTP_COMPLETE':
+                return true;
+            case 'DENY_ACCESS':
+                return true;
+            case 'CLOSED_ACCOUNT':
+                return true;
+            default:
+                return false;
         }
     };
 
@@ -506,8 +526,7 @@ const AccessRegForm = () => {
     };
 
     // 페이징 변경 이벤트
-    const handlePage = (page) => {
-    };
+    const handlePage = (page) => {};
 
     // 그리드 클릭
     const handleClick = (rowData) => {
@@ -520,8 +539,7 @@ const AccessRegForm = () => {
     };
 
     // 그리드 더블 클릭
-    const handleDoubleClick = (rowData) => {
-    };
+    const handleDoubleClick = (rowData) => {};
 
     // 사이트명과 운영권한을 가지고 Role을 등록한다.
     // 기존에 등록된 Role이 있으면 등록하지 않는다.
@@ -570,14 +588,13 @@ const AccessRegForm = () => {
     };
     // 등록된 Role 목록에서 Role을 제거한다.
     const minusRegister = () => {
+        console.log(selectedRegisterRows.length);
         if (selectedRegisterRows.length > 0) {
+            let newList = dataGridRegisterRows;
             selectedRegisterRows.map((id, Index) => {
-                dataGridRegisterRows.map((regData, idx) => {
-                    if (id === regData.id) {
-                        setDataGridRegisterRows((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
-                        setIsSave(true);
-                    }
-                });
+                newList = newList.filter((item) => item.id !== id);
+                setDataGridRegisterRows(newList);
+                setIsSave(true);
             });
         }
     };
@@ -605,9 +622,9 @@ const AccessRegForm = () => {
         <>
             <Grid container rowSpacing={4.5} columnSpacing={2.75}>
                 <Grid item xs={12} md={7} lg={12}>
-                    <HeaderTitle titleNm="사용자 접근 관리" menuStep01="사이트 관리" menuStep02="사용자 접근 관리" menuStep03="계정 등록"/>
+                    <HeaderTitle titleNm="사용자 접근 관리" menuStep01="사이트 관리" menuStep02="사용자 접근 관리" menuStep03="계정 등록" />
 
-                    <MainCard sx={{mt: 2}}>
+                    <MainCard sx={{ mt: 2 }}>
                         <div className="bottom--blank">
                             <FlexBox>
                                 <DropInput title="이름">
@@ -616,7 +633,7 @@ const AccessRegForm = () => {
                                         type="text"
                                         size="small"
                                         value={name}
-                                        inputProps={{readOnly: true}}
+                                        inputProps={{ readOnly: true }}
                                         name="name"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
@@ -633,7 +650,7 @@ const AccessRegForm = () => {
                                             size="small"
                                             value={email}
                                             name="email"
-                                            inputProps={{readOnly: true}}
+                                            inputProps={{ readOnly: true }}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
                                             placeholder="Enter Email ID"
@@ -685,9 +702,12 @@ const AccessRegForm = () => {
                                 </Grid>
                                 <DropInput title="계정상태">
                                     <Grid>
-                                        <TextField name="currentStatus" label="현재 계정상태" value={currentStatus}
-                                                   readOnly="readOnly">
-                                        </TextField>
+                                        <TextField
+                                            name="currentStatus"
+                                            label="현재 계정상태"
+                                            value={currentStatus}
+                                            readOnly="readOnly"
+                                        ></TextField>
                                         <span className={cx('center')}> </span>
                                         <Select name="status" label="변경 계정상태" value={status} onChange={statusChanged}>
                                             <MenuItem value="INIT">변경 상태선택</MenuItem>
@@ -698,7 +718,6 @@ const AccessRegForm = () => {
                                         </Select>
                                     </Grid>
                                 </DropInput>
-
                             </FlexBox>
                         </div>
 
@@ -717,8 +736,8 @@ const AccessRegForm = () => {
                                     value={is_use}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel value="true" control={<Radio/>} label="사용함"/>
-                                    <FormControlLabel value="false" control={<Radio/>} label="사용안함"/>
+                                    <FormControlLabel value="true" control={<Radio />} label="사용함" />
+                                    <FormControlLabel value="false" control={<Radio />} label="사용안함" />
                                 </RadioGroup>
                             </DropInput>
                         </FlexBox>

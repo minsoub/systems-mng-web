@@ -92,7 +92,12 @@ const SiteRoleMappingForm = () => {
     }));
 
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { roleSearch, roleRegisterSave, roleRegisterSearch, roleRegisterDelete }] = RoleApi();
+    const [
+        responseData,
+        requestError,
+        loading,
+        { roleSearch, roleRegisterSave, roleRegisterSearch, roleRegisterDelete, roleMappingRegisterSave }
+    ] = RoleApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
     const [resAccData, reqAccErr, resAccLoading, { accountUserSearch }] = AccountApis();
     const { siteId } = useSelector((state) => state.auth);
@@ -146,6 +151,9 @@ const SiteRoleMappingForm = () => {
     useEffect(() => {
         if (requestError) {
             if (requestError.result === 'FAIL') {
+                if (requestError.error.code === 'R501') {
+                    alert('Role은 사이트당 한개만 등록이 가능합니다.');
+                }
                 console.log('error requestError');
                 console.log(requestError);
                 setErrorTitle('Error Message');
@@ -187,8 +195,9 @@ const SiteRoleMappingForm = () => {
                     setDataGridRows([]);
                 }
                 break;
-            case 'registerList':
+            case 'registerList': // 등록된 사용자 리스트
                 if (responseData.data.data) {
+                    console.log(responseData.data.data);
                     setDataGridRegisterRows(responseData.data.data);
                     setPrevDataGridRows(responseData.data.data);
                 } else {
@@ -210,6 +219,12 @@ const SiteRoleMappingForm = () => {
                         setDeleteCount(0);
                         setDeleteProcessCount(0);
                     }
+                }
+                break;
+            case 'registerRoleMappingData':
+                if (responseData.data.data) {
+                    alert('저장을 완료하였습니다.');
+                    roleRegisterSearch(selectedRole, '', '');
                 }
                 break;
             default:
@@ -294,7 +309,8 @@ const SiteRoleMappingForm = () => {
                 });
                 if (found === 0) {
                     // 신규 등록
-                    saveData.push(data.id);
+                    let insertData = { flag: 'INSERT', id: data.id };
+                    saveData.push(insertData);
                 }
             });
             // 이전 데이터는 있었지만 현재는 없다면 삭제이다.
@@ -306,20 +322,22 @@ const SiteRoleMappingForm = () => {
                 });
                 if (found === 0) {
                     // 삭제건이다.
-                    deleteIds.push(prev.id);
+                    let deleteData = { flag: 'DELETE', id: prev.id };
+                    //deleteIds.push(prev.id);
+                    saveData.push(deleteData);
                 }
             });
-            if (deleteIds.length > 0) {
-                setDeleteCount(deleteIds.length);
-                deleteIds.map((id) => {
-                    roleRegisterDelete(selectedRole, id);
-                });
-            }
+            // if (deleteIds.length > 0) {
+            //     setDeleteCount(deleteIds.length);
+            //     deleteIds.map((id) => {
+            //         roleRegisterDelete(selectedRole, id);
+            //     });
+            // }
             if (saveData.length > 0) {
                 let data = { accounts: saveData };
                 console.log(selectedRole);
                 console.log(data);
-                roleRegisterSave(selectedRole, data);
+                roleMappingRegisterSave(selectedRole, data);
             }
         } else if (dataGridRegisterRows.length === 0 && prevDataGridRows.length > 0) {
             if (confirm('등록 취소한 사용자를 모두 삭제하시겠습니까?')) {
@@ -382,13 +400,17 @@ const SiteRoleMappingForm = () => {
     // 체크된 등록된 사용자를 뺀다.
     const minusRegister = () => {
         if (selectedRegisterRows.length > 0) {
+            let newList = dataGridRegisterRows;
             selectedRegisterRows.map((id, index) => {
-                dataGridRegisterRows.map((regData, idx) => {
-                    if (id === regData.id) {
-                        setDataGridRegisterRows((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
-                        setIsSave(true);
-                    }
-                });
+                newList = newList.filter((item) => item.id !== id);
+                setDataGridRegisterRows(newList);
+                setIsSave(true);
+                // dataGridRegisterRows.map((regData, idx) => {
+                //     if (id === regData.id) {
+                //         setDataGridRegisterRows((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
+                //         setIsSave(true);
+                //     }
+                // });
                 // let selectedData = { id: data.id, name: data.name, email: data.email };
                 // // 등록된 데이터가 없으면 등록해야 한다.
                 // dataGridRegisterRows.pop(selectedData);
@@ -461,7 +483,7 @@ const SiteRoleMappingForm = () => {
                             </Typography>
 
                             <div className="role--layout">
-                                <DropInput title="Role ID">
+                                <DropInput title="">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
