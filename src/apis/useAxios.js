@@ -21,79 +21,44 @@ const useAxios = () => {
 
         console.log('>> axiosFetch called......');
         setLoading(true);
-        let authData = null;
-        if (localStorage.hasOwnProperty('authenticated')) {
-            authData = JSON.parse(localStorage.getItem('authenticated'));
-        }
+
         // register a synchronous request interceptor
-        console.log(url);
+        console.log('>> axiosFetch url : %s', url);
         if (url.indexOf('adm') === -1) {
-            if (authData === null || !authData.siteId) navigate('/login');
-            console.log(authData);
-            let site_id = authData.siteId;
-            // 현재 토큰 체크 진행중이 아니려면.. 아래 로직을 수행한다.
-            if (!tokenChecked) {
-                if (authData == null) {
-                    console.log('토큰 정보가 존재하지 않습니다.');
-                    setTokenCheck(false);
-                    setRequestSubscribers([]);
-                    navigate('/login');
-                    //setError('Token 정보가 존재하지 않습니다');
-                    return;
+            try {
+                let authData = null;
+                if (localStorage.hasOwnProperty('authenticated')) {
+                    authData = JSON.parse(localStorage.getItem('authenticated'));
                 }
-                let decodePayload = jwt.decode(authData.accessToken);
-                //console.log(decodePayload);
-                const exp = new Date(decodePayload.exp * 1000).getTime();
-                const now = new Date().getTime();
-                if (now > exp) {
-                    console.log('AccessToken is invalid...');
-
-                    console.log('refresh Token check');
-                    console.log(authData.refreshToken);
-
-                    let decodeRefreshPayload = jwt.decode(authData.refreshToken);
-                    const expRefresh = new Date(decodeRefreshPayload.exp * 1000).getTime();
-                    if (now > expRefresh) {
-                        //console.log(now);
-                        //console.log(expRefresh);
-                        if (localStorage.hasOwnProperty('authenticated')) {
-                            dispatch(activeSite({ siteId: '' }));
-                            dispatch(activeRole({ roleId: '' })); // Role Id
-                            dispatch(activeEmail({ email: '' }));
-                            dispatch(activeToken({ accessToken: '' }));
-                            dispatch(activeRefreshToken({ refreshToken: '' }));
-                            dispatch(activeLoginDate({ loginDate: '' }));
-                            dispatch(activeLogin({ isLoggined: false }));
-                        }
-                        localStorage.clear();
+                if (authData === null || !authData.siteId) navigate('/login');
+                //console.log(authData);
+                let site_id = authData.siteId;
+                // 현재 토큰 체크 진행중이 아니려면.. 아래 로직을 수행한다.
+                if (!tokenChecked) {
+                    if (authData == null) {
+                        console.log('토큰 정보가 존재하지 않습니다.');
                         setTokenCheck(false);
                         setRequestSubscribers([]);
                         navigate('/login');
+                        //setError('Token 정보가 존재하지 않습니다');
                         return;
-                    } else {
-                        setTokenCheck(true);
-                        // access token request
-                        let requestTokenData = {
-                            access_token: authData.accessToken,
-                            refresh_token: authData.refreshToken
-                        };
-                        try {
-                            console.log('refresh token call start....');
-                            //console.log(requestTokenData);
-                            axiosInstanceAuth.defaults.headers.my_site_id = site_id;
-                            console.log('api refresh call...');
-                            const result = await axiosInstanceAuth.put('/adm/token', requestTokenData);
-                            console.log(result);
-                            if (result.data.access_token) {
-                                authData.accessToken = result.data.access_token;
-                                localStorage.setItem('authenticated', JSON.stringify(authData));
-                                dispatch(activeToken({ accessToken: authData.accessToken }));
-                                dispatch(activeRefreshToken({ refreshToken: authData.refreshToken }));
-                            }
-                            setTokenCheck(false);
-                        } catch (err) {
-                            console.log('catch error....');
-                            console.log(err);
+                    }
+                    let decodePayload = jwt.decode(authData.accessToken);
+                    //console.log(decodePayload);
+                    const exp = new Date(decodePayload.exp * 1000).getTime();
+                    const now = new Date().getTime();
+                    if (now > exp) {
+                        console.log('>> AccessToken is invalid...');
+
+                        console.log('>> refresh Token check');
+                        console.log(authData.refreshToken);
+
+                        let decodeRefreshPayload = jwt.decode(authData.refreshToken);
+                        const expRefresh = new Date(decodeRefreshPayload.exp * 1000).getTime();
+                        if (now > expRefresh) {
+                            //console.log(now);
+                            //console.log(expRefresh);
+                            console.log('>> refresh token expire => now : %s, expRefresh : %s', now, expRefresh);
                             if (localStorage.hasOwnProperty('authenticated')) {
                                 dispatch(activeSite({ siteId: '' }));
                                 dispatch(activeRole({ roleId: '' })); // Role Id
@@ -108,14 +73,55 @@ const useAxios = () => {
                             setRequestSubscribers([]);
                             navigate('/login');
                             return;
+                        } else {
+                            setTokenCheck(true);
+                            // access token request
+                            let requestTokenData = {
+                                access_token: authData.accessToken,
+                                refresh_token: authData.refreshToken
+                            };
+                            try {
+                                console.log('>> refresh token call start....');
+                                //console.log(requestTokenData);
+                                axiosInstanceAuth.defaults.headers.my_site_id = site_id;
+                                console.log('>> api refresh call...');
+                                const result = await axiosInstanceAuth.put('/adm/token', requestTokenData);
+                                console.log(result);
+                                if (result.data.access_token) {
+                                    authData.accessToken = result.data.access_token;
+                                    localStorage.setItem('authenticated', JSON.stringify(authData));
+                                    dispatch(activeToken({ accessToken: authData.accessToken }));
+                                    dispatch(activeRefreshToken({ refreshToken: authData.refreshToken }));
+                                }
+                                setTokenCheck(false);
+                            } catch (err) {
+                                console.log('catch error....');
+                                console.log(err);
+                                if (localStorage.hasOwnProperty('authenticated')) {
+                                    dispatch(activeSite({ siteId: '' }));
+                                    dispatch(activeRole({ roleId: '' })); // Role Id
+                                    dispatch(activeEmail({ email: '' }));
+                                    dispatch(activeToken({ accessToken: '' }));
+                                    dispatch(activeRefreshToken({ refreshToken: '' }));
+                                    dispatch(activeLoginDate({ loginDate: '' }));
+                                    dispatch(activeLogin({ isLoggined: false }));
+                                }
+                                localStorage.clear();
+                                setTokenCheck(false);
+                                setRequestSubscribers([]);
+                                navigate('/login');
+                                return;
+                            }
                         }
                     }
-                }
 
-                let Authorization = `Bearer ${authData.accessToken}`; // `Bearer ${accessToken}`;
-                // Token 처리
-                axiosInstance.defaults.headers.Authorization = Authorization;
-                axiosInstance.defaults.headers.my_site_id = site_id;
+                    let Authorization = `Bearer ${authData.accessToken}`; // `Bearer ${accessToken}`;
+                    // Token 처리
+                    axiosInstance.defaults.headers.Authorization = Authorization;
+                    axiosInstance.defaults.headers.my_site_id = site_id;
+                }
+            } catch (err) {
+                console.log('token error {%s}', err);
             }
         }
         if (!tokenChecked) {
@@ -165,7 +171,7 @@ const useAxios = () => {
     };
 
     useEffect(() => {
-        console.log(controller);
+        //console.log(controller);
 
         // useEffect cleanup function (memory-leak-and-useeffect)
         return () => controller && controller.abort();
@@ -178,6 +184,7 @@ const useAxios = () => {
                 if (localStorage.hasOwnProperty('authenticated')) {
                     authData = JSON.parse(localStorage.getItem('authenticated'));
                 }
+                if (authData === null || !authData.siteId) navigate('/login');
                 let site_id = authData.siteId;
                 let Authorization = `Bearer ${authData.accessToken}`; // `Bearer ${accessToken}`;
                 // Token 처리

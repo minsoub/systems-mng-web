@@ -27,14 +27,19 @@ import DropInput from '../../../components/Common/DropInput';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import './styles.scss';
 import cx from 'classnames';
-import SearchDate from "../../../components/ContentManage/SearchDate";
+import SearchDate from '../../../components/ContentManage/SearchDate';
 
 const AccountMngForm = () => {
     let isSubmitting = false;
 
     const navigate = useNavigate();
     const { paramId } = useParams();
-    const [responseData, requestError, loading, { accountSearch, accountMngInsert, accountMngDetail, accountMngUpdate, accountDeletes }] = AccountApis();
+    const [
+        responseData,
+        requestError,
+        loading,
+        { accountSearch, accountMngInsert, accountMngDetail, accountMngUpdate, accountDeletes }
+    ] = AccountApis();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
     // Alert Dialog
@@ -195,8 +200,8 @@ const AccountMngForm = () => {
 
     const currentDate = () => {
         const date = new Date();
-        return `${String(date.getFullYear())}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;
-    }
+        return `${String(date.getFullYear())}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    };
 
     // list
     const listClick = () => {
@@ -315,10 +320,7 @@ const AccountMngForm = () => {
 
                                 <MainCard sx={{ mt: 2 }}>
                                     <div className="layout--aline account--blank">
-                                        <Stack spacing={10} className={cx('borderTitle')}>
-                                            이메일 주소
-                                        </Stack>
-                                        <FormControl sx={{ minWidth: 250 }} size="medium">
+                                        <DropInput title="이메일 주소">
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
@@ -331,7 +333,7 @@ const AccountMngForm = () => {
                                                 placeholder="Enter Email ID"
                                                 error={Boolean(touched.email && errors.email)}
                                             />
-                                        </FormControl>
+                                        </DropInput>
 
                                         <ButtonLayout>
                                             <Button

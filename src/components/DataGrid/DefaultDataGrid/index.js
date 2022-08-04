@@ -59,7 +59,7 @@ export function CustomDataGrid({
     };
 
     useEffect(() => {
-        console.log('change selectionModel:', selectionModel);
+        //console.log('change selectionModel:', selectionModel);
         selectionChange(selectionModel);
     }, [selectionModel]);
 
