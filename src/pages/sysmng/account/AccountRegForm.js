@@ -17,7 +17,7 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ContentLine from '../../../components/Common/ContentLine';
 import InputLayout from '../../../components/Common/InputLayout';
-import SearchDate from "../../../components/ContentManage/SearchDate";
+import SearchDate from '../../../components/ContentManage/SearchDate';
 
 const AccountRegForm = () => {
     let isSubmitting = false;
@@ -355,8 +355,8 @@ const AccountRegForm = () => {
 
     const currentDate = () => {
         const date = new Date();
-        return `${String(date.getFullYear())}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;
-    }
+        return `${String(date.getFullYear())}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    };
 
     // delete
     const deleteClick = () => {};
@@ -435,7 +435,7 @@ const AccountRegForm = () => {
             is_use: is_use,
             is_send_mail: send_chk,
             valid_start_date: valid_start_date,
-            valid_end_date: valid_end_date,
+            valid_end_date: valid_end_date
         };
         console.log(requestData);
         if (paramId) {
@@ -544,13 +544,17 @@ const AccountRegForm = () => {
     // 등록된 Role 목록에서 Role을 제거한다.
     const minusRegister = () => {
         if (selectedRegisterRows.length > 0) {
+            let newList = dataGridRegisterRows;
             selectedRegisterRows.map((id, Index) => {
-                dataGridRegisterRows.map((regData, idx) => {
-                    if (id === regData.id) {
-                        setDataGridRegisterRows((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
-                        setIsSave(true);
-                    }
-                });
+                newList = newList.filter((item) => item.id !== id);
+                setDataGridRegisterRows(newList);
+                setIsSave(true);
+                // dataGridRegisterRows.map((regData, idx) => {
+                //     if (id === regData.id) {
+                //         setDataGridRegisterRows((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
+                //         setIsSave(true);
+                //     }
+                // });
             });
         }
     };
