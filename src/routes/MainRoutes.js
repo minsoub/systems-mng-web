@@ -109,6 +109,8 @@ const AuthManagementPage = Loadable(lazy(() => import('pages/sysmng/authmng/inde
 const AuthMngRegForm = Loadable(lazy(() => import('pages/sysmng/authmng/AuthMngReg.js')));
 
 const LrcDashboard = Loadable(lazy(() => import('pages/lrc/dashboard/index')));
+const FileManagementPage = Loadable(lazy(() => import('pages/sysmng/filemng/index')));
+const FilemngRegForm = Loadable(lazy(() => import('pages/sysmng/filemng/FilemngRegForm')));
 
 const MainRoutes = [
     {
@@ -495,6 +497,14 @@ const MainRoutes = [
             {
                 path: 'authmng/reg/:siteId/:roleType/:roleId',
                 element: <AuthMngRegForm />
+            },
+            {
+                path: 'filemng/list',
+                element: <FileManagementPage />
+            },
+            {
+                path: 'filemng/reg',
+                element: <FilemngRegForm />
             }
         ]
     }

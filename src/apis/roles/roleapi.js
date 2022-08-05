@@ -117,6 +117,16 @@ const RoleApi = () => {
         });
     };
 
+    // 사용자 맵핑 저장 및 삭제
+    const roleMappingRegisterSave = (id, data) => {
+        callApi('registerRoleMappingData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'post',
+            url: `/role/${id}/accounts`,
+            requestConfig: data
+        });
+    };
+
     // 사용자 맵핑 롤 삭제
     const roleRegisterDelete = (role_id, user_id) => {
         callApi('registerDeleteRoleData', {
@@ -162,6 +172,7 @@ const RoleApi = () => {
             roleUpdate: updateRoleData,
             roleRegisterSearch: roleRegisterSearch,
             roleRegisterSave: roleRegisterSave,
+            roleMappingRegisterSave: roleMappingRegisterSave,
             roleRegisterDelete: roleRegisterDelete,
             roleRegisterTreeList: roleRegisterTreeList,
             roleMenuSave: roleMenuSave
