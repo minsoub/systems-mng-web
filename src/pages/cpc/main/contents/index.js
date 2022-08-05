@@ -40,7 +40,7 @@ const MainContents = () => {
     const [digital_asset_basic, setDigitalAssetBasic] = useState([]);
     const [insight_column, setInsightColumn] = useState([]);
     const [digital_asset_trends, setDigitalAssetTrends] = useState([]);
-    const [blockchain_news, setBlockchainNews] = useState([]);
+    // const [blockchain_news, setBlockchainNews] = useState([]);
 
     // onload
     useEffect(() => {
@@ -69,7 +69,7 @@ const MainContents = () => {
                     setDigitalAssetBasic(responseData.data.data.digital_asset_basic);
                     setInsightColumn(responseData.data.data.insight_column);
                     setDigitalAssetTrends(responseData.data.data.digital_asset_trends);
-                    setBlockchainNews(responseData.data.data.blockchain_news);
+                    // setBlockchainNews(responseData.data.data.blockchain_news);
                 }
                 break;
             default:
@@ -91,7 +91,7 @@ const MainContents = () => {
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={handleChange} aria-label="main contents tabs">
                             <Tab label="가상자산 동향" value="1" />
-                            <Tab label="블록체인 뉴스" value="2" />
+                            {/* <Tab label="블록체인 뉴스" value="2" /> */}
                             <Tab label="가상자산의 기초" value="3" />
                             <Tab label="인사이트 칼럼" value="4" />
                         </TabList>
@@ -141,7 +141,7 @@ const MainContents = () => {
                         </ButtonLayout>
                     </TabPanel>
                     {/* 블록체인 뉴스 */}
-                    <TabPanel value="2" className={cx('mainMng')}>
+                    {/* <TabPanel value="2" className={cx('mainMng')}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
@@ -177,7 +177,7 @@ const MainContents = () => {
                                 게시글 선택
                             </Button>
                         </ButtonLayout>
-                    </TabPanel>
+                    </TabPanel> */}
                     {/* 가상자산의 기초 */}
                     <TabPanel value="3" className={cx('mainMng')}>
                         <TableContainer component={Paper}>
