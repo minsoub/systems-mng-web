@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {
@@ -15,12 +15,12 @@ import * as Yup from "yup";
 
 const ResetPasswordForm = () => {
     const navigate = useNavigate();
-    const [responseData, requestError, { actionLogin }] = useAuthorized();
+    const [responseData, requestError, loading, {actionTempPassword}] = useAuthorized();
 
-    const { isLoggined, siteId, accessToken } = useSelector((state) => state.auth);
+    const {isLoggined, siteId, accessToken} = useSelector((state) => state.auth);
 
     useEffect(() => {
-        if(localStorage.hasOwnProperty('authenticated') && isLoggined === true && siteId && accessToken) {
+        if (localStorage.hasOwnProperty('authenticated') && isLoggined === true && siteId && accessToken) {
             if (siteId === '62a15f4ae4129b518b133128') {
                 // 투자보호
                 navigate('/cpc/dashboard');
@@ -36,14 +36,8 @@ const ResetPasswordForm = () => {
         if (requestError) {
             console.log('>> requestError <<');
             console.log(requestError);
-            if (requestError.message === 'INVALID_USER_PASSWORD') {
-                alert('패스워드가 일치하지 않습니다.');
-            } else if(requestError.message === 'INVALID_USER'){
+            if (requestError.message === 'INVALID_USER') {
                 alert('가입되지 않은 사용자 입니다.');
-            } else if(requestError.message === 'INVALID_TOKEN'){
-                alert('사용 권한이 없는 사용자 입니다.');
-            } else if (requestError.message === 'INVALID_ACCOUNT_CLOSED' || requestError.message === 'USER_ACCOUNT_DISABLE') {
-                alert('계정이 잠겼습니다. 관리자에게 문의 해 주시기 바랍니다.');
             } else {
                 alert(requestError.message);
             }
@@ -57,7 +51,7 @@ const ResetPasswordForm = () => {
         }
         console.log(responseData.transactionId);
         switch (responseData.transactionId) {
-            case 'siginin':
+            case 'temp-password':
                 console.log(responseData);
                 if (responseData.data) {
                     //setDataGridRows(responseData.data);
@@ -65,16 +59,13 @@ const ResetPasswordForm = () => {
                     // site_id, token
                     console.log('success => ');
                     console.log(responseData.data);
-                    if (responseData.data.opt_key && responseData.data.opt_key.length > 0) {
-                        navigate('/otpsimplelogin', { state: responseData.data });
-                    } else {
-                        navigate('/otplogin', { state: responseData.data });
-                    }
+                    alert("임시비밀번호가 메일로 발송되었습니다. 메일을 확인해 주세요.")
+                    navigate('/login');
                 }
                 break;
-            default:
         }
     }, [responseData]);
+
 
     return (
         <>
@@ -86,21 +77,21 @@ const ResetPasswordForm = () => {
                 validationSchema={Yup.object().shape({
                     email: Yup.string().email('올바른 이메일 주소를 입력해 주세요.').max(255).required('올바른 이메일 주소를 입력해 주세요.')
                 })}
-                onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+                onSubmit={async (values, {setErrors, setStatus, setSubmitting}) => {
                     try {
-                        setStatus({ success: false });
+                        setStatus({success: false});
                         setSubmitting(true);
-                        console.log(values);
-                        actionLogin(values.email, values.password);
+                        console.log(values.email);
+                        actionTempPassword(values.email);
                     } catch (err) {
                         console.log(err);
-                        setStatus({ success: false });
-                        setErrors({ submit: err.message });
+                        setStatus({success: false});
+                        setErrors({submit: err.message});
                         setSubmitting(false);
                     }
                 }}
             >
-                {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+                {({errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values}) => (
                     <form noValidate onSubmit={handleSubmit}>
                         <Grid container spacing={3}>
                             <Grid item xs={12}>

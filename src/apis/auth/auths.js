@@ -45,7 +45,6 @@ const useAuthorized = () => {
             requestConfig: data
         });
     };
-
     // 사용자 패스워드 수정
     const passwordUpdate = (email, password) => {
         callApi('passupdate', {
@@ -59,6 +58,16 @@ const useAuthorized = () => {
             }
         });
     };
+    const tempPassword = (email) => {
+        callApi('temp-password', {
+            axiosInstance: axiosInstanceAuth,
+            method: 'post',
+            url: `/adm/temp-password`,
+            requestConfig: {
+                email: doEncrypt(email)
+            }
+        });
+    };
     return [
         responseData,
         requestError,
@@ -67,7 +76,8 @@ const useAuthorized = () => {
             actionLogin: siginIn,
             actionOtp: optLogin,
             actionClear: otpClear,
-            actionPasswordUpdate: passwordUpdate
+            actionPasswordUpdate: passwordUpdate,
+            actionTempPassword: tempPassword
         }
     ];
 };
