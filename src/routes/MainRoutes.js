@@ -16,6 +16,8 @@ const ResetPasswordForm = Loadable(lazy(() => import('pages/auth/resetPasswordFo
 
 const SignUp = Loadable(lazy(() => import('pages/auth/signup')));
 
+const Unauthorized = Loadable(lazy(() => import('pages/auth/Unauthorized')));
+
 // profile - updateform
 const ProfileUpdateForm = Loadable(lazy(() => import('pages/profile/index')));
 // render - 사이트 운영 (거래지원 신청)
@@ -149,7 +151,12 @@ const MainRoutes = [
             {
                 path: 'signup',
                 element: <SignUp />
-            }
+            },
+            // 401
+            {
+                path: '401',
+                element: <Unauthorized />
+            },            
         ]
     },
     {
