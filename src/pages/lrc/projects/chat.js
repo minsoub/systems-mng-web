@@ -145,7 +145,7 @@ const Chat = forwardRef((props, ref) => {
         if (!responseData) return;
 
         if (responseData) {
-            if (responseData.length > 1) {
+            if (responseData.length > 0) {
                 console.log('here');
                 let msg = [];
                 let data = {};
