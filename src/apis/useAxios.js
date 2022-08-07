@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import jwt from 'jsonwebtoken';
 import { useNavigate } from 'react-router-dom';
-import {useSelector, useDispatch} from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 import axiosInstanceAuth from './axiosAuth';
 import { activeToken, activeRefreshToken } from 'store/reducers/auth';
 import { dispatch } from '../store';
@@ -15,10 +15,10 @@ const useAxios = () => {
     const navigate = useNavigate();
     // Refresh 토큰용
     const dispatch = useDispatch();
-    const {accessToken, refreshToken} = useSelector((state) => state.auth);
-    const refRequestInfo = useRef([]);        // transaction 백업
-    const refFailCount = useRef(0);         // 인증실패 횟수
-    const refRefreshChecker = useRef('');   // 최초 토큰갱신 요청 확인용 키
+    const { accessToken, refreshToken } = useSelector((state) => state.auth);
+    const refRequestInfo = useRef([]); // transaction 백업
+    const refFailCount = useRef(0); // 인증실패 횟수
+    const refRefreshChecker = useRef(''); // 최초 토큰갱신 요청 확인용 키
 
     // 인증 에러시 로그아웃 후 로그인 페이지로 이동.
     const logout = () => {
@@ -52,7 +52,7 @@ const useAxios = () => {
      * 4. 첫번째 호출건이 정상적으로 호출되고 토큰의 상태를 갱신(useEffect로 accessToken 상태 체크)한 후에 나머지 실패 건이 실행된다.
      * 5. 상태 갱신이 끝나면 기존 트랜젝션을 재 호출하고 체커(checker)를 초기화 한다.
      * */
-     const refreshFetch = async () => {
+    const refreshFetch = async () => {
         console.log('>> Run refreshFetch <<');
         // 토큰에러 카운팅
         refFailCount.current += 1;
@@ -69,7 +69,7 @@ const useAxios = () => {
         let authData = null;
         if (localStorage.hasOwnProperty('authenticated')) {
             authData = JSON.parse(localStorage.getItem('authenticated'));
-        }else{
+        } else {
             logout();
         }
         console.log('authData:', authData);
@@ -95,7 +95,7 @@ const useAxios = () => {
                 localStorage.setItem('authenticated', JSON.stringify(authData));
                 // 소스 하단에 useEffect에서 트랜잭션 재 호출.
                 dispatch(activeToken({ accessToken: access_token }));
-                dispatch(activeRefreshToken({ refreshToken: refresh_token }));                
+                dispatch(activeRefreshToken({ refreshToken: refresh_token }));
             }
         } catch (err) {
             console.log('refresh fail.');
@@ -125,13 +125,16 @@ const useAxios = () => {
                     authData = JSON.parse(localStorage.getItem('authenticated'));
                 }
                 if (authData === null || !authData.siteId) navigate('/login');
-                console.log('authData:', authData);
+                //console.log('authData:', authData);
                 let site_id = authData.siteId;
 
                 let Authorization = `Bearer ${authData.accessToken}`; // `Bearer ${accessToken}`;
                 // Token 처리
                 axiosInstance.defaults.headers.Authorization = Authorization;
                 axiosInstance.defaults.headers.my_site_id = site_id;
+            } else {
+                console.log('Authrozaton clear...');
+                axiosInstance.defaults.headers.Authorization = '';
             }
             const ctrl = new AbortController();
             setController(ctrl);
@@ -195,12 +198,12 @@ const useAxios = () => {
     useEffect(() => {
         console.log('re accessToken:', refRequestInfo.current);
         // 상태관리가 완전히 클리어된 후 로그인 페이지로 이동.
-        if(accessToken && refFailCount.current > 0){
+        if (accessToken && refFailCount.current > 0) {
             // 실패 횟수 초기화
             refFailCount.current = 0;
             // 누적된 실패 건수 재 호출 처리
             refRequestInfo.current.forEach((item) => {
-                axiosFetch(item.tid, item.configObj); 
+                axiosFetch(item.tid, item.configObj);
             });
             // 실패 건수 클리어
             refRequestInfo.current = [];

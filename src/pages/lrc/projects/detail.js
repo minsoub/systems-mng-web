@@ -134,7 +134,7 @@ const ProjectsDetailPage = () => {
         //roleList();
         // 파일 리스트 조회
         getChatFileList(paramId);
-    }, []);
+    }, [paramId]);
 
     // transaction error 처리
     useEffect(() => {

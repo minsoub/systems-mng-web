@@ -16,12 +16,14 @@ import { Avatar } from 'antd';
 import {
     activeEmail,
     activeLogin,
-    activeLoginDate, activeRefreshToken,
+    activeLoginDate,
+    activeRefreshToken,
     activeRole,
     activeSite,
     activeToken
-} from "../../../../../store/reducers/auth";
-import {dispatch} from "../../../../../store";
+} from '../../../../../store/reducers/auth';
+import { dispatch } from '../../../../../store';
+import { doDecrypt } from 'utils/Crypt';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -143,7 +145,7 @@ const Profile = () => {
                                         <CardContent>
                                             <Grid container justifyContent="space-between" alignItems="center">
                                                 <div className="mypage--userInfo">
-                                                    <p className="email">{authData.email}</p>
+                                                    <p className="email">{doDecrypt(authData.email)}</p>
                                                     <p className="admin">Smart Admin 관리자</p>
                                                     <span className="time">( 접속일시 : {authData.loginDate} )</span>
                                                 </div>

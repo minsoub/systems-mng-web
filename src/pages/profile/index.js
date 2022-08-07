@@ -175,7 +175,7 @@ const ProfileUpdateForm = () => {
             return;
         }
         let send_data = {
-            email: authData.email,
+            email: doEncrypt(authData.email),
             current_password: doEncrypt(current_password),
             new_password: doEncrypt(new_password),
             confirm_password: doEncrypt(confirm_password)

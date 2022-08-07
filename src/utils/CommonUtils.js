@@ -9,7 +9,14 @@ export const getDateFormat = (paramDate) => {
     }
     return '';
 };
-
+export const getDateFormatSecond = (paramDate) => {
+    if (paramDate) {
+        const dateFormat = 'YYYY-MM-DD HH:mm:ss';
+        const newDate = moment(paramDate).add(9, 'h').format(dateFormat);
+        return newDate;
+    }
+    return '';
+};
 // br 변환
 export const nl2br = (content) => {
     if (!content) {
