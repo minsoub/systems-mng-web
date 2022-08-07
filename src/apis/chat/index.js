@@ -47,31 +47,6 @@ const useRScoketClient = () => {
     const createClient = async (projectId) => {
         console.log('>>createClient called..<<');
         setProjectId(projectId);
-        // //let url = new URL('ws://adf6a8418bce84e3582843612fe2477f-1744457513.ap-northeast-2.elb.amazonaws.com:9090');
-        // //console.log(url);
-        // const transportOptions = {
-        //     debug: true,
-        //     url: serverURL, //'ws://k8s-systemsd-systemsc-383ed2dc5d-1210336174.ap-northeast-2.elb.amazonaws.com:9090',
-        //     wsCreator: (url) => new WebSocket(url)
-        // };
-        // const setup = {
-        //     dataMimeType: 'application/json', //APPLICATION_JSON, // 'applicaton/json',
-        //     keepAlive: 5000, // avoid sending during test
-        //     lifetime: 100000,
-        //     metadataMimeType: 'application/json' //MESSAGE_RSOCKET_COMPOSITE_METADATA
-        // };
-        // //constructor(options: ClientOptions, encoders?: Encoders<any>);
-        // const transport = new RSocketWebsocketClient(transportOptions, BufferEncoders); // { options: transportOptions, encoders: BufferEncoders });
-        // console.log('client create...');
-        // const client = new RSocketClient({
-        //     setup,
-        //     transport,
-        //     errorHandler: (e) => {
-        //         console.log('>> RScoketClient error <<');
-        //         setClientError(e);
-        //     }
-        // });
-
         const client = new RSocketClient({
             setup: {
                 dataMimeType: APPLICATION_JSON.string,

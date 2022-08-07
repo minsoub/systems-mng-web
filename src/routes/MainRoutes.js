@@ -52,19 +52,19 @@ const CpcInsightColumnMngForm = Loadable(lazy(() => import('pages/cpc/contents/I
 const CpcDigitalAssetTrendMng = Loadable(lazy(() => import('pages/cpc/contents/AssetTrend/view')));
 const CpcDigitalAssetTrendMngForm = Loadable(lazy(() => import('pages/cpc/contents/AssetTrend/post')));
 // 블록체인 뉴스
-const CpcBlockChainNewsMng = Loadable(lazy(() => import('pages/cpc/contents/BlockChain/view')));
-const CpcBlockChainNewsMngForm = Loadable(lazy(() => import('pages/cpc/contents/BlockChain/post')));
+// const CpcBlockChainNewsMng = Loadable(lazy(() => import('pages/cpc/contents/BlockChain/view')));
+// const CpcBlockChainNewsMngForm = Loadable(lazy(() => import('pages/cpc/contents/BlockChain/post')));
 // 공지사항
 const CpcNoticeMng = Loadable(lazy(() => import('pages/cpc/contents/Notice/view')));
 const CpcNoticeMngForm = Loadable(lazy(() => import('pages/cpc/contents/Notice/post')));
 // -----------------------
 // render - 고객보호센터 - 사기신고 관리
-const CpcFraudReportMng = Loadable(lazy(() => import('pages/cpc/fraudReport/view')));
-const CpcFraudReportMngForm = Loadable(lazy(() => import('pages/cpc/fraudReport/detail')));
+// const CpcFraudReportMng = Loadable(lazy(() => import('pages/cpc/fraudReport/view')));
+// const CpcFraudReportMngForm = Loadable(lazy(() => import('pages/cpc/fraudReport/detail')));
 // -----------------------
 // render - 고객보호센터 - 법률상담 관리
-const CpcLegalCounselingMng = Loadable(lazy(() => import('pages/cpc/legalCounseling/view')));
-const CpcLegalCounselingMngForm = Loadable(lazy(() => import('pages/cpc/legalCounseling/detail')));
+// const CpcLegalCounselingMng = Loadable(lazy(() => import('pages/cpc/legalCounseling/view')));
+// const CpcLegalCounselingMngForm = Loadable(lazy(() => import('pages/cpc/legalCounseling/detail')));
 // -----------------------
 // render - 통합 게시판 관리
 const BoardMng = Loadable(lazy(() => import('pages/board/index')));
@@ -156,7 +156,7 @@ const MainRoutes = [
             {
                 path: '401',
                 element: <Unauthorized />
-            },            
+            }
         ]
     },
     {
@@ -296,18 +296,18 @@ const MainRoutes = [
                 path: 'cpc/contents/digital-asset-trend/reg/:boardId',
                 element: <CpcDigitalAssetTrendMngForm />
             },
-            {
-                path: 'cpc/contents/blockchain-news/list',
-                element: <CpcBlockChainNewsMng />
-            },
-            {
-                path: 'cpc/contents/blockchain-news/reg',
-                element: <CpcBlockChainNewsMngForm />
-            },
-            {
-                path: 'cpc/contents/blockchain-news/reg/:newsId',
-                element: <CpcBlockChainNewsMngForm />
-            },
+            // {
+            //     path: 'cpc/contents/blockchain-news/list',
+            //     element: <CpcBlockChainNewsMng />
+            // },
+            // {
+            //     path: 'cpc/contents/blockchain-news/reg',
+            //     element: <CpcBlockChainNewsMngForm />
+            // },
+            // {
+            //     path: 'cpc/contents/blockchain-news/reg/:newsId',
+            //     element: <CpcBlockChainNewsMngForm />
+            // },
             {
                 path: 'cpc/contents/notice/list',
                 element: <CpcNoticeMng />
@@ -321,23 +321,23 @@ const MainRoutes = [
                 element: <CpcNoticeMngForm />
             },
             // 고객보호센터 - 사기신고 관리
-            {
-                path: 'cpc/fraud-report/list',
-                element: <CpcFraudReportMng />
-            },
-            {
-                path: 'cpc/fraud-report/reg/:applyId',
-                element: <CpcFraudReportMngForm />
-            },
+            // {
+            //     path: 'cpc/fraud-report/list',
+            //     element: <CpcFraudReportMng />
+            // },
+            // {
+            //     path: 'cpc/fraud-report/reg/:applyId',
+            //     element: <CpcFraudReportMngForm />
+            // },
             // 고객보호센터 - 법률상담 관리
-            {
-                path: 'cpc/legal-counseling/list',
-                element: <CpcLegalCounselingMng />
-            },
-            {
-                path: 'cpc/legal-counseling/reg/:applyId',
-                element: <CpcLegalCounselingMngForm />
-            },
+            // {
+            //     path: 'cpc/legal-counseling/list',
+            //     element: <CpcLegalCounselingMng />
+            // },
+            // {
+            //     path: 'cpc/legal-counseling/reg/:applyId',
+            //     element: <CpcLegalCounselingMngForm />
+            // },
             // 사이트 관리
             {
                 path: 'access/list',
