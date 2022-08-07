@@ -31,7 +31,7 @@ const useRScoketClient = () => {
     const [responseData, setResponseData] = useState();
     const [responseError, setResponseError] = useState();
     const [projectId, setProjectId] = useState('');
-    const { siteId } = useSelector((state) => state.auth);
+    const { siteId, name } = useSelector((state) => state.auth);
 
     const getMetadata = (route) => {
         const socketAuthProvider = encodeBearerAuthMetadata(
@@ -125,7 +125,8 @@ const useRScoketClient = () => {
         const messageRequest = {
             content: message,
             chat_room: project_id,
-            site_id: siteId
+            site_id: siteId,
+            name: name
         };
         console.log(messageRequest);
 
@@ -197,10 +198,11 @@ const useRScoketClient = () => {
     };
 
     // 기존 채팅 리스트 가져오기
-    const sendJoinChat = (route) => {
+    const sendJoinChat = (route, pId) => {
         if (rSocket) {
+            setProjectId(pId);
             const message = {
-                chat_room: projectId,
+                chat_room: pId,
                 site_id: siteId
             };
             rSocket

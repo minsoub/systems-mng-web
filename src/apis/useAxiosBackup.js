@@ -3,7 +3,16 @@ import jwt from 'jsonwebtoken';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axiosInstanceAuth from './axiosAuth';
-import { activeToken, activeRefreshToken, activeSite, activeRole, activeEmail, activeLogin, activeLoginDate } from 'store/reducers/auth';
+import {
+    activeToken,
+    activeRefreshToken,
+    activeSite,
+    activeRole,
+    activeEmail,
+    activeName,
+    activeLogin,
+    activeLoginDate
+} from 'store/reducers/auth';
 import { dispatch } from '../store';
 
 const useAxios = () => {
@@ -63,6 +72,7 @@ const useAxios = () => {
                                 dispatch(activeSite({ siteId: '' }));
                                 dispatch(activeRole({ roleId: '' })); // Role Id
                                 dispatch(activeEmail({ email: '' }));
+                                dispatch(activeName({ name: '' }));
                                 dispatch(activeToken({ accessToken: '' }));
                                 dispatch(activeRefreshToken({ refreshToken: '' }));
                                 dispatch(activeLoginDate({ loginDate: '' }));
@@ -101,6 +111,7 @@ const useAxios = () => {
                                     dispatch(activeSite({ siteId: '' }));
                                     dispatch(activeRole({ roleId: '' })); // Role Id
                                     dispatch(activeEmail({ email: '' }));
+                                    dispatch(activeName({ name: '' }));
                                     dispatch(activeToken({ accessToken: '' }));
                                     dispatch(activeRefreshToken({ refreshToken: '' }));
                                     dispatch(activeLoginDate({ loginDate: '' }));

@@ -11,6 +11,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import jwt from 'jsonwebtoken';
 import { nl2brToString } from 'utils/CommonUtils';
 import { Index } from '../../../components/Chat/TextInput';
+import { getDateFormatSecond } from 'utils/CommonUtils';
 const Chat = forwardRef((props, ref) => {
     const { projectId, fileList, fileDownload, children, tabindex, index, ...other } = props;
     const [resData, reqError, loading, { chatExistsAndSave, deleteChat, chatExcelDownload }] = ChatApi();
@@ -124,10 +125,19 @@ const Chat = forwardRef((props, ref) => {
 
     useEffect(() => {
         if (rSocket) {
-            sendJoinChat('join-chat');
+            setMessageList([]);
+            sendJoinChat('join-chat', projectId);
         }
     }, [rSocket]);
 
+    useEffect(() => {
+        if (rSocket) {
+            console.log('>> project id is changed.....');
+            console.log(projectId);
+            setMessageList([]);
+            sendJoinChat('join-chat', projectId);
+        }
+    }, [projectId]);
     // response 값 처리
     useEffect(() => {
         console.log('get response data: ', responseData);
@@ -147,7 +157,7 @@ const Chat = forwardRef((props, ref) => {
                             recevier: 'receiveUser',
                             sender: 'Listing Team',
                             message: item.content,
-                            createdDt: item.create_date,
+                            createdDt: getDateFormatSecond(item.create_date),
                             fileKey: '',
                             fileName: '',
                             fileSize: '',
@@ -159,7 +169,7 @@ const Chat = forwardRef((props, ref) => {
                             recevier: 'Listing Team',
                             sender: item.email,
                             message: item.content,
-                            createdDt: item.create_date,
+                            createdDt: getDateFormatSecond(item.create_date),
                             fileKey: '',
                             fileName: '',
                             fileSize: '',
@@ -196,7 +206,7 @@ const Chat = forwardRef((props, ref) => {
                             recevier: 'receiveUser',
                             sender: 'Listing Team',
                             message: responseData.content,
-                            createdDt: responseData.create_date,
+                            createdDt: getDateFormatSecond(responseData.create_date),
                             fileKey: '',
                             fileName: '',
                             fileSize: '',
@@ -208,7 +218,7 @@ const Chat = forwardRef((props, ref) => {
                             recevier: 'Listing Team',
                             sender: responseData.email,
                             message: responseData.content,
-                            createdDt: responseData.create_date,
+                            createdDt: getDateFormatSecond(responseData.create_date),
                             fileKey: '',
                             fileName: '',
                             fileSize: '',
@@ -248,10 +258,6 @@ const Chat = forwardRef((props, ref) => {
 
     // 메시지 전송 Text 박스
     const sendRequest = (data) => {
-        // if (rSocket) {
-        //     console.log(rSocket);
-        //     sendJoinChat('join-chat', projectId);
-        // }
         console.log(data);
         const route = 'send-chat-message';
         sendRequestResponse(route, projectId, data);

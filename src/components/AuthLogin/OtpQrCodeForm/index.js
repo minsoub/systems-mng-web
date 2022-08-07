@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { Button, Grid } from '@mui/material';
 import useAuthorized from 'apis/auth/auths';
 import { Box } from '@mui/material';
-import { activeEmail, activeLogin, activeLoginDate, activeSite, activeToken, activeRefreshToken } from 'store/reducers/auth';
+import { activeEmail, activeName, activeLogin, activeLoginDate, activeSite, activeToken, activeRefreshToken } from 'store/reducers/auth';
 import OtpInput from 'react-otp-input';
 import { useNavigate } from 'react-router-dom';
 import OtpQrCode from '../OtpQrCodeText';
@@ -22,9 +22,8 @@ const OtpQrCodeForm = ({ result }) => {
     const [responseData, requestError, loading, { actionOtp }] = useAuthorized();
     const { isLoggined, siteId, accessToken } = useSelector((state) => state.auth);
 
-
     useEffect(() => {
-        if(localStorage.hasOwnProperty('authenticated') && isLoggined === true && siteId && accessToken) {
+        if (localStorage.hasOwnProperty('authenticated') && isLoggined === true && siteId && accessToken) {
             if (siteId === '62a15f4ae4129b518b133128') {
                 // 투자보호
                 navigate('/cpc/dashboard');
@@ -52,19 +51,22 @@ const OtpQrCodeForm = ({ result }) => {
                 console.log('otplogin transaction id => ', responseData);
                 if (responseData.data) {
                     // 임시 패스워드 접근
-                    if (responseData.data.status === 'INIT_REQUEST'
-                        || responseData.data.status === 'INIT_REGISTER'
-                        || responseData.data.status === 'INIT_CONFIRM'
-                        || responseData.data.status === 'INIT_COMPLETE'
-                        || responseData.data.status === 'CHANGE_PASSWORD') {
+                    if (
+                        responseData.data.status === 'INIT_REQUEST' ||
+                        responseData.data.status === 'INIT_REGISTER' ||
+                        responseData.data.status === 'INIT_CONFIRM' ||
+                        responseData.data.status === 'INIT_COMPLETE' ||
+                        responseData.data.status === 'CHANGE_PASSWORD'
+                    ) {
                         console.log('임시 패스워드로 인한 변경 작업 화면 호출');
-                        navigate('/tmppassword', {state: responseData.data});
+                        navigate('/tmppassword', { state: responseData.data });
                         return;
                     }
                     // Token 정보 저장
                     const authData = {
                         siteId: result.site_id,
                         email: result.email,
+                        name: result.name,
                         accessToken: responseData.data.access_token,
                         refreshToken: responseData.data.refresh_token,
                         isLoggined: true,
@@ -73,6 +75,7 @@ const OtpQrCodeForm = ({ result }) => {
                     //dispatch(setAuthData(authData));
                     dispatch(activeSite({ siteId: authData.siteId }));
                     dispatch(activeEmail({ email: authData.email }));
+                    dispatch(activeName({ name: authData.name }));
                     dispatch(activeToken({ accessToken: authData.accessToken }));
                     dispatch(activeRefreshToken({ refreshToken: authData.refreshToken }));
                     dispatch(activeLogin({ isLoggined: authData.isLoggined }));
@@ -149,6 +152,7 @@ const OtpQrCodeForm = ({ result }) => {
                     numInputs={6}
                     className={cx('otpNumber')}
                     onKeyPress={keyPress}
+                    shouldAutoFocus={true}
                 />
                 {/* 에러 메시지 - OTP 번호가 일치하지 않을 때 */}
                 <span className={cx('errorMsg')}>{errMsg}</span>

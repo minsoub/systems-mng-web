@@ -1,26 +1,19 @@
-import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import OtpInput from 'react-otp-input';
-import {Button, Grid, InputLabel, Stack} from '@mui/material';
+import { Button, Grid, InputLabel, Stack } from '@mui/material';
 import useAuthorized from 'apis/auth/auths';
-import {
-    activeEmail,
-    activeLogin,
-    activeLoginDate,
-    activeSite,
-    activeToken,
-    activeRefreshToken
-} from 'store/reducers/auth';
+import { activeEmail, activeName, activeLogin, activeLoginDate, activeSite, activeToken, activeRefreshToken } from 'store/reducers/auth';
 import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-const OtpSimpleForm = ({result}) => {
-    const [responseData, requestError, loading, {actionOtp, actionClear}] = useAuthorized();
+const OtpSimpleForm = ({ result }) => {
+    const [responseData, requestError, loading, { actionOtp, actionClear }] = useAuthorized();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [otpNumber, setOtpNumber] = useState('');
@@ -48,31 +41,35 @@ const OtpSimpleForm = ({result}) => {
                 if (responseData.data) {
                     // 임시 패스워드 접근
                     // INIT_REQUEST, INIT_CONFIRM, INIT_COMPLETE, INIT_REGISTER
-                    if (responseData.data.status === 'INIT_REQUEST'
-                        || responseData.data.status === 'INIT_REGISTER'
-                        || responseData.data.status === 'INIT_CONFIRM'
-                        || responseData.data.status === 'INIT_COMPLETE'
-                        || responseData.data.status === 'CHANGE_PASSWORD') {
+                    if (
+                        responseData.data.status === 'INIT_REQUEST' ||
+                        responseData.data.status === 'INIT_REGISTER' ||
+                        responseData.data.status === 'INIT_CONFIRM' ||
+                        responseData.data.status === 'INIT_COMPLETE' ||
+                        responseData.data.status === 'CHANGE_PASSWORD'
+                    ) {
                         console.log('임시 패스워드로 인한 변경 작업 화면 호출');
-                        navigate('/tmppassword', {state: responseData.data});
+                        navigate('/tmppassword', { state: responseData.data });
                         return;
                     }
                     // Token 정보 저장
                     const authData = {
                         siteId: result.site_id,
                         email: result.email,
+                        name: result.name,
                         accessToken: responseData.data.access_token,
                         refreshToken: responseData.data.refresh_token,
                         isLoggined: true,
                         loginDate: moment().format('YYYY.MM.DD HH:mm:ss')
                     };
                     //dispatch(setAuthData(authData));
-                    dispatch(activeSite({siteId: authData.siteId}));
-                    dispatch(activeEmail({email: authData.email}));
-                    dispatch(activeToken({accessToken: authData.accessToken}));
-                    dispatch(activeRefreshToken({refreshToken: authData.refreshToken}));
-                    dispatch(activeLogin({isLoggined: authData.isLoggined}));
-                    dispatch(activeLoginDate({loginDate: authData.loginDate}));
+                    dispatch(activeSite({ siteId: authData.siteId }));
+                    dispatch(activeEmail({ email: authData.email }));
+                    dispatch(activeName({ name: authData.name }));
+                    dispatch(activeToken({ accessToken: authData.accessToken }));
+                    dispatch(activeRefreshToken({ refreshToken: authData.refreshToken }));
+                    dispatch(activeLogin({ isLoggined: authData.isLoggined }));
+                    dispatch(activeLoginDate({ loginDate: authData.loginDate }));
                     localStorage.setItem('authenticated', JSON.stringify(authData));
                     // alert("로그인을 완료하였습니다!!!")
                     if (authData.siteId === '62a15f4ae4129b518b133128') {
@@ -122,6 +119,7 @@ const OtpSimpleForm = ({result}) => {
             let data = {
                 site_id: result.site_id,
                 otp_no: otpNumber,
+                name: result.name,
                 token: result.token,
                 encode_key: result.otp_info.encode_key,
                 status: result.status
@@ -149,6 +147,7 @@ const OtpSimpleForm = ({result}) => {
                         onChange={handleChange}
                         numInputs={6}
                         className={cx('otpNumber')}
+                        shouldAutoFocus={true}
                     />
                     {/* 에러 메시지 - OTP 번호가 일치하지 않을 때 */}
                     <span className={cx('errorMsg')}>{errMsg}</span>

@@ -12,7 +12,7 @@ import './styles.scss';
 import DropInput from '../../../components/Common/DropInput';
 import ContentLine from '../../../components/Common/ContentLine';
 import FlexBox from '../../../components/Common/FlexBox';
-import {getDateFormat} from '../../../utils/CommonUtils';
+import { getDateFormat } from '../../../utils/CommonUtils';
 
 const FaqCategoryPage = () => {
     let isSubmitting = false;
@@ -170,6 +170,7 @@ const FaqCategoryPage = () => {
 
     const searchLanguageChanged = (e) => {
         setSearchLanguage(e.target.value);
+        categorySearch(e.target.value);
     };
 
     // 그리드 더블 클릭
@@ -250,7 +251,7 @@ const FaqCategoryPage = () => {
                         </FormControl>
 
                         <ButtonLayout>
-                            <Button
+                            {/* <Button
                                 disableElevation
                                 size="medium"
                                 type="submit"
@@ -259,7 +260,7 @@ const FaqCategoryPage = () => {
                                 onClick={searchClick}
                             >
                                 검색
-                            </Button>
+                            </Button> */}
 
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
                                 신규

@@ -24,6 +24,7 @@ const initialState = {
     siteId: '',
     roleId: '',
     email: '',
+    name: '',
     accessToken: '',
     refreshToken: '',
     isLoggined: false,
@@ -72,6 +73,10 @@ const auth = createSlice({
             state.email = action.payload.email;
         },
 
+        activeName(state, action) {
+            state.name = action.payload.name;
+        },
+
         activeToken(state, action) {
             state.accessToken = action.payload.accessToken;
         },
@@ -90,4 +95,13 @@ const auth = createSlice({
 
 export default auth.reducer;
 
-export const { activeSite, activeRole, activeEmail, activeToken, activeRefreshToken, activeLogin, activeLoginDate } = auth.actions;
+export const {
+    activeSite,
+    activeRole,
+    activeEmail,
+    activeName,
+    activeToken,
+    activeRefreshToken,
+    activeLogin,
+    activeLoginDate
+} = auth.actions;
