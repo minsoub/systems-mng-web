@@ -12,7 +12,7 @@ import NavGroup from './NavGroup';
 import { Box, Typography } from '@mui/material';
 import MenuMngApi from 'apis/menu/menumngapi';
 import RoleApi from 'apis/roles/roleapi';
-import { activeSite, activeRole, activeEmail, activeToken, activeLogin, activeLoginDate } from 'store/reducers/auth';
+import { activeSite, activeRole, activeEmail, activeName, activeToken, activeLogin, activeLoginDate } from 'store/reducers/auth';
 
 export default function FileSystemNavigator(navigation, site) {
     const navgate = useNavigate();
@@ -39,6 +39,7 @@ export default function FileSystemNavigator(navigation, site) {
                 dispatch(activeSite({ siteId: authData.siteId }));
                 dispatch(activeRole({ roleId: authData.roleId })); // Role Id
                 dispatch(activeEmail({ email: authData.email }));
+                dispatch(activeName({ name: authData.name }));
                 dispatch(activeToken({ accessToken: authData.accessToken }));
                 dispatch(activeLogin({ isLoggined: authData.isLoggined }));
                 dispatch(activeLoginDate({ loginDate: authData.loginDate }));

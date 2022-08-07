@@ -15,6 +15,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import {
     activeEmail,
+    activeName,
     activeLogin,
     activeLoginDate,
     activeRefreshToken,
@@ -64,6 +65,7 @@ const Profile = () => {
                 dispatch(activeSite({ siteId: '' }));
                 dispatch(activeRole({ roleId: '' })); // Role Id
                 dispatch(activeEmail({ email: '' }));
+                dispatch(activeName({ name: '' }));
                 dispatch(activeToken({ accessToken: '' }));
                 dispatch(activeRefreshToken({ refreshToken: '' }));
                 dispatch(activeLoginDate({ loginDate: '' }));

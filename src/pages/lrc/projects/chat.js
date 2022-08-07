@@ -12,6 +12,7 @@ import jwt from 'jsonwebtoken';
 import { nl2brToString } from 'utils/CommonUtils';
 import { Index } from '../../../components/Chat/TextInput';
 import { getDateFormatSecond } from 'utils/CommonUtils';
+import { doDecrypt } from 'utils/Crypt';
 const Chat = forwardRef((props, ref) => {
     const { projectId, fileList, fileDownload, children, tabindex, index, ...other } = props;
     const [resData, reqError, loading, { chatExistsAndSave, deleteChat, chatExcelDownload }] = ChatApi();
@@ -155,8 +156,9 @@ const Chat = forwardRef((props, ref) => {
                         data = {
                             id: item.id,
                             recevier: 'receiveUser',
-                            sender: 'Listing Team',
+                            sender: item.name ? doDecrypt(item.name) : 'Listing Team',
                             message: item.content,
+                            type: item.role,
                             createdDt: getDateFormatSecond(item.create_date),
                             fileKey: '',
                             fileName: '',
@@ -169,6 +171,7 @@ const Chat = forwardRef((props, ref) => {
                             recevier: 'Listing Team',
                             sender: item.email,
                             message: item.content,
+                            type: item.role,
                             createdDt: getDateFormatSecond(item.create_date),
                             fileKey: '',
                             fileName: '',
@@ -204,8 +207,9 @@ const Chat = forwardRef((props, ref) => {
                         data = {
                             id: responseData.id,
                             recevier: 'receiveUser',
-                            sender: 'Listing Team',
+                            sender: responseData.name ? doDecrypt(responseData.name) : 'Listing Team',
                             message: responseData.content,
+                            type: responseData.role,
                             createdDt: getDateFormatSecond(responseData.create_date),
                             fileKey: '',
                             fileName: '',
@@ -218,6 +222,7 @@ const Chat = forwardRef((props, ref) => {
                             recevier: 'Listing Team',
                             sender: responseData.email,
                             message: responseData.content,
+                            type: item.role,
                             createdDt: getDateFormatSecond(responseData.create_date),
                             fileKey: '',
                             fileName: '',
@@ -387,7 +392,7 @@ const Chat = forwardRef((props, ref) => {
                         {messageList.length > 0 &&
                             messageList.map((item, idx) => {
                                 const key = `key_${idx}`;
-                                if (item.sender === 'Listing Team') {
+                                if (item.type === 'ADMIN') {
                                     return (
                                         <MessageRight
                                             key={item.id}
