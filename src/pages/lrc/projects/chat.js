@@ -150,6 +150,7 @@ const Chat = forwardRef((props, ref) => {
                 let msg = [];
                 let data = {};
                 responseData.map((item, index) => {
+                    if (item.id === null) return;
                     let data = {};
 
                     if (item.role === 'ADMIN') {
