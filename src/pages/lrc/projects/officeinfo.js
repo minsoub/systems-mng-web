@@ -475,7 +475,7 @@ const OfficeInfo = (props) => {
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
                                     {projecInfo.network_name}
                                 </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                <TableCell style={{ width: '25%', lineBreak: 'anywhere' }} align="center" component="th" scope="row">
                                     {projecInfo.whitepaper_link}
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">

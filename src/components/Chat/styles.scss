@@ -51,6 +51,7 @@ $gray: #92959e;
     font-size: 16px;
     border-radius: 7px;
     position: relative;
+    word-break: break-all;
     &:after {
         bottom: 100%;
         right: 29px;

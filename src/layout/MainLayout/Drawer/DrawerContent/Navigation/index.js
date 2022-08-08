@@ -58,7 +58,7 @@ export default function FileSystemNavigator(navigation, site) {
                 console.log(requestError);
                 if (requestError.error.code === 909 || !localStorage.hasOwnProperty('authenticated')) {
                     // token expire
-                    alert('로그인 유효기간이 만료되어 로그아웃되었습니다. 재로그인 하시기 바랍니다.');
+                    //alert('로그인 유효기간이 만료되어 로그아웃되었습니다. 재로그인 하시기 바랍니다.');
                     navgate('/login');
                 }
             }

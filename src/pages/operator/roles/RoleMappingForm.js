@@ -468,12 +468,12 @@ const SiteRoleMappingForm = () => {
 
                         {/* 화살표 */}
                         <div className="arr--layout">
-                            <Item className="leftBlank">
-                                <ArrowDropUpIcon aria-label="+" disabled color="primary" onClick={plusRegister} />
+                            <Item className="leftBlank" onClick={plusRegister}>
+                                <ArrowDropUpIcon aria-label="+" disabled color="primary" />
                             </Item>
 
-                            <Item>
-                                <ArrowDropDownIcon aria-label="-" disabled color="primary" onClick={minusRegister} />
+                            <Item onClick={minusRegister}>
+                                <ArrowDropDownIcon aria-label="-" disabled color="primary" />
                             </Item>
                         </div>
 
