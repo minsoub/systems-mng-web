@@ -1,4 +1,3 @@
-import React from 'react';
 import axiosInstanceDefault from '../axiosDefault';
 import useAxios from '../useAxios';
 

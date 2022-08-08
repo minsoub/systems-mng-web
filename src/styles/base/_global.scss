@@ -289,6 +289,11 @@ html [type='button'],
     }
 }
 
+// input height 조정
+.css-6wp6pb-MuiOutlinedInput-notchedOutline {
+    top: 0 !important;
+}
+
 // 리액트 해시태그 관련 스타일
 .ReactTags__tag {
     height: 32px;
