@@ -1066,8 +1066,8 @@ const ProjectMng = (props) => {
                         <thead>
                             <tr>
                                 <th>심볼</th>
-                                <th>최소 지원 수량</th>
-                                <th>실제 상장 지원 수량</th>
+                                <th>제안받은 수량</th>
+                                <th>입금 완료된 수량</th>
                                 <th>-</th>
                             </tr>
                         </thead>
