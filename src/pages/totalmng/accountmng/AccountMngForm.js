@@ -217,7 +217,7 @@ const AccountMngForm = () => {
 
     // Email Duplicate Check
     const emailDuplicateCheck = () => {
-        const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+        const regEmail = /^[a-zA-Z0-9._!#$%&*+-/=?^{}~]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9-]+$/i; //  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
         if (regEmail.test(email) === false) {
             alert('정확한 메일주소를 입력해 주세요.');
             return;

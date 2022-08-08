@@ -450,7 +450,7 @@ const AccountRegForm = () => {
     // Email Duplicate Check
     const emailDuplicateCheck = () => {
         // 메일 주소 중복 체크를 한다.
-        const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+        const regEmail = /^[a-zA-Z0-9._!#$%&*+-/=?^{}~]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9-]+$/i; // /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
         if (regEmail.test(email) === false) {
             alert('정확한 메일주소를 입력해 주세요.');
             return;
@@ -527,8 +527,8 @@ const AccountRegForm = () => {
             return;
         }
         // 등록이 가능하다.
-        let r = roleList.filter((data) => data.id.match(new RegExp(role_id, 'g')));
-        let d = itemList.filter((data) => data.id.match(new RegExp(site_id, 'g')));
+        let r = roleList.filter((data) => data.id === role_id); // .match(new RegExp(role_id, 'g')));
+        let d = itemList.filter((data) => data.id === site_id); // .match(new RegExp(site_id, 'g')));
         let regData = {
             id: role_id,
             name: r[0].name,
@@ -536,7 +536,7 @@ const AccountRegForm = () => {
             site_name: d[0].name
         };
 
-        console.log(roleList.filter((data) => data.id.match(new RegExp(role_id, 'g'))));
+        console.log(roleList.filter((data) => data.id === role_id)); // .match(new RegExp(role_id, 'g'))));
 
         console.log(regData);
 
