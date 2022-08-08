@@ -589,8 +589,8 @@ const OfficeInfo = (props) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">심볼</TableCell>
-                                <TableCell align="center">최소 지원 수량</TableCell>
-                                <TableCell align="center">실제 상장 지원 수량</TableCell>
+                                <TableCell align="center">제안받은 수량</TableCell>
+                                <TableCell align="center">입금 완료된 수량</TableCell>
                             </TableRow>
                         </TableHead>
                         {marketingList.map((item, index) => (
