@@ -133,7 +133,6 @@ const IpMng = () => {
 
     // search
     const searchClick = () => {
-        console.log('searchClick called...');
         if (!site_id) {
             alert('사이트명을 선택하세요.');
             return;
@@ -199,11 +198,8 @@ const IpMng = () => {
                         <InputLayout gridClass="gridClass">
                             <FormControl sx={{ minWidth: 250, boxSizing: 'border-box' }} size="medium">
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
-                                    <MenuItem value="">
-                                        <em>Choose a Site Type</em>
-                                    </MenuItem>
                                     {siteList.map((item, index) => (
-                                        <MenuItem key={index} value={item.id}>
+                                        <MenuItem key={index} value={item.id} placeholder={item.name}>
                                             {item.name}
                                         </MenuItem>
                                     ))}
@@ -230,7 +226,7 @@ const IpMng = () => {
                                 <Button
                                     disableElevation
                                     size="medium"
-                                    color="secondary"
+                                    color="primary"
                                     type="submit"
                                     variant="contained"
                                     onClick={searchClick}
