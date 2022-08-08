@@ -539,9 +539,9 @@ const ProjectsPage = () => {
         setPage(0);
     };
 
-    const currencyFormat = (num) => {
-        return num.toFixed(4).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    };
+    // const currencyFormat = (num) => {
+    //     return num.toFixed(4).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    // };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>

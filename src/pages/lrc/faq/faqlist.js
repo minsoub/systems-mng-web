@@ -303,15 +303,15 @@ const FaqContent = (props) => {
                 console.log('not work...');
             } else {
                 if (kind === '+') {
-                    let original = copyGrid[index]; // curent
+                    let original = copyGrid[`${index}`]; // curent
                     let copy = copyGrid[index - 1];
-                    copyGrid[index] = copy; //{ ...copyGrid[index], copy };
+                    copyGrid[`${index}`] = copy; //{ ...copyGrid[index], copy };
                     copyGrid[index - 1] = original; //{ ...copyGrid[index + 1], original };
                     setDataGridRows(copyGrid);
                 } else {
-                    let original = copyGrid[index]; // curent
+                    let original = copyGrid[`${index}`]; // curent
                     let copy = copyGrid[index + 1];
-                    copyGrid[index] = copy; // { ...copyGrid[index], copy };
+                    copyGrid[`${index}`] = copy; // { ...copyGrid[index], copy };
                     copyGrid[index + 1] = original; // { ...copyGrid[index + 1], original };
                     console.log(copyGrid);
                     setDataGridRows(copyGrid);

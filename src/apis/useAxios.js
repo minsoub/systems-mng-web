@@ -148,7 +148,8 @@ const useAxios = () => {
                     signal: ctrl.signal
                 };
             }
-            const res = await axiosInstance[method](url, data);
+            // TODO: Test 필요.
+            const res = await axiosInstance[`${method}`](url, data);
 
             // transaction이 성공했으므로 refresh token 체크용 초기화.
             sessionStorage.removeItem('checker');

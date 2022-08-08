@@ -118,7 +118,9 @@ export default function FileSystemNavigator(navigation, site) {
         if (selectItem.type === 'ITEM') {
             if (selectItem.external) {
                 //window.location.href = selectItem.url;
-                window.open(selectItem.url, '_blank');
+                // TODO - Security 문제로 막음. : security/detect-non-literal-fs-filename
+                alert('보안 문제로 지원하지 않습니다!!!');
+                //window.open(selectItem.url, '_blank');
             } else {
                 navgate(selectItem.url);
             }
