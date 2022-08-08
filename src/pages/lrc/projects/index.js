@@ -698,7 +698,7 @@ const ProjectsPage = () => {
                                         {item.ico_date}
                                     </TableCell>
                                     <TableCell style={{ width: '12%' }} align="center" component="th" scope="row">
-                                        {item.create_date}
+                                        {getDateFormat(item.create_date)}
                                     </TableCell>
                                 </TableRow>
                             ))}
