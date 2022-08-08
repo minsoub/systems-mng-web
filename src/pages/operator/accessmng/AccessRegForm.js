@@ -89,6 +89,8 @@ const AccessRegForm = () => {
     const [role_id, setRoleId] = useState('');
     const [site_id, setSiteId] = useState('');
     const [newHidden, setNewHidden] = useState(false);
+    const [loginFailCount, setLoginFailCount] = useState(0);
+
 
     // Role Update button
     const [isRoleUpdate, setIsRoleUpdate] = useState(true);
@@ -291,6 +293,7 @@ const AccessRegForm = () => {
                     setNewHidden(true);
                     setValidStartDate(res.valid_start_date);
                     setValidEndDate(res.valid_end_date);
+                    setLoginFailCount(res.login_fail_count == null ? 0 : res.login_fail_count + ' (정상으로 변경시 0 으로 초기화)');
                     // 수정모드이면 운영권한 콤보박스 데이터를 조회한다.
                     //setRoleList([]);
                     //roleComboSearch(true, 'ADMIN', res.site_id);
@@ -722,12 +725,18 @@ const AccessRegForm = () => {
                         </div>
 
                         <FlexBox>
-                            {/*<DropInput title="전송여부">*/}
-                            {/*    <FormControlLabel*/}
-                            {/*        control={<Checkbox name="send_chk" value={send_chk} onBlur={handleBlur} onChange={handleChange} />}*/}
-                            {/*        label="체크시 패스워드 초기화 메일 전송됨."*/}
-                            {/*    />*/}
-                            {/*</DropInput>*/}
+                            <DropInput title="로그인 실패">
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="small"
+                                    value={loginFailCount}
+                                    inputProps={{ readOnly: true }}
+                                    name="name"
+                                    placeholder="Input the name"
+                                    fullWidth
+                                />
+                            </DropInput>
                             <DropInput title="사용여부">
                                 <RadioGroup
                                     row

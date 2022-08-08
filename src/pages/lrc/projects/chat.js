@@ -91,7 +91,7 @@ const Chat = forwardRef((props, ref) => {
                     if (resData.data.data.use === true) {
                         if (!rSocket) createClient(projectId);
                     } else {
-                        console.log('chat channer search Error....');
+                        console.log('chat channel search Error....');
                         if (rSocket) connectionClose();
                     }
                 }
@@ -155,7 +155,7 @@ const Chat = forwardRef((props, ref) => {
                     if (item.role === 'ADMIN') {
                         data = {
                             id: item.id,
-                            recevier: 'receiveUser',
+                            receiver: 'receiveUser',
                             sender: item.name ? doDecrypt(item.name) : 'Listing Team',
                             message: item.content,
                             type: item.role,
@@ -168,7 +168,7 @@ const Chat = forwardRef((props, ref) => {
                     } else {
                         data = {
                             id: item.id,
-                            recevier: 'Listing Team',
+                            receiver: 'Listing Team',
                             sender: item.email,
                             message: item.content,
                             type: item.role,
@@ -206,7 +206,7 @@ const Chat = forwardRef((props, ref) => {
                     if (responseData.role === 'ADMIN') {
                         data = {
                             id: responseData.id,
-                            recevier: 'receiveUser',
+                            receiver: 'receiveUser',
                             sender: responseData.name ? doDecrypt(responseData.name) : 'Listing Team',
                             message: responseData.content,
                             type: responseData.role,
@@ -219,7 +219,7 @@ const Chat = forwardRef((props, ref) => {
                     } else {
                         data = {
                             id: responseData.id,
-                            recevier: 'Listing Team',
+                            receiver: 'Listing Team',
                             sender: responseData.email,
                             message: responseData.content,
                             type: item.role,
