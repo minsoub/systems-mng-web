@@ -394,7 +394,7 @@ const FileMng = (props) => {
 
     return (
         <Grid container alignItems="center" justifyContent="space-between">
-            <Typography variant="h4">제출 서류 관리자</Typography>
+            <Typography variant="h4">제출 서류 관리</Typography>
 
             <Grid container className="officeinfo__content--box">
                 <ContentLine container className="common__grid--rowTable filemng__table">
