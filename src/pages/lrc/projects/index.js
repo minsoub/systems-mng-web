@@ -384,13 +384,11 @@ const ProjectsPage = () => {
     // 계약 상태 변경 시 진행상태 출력
     const processPrint = (id) => {
         setProcessList([]);
-        console.log(id);
         let list = [];
         statusAllList.map((item, index) => {
             if (item.id === id && item.children && item.children.length > 0) {
                 item.children.map((subitem, idx) => {
                     const s = { id: subitem.id, name: subitem.name };
-                    console.log(s);
                     list.push(s);
                 });
                 setProcessList(list);
@@ -400,7 +398,6 @@ const ProjectsPage = () => {
     };
     // Business Checkbox Handler
     const checkedBusinessItemHandler = (id, isChecked) => {
-        console.log(id);
         setIsAllChecked(false);
         if (isChecked) {
             checkedBusinessItems.add(id);
@@ -412,7 +409,6 @@ const ProjectsPage = () => {
     };
     // Network Checkbox Handler
     const checkedNetworkItemHandler = (id, isChecked) => {
-        console.log(id);
         setIsAllChecked(false);
         if (isChecked) {
             checkedNetworkItems.add(id);
