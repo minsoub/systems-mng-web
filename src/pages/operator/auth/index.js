@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { Button, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, Select } from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, Select, Stack } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import RoleApi from 'apis/roles/roleapi';
@@ -10,6 +10,7 @@ import SiteApi from 'apis/site/siteapi';
 import ErrorScreen from 'components/ErrorScreen';
 import HeaderTitle from '../../../components/HeaderTitle';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
+import cx from 'classnames';
 import InputLayout from '../../../components/Common/InputLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import './styles.scss';
@@ -17,6 +18,7 @@ import DropInput from '../../../components/Common/DropInput';
 import ContentLine from '../../../components/Common/ContentLine';
 
 const SiteAuthManagementPage = () => {
+    let isSubmitting = false;
     const columns = [
         {
             field: 'id',
@@ -69,11 +71,13 @@ const SiteAuthManagementPage = () => {
         }
     ];
     const navigate = useNavigate();
-    // const { search_site_id, search_is_use } = useParams();
+    const { search_site_id, search_is_use } = useParams();
     const { siteId } = useSelector((state) => state.auth);
     const [responseData, requestError, loading, { roleList, roleComboSearch }] = RoleApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
+    // 그리드 선택된 row id
+    const [selectedRows, setSeletedRows] = useState([]);
     // 그리드 목록 데이터
     const [dataGridRows, setDataGridRows] = useState([]);
 
@@ -93,8 +97,8 @@ const SiteAuthManagementPage = () => {
     const [is_use, setIsUse] = useState(true);
 
     // 파라미터 상태값
-    // const [param_site_id, setParamSiteId] = useState(search_site_id);
-    // const [param_is_use, setParamIsUse] = useState(search_is_use);
+    const [param_site_id, setParamSiteId] = useState(search_site_id);
+    const [param_is_use, setParamIsUse] = useState(search_is_use);
 
     // Change Event
     // site가 변경되었을 때 호출된다.
@@ -109,10 +113,10 @@ const SiteAuthManagementPage = () => {
     // onload
     useEffect(() => {
         // 사이트 구분 리스트 가져오기
-        // console.log('paramter data => ');
-        // console.log(search_site_id);
-        // console.log(search_is_use);
-        // console.log('====================');
+        console.log('paramter data => ');
+        console.log(search_site_id);
+        console.log(search_is_use);
+        console.log('====================');
         // if (search_site_id) {
         //     setParamSiteId(search_site_id);
         //     setParamIsUse(search_is_use);
