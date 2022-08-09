@@ -223,7 +223,7 @@ const Chat = forwardRef((props, ref) => {
                             recevier: 'Listing Team',
                             sender: responseData.email,
                             message: responseData.content,
-                            type: item.role,
+                            type: responseData.role,
                             createdDt: getDateFormatSecond(responseData.create_date),
                             fileKey: '',
                             fileName: '',
