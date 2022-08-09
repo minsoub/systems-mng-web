@@ -191,6 +191,7 @@ input::file-selector-button {
     margin-top: 1rem;
     .filemng__file--id,
     .filemng__file--url {
+        word-break: break-all;
         font-size: 0.8rem;
     }
     .filemng__file--date {
