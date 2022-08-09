@@ -18,6 +18,7 @@ import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import { Empty } from 'antd';
 import './styles.scss';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const ProjectsDetailPage = () => {
     let isSubmitting = false;
@@ -134,6 +135,13 @@ const ProjectsDetailPage = () => {
         //roleList();
         // 파일 리스트 조회
         getChatFileList(paramId);
+
+        // 탭 파일 변경.
+        if (localStorage.getItem('projectTabIndex')) {
+            let data = localStorage.getItem('projectTabIndex');
+            console.log(`tab value => ${data}`);
+            setValue(parseInt(data, 10));
+        }
     }, [paramId]);
 
     // transaction error 처리
@@ -229,6 +237,8 @@ const ProjectsDetailPage = () => {
 
     const tabChange = (event, value) => {
         setValue(value);
+        // 해당 값을 로컬 스토리지에 저장한다.
+        localStorage.setItem('projectTabIndex', value);
     };
 
     const listClick = () => {
@@ -432,7 +442,7 @@ const ProjectsDetailPage = () => {
                                                                 {item.file_name}
                                                             </button>
                                                             <p>
-                                                                {item.file_size}&nbsp;{item.create_date}
+                                                                {item.file_size}&nbsp;{getDateFormat(item.create_date)}
                                                             </p>
                                                         </div>
                                                     </TopInputLayout>

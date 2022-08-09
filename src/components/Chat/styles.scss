@@ -69,6 +69,8 @@ $gray: #92959e;
 .my-message {
     background: $green;
     cursor: pointer;
+    min-width: 100px;
+    max-width: 100%;
 }
 
 .other-message {
