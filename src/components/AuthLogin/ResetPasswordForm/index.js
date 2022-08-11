@@ -36,7 +36,9 @@ const ResetPasswordForm = () => {
         if (requestError) {
             console.log('>> requestError <<');
             console.log(requestError);
-            if (requestError.message === 'INVALID_USER') {
+            if(requestError.message === 'USER_ACCOUNT_DISABLE' ) {
+                alert('계정이 잠겼습니다. 관리자에게 문의 해 주시기 바랍니다.');
+            } else if (requestError.message === 'INVALID_USER') {
                 alert('가입되지 않은 사용자 입니다.');
             } else {
                 alert(requestError.message);
