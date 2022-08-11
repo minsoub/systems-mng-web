@@ -10,6 +10,7 @@ import FlexBox from '../../../components/Common/FlexBox';
 import ContentLine from '../../../components/Common/ContentLine';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
+import { map } from 'lodash';
 const useStyles = makeStyles({
     tableRow: {
         height: 25
@@ -46,8 +47,10 @@ const ProjectMng = (props) => {
             updateFoundationInfo,
             marketingSearch,
             updateMarketingList,
+            deleteMarketingData,
             reviewSearch,
             updateReviewList,
+            deleteReviewData,
             projectSearch,
             updateProjectInfo,
             userSearch,
@@ -59,7 +62,11 @@ const ProjectMng = (props) => {
             symbolKeywordSearch,
             projectConnectSave,
             projectDisconnectSave,
-            projectLinkListSearch
+            projectLinkListSearch,
+            userKeywordSearch,
+            lrcUserRegister,
+            lrcUserDelete,
+            lrcUserSave
         }
     ] = FoundationApi();
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
@@ -122,6 +129,11 @@ const ProjectMng = (props) => {
     const [projectLinkList, setProjectLinkList] = useState([]);
     // 검색 결과 메시지
     const [searchMessage, setSearchMessage] = useState('');
+
+    // 사용자 검색 및 등록항목 정의
+    const refuserKeyword = useRef();
+    const [userSearchList, setUserSearchList] = useState([]);
+
     // 다운로드 파일명 정의
     const [downloadFileName, setDownloadFileName] = useState('');
 
@@ -318,10 +330,20 @@ const ProjectMng = (props) => {
                     marketingSearch(projectId);
                 }
                 break;
+            case 'deleteMarketing': // 마케팅 정보 삭제
+                if (responseData.data.data) {
+                    alert('삭제를 완료하였습니다.');
+                }
+                break;
             case 'updateReviewList': // 검토 평가 리스트 업데이트
                 if (responseData.data.data) {
                     alert('저장을 완료하였습니다.');
                     reviewSearch(projectId);
+                }
+                break;
+            case 'deleteReviewData': // 검토 평가 삭제
+                if (responseData.data.data) {
+                    alert('삭제를 완료하였습니다.');
                 }
                 break;
             case 'getFile':
@@ -386,6 +408,31 @@ const ProjectMng = (props) => {
                     setProjectLinkList(responseData.data.data);
                 } else {
                     setProjectLinkList([]);
+                }
+                break;
+            case 'getUserSearchList':
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    setUserSearchList(responseData.data.data);
+                } else {
+                    setUserSearchList([]);
+                }
+                break;
+            case 'userRegister':
+                if (responseData.data.data) {
+                    alert('사용자 추가를 완료하였습니다.');
+                    userSearch(projectId);
+                }
+                break;
+            case 'delRegister':
+                if (responseData.data.data) {
+                    alert('탈퇴 처리를 완료하였습니다.');
+                    userSearch(projectId);
+                }
+                break;
+            case 'userUpdate':
+                if (responseData.data.data) {
+                    alert('저장을 완료하였습니다.');
+                    userSearch(projectId);
                 }
                 break;
             default:
@@ -482,10 +529,10 @@ const ProjectMng = (props) => {
     // };
 
     const numberCheck = (e) => {
-        const pattern = /(^\d*)(.)\d{0,3}$/;
-        if (!pattern.test(e.target.value) && !(e.target.value === '')) {
-            e.preventDefault();
-        }
+        // const pattern = /(^\d*)(.)\d{0,3}$/;
+        // if (!pattern.test(e.target.value) && !(e.target.value === '')) {
+        //     e.preventDefault();
+        // }
         console.log(e.target.value);
         if (!/[0-9.]/.test(e.key)) {
             e.preventDefault();
@@ -589,6 +636,21 @@ const ProjectMng = (props) => {
             });
         }
     };
+    // 마켓팅 수량 삭제
+    const deleteMarketing = (evt, idx, id) => {
+        if (confirm('삭제 하시겠습니까?')) {
+            if (marketingList.length > 0) {
+                marketingList.map((item, Index) => {
+                    if (idx === Index) {
+                        setMarketingList((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
+                        // 삭제 API 호출
+                        deleteMarketingData(projectId, id);
+                        return;
+                    }
+                });
+            }
+        }
+    };
     // 검토 평가 List 추가
     const addReviewgList = () => {
         if (reviewList.length === 3) {
@@ -616,6 +678,20 @@ const ProjectMng = (props) => {
                     return;
                 }
             });
+        }
+    };
+    // 검토 평가 삭제
+    const deleteReview = (evt, idx, id) => {
+        if (confirm('삭제 하시겠습니까?')) {
+            if (reviewList.length > 0) {
+                reviewList.map((item, Index) => {
+                    if (idx === Index) {
+                        setReviewList((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
+                        deleteReviewData(projectId, id);
+                        return;
+                    }
+                });
+            }
         }
     };
 
@@ -652,11 +728,11 @@ const ProjectMng = (props) => {
     };
     // 상장정보 저장
     const icoSave = () => {
-        const pattern = /(^\d+)[.]?\d{1,4}$/;
-        if (!pattern.test(refPriceBTC.current.value) || !pattern.test(refPriceKRW.current.value)) {
-            alert('소수점 네자리까지 입력 가능합니다.');
-            return;
-        }
+        // const pattern = /(^\d+)[.]?\d{1,4}$/;
+        // if (!pattern.test(refPriceBTC.current.value) || !pattern.test(refPriceKRW.current.value)) {
+        //     alert('소수점 네자리까지 입력 가능합니다.');
+        //     return;
+        // }
         if (confirm('저장하시겠습니까?')) {
             let ico_info_list = [];
             // 상장정보가 초기에는 데이터가 없다.
@@ -707,14 +783,14 @@ const ProjectMng = (props) => {
     };
     // 마케팅 수량 리스트 저장
     const saveMarketingList = () => {
-        const pattern = /(^\d+)[.]?\d{1,4}$/;
-        marketingList.map((item) => {
-            const { minimum_quantity, actual_quantity } = item;
-            if (!pattern.test(minimum_quantity) || !pattern.test(actual_quantity)) {
-                alert('소수점 네자리까지 입력 가능합니다.');
-                return;
-            }
-        });
+        // const pattern = /(^\d+)[.]?\d{1,4}$/;
+        // marketingList.map((item) => {
+        //     const { minimum_quantity, actual_quantity } = item;
+        //     if (!pattern.test(minimum_quantity) || !pattern.test(actual_quantity)) {
+        //         alert('소수점 네자리까지 입력 가능합니다.');
+        //         return;
+        //     }
+        // });
         if (marketingList && marketingList.length > 0) {
             if (confirm('저장하시겠습니까?')) {
                 let saveData = { marketing_list: marketingList };
@@ -785,6 +861,52 @@ const ProjectMng = (props) => {
     const projectDisconnect = (id) => {
         if (confirm('프로젝트 연결 해제하시겠습니까?')) {
             projectDisconnectSave(id);
+        }
+    };
+
+    // 당당자 정보 검색
+    const projectUserdSearch = () => {
+        if (!refuserKeyword.current.value) {
+            alert('검색 단어를 입력하세요.');
+            return;
+        }
+        userKeywordSearch(refuserKeyword.current.value, projectId);
+    };
+
+    // 담당자 추가
+    const userAdd = (id, email) => {
+        // 이미 등록되어 있는지 체크한다.
+        userList.map((item, idx) => {
+            if (item.email === email) {
+                alert('이미 등록된 사용자입니다.');
+                return;
+            }
+        });
+        lrcUserRegister(projectId, id, email);
+    };
+    // 담당자 탈퇴 처리
+    const userDelete = (project_id, id) => {
+        if (confirm('탈퇴 처리하시겠습니까?')) {
+            lrcUserDelete(project_id, id);
+        }
+    };
+
+    // 담당자 정보 수정
+    const handleUserChange = (evt, type, idx) => {
+        const newData = userList.map((item, index) => {
+            if (idx !== index) return item;
+            return { ...item, [type]: evt.target.value };
+        });
+        //console.log(newData);
+        setUserList(newData);
+    };
+
+    // 담당자 정보 저장
+    const userSave = () => {
+        if (userList.length > 0) {
+            if (confirm('저장하시겠습니까?')) {
+                lrcUserSave(projectId, userList);
+            }
         }
     };
 
@@ -873,7 +995,7 @@ const ProjectMng = (props) => {
                             <tr>
                                 <th className="tg-0lax">사업계열</th>
                                 <th className="tg-0lax">네트워크 계열</th>
-                                <th className="tg-0lax">백서 링크</th>
+                                <th className="tg-0lax">Jira 번호</th>
                                 <th className="tg-0lax">최초 발행일</th>
                             </tr>
                         </thead>
@@ -931,117 +1053,6 @@ const ProjectMng = (props) => {
             </Grid>
 
             <Grid container className="officeinfo__content--box">
-                <Grid className="bottom--blank__small">
-                    <Typography variant="h4">담당자 정보</Typography>
-                </Grid>
-                <ContentLine className="common__grid--rowTable">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>이름</th>
-                                <th>연락처</th>
-                                <th>SNS ID</th>
-                                <th>이메일 주소</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {userList.length > 0 ? (
-                                userList.map((item, index) => (
-                                    <tr key={index}>
-                                        <td>{item.user_name}</td>
-                                        <td>{item.phone}</td>
-                                        <td>{item.sns_id}</td>
-                                        <td>{item.email}</td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </ContentLine>
-            </Grid>
-
-            <Grid container className="officeinfo__content--box">
-                <TopInputLayout className="officeinfo__content--align bottom--blank__small">
-                    <Typography variant="h4">상장 정보</Typography>
-
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={icoSave}>
-                            저장
-                        </Button>
-                    </ButtonLayout>
-                </TopInputLayout>
-
-                <ContentLine container className="common__grid--rowTable">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>마켓 정보</th>
-                                <th>상장가</th>
-                                <th>상장일</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>KRW</th>
-                                <td>
-                                    <TextField
-                                        id="outlined-multiline-static"
-                                        size="medium"
-                                        inputRef={refPriceKRW}
-                                        onKeyPress={numberCheck}
-                                        fullWidth
-                                    />
-                                </td>
-                                <td>
-                                    <TextField
-                                        id="krw_ico_date"
-                                        name="krw_ico_date"
-                                        size="medium"
-                                        value={krw_ico_date}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        type="date"
-                                        fullWidth
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>BTC</th>
-                                <td>
-                                    <TextField
-                                        id="outlined-multiline-static"
-                                        size="medium"
-                                        inputRef={refPriceBTC}
-                                        onKeyPress={numberCheck}
-                                        fullWidth
-                                    />
-                                </td>
-                                <td>
-                                    <TextField
-                                        id="btc_ico_date"
-                                        name="btc_ico_date"
-                                        size="medium"
-                                        value={btc_ico_date}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        type="date"
-                                        fullWidth
-                                    />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </ContentLine>
-            </Grid>
-
-            <Grid container className="officeinfo__content--box">
                 <TopInputLayout className="officeinfo__content--align bottom--blank__small">
                     <Typography variant="h3">마케팅 수량</Typography>
                     <ButtonLayout>
@@ -1068,7 +1079,7 @@ const ProjectMng = (props) => {
                                 <th>심볼</th>
                                 <th>제안받은 수량</th>
                                 <th>입금 완료된 수량</th>
-                                <th>-</th>
+                                <th>삭제</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1109,7 +1120,11 @@ const ProjectMng = (props) => {
                                                 <DeleteIcon />
                                             </IconButton>
                                         )}
-                                        {item.id !== '' && <div>-</div>}
+                                        {item.id !== '' && (
+                                            <IconButton aria-label="delete" onClick={(e) => deleteMarketing(e, index, item.id)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        )}
                                     </td>
                                 </tr>
                             ))}
@@ -1140,7 +1155,7 @@ const ProjectMng = (props) => {
                             <th className="tg-1wig" colSpan="2">
                                 평가 자료
                             </th>
-                            <th className="tg-0lax__del">&nbsp;</th>
+                            <th className="tg-0lax__del">삭제</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1198,13 +1213,93 @@ const ProjectMng = (props) => {
                                             <DeleteIcon />
                                         </IconButton>
                                     )}
-                                    {item.id !== '' && <div>-</div>}
+                                    {item.id !== '' && (
+                                        <div>
+                                            <IconButton aria-label="delete" onClick={(e) => deleteReview(e, index, item.id)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </div>
+                                    )}
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </ContentLine>
+
+            <Grid container className="officeinfo__content--box">
+                <TopInputLayout className="officeinfo__content--align bottom--blank__small">
+                    <Typography variant="h4">상장 정보</Typography>
+
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={icoSave}>
+                            저장
+                        </Button>
+                    </ButtonLayout>
+                </TopInputLayout>
+
+                <ContentLine container className="common__grid--rowTable">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>마켓 정보</th>
+                                <th>상장일</th>
+                                <th>상장가</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>KRW</th>
+                                <td>
+                                    <TextField
+                                        id="krw_ico_date"
+                                        name="krw_ico_date"
+                                        size="medium"
+                                        value={krw_ico_date}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        type="date"
+                                        fullWidth
+                                    />
+                                </td>
+                                <td>
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        size="medium"
+                                        inputRef={refPriceKRW}
+                                        onKeyPress={numberCheck}
+                                        fullWidth
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>BTC</th>
+                                <td>
+                                    <TextField
+                                        id="btc_ico_date"
+                                        name="btc_ico_date"
+                                        size="medium"
+                                        value={btc_ico_date}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        type="date"
+                                        fullWidth
+                                    />
+                                </td>
+                                <td>
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        size="medium"
+                                        inputRef={refPriceBTC}
+                                        onKeyPress={numberCheck}
+                                        fullWidth
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ContentLine>
+            </Grid>
 
             <Grid container className="officeinfo__content--box">
                 <TopInputLayout className="officeinfo__content--align bottom--blank__small">
@@ -1219,7 +1314,7 @@ const ProjectMng = (props) => {
                             <td colSpan={2}>
                                 <FlexBox classNames="projectmng__select">
                                     <TextField id="outlined-multiline-static" fullWidth name="keyword" inputRef={refKeyword} size="small" />
-
+                                    &nbsp;
                                     <Button
                                         disableElevation
                                         size="medium"
@@ -1279,6 +1374,148 @@ const ProjectMng = (props) => {
                                 <td colSpan={2}>{searchMessage}</td>
                             </tr>
                         )}
+                    </table>
+                </ContentLine>
+            </Grid>
+
+            <Grid container className="officeinfo__content--box">
+                <Grid className="bottom--blank__small">
+                    <Typography variant="h4">담당자 정보</Typography>
+                </Grid>
+                <ContentLine className="common__grid--userrowTable">
+                    <table style={{ border: 0 }}>
+                        <tr>
+                            <td colSpan={2}>
+                                <FlexBox classNames="projectmng__select">
+                                    &nbsp;
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        fullWidth
+                                        name="userKeyword"
+                                        inputRef={refuserKeyword}
+                                        size="small"
+                                    />
+                                    &nbsp;
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={projectUserdSearch}
+                                    >
+                                        검색
+                                    </Button>
+                                    &nbsp;
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={userSave}
+                                    >
+                                        저장
+                                    </Button>
+                                    &nbsp;
+                                </FlexBox>
+                            </td>
+                        </tr>
+                        {userSearchList.map((item, index) => (
+                            <tr key={index}>
+                                <td>{item.email}</td>
+                                <td>
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => userAdd(item.user_account_id, item.email)}
+                                    >
+                                        선택
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>계정</th>
+                                <th>이름</th>
+                                <th>연락처</th>
+                                <th>SNS ID</th>
+                                <th>이메일 주소</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {userList.length > 0 ? (
+                                userList.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>{item.user_email}</td>
+                                        <td>
+                                            <TextField
+                                                id="outlined-multiline-static"
+                                                size="medium"
+                                                fullWidth
+                                                value={item.user_name}
+                                                onChange={(e) => handleUserChange(e, 'user_name', index)}
+                                            />
+                                        </td>
+                                        <td>
+                                            <TextField
+                                                id="outlined-multiline-static"
+                                                size="medium"
+                                                fullWidth
+                                                value={item.phone}
+                                                onChange={(e) => handleUserChange(e, 'phone', index)}
+                                            />
+                                        </td>
+                                        <td>
+                                            <TextField
+                                                id="outlined-multiline-static"
+                                                size="medium"
+                                                fullWidth
+                                                value={item.sns_id}
+                                                onChange={(e) => handleUserChange(e, 'sns_id', index)}
+                                            />
+                                        </td>
+                                        <td>
+                                            <TextField
+                                                id="outlined-multiline-static"
+                                                size="medium"
+                                                fullWidth
+                                                value={item.email}
+                                                onChange={(e) => handleUserChange(e, 'email', index)}
+                                            />
+                                        </td>
+                                        <td>
+                                            {' '}
+                                            <Button
+                                                disableElevation
+                                                size="medium"
+                                                type="submit"
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={() => userDelete(item.project_id, item.id)}
+                                            >
+                                                탈퇴
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            )}
+                        </tbody>
                     </table>
                 </ContentLine>
             </Grid>

@@ -276,7 +276,8 @@ const ProjectsDetailPage = () => {
     function byteString(index) {
         const units = ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; //  : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 
-        return units(index);
+        // eslint-disable-next-line security/detect-object-injection
+        return units[index];
     }
     function humanFileSize(bytes, si = false, dp = 1) {
         const thresh = si ? 1000 : 1024;
@@ -292,7 +293,7 @@ const ProjectsDetailPage = () => {
         do {
             bytes /= thresh;
             ++u;
-        } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+        } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < 8 - 1); // units.length - 1);
 
         return bytes.toFixed(dp) + ' ' + byteString(u); // units[u];
     }

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // material-ui
-import { Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack } from '@mui/material';
+import { Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
@@ -12,7 +12,7 @@ import { Formik } from 'formik';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import jwt from 'jsonwebtoken';
 import useAuthorized from 'apis/auth/auths';
-import Dot from "../../Common/Dot";
+import Dot from '../../Common/Dot';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -39,7 +39,7 @@ const TmpUpdatePasswordForm = ({ result }) => {
         if (requestError) {
             console.log('>> requestError <<');
             console.log(requestError);
-            if(requestError.message === 'EQUAL_CURRENT_PASSWORD' || requestError.message === 'EQUAL_OLD_PASSWORD') {
+            if (requestError.message === 'EQUAL_CURRENT_PASSWORD' || requestError.message === 'EQUAL_OLD_PASSWORD') {
                 alert('이전 비밀번호와 다른 비밀번호를 입력해 주세요.');
             }
         }
@@ -114,7 +114,11 @@ const TmpUpdatePasswordForm = ({ result }) => {
                     <form noValidate onSubmit={handleSubmit}>
                         <Grid item xs={12}>
                             <Stack spacing={2}>
-                                <InputLabel>{result.status === 'CHANGE_PASSWORD' ? '비밀번호 변경 후 90일이 경과되었습니다.' : '임시 발급된 비밀번호입니다.'}</InputLabel>
+                                <InputLabel>
+                                    {result.status === 'CHANGE_PASSWORD'
+                                        ? '비밀번호 변경 후 90일이 경과되었습니다.'
+                                        : '임시 발급된 비밀번호입니다.'}
+                                </InputLabel>
                             </Stack>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>&nbsp;</Stack>
@@ -131,7 +135,9 @@ const TmpUpdatePasswordForm = ({ result }) => {
                         </Grid>
                         <Grid item xs={12}>
                             <Stack spacing={1}>
-                                <InputLabel htmlFor="password-login" required="true">신규 비밀번호</InputLabel>
+                                <InputLabel htmlFor="password-login" required="true">
+                                    신규 비밀번호
+                                </InputLabel>
                                 <OutlinedInput
                                     fullWidth
                                     error={Boolean(touched.password && errors.password)}
@@ -168,7 +174,9 @@ const TmpUpdatePasswordForm = ({ result }) => {
                         </Grid>
                         <Grid item xs={12}>
                             <Stack spacing={1}>
-                                <InputLabel htmlFor="password-login" required="true">신규 비밀번호 확인</InputLabel>
+                                <InputLabel htmlFor="password-login" required="true">
+                                    신규 비밀번호 확인
+                                </InputLabel>
                                 <OutlinedInput
                                     fullWidth
                                     error={Boolean(touched.confirmPassword && errors.confirmPassword)}
@@ -213,19 +221,25 @@ const TmpUpdatePasswordForm = ({ result }) => {
                         </Grid>
                         <Grid item xs={12}>
                             <Stack spacing={2}>
-                                <InputLabel>- 영문 소문자, 대문자, 특수문자를 포함하여 8자리~64자리로 만들어 주세요. </InputLabel>
+                                <Typography variant="body2">
+                                    - 영문 소문자, 대문자, 특수문자를 포함하여 8자리~64자리로 만들어 주세요.{' '}
+                                </Typography>
                             </Stack>
                             <Stack spacing={2}>
-                                <InputLabel>단, 허용되는 특수문자 (~!@#$%^&*_)와 다른 특수문자는 사용할 수 없습니다.</InputLabel>
+                                <Typography variant="body2">
+                                    단, 허용되는 특수문자 (~!@#$%^&*_)외 다른 특수문자는 사용할 수 없습니다.
+                                </Typography>
                             </Stack>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>&nbsp;</Stack>
                             </Grid>
                             <Stack spacing={2}>
-                                <InputLabel>- 타 사이트와 동일하거나 비슷한 암호를 설정하지 마세요.</InputLabel>
+                                <Typography variant="body2">- 타 사이트와 동일하거나 비슷한 암호를 설정하지 마세요.</Typography>
                             </Stack>
                             <Stack spacing={2}>
-                                <InputLabel>타 사이트에서 암호가 유출될 경우 제3자가 회원님의 계정에 접근할 위험이 있습니다.</InputLabel>
+                                <Typography variant="body2">
+                                    타 사이트에서 암호가 유출될 경우 제3자가 회원님의 계정에 접근할 위험이 있습니다.
+                                </Typography>
                             </Stack>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>&nbsp;</Stack>
