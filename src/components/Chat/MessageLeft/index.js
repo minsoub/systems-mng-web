@@ -1,4 +1,5 @@
 import '../styles.scss';
+import { nl2br } from 'utils/CommonUtils';
 
 const MessageLeft = ({ id, message, timestamp, displayName, fileList, fileDownload }) => {
     //const checkFile = (data) => {
@@ -45,7 +46,7 @@ const MessageLeft = ({ id, message, timestamp, displayName, fileList, fileDownlo
                     {message.fileKey ? (
                         <div key={id} className="message other-message" data-message-id={id}>
                             <a href="#" onClick={() => fileDownload(message.fileKey, message.fileName)}>
-                                {message.message}
+                                {nl2br(message.message)}
                             </a>
                         </div>
                     ) : (

@@ -139,6 +139,15 @@ const Chat = forwardRef((props, ref) => {
             sendJoinChat('join-chat', projectId);
         }
     }, [projectId]);
+
+    useEffect(() => {
+        if (rSocket) {
+            console.log('>> file id is changed.....');
+            console.log(projectId);
+            setMessageList([]);
+            sendJoinChat('join-chat', projectId);
+        }
+    }, [fileList]);
     // response 값 처리
     useEffect(() => {
         console.log('get response data: ', responseData);
@@ -152,6 +161,8 @@ const Chat = forwardRef((props, ref) => {
                 responseData.map((item, index) => {
                     if (item.id === null) return;
                     let data = {};
+                    console.log(`>> chat list data << `);
+                    console.log(item);
 
                     if (item.role === 'ADMIN') {
                         data = {
@@ -182,8 +193,9 @@ const Chat = forwardRef((props, ref) => {
                         sendMailaddress = item.email;
                         console.log('>> found sendMail address : %s', sendMailaddress);
                     }
-                    console.log(data);
-                    if (item.content.indexOf('FILE_MESSAGE::') === 0) {
+
+                    if (item.content.indexOf('FILE_MESSAGE::') !== -1) {
+                        console.log('>> found file data => FILE_MESSAGE');
                         const fileKey = item.content.replace('FILE_MESSAGE::', '');
                         const fileInfo = fileList.find((file) => {
                             return file.id === fileKey;
@@ -196,6 +208,7 @@ const Chat = forwardRef((props, ref) => {
                             data.message = `첨부파일 : ${data.fileName}`;
                         }
                     }
+                    console.log(data);
                     msg.push(data);
                     //setMessageList([...messageList, mDataSend]);
                 });
@@ -233,7 +246,7 @@ const Chat = forwardRef((props, ref) => {
                         sendMailaddress = responseData.email;
                     }
                     let item = responseData.content;
-                    if (item.indexOf('FILE_MESSAGE::') === 0) {
+                    if (item.indexOf('FILE_MESSAGE::') !== -1) {
                         const fileKey = item.replace('FILE_MESSAGE::', '');
                         const fileInfo = fileList.find((file) => {
                             return file.id === fileKey;

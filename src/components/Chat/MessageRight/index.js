@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import '../styles.scss';
+import { nl2br } from 'utils/CommonUtils';
 
 const MessageRight = ({ id, message, timestamp, displayName, deleteChatMessage, fileList, fileDownload }) => {
     const deleteMessage = (id) => {
@@ -57,7 +58,7 @@ const MessageRight = ({ id, message, timestamp, displayName, deleteChatMessage, 
                         </div>
                     ) : (
                         <div key={id} className="message my-message" data-message-id={id}>
-                            {message.message}
+                            {nl2br(message.message)}
                         </div>
                     )}
                     <div className="my-message__delete">
