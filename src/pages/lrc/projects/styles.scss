@@ -54,8 +54,8 @@
 }
 
 .project__info {
-    margin: 10px 0;
-    padding: 10px 0;
+    margin: 2px 0;
+    padding: 2px 0;
     border-bottom: 1px solid #e6ebf1;
     &:last-child {
         border-bottom: none;
@@ -77,7 +77,7 @@
     margin: 1rem 0;
 
     .file__upload--field {
-        width: 85%;
+        width: 75%;
     }
 
     button {
@@ -311,6 +311,71 @@ input::file-selector-button {
         }
         .tg-1wig {
             width: 40%;
+        }
+        .tg-0lax__del {
+            width: 50px;
+        }
+    }
+}
+
+.common__grid--reviewRowTable {
+    width: 100%;
+    .css-6wp6pb-MuiOutlinedInput-notchedOutline {
+        top: 0 !important;
+    }
+    table {
+        width: 100%;
+        th {
+            width: 23%;
+            padding: 1.5rem 0;
+            background-color: #fafafb;
+            border-bottom: 1px solid #f0f0f0;
+            border-right: 1px solid #f0f0f0;
+            font-weight: 600;
+            &:last-child {
+                border-right: none;
+            }
+        }
+        td {
+            padding: 1.5rem 0;
+            text-align: center;
+            border-right: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            &:last-child {
+                border-right: none;
+            }
+        }
+        tr {
+            &:last-child {
+                td {
+                    border-bottom: none;
+                }
+                th {
+                    border-bottom: none;
+                }
+            }
+        }
+        .css-199jxd5-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root,
+        .css-wb57ya-MuiFormControl-root-MuiTextField-root,
+        .css-wb57ya-MuiFormControl-root-MuiTextField-root {
+            width: 85%;
+        }
+        .tg-0lax-left {
+            .css-wb57ya-MuiFormControl-root-MuiTextField-root {
+                width: 100% !important;
+            }
+            border-bottom: none;
+        }
+        .css-o8pmqo-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-o8pmqo-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-o8pmqo-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+            text-align: left;
+        }
+    }
+    .projectmng__evaluation {
+        .tg-0lax {
+            width: 22%;
+        }
+        .tg-1wig {
+            width: 42%;
         }
         .tg-0lax__del {
             width: 50px;

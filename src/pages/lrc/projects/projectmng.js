@@ -922,7 +922,7 @@ const ProjectMng = (props) => {
                     </ButtonLayout>
                 </TopInputLayout>
 
-                <div className="common-grid--layout">
+                <div className="common__grid--rowTable">
                     <table>
                         <tr>
                             <th>프로젝트명</th>
@@ -1146,7 +1146,7 @@ const ProjectMng = (props) => {
                     </ButtonLayout>
                 </TopInputLayout>
             </Grid>
-            <ContentLine container className="common__grid--rowTable">
+            <ContentLine container className="common__grid--reviewRowTable">
                 <table className="projectmng__evaluation">
                     <thead>
                         <tr>

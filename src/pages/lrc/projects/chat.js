@@ -269,6 +269,15 @@ const Chat = forwardRef((props, ref) => {
     // 에러처리
     useEffect(() => {
         console.log(responseError);
+        if (!rSocket) {
+            let timer = setTimeout(() => {
+                createClient(projectId);
+            }, 2000);
+
+            return () => {
+                clearTimeout(timer);
+            };
+        }
     }, [responseError]);
 
     useEffect(() => {
@@ -392,8 +401,8 @@ const Chat = forwardRef((props, ref) => {
                 <button type="button" color="primary" className="list__download" onClick={excelDownload}>
                     <DownloadIcon /> 내역 다운로드
                 </button>
-                <FormControl sx={{ minWidth: 250, boxSizing: 'border-box', marginRight: '0.5rem' }} size="medium">
-                    <TextField id="symbol" name="symbol" inputRef={refKeyword} type="text" />
+                <FormControl sx={{ minWidth: 100, boxSizing: 'border-box', marginRight: '0.5rem' }} size="medium">
+                    <TextField id="symbol" name="symbol" inputRef={refKeyword} type="text" size="small" />
                 </FormControl>
 
                 <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>

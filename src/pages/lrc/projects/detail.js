@@ -444,7 +444,7 @@ const ProjectsDetailPage = () => {
                                                     '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
-
+                                        &nbsp;
                                         <Button
                                             disableElevation
                                             size="medium"
@@ -472,28 +472,21 @@ const ProjectsDetailPage = () => {
                                                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                                                 .map((item, index) => (
                                                                     <TableRow key={index} hover>
-                                                                        <TableCell
-                                                                            style={{ width: '40%' }}
-                                                                            align="center"
-                                                                            component="th"
-                                                                            scope="row"
-                                                                        >
+                                                                        <TableCell align="center" component="th" scope="row">
                                                                             {item.user_type_name}
                                                                         </TableCell>
                                                                         <TableCell align="center" component="th" scope="row">
-                                                                            <div className="project__info--download">
-                                                                                <Button
-                                                                                    variant="outlined"
-                                                                                    startIcon={<AttachFileOutlinedIcon />}
-                                                                                    size="small"
-                                                                                    onClick={() => FileDownload(item.id, item.file_name)}
-                                                                                >
-                                                                                    {item.file_name}
-                                                                                </Button>
-                                                                                <p>
-                                                                                    {item.file_size}&nbsp;{getDateFormat(item.create_date)}
-                                                                                </p>
-                                                                            </div>
+                                                                            <Button
+                                                                                variant="outlined"
+                                                                                startIcon={<AttachFileOutlinedIcon />}
+                                                                                size="small"
+                                                                                onClick={() => FileDownload(item.id, item.file_name)}
+                                                                            >
+                                                                                {item.file_name}
+                                                                            </Button>
+                                                                            <p>
+                                                                                {item.file_size}&nbsp;{getDateFormat(item.create_date)}
+                                                                            </p>
                                                                         </TableCell>
                                                                     </TableRow>
                                                                 ))}
