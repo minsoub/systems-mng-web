@@ -174,13 +174,20 @@ const ProfileUpdateForm = () => {
             alert('요청한 패스워드 형식에 일치하지 않습니다.');
             return;
         }
-        let send_data = {
-            email: doEncrypt(authData.email),
-            current_password: doEncrypt(current_password),
-            new_password: doEncrypt(new_password),
-            confirm_password: doEncrypt(confirm_password)
-        };
-        updatePasswordInfo(send_data);
+        const emailPromise = doEncrypt(authData.email);
+        const currentPasswordPromise = doEncrypt(current_password);
+        const newPasswordPromise = doEncrypt(new_password);
+        const confirmPasswordPromise = doEncrypt(confirm_password);
+
+        Promise.all([emailPromise, currentPasswordPromise, newPasswordPromise, confirmPasswordPromise]).then((values) => {
+            let send_data = {
+                email: values[0],
+                current_password: values[1],
+                new_password: values[2],
+                confirm_password: values[3]
+            };
+            updatePasswordInfo(send_data);
+        });
     };
 
     return (

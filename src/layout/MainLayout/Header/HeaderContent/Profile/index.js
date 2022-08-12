@@ -138,7 +138,7 @@ const Profile = () => {
                     ]
                 }}
             >
-                {({ TransitionProps }) => (
+                {async ({TransitionProps}) => (
                     <Transitions type="fade" in={open} {...TransitionProps}>
                         {open && (
                             <Paper>
@@ -147,7 +147,7 @@ const Profile = () => {
                                         <CardContent>
                                             <Grid container justifyContent="space-between" alignItems="center">
                                                 <div className="mypage--userInfo">
-                                                    <p className="email">{doDecrypt(authData.email)}</p>
+                                                    <p className="email">{await doDecrypt(authData.email)}</p>
                                                     <p className="admin">Smart Admin 관리자</p>
                                                     <span className="time">( 접속일시 : {authData.loginDate} )</span>
                                                 </div>
@@ -155,7 +155,7 @@ const Profile = () => {
                                         </CardContent>
                                         {open && (
                                             <>
-                                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                                                     <Tabs
                                                         variant="fullWidth"
                                                         value={value}
@@ -170,14 +170,16 @@ const Profile = () => {
                                                                 alignItems: 'center',
                                                                 textTransform: 'capitalize'
                                                             }}
-                                                            icon={<UserOutlined style={{ marginBottom: 0, marginRight: '10px' }} />}
+                                                            icon={<UserOutlined
+                                                                style={{marginBottom: 0, marginRight: '10px'}}/>}
                                                             label="계정 정보 수정"
                                                             {...a11yProps(0)}
                                                         />
                                                     </Tabs>
                                                 </Box>
                                                 <TabPanel value={value} index={0} dir={theme.direction}>
-                                                    <ProfileTab handleLogout={handleLogout} handleUpdate={handleUpdate} />
+                                                    <ProfileTab handleLogout={handleLogout}
+                                                                handleUpdate={handleUpdate}/>
                                                 </TabPanel>
                                             </>
                                         )}

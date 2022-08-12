@@ -140,7 +140,7 @@ const Chat = forwardRef((props, ref) => {
         }
     }, [projectId]);
     // response 값 처리
-    useEffect(() => {
+    useEffect(async () => {
         console.log('get response data: ', responseData);
         if (!responseData) return;
 
@@ -149,7 +149,7 @@ const Chat = forwardRef((props, ref) => {
                 console.log('here');
                 let msg = [];
                 let data = {};
-                responseData.map((item, index) => {
+                responseData.map(async (item, index) => {
                     if (item.id === null) return;
                     let data = {};
 
@@ -157,7 +157,7 @@ const Chat = forwardRef((props, ref) => {
                         data = {
                             id: item.id,
                             receiver: 'receiveUser',
-                            sender: item.name ? doDecrypt(item.name) : 'Listing Team',
+                            sender: item.name ? await doDecrypt(item.name) : 'Listing Team',
                             message: item.content,
                             type: item.role,
                             createdDt: getDateFormatSecond(item.create_date),
@@ -208,7 +208,7 @@ const Chat = forwardRef((props, ref) => {
                         data = {
                             id: responseData.id,
                             receiver: 'receiveUser',
-                            sender: responseData.name ? doDecrypt(responseData.name) : 'Listing Team',
+                            sender: responseData.name ? await doDecrypt(responseData.name) : 'Listing Team',
                             message: responseData.content,
                             type: responseData.role,
                             createdDt: getDateFormatSecond(responseData.create_date),
