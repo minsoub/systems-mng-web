@@ -270,8 +270,19 @@ const Chat = forwardRef((props, ref) => {
     useEffect(() => {
         console.log(responseError);
         if (!rSocket) {
+            console.log('here is called...');
             let timer = setTimeout(() => {
                 createClient(projectId);
+            }, 2000);
+
+            return () => {
+                clearTimeout(timer);
+            };
+        } else {
+            console.log('rSocket is connected....');
+            let timer = setTimeout(() => {
+                setMessageList([]);
+                sendJoinChat('join-chat', projectId);
             }, 2000);
 
             return () => {
