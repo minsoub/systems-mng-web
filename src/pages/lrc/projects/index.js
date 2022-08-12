@@ -138,7 +138,7 @@ const ProjectsPage = () => {
     const navigate = useNavigate();
     const { paramId1, paramId2 } = useParams();
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
-    const [responseData, requestError, Loading, { foundationSearch }] = FoundationApi();
+    const [responseData, requestError, Loading, { foundationSearch, foundationExcelDownload }] = FoundationApi();
 
     const {
         reduceFromDate,
@@ -194,8 +194,8 @@ const ProjectsPage = () => {
     useEffect(() => {
         // setStartDate(moment().format('YYYY-MM-DD'));
         // setEndDate(moment().format('YYYY-MM-DD'));
-        setDateFromToSet('3');
-        setPeriod('3'); // default value
+        setDateFromToSet('5');
+        setPeriod('5'); // default value
         statusSearch(false); // 상태 값 모두 조회
         console.log(new Date());
         if (!paramId1 && !paramId2) {
@@ -227,8 +227,8 @@ const ProjectsPage = () => {
         if (paramId1) {
             setSts(paramId1);
             processPrint(paramId1);
-            setDateFromToSet('4');
-            setPeriod('4'); // default value
+            setDateFromToSet('5');
+            setPeriod('5'); // default value
         }
     }, [statusList]);
     // 진행상태 변경
@@ -311,6 +311,22 @@ const ProjectsPage = () => {
                     });
                 } else {
                     setDataGridRows([]);
+                }
+                break;
+            case 'excelDownload':
+                if (responseData.data) {
+                    let res = responseData;
+                    console.log('res data....');
+                    console.log(res);
+                    console.log(res.fileName);
+                    const url = window.URL.createObjectURL(new Blob([res.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', '거래지원.xlsx');
+                    link.style.cssText = 'display:none';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
                 }
                 break;
             default:
@@ -457,10 +473,17 @@ const ProjectsPage = () => {
         Array.from(checkedNetworkItems).map((item, idx) => {
             network_list.push(item);
         });
+        let start_date = from_date;
+        let end_date = to_date;
+
+        if (period === '5') {
+            start_date = '2022-01-01';
+            end_date = '2099-12-31';
+        }
         // 검색 조건 세팅
         let data = {
-            from_date: from_date,
-            to_date: to_date,
+            from_date: start_date,
+            to_date: end_date,
             contract_code: contract_code,
             progress_code: process_code,
             business_list: business_list,
@@ -485,8 +508,8 @@ const ProjectsPage = () => {
     const clearClick = () => {
         setPage(0);
         setRowsPerPage(10);
-        setPeriod('3');
-        setDateFromToSet('3');
+        setPeriod('5');
+        setDateFromToSet('5');
         clearCategory();
         // setStartDate(moment().format('YYYY-MM-DD'));
         // setEndDate(moment().format('YYYY-MM-DD'));
@@ -525,6 +548,39 @@ const ProjectsPage = () => {
         } else {
             setDataGridRows(totalDataGridRows);
         }
+    };
+
+    // 엑셀 다운로드 클릭 시
+    const ExcelDownloadClick = () => {
+        console.log('ExcelDownloadClick called...');
+        //roleComboSearch(is_use, type, site_id);
+        let business_list = [];
+        let network_list = [];
+        Array.from(checkedBusinessItems).map((item, idx) => {
+            business_list.push(item);
+        });
+        Array.from(checkedNetworkItems).map((item, idx) => {
+            network_list.push(item);
+        });
+        let start_date = from_date;
+        let end_date = to_date;
+
+        if (period === '5') {
+            start_date = '2022-01-01';
+            end_date = '2099-12-31';
+        }
+        // 검색 조건 세팅
+        let data = {
+            from_date: start_date,
+            to_date: end_date,
+            contract_code: contract_code,
+            progress_code: process_code,
+            business_list: business_list,
+            network_list: network_list,
+            keyword: keyword
+        };
+        console.log(data);
+        foundationExcelDownload(data);
     };
 
     const [page, setPage] = React.useState(0);
@@ -601,6 +657,9 @@ const ProjectsPage = () => {
                     <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
                         초기화
                     </Button>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={ExcelDownloadClick}>
+                        엑셀 다운로드
+                    </Button>
                 </ButtonLayout>
 
                 <MainCard>
@@ -657,10 +716,10 @@ const ProjectsPage = () => {
                                     진행 상태
                                 </StyledTableCell>
                                 <StyledTableCell style={{ width: '10%' }} align="center">
-                                    최소
+                                    제안
                                 </StyledTableCell>
                                 <StyledTableCell style={{ width: '10%' }} align="center">
-                                    실제
+                                    입금
                                 </StyledTableCell>
                             </TableRow>
                         </TableHead>

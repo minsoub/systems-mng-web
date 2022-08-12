@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, FormControl, TextField, Typography } from '@mui/material';
@@ -28,7 +27,22 @@ const ProjectHistory = (props) => {
         {
             field: 'task_history',
             headerName: '작업내역',
-            width: 300,
+            width: 150,
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'item',
+            headerName: '변경값',
+            width: 250,
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'type',
+            headerName: '사용자구분',
             flex: 1,
             headerAlign: 'center',
             align: 'center'

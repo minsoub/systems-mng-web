@@ -3,6 +3,7 @@ import axiosInstanceDefault from 'apis/axiosDefault';
 import axiosInstanceUpload from 'apis/axiosUpload';
 import axiosInstanceDownload from 'apis/axiosDownload';
 import useAxios from '../../useAxios';
+import { doEncrypt } from 'utils/Crypt';
 
 const FoundationApi = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
@@ -42,6 +43,44 @@ const FoundationApi = () => {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
             url: `/mng/lrc/lrcmanagment/project/foundation/search?${parameter}`,
+            requestConfig: {}
+        });
+    };
+
+    const foundationExcelDownload = (data) => {
+        var parameter = '';
+        var networklist = '';
+        var businesslist = '';
+        if (data.business_list && data.business_list.length > 0) {
+            let found = 0;
+            data.business_list.map((item) => {
+                if (found !== 0) businesslist += ';';
+                businesslist += item;
+                found++;
+            });
+        }
+        if (data.network_list && data.network_list.length > 0) {
+            let found = 0;
+            data.network_list.map((item) => {
+                if (found !== 0) networklist += ';';
+                networklist += item;
+                found++;
+            });
+        }
+        parameter +=
+            'fromDate=' +
+            data.from_date +
+            '&toDate=' +
+            data.to_date +
+            '&contractCode=' +
+            data.contract_code +
+            '&progressCode=' +
+            data.progress_code;
+        parameter += '&businessCode=' + businesslist + '&networkCode=' + networklist + '&keyword=' + encodeURIComponent(data.keyword);
+        callApi('excelDownload', {
+            axiosInstance: axiosInstanceDownload,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/foundation/excel/download?${parameter}`,
             requestConfig: {}
         });
     };
@@ -147,6 +186,16 @@ const FoundationApi = () => {
         });
     };
 
+    // 마케팅 정보 삭제
+    const deleteMarketing = (projectId, id) => {
+        callApi('deleteMarketing', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/mng/lrc/lrcmanagment/project/marketing-quantity/${projectId}/${id}`,
+            requestConfig: {}
+        });
+    };
+
     // 검토 평가
     // 검토 평가 조회
     const getReviewListData = (data) => {
@@ -166,6 +215,16 @@ const FoundationApi = () => {
             requestConfig: data
         });
     };
+    // 검토 평가 삭제
+    const deleteReview = (projectId, id) => {
+        callApi('deleteReview', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/mng/lrc/lrcmanagment/project/review-estimate/${projectId}/${id}`,
+            requestConfig: {}
+        });
+    };
+
     // 파일 다운로드
     const getFile = (key) => {
         callApi('getFile', {
@@ -242,17 +301,76 @@ const FoundationApi = () => {
         });
     };
 
+    // 담당자 정보 조회
+    const userKeywordSearch = (keyword) => {
+        let keywordData = encodeURIComponent(keyword);
+        callApi('getUserSearchList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/user-account?keyword=${keywordData}`,
+            requestConfig: {}
+        });
+    };
+    // 담당자 정보 등록
+    const lrcUserRegister = (projectId, id, email) => {
+        let data = {
+            id: id,
+            email: doEncrypt(email)
+        };
+
+        callApi('userRegister', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'post',
+            url: `/mng/lrc/lrcmanagment/project/user-account/${projectId}`,
+            requestConfig: data
+        });
+    };
+
+    // 담당자 탈퇴 처리
+    const lrcUserDelete = (projectId, id) => {
+        callApi('delRegister', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/mng/lrc/lrcmanagment/project/user-account/${projectId}/${id}`,
+            requestConfig: {}
+        });
+    };
+
+    // 담당자 정보 수정
+    const lrcUserSave = (projectId, userList) => {
+        let data = userList;
+        data.map((item, idx) => {
+            item.user_name = doEncrypt(item.user_name);
+            item.sns_id = doEncrypt(item.sns_id);
+            item.phone = doEncrypt(item.phone);
+            item.email = doEncrypt(item.email);
+        });
+
+        console.log(data);
+        let sendData = { send_data: data };
+
+        callApi('userUpdate', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'post',
+            url: `/mng/lrc/lrcmanagment/project/user-accounts/${projectId}`,
+            requestConfig: sendData
+        });
+    };
+
     return [
         responseData,
         requestError,
         loading,
         {
             foundationSearch: getListData,
+            foundationExcelDownload: foundationExcelDownload,
             updateFoundationInfo: updateFoundationInfo,
             marketingSearch: getMarketingListData,
             updateMarketingList: updateMarketingList,
+            deleteMarketingData: deleteMarketing,
             reviewSearch: getReviewListData,
             updateReviewList: updateReviewList,
+            deleteReviewData: deleteReview,
             projectSearch: getProjectListData,
             updateProjectInfo: updateProjectInfo,
             userSearch: getUserListData,
@@ -267,7 +385,11 @@ const FoundationApi = () => {
             projectConnectSave: projectConnectSave,
             projectDisconnectSave: projectDisconnectSave,
             projectLinkListSearch: projectLinkListSearch,
-            sendEmail: sendEmail
+            sendEmail: sendEmail,
+            userKeywordSearch: userKeywordSearch,
+            lrcUserRegister: lrcUserRegister,
+            lrcUserDelete: lrcUserDelete,
+            lrcUserSave: lrcUserSave
         }
     ];
 };

@@ -1,6 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, Grid, Tab, TableCell, Tabs, TextField, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Grid,
+    Tab,
+    TableCell,
+    Tabs,
+    TextField,
+    Typography,
+    Table,
+    TableBody,
+    TableHead,
+    TablePagination,
+    TableRow
+} from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
@@ -19,7 +33,7 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import { Empty } from 'antd';
 import './styles.scss';
 import { getDateFormat } from 'utils/CommonUtils';
-
+import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
 const ProjectsDetailPage = () => {
     let isSubmitting = false;
     const columns = [
@@ -276,7 +290,8 @@ const ProjectsDetailPage = () => {
     function byteString(index) {
         const units = ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; //  : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 
-        return units(index);
+        // eslint-disable-next-line security/detect-object-injection
+        return units[index];
     }
     function humanFileSize(bytes, si = false, dp = 1) {
         const thresh = si ? 1000 : 1024;
@@ -292,7 +307,7 @@ const ProjectsDetailPage = () => {
         do {
             bytes /= thresh;
             ++u;
-        } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+        } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < 8 - 1); // units.length - 1);
 
         return bytes.toFixed(dp) + ' ' + byteString(u); // units[u];
     }
@@ -331,6 +346,19 @@ const ProjectsDetailPage = () => {
             // 메일 전송
             sendEmail(mail, 'EN');
         }
+    };
+    // 페이징 변경 이벤트
+    const handlePage = (page) => {};
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
     };
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
@@ -416,7 +444,7 @@ const ProjectsDetailPage = () => {
                                                     '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
-
+                                        &nbsp;
                                         <Button
                                             disableElevation
                                             size="medium"
@@ -430,17 +458,69 @@ const ProjectsDetailPage = () => {
                                     </TopInputLayout>
                                     <MainCard>
                                         <Typography variant="h4">첨부파일 목록</Typography>
-
                                         {fileList.length > 0 ? (
+                                            <div className="project__info--box">
+                                                <div className="project__info--download">
+                                                    <Table
+                                                        fixedHeader={false}
+                                                        style={{ width: '100%', tableLayout: 'auto' }}
+                                                        stickyHeader
+                                                        aria-label="simple table"
+                                                    >
+                                                        <TableBody>
+                                                            {fileList
+                                                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                                                .map((item, index) => (
+                                                                    <TableRow key={index} hover>
+                                                                        <TableCell align="center" component="th" scope="row">
+                                                                            {item.user_type_name}
+                                                                        </TableCell>
+                                                                        <TableCell align="center" component="th" scope="row">
+                                                                            <Button
+                                                                                variant="outlined"
+                                                                                startIcon={<AttachFileOutlinedIcon />}
+                                                                                size="small"
+                                                                                onClick={() => FileDownload(item.id, item.file_name)}
+                                                                            >
+                                                                                {item.file_name}
+                                                                            </Button>
+                                                                            <p>
+                                                                                {item.file_size}&nbsp;{getDateFormat(item.create_date)}
+                                                                            </p>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                ))}
+                                                        </TableBody>
+                                                    </Table>
+                                                    <TablePagination
+                                                        rowsPerPageOptions={[10, 25, 100]}
+                                                        component="div"
+                                                        count={fileList.length}
+                                                        rowsPerPage={rowsPerPage}
+                                                        page={page}
+                                                        onPageChange={handleChangePage}
+                                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="첨부된 파일이 없습니다." />
+                                        )}
+
+                                        {/* {fileList.length > 0 ? (
                                             <div className="project__info--box">
                                                 {fileList.map((item, index) => (
                                                     <TopInputLayout key={index} className="project__info">
                                                         <h6 style={{ width: '36%', lineBreak: 'anywhere' }}>[{item.user_type_name}]</h6>
-
                                                         <div className="project__info--download">
-                                                            <button type="button" onClick={() => FileDownload(item.id, item.file_name)}>
+                                                            <Button
+                                                                variant="outlined"
+                                                                startIcon={<AttachFileOutlinedIcon />}
+                                                                size="small"
+                                                                onClick={() => FileDownload(item.id, item.file_name)}
+                                                            >
                                                                 {item.file_name}
-                                                            </button>
+                                                            </Button>
                                                             <p>
                                                                 {item.file_size}&nbsp;{getDateFormat(item.create_date)}
                                                             </p>
@@ -450,7 +530,7 @@ const ProjectsDetailPage = () => {
                                             </div>
                                         ) : (
                                             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="첨부된 파일이 없습니다." />
-                                        )}
+                                        )} */}
                                     </MainCard>
                                 </Grid>
                             </Grid>
