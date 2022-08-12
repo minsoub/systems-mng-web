@@ -17,12 +17,6 @@ import { useEffect, useRef, useState } from 'react';
 //const WebSocket = require('ws');
 
 const serverURL = process.env.REACT_APP_CHAT_SERVER_URL ? process.env.REACT_APP_CHAT_SERVER_URL : 'ws://localhost:9090';
-let authData = null;
-if (localStorage.hasOwnProperty('authenticated')) {
-    //console.log(localStorage.getItem('authenticated'));
-    authData = JSON.parse(localStorage.getItem('authenticated'));
-    console.log(authData.accessToken);
-}
 
 const useRScoketClient = () => {
     const connection = useRef();
@@ -34,6 +28,13 @@ const useRScoketClient = () => {
     const { siteId, name } = useSelector((state) => state.auth);
 
     const getMetadata = (route) => {
+        let authData = null;
+        if (localStorage.hasOwnProperty('authenticated')) {
+            //console.log(localStorage.getItem('authenticated'));
+            authData = JSON.parse(localStorage.getItem('authenticated'));
+            console.log(authData.accessToken);
+        }
+
         const socketAuthProvider = encodeBearerAuthMetadata(
             authData.accessToken
             //'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiYXVkIjoiaGVsbG8tc2VydmljZSIsImFjY291bnRfaWQiOiJyaWhvbmdvIiwicm9sZSI6IlVTRVIiLCJpc3MiOiJoZWxsby1zZXJ2aWNlLWRlbW8iLCJleHAiOjE2NTY1MDk0NjEsImp0aSI6ImQzMWUwMWEzLWZlMWUtNDU1Yi04ZTUwLWQ0MTkyODhhODY2NiJ9.061X4m386ISFNdnn5XLZSySu_ryc1LYoIqDl8YfL_Yc'
