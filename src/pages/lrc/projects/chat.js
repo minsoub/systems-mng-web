@@ -51,9 +51,9 @@ const Chat = forwardRef((props, ref) => {
 
     const initChatScroll = () => {
         // 채팅영역 스크롤
-        console.log('initChatScroll called...');
+        //console.log('initChatScroll called...');
         if (refChatArea.current) {
-            console.log('refChatArea current...');
+            //console.log('refChatArea current...');
             refChatArea.current.scrollTop = refChatArea.current.scrollHeight;
         }
         // // 첨부파일 스크롤
@@ -67,13 +67,13 @@ const Chat = forwardRef((props, ref) => {
         if (localStorage.hasOwnProperty('authenticated')) {
             authData = JSON.parse(localStorage.getItem('authenticated'));
             let decodePayload = jwt.decode(authData.accessToken);
-            console.log(decodePayload);
+            //console.log(decodePayload);
             let data = {
                 account_id: decodePayload.account_id,
                 site_id: siteId,
                 project_id: projectId
             };
-            console.log(data);
+            //console.log(data);
             chatExistsAndSave(data);
         }
         prevSearchKeyword = '';
@@ -126,6 +126,7 @@ const Chat = forwardRef((props, ref) => {
 
     useEffect(() => {
         if (rSocket) {
+            console.log('>> rSocket id is changed.....');
             setMessageList([]);
             sendJoinChat('join-chat', projectId);
         }
@@ -150,7 +151,7 @@ const Chat = forwardRef((props, ref) => {
     }, [fileList]);
     // response 값 처리
     useEffect(() => {
-        console.log('get response data: ', responseData);
+        console.log('>> get response data: ', responseData);
         if (!responseData) return;
 
         if (responseData) {
@@ -259,7 +260,7 @@ const Chat = forwardRef((props, ref) => {
                             data.message = `첨부파일 : ${data.fileName}`;
                         }
                     }
-                    console.log(data);
+                    //console.log(data);
                     setMessageList([...messageList, data]);
                 }
             }
@@ -270,7 +271,7 @@ const Chat = forwardRef((props, ref) => {
     useEffect(() => {
         console.log(responseError);
         if (!rSocket) {
-            console.log('here is called...');
+            console.log('>> chat error occured...');
             let timer = setTimeout(() => {
                 createClient(projectId);
             }, 2000);
@@ -279,7 +280,7 @@ const Chat = forwardRef((props, ref) => {
                 clearTimeout(timer);
             };
         } else {
-            console.log('rSocket is connected....');
+            console.log('>> rSocket is connected....');
             let timer = setTimeout(() => {
                 setMessageList([]);
                 sendJoinChat('join-chat', projectId);
@@ -297,7 +298,7 @@ const Chat = forwardRef((props, ref) => {
 
     // 메시지 전송 Text 박스
     const sendRequest = (data) => {
-        console.log(data);
+        console.log('>> sendRequest : ', data);
         const route = 'send-chat-message';
         sendRequestResponse(route, projectId, data);
     };
