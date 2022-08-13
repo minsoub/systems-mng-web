@@ -12,7 +12,6 @@ import jwt from 'jsonwebtoken';
 import { nl2brToString } from 'utils/CommonUtils';
 import { Index } from '../../../components/Chat/TextInput';
 import { getDateFormatSecond } from 'utils/CommonUtils';
-import { doDecrypt } from 'utils/Crypt';
 const Chat = forwardRef((props, ref) => {
     const { projectId, fileList, fileDownload, children, tabindex, index, ...other } = props;
     const [resData, reqError, loading, { chatExistsAndSave, deleteChat, chatExcelDownload }] = ChatApi();
@@ -149,7 +148,7 @@ const Chat = forwardRef((props, ref) => {
         }
     }, [fileList]);
     // response 값 처리
-    useEffect(async () => {
+    useEffect(() => {
         console.log('get response data: ', responseData);
         if (!responseData) return;
 
@@ -158,7 +157,7 @@ const Chat = forwardRef((props, ref) => {
                 console.log('here');
                 let msg = [];
                 let data = {};
-                responseData.map(async (item, index) => {
+                responseData.map((item, index) => {
                     if (item.id === null) return;
                     let data = {};
                     console.log(`>> chat list data << `);
@@ -168,7 +167,7 @@ const Chat = forwardRef((props, ref) => {
                         data = {
                             id: item.id,
                             receiver: 'receiveUser',
-                            sender: item.name ? await doDecrypt(item.name) : 'Listing Team',
+                            sender: item.name ? item.name : 'Listing Team',
                             message: item.content,
                             type: item.role,
                             createdDt: getDateFormatSecond(item.create_date),
@@ -221,7 +220,7 @@ const Chat = forwardRef((props, ref) => {
                         data = {
                             id: responseData.id,
                             receiver: 'receiveUser',
-                            sender: responseData.name ? await doDecrypt(responseData.name) : 'Listing Team',
+                            sender: responseData.name ? responseData.name : 'Listing Team',
                             message: responseData.content,
                             type: responseData.role,
                             createdDt: getDateFormatSecond(responseData.create_date),
