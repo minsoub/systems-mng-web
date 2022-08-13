@@ -272,23 +272,26 @@ const Chat = forwardRef((props, ref) => {
         console.log(responseError);
         if (!rSocket) {
             console.log('>> chat error occured...rSocket closed. timer start => createClient call...');
-            let timer = setTimeout(() => {
-                createClient(projectId);
-            }, 2000);
+            createClient(projectId);
+            // let timer = setTimeout(() => {
+            //     createClient(projectId);
+            // }, 2000);
 
-            return () => {
-                clearTimeout(timer);
-            };
+            // return () => {
+            //     clearTimeout(timer);
+            // };
         } else {
             console.log('>> chat error occured...rSocket is connected.... => join-chat call...');
-            let timer = setTimeout(() => {
-                setMessageList([]);
-                sendJoinChat('join-chat', projectId);
-            }, 2000);
+            setMessageList([]);
+            sendDataJoinChat('join-chat', projectId);
+            // let timer = setTimeout(() => {
+            //     setMessageList([]);
+            //     sendJoinChat('join-chat', projectId);
+            // }, 2000);
 
-            return () => {
-                clearTimeout(timer);
-            };
+            // return () => {
+            //     clearTimeout(timer);
+            // };
         }
     }, [responseError]);
 
