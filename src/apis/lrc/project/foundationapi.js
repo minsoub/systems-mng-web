@@ -1,11 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axiosInstanceDefault from 'apis/axiosDefault';
 import axiosInstanceUpload from 'apis/axiosUpload';
 import axiosInstanceDownload from 'apis/axiosDownload';
 import useAxios from '../../useAxios';
 import { doEncrypt } from 'utils/Crypt';
-import axiosInstanceAuth from '../../axiosAuth';
-import { resolve } from 'eslint-import-resolver-typescript';
 
 const FoundationApi = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
@@ -342,11 +340,10 @@ const FoundationApi = () => {
 
     // 담당자 정보 수정
     const lrcUserSave = (projectId, userList) => {
+        console.log(userList);
         const data = Object.assign(userList, []);
         const sendData = data.map((d) => getItem(d));
         Promise.all(sendData).then((values) => {
-            // console.log(values);
-
             callApi('userUpdate', {
                 axiosInstance: axiosInstanceDefault,
                 method: 'post',
@@ -369,7 +366,6 @@ const FoundationApi = () => {
             data.email = values[3];
             return data;
         });
-        // console.log(data);
     };
 
     return [

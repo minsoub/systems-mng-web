@@ -10,7 +10,9 @@ import FlexBox from '../../../components/Common/FlexBox';
 import ContentLine from '../../../components/Common/ContentLine';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
-import { map } from 'lodash';
+import axiosInstanceDefault from "../../../apis/axiosDefault";
+import {doEncrypt} from "../../../utils/Crypt";
+
 const useStyles = makeStyles({
     tableRow: {
         height: 25
@@ -44,6 +46,7 @@ const ProjectMng = (props) => {
         loading,
         {
             foundationSearch,
+            foundationExcelDownload,
             updateFoundationInfo,
             marketingSearch,
             updateMarketingList,
@@ -279,7 +282,7 @@ const ProjectMng = (props) => {
                     setIcoList(responseData.data.data);
                     // KRW/BTC
                     let data = responseData.data.data;
-                    data.map((item, indx) => {
+                    data.map((item) => {
                         if (item.market_info === 'KRW') {
                             if (item.ico_date) setKrw_ico_date(item.ico_date.substring(0, 10));
                             refPriceKRW.current.value = item.price;
@@ -368,12 +371,11 @@ const ProjectMng = (props) => {
                     // 프로젝트 연결 리스트에서 이미 연결된 부분에 대해서 제회한다.
                     let origin = responseData.data.data;
                     let insertData = [];
-                    origin.map((item, index) => {
+                    origin.map((item) => {
                         let found = 0;
-                        projectLinkList.map((itm, idx) => {
+                        projectLinkList.map((itm) => {
                             if (item.project_id === itm.link_project_id) {
                                 found = 1;
-                                return;
                             }
                         });
                         if (found === 0) {
@@ -452,7 +454,6 @@ const ProjectMng = (props) => {
                     list.push(s);
                 });
                 setProcessList(list);
-                return;
             }
         });
     };
@@ -625,13 +626,12 @@ const ProjectMng = (props) => {
         };
         setMarketingList((prevRows) => [...prevRows, addRow]);
     };
-    // Makreting List remove
+    // Marketing List remove
     const deleteMarketingList = (evt, idx) => {
         if (marketingList.length > 0) {
             marketingList.map((item, Index) => {
                 if (idx === Index) {
                     setMarketingList((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
-                    return;
                 }
             });
         }
@@ -645,17 +645,15 @@ const ProjectMng = (props) => {
                         setMarketingList((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
                         // 삭제 API 호출
                         deleteMarketingData(projectId, id);
-                        return;
                     }
                 });
             }
         }
     };
     // 검토 평가 List 추가
-    const addReviewgList = () => {
+    const addReviewList = () => {
         if (reviewList.length === 3) {
             alert('3개 까지만 입력이 가능합니다!.');
-            return;
         } else {
             let addRow = {
                 id: '',
@@ -675,7 +673,6 @@ const ProjectMng = (props) => {
             reviewList.map((item, Index) => {
                 if (idx === Index) {
                     setReviewList((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
-                    return;
                 }
             });
         }
@@ -688,7 +685,6 @@ const ProjectMng = (props) => {
                     if (idx === Index) {
                         setReviewList((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
                         deleteReviewData(projectId, id);
-                        return;
                     }
                 });
             }
@@ -1137,7 +1133,7 @@ const ProjectMng = (props) => {
                 <TopInputLayout className="officeinfo__content--align bottom--blank__small">
                     <Typography variant="h3">검토 평가</Typography>
                     <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addReviewgList}>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addReviewList}>
                             추가
                         </Button>
                         <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={reviewSaveList}>

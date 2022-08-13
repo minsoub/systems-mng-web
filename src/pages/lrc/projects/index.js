@@ -138,7 +138,7 @@ const ProjectsPage = () => {
     const navigate = useNavigate();
     const { paramId1, paramId2 } = useParams();
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
-    const [responseData, requestError, Loading, { foundationSearch, foundationExcelDownload }] = FoundationApi();
+    const [responseData, requestError, loading, { foundationSearch, foundationExcelDownload }] = FoundationApi();
 
     const {
         reduceFromDate,
