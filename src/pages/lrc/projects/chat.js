@@ -23,6 +23,7 @@ const Chat = forwardRef((props, ref) => {
         sendJoinChat,
         connectionClose,
         sendRequestResponse,
+        sendDataJoinChat,
         responseData,
         responseError
     ] = useRSocketClient();
@@ -144,7 +145,7 @@ const Chat = forwardRef((props, ref) => {
             console.log('>> file id is changed.....');
             console.log(projectId);
             setMessageList([]);
-            sendJoinChat('join-chat', projectId);
+            sendDataJoinChat('join-chat', projectId);
         }
     }, [fileList]);
     // response 값 처리

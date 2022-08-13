@@ -206,7 +206,49 @@ const useRScoketClient = () => {
         }
     };
 
-    return [clientError, rSocket, createClient, sendJoinChat, connectionClose, sendRequestResponse, responseData, responseError];
+    const sendDataJoinChat = (route, pId) => {
+        if (rSocket) {
+            setProjectId(pId);
+            const message = {
+                chat_room: pId,
+                site_id: siteId
+            };
+            rSocket
+                .requestResponse({
+                    data: Buffer.from(JSON.stringify(message)),
+                    metadata: getMetadata(route)
+                })
+                .subscribe({
+                    onComplete: (response) => {
+                        if (response && response.data) {
+                            const text = response.data.toString();
+                            const data = JSON.parse(text);
+                            setResponseData(data);
+                        }
+                    },
+                    onError: (error) => {
+                        //console.log(`onError: ${error}`);
+                        setResponseError(error);
+                    },
+                    onSubscribe: (cancel) => {
+                        //sendRequestChannel('channel-chat-message');
+                        // console.log('onSubscribe');
+                    }
+                });
+        }
+    };
+
+    return [
+        clientError,
+        rSocket,
+        createClient,
+        sendJoinChat,
+        connectionClose,
+        sendRequestResponse,
+        sendDataJoinChat,
+        responseData,
+        responseError
+    ];
 };
 
 export default useRScoketClient;
