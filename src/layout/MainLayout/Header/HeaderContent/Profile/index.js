@@ -159,7 +159,7 @@ const Profile = () => {
                                                 <div className="mypage--userInfo">
                                                     <p ref={refEmail} className="email"></p>
                                                     <p className="admin">Smart Admin 관리자</p>
-                                                    <span className="time">( 접속일시 : <p ref={refLoginData}></p> )</span>
+                                                    <span className="time">( 접속일시 : <span ref={refLoginData}></span> )</span>
                                                 </div>
                                             </Grid>
                                         </CardContent>
