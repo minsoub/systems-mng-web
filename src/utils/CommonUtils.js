@@ -22,7 +22,7 @@ export const nl2br = (content) => {
     if (!content) {
         return '';
     }
-    console.log('nl2br:', content, content.split('\n'));
+    //console.log('nl2br:', content, content.split('\n'));
     return content.split('\n').map((item, index) => {
         return (
             // eslint-disable-next-line react/no-array-index-key
