@@ -13,7 +13,8 @@ import {
     TableBody,
     TableHead,
     TablePagination,
-    TableRow
+    TableRow,
+    Tooltip
 } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import { tableCellClasses } from '@mui/material/TableCell';
@@ -476,14 +477,16 @@ const ProjectsDetailPage = () => {
                                                                             {item.user_type_name}
                                                                         </TableCell>
                                                                         <TableCell align="center" component="th" scope="row">
-                                                                            <Button
-                                                                                variant="outlined"
-                                                                                startIcon={<AttachFileOutlinedIcon />}
-                                                                                size="small"
-                                                                                onClick={() => FileDownload(item.id, item.file_name)}
-                                                                            >
-                                                                                {item.file_name}
-                                                                            </Button>
+                                                                            <Tooltip title={item.file_name}>
+                                                                                <Button
+                                                                                    variant="outlined"
+                                                                                    startIcon={<AttachFileOutlinedIcon />}
+                                                                                    size="small"
+                                                                                    onClick={() => FileDownload(item.id, item.file_name)}
+                                                                                >
+                                                                                    파일 다운로드
+                                                                                </Button>
+                                                                            </Tooltip>
                                                                             <p>
                                                                                 {item.file_size}&nbsp;{getDateFormat(item.create_date)}
                                                                             </p>
