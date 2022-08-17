@@ -143,6 +143,7 @@ const ProjectsDetailPage = () => {
     };
     ////////////////////////////////////////////////////
     const chatRef = useRef({});
+    const [chatStart, setChatStart] = useState(false);
 
     // onload
     useEffect(() => {
@@ -168,6 +169,8 @@ const ProjectsDetailPage = () => {
                 setErrorTitle('Error Message');
                 setErrorMessage('[' + reqError.error.code + '] ' + reqError.error.message);
                 setOpen(true);
+
+                if (chatStart === false) setChatStart(true);
             }
         }
     }, [reqError]);
@@ -196,6 +199,7 @@ const ProjectsDetailPage = () => {
                     console.log(resData);
                     setFileList(resData.data.data);
                 }
+                setChatStart(true);
                 break;
             case 'insertData':
                 if (resData.data.data) {
@@ -361,6 +365,10 @@ const ProjectsDetailPage = () => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+    const fileSearch = () => {
+        getChatFileList(paramId);
+    };
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
@@ -405,7 +413,14 @@ const ProjectsDetailPage = () => {
                                 </Grid>
                                 <Grid item xs={4} sm={4} className="catting__layout">
                                     {/* 채팅 영역 */}
-                                    <Chat projectId={paramId} ref={chatRef} fileList={fileList} fileDownload={FileDownload} />
+                                    <Chat
+                                        projectId={paramId}
+                                        ref={chatRef}
+                                        chatStart={chatStart}
+                                        fileList={fileList}
+                                        fileDownload={FileDownload}
+                                        fileSearch={fileSearch}
+                                    />
 
                                     <div align="center" style={{ padding: '20px' }}>
                                         <Button

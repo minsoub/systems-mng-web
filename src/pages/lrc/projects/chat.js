@@ -13,7 +13,7 @@ import { nl2brToString } from 'utils/CommonUtils';
 import { Index } from '../../../components/Chat/TextInput';
 import { getDateFormatSecond } from 'utils/CommonUtils';
 const Chat = forwardRef((props, ref) => {
-    const { projectId, fileList, fileDownload, children, tabindex, index, ...other } = props;
+    const { projectId, fileList, fileDownload, chatStart, fileSearch, children, tabindex, index, ...other } = props;
     const [resData, reqError, loading, { chatExistsAndSave, deleteChat, chatExcelDownload }] = ChatApi();
     const { siteId } = useSelector((state) => state.auth);
     const [
@@ -22,6 +22,7 @@ const Chat = forwardRef((props, ref) => {
         createClient,
         sendJoinChat,
         connectionClose,
+        sendRequestChannel,
         sendRequestResponse,
         sendDataJoinChat,
         responseData,
@@ -124,11 +125,13 @@ const Chat = forwardRef((props, ref) => {
         }
     }, [resData]);
 
+    // chatStart
     useEffect(() => {
         if (rSocket) {
             console.log('>> rSocket id is changed.....');
             setMessageList([]);
-            sendJoinChat('join-chat', projectId);
+            //sendJoinChat('join-chat', projectId);
+            sendRequestChannel('channel-chat-message');
         }
     }, [rSocket]);
 
@@ -137,18 +140,23 @@ const Chat = forwardRef((props, ref) => {
             console.log('>> project id is changed.....');
             console.log(projectId);
             setMessageList([]);
-            sendJoinChat('join-chat', projectId);
+            sendRequestChannel('channel-chat-message');
+            //sendJoinChat('join-chat', projectId);
         }
     }, [projectId]);
 
     useEffect(() => {
         if (rSocket) {
-            console.log('>> file id is changed.....');
-            console.log(projectId);
-            //setMessageList([]);
-            sendDataJoinChat('join-chat', projectId);
+            console.log(chatStart);
+            if (chatStart === true) {
+                console.log('>> file id is changed.....');
+                console.log(projectId);
+                //setMessageList([]);
+                sendDataJoinChat('join-chat', projectId);
+            }
         }
-    }, [fileList]);
+    }, [fileList, chatStart]);
+
     // response 값 처리
     useEffect(() => {
         console.log('>> get response data: ', responseData);
@@ -159,10 +167,10 @@ const Chat = forwardRef((props, ref) => {
                 console.log('here');
                 let msg = [];
                 let data = {};
+                console.log(`>> chat list data << `);
                 responseData.map((item, index) => {
                     if (item.id === null) return;
                     let data = {};
-                    console.log(`>> chat list data << `);
                     console.log(item);
 
                     if (item.role === 'ADMIN') {
@@ -192,7 +200,7 @@ const Chat = forwardRef((props, ref) => {
                             fileType: ''
                         };
                         sendMailaddress = item.email;
-                        console.log('>> found sendMail address : %s', sendMailaddress);
+                        //console.log('>> found sendMail address : %s', sendMailaddress);
                     }
 
                     if (item.content.indexOf('FILE_MESSAGE::') !== -1) {
@@ -262,6 +270,9 @@ const Chat = forwardRef((props, ref) => {
                     }
                     //console.log(data);
                     setMessageList([...messageList, data]);
+                    if (item.indexOf('FILE_MESSAGE::') !== -1) {
+                        fileSearch();
+                    }
                 }
             }
         }

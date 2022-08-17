@@ -244,6 +244,7 @@ const useRScoketClient = () => {
         createClient,
         sendJoinChat,
         connectionClose,
+        sendRequestChannel,
         sendRequestResponse,
         sendDataJoinChat,
         responseData,
