@@ -1,12 +1,14 @@
-import {useLocation} from 'react-router';
-import {Grid, Stack, Typography} from '@mui/material';
+import { useLocation } from 'react-router';
+import { Grid, Stack, Typography } from '@mui/material';
 import TmpUpdatePasswordForm from '../../../components/AuthLogin/TmpUpdatePasswordForm';
 import AuthWrapper from '../../../components/AuthLogin/AuthWrapper';
 
 // 임시 패스워드 변경 페이지
 const TmpPasswordForm = () => {
-    const { state } = useLocation();
-
+    // const { state } = useLocation();
+    const state = {
+        status: 'CHANGE_PASSWORD'
+    };
     return (
         <AuthWrapper>
             <Grid container spacing={3}>
