@@ -81,7 +81,7 @@ const LineMngPage = () => {
     };
     ////////////////////////////////////////////////////
 
-    const [search_line_type, setSearchLineType] = useState('');
+    const [search_line_type, setSearchLineType] = useState(' ');
     const [isUpdate, setIsUpdate] = useState(false);
 
     // 입력 데이터 - Default
@@ -175,6 +175,7 @@ const LineMngPage = () => {
 
     const searchLineChanged = (e) => {
         setSearchLineType(e.target.value);
+        lineSearch(e.target.value);
     };
 
     // 그리드 더블 클릭
@@ -251,16 +252,23 @@ const LineMngPage = () => {
                     <TopInputLayout>
                         <DropInput title="계열 구분">
                             <Select name="search_line_type" label="계열타입" value={search_line_type} onChange={searchLineChanged}>
+                                <MenuItem value=" ">전체</MenuItem>
                                 <MenuItem value="BUSINESS">사업계열</MenuItem>
                                 <MenuItem value="NETWORK">네트워크계열</MenuItem>
-                                <MenuItem value="">전체</MenuItem>
                             </Select>
                         </DropInput>
 
                         <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                onClick={searchClick}
+                            >
                                 검색
-                            </Button>
+                            </Button> */}
 
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
                                 신규
@@ -277,7 +285,7 @@ const LineMngPage = () => {
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
-                        height={350}
+                        height={450}
                     />
                 </ContentLine>
 

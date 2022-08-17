@@ -1,6 +1,6 @@
 import axiosInstanceAuth from '../axiosAuth';
 import useAxios from '../useAxios';
-import { doEncrypt } from 'utils/Crypt';
+import {doEncrypt} from 'utils/Crypt';
 
 const useAuthorized = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
@@ -12,15 +12,17 @@ const useAuthorized = () => {
         let c = doEncrypt(password);
         console.log(e);
         console.log(c);
-        callApi('siginin', {
-            axiosInstance: axiosInstanceAuth,
-            method: 'post',
-            url: `/adm/login`,
-            requestConfig: {
-                email: e, //doEncrypt(email),
-                passwd: c, //doEncrypt(password),
-                siteId: '628cfe073d11df86c8933a89'
-            }
+        Promise.all([e, c]).then((values) => {
+            callApi('siginin', {
+                axiosInstance: axiosInstanceAuth,
+                method: 'post',
+                url: `/adm/login`,
+                requestConfig: {
+                    email: values[0], //doEncrypt(email),
+                    passwd: values[1], //doEncrypt(password),
+                    siteId: '628cfe073d11df86c8933a89'
+                }
+            });
         });
     };
     // 사용자 OTP 로그인 2차
@@ -47,25 +49,31 @@ const useAuthorized = () => {
     };
     // 사용자 패스워드 수정
     const passwordUpdate = (email, password) => {
-        callApi('passupdate', {
-            axiosInstance: axiosInstanceAuth,
-            method: 'post',
-            url: `/adm/password`,
-            requestConfig: {
-                email: doEncrypt(email),
-                passwd: doEncrypt(password),
-                siteId: '628cfe073d11df86c8933a89'
-            }
+        const encryptEmail = doEncrypt(email);
+        const encryptPasswd = doEncrypt(password);
+        Promise.all([encryptEmail, encryptPasswd]).then((values) => {
+            callApi('passupdate', {
+                axiosInstance: axiosInstanceAuth,
+                method: 'post',
+                url: `/adm/password`,
+                requestConfig: {
+                    email: values[0],
+                    passwd: values[1],
+                    siteId: '628cfe073d11df86c8933a89'
+                }
+            });
         });
     };
     const tempPassword = (email) => {
-        callApi('temp-password', {
-            axiosInstance: axiosInstanceAuth,
-            method: 'post',
-            url: `/adm/temp-password`,
-            requestConfig: {
-                email: doEncrypt(email)
-            }
+        doEncrypt(email).then((encryptedEmail) => {
+            callApi('temp-password', {
+                axiosInstance: axiosInstanceAuth,
+                method: 'post',
+                url: `/adm/temp-password`,
+                requestConfig: {
+                    email: encryptedEmail
+                }
+            });
         });
     };
     return [

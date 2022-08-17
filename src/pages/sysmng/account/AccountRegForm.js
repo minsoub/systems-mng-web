@@ -97,6 +97,7 @@ const AccountRegForm = () => {
     const [send_chk, setSendChk] = useState(false);
     const [valid_start_date, setValidStartDate] = useState(new Date());
     const [valid_end_date, setValidEndDate] = useState('');
+    const [loginFailCount, setLoginFailCount] = useState(0);
 
     // Email 작성 여부
     const [emailStatus, setEmailStatus] = useState(false);
@@ -262,6 +263,7 @@ const AccountRegForm = () => {
                     setEmailChk(true);
                     setValidStartDate(res.valid_start_date);
                     setValidEndDate(res.valid_end_date);
+                    setLoginFailCount(res.login_fail_count == null ? 0 : res.login_fail_count + ' (정상으로 변경시 0 으로 초기화)');
                     // 수정모드이면 운영권한 콤보박스 데이터를 조회한다.
                     //setRoleList([]);
                     //roleComboSearch(true, 'ADMIN', res.site_id);
@@ -448,7 +450,7 @@ const AccountRegForm = () => {
     // Email Duplicate Check
     const emailDuplicateCheck = () => {
         // 메일 주소 중복 체크를 한다.
-        const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+        const regEmail = /^[a-zA-Z0-9._!#$%&*+-/=?^{}~]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9-]+$/i; // /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
         if (regEmail.test(email) === false) {
             alert('정확한 메일주소를 입력해 주세요.');
             return;
@@ -525,8 +527,8 @@ const AccountRegForm = () => {
             return;
         }
         // 등록이 가능하다.
-        let r = roleList.filter((data) => data.id.match(new RegExp(role_id, 'g')));
-        let d = itemList.filter((data) => data.id.match(new RegExp(site_id, 'g')));
+        let r = roleList.filter((data) => data.id === role_id); // .match(new RegExp(role_id, 'g')));
+        let d = itemList.filter((data) => data.id === site_id); // .match(new RegExp(site_id, 'g')));
         let regData = {
             id: role_id,
             name: r[0].name,
@@ -534,7 +536,7 @@ const AccountRegForm = () => {
             site_name: d[0].name
         };
 
-        console.log(roleList.filter((data) => data.id.match(new RegExp(role_id, 'g'))));
+        console.log(roleList.filter((data) => data.id === role_id)); // .match(new RegExp(role_id, 'g'))));
 
         console.log(regData);
 
@@ -679,7 +681,19 @@ const AccountRegForm = () => {
                                     label="체크시 패스워드 초기화 메일 전송"
                                 />
                             </DropInput>
+                            <DropInput title="로그인 실패">
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="small"
+                                    value={loginFailCount}
+                                    inputProps={{ readOnly: true }}
+                                    name="name"
+                                    placeholder="Input the name"
+                                />
+                            </DropInput>
                             <DropInput title="사용여부">
+
                                 <FormControlLabel
                                     control={
                                         <Checkbox

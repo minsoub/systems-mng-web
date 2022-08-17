@@ -27,7 +27,7 @@ $gray: #92959e;
 }
 
 .msg--right {
-    text-align: right;
+    text-align: left;
 }
 
 .msg--left__time {
@@ -51,6 +51,7 @@ $gray: #92959e;
     font-size: 16px;
     border-radius: 7px;
     position: relative;
+    word-break: break-all;
     &:after {
         bottom: 100%;
         right: 29px;
@@ -68,6 +69,8 @@ $gray: #92959e;
 .my-message {
     background: $green;
     cursor: pointer;
+    min-width: 100px;
+    max-width: 100%;
 }
 
 .other-message {

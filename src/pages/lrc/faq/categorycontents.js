@@ -6,7 +6,9 @@ const CategoryContents = (props) => {
 
     return (
         <Typography variant="h6" color="inherit" onClick={() => filterClick(id)} className="content__mng--row">
-            {content}({count})
+            <a href="#">
+                {content}({count})
+            </a>
         </Typography>
     );
 };

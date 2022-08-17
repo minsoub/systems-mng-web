@@ -4,7 +4,13 @@
         "browser": true,
         "es2021": true
     },
-    "extends": ["prettier", "plugin:react/jsx-runtime", "plugin:jsx-a11y/recommended", "plugin:react-hooks/recommended"],
+    "extends": [
+        "prettier",
+        "plugin:react/jsx-runtime",
+        "plugin:jsx-a11y/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:security/recommended"
+    ],
     "settings": {
         "import/resolver": {
             "node": {
@@ -20,7 +26,7 @@
         },
         "ecmaVersion": 12
     },
-    "plugins": ["prettier", "react", "react-hooks"],
+    "plugins": ["prettier", "react", "react-hooks", "security"],
     "rules": {
         "react/jsx-filename-extension": 0,
         "no-param-reassign": 0,
@@ -40,6 +46,10 @@
                 "ignoreRestSiblings": false
             }
         ],
-        "prettier/prettier": 0  //prettier 에 대한 경고 끄기
+        "prettier/prettier": 1, //prettier 에 대한 경고 끄기
+        "security/detect-object-injection": 2,
+        "security/detect-non-literal-fs-filename": 2,
+        "security/detect-unsafe-regex": 2,
+        "security/detect-non-literal-regexp": 2
     }
 }

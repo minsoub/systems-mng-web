@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './styles.scss';
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -57,6 +57,8 @@ const Profile = () => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(0);
     const iconBackColorOpen = 'grey.300';
+    const refEmail = useRef(null);
+    const refLoginData = useRef(null);
 
     const handleLogout = async () => {
         if (confirm('로그아웃 하시겠습니까?')) {
@@ -94,11 +96,19 @@ const Profile = () => {
         setValue(newValue);
     };
 
-    let authData = null;
-    if (localStorage.hasOwnProperty('authenticated')) {
-        //console.log(localStorage.getItem('authenticated'));
-        authData = JSON.parse(localStorage.getItem('authenticated'));
-    }
+    useEffect(() => {
+        if (open && localStorage.hasOwnProperty('authenticated')) {
+            let authData = null;
+            //console.log(localStorage.getItem('authenticated'));
+            authData = JSON.parse(localStorage.getItem('authenticated'));
+            if(authData.loginDate){
+                refLoginData.current.innerText = authData.loginDate;
+            }
+            doDecrypt(authData.email).then((decEmail) => {
+                refEmail.current.innerText = decEmail;
+            });
+        }
+    }, [open]);
 
     return (
         <Box sx={{ flexShrink: 0, ml: 0.75 }}>
@@ -147,9 +157,9 @@ const Profile = () => {
                                         <CardContent>
                                             <Grid container justifyContent="space-between" alignItems="center">
                                                 <div className="mypage--userInfo">
-                                                    <p className="email">{doDecrypt(authData.email)}</p>
+                                                    <p ref={refEmail} className="email"></p>
                                                     <p className="admin">Smart Admin 관리자</p>
-                                                    <span className="time">( 접속일시 : {authData.loginDate} )</span>
+                                                    <span className="time">( 접속일시 : <span ref={refLoginData}></span> )</span>
                                                 </div>
                                             </Grid>
                                         </CardContent>

@@ -1,29 +1,31 @@
+import React from 'react';
 import axiosInstanceDefault from 'apis/axiosDefault';
 import axiosInstanceUpload from 'apis/axiosUpload';
 import axiosInstanceDownload from 'apis/axiosDownload';
 import useAxios from '../../useAxios';
+import { doEncrypt } from 'utils/Crypt';
 
 const FoundationApi = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
 
     // 데이터 조회
     const getListData = (data) => {
-        var parameter = '';
-        var networklist = '';
-        var businesslist = '';
+        let parameter = '';
+        let networkList = '';
+        let businessList = '';
         if (data.business_list && data.business_list.length > 0) {
             let found = 0;
             data.business_list.map((item) => {
-                if (found === 1) businesslist += ';';
-                businesslist += item;
+                if (found !== 0) businessList += ';';
+                businessList += item;
                 found++;
             });
         }
         if (data.network_list && data.network_list.length > 0) {
             let found = 0;
             data.network_list.map((item) => {
-                if (found === 1) networklist += ';';
-                networklist += item;
+                if (found !== 0) networkList += ';';
+                networkList += item;
                 found++;
             });
         }
@@ -36,11 +38,49 @@ const FoundationApi = () => {
             data.contract_code +
             '&progressCode=' +
             data.progress_code;
-        parameter += '&businessCode=' + businesslist + '&networkCode=' + networklist + '&keyword=' + encodeURIComponent(data.keyword);
+        parameter += '&businessCode=' + businessList + '&networkCode=' + networkList + '&keyword=' + encodeURIComponent(data.keyword);
         callApi('getList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
             url: `/mng/lrc/lrcmanagment/project/foundation/search?${parameter}`,
+            requestConfig: {}
+        });
+    };
+
+    const foundationExcelDownload = (data) => {
+        let parameter = '';
+        let networkList = '';
+        let businessList = '';
+        if (data.business_list && data.business_list.length > 0) {
+            let found = 0;
+            data.business_list.map((item) => {
+                if (found !== 0) businessList += ';';
+                businessList += item;
+                found++;
+            });
+        }
+        if (data.network_list && data.network_list.length > 0) {
+            let found = 0;
+            data.network_list.map((item) => {
+                if (found !== 0) networkList += ';';
+                networkList += item;
+                found++;
+            });
+        }
+        parameter +=
+            'fromDate=' +
+            data.from_date +
+            '&toDate=' +
+            data.to_date +
+            '&contractCode=' +
+            data.contract_code +
+            '&progressCode=' +
+            data.progress_code;
+        parameter += '&businessCode=' + businessList + '&networkCode=' + networkList + '&keyword=' + encodeURIComponent(data.keyword);
+        callApi('excelDownload', {
+            axiosInstance: axiosInstanceDownload,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/foundation/excel/download?${parameter}`,
             requestConfig: {}
         });
     };
@@ -146,6 +186,16 @@ const FoundationApi = () => {
         });
     };
 
+    // 마케팅 정보 삭제
+    const deleteMarketing = (projectId, id) => {
+        callApi('deleteMarketing', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/mng/lrc/lrcmanagment/project/marketing-quantity/${projectId}/${id}`,
+            requestConfig: {}
+        });
+    };
+
     // 검토 평가
     // 검토 평가 조회
     const getReviewListData = (data) => {
@@ -165,6 +215,16 @@ const FoundationApi = () => {
             requestConfig: data
         });
     };
+    // 검토 평가 삭제
+    const deleteReview = (projectId, id) => {
+        callApi('deleteReview', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/mng/lrc/lrcmanagment/project/review-estimate/${projectId}/${id}`,
+            requestConfig: {}
+        });
+    };
+
     // 파일 다운로드
     const getFile = (key) => {
         callApi('getFile', {
@@ -241,17 +301,87 @@ const FoundationApi = () => {
         });
     };
 
+    // 담당자 정보 조회
+    const userKeywordSearch = (keyword) => {
+        let keywordData = encodeURIComponent(keyword);
+        callApi('getUserSearchList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/user-account?keyword=${keywordData}`,
+            requestConfig: {}
+        });
+    };
+    // 담당자 정보 등록
+    const lrcUserRegister = (projectId, id, email) => {
+        doEncrypt(email).then((encryptedEmail) => {
+            let data = {
+                id: id,
+                email: encryptedEmail
+            };
+
+            callApi('userRegister', {
+                axiosInstance: axiosInstanceDefault,
+                method: 'post',
+                url: `/mng/lrc/lrcmanagment/project/user-account/${projectId}`,
+                requestConfig: data
+            });
+        });
+    };
+
+    // 담당자 탈퇴 처리
+    const lrcUserDelete = (projectId, id) => {
+        callApi('delRegister', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/mng/lrc/lrcmanagment/project/user-account/${projectId}/${id}`,
+            requestConfig: {}
+        });
+    };
+
+    // 담당자 정보 수정
+    const lrcUserSave = (projectId, userList) => {
+        console.log(userList);
+        const data = Object.assign(userList, []);
+        const sendData = data.map((d) => getItem(d));
+        Promise.all(sendData).then((values) => {
+            callApi('userUpdate', {
+                axiosInstance: axiosInstanceDefault,
+                method: 'post',
+                url: `/mng/lrc/lrcmanagment/project/user-accounts/${projectId}`,
+                requestConfig: { send_data: values }
+            });
+        });
+    };
+
+    const getItem = async (item) => {
+        const data = Object.assign(item, {});
+        const userName = await doEncrypt(item.user_name);
+        const snsId = await doEncrypt(item.sns_id);
+        const phone = await doEncrypt(item.phone);
+        const email = await doEncrypt(item.email);
+        return Promise.all([userName, snsId, phone, email]).then((values) => {
+            data.user_name = values[0];
+            data.sns_id = values[1];
+            data.phone = values[2];
+            data.email = values[3];
+            return data;
+        });
+    };
+
     return [
         responseData,
         requestError,
         loading,
         {
             foundationSearch: getListData,
+            foundationExcelDownload: foundationExcelDownload,
             updateFoundationInfo: updateFoundationInfo,
             marketingSearch: getMarketingListData,
             updateMarketingList: updateMarketingList,
+            deleteMarketingData: deleteMarketing,
             reviewSearch: getReviewListData,
             updateReviewList: updateReviewList,
+            deleteReviewData: deleteReview,
             projectSearch: getProjectListData,
             updateProjectInfo: updateProjectInfo,
             userSearch: getUserListData,
@@ -266,7 +396,11 @@ const FoundationApi = () => {
             projectConnectSave: projectConnectSave,
             projectDisconnectSave: projectDisconnectSave,
             projectLinkListSearch: projectLinkListSearch,
-            sendEmail: sendEmail
+            sendEmail: sendEmail,
+            userKeywordSearch: userKeywordSearch,
+            lrcUserRegister: lrcUserRegister,
+            lrcUserDelete: lrcUserDelete,
+            lrcUserSave: lrcUserSave
         }
     ];
 };

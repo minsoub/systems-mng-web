@@ -1,19 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {
-    Button,
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    Grid,
-    MenuItem,
-    Paper,
-    Select,
-    Stack,
-    TextField,
-    Typography
-} from '@mui/material';
+import { Button, Grid, Paper, Stack, TextField, Typography } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { styled } from '@mui/material/styles';
@@ -468,12 +456,12 @@ const SiteRoleMappingForm = () => {
 
                         {/* 화살표 */}
                         <div className="arr--layout">
-                            <Item className="leftBlank">
-                                <ArrowDropUpIcon aria-label="+" disabled color="primary" onClick={plusRegister} />
+                            <Item className="leftBlank" onClick={plusRegister}>
+                                <ArrowDropUpIcon aria-label="+" disabled color="primary" />
                             </Item>
 
-                            <Item>
-                                <ArrowDropDownIcon aria-label="-" disabled color="primary" onClick={minusRegister} />
+                            <Item onClick={minusRegister}>
+                                <ArrowDropDownIcon aria-label="-" disabled color="primary" />
                             </Item>
                         </div>
 

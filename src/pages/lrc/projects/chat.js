@@ -12,9 +12,8 @@ import jwt from 'jsonwebtoken';
 import { nl2brToString } from 'utils/CommonUtils';
 import { Index } from '../../../components/Chat/TextInput';
 import { getDateFormatSecond } from 'utils/CommonUtils';
-import { doDecrypt } from 'utils/Crypt';
 const Chat = forwardRef((props, ref) => {
-    const { projectId, fileList, fileDownload, children, tabindex, index, ...other } = props;
+    const { projectId, fileList, fileDownload, chatStart, fileSearch, children, tabindex, index, ...other } = props;
     const [resData, reqError, loading, { chatExistsAndSave, deleteChat, chatExcelDownload }] = ChatApi();
     const { siteId } = useSelector((state) => state.auth);
     const [
@@ -23,7 +22,9 @@ const Chat = forwardRef((props, ref) => {
         createClient,
         sendJoinChat,
         connectionClose,
+        sendRequestChannel,
         sendRequestResponse,
+        sendDataJoinChat,
         responseData,
         responseError
     ] = useRSocketClient();
@@ -51,9 +52,9 @@ const Chat = forwardRef((props, ref) => {
 
     const initChatScroll = () => {
         // 채팅영역 스크롤
-        console.log('initChatScroll called...');
+        //console.log('initChatScroll called...');
         if (refChatArea.current) {
-            console.log('refChatArea current...');
+            //console.log('refChatArea current...');
             refChatArea.current.scrollTop = refChatArea.current.scrollHeight;
         }
         // // 첨부파일 스크롤
@@ -67,13 +68,13 @@ const Chat = forwardRef((props, ref) => {
         if (localStorage.hasOwnProperty('authenticated')) {
             authData = JSON.parse(localStorage.getItem('authenticated'));
             let decodePayload = jwt.decode(authData.accessToken);
-            console.log(decodePayload);
+            //console.log(decodePayload);
             let data = {
                 account_id: decodePayload.account_id,
                 site_id: siteId,
                 project_id: projectId
             };
-            console.log(data);
+            //console.log(data);
             chatExistsAndSave(data);
         }
         prevSearchKeyword = '';
@@ -91,7 +92,7 @@ const Chat = forwardRef((props, ref) => {
                     if (resData.data.data.use === true) {
                         if (!rSocket) createClient(projectId);
                     } else {
-                        console.log('chat channer search Error....');
+                        console.log('chat channel search Error....');
                         if (rSocket) connectionClose();
                     }
                 }
@@ -124,10 +125,13 @@ const Chat = forwardRef((props, ref) => {
         }
     }, [resData]);
 
+    // chatStart
     useEffect(() => {
         if (rSocket) {
+            console.log('>> rSocket id is changed.....');
             setMessageList([]);
-            sendJoinChat('join-chat', projectId);
+            //sendJoinChat('join-chat', projectId);
+            sendRequestChannel('channel-chat-message');
         }
     }, [rSocket]);
 
@@ -136,12 +140,26 @@ const Chat = forwardRef((props, ref) => {
             console.log('>> project id is changed.....');
             console.log(projectId);
             setMessageList([]);
-            sendJoinChat('join-chat', projectId);
+            sendRequestChannel('channel-chat-message');
+            //sendJoinChat('join-chat', projectId);
         }
     }, [projectId]);
+
+    useEffect(() => {
+        if (rSocket) {
+            console.log(chatStart);
+            if (chatStart === true) {
+                console.log('>> file id is changed.....');
+                console.log(projectId);
+                //setMessageList([]);
+                sendDataJoinChat('join-chat', projectId);
+            }
+        }
+    }, [fileList, chatStart]);
+
     // response 값 처리
     useEffect(() => {
-        console.log('get response data: ', responseData);
+        console.log('>> get response data: ', responseData);
         if (!responseData) return;
 
         if (responseData) {
@@ -149,14 +167,17 @@ const Chat = forwardRef((props, ref) => {
                 console.log('here');
                 let msg = [];
                 let data = {};
+                console.log(`>> chat list data << `);
                 responseData.map((item, index) => {
+                    if (item.id === null) return;
                     let data = {};
+                    console.log(item);
 
                     if (item.role === 'ADMIN') {
                         data = {
                             id: item.id,
-                            recevier: 'receiveUser',
-                            sender: item.name ? doDecrypt(item.name) : 'Listing Team',
+                            receiver: 'receiveUser',
+                            sender: item.name ? item.name : 'Listing Team',
                             message: item.content,
                             type: item.role,
                             createdDt: getDateFormatSecond(item.create_date),
@@ -168,7 +189,7 @@ const Chat = forwardRef((props, ref) => {
                     } else {
                         data = {
                             id: item.id,
-                            recevier: 'Listing Team',
+                            receiver: 'Listing Team',
                             sender: item.email,
                             message: item.content,
                             type: item.role,
@@ -179,10 +200,11 @@ const Chat = forwardRef((props, ref) => {
                             fileType: ''
                         };
                         sendMailaddress = item.email;
-                        console.log('>> found sendMail address : %s', sendMailaddress);
+                        //console.log('>> found sendMail address : %s', sendMailaddress);
                     }
-                    console.log(data);
-                    if (item.content.indexOf('FILE_MESSAGE::') === 0) {
+
+                    if (item.content.indexOf('FILE_MESSAGE::') !== -1) {
+                        console.log('>> found file data => FILE_MESSAGE');
                         const fileKey = item.content.replace('FILE_MESSAGE::', '');
                         const fileInfo = fileList.find((file) => {
                             return file.id === fileKey;
@@ -195,6 +217,7 @@ const Chat = forwardRef((props, ref) => {
                             data.message = `첨부파일 : ${data.fileName}`;
                         }
                     }
+                    console.log(data);
                     msg.push(data);
                     //setMessageList([...messageList, mDataSend]);
                 });
@@ -206,8 +229,8 @@ const Chat = forwardRef((props, ref) => {
                     if (responseData.role === 'ADMIN') {
                         data = {
                             id: responseData.id,
-                            recevier: 'receiveUser',
-                            sender: responseData.name ? doDecrypt(responseData.name) : 'Listing Team',
+                            receiver: 'receiveUser',
+                            sender: responseData.name ? responseData.name : 'Listing Team',
                             message: responseData.content,
                             type: responseData.role,
                             createdDt: getDateFormatSecond(responseData.create_date),
@@ -219,10 +242,10 @@ const Chat = forwardRef((props, ref) => {
                     } else {
                         data = {
                             id: responseData.id,
-                            recevier: 'Listing Team',
+                            receiver: 'Listing Team',
                             sender: responseData.email,
                             message: responseData.content,
-                            type: item.role,
+                            type: responseData.role,
                             createdDt: getDateFormatSecond(responseData.create_date),
                             fileKey: '',
                             fileName: '',
@@ -232,7 +255,7 @@ const Chat = forwardRef((props, ref) => {
                         sendMailaddress = responseData.email;
                     }
                     let item = responseData.content;
-                    if (item.indexOf('FILE_MESSAGE::') === 0) {
+                    if (item.indexOf('FILE_MESSAGE::') !== -1) {
                         const fileKey = item.replace('FILE_MESSAGE::', '');
                         const fileInfo = fileList.find((file) => {
                             return file.id === fileKey;
@@ -245,8 +268,11 @@ const Chat = forwardRef((props, ref) => {
                             data.message = `첨부파일 : ${data.fileName}`;
                         }
                     }
-                    console.log(data);
+                    //console.log(data);
                     setMessageList([...messageList, data]);
+                    if (item.indexOf('FILE_MESSAGE::') !== -1) {
+                        fileSearch();
+                    }
                 }
             }
         }
@@ -255,6 +281,29 @@ const Chat = forwardRef((props, ref) => {
     // 에러처리
     useEffect(() => {
         console.log(responseError);
+        if (!rSocket) {
+            console.log('>> chat error occured...rSocket closed. timer start => createClient call...');
+            createClient(projectId);
+            // let timer = setTimeout(() => {
+            //     createClient(projectId);
+            // }, 2000);
+
+            // return () => {
+            //     clearTimeout(timer);
+            // };
+        } else {
+            console.log('>> chat error occured...rSocket is connected.... => join-chat call...');
+            setMessageList([]);
+            sendDataJoinChat('join-chat', projectId);
+            // let timer = setTimeout(() => {
+            //     setMessageList([]);
+            //     sendJoinChat('join-chat', projectId);
+            // }, 2000);
+
+            // return () => {
+            //     clearTimeout(timer);
+            // };
+        }
     }, [responseError]);
 
     useEffect(() => {
@@ -263,7 +312,7 @@ const Chat = forwardRef((props, ref) => {
 
     // 메시지 전송 Text 박스
     const sendRequest = (data) => {
-        console.log(data);
+        console.log('>> sendRequest : ', data);
         const route = 'send-chat-message';
         sendRequestResponse(route, projectId, data);
     };
@@ -378,8 +427,8 @@ const Chat = forwardRef((props, ref) => {
                 <button type="button" color="primary" className="list__download" onClick={excelDownload}>
                     <DownloadIcon /> 내역 다운로드
                 </button>
-                <FormControl sx={{ minWidth: 250, boxSizing: 'border-box', marginRight: '0.5rem' }} size="medium">
-                    <TextField id="symbol" name="symbol" inputRef={refKeyword} type="text" />
+                <FormControl sx={{ minWidth: 100, boxSizing: 'border-box', marginRight: '0.5rem' }} size="medium">
+                    <TextField id="symbol" name="symbol" inputRef={refKeyword} type="text" size="small" />
                 </FormControl>
 
                 <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>

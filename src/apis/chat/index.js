@@ -17,12 +17,6 @@ import { useEffect, useRef, useState } from 'react';
 //const WebSocket = require('ws');
 
 const serverURL = process.env.REACT_APP_CHAT_SERVER_URL ? process.env.REACT_APP_CHAT_SERVER_URL : 'ws://localhost:9090';
-let authData = null;
-if (localStorage.hasOwnProperty('authenticated')) {
-    //console.log(localStorage.getItem('authenticated'));
-    authData = JSON.parse(localStorage.getItem('authenticated'));
-    console.log(authData.accessToken);
-}
 
 const useRScoketClient = () => {
     const connection = useRef();
@@ -34,6 +28,13 @@ const useRScoketClient = () => {
     const { siteId, name } = useSelector((state) => state.auth);
 
     const getMetadata = (route) => {
+        let authData = null;
+        if (localStorage.hasOwnProperty('authenticated')) {
+            //console.log(localStorage.getItem('authenticated'));
+            authData = JSON.parse(localStorage.getItem('authenticated'));
+            console.log(authData.accessToken);
+        }
+
         const socketAuthProvider = encodeBearerAuthMetadata(
             authData.accessToken
             //'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiYXVkIjoiaGVsbG8tc2VydmljZSIsImFjY291bnRfaWQiOiJyaWhvbmdvIiwicm9sZSI6IlVTRVIiLCJpc3MiOiJoZWxsby1zZXJ2aWNlLWRlbW8iLCJleHAiOjE2NTY1MDk0NjEsImp0aSI6ImQzMWUwMWEzLWZlMWUtNDU1Yi04ZTUwLWQ0MTkyODhhODY2NiJ9.061X4m386ISFNdnn5XLZSySu_ryc1LYoIqDl8YfL_Yc'
@@ -205,7 +206,50 @@ const useRScoketClient = () => {
         }
     };
 
-    return [clientError, rSocket, createClient, sendJoinChat, connectionClose, sendRequestResponse, responseData, responseError];
+    const sendDataJoinChat = (route, pId) => {
+        if (rSocket) {
+            setProjectId(pId);
+            const message = {
+                chat_room: pId,
+                site_id: siteId
+            };
+            rSocket
+                .requestResponse({
+                    data: Buffer.from(JSON.stringify(message)),
+                    metadata: getMetadata(route)
+                })
+                .subscribe({
+                    onComplete: (response) => {
+                        if (response && response.data) {
+                            const text = response.data.toString();
+                            const data = JSON.parse(text);
+                            setResponseData(data);
+                        }
+                    },
+                    onError: (error) => {
+                        //console.log(`onError: ${error}`);
+                        setResponseError(error);
+                    },
+                    onSubscribe: (cancel) => {
+                        //sendRequestChannel('channel-chat-message');
+                        // console.log('onSubscribe');
+                    }
+                });
+        }
+    };
+
+    return [
+        clientError,
+        rSocket,
+        createClient,
+        sendJoinChat,
+        connectionClose,
+        sendRequestChannel,
+        sendRequestResponse,
+        sendDataJoinChat,
+        responseData,
+        responseError
+    ];
 };
 
 export default useRScoketClient;

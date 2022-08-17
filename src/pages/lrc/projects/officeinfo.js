@@ -66,17 +66,17 @@ const OfficeInfo = (props) => {
     const [marketingList, setMarketingList] = useState([]); // 마켓팅 수량
     const [reviewList, setReviewList] = useState([]); // 검토평가 리스트
     // 서류제출 현황 항목 정의
-    const [file1, setFile1] = useState({}); // 거래지원 신청서
-    const [file2, setFile2] = useState({}); // 개인정보 수집 및 이용동의서
-    const [file3, setFile3] = useState({}); // 프로젝트 백서
-    const [file4, setFile4] = useState({}); // 기술검토보고서
-    const [file5, setFile5] = useState({}); // 토큰세일 및 분배 계획서
-    const [file6, setFile6] = useState({}); // 법률 검토 의견서
-    const [file7, setFile7] = useState({}); // 사업자 등록증
-    const [file8, setFile8] = useState({}); // 윤리서약서
-    const [file9, setFile9] = useState({}); // 규제준수 확약서
-    const [file10, setFile10] = useState({}); // 기타
-    const [file11, setFile11] = useState({}); // 별첨
+    const [file1, setFile1] = useState([]); // 거래지원 신청서
+    const [file2, setFile2] = useState([]); // 개인정보 수집 및 이용동의서
+    const [file3, setFile3] = useState([]); // 프로젝트 백서
+    const [file4, setFile4] = useState([]); // 기술검토보고서
+    const [file5, setFile5] = useState([]); // 토큰세일 및 분배 계획서
+    const [file6, setFile6] = useState([]); // 법률 검토 의견서
+    const [file7, setFile7] = useState([]); // 사업자 등록증
+    const [file8, setFile8] = useState([]); // 윤리서약서
+    const [file9, setFile9] = useState([]); // 규제준수 확약서
+    const [file10, setFile10] = useState([]); // 기타
+    const [file11, setFile11] = useState([]); // 별첨
     // 다운로드 파일명 정의
     const [downloadFileName, setDownloadFileName] = useState('');
     // onload
@@ -209,30 +209,30 @@ const OfficeInfo = (props) => {
                         } else {
                             name = '사용자';
                         }
-                        let data = { item: `문서 추가(${name})`, item1: `${item.create_date}`, d: item.create_date };
+                        let data = { item: `문서 추가`, item1: `${item.create_date}`, d: item.create_date };
                         //console.log(data);
                         if (item.type === 'IPO_APPLICATION') {
-                            if (!file1.item) setFile1(data);
+                            setFile1((prevRows) => [...prevRows, data]);
                         } else if (item.type === 'COLLECT_CONFIRM') {
-                            if (!file2.item) setFile2(data);
+                            setFile2((prevRows) => [...prevRows, data]);
                         } else if (item.type === 'PROJECT_WHITEPAPER') {
-                            if (!file3.item) setFile3(data);
+                            setFile3((prevRows) => [...prevRows, data]);
                         } else if (item.type === 'TECH_REVIEW_REPORT') {
-                            if (!file4.item) setFile4(data);
+                            setFile4((prevRows) => [...prevRows, data]);
                         } else if (item.type === 'TOKEN_DIVISION_PLAN') {
-                            if (!file5.item) setFile5(data);
+                            setFile5((prevRows) => [...prevRows, data]);
                         } else if (item.type === 'LEGAL_REVIEW') {
-                            if (!file6.item) setFile6(data);
+                            setFile6((prevRows) => [...prevRows, data]);
                         } else if (item.type === 'BUSINESS_LICENSE') {
-                            if (!file7.item) setFile7(data);
+                            setFile7((prevRows) => [...prevRows, data]);
                         } else if (item.type === 'ETHICAL_WRITE_AUTH') {
-                            if (!file8.item) setFile8(data);
+                            setFile8((prevRows) => [...prevRows, data]);
                         } else if (item.type === 'REGULATORY_COMPLIANCE') {
-                            if (!file9.item) setFile9(data);
+                            setFile9((prevRows) => [...prevRows, data]);
                         } else if (item.type === 'ETC') {
-                            if (!file10.item) setFile10(data);
+                            setFile10((prevRows) => [...prevRows, data]);
                         } else if (item.type === 'PERSONAL_INFO_REQ') {
-                            if (!file11.item) setFile11(data);
+                            setFile11((prevRows) => [...prevRows, data]);
                         }
                     });
                 }
@@ -248,95 +248,106 @@ const OfficeInfo = (props) => {
                         } else {
                             name = '사용자';
                         }
-                        let data = { item: `URL 추가(${name})`, item1: `${item.create_date}`, d: item.create_date };
+                        let data = { item: `URL 추가`, item1: `${item.create_date}`, d: item.create_date };
                         if (item.type === 'IPO_APPLICATION') {
-                            if (!file1.item) setFile1(data);
-                            else {
-                                // 날짜 비교
-                                if (moment(item.create_date).isAfter(file1.d)) {
-                                    setFile1(data);
-                                }
-                            }
+                            setFile1((prevRows) => [...prevRows, data]);
+                            // if (!file1.item) setFile1(data);
+                            // else {
+                            //     // 날짜 비교
+                            //     if (moment(item.create_date).isAfter(file1.d)) {
+                            //         setFile1(data);
+                            //     }
+                            // }
                         } else if (item.type === 'COLLECT_CONFIRM') {
-                            if (!file2.item) setFile2(data);
-                            else {
-                                // 날짜 비교
-                                if (moment(item.create_date).isAfter(file2.d)) {
-                                    setFile2(data);
-                                }
-                            }
+                            setFile2((prevRows) => [...prevRows, data]);
+                            // if (!file2.item) setFile2(data);
+                            // else {
+                            //     // 날짜 비교
+                            //     if (moment(item.create_date).isAfter(file2.d)) {
+                            //         setFile2(data);
+                            //     }
+                            // }
                         } else if (item.type === 'PROJECT_WHITEPAPER') {
-                            if (!file3.item) setFile3(data);
-                            else {
-                                // 날짜 비교
-                                if (moment(item.create_date).isAfter(file3.d)) {
-                                    setFile3(data);
-                                }
-                            }
+                            setFile3((prevRows) => [...prevRows, data]);
+                            // if (!file3.item) setFile3(data);
+                            // else {
+                            //     // 날짜 비교
+                            //     if (moment(item.create_date).isAfter(file3.d)) {
+                            //         setFile3(data);
+                            //     }
+                            // }
                         } else if (item.type === 'TECH_REVIEW_REPORT') {
-                            if (!file4.item) setFile4(data);
-                            else {
-                                // 날짜 비교
-                                if (moment(item.create_date).isAfter(file4.d)) {
-                                    setFile4(data);
-                                }
-                            }
+                            setFile4((prevRows) => [...prevRows, data]);
+                            // if (!file4.item) setFile4(data);
+                            // else {
+                            //     // 날짜 비교
+                            //     if (moment(item.create_date).isAfter(file4.d)) {
+                            //         setFile4(data);
+                            //     }
+                            // }
                         } else if (item.type === 'TOKEN_DIVISION_PLAN') {
-                            if (!file5.item) setFile5(data);
-                            else {
-                                // 날짜 비교
-                                if (moment(item.create_date).isAfter(file5.d)) {
-                                    setFile5(data);
-                                }
-                            }
+                            setFile5((prevRows) => [...prevRows, data]);
+                            // if (!file5.item) setFile5(data);
+                            // else {
+                            //     // 날짜 비교
+                            //     if (moment(item.create_date).isAfter(file5.d)) {
+                            //         setFile5(data);
+                            //     }
+                            // }
                         } else if (item.type === 'LEGAL_REVIEW') {
-                            if (!file6.item) setFile6(data);
-                            else {
-                                // 날짜 비교
-                                if (moment(item.create_date).isAfter(file6.d)) {
-                                    setFile6(data);
-                                }
-                            }
+                            setFile6((prevRows) => [...prevRows, data]);
+                            // if (!file6.item) setFile6(data);
+                            // else {
+                            //     // 날짜 비교
+                            //     if (moment(item.create_date).isAfter(file6.d)) {
+                            //         setFile6(data);
+                            //     }
+                            // }
                         } else if (item.type === 'BUSINESS_LICENSE') {
-                            if (!file7.item) setFile7(data);
-                            else {
-                                // 날짜 비교
-                                if (moment(item.create_date).isAfter(file7.d)) {
-                                    setFile7(data);
-                                }
-                            }
+                            setFile7((prevRows) => [...prevRows, data]);
+                            // if (!file7.item) setFile7(data);
+                            // else {
+                            //     // 날짜 비교
+                            //     if (moment(item.create_date).isAfter(file7.d)) {
+                            //         setFile7(data);
+                            //     }
+                            // }
                         } else if (item.type === 'ETHICAL_WRITE_AUTH') {
-                            if (!file8.item) setFile8(data);
-                            else {
-                                // 날짜 비교
-                                if (moment(item.create_date).isAfter(file8.d)) {
-                                    setFile8(data);
-                                }
-                            }
+                            setFile8((prevRows) => [...prevRows, data]);
+                            // if (!file8.item) setFile8(data);
+                            // else {
+                            //     // 날짜 비교
+                            //     if (moment(item.create_date).isAfter(file8.d)) {
+                            //         setFile8(data);
+                            //     }
+                            // }
                         } else if (item.type === 'REGULATORY_COMPLIANCE') {
-                            if (!file9.item) setFile9(data);
-                            else {
-                                // 날짜 비교
-                                if (moment(item.create_date).isAfter(file9.d)) {
-                                    setFile9(data);
-                                }
-                            }
+                            setFile9((prevRows) => [...prevRows, data]);
+                            // if (!file9.item) setFile9(data);
+                            // else {
+                            //     // 날짜 비교
+                            //     if (moment(item.create_date).isAfter(file9.d)) {
+                            //         setFile9(data);
+                            //     }
+                            // }
                         } else if (item.type === 'ETC') {
-                            if (!file10.item) setFile10(data);
-                            else {
-                                // 날짜 비교
-                                if (moment(item.create_date).isAfter(file10.d)) {
-                                    setFile10(data);
-                                }
-                            }
+                            setFile10((prevRows) => [...prevRows, data]);
+                            // if (!file10.item) setFile10(data);
+                            // else {
+                            //     // 날짜 비교
+                            //     if (moment(item.create_date).isAfter(file10.d)) {
+                            //         setFile10(data);
+                            //     }
+                            // }
                         } else if (item.type === 'PERSONAL_INFO_REQ') {
-                            if (!file11.item) setFile11(data);
-                            else {
-                                // 날짜 비교
-                                if (moment(item.create_date).isAfter(file11.d)) {
-                                    setFile11(data);
-                                }
-                            }
+                            setFile11((prevRows) => [...prevRows, data]);
+                            // if (!file11.item) setFile11(data);
+                            // else {
+                            //     // 날짜 비교
+                            //     if (moment(item.create_date).isAfter(file11.d)) {
+                            //         setFile11(data);
+                            //     }
+                            // }
                         }
                     });
                 }
@@ -459,7 +470,7 @@ const OfficeInfo = (props) => {
                                     네트워크 계열
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center">
-                                    백서 링크
+                                    Jira 번호
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center">
                                     최초 발행일
@@ -475,7 +486,7 @@ const OfficeInfo = (props) => {
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
                                     {projecInfo.network_name}
                                 </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                <TableCell style={{ width: '25%', lineBreak: 'anywhere' }} align="center" component="th" scope="row">
                                     {projecInfo.whitepaper_link}
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
@@ -543,42 +554,6 @@ const OfficeInfo = (props) => {
                     </Table>
                 </ContentLine>
             </Grid>
-
-            <Grid container className="officeinfo__content--box">
-                <Grid container spacing={0} sx={{ mt: 1 }}>
-                    <Typography variant="h4">상장 정보</Typography>
-                </Grid>
-                <ContentLine className="officeinfo__table__width">
-                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center">마켓 정보</TableCell>
-                                <TableCell align="center">상장일</TableCell>
-                                <TableCell align="center">상장가 (원)</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        {icoList.map((item, index) => (
-                            <TableRow key={index}>
-                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    {item.market_info}
-                                </TableCell>
-                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    {item.ico_date}
-                                </TableCell>
-                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    <NumberFormat
-                                        value={item.price.toFixed(4)}
-                                        allowNegative={true}
-                                        displayType={'text'}
-                                        thousandSeparator={true}
-                                        prefix={''}
-                                    />
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </Table>
-                </ContentLine>
-            </Grid>
             <Grid container className="officeinfo__content--box">
                 <Grid container spacing={0} sx={{ mt: 1 }}>
                     <Typography variant="h4">마케팅 수량</Typography>
@@ -589,8 +564,8 @@ const OfficeInfo = (props) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">심볼</TableCell>
-                                <TableCell align="center">최소 지원 수량</TableCell>
-                                <TableCell align="center">실제 상장 지원 수량</TableCell>
+                                <TableCell align="center">제안받은 수량</TableCell>
+                                <TableCell align="center">입금 완료된 수량</TableCell>
                             </TableRow>
                         </TableHead>
                         {marketingList.map((item, index) => (
@@ -600,7 +575,7 @@ const OfficeInfo = (props) => {
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
                                     <NumberFormat
-                                        value={item.minimum_quantity.toFixed(4)}
+                                        value={item.minimum_quantity}
                                         allowNegative={true}
                                         displayType={'text'}
                                         thousandSeparator={true}
@@ -609,7 +584,7 @@ const OfficeInfo = (props) => {
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
                                     <NumberFormat
-                                        value={item.actual_quantity.toFixed(4)}
+                                        value={item.actual_quantity}
                                         allowNegative={true}
                                         displayType={'text'}
                                         thousandSeparator={true}
@@ -674,24 +649,44 @@ const OfficeInfo = (props) => {
                         </TableHead>
                         <TableRow>
                             <TableCell component="th" scope="row" align="center">
-                                {file1.item}
-                                <br />
-                                {file1.item1}
+                                {file1
+                                    .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                    .filter((doc, idx) => idx < 2)
+                                    .map((doc, index) => (
+                                        <p>
+                                            {doc.item} {doc.item1}
+                                        </p>
+                                    ))}
                             </TableCell>
                             <TableCell component="th" scope="row" align="center">
-                                {file11.item}
-                                <br />
-                                {file11.item1}
+                                {file11
+                                    .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                    .filter((doc, idx) => idx < 2)
+                                    .map((doc, index) => (
+                                        <p>
+                                            {doc.item} {doc.item1}
+                                        </p>
+                                    ))}
                             </TableCell>
                             <TableCell component="th" scope="row" align="center">
-                                {file2.item}
-                                <br />
-                                {file2.item1}
+                                {file2
+                                    .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                    .filter((doc, idx) => idx < 2)
+                                    .map((doc, index) => (
+                                        <p>
+                                            {doc.item} {doc.item1}
+                                        </p>
+                                    ))}
                             </TableCell>
                             <TableCell component="th" scope="row" align="center">
-                                {file3.item}
-                                <br />
-                                {file3.item1}
+                                {file3
+                                    .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                    .filter((doc, idx) => idx < 2)
+                                    .map((doc, index) => (
+                                        <p>
+                                            {doc.item} {doc.item1}
+                                        </p>
+                                    ))}
                             </TableCell>
                         </TableRow>
                         <TableHead>
@@ -704,24 +699,44 @@ const OfficeInfo = (props) => {
                         </TableHead>
                         <TableRow>
                             <TableCell component="th" scope="row" align="center">
-                                {file4.item}
-                                <br />
-                                {file4.item1}
+                                {file4
+                                    .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                    .filter((doc, idx) => idx < 2)
+                                    .map((doc, index) => (
+                                        <p>
+                                            {doc.item} {doc.item1}
+                                        </p>
+                                    ))}
                             </TableCell>
                             <TableCell component="th" scope="row" align="center">
-                                {file5.item}
-                                <br />
-                                {file5.item1}
+                                {file5
+                                    .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                    .filter((doc, idx) => idx < 2)
+                                    .map((doc, index) => (
+                                        <p>
+                                            {doc.item} {doc.item1}
+                                        </p>
+                                    ))}
                             </TableCell>
                             <TableCell component="th" scope="row" align="center">
-                                {file6.item}
-                                <br />
-                                {file6.item1}
+                                {file6
+                                    .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                    .filter((doc, idx) => idx < 2)
+                                    .map((doc, index) => (
+                                        <p>
+                                            {doc.item} {doc.item1}
+                                        </p>
+                                    ))}
                             </TableCell>
                             <TableCell component="th" scope="row" align="center">
-                                {file7.item}
-                                <br />
-                                {file7.item1}
+                                {file7
+                                    .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                    .filter((doc, idx) => idx < 2)
+                                    .map((doc, index) => (
+                                        <p>
+                                            {doc.item} {doc.item1}
+                                        </p>
+                                    ))}
                             </TableCell>
                         </TableRow>
                         <TableHead>
@@ -734,23 +749,74 @@ const OfficeInfo = (props) => {
                         </TableHead>
                         <TableRow>
                             <TableCell component="th" scope="row" align="center">
-                                {file9.item}
-                                <br />
-                                {file9.item1}
+                                {file9
+                                    .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                    .filter((doc, idx) => idx < 2)
+                                    .map((doc, index) => (
+                                        <p>
+                                            {doc.item} {doc.item1}
+                                        </p>
+                                    ))}
                             </TableCell>
                             <TableCell component="th" scope="row" align="center">
-                                {file8.item}
-                                <br />
-                                {file8.item1}
+                                {file8
+                                    .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                    .filter((doc, idx) => idx < 2)
+                                    .map((doc, index) => (
+                                        <p>
+                                            {doc.item} {doc.item1}
+                                        </p>
+                                    ))}
                             </TableCell>
 
                             <TableCell component="th" scope="row" align="center">
-                                {file10.item}
-                                <br />
-                                {file10.item1}
+                                {file10
+                                    .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                    .filter((doc, idx) => idx < 2)
+                                    .map((doc, index) => (
+                                        <p>
+                                            {doc.item} {doc.item1}
+                                        </p>
+                                    ))}
                             </TableCell>
                             <TableCell component="th" scope="row"></TableCell>
                         </TableRow>
+                    </Table>
+                </ContentLine>
+            </Grid>
+
+            <Grid container className="officeinfo__content--box">
+                <Grid container spacing={0} sx={{ mt: 1 }}>
+                    <Typography variant="h4">상장 정보</Typography>
+                </Grid>
+                <ContentLine className="officeinfo__table__width">
+                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="center">마켓 정보</TableCell>
+                                <TableCell align="center">상장일</TableCell>
+                                <TableCell align="center">상장가</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        {icoList.map((item, index) => (
+                            <TableRow key={index}>
+                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                    {item.market_info}
+                                </TableCell>
+                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                    {item.ico_date}
+                                </TableCell>
+                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                    <NumberFormat
+                                        value={item.price}
+                                        allowNegative={true}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        prefix={''}
+                                    />
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </Table>
                 </ContentLine>
             </Grid>
