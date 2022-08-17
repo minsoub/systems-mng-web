@@ -112,7 +112,7 @@ const ProjectsDetailPage = () => {
     const navigate = useNavigate();
     const { paramId } = useParams();
 
-    const [resData, reqError, loading, { insertChatFile, getChatFile, getChatFileList }] = ChatApi();
+    const [resData, reqError, loading, { insertChatFile, getChatFile, getChatFileList, fileDetailSearch }] = ChatApi();
 
     const [responseData, requestError, loadingData, { sendEmail }] = FoundationApi();
 
@@ -201,6 +201,11 @@ const ProjectsDetailPage = () => {
                 }
                 setChatStart(true);
                 break;
+            case 'getFileData':
+                if (resData.data.data) {
+                    console.log(resData);
+                    setFileList([...fileList, resData.data.data]);
+                }
             case 'insertData':
                 if (resData.data.data) {
                     console.log(resData);
@@ -366,8 +371,8 @@ const ProjectsDetailPage = () => {
         setPage(0);
     };
 
-    const fileSearch = () => {
-        getChatFileList(paramId);
+    const fileSearch = (projectId, fileKey) => {
+        fileDetailSearch(projectId, fileKey);
     };
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>

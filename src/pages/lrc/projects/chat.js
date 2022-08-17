@@ -39,6 +39,7 @@ const Chat = forwardRef((props, ref) => {
 
     const domMessage = useRef();
     const [message, setMessage] = useState('');
+    const [fileItem, setFileItem] = useState('');
 
     const refKeyword = useRef(); // < HTMLInputElement > null;
 
@@ -152,7 +153,25 @@ const Chat = forwardRef((props, ref) => {
                 console.log('>> file id is changed.....');
                 console.log(projectId);
                 //setMessageList([]);
-                sendDataJoinChat('join-chat', projectId);
+                if (fileItem) {
+                    let data = fileItem;
+                    const fileKey = data.message.replace('FILE_MESSAGE::', '');
+                    const fileInfo = fileList.find((file) => {
+                        return file.id === fileKey;
+                    });
+                    if (fileInfo) {
+                        data.fileKey = fileInfo.id;
+                        data.fileName = fileInfo.file_name;
+                        data.fileSize = fileInfo.file_size;
+                        data.fileType = fileInfo.file_type;
+                        data.message = `첨부파일 : ${data.fileName}`;
+
+                        setMessageList([...messageList, data]);
+                    }
+                    setFileItem('');
+                } else {
+                    sendDataJoinChat('join-chat', projectId);
+                }
             }
         }
     }, [fileList, chatStart]);
@@ -266,12 +285,16 @@ const Chat = forwardRef((props, ref) => {
                             data.fileSize = fileInfo.file_size;
                             data.fileType = fileInfo.file_type;
                             data.message = `첨부파일 : ${data.fileName}`;
+
+                            setMessageList([...messageList, data]);
+                        } else {
+                            if (item.indexOf('FILE_MESSAGE::') !== -1) {
+                                setFileItem(data);
+                                fileSearch(projectId, fileKey);
+                            }
                         }
-                    }
-                    //console.log(data);
-                    setMessageList([...messageList, data]);
-                    if (item.indexOf('FILE_MESSAGE::') !== -1) {
-                        fileSearch();
+                    } else {
+                        setMessageList([...messageList, data]);
                     }
                 }
             }

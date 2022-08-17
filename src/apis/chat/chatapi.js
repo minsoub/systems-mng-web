@@ -63,6 +63,16 @@ const ChatApi = () => {
         });
     };
 
+    // 파일 세부 조회
+    const getFileDetailData = (project_id, fileKey) => {
+        callApi('getFileData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/service/chat/files/${project_id}/${fileKey}`,
+            requestConfig: {}
+        });
+    };
+
     return [
         resData,
         reqError,
@@ -73,7 +83,8 @@ const ChatApi = () => {
             getChatFile: getFile,
             getChatFileList: getFileListData,
             deleteChat: deleteChatMessage,
-            chatExcelDownload: chatExcelDownload
+            chatExcelDownload: chatExcelDownload,
+            fileDetailSearch: getFileDetailData
         }
     ];
 };
