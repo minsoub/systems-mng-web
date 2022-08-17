@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { Button, FormControl, Grid, MenuItem, OutlinedInput, Select } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
@@ -216,7 +215,7 @@ const AccountManagementPage = () => {
             // 선택한 계정에 대해서 삭제를 수행한다.
             let deleteIds = '';
             let idx = 0;
-            selectedRows.map((data, Index) => {
+            selectedRows.map((data, index) => {
                 if (idx > 0) deleteIds = deleteIds + '::';
                 deleteIds = deleteIds + data;
                 idx++;
@@ -262,7 +261,7 @@ const AccountManagementPage = () => {
                                 size="medium"
                                 type="submit"
                                 variant="contained"
-                                color="secondary"
+                                color="primary"
                                 onClick={searchClick}
                             >
                                 검색

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import {
     Alert,
     AlertTitle,
@@ -14,7 +13,6 @@ import {
     Stack,
     TextField
 } from '@mui/material';
-// third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import MainCard from 'components/Common/MainCard';
@@ -22,17 +20,16 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import SiteApi from 'apis/site/siteapi';
 import UserSearchDialog from 'pages/popup/UserSearchPopup';
-import HeaderTitle from '../../../components/HeaderTitle';
-import DropInput from '../../../components/Common/DropInput';
-import ButtonLayout from '../../../components/Common/ButtonLayout';
-import SearchDate from '../../../components/ContentManage/SearchDate';
+import HeaderTitle from 'components/HeaderTitle';
+import DropInput from 'components/Common/DropInput';
+import ButtonLayout from 'components/Common/ButtonLayout';
+import SearchDate from 'components/ContentManage/SearchDate';
+import FlexBox from 'components/Common/FlexBox';
 import './styles.module.scss';
 import './styles.scss';
-import FlexBox from '../../../components/Common/FlexBox';
 
 const SiteRegForm = () => {
     let isSubmitting = false;
-
     const navigate = useNavigate();
     const { paramId } = useParams();
     const [responseData, requestError, loading, { siteInsert, siteDetail, siteDelete, siteUpdate }] = SiteApi();
@@ -57,7 +54,6 @@ const SiteRegForm = () => {
     const [valid_end_date, setValidEndDate] = useState('');
     const [adminPhone, setAdminPhone] = useState('');
     const [description, setDescritpion] = useState('');
-
     const [readOnlyId, setReadonlyId] = useState(false);
     const [isDeleted, setDisabledButton] = useState(true);
 
