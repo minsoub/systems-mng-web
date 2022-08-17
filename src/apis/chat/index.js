@@ -32,7 +32,7 @@ const useRScoketClient = () => {
         if (localStorage.hasOwnProperty('authenticated')) {
             //console.log(localStorage.getItem('authenticated'));
             authData = JSON.parse(localStorage.getItem('authenticated'));
-            console.log(authData.accessToken);
+            //console.log(authData.accessToken);
         }
 
         const socketAuthProvider = encodeBearerAuthMetadata(
@@ -108,6 +108,8 @@ const useRScoketClient = () => {
 
         if (rSocket && rSocket) {
             console.log(rSocket);
+            console.log(rSocket.connectionSttus);
+            console.log(rSocket.availability);
             rSocket
                 .requestResponse({
                     data: Buffer.from(JSON.stringify(messageRequest)),
@@ -120,6 +122,7 @@ const useRScoketClient = () => {
                             const data = JSON.parse(text);
                             console.log(text);
                             console.log(data);
+                            //setResponseData(data);
                         }
                     },
                     onError: (error) => {

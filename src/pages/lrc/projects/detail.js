@@ -155,7 +155,7 @@ const ProjectsDetailPage = () => {
         // 탭 파일 변경.
         if (localStorage.getItem('projectTabIndex')) {
             let data = localStorage.getItem('projectTabIndex');
-            console.log(`tab value => ${data}`);
+            //console.log(`tab value => ${data}`);
             setValue(parseInt(data, 10));
         }
     }, [paramId]);
@@ -164,8 +164,8 @@ const ProjectsDetailPage = () => {
     useEffect(() => {
         if (reqError) {
             if (reqError.result === 'FAIL') {
-                console.log('error requestError');
-                console.log(reqError);
+                //console.log('error requestError');
+                //console.log(reqError);
                 setErrorTitle('Error Message');
                 setErrorMessage('[' + reqError.error.code + '] ' + reqError.error.message);
                 setOpen(true);
@@ -217,9 +217,9 @@ const ProjectsDetailPage = () => {
             case 'getFile':
                 if (resData.data) {
                     let res = resData;
-                    console.log('res data....');
-                    console.log(res);
-                    console.log(res.fileName);
+                    //console.log('res data....');
+                    //console.log(res);
+                    //console.log(res.fileName);
                     const url = window.URL.createObjectURL(new Blob([res.data]));
                     const link = document.createElement('a');
                     link.href = url;
@@ -283,7 +283,7 @@ const ProjectsDetailPage = () => {
         // 3.2MB로 계산하기
         formData.append('fileSize', humanFileSize(file_part.size, true, 2));
 
-        console.log(formData);
+        //console.log(formData);
         insertChatFile(formData);
     };
 
@@ -374,6 +374,10 @@ const ProjectsDetailPage = () => {
     const fileSearch = (projectId, fileKey) => {
         fileDetailSearch(projectId, fileKey);
     };
+
+    const chatClose = () => {
+        chatRef.current.chatClose();
+    };
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
@@ -401,7 +405,7 @@ const ProjectsDetailPage = () => {
                                 <Grid item xs={8} sm={8}>
                                     {/* 재단 정보 */}
                                     <TabPanel value={value} index={0}>
-                                        <OfficeInfo value={value} projectId={paramId} index={0} />
+                                        <OfficeInfo value={value} projectId={paramId} index={0} chatClose={chatClose} />
                                     </TabPanel>
                                     {/* 프로젝트 관리 */}
                                     <TabPanel value={value} index={1}>

@@ -81,7 +81,7 @@ const Header = ({ open, handleDrawerToggle }) => {
             if (!mySiteId) setMySiteId(site_id);
             // 나의 Role에 관련된 사이트 아이디 조회
             let tokenData = jwt.decode(authData.accessToken);
-            console.log(tokenData);
+            //console.log(tokenData);
             let ROLE = tokenData.ROLE;
             setSiteList([]);
             ROLE.map((item, index) => {
@@ -91,16 +91,16 @@ const Header = ({ open, handleDrawerToggle }) => {
     }, []);
     useEffect(() => {
         if (!responseData) return;
-        console.log(responseData);
-        console.log(responseData.data);
-        console.log(responseData.data.data.site_id);
-        console.log(responseData.data.data.name);
+        // console.log(responseData);
+        // console.log(responseData.data);
+        // console.log(responseData.data.data.site_id);
+        // console.log(responseData.data.data.name);
         if (responseData.data.data) {
             setSiteList((arr) => [
                 ...arr,
                 { id: responseData.data.data.id, site_id: responseData.data.data.site_id, name: responseData.data.data.name }
             ]);
-            console.log(mySiteList);
+            //console.log(mySiteList);
 
             if (responseData.data.data.site_id === mySiteId) {
                 // role과 site_id로 메뉴 조회
@@ -125,7 +125,7 @@ const Header = ({ open, handleDrawerToggle }) => {
             }
         });
         localStorage.setItem('authenticated', JSON.stringify(authData)); // 토큰 재저장
-        console.log(authData);
+        //console.log(authData);
         // menu reload
         dispatch(activeSite({ siteId: e.target.value }));
         if (authData.siteId === '62a15f4ae4129b518b133128') {

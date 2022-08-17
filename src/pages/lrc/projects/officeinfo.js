@@ -48,7 +48,7 @@ const OfficeInfo = (props) => {
         }
     ] = FoundationApi();
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
-    const { projectId, children, tabindex, index, ...other } = props;
+    const { projectId, chatClose, children, tabindex, index, ...other } = props;
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -368,6 +368,7 @@ const OfficeInfo = (props) => {
             case 'project_link':
                 if (e.target.value === '') return;
                 console.log(e.target.value);
+                chatClose();
                 navigate('/projects/detail/' + e.target.value);
                 break;
             case 'start_date':

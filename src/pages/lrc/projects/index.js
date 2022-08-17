@@ -259,7 +259,7 @@ const ProjectsPage = () => {
                     itemData.map((item, index) => {
                         if (item.parent_code === '') {
                             const s = { id: item.id, name: item.name };
-                            console.log(s);
+                            //console.log(s);
                             list.push(s);
 
                             const s1 = { id: item.id, name: item.name, count: 0 };
@@ -340,9 +340,9 @@ const ProjectsPage = () => {
         console.log(e);
     };
     const handleChange = (e) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
-        console.log(moment(e.target.value).format('YYYY.MM.DD'));
+        //console.log(e.target.name);
+        //console.log(e.target.value);
+        //console.log(moment(e.target.value).format('YYYY.MM.DD'));
         switch (e.target.name) {
             case 'keyword':
                 setKeyword(e.target.value);
