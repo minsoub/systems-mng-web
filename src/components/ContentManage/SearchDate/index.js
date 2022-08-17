@@ -2,7 +2,18 @@ import { FormControl, FormControlLabel, RadioGroup, Radio, Stack, TextField } fr
 import cx from 'classnames';
 import './styles.scss';
 
-const SearchDate = ({ start_date, handleBlur, handleChange, end_date, noneChecked, period, startName, endName, title = '기간 검색' }) => {
+const SearchDate = ({
+    start_date,
+    handleBlur,
+    handleChange,
+    end_date,
+    noneChecked,
+    period,
+    startName,
+    endName,
+    title = '기간 검색',
+    addAll
+}) => {
     SearchDate.defaultProps = {
         noneChecked: null,
         period: null
@@ -35,7 +46,7 @@ const SearchDate = ({ start_date, handleBlur, handleChange, end_date, noneChecke
                 <FormControlLabel value="2" control={<Radio />} label="어제" />
                 <FormControlLabel value="3" control={<Radio />} label="1개월" />
                 <FormControlLabel value="4" control={<Radio />} label="3개월" />
-                <FormControlLabel value="5" control={<Radio />} label="전체" />
+                {addAll && <FormControlLabel value="5" control={<Radio />} label="전체" />}
             </RadioGroup>
         </div>
     );
