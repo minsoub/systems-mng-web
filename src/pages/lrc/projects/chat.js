@@ -31,7 +31,8 @@ const Chat = forwardRef((props, ref) => {
 
     useImperativeHandle(ref, () => ({
         sendRequest,
-        getMailSendAddress
+        getMailSendAddress,
+        chatClose
     }));
     // 가짜 데이터
     const [messageList, setMessageList] = useState([]);
@@ -64,7 +65,29 @@ const Chat = forwardRef((props, ref) => {
         // }
     };
 
+    const chatClose = () => {
+        setMessageList([]);
+        try {
+            connectionClose();
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     useEffect(() => {
+        chatExistCheckSend();
+        prevSearchKeyword = '';
+
+        return () => {
+            // hit endpoint to end show
+            if (rSocket) {
+                console.log('rSocket disconnect call');
+                connectionClose();
+            }
+        };
+    }, []);
+
+    const chatExistCheckSend = () => {
         let authData = null;
         if (localStorage.hasOwnProperty('authenticated')) {
             authData = JSON.parse(localStorage.getItem('authenticated'));
@@ -78,8 +101,7 @@ const Chat = forwardRef((props, ref) => {
             //console.log(data);
             chatExistsAndSave(data);
         }
-        prevSearchKeyword = '';
-    }, []);
+    };
 
     useEffect(() => {
         if (!resData) {
@@ -91,6 +113,7 @@ const Chat = forwardRef((props, ref) => {
                     console.log(resData.data.data);
                     // ok
                     if (resData.data.data.use === true) {
+                        console.log(rSocket);
                         if (!rSocket) createClient(projectId);
                     } else {
                         console.log('chat channel search Error....');
@@ -137,13 +160,16 @@ const Chat = forwardRef((props, ref) => {
     }, [rSocket]);
 
     useEffect(() => {
-        if (rSocket) {
-            console.log('>> project id is changed.....');
-            console.log(projectId);
-            setMessageList([]);
-            sendRequestChannel('channel-chat-message');
-            //sendJoinChat('join-chat', projectId);
-        }
+        console.log('>> project id restart called....');
+        // if (rSocket) {
+        //     console.log('>> project id is changed.....');
+        //     console.log(projectId);
+        //     setMessageList([]);
+        //     //sendRequestChannel('channel-chat-message');
+        //     sendJoinChat('join-chat', projectId);
+        // }
+        console.log(rSocket);
+        createClient(projectId);
     }, [projectId]);
 
     useEffect(() => {
@@ -178,9 +204,8 @@ const Chat = forwardRef((props, ref) => {
 
     // response 값 처리
     useEffect(() => {
-        console.log('>> get response data: ', responseData);
         if (!responseData) return;
-
+        console.log('>> get response data: ', responseData);
         if (responseData) {
             if (responseData.length > 0) {
                 console.log('here');
@@ -190,7 +215,7 @@ const Chat = forwardRef((props, ref) => {
                 responseData.map((item, index) => {
                     if (item.id === null) return;
                     let data = {};
-                    console.log(item);
+                    //console.log(item);
 
                     if (item.role === 'ADMIN') {
                         data = {
@@ -236,7 +261,7 @@ const Chat = forwardRef((props, ref) => {
                             data.message = `첨부파일 : ${data.fileName}`;
                         }
                     }
-                    console.log(data);
+                    //console.log(data);
                     msg.push(data);
                     //setMessageList([...messageList, mDataSend]);
                 });
@@ -304,7 +329,10 @@ const Chat = forwardRef((props, ref) => {
     // 에러처리
     useEffect(() => {
         console.log(responseError);
-        if (!rSocket) {
+        if (!responseError) return;
+
+        if (responseError.toString().indexOf('Socket close') !== -1) {
+            //if (!rSocket) {
             console.log('>> chat error occured...rSocket closed. timer start => createClient call...');
             createClient(projectId);
             // let timer = setTimeout(() => {

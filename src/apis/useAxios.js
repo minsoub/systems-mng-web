@@ -112,7 +112,7 @@ const useAxios = () => {
         //Refresh token 갱신 후처리를 위한 파라메터 백업
         refRequestInfo.current.push({ tid, configObj });
 
-        console.log('>> axiosFetch called......');
+        //console.log('>> axiosFetch called......');
         setLoading(true);
 
         // register a synchronous request interceptor
@@ -197,7 +197,7 @@ const useAxios = () => {
 
     //Refresh Token조회 후 다시 트랜잭션 재호출
     useEffect(() => {
-        console.log('re accessToken:', refRequestInfo.current);
+        //console.log('re accessToken:', refRequestInfo.current);
         // 상태관리가 완전히 클리어된 후 로그인 페이지로 이동.
         if (accessToken && refFailCount.current > 0) {
             // 실패 횟수 초기화
