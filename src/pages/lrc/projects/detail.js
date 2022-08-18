@@ -435,7 +435,7 @@ const ProjectsDetailPage = () => {
                                         <Button
                                             disableElevation
                                             size="medium"
-                                            type="submit"
+                                            type="button"
                                             variant="contained"
                                             color="primary"
                                             onClick={mailSendKor}
@@ -446,7 +446,7 @@ const ProjectsDetailPage = () => {
                                         <Button
                                             disableElevation
                                             size="medium"
-                                            type="submit"
+                                            type="button"
                                             variant="contained"
                                             color="primary"
                                             onClick={mailSendEn}
