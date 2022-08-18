@@ -46,10 +46,10 @@ const Chat = forwardRef((props, ref) => {
 
     let searchPosNow = 0;
     let prevSearchKeyword = '';
-    let sendMailaddress = '';
+    const sendMailaddress = useRef('');
 
     const getMailSendAddress = () => {
-        return sendMailaddress;
+        return sendMailaddress.current;
     };
 
     const initChatScroll = () => {
@@ -243,8 +243,8 @@ const Chat = forwardRef((props, ref) => {
                             fileSize: '',
                             fileType: ''
                         };
-                        sendMailaddress = item.email;
-                        //console.log('>> found sendMail address : %s', sendMailaddress);
+                        sendMailaddress.current = item.email;
+                        //console.log('>> found sendMail address : %s', sendMailaddress.current);
                     }
 
                     if (item.content.indexOf('FILE_MESSAGE::') !== -1) {
@@ -296,7 +296,7 @@ const Chat = forwardRef((props, ref) => {
                             fileSize: '',
                             fileType: ''
                         };
-                        sendMailaddress = responseData.email;
+                        sendMailaddress.current = responseData.email;
                     }
                     let item = responseData.content;
                     if (item.indexOf('FILE_MESSAGE::') !== -1) {
