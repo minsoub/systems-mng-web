@@ -615,6 +615,7 @@ const ProjectsPage = () => {
                             handleChange={handleChange}
                             startName="from_date"
                             endName="to_date"
+                            addAll={true}
                         />
 
                         <InputLayout>

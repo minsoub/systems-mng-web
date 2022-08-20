@@ -298,7 +298,7 @@ const ProjectsDetailPage = () => {
     };
 
     function byteString(index) {
-        const units = ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; //  : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+        const units = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; //  : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 
         // eslint-disable-next-line security/detect-object-injection
         return units[index];
