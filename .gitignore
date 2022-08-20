@@ -111,5 +111,10 @@ build
 
 #Mac finder file
 .DS_Store
-yarn.lock
 package-lock.json
+
+# IntelliJ file
+.idea/
+
+# VS Code file
+.vscode/

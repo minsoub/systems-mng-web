@@ -2,7 +2,7 @@
 
 ## Version information
 - node : v16.15.0
-- yarn : v1.22.18
+- yarn : v3.2.2
 
 ## Install IDE
 - Visual Studio Code

@@ -5,10 +5,8 @@ import AuthWrapper from '../../../components/AuthLogin/AuthWrapper';
 
 // 임시 패스워드 변경 페이지
 const TmpPasswordForm = () => {
-    // const { state } = useLocation();
-    const state = {
-        status: 'CHANGE_PASSWORD'
-    };
+    const { state } = useLocation();
+
     return (
         <AuthWrapper>
             <Grid container spacing={3}>

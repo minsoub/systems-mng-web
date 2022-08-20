@@ -13,7 +13,6 @@ import {
     LoadingOutlined
 } from '@ant-design/icons';
 import Apis from 'apis/Apis';
-import icon from '../../../node_modules/refractor/lang/icon';
 
 // icons
 const icons = {
