@@ -114,7 +114,7 @@ const ProjectsDetailPage = () => {
 
     const [resData, reqError, loading, { insertChatFile, getChatFile, getChatFileList, fileDetailSearch }] = ChatApi();
 
-    const [responseData, requestError, loadingData, { sendEmail }] = FoundationApi();
+    const [responseData, requestError, loadingData, { sendEmailToProjectUser }] = FoundationApi();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -338,14 +338,17 @@ const ProjectsDetailPage = () => {
             fontSize: 9
         }
     }));
-
+    const sendEmail = (param) => {
+        sendEmailToProjectUser(paramId, param);
+    };
+    /*
     const mailSendKor = () => {
         if (chatRef.current.getMailSendAddress()) {
             let mail = chatRef.current.getMailSendAddress();
             console.log(mail);
 
             // 메일 전송
-            sendEmail(mail, 'KOR');
+            sendEmail(paramId, 'KOR');
         }
     };
 
@@ -355,9 +358,10 @@ const ProjectsDetailPage = () => {
             console.log(mail);
 
             // 메일 전송
-            sendEmail(mail, 'EN');
+            sendEmail(paramId, 'EN');
         }
     };
+*/
     // 페이징 변경 이벤트
     const handlePage = (page) => {};
     const [page, setPage] = React.useState(0);
@@ -439,7 +443,9 @@ const ProjectsDetailPage = () => {
                                             type="button"
                                             variant="contained"
                                             color="primary"
-                                            onClick={mailSendKor}
+                                            onClick={() => {
+                                                sendEmail('KOR');
+                                            }}
                                         >
                                             국문 알림 메일 발송하기
                                         </Button>
@@ -450,7 +456,9 @@ const ProjectsDetailPage = () => {
                                             type="button"
                                             variant="contained"
                                             color="primary"
-                                            onClick={mailSendEn}
+                                            onClick={() => {
+                                                sendEmail('EN');
+                                            }}
                                         >
                                             영문 알림 메일 발송하기
                                         </Button>

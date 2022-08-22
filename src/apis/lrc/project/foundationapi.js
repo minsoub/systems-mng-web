@@ -301,6 +301,16 @@ const FoundationApi = () => {
         });
     };
 
+    // mail send (프로젝트 참여자 대상)
+    const sendEmailToProjectUser = (projectId, type) => {
+        callApi('sendEmail', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/mail/send?projectId=${projectId}&type=${type}`,
+            requestConfig: {}
+        });
+    };
+
     // 담당자 정보 조회
     const userKeywordSearch = (keyword) => {
         let keywordData = encodeURIComponent(keyword);
@@ -400,7 +410,8 @@ const FoundationApi = () => {
             userKeywordSearch: userKeywordSearch,
             lrcUserRegister: lrcUserRegister,
             lrcUserDelete: lrcUserDelete,
-            lrcUserSave: lrcUserSave
+            lrcUserSave: lrcUserSave,
+            sendEmailToProjectUser: sendEmailToProjectUser
         }
     ];
 };
