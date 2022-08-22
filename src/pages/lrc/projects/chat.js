@@ -169,7 +169,8 @@ const Chat = forwardRef((props, ref) => {
         //     sendJoinChat('join-chat', projectId);
         // }
         console.log(rSocket);
-        createClient(projectId);
+        //createClient(projectId);
+        chatExistCheckSend();
     }, [projectId]);
 
     useEffect(() => {
