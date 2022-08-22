@@ -269,57 +269,59 @@ const Chat = forwardRef((props, ref) => {
             } else {
                 if (responseData.id) {
                     console.log('called....');
-                    let data = {};
-                    if (responseData.role === 'ADMIN') {
-                        data = {
-                            id: responseData.id,
-                            receiver: 'receiveUser',
-                            sender: responseData.name ? responseData.name : 'Listing Team',
-                            message: responseData.content,
-                            type: responseData.role,
-                            createdDt: getDateFormatSecond(responseData.create_date),
-                            fileKey: '',
-                            fileName: '',
-                            fileSize: '',
-                            fileType: ''
-                        };
-                    } else {
-                        data = {
-                            id: responseData.id,
-                            receiver: 'Listing Team',
-                            sender: responseData.email,
-                            message: responseData.content,
-                            type: responseData.role,
-                            createdDt: getDateFormatSecond(responseData.create_date),
-                            fileKey: '',
-                            fileName: '',
-                            fileSize: '',
-                            fileType: ''
-                        };
-                        sendMailaddress.current = responseData.email;
-                    }
-                    let item = responseData.content;
-                    if (item.indexOf('FILE_MESSAGE::') !== -1) {
-                        const fileKey = item.replace('FILE_MESSAGE::', '');
-                        const fileInfo = fileList.find((file) => {
-                            return file.id === fileKey;
-                        });
-                        if (fileInfo) {
-                            data.fileKey = fileInfo.id;
-                            data.fileName = fileInfo.file_name;
-                            data.fileSize = fileInfo.file_size;
-                            data.fileType = fileInfo.file_type;
-                            data.message = `첨부파일 : ${data.fileName}`;
-
-                            setMessageList([...messageList, data]);
+                    if (responseData.operation_type !== 'REPLACE') {
+                        let data = {};
+                        if (responseData.role === 'ADMIN') {
+                            data = {
+                                id: responseData.id,
+                                receiver: 'receiveUser',
+                                sender: responseData.name ? responseData.name : 'Listing Team',
+                                message: responseData.content,
+                                type: responseData.role,
+                                createdDt: getDateFormatSecond(responseData.create_date),
+                                fileKey: '',
+                                fileName: '',
+                                fileSize: '',
+                                fileType: ''
+                            };
                         } else {
-                            if (item.indexOf('FILE_MESSAGE::') !== -1) {
-                                setFileItem(data);
-                                fileSearch(projectId, fileKey);
-                            }
+                            data = {
+                                id: responseData.id,
+                                receiver: 'Listing Team',
+                                sender: responseData.email,
+                                message: responseData.content,
+                                type: responseData.role,
+                                createdDt: getDateFormatSecond(responseData.create_date),
+                                fileKey: '',
+                                fileName: '',
+                                fileSize: '',
+                                fileType: ''
+                            };
+                            sendMailaddress.current = responseData.email;
                         }
-                    } else {
-                        setMessageList([...messageList, data]);
+                        let item = responseData.content;
+                        if (item.indexOf('FILE_MESSAGE::') !== -1) {
+                            const fileKey = item.replace('FILE_MESSAGE::', '');
+                            const fileInfo = fileList.find((file) => {
+                                return file.id === fileKey;
+                            });
+                            if (fileInfo) {
+                                data.fileKey = fileInfo.id;
+                                data.fileName = fileInfo.file_name;
+                                data.fileSize = fileInfo.file_size;
+                                data.fileType = fileInfo.file_type;
+                                data.message = `첨부파일 : ${data.fileName}`;
+
+                                setMessageList([...messageList, data]);
+                            } else {
+                                if (item.indexOf('FILE_MESSAGE::') !== -1) {
+                                    setFileItem(data);
+                                    fileSearch(projectId, fileKey);
+                                }
+                            }
+                        } else {
+                            setMessageList([...messageList, data]);
+                        }
                     }
                 }
             }
