@@ -51,7 +51,7 @@ const MessageLeft = ({ id, message, timestamp, displayName, fileList, fileDownlo
                         </div>
                     ) : (
                         <div key={id} className="message other-message" data-message-id={id}>
-                            {message.message}
+                            {nl2br(message.message)}
                         </div>
                     )}
                 </div>

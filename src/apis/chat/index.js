@@ -164,9 +164,12 @@ const useRScoketClient = () => {
                         setResponseError(error);
                     },
                     onNext: (payload) => {
-                        const text = payload.data.toString();
-                        const data = JSON.parse(text);
-                        setResponseData(data);
+                        console.log(payload);
+                        if (payload.operation_type === undefined || payload.operation_type === 'INSERT') {
+                            const text = payload.data.toString();
+                            const data = JSON.parse(text);
+                            setResponseData(data);
+                        }
                     },
                     onSubscribe: (subscription) => {
                         // console.log(subscription);
@@ -191,10 +194,13 @@ const useRScoketClient = () => {
                 })
                 .subscribe({
                     onComplete: (response) => {
-                        if (response && response.data) {
-                            const text = response.data.toString();
-                            const data = JSON.parse(text);
-                            setResponseData(data);
+                        console.log(response);
+                        if (response.operation_type === undefined || response.operation_type === 'INSERT') {
+                            if (response && response.data) {
+                                const text = response.data.toString();
+                                const data = JSON.parse(text);
+                                setResponseData(data);
+                            }
                         }
                     },
                     onError: (error) => {
@@ -223,10 +229,13 @@ const useRScoketClient = () => {
                 })
                 .subscribe({
                     onComplete: (response) => {
-                        if (response && response.data) {
-                            const text = response.data.toString();
-                            const data = JSON.parse(text);
-                            setResponseData(data);
+                        console.log(response);
+                        if (response.operation_type === undefined || response.operation_type === 'INSERT') {
+                            if (response && response.data) {
+                                const text = response.data.toString();
+                                const data = JSON.parse(text);
+                                setResponseData(data);
+                            }
                         }
                     },
                     onError: (error) => {
