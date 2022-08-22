@@ -48,7 +48,7 @@ const OfficeInfo = (props) => {
         }
     ] = FoundationApi();
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
-    const { projectId, children, tabindex, index, ...other } = props;
+    const { projectId, chatClose, children, tabindex, index, ...other } = props;
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -368,6 +368,7 @@ const OfficeInfo = (props) => {
             case 'project_link':
                 if (e.target.value === '') return;
                 console.log(e.target.value);
+                chatClose();
                 navigate('/projects/detail/' + e.target.value);
                 break;
             case 'start_date':
@@ -436,15 +437,17 @@ const OfficeInfo = (props) => {
                         {officeInfo.contract_name}
                     </Button>
                     <p className="order__content--checkList">{officeInfo.process_name}</p>
-                    <FormControl sx={{ minWidth: 250, boxSizing: 'border-box' }} size="medium">
-                        <Select name="project_link" label="연결 프로젝트 선택" onChange={handleChange}>
-                            {projectLink.map((item, index) => (
-                                <MenuItem key={index} value={item.link_project_id}>
-                                    {item.link_project_name} ( {item.link_project_symbol} )
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    {projectLink.length > 0 && (
+                        <FormControl sx={{ minWidth: 250, boxSizing: 'border-box' }} size="medium">
+                            <Select name="project_link" label="연결 프로젝트 선택" onChange={handleChange}>
+                                {projectLink.map((item, index) => (
+                                    <MenuItem key={index} value={item.link_project_id}>
+                                        {item.link_project_name} ( {item.link_project_symbol} )
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    )}
                 </FlexBox>
             </div>
 

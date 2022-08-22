@@ -10,8 +10,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY . /app/
 
-RUN npm install --legacy-peer-deps
 RUN npm install yarn serve
+RUN yarn install
 RUN yarn build:$SET_PROFILE
 
 EXPOSE 3000

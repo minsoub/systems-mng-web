@@ -32,7 +32,7 @@ const useRScoketClient = () => {
         if (localStorage.hasOwnProperty('authenticated')) {
             //console.log(localStorage.getItem('authenticated'));
             authData = JSON.parse(localStorage.getItem('authenticated'));
-            console.log(authData.accessToken);
+            //console.log(authData.accessToken);
         }
 
         const socketAuthProvider = encodeBearerAuthMetadata(
@@ -108,6 +108,8 @@ const useRScoketClient = () => {
 
         if (rSocket && rSocket) {
             console.log(rSocket);
+            console.log(rSocket.connectionSttus);
+            console.log(rSocket.availability);
             rSocket
                 .requestResponse({
                     data: Buffer.from(JSON.stringify(messageRequest)),
@@ -120,6 +122,7 @@ const useRScoketClient = () => {
                             const data = JSON.parse(text);
                             console.log(text);
                             console.log(data);
+                            //setResponseData(data);
                         }
                     },
                     onError: (error) => {
@@ -161,9 +164,12 @@ const useRScoketClient = () => {
                         setResponseError(error);
                     },
                     onNext: (payload) => {
+                        //console.log(payload);
+                        //if (payload.operation_type === undefined || payload.operation_type === 'INSERT') {
                         const text = payload.data.toString();
                         const data = JSON.parse(text);
                         setResponseData(data);
+                        //}
                     },
                     onSubscribe: (subscription) => {
                         // console.log(subscription);
@@ -188,11 +194,14 @@ const useRScoketClient = () => {
                 })
                 .subscribe({
                     onComplete: (response) => {
+                        console.log(response);
+                        //if (response.operation_type === undefined || response.operation_type === 'INSERT') {
                         if (response && response.data) {
                             const text = response.data.toString();
                             const data = JSON.parse(text);
                             setResponseData(data);
                         }
+                        // }
                     },
                     onError: (error) => {
                         //console.log(`onError: ${error}`);
@@ -206,7 +215,53 @@ const useRScoketClient = () => {
         }
     };
 
-    return [clientError, rSocket, createClient, sendJoinChat, connectionClose, sendRequestResponse, responseData, responseError];
+    const sendDataJoinChat = (route, pId) => {
+        if (rSocket) {
+            setProjectId(pId);
+            const message = {
+                chat_room: pId,
+                site_id: siteId
+            };
+            rSocket
+                .requestResponse({
+                    data: Buffer.from(JSON.stringify(message)),
+                    metadata: getMetadata(route)
+                })
+                .subscribe({
+                    onComplete: (response) => {
+                        console.log(response);
+                        //if (response.operation_type === undefined || response.operation_type === 'INSERT') {
+                        if (response && response.data) {
+                            const text = response.data.toString();
+                            const data = JSON.parse(text);
+                            setResponseData(data);
+                        }
+                        //}
+                    },
+                    onError: (error) => {
+                        //console.log(`onError: ${error}`);
+                        setResponseError(error);
+                    },
+                    onSubscribe: (cancel) => {
+                        //sendRequestChannel('channel-chat-message');
+                        // console.log('onSubscribe');
+                    }
+                });
+        }
+    };
+
+    return [
+        clientError,
+        rSocket,
+        createClient,
+        sendJoinChat,
+        connectionClose,
+        sendRequestChannel,
+        sendRequestResponse,
+        sendDataJoinChat,
+        responseData,
+        responseError
+    ];
 };
 
 export default useRScoketClient;

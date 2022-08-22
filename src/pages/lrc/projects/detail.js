@@ -13,7 +13,8 @@ import {
     TableBody,
     TableHead,
     TablePagination,
-    TableRow
+    TableRow,
+    Tooltip
 } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import { tableCellClasses } from '@mui/material/TableCell';
@@ -111,7 +112,7 @@ const ProjectsDetailPage = () => {
     const navigate = useNavigate();
     const { paramId } = useParams();
 
-    const [resData, reqError, loading, { insertChatFile, getChatFile, getChatFileList }] = ChatApi();
+    const [resData, reqError, loading, { insertChatFile, getChatFile, getChatFileList, fileDetailSearch }] = ChatApi();
 
     const [responseData, requestError, loadingData, { sendEmail }] = FoundationApi();
 
@@ -142,6 +143,7 @@ const ProjectsDetailPage = () => {
     };
     ////////////////////////////////////////////////////
     const chatRef = useRef({});
+    const [chatStart, setChatStart] = useState(false);
 
     // onload
     useEffect(() => {
@@ -153,7 +155,7 @@ const ProjectsDetailPage = () => {
         // 탭 파일 변경.
         if (localStorage.getItem('projectTabIndex')) {
             let data = localStorage.getItem('projectTabIndex');
-            console.log(`tab value => ${data}`);
+            //console.log(`tab value => ${data}`);
             setValue(parseInt(data, 10));
         }
     }, [paramId]);
@@ -162,11 +164,13 @@ const ProjectsDetailPage = () => {
     useEffect(() => {
         if (reqError) {
             if (reqError.result === 'FAIL') {
-                console.log('error requestError');
-                console.log(reqError);
+                //console.log('error requestError');
+                //console.log(reqError);
                 setErrorTitle('Error Message');
                 setErrorMessage('[' + reqError.error.code + '] ' + reqError.error.message);
                 setOpen(true);
+
+                if (chatStart === false) setChatStart(true);
             }
         }
     }, [reqError]);
@@ -195,6 +199,13 @@ const ProjectsDetailPage = () => {
                     console.log(resData);
                     setFileList(resData.data.data);
                 }
+                setChatStart(true);
+                break;
+            case 'getFileData':
+                if (resData.data.data) {
+                    console.log(resData);
+                    setFileList([...fileList, resData.data.data]);
+                }
                 break;
             case 'insertData':
                 if (resData.data.data) {
@@ -207,9 +218,9 @@ const ProjectsDetailPage = () => {
             case 'getFile':
                 if (resData.data) {
                     let res = resData;
-                    console.log('res data....');
-                    console.log(res);
-                    console.log(res.fileName);
+                    //console.log('res data....');
+                    //console.log(res);
+                    //console.log(res.fileName);
                     const url = window.URL.createObjectURL(new Blob([res.data]));
                     const link = document.createElement('a');
                     link.href = url;
@@ -273,7 +284,7 @@ const ProjectsDetailPage = () => {
         // 3.2MB로 계산하기
         formData.append('fileSize', humanFileSize(file_part.size, true, 2));
 
-        console.log(formData);
+        //console.log(formData);
         insertChatFile(formData);
     };
 
@@ -288,7 +299,7 @@ const ProjectsDetailPage = () => {
     };
 
     function byteString(index) {
-        const units = ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; //  : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+        const units = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; //  : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 
         // eslint-disable-next-line security/detect-object-injection
         return units[index];
@@ -360,6 +371,14 @@ const ProjectsDetailPage = () => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+    const fileSearch = (projectId, fileKey) => {
+        fileDetailSearch(projectId, fileKey);
+    };
+
+    const chatClose = () => {
+        chatRef.current.chatClose();
+    };
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             <Grid item xs={12} md={7} lg={12}>
@@ -387,7 +406,7 @@ const ProjectsDetailPage = () => {
                                 <Grid item xs={8} sm={8}>
                                     {/* 재단 정보 */}
                                     <TabPanel value={value} index={0}>
-                                        <OfficeInfo value={value} projectId={paramId} index={0} />
+                                        <OfficeInfo value={value} projectId={paramId} index={0} chatClose={chatClose} />
                                     </TabPanel>
                                     {/* 프로젝트 관리 */}
                                     <TabPanel value={value} index={1}>
@@ -404,13 +423,20 @@ const ProjectsDetailPage = () => {
                                 </Grid>
                                 <Grid item xs={4} sm={4} className="catting__layout">
                                     {/* 채팅 영역 */}
-                                    <Chat projectId={paramId} ref={chatRef} fileList={fileList} fileDownload={FileDownload} />
+                                    <Chat
+                                        projectId={paramId}
+                                        ref={chatRef}
+                                        chatStart={chatStart}
+                                        fileList={fileList}
+                                        fileDownload={FileDownload}
+                                        fileSearch={fileSearch}
+                                    />
 
                                     <div align="center" style={{ padding: '20px' }}>
                                         <Button
                                             disableElevation
                                             size="medium"
-                                            type="submit"
+                                            type="button"
                                             variant="contained"
                                             color="primary"
                                             onClick={mailSendKor}
@@ -421,7 +447,7 @@ const ProjectsDetailPage = () => {
                                         <Button
                                             disableElevation
                                             size="medium"
-                                            type="submit"
+                                            type="button"
                                             variant="contained"
                                             color="primary"
                                             onClick={mailSendEn}
@@ -476,14 +502,16 @@ const ProjectsDetailPage = () => {
                                                                             {item.user_type_name}
                                                                         </TableCell>
                                                                         <TableCell align="center" component="th" scope="row">
-                                                                            <Button
-                                                                                variant="outlined"
-                                                                                startIcon={<AttachFileOutlinedIcon />}
-                                                                                size="small"
-                                                                                onClick={() => FileDownload(item.id, item.file_name)}
-                                                                            >
-                                                                                {item.file_name}
-                                                                            </Button>
+                                                                            <Tooltip title={item.file_name}>
+                                                                                <Button
+                                                                                    variant="outlined"
+                                                                                    startIcon={<AttachFileOutlinedIcon />}
+                                                                                    size="small"
+                                                                                    onClick={() => FileDownload(item.id, item.file_name)}
+                                                                                >
+                                                                                    파일 다운로드
+                                                                                </Button>
+                                                                            </Tooltip>
                                                                             <p>
                                                                                 {item.file_size}&nbsp;{getDateFormat(item.create_date)}
                                                                             </p>

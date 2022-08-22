@@ -112,6 +112,10 @@ const LrcDashboard = Loadable(lazy(() => import('pages/lrc/dashboard/index')));
 const FileManagementPage = Loadable(lazy(() => import('pages/sysmng/filemng/index')));
 const FilemngRegForm = Loadable(lazy(() => import('pages/sysmng/filemng/FilemngRegForm')));
 
+// 통합 시스템 관리 -> 접근 IP 관리
+const IpMngBoard = Loadable(lazy(() => import('pages/sysmng/ipmng')));
+const IpMngRegForm = Loadable(lazy(() => import('pages/sysmng/ipmng/ipRegForm')));
+
 const MainRoutes = [
     {
         path: '/',
@@ -505,6 +509,14 @@ const MainRoutes = [
             {
                 path: 'filemng/reg',
                 element: <FilemngRegForm />
+            },
+            {
+                path: 'ipmng/list',
+                element: <IpMngBoard />
+            },
+            {
+                path: 'ipmng/reg',
+                element: <IpMngRegForm />
             }
         ]
     }

@@ -7,6 +7,7 @@ import { Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, O
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import './styles.scss';
 
 // assets
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
@@ -120,20 +121,11 @@ const TmpUpdatePasswordForm = ({ result }) => {
                                         : '임시 발급된 비밀번호입니다.'}
                                 </InputLabel>
                             </Stack>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>&nbsp;</Stack>
-                            </Grid>
                             <Stack spacing={2}>
                                 <InputLabel>개인정보보호를 위하여 새로운 비밀번호로 변경 후 사용이 가능합니다.</InputLabel>
                             </Stack>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Stack spacing={1}>&nbsp;</Stack>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Stack spacing={1}>&nbsp;</Stack>
-                        </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} className="passwordForm">
                             <Stack spacing={1}>
                                 <InputLabel htmlFor="password-login" required="true">
                                     신규 비밀번호
@@ -213,40 +205,16 @@ const TmpUpdatePasswordForm = ({ result }) => {
                                 <FormHelperText error>{errors.submit}</FormHelperText>
                             </Grid>
                         )}
-                        <Grid item xs={12}>
-                            <Stack spacing={1}>&nbsp;</Stack>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Stack spacing={1}>&nbsp;</Stack>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Stack spacing={2}>
-                                <Typography variant="body2">
-                                    - 영문 소문자, 대문자, 특수문자를 포함하여 8자리~64자리로 만들어 주세요.{' '}
-                                </Typography>
-                            </Stack>
-                            <Stack spacing={2}>
-                                <Typography variant="body2">
-                                    단, 허용되는 특수문자 (~!@#$%^&*_)외 다른 특수문자는 사용할 수 없습니다.
-                                </Typography>
-                            </Stack>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>&nbsp;</Stack>
-                            </Grid>
-                            <Stack spacing={2}>
-                                <Typography variant="body2">- 타 사이트와 동일하거나 비슷한 암호를 설정하지 마세요.</Typography>
-                            </Stack>
-                            <Stack spacing={2}>
-                                <Typography variant="body2">
-                                    타 사이트에서 암호가 유출될 경우 제3자가 회원님의 계정에 접근할 위험이 있습니다.
-                                </Typography>
-                            </Stack>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>&nbsp;</Stack>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>&nbsp;</Stack>
-                            </Grid>
+                        <Grid item xs={12} className="passwordForm">
+                            <div>
+                                <p>- 영문 소문자, 대문자, 특수문자를 포함하여 8자리~64자리로 만들어 주세요.</p>
+                                <p>단, 허용되는 특수문자 (~!@#$%^&*_)외 다른 특수문자는 사용할 수 없습니다.</p>
+                            </div>
+
+                            <div className="text__bottom">
+                                <p>- 타 사이트와 동일하거나 비슷한 암호를 설정하지 마세요.</p>
+                                <p>타 사이트에서 암호가 유출될 경우 제3자가 회원님의 계정에 접근할 위험이 있습니다.</p>
+                            </div>
                         </Grid>
                         <Grid item xs={12}>
                             <Button

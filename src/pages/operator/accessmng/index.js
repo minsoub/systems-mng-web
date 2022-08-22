@@ -11,6 +11,7 @@ import TopInputLayout from '../../../components/Common/TopInputLayout';
 import './styles.scss';
 import cx from 'classnames';
 import ContentLine from '../../../components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const AccessMngPage = () => {
     let isSubmitting = false;
@@ -76,7 +77,8 @@ const AccessMngPage = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 140
+            maxWidth: 140,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
 

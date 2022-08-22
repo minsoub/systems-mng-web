@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { Button, Checkbox, FormControlLabel, Grid, MenuItem, Select } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
@@ -71,7 +70,9 @@ const ProgramManagementPage = () => {
     const navigate = useNavigate();
     const [responseData, requestError, loading, { programSearch, programList }] = ProgramApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-
+    const [siteList, setSiteList] = useState([]);
+    const [site_id, setSiteId] = useState('');
+    const [is_use, setIsUse] = useState(true);
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
     // 그리드 목록 데이터
@@ -82,16 +83,6 @@ const ProgramManagementPage = () => {
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const parentErrorClear = () => {
-        setOpen(false);
-        setErrorTitle('');
-        setErrorMessage('');
-    };
-    ////////////////////////////////////////////////////
-
-    const [siteList, setSiteList] = useState([]);
-    const [site_id, setSiteId] = useState('');
-    const [is_use, setIsUse] = useState(true);
 
     // Change Event
     // site가 변경되었을 때 호출된다.

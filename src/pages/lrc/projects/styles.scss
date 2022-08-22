@@ -199,6 +199,7 @@ input::file-selector-button {
     }
     .filemng__file--con {
         text-align: right;
+        word-break: break-all;
         .filemng__file--downlaod {
             text-decoration: underline;
             &:hover {

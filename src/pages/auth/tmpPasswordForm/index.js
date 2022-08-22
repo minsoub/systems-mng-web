@@ -1,5 +1,5 @@
-import {useLocation} from 'react-router';
-import {Grid, Stack, Typography} from '@mui/material';
+import { useLocation } from 'react-router';
+import { Grid, Stack, Typography } from '@mui/material';
 import TmpUpdatePasswordForm from '../../../components/AuthLogin/TmpUpdatePasswordForm';
 import AuthWrapper from '../../../components/AuthLogin/AuthWrapper';
 
