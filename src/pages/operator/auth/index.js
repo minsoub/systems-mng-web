@@ -16,6 +16,7 @@ import TopInputLayout from '../../../components/Common/TopInputLayout';
 import './styles.scss';
 import DropInput from '../../../components/Common/DropInput';
 import ContentLine from '../../../components/Common/ContentLine';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const SiteAuthManagementPage = () => {
     let isSubmitting = false;
@@ -67,7 +68,8 @@ const SiteAuthManagementPage = () => {
             headerName: '등록일자',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
     const navigate = useNavigate();

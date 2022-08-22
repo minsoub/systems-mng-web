@@ -142,6 +142,10 @@ const OtpQrCodeForm = ({ result }) => {
                 <Box component="img" alt="QR Code" src={result.otp_info.url} />
             </div>
 
+            <div className={cx('titleBox')}>
+                <p>바코드를 스캔하여 OTP를 설정해주세요.</p>
+            </div>
+
             {/* OTP 번호 입력란 */}
             <div className={cx('otpAction')}>
                 <OtpInput

@@ -437,15 +437,17 @@ const OfficeInfo = (props) => {
                         {officeInfo.contract_name}
                     </Button>
                     <p className="order__content--checkList">{officeInfo.process_name}</p>
-                    <FormControl sx={{ minWidth: 250, boxSizing: 'border-box' }} size="medium">
-                        <Select name="project_link" label="연결 프로젝트 선택" onChange={handleChange}>
-                            {projectLink.map((item, index) => (
-                                <MenuItem key={index} value={item.link_project_id}>
-                                    {item.link_project_name} ( {item.link_project_symbol} )
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    {projectLink.length > 0 && (
+                        <FormControl sx={{ minWidth: 250, boxSizing: 'border-box' }} size="medium">
+                            <Select name="project_link" label="연결 프로젝트 선택" onChange={handleChange}>
+                                {projectLink.map((item, index) => (
+                                    <MenuItem key={index} value={item.link_project_id}>
+                                        {item.link_project_name} ( {item.link_project_symbol} )
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    )}
                 </FlexBox>
             </div>
 

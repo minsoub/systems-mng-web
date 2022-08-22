@@ -6,6 +6,7 @@ import HistoryApi from 'apis/lrc/project/historyapi';
 import ContentLine from '../../../components/Common/ContentLine';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const ProjectHistory = (props) => {
     let isSubmitting = false;
@@ -59,7 +60,8 @@ const ProjectHistory = (props) => {
             headerName: '변경일시',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
     const navigate = useNavigate();
