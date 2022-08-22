@@ -206,6 +206,7 @@ const ProjectsDetailPage = () => {
                     console.log(resData);
                     setFileList([...fileList, resData.data.data]);
                 }
+                break;
             case 'insertData':
                 if (resData.data.data) {
                     console.log(resData);
