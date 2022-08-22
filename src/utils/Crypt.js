@@ -20,7 +20,7 @@ const deriveKey = async (password, salt, keyUsage) => {
         {
             name: 'PBKDF2',
             salt,
-            iterations: 65536,
+            iterations: 1024,
             hash: 'SHA-256'
         },
         password,
