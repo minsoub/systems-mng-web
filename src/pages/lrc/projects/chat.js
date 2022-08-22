@@ -154,8 +154,8 @@ const Chat = forwardRef((props, ref) => {
         if (rSocket) {
             console.log('>> rSocket id is changed.....');
             setMessageList([]);
-            //sendJoinChat('join-chat', projectId);
-            sendRequestChannel('channel-chat-message');
+            sendJoinChat('join-chat', projectId);
+            //sendRequestChannel('channel-chat-message');
         }
     }, [rSocket]);
 
