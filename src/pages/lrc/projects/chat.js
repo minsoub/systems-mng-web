@@ -75,7 +75,7 @@ const Chat = forwardRef((props, ref) => {
     };
 
     useEffect(() => {
-        chatExistCheckSend();
+        //chatExistCheckSend();
         prevSearchKeyword = '';
 
         return () => {
