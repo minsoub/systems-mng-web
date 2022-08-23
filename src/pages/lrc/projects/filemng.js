@@ -439,7 +439,7 @@ const FileMng = (props) => {
                                             <div className="filemng__file--con">
                                                 {/* url 주소 */}
                                                 <p className="filemng__file--url">
-                                                    <a href={item.url} target="_blank">
+                                                    <a href={item.url} target="_blank" rel="noreferrer noopener">
                                                         {item.url}
                                                     </a>
                                                 </p>
@@ -526,7 +526,7 @@ const FileMng = (props) => {
                                             <div className="filemng__file--con">
                                                 {/* url 주소 */}
                                                 <p className="filemng__file--url">
-                                                    <a href={item.url} target="_blank">
+                                                    <a href={item.url} target="_blank" rel="noreferrer noopener">
                                                         {item.url}
                                                     </a>
                                                 </p>
@@ -605,7 +605,7 @@ const FileMng = (props) => {
                                             <div className="filemng__file--con">
                                                 {/* url 주소 */}
                                                 <p className="filemng__file--url">
-                                                    <a href={item.url} target="_blank">
+                                                    <a href={item.url} target="_blank" rel="noreferrer noopener">
                                                         {item.url}
                                                     </a>
                                                 </p>
@@ -682,7 +682,7 @@ const FileMng = (props) => {
                                             <div className="filemng__file--con">
                                                 {/* url 주소 */}
                                                 <p className="filemng__file--url">
-                                                    <a href={item.url} target="_blank">
+                                                    <a href={item.url} target="_blank" rel="noreferrer noopener">
                                                         {item.url}
                                                     </a>
                                                 </p>
@@ -765,7 +765,7 @@ const FileMng = (props) => {
                                             <div className="filemng__file--con">
                                                 {/* url 주소 */}
                                                 <p className="filemng__file--url">
-                                                    <a href={item.url} target="_blank">
+                                                    <a href={item.url} target="_blank" rel="noreferrer noopener">
                                                         {item.url}
                                                     </a>
                                                 </p>
@@ -848,7 +848,7 @@ const FileMng = (props) => {
                                             <div className="filemng__file--con">
                                                 {/* url 주소 */}
                                                 <p className="filemng__file--url">
-                                                    <a href={item.url} target="_blank">
+                                                    <a href={item.url} target="_blank" rel="noreferrer noopener">
                                                         {item.url}
                                                     </a>
                                                 </p>
@@ -931,7 +931,7 @@ const FileMng = (props) => {
                                             <div className="filemng__file--con">
                                                 {/* url 주소 */}
                                                 <p className="filemng__file--url">
-                                                    <a href={item.url} target="_blank">
+                                                    <a href={item.url} target="_blank" rel="noreferrer noopener">
                                                         {item.url}
                                                     </a>
                                                 </p>
@@ -1014,7 +1014,7 @@ const FileMng = (props) => {
                                             <div className="filemng__file--con">
                                                 {/* url 주소 */}
                                                 <p className="filemng__file--url">
-                                                    <a href={item.url} target="_blank">
+                                                    <a href={item.url} target="_blank" rel="noreferrer noopener">
                                                         {item.url}
                                                     </a>
                                                 </p>
@@ -1097,7 +1097,7 @@ const FileMng = (props) => {
                                             <div className="filemng__file--con">
                                                 {/* url 주소 */}
                                                 <p className="filemng__file--url">
-                                                    <a href={item.url} target="_blank">
+                                                    <a href={item.url} target="_blank" rel="noreferrer noopener">
                                                         {item.url}
                                                     </a>
                                                 </p>
@@ -1180,7 +1180,7 @@ const FileMng = (props) => {
                                             <div className="filemng__file--con">
                                                 {/* url 주소 */}
                                                 <p className="filemng__file--url">
-                                                    <a href={item.url} target="_blank">
+                                                    <a href={item.url} target="_blank" rel="noreferrer noopener">
                                                         {item.url}
                                                     </a>
                                                 </p>
@@ -1264,7 +1264,7 @@ const FileMng = (props) => {
                                             <div className="filemng__file--con">
                                                 {/* url 주소 */}
                                                 <p className="filemng__file--url">
-                                                    <a href={item.url} target="_blank">
+                                                    <a href={item.url} target="_blank" rel="noreferrer noopener">
                                                         {item.url}
                                                     </a>
                                                 </p>
