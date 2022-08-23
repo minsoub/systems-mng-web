@@ -334,7 +334,7 @@ const Chat = forwardRef((props, ref) => {
         console.log(responseError);
         if (!responseError) return;
 
-        if (responseError.toString().indexOf('Socket close') !== -1) {
+        if (responseError.toString().indexOf('Socket close') !== -1 || responseError.toString().indexOf('connection was closed') !== -1) {
             //if (!rSocket) {
             console.log('>> chat error occured...rSocket closed. timer start => createClient call...');
             createClient(projectId);
