@@ -10,8 +10,8 @@ import FlexBox from '../../../components/Common/FlexBox';
 import ContentLine from '../../../components/Common/ContentLine';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
-import axiosInstanceDefault from "../../../apis/axiosDefault";
-import {doEncrypt} from "../../../utils/Crypt";
+import axiosInstanceDefault from '../../../apis/axiosDefault';
+import { doEncrypt } from '../../../utils/Crypt';
 
 const useStyles = makeStyles({
     tableRow: {
@@ -233,6 +233,7 @@ const ProjectMng = (props) => {
         switch (responseData.transactionId) {
             case 'getFoundationInfo': // 재단정보
                 if (responseData.data.data) {
+                    console.log(responseData.data.data);
                     setOfficeInfo(responseData.data.data);
                     refProject_name.current.value = responseData.data.data.project_name;
                     refSymbol.current.value = responseData.data.data.symbol;
@@ -621,8 +622,8 @@ const ProjectMng = (props) => {
             id: '',
             project_id: projectId,
             symbol: '',
-            minimum_quantity: 0,
-            actual_quantity: 0
+            minimum_quantity: '',
+            actual_quantity: ''
         };
         setMarketingList((prevRows) => [...prevRows, addRow]);
     };
