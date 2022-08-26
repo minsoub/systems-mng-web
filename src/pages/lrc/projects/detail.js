@@ -183,6 +183,7 @@ const ProjectsDetailPage = () => {
         switch (responseData.transactionId) {
             case 'sendEmail':
                 console.log(responseData.data);
+                alert('전송을 완료하였습니다.');
                 break;
             default:
                 break;
@@ -339,7 +340,16 @@ const ProjectsDetailPage = () => {
         }
     }));
     const sendEmail = (param) => {
-        sendEmailToProjectUser(paramId, param);
+        console.log(param);
+        if (param === 'KOR') {
+            if (confirm('국문 알림 메일을 발송하시겠습니까?')) {
+                sendEmailToProjectUser(paramId, param);
+            }
+        } else if (param === 'EN') {
+            if (confirm('영문 알림 메일을 발송하시겠습니까?')) {
+                sendEmailToProjectUser(paramId, param);
+            }
+        }
     };
     /*
     const mailSendKor = () => {
