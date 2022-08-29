@@ -692,8 +692,30 @@ const ProjectMng = (props) => {
         }
     };
 
-    // 재단정보 저장
+       // 재단정보 저장
     const foundationSave = () => {
+        // 프로젝트명과 심벌의 경우 필수 조건
+        if (refProject_name.current.value.length === 0) {
+          alert('프로젝트명을 입력해주세요.');
+          return;
+        }
+        if (refSymbol.current.value.length === 0) {
+          alert('심볼을 입력해주세요.');
+          return;
+        }
+        const regex1 = /^[A-Z|a-z|0-9|]*$/;
+        if (!regex1.test(refProject_name.current.value)) {
+            alert('유효하지 않은 프로젝트명입니다.');
+            return;
+        }
+
+        const regex2 = /^[A-Z|a-z|0-9|]+$/;
+        if (!regex2.test(refSymbol.current.value)) {
+            alert('유효하지 않은 심볼입니다.');
+            return;
+        }
+
+
         if (confirm('저장하시겠습니까?')) {
             let saveData = {
                 id: officeInfo.id,
@@ -730,6 +752,23 @@ const ProjectMng = (props) => {
         //     alert('소수점 네자리까지 입력 가능합니다.');
         //     return;
         // }
+        if (!refPriceKRW.current.value) {
+            alert('KRW 상장가를 입력해주세요.');
+            return;
+        }
+      if (!krw_ico_date) {
+        alert('KRW 상장일을 입력해주세요.');
+        return;
+      }
+        if (!refPriceBTC.current.value) {
+          alert('BTC 상장가를 입력해주세요.');
+          return;
+        }
+
+        if (!btc_ico_date) {
+          alert('BTC 상장일을 입력해주세요.');
+          return;
+        }
         if (confirm('저장하시겠습니까?')) {
             let ico_info_list = [];
             // 상장정보가 초기에는 데이터가 없다.
@@ -781,13 +820,22 @@ const ProjectMng = (props) => {
     // 마케팅 수량 리스트 저장
     const saveMarketingList = () => {
         // const pattern = /(^\d+)[.]?\d{1,4}$/;
-        // marketingList.map((item) => {
-        //     const { minimum_quantity, actual_quantity } = item;
-        //     if (!pattern.test(minimum_quantity) || !pattern.test(actual_quantity)) {
-        //         alert('소수점 네자리까지 입력 가능합니다.');
-        //         return;
-        //     }
-        // });
+        const pattern = /^[A-Z|a-z|0-9|]+$/;
+        let found = 0;
+        marketingList.map((item) => {
+            const { minimum_quantity, actual_quantity } = item;
+            if (!item.symbol) {
+              alert('심볼을 입력해주세요.');
+              found = 1;
+              return;
+            }
+            if (!pattern.test(item.symbol)) {
+                alert('유효하지 않은 심볼입니다.');
+                found = 1;
+                return;
+            }
+        });
+        if (found === 1) return;
         if (marketingList && marketingList.length > 0) {
             if (confirm('저장하시겠습니까?')) {
                 let saveData = { marketing_list: marketingList };
