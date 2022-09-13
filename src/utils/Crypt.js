@@ -1,13 +1,15 @@
-const CRYPT_KEY = process.env.REACT_APP_DEFAULT_CRYPT_KEY || '';
+//const CRYPT_KEY = process.env.REACT_APP_DEFAULT_CRYPT_KEY || '';
+import base64 from 'base-64';
 const IV_LENGTH_BYTE = 12;
 const SALT_LENGTH_BYTE = 16;
 const enc = new TextEncoder();
 const dec = new TextDecoder();
 
 const getPasswordKey = async () => {
+    const initData = localStorage.getItem('initData');
     const key = await window.crypto.subtle.importKey(
         'raw',
-        enc.encode(CRYPT_KEY),
+        enc.encode(base64.decode(initData)),
         'PBKDF2',
         false, // whether the key is extractable (i.e. can be used in exportKey)
         ['deriveBits', 'deriveKey'] // can "encrypt", "decrypt", "wrapKey", or "unwrapKey"

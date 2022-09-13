@@ -59,6 +59,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["antd", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:4.22.6"],\
             ["apexcharts", "npm:3.35.4"],\
             ["axios", "npm:0.27.2"],\
+            ["base-64", "npm:1.0.0"],\
             ["buffer", "npm:6.0.3"],\
             ["classnames", "npm:2.3.1"],\
             ["clsx", "npm:1.2.1"],\
@@ -8029,6 +8030,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["isobject", "npm:3.0.1"],\
             ["mixin-deep", "npm:1.3.2"],\
             ["pascalcase", "npm:0.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["base-64", [\
+        ["npm:1.0.0", {\
+          "packageLocation": "./.yarn/cache/base-64-npm-1.0.0-0683a6b836-d10b64a1fc.zip/node_modules/base-64/",\
+          "packageDependencies": [\
+            ["base-64", "npm:1.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -24410,6 +24420,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["antd", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:4.22.6"],\
             ["apexcharts", "npm:3.35.4"],\
             ["axios", "npm:0.27.2"],\
+            ["base-64", "npm:1.0.0"],\
             ["buffer", "npm:6.0.3"],\
             ["classnames", "npm:2.3.1"],\
             ["clsx", "npm:1.2.1"],\
