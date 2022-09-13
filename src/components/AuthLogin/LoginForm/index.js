@@ -1,36 +1,32 @@
-import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {
-    Button,
-    FormHelperText,
-    Grid,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    OutlinedInput,
-    Stack
-} from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack } from '@mui/material';
 
 import * as Yup from 'yup';
-import {Formik} from 'formik';
-import {EyeInvisibleOutlined, EyeOutlined} from '@ant-design/icons';
+import { Formik } from 'formik';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import useAuthorized from 'apis/auth/auths';
-import {useSelector} from "react-redux";
+import { useSelector } from 'react-redux';
 
 import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
+import base64 from 'base-64';
 
 const cx = classNames.bind(styles);
 
 const AuthLogin = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
-    const [responseData, requestError, loading, { actionLogin }] = useAuthorized();
+    const [responseData, requestError, loading, { actionLogin, actionInit }] = useAuthorized();
 
     const { isLoggined, siteId, accessToken } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        if(localStorage.hasOwnProperty('authenticated') && isLoggined === true && siteId && accessToken) {
+        actionInit();
+    }, []);
+
+    useEffect(() => {
+        if (localStorage.hasOwnProperty('authenticated') && isLoggined === true && siteId && accessToken) {
             if (siteId === '62a15f4ae4129b518b133128') {
                 // 투자보호
                 navigate('/cpc/dashboard');
@@ -56,9 +52,9 @@ const AuthLogin = () => {
             console.log(requestError);
             if (requestError.message === 'INVALID_USER_PASSWORD') {
                 alert('패스워드가 일치하지 않습니다.');
-            } else if(requestError.message === 'INVALID_USER'){
+            } else if (requestError.message === 'INVALID_USER') {
                 alert('가입되지 않은 사용자 입니다.');
-            } else if(requestError.message === 'INVALID_TOKEN'){
+            } else if (requestError.message === 'INVALID_TOKEN') {
                 alert('사용 권한이 없는 사용자 입니다.');
             } else if (requestError.message === 'INVALID_ACCOUNT_CLOSED' || requestError.message === 'USER_ACCOUNT_DISABLE') {
                 alert('계정이 잠겼습니다. 관리자에게 문의 해 주시기 바랍니다.');
@@ -75,6 +71,13 @@ const AuthLogin = () => {
         }
         console.log(responseData.transactionId);
         switch (responseData.transactionId) {
+            case 'initLogin':
+                if (responseData.data) {
+                    console.log(responseData.data);
+                    console.log(base64.decode(responseData.data.init_data));
+                    localStorage.setItem('initData', responseData.data.init_data);
+                }
+                break;
             case 'siginin':
                 console.log(responseData);
                 if (responseData.data) {
@@ -103,7 +106,10 @@ const AuthLogin = () => {
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
-                    email: Yup.string().email('올바른 이메일 주소를 입력해 주세요.').max(255).required('올바른 이메일 주소를 입력해 주세요.'),
+                    email: Yup.string()
+                        .email('올바른 이메일 주소를 입력해 주세요.')
+                        .max(255)
+                        .required('올바른 이메일 주소를 입력해 주세요.'),
                     password: Yup.string().max(255).required('올바른 비밀번호를 입력해 주세요.')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
@@ -203,10 +209,7 @@ const AuthLogin = () => {
                             <Grid item xs={12} className={cx('blank')}>
                                 <div className={cx('label--center')}>
                                     <span>비밀번호를 분실하셨나요?</span>
-                                    <a
-                                        href="/resetpassword"
-                                        className={cx('label--center--highlight')}
-                                    >
+                                    <a href="/resetpassword" className={cx('label--center--highlight')}>
                                         초기화 요청
                                     </a>
                                 </div>

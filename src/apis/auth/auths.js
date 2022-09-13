@@ -1,9 +1,19 @@
 import axiosInstanceAuth from '../axiosAuth';
 import useAxios from '../useAxios';
-import {doEncrypt} from 'utils/Crypt';
+import { doEncrypt } from 'utils/Crypt';
 
 const useAuthorized = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
+
+    const init = () => {
+        console.log('init called...');
+        callApi('initLogin', {
+            axiosInstance: axiosInstanceAuth,
+            method: 'get',
+            url: `/adm/init`,
+            requestConfig: {}
+        });
+    };
 
     // 사용자 로그인 1차
     const siginIn = (email, password) => {
@@ -85,7 +95,8 @@ const useAuthorized = () => {
             actionOtp: optLogin,
             actionClear: otpClear,
             actionPasswordUpdate: passwordUpdate,
-            actionTempPassword: tempPassword
+            actionTempPassword: tempPassword,
+            actionInit: init
         }
     ];
 };
