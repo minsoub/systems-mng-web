@@ -110,6 +110,7 @@ const AccessMngPage = () => {
             if (requestError.result === 'FAIL') {
                 console.log('error requestError');
                 console.log(requestError);
+                alert(requestError.error.message);
                 // setErrorTitle('Error Message');
                 // setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
                 // setOpen(true);

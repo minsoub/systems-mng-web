@@ -40,9 +40,12 @@ const TmpUpdatePasswordForm = ({ result }) => {
         if (requestError) {
             console.log('>> requestError <<');
             console.log(requestError);
-            if (requestError.message === 'EQUAL_CURRENT_PASSWORD' || requestError.message === 'EQUAL_OLD_PASSWORD') {
-                alert('이전 비밀번호와 다른 비밀번호를 입력해 주세요.');
-            }
+          if (requestError.message === 'INVALID_USER_PASSWORD') {
+            alert('영문 소문자, 대문자, 특수문자를 포함하여 8자리-64자리로 만들어 주세요.');
+          }
+          if (requestError.message === 'EQUAL_CURRENT_PASSWORD' || requestError.message === 'EQUAL_OLD_PASSWORD') {
+            alert('이전 비밀번호와 다른 비밀번호를 입력해 주세요.');
+          }
         }
     }, [requestError]);
 
