@@ -57,6 +57,9 @@ const CpcDigitalAssetTrendMngForm = Loadable(lazy(() => import('pages/cpc/conten
 // 공지사항
 const CpcNoticeMng = Loadable(lazy(() => import('pages/cpc/contents/Notice/view')));
 const CpcNoticeMngForm = Loadable(lazy(() => import('pages/cpc/contents/Notice/post')));
+// 보도자료
+const CpcPressReleaseMng = Loadable(lazy(() => import('pages/cpc/contents/PressRelease/view')));
+const CpcPressReleaseForm = Loadable(lazy(() => import('pages/cpc/contents/PressRelease/post')));
 // -----------------------
 // render - 고객보호센터 - 사기신고 관리
 // const CpcFraudReportMng = Loadable(lazy(() => import('pages/cpc/fraudReport/view')));
@@ -323,6 +326,21 @@ const MainRoutes = [
             {
                 path: 'cpc/contents/notice/reg/:boardId',
                 element: <CpcNoticeMngForm />
+            },
+            // 보도자료 리스트
+            {
+                path: 'cpc/contents/press_release/list',
+                element: <CpcPressReleaseMng />
+            },
+            // 보도자료 등록
+            {
+                path: 'cpc/contents/press_release/reg',
+                element: <CpcPressReleaseForm />
+            },
+            // 보도자료 수정
+            {
+                path: 'cpc/contents/press_release/reg/:boardId',
+                element: <CpcPressReleaseForm />
             },
             // 고객보호센터 - 사기신고 관리
             // {
