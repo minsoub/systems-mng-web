@@ -246,7 +246,7 @@ const Post = () => {
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-            thumbnailFile && formData.append('file', thumbnailFile, { type: 'multipart/form-data' });
+            thumbnailFile && formData.append('file', thumbnailFile);
             console.log(formData);
             createBoard(boardMasterId, formData);
         }
@@ -279,7 +279,7 @@ const Post = () => {
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-            thumbnailFile && formData.append('file', thumbnailFile, { type: 'multipart/form-data' });
+            thumbnailFile && formData.append('file', thumbnailFile);
             console.log(formData);
             updateBoard(boardMasterId, data.id, formData);
         }
