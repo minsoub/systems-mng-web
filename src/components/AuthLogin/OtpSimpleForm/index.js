@@ -25,6 +25,8 @@ const OtpSimpleForm = ({ result }) => {
             if (requestError.message === 'INVALID_OTP_NUMBER') {
                 setErrMsg('OTP 번호를 다시 입력해 주세요');
                 return;
+            } else {
+                alert('요청 정보 처리에 오류가 발생하였습니다.');
             }
         }
     }, [requestError]);
@@ -97,7 +99,6 @@ const OtpSimpleForm = ({ result }) => {
             let data = {
                 site_id: result.site_id,
                 email: result.email,
-                otp_key: result.otp_key,
                 token: result.token
             };
             actionClear(data);
