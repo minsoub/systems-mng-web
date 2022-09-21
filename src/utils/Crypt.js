@@ -26,7 +26,7 @@ const deriveKey = async (password, salt, keyUsage) => {
             hash: 'SHA-256'
         },
         password,
-        { name: 'AES-GCM', length: 256 },
+        { name: 'AES-GCM', length: 128 },
         true,
         keyUsage
     );
