@@ -17,12 +17,13 @@ const cx = classNames.bind(styles);
 const AuthLogin = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
-    const [responseData, requestError, loading, { actionLogin, actionInit }] = useAuthorized();
+    const [responseData, requestError, loading, { actionLogin, actionInit, actionRsaPublicKey }] = useAuthorized();
 
     const { isLoggined, siteId, accessToken } = useSelector((state) => state.auth);
 
     useEffect(() => {
         actionInit();
+        actionRsaPublicKey();
     }, []);
 
     useEffect(() => {
@@ -66,6 +67,13 @@ const AuthLogin = () => {
                     console.log(responseData.data);
                     console.log(base64.decode(responseData.data.init_data));
                     localStorage.setItem('initData', responseData.data.init_data);
+                }
+                break;
+            case 'rsaPublicKey':
+                if (responseData.data) {
+                    console.log(responseData.data);
+                    console.log(base64.decode(responseData.data.public_key));
+                    sessionStorage.setItem('rsaPublicKey', responseData.data.public_key);
                 }
                 break;
             case 'siginin':
