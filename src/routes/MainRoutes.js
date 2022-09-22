@@ -329,17 +329,17 @@ const MainRoutes = [
             },
             // 보도자료 리스트
             {
-                path: 'cpc/contents/press_release/list',
+                path: 'cpc/contents/press-release/list',
                 element: <CpcPressReleaseMng />
             },
             // 보도자료 등록
             {
-                path: 'cpc/contents/press_release/reg',
+                path: 'cpc/contents/press-release/reg',
                 element: <CpcPressReleaseForm />
             },
             // 보도자료 수정
             {
-                path: 'cpc/contents/press_release/reg/:boardId',
+                path: 'cpc/contents/press-release/reg/:boardId',
                 element: <CpcPressReleaseForm />
             },
             // 고객보호센터 - 사기신고 관리

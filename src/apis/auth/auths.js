@@ -1,6 +1,6 @@
 import axiosInstanceAuth from '../axiosAuth';
 import useAxios from '../useAxios';
-import { doEncrypt } from 'utils/Crypt';
+import { doEncrypt, doEncryptRSA } from 'utils/Crypt';
 
 const useAuthorized = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
@@ -15,11 +15,21 @@ const useAuthorized = () => {
         });
     };
 
+    const rsaPublicKey = () => {
+        console.log('rsaPublicKey called...');
+        callApi('rsaPublicKey', {
+            axiosInstance: axiosInstanceAuth,
+            method: 'get',
+            url: `/adm/public-key`,
+            requestConfig: {}
+        });
+    };
+
     // 사용자 로그인 1차
     const siginIn = (email, password) => {
         console.log('signIn called...');
-        let e = doEncrypt(email);
-        let c = doEncrypt(password);
+        let e = doEncryptRSA(email);
+        let c = doEncryptRSA(password);
         console.log(e);
         console.log(c);
         Promise.all([e, c]).then((values) => {
@@ -96,7 +106,8 @@ const useAuthorized = () => {
             actionClear: otpClear,
             actionPasswordUpdate: passwordUpdate,
             actionTempPassword: tempPassword,
-            actionInit: init
+            actionInit: init,
+            actionRsaPublicKey: rsaPublicKey
         }
     ];
 };

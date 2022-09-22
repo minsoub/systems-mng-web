@@ -85,6 +85,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["history", "npm:5.3.0"],\
             ["install", "npm:0.13.0"],\
             ["jodit-react", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:1.3.14"],\
+            ["jsencrypt", "npm:3.2.1"],\
             ["jsonwebtoken", "npm:8.5.1"],\
             ["lodash", "npm:4.17.21"],\
             ["moment", "npm:2.29.4"],\
@@ -15840,6 +15841,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["jsencrypt", [\
+        ["npm:3.2.1", {\
+          "packageLocation": "./.yarn/cache/jsencrypt-npm-3.2.1-a272eea704-daf813bac2.zip/node_modules/jsencrypt/",\
+          "packageDependencies": [\
+            ["jsencrypt", "npm:3.2.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["jsesc", [\
         ["npm:0.5.0", {\
           "packageLocation": "./.yarn/cache/jsesc-npm-0.5.0-6827074492-b8b44cbfc9.zip/node_modules/jsesc/",\
@@ -24446,6 +24456,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["history", "npm:5.3.0"],\
             ["install", "npm:0.13.0"],\
             ["jodit-react", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:1.3.14"],\
+            ["jsencrypt", "npm:3.2.1"],\
             ["jsonwebtoken", "npm:8.5.1"],\
             ["lodash", "npm:4.17.21"],\
             ["moment", "npm:2.29.4"],\

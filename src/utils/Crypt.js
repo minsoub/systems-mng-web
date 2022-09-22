@@ -1,9 +1,12 @@
 //const CRYPT_KEY = process.env.REACT_APP_DEFAULT_CRYPT_KEY || '';
 import base64 from 'base-64';
+import { JSEncrypt } from 'jsencrypt';
+
 const IV_LENGTH_BYTE = 12;
 const SALT_LENGTH_BYTE = 16;
 const enc = new TextEncoder();
 const dec = new TextDecoder();
+const rsaEncrypt = new JSEncrypt();
 
 const getPasswordKey = async () => {
     const initData = localStorage.getItem('initData');
@@ -95,6 +98,16 @@ export const doDecrypt = async (cipherText) => {
         );
 
         return dec.decode(decryptedContent);
+    } catch (e) {
+        console.log(`Error - ${e}`);
+        return '';
+    }
+};
+
+export const doEncryptRSA = (plainText) => {
+    try {
+        rsaEncrypt.setPublicKey(base64.decode(sessionStorage.getItem('rsaPublicKey')));
+        return rsaEncrypt.encrypt(plainText);
     } catch (e) {
         console.log(`Error - ${e}`);
         return '';
