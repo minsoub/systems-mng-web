@@ -135,10 +135,10 @@ const MainRoutes = [
                 element: <AuthLogin />
             },
             // otp (QR 코드) 발급 페이지
-            {
-                path: 'otplogin',
-                element: <OtpLogin />
-            },
+            //{
+            //    path: 'otplogin',
+            //    element: <OtpLogin />
+            //},
             // otp 인증 페이지
             {
                 path: 'otpsimplelogin',

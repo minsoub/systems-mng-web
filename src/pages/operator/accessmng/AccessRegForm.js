@@ -73,7 +73,7 @@ const AccessRegForm = () => {
         responseData,
         requestError,
         loading,
-        { accountMngDetail, accountSearch, accountUpdate, accountInsert, accountMngRole, accountRolesUpdate }
+        { accountMngDetail, accountSearch, accessUpdate, accountInsert, accountMngRole, accountRolesUpdate }
     ] = AccountApis();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
     const [resRoleData, resRoleError, resRoleLoading, { roleComboSearch }] = RoleApi();
@@ -90,7 +90,6 @@ const AccessRegForm = () => {
     const [site_id, setSiteId] = useState('');
     const [newHidden, setNewHidden] = useState(false);
     const [loginFailCount, setLoginFailCount] = useState(0);
-
 
     // Role Update button
     const [isRoleUpdate, setIsRoleUpdate] = useState(true);
@@ -319,7 +318,7 @@ const AccessRegForm = () => {
                 alert('등록을 완료하였습니다.');
                 navigate('/access/list');
                 break;
-            case 'updateData':
+            case 'updateAccessData':
                 alert('수정을 완료하였습니다.');
                 navigate('/access/list');
                 break;
@@ -487,7 +486,7 @@ const AccessRegForm = () => {
         };
         console.log(requestData);
         if (paramId) {
-            accountUpdate(id, requestData);
+            accessUpdate(id, requestData);
         } else {
             accountInsert(requestData);
         }

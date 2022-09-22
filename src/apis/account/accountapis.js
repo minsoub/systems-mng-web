@@ -77,6 +77,15 @@ const AccountApis = () => {
         });
     };
 
+    const updateAccessData = (id, data) => {
+        callApi('updateAccessData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/access/${id}`,
+            requestConfig: data
+        });
+    };
+
     // 통합시스템 관리 - 접근 관리 수정 (롤정보 업데이트)
     const updateRoleData = (id, data) => {
         callApi('updateRoleData', {
@@ -201,6 +210,7 @@ const AccountApis = () => {
             accountDeletes: deleteAccounts,
             accountInsert: insertData,
             accountUpdate: updateData,
+            accessUpdate: updateAccessData,
             accountMngSearch: getSearchMngData,
             accountMngDetail: getDetailDataMng,
             accountMngUpdate: updateMng,

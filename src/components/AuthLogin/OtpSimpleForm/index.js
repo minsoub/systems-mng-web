@@ -122,7 +122,7 @@ const OtpSimpleForm = ({ result }) => {
                 otp_no: otpNumber,
                 name: result.name,
                 token: result.token,
-                encode_key: result.otp_info.encode_key,
+                check_data: result.valid_data,
                 status: result.status
             };
             actionOtp(data);

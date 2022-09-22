@@ -76,11 +76,11 @@ const AuthLogin = () => {
                     // site_id, token
                     console.log('success => ');
                     console.log(responseData.data);
-                    if (responseData.data.is_code === true) {
-                        navigate('/otpsimplelogin', { state: responseData.data });
-                    } else {
-                        navigate('/otplogin', { state: responseData.data });
-                    }
+                    //if (responseData.data.is_code === true) {
+                    navigate('/otpsimplelogin', { state: responseData.data });
+                    //} else {
+                    //    navigate('/otplogin', { state: responseData.data });
+                    //}
                 }
                 break;
             default:
