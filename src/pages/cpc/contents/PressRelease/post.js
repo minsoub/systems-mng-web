@@ -213,7 +213,7 @@ const Post = () => {
     // 목록
     const listClick = () => {
         console.log('listClick called...');
-        navigate('/cpc/contents/press_release/list');
+        navigate('/cpc/contents/press-release/list');
     };
 
     const isValidate = () => {

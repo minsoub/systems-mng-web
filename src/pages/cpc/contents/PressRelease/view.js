@@ -244,7 +244,7 @@ const View = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/cpc/contents/press_release/reg/${rowData.id}`);
+            navigate(`/cpc/contents/press-release/reg/${rowData.id}`);
         }
     };
 
@@ -304,7 +304,7 @@ const View = () => {
     // 등록
     const addClick = () => {
         console.log('addClick called...');
-        navigate('/cpc/contents/press_release/reg');
+        navigate('/cpc/contents/press-release/reg');
     };
 
     return (
