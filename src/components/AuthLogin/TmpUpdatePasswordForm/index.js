@@ -40,12 +40,12 @@ const TmpUpdatePasswordForm = ({ result }) => {
         if (requestError) {
             console.log('>> requestError <<');
             console.log(requestError);
-          if (requestError.message === 'INVALID_USER_PASSWORD') {
-            alert('영문 소문자, 대문자, 특수문자를 포함하여 8자리-64자리로 만들어 주세요.');
-          }
-          if (requestError.message === 'EQUAL_CURRENT_PASSWORD' || requestError.message === 'EQUAL_OLD_PASSWORD') {
-            alert('이전 비밀번호와 다른 비밀번호를 입력해 주세요.');
-          }
+            if (requestError.message === 'INVALID_USER_PASSWORD') {
+                alert('영문 소문자, 대문자, 특수문자를 포함하여 8자리-64자리로 만들어 주세요.');
+            }
+            if (requestError.message === 'EQUAL_CURRENT_PASSWORD' || requestError.message === 'EQUAL_OLD_PASSWORD') {
+                alert('이전 비밀번호와 다른 비밀번호를 입력해 주세요.');
+            }
         }
     }, [requestError]);
 
@@ -76,11 +76,13 @@ const TmpUpdatePasswordForm = ({ result }) => {
         <>
             <Formik
                 initialValues={{
+                    current_password: '',
                     password: '',
                     confirmPassword: '',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
+                    current_password: Yup.string().max(255).required('Current Password is required'),
                     password: Yup.string().max(255).required('Password is required'),
                     confirmPassword: Yup.string().max(255).required('Password is required')
                 })}
@@ -90,6 +92,10 @@ const TmpUpdatePasswordForm = ({ result }) => {
                 // }}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
+                        if (!values.current_password) {
+                            alert('기존 비밀번호를 입력해 주세요.');
+                            return;
+                        }
                         if (values.password !== values.confirmPassword) {
                             alert('비밀번호가 다릅니다.');
                             return;
@@ -105,7 +111,7 @@ const TmpUpdatePasswordForm = ({ result }) => {
                         //console.log(result);
                         let tokenData = jwt.decode(result.access_token);
                         console.log(tokenData);
-                        actionPasswordUpdate(tokenData.iss, values.password);
+                        actionPasswordUpdate(tokenData.iss, values.current_password, values.password);
                     } catch (err) {
                         console.log(err);
                         setStatus({ success: false });
@@ -127,6 +133,45 @@ const TmpUpdatePasswordForm = ({ result }) => {
                             <Stack spacing={2}>
                                 <InputLabel>개인정보보호를 위하여 새로운 비밀번호로 변경 후 사용이 가능합니다.</InputLabel>
                             </Stack>
+                        </Grid>
+                        <Grid item xs={12} className="passwordForm">
+                            <Stack spacing={1}>
+                                <InputLabel htmlFor="password-login" required="true">
+                                    기존 비밀번호
+                                </InputLabel>
+                                <OutlinedInput
+                                    fullWidth
+                                    error={Boolean(touched.current_password && errors.current_password)}
+                                    id="-password-login"
+                                    type={showPassword ? 'text' : 'password'}
+                                    value={values.current_password}
+                                    name="current_password"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                                size="large"
+                                            >
+                                                {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    placeholder="Enter Current password"
+                                />
+                                {touched.current_password && errors.current_password && (
+                                    <FormHelperText error id="standard-weight-helper-text-password-login">
+                                        {errors.current_password}
+                                    </FormHelperText>
+                                )}
+                            </Stack>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Stack spacing={1}>&nbsp;</Stack>
                         </Grid>
                         <Grid item xs={12} className="passwordForm">
                             <Stack spacing={1}>

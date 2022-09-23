@@ -154,6 +154,11 @@ const MainRoutes = [
                 path: 'resetpassword',
                 element: <ResetPasswordForm />
             },
+            // 패스워드 초기화 요청 페이지
+            {
+                path: 'confirm-password/:paramId',
+                element: <ResetPasswordForm />
+            },
             // 회원가입 페이지
             {
                 path: 'signup',

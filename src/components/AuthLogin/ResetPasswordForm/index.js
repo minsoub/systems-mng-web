@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button, FormHelperText, Grid, InputLabel, OutlinedInput, Stack } from '@mui/material';
 import useAuthorized from 'apis/auth/auths';
@@ -8,9 +8,19 @@ import * as Yup from 'yup';
 
 const ResetPasswordForm = () => {
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { actionTempPassword }] = useAuthorized();
+    const [responseData, requestError, loading, { actionTempPassword, actionTempPasswordInit }] = useAuthorized();
+    const [title, setTitle] = useState();
 
     const { isLoggined, siteId, accessToken } = useSelector((state) => state.auth);
+    const { paramId } = useParams();
+
+    useEffect(() => {
+        if (paramId) {
+            setTitle('임시 비밀번호 발급');
+        } else {
+            setTitle('본인 확인 요청');
+        }
+    }, []);
 
     useEffect(() => {
         if (localStorage.hasOwnProperty('authenticated') && isLoggined === true && siteId && accessToken) {
@@ -47,7 +57,19 @@ const ResetPasswordForm = () => {
                     // site_id, token
                     console.log('success => ');
                     console.log(responseData.data);
-                    alert('임시비밀번호가 메일로 발송되었습니다. 메일을 확인해 주세요.');
+                    alert('임시 비밀번호가 발송되었습니다. 메일을 확인해 주세요.');
+                    navigate('/login');
+                }
+                break;
+            case 'temp-password-init':
+                console.log(responseData);
+                if (responseData.data) {
+                    //setDataGridRows(responseData.data);
+                    // email, otpInfo:encode_key, url
+                    // site_id, token
+                    console.log('success => ');
+                    console.log(responseData.data);
+                    alert('본인 확인을 위한 메일이 발송되었습니다. 메일을 확인해 주세요.');
                     navigate('/login');
                 }
                 break;
@@ -72,7 +94,12 @@ const ResetPasswordForm = () => {
                         setStatus({ success: false });
                         setSubmitting(true);
                         console.log(values.email);
-                        actionTempPassword(values.email);
+                        if (paramId) {
+                            // 임시 비밀번호 발급 요청
+                            actionTempPassword(values.email, paramId);
+                        } else {
+                            actionTempPasswordInit(values.email); // 본인 확인 요청
+                        }
                     } catch (err) {
                         console.log(err);
                         setStatus({ success: false });
@@ -123,7 +150,7 @@ const ResetPasswordForm = () => {
                                     variant="contained"
                                     color="primary"
                                 >
-                                    임시 비밀번호 발급
+                                    {title}
                                 </Button>
                             </Grid>
                         </Grid>

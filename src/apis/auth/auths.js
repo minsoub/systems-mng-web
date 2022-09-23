@@ -68,10 +68,11 @@ const useAuthorized = () => {
         });
     };
     // 사용자 패스워드 수정
-    const passwordUpdate = (email, password) => {
+    const passwordUpdate = (email, current_password, password) => {
         const encryptEmail = doEncrypt(email);
         const encryptPasswd = doEncrypt(password);
-        Promise.all([encryptEmail, encryptPasswd]).then((values) => {
+        const encryptCurrentPasswd = doEncrypt(current_password);
+        Promise.all([encryptEmail, encryptPasswd, encryptCurrentPasswd]).then((values) => {
             callApi('passupdate', {
                 axiosInstance: axiosInstanceAuth,
                 method: 'post',
@@ -79,17 +80,31 @@ const useAuthorized = () => {
                 requestConfig: {
                     email: values[0],
                     passwd: values[1],
+                    current_passwd: values[2],
                     siteId: '628cfe073d11df86c8933a89'
                 }
             });
         });
     };
-    const tempPassword = (email) => {
+    const tempPassword = (email, validData) => {
         doEncrypt(email).then((encryptedEmail) => {
             callApi('temp-password', {
                 axiosInstance: axiosInstanceAuth,
                 method: 'post',
                 url: `/adm/temp-password`,
+                requestConfig: {
+                    email: encryptedEmail,
+                    valid_data: validData
+                }
+            });
+        });
+    };
+    const tempPasswordInit = (email) => {
+        doEncrypt(email).then((encryptedEmail) => {
+            callApi('temp-password-init', {
+                axiosInstance: axiosInstanceAuth,
+                method: 'post',
+                url: `/adm/temp-password-init`,
                 requestConfig: {
                     email: encryptedEmail
                 }
@@ -106,6 +121,7 @@ const useAuthorized = () => {
             actionClear: otpClear,
             actionPasswordUpdate: passwordUpdate,
             actionTempPassword: tempPassword,
+            actionTempPasswordInit: tempPasswordInit,
             actionInit: init,
             actionRsaPublicKey: rsaPublicKey
         }
