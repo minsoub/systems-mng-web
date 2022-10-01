@@ -126,12 +126,22 @@ const FoundationApi = () => {
     };
 
     // 담당자 정보
-    // 담당자 정보 조회
+    // 담당자 정보 조회(마스킹된 데이터)
     const getUserListData = (data) => {
         callApi('getUserList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
             url: `/mng/lrc/lrcmanagment/project/user-account/${data}`,
+            requestConfig: {}
+        });
+    };
+    // 담당자 정보 조회(UnMasking Data)
+    const getUnMaskingUserListData = (data, reason) => {
+        let reasonData = encodeURIComponent(reason);
+        callApi('getUserList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/user-account/unmasking/${data}?reason=${reasonData}`,
             requestConfig: {}
         });
     };
@@ -321,6 +331,7 @@ const FoundationApi = () => {
             requestConfig: {}
         });
     };
+
     // 담당자 정보 등록
     const lrcUserRegister = (projectId, id, email) => {
         doEncrypt(email).then((encryptedEmail) => {
@@ -395,6 +406,7 @@ const FoundationApi = () => {
             projectSearch: getProjectListData,
             updateProjectInfo: updateProjectInfo,
             userSearch: getUserListData,
+            userUnMaskingSearch: getUnMaskingUserListData,
             createUserSearch: getCreateUserData,
             icoSearch: getIcoListData,
             updateIcoList: updateIcoList,

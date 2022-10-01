@@ -31,7 +31,8 @@ const SiteMyPrivacy = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 60
+            maxWidth: 60,
+            renderCell: (index) => index.api.getRowIndex(index.row.id) + 1
         },
         {
             field: 'email',
@@ -39,7 +40,7 @@ const SiteMyPrivacy = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 200
+            maxWidth: 240
         },
         {
             field: 'ip',
@@ -50,12 +51,12 @@ const SiteMyPrivacy = () => {
             maxWidth: 100
         },
         {
-            field: 'work',
+            field: 'action_type',
             headerName: '수행업무',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 200
+            maxWidth: 100
         },
         {
             field: 'reason',
@@ -63,7 +64,7 @@ const SiteMyPrivacy = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 60
+            maxWidth: 200
         },
         {
             field: 'description',
@@ -73,7 +74,7 @@ const SiteMyPrivacy = () => {
             align: 'left'
         },
         {
-            field: 'input_time',
+            field: 'create_date',
             headerName: '입력시간',
             flex: 1,
             headerAlign: 'center',
@@ -84,7 +85,7 @@ const SiteMyPrivacy = () => {
 
     // 그리드 클릭
     const handleClick = (rowData) => {
-        navigate(`/sitemyprivacy/${rowData.row.id}`);
+        //navigate(`/sitemyprivacy/${rowData.row.id}`);
     };
 
     //체크박스 선택된 row id 저장
@@ -147,6 +148,11 @@ const SiteMyPrivacy = () => {
     const searchClick = () => {
         getSearchData(start_date, end_date, keyword);
     };
+    useEffect(() => {
+        setStartDate(moment().format('YYYY-MM-DD'));
+        setEndDate(moment().format('YYYY-MM-DD'));
+        getSearchData(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'), '');
+    }, []);
 
     useEffect(() => {
         if (!responseData) {

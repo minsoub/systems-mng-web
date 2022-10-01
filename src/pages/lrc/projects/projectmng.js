@@ -12,6 +12,7 @@ import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import axiosInstanceDefault from '../../../apis/axiosDefault';
 import { doEncrypt } from '../../../utils/Crypt';
+import PrivateReasonDialog from '../../popup/PrivateResonPopup';
 
 const useStyles = makeStyles({
     tableRow: {
@@ -57,6 +58,7 @@ const ProjectMng = (props) => {
             projectSearch,
             updateProjectInfo,
             userSearch,
+            userUnMaskingSearch,
             createUserSearch,
             icoSearch,
             updateIcoList,
@@ -75,6 +77,10 @@ const ProjectMng = (props) => {
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
     const [resLineData, reqLineError, lineLoading, { lineSearch }] = LineApis();
     const { projectId, children, tabindex, index, ...other } = props;
+
+    // Log reason Dialog
+    const [openReason, setOpenReason] = useState(false);
+    const [selectedValue, setSelectedValue] = useState('');
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -692,16 +698,16 @@ const ProjectMng = (props) => {
         }
     };
 
-       // 재단정보 저장
+    // 재단정보 저장
     const foundationSave = () => {
         // 프로젝트명과 심벌의 경우 필수 조건
         if (refProject_name.current.value.length === 0) {
-          alert('프로젝트명을 입력해주세요.');
-          return;
+            alert('프로젝트명을 입력해주세요.');
+            return;
         }
         if (refSymbol.current.value.length === 0) {
-          alert('심볼을 입력해주세요.');
-          return;
+            alert('심볼을 입력해주세요.');
+            return;
         }
         const regex1 = /^[A-Z|a-z|0-9|]*$/;
         if (!regex1.test(refProject_name.current.value)) {
@@ -714,7 +720,6 @@ const ProjectMng = (props) => {
             alert('유효하지 않은 심볼입니다.');
             return;
         }
-
 
         if (confirm('저장하시겠습니까?')) {
             let saveData = {
@@ -756,18 +761,18 @@ const ProjectMng = (props) => {
             alert('KRW 상장가를 입력해주세요.');
             return;
         }
-      if (!krw_ico_date) {
-        alert('KRW 상장일을 입력해주세요.');
-        return;
-      }
+        if (!krw_ico_date) {
+            alert('KRW 상장일을 입력해주세요.');
+            return;
+        }
         if (!refPriceBTC.current.value) {
-          alert('BTC 상장가를 입력해주세요.');
-          return;
+            alert('BTC 상장가를 입력해주세요.');
+            return;
         }
 
         if (!btc_ico_date) {
-          alert('BTC 상장일을 입력해주세요.');
-          return;
+            alert('BTC 상장일을 입력해주세요.');
+            return;
         }
         if (confirm('저장하시겠습니까?')) {
             let ico_info_list = [];
@@ -825,9 +830,9 @@ const ProjectMng = (props) => {
         marketingList.map((item) => {
             const { minimum_quantity, actual_quantity } = item;
             if (!item.symbol) {
-              alert('심볼을 입력해주세요.');
-              found = 1;
-              return;
+                alert('심볼을 입력해주세요.');
+                found = 1;
+                return;
             }
             if (!pattern.test(item.symbol)) {
                 alert('유효하지 않은 심볼입니다.');
@@ -952,6 +957,24 @@ const ProjectMng = (props) => {
             if (confirm('저장하시겠습니까?')) {
                 lrcUserSave(projectId, userList);
             }
+        }
+    };
+
+    const reqUnMask = () => {
+        if (userList.length > 0) {
+            // 마스킹 해제 요청을 한다. (해당 요청은 내부망에서만 이루어질 것이다)
+            setOpenReason(true);
+        }
+    };
+
+    const handlePopupClose = (returnData) => {
+        setOpenReason(false);
+        // 데이터 처리
+        if (returnData.length !== 0) {
+            // 데이터 처리
+            console.log(returnData);
+            let reason = returnData;
+            userUnMaskingSearch(projectId, reason);
         }
     };
 
@@ -1463,6 +1486,16 @@ const ProjectMng = (props) => {
                                         저장
                                     </Button>
                                     &nbsp;
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={reqUnMask}
+                                    >
+                                        UnMask
+                                    </Button>
                                 </FlexBox>
                             </td>
                         </tr>
@@ -1564,6 +1597,7 @@ const ProjectMng = (props) => {
                     </table>
                 </ContentLine>
             </Grid>
+            <PrivateReasonDialog selectedValue={selectedValue} open={openReason} onClose={handlePopupClose} />
         </Grid>
     );
 };

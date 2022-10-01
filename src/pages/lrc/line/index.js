@@ -268,7 +268,7 @@ const LineMngPage = () => {
                                 onClick={searchClick}
                             >
                                 검색
-                            </Button> */}
+                            </Button>
 
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
                                 신규
