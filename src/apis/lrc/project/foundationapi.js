@@ -235,12 +235,12 @@ const FoundationApi = () => {
         });
     };
 
-    // 파일 다운로드
-    const getFile = (key) => {
+    // 검토 평가 파일 다운로드
+    const getFile = (projectId, id, key) => {
         callApi('getFile', {
             axiosInstance: axiosInstanceDownload,
             method: 'get',
-            url: `/mng/lrc/files/download/s3/common/${key}`,
+            url: `/mng/lrc/lrcmanagment/project/review-estimate/file/${projectId}/${id}/${key}`,
             requestConfig: {}
         });
     };

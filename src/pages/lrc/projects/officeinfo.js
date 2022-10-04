@@ -421,9 +421,9 @@ const OfficeInfo = (props) => {
         setValue(value);
     };
     // 검토 파일 다운로드
-    const fileDownload = (fileKey, fileName) => {
+    const fileDownload = (id, fileKey, fileName) => {
         setDownloadFileName(fileName);
-        fileReviewDownload(fileKey);
+        fileReviewDownload(projectId, id, fileKey);
     };
     const format = (num, decimals) =>
         num.toLocaleString('en-US', {
@@ -656,9 +656,13 @@ const OfficeInfo = (props) => {
                                     {item.reference}
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    <a href="#" onClick={() => fileDownload(item.file_key, item.file_name)}>
-                                        {item.file_name}
-                                    </a>
+                                    {item.file_key && item.file_status === 'CLEAN' && (
+                                        <a href="#" onClick={() => fileDownload(item.id, item.file_key, item.file_name)}>
+                                            {item.file_name}
+                                        </a>
+                                    )}
+                                    {item.file_key && item.file_status === 'ING' && <div>{item.file_name} [검사중]</div>}
+                                    {item.file_key && item.file_status === 'INFECTED' && <div>{item.file_name} [감염파일]</div>}
                                 </TableCell>
                             </TableRow>
                         ))}
