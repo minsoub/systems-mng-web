@@ -53,7 +53,7 @@ export const NetworkCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
             <Stack spacing={10} className={cx('borderTitle')}>
                 네트워크 계열
             </Stack>
-            <Grid item xs={8} sm={10}>
+            <Grid>
                 {dataGridRows.map((item, index) => (
                     <StsCheckbox
                         className="checkedBox--width"

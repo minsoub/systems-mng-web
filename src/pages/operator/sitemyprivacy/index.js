@@ -172,8 +172,8 @@ const SiteMyPrivacy = () => {
     }, [responseData]);
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="개인정보 취급이력" menuStep01="사이트 관리" menuStep02="개인정보 취급이력" />
                 <MainCard>
                     {/* 기간 검색 */}

@@ -2,6 +2,11 @@
 @import 'commonColor';
 @import 'mixin';
 
+body{
+    min-width: 1280px;
+    overflow-x: auto;
+}
+
 // 공통 타이틀
 .borderTitle {
     width: 100px;
@@ -109,7 +114,7 @@ legend,
 .common-grid--layout {
     width: 100%;
     margin-bottom: 1.5rem;
-
+    overflow-x: auto;
     table {
         width: 100%;
     }

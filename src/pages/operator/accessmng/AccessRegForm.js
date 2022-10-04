@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
+import './styles.scss';
 import {
     Button,
     Checkbox,
@@ -622,108 +622,101 @@ const AccessRegForm = () => {
 
     return (
         <>
-            <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-                <Grid item xs={12} md={7} lg={12}>
+            <Grid container rowSpacing={4} columnSpacing={2.75} className="accessReg">
+                <Grid item xs={12}>
                     <HeaderTitle titleNm="사용자 접근 관리" menuStep01="사이트 관리" menuStep02="사용자 접근 관리" menuStep03="계정 등록" />
 
                     <MainCard sx={{ mt: 2 }}>
                         <div className="bottom--blank">
-                            <FlexBox>
-                                <DropInput title="이름">
-                                    <TextField
-                                        id="filled-hidden-label-small"
-                                        type="text"
-                                        size="small"
-                                        value={name}
-                                        inputProps={{ readOnly: true }}
-                                        name="name"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        placeholder="Input the name"
-                                        fullWidth
-                                    />
-                                </DropInput>
-
-                                <FlexBox>
-                                    <DropInput title="이메일 주소">
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="small"
-                                            value={email}
-                                            name="email"
-                                            inputProps={{ readOnly: true }}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="Enter Email ID"
-                                            fullWidth
-                                        />
-                                    </DropInput>
-                                </FlexBox>
-                                {/* <Button
-                                    disableElevation
-                                    size="medium"
-                                    type="button"
-                                    disabled={isUpdate}
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={emailDuplicateCheck}
-                                >
-                                    중복체크
-                                </Button> */}
-                            </FlexBox>
+                            <DropInput title="이름">
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="small"
+                                    value={name}
+                                    inputProps={{ readOnly: true }}
+                                    name="name"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    placeholder="Input the name"
+                                    fullWidth
+                                />
+                            </DropInput>
+                            <DropInput title="이메일 주소">
+                                <TextField
+                                    id="filled-hidden-label-small"
+                                    type="text"
+                                    size="small"
+                                    value={email}
+                                    name="email"
+                                    inputProps={{ readOnly: true }}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    placeholder="Enter Email ID"
+                                    fullWidth
+                                />
+                            </DropInput>
+                            {/* <Button
+                                disableElevation
+                                size="medium"
+                                type="button"
+                                disabled={isUpdate}
+                                variant="contained"
+                                color="secondary"
+                                onClick={emailDuplicateCheck}
+                            >
+                                중복체크
+                            </Button> */}
                         </div>
 
                         <div className="bottom--blank">
-                            <FlexBox>
-                                {/*<DropInput title="비밀번호">*/}
-                                {/*    <TextField*/}
-                                {/*        id="filled-hidden-label-small"*/}
-                                {/*        type="password"*/}
-                                {/*        size="small"*/}
-                                {/*        value={password}*/}
-                                {/*        name="password"*/}
-                                {/*        onBlur={handleBlur}*/}
-                                {/*        onChange={handleChange}*/}
-                                {/*        placeholder="Input the password."*/}
-                                {/*        fullWidth*/}
-                                {/*    />*/}
-                                {/*</DropInput>*/}
+                            {/*<DropInput title="비밀번호">*/}
+                            {/*    <TextField*/}
+                            {/*        id="filled-hidden-label-small"*/}
+                            {/*        type="password"*/}
+                            {/*        size="small"*/}
+                            {/*        value={password}*/}
+                            {/*        name="password"*/}
+                            {/*        onBlur={handleBlur}*/}
+                            {/*        onChange={handleChange}*/}
+                            {/*        placeholder="Input the password."*/}
+                            {/*        fullWidth*/}
+                            {/*    />*/}
+                            {/*</DropInput>*/}
+                            <Grid>
+                                {/* 기간 검색 */}
+                                <SearchDate
+                                    start_date={valid_start_date}
+                                    end_date={valid_end_date}
+                                    handleBlur={handleBlur}
+                                    handleChange={handleChange}
+                                    noneChecked="noneChecked"
+                                    startName="valid_start_date"
+                                    endName="valid_end_date"
+                                    title="유효 기간"
+                                />
+                            </Grid>
+                            <DropInput title="계정상태">
                                 <Grid>
-                                    {/* 기간 검색 */}
-                                    <SearchDate
-                                        start_date={valid_start_date}
-                                        end_date={valid_end_date}
-                                        handleBlur={handleBlur}
-                                        handleChange={handleChange}
-                                        noneChecked="noneChecked"
-                                        startName="valid_start_date"
-                                        endName="valid_end_date"
-                                        title="유효 기간"
-                                    />
+                                    <TextField
+                                        name="currentStatus"
+                                        label="현재 계정상태"
+                                        value={currentStatus}
+                                        readOnly="readOnly"
+                                    ></TextField>
+                                    <span className={cx('center')}> </span>
+                                    <Select name="status" label="변경 계정상태" value={status} onChange={statusChanged}>
+                                        <MenuItem value="INIT">변경 상태선택</MenuItem>
+                                        <MenuItem value="NORMAL">정상</MenuItem>
+                                        <MenuItem value="INIT_OTP_COMPLETE">초기화완료(OTP)</MenuItem>
+                                        <MenuItem value="DENY_ACCESS">중지상태</MenuItem>
+                                        <MenuItem value="CLOSED_ACCOUNT">계정잠금</MenuItem>
+                                    </Select>
                                 </Grid>
-                                <DropInput title="계정상태">
-                                    <Grid>
-                                        <TextField
-                                            name="currentStatus"
-                                            label="현재 계정상태"
-                                            value={currentStatus}
-                                            readOnly="readOnly"
-                                        ></TextField>
-                                        <span className={cx('center')}> </span>
-                                        <Select name="status" label="변경 계정상태" value={status} onChange={statusChanged}>
-                                            <MenuItem value="INIT">변경 상태선택</MenuItem>
-                                            <MenuItem value="NORMAL">정상</MenuItem>
-                                            <MenuItem value="INIT_OTP_COMPLETE">초기화완료(OTP)</MenuItem>
-                                            <MenuItem value="DENY_ACCESS">중지상태</MenuItem>
-                                            <MenuItem value="CLOSED_ACCOUNT">계정잠금</MenuItem>
-                                        </Select>
-                                    </Grid>
-                                </DropInput>
-                            </FlexBox>
+                            </DropInput>
                         </div>
 
-                        <FlexBox>
+                        <div className="bottom--blank">
                             <DropInput title="로그인 실패">
                                 <TextField
                                     id="filled-hidden-label-small"
@@ -748,7 +741,7 @@ const AccessRegForm = () => {
                                     <FormControlLabel value="false" control={<Radio />} label="사용안함" />
                                 </RadioGroup>
                             </DropInput>
-                        </FlexBox>
+                        </div>
 
                         <ButtonLayout>
                             <Button
@@ -829,7 +822,7 @@ const AccessRegForm = () => {
 
                     <MainCard>
                         <TopInputLayout>
-                            <FlexBox>
+                            <div className="selectBoxSet">
                                 <DropInput title="사이트명">
                                     <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                         <MenuItem value="">
@@ -857,7 +850,7 @@ const AccessRegForm = () => {
                                         ))}
                                     </Select>
                                 </DropInput>
-                            </FlexBox>
+                            </div>
 
                             <ButtonLayout>
                                 <Button

@@ -755,8 +755,8 @@ const SiteAuthMngRegForm = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className="siteauthReg">
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="권한 맵핑 등록" menuStep01="사이트 관리" menuStep02="권한 관리" menuStep03="권한 맵핑 등록" />
 
                 <MainCard>
@@ -811,7 +811,7 @@ const SiteAuthMngRegForm = () => {
                 </MainCard>
 
                 <Grid container xs={12}>
-                    <Grid item xs={4}>
+                    <Grid item xs={4} className="treeArea">
                         <MainCard sx={{ mt: 2 }} content={false}>
                             <TreeView
                                 aria-label="controlled"
@@ -826,57 +826,57 @@ const SiteAuthMngRegForm = () => {
 
                     {/* 콘텐츠 영역 */}
                     <Grid item xs={8} className="blank--layout">
-                        <div className="layout--align">
-                            <Item>Role : {role_name}</Item>
-                            <Button disableElevation size="medium" type="button" variant="contained" onClick={programMappingSaveClick}>
-                                저장
-                            </Button>
-                        </div>
-
                         <Grid container spacing={0} sx={{ mt: 1 }}>
-                            <Grid item xs={8} sm={12}>
-                                <ContentLine>
-                                    <DefaultDataGrid
-                                        columns={roleColumns}
-                                        rows={dataGridRoleRows}
-                                        handlePageChange={handlePage}
-                                        handleGridClick={handleClick}
-                                        handleGridDoubleClick={handleDoubleClick}
-                                        selectionChange={handleSelectionRoleChange}
-                                        height={340}
-                                    />
-                                </ContentLine>
+                            <div className="layout--align">
+                                <Item>Role : {role_name}</Item>
+                                <Button disableElevation size="medium" type="button" variant="contained" onClick={programMappingSaveClick}>
+                                    저장
+                                </Button>
+                            </div>
+                            <Grid container spacing={0} sx={{ mt: 1 }}>
+                                <Grid item xs={12} sm={12}>
+                                    <ContentLine>
+                                        <DefaultDataGrid
+                                            columns={roleColumns}
+                                            rows={dataGridRoleRows}
+                                            handlePageChange={handlePage}
+                                            handleGridClick={handleClick}
+                                            handleGridDoubleClick={handleDoubleClick}
+                                            selectionChange={handleSelectionRoleChange}
+                                            height={340}
+                                        />
+                                    </ContentLine>
+                                </Grid>
                             </Grid>
+                        </Grid>
+                        <Grid container spacing={0} sx={{ mt: 1 }}>
+                            <div className="layout--align">
+                                <Item>프로그램 목록</Item>
+                                <Button
+                                    disableElevation
+                                    size="medium"
+                                    type="button"
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={programMappingSave}
+                                >
+                                    선택반영
+                                </Button>
+                            </div>
 
                             <Grid container spacing={0} sx={{ mt: 1 }}>
-                                <div className="layout--align">
-                                    <Item>프로그램 목록</Item>
-                                    <Button
-                                        disableElevation
-                                        size="medium"
-                                        type="button"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={programMappingSave}
-                                    >
-                                        선택반영
-                                    </Button>
-                                </div>
-
-                                <Grid container spacing={0} sx={{ mt: 1 }}>
-                                    <Grid item xs={8} sm={12}>
-                                        <ContentLine>
-                                            <CheckBoxDataGrid
-                                                columns={programColumns}
-                                                rows={dataGridProgramRows}
-                                                handlePageChange={handlePage}
-                                                handleGridClick={handleClick}
-                                                handleGridDoubleClick={handleDoubleClick}
-                                                selectionChange={handleSelectionProgramChange}
-                                                height={340}
-                                            />
-                                        </ContentLine>
-                                    </Grid>
+                                <Grid item xs={12} sm={12}>
+                                    <ContentLine>
+                                        <CheckBoxDataGrid
+                                            columns={programColumns}
+                                            rows={dataGridProgramRows}
+                                            handlePageChange={handlePage}
+                                            handleGridClick={handleClick}
+                                            handleGridDoubleClick={handleDoubleClick}
+                                            selectionChange={handleSelectionProgramChange}
+                                            height={340}
+                                        />
+                                    </ContentLine>
                                 </Grid>
                             </Grid>
                         </Grid>

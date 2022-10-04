@@ -341,8 +341,8 @@ const LegalCounselingMng = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="법률 상담 관리" menuStep01="사이트 운영" menuStep02="법률 상담 관리" />
 
                 <MainCard className="legalLayout">
