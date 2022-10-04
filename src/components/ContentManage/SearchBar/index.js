@@ -10,7 +10,7 @@ const SearchBar = ({ keyword, handleBlur, handleChange }) => {
                 검색어
             </Stack>
 
-            <FormControl sx={{ minWidth: 400 }} size="medium">
+            <FormControl sx={{ minWidth: 350, width: '100%' }} size="medium">
                 <TextField
                     id="filled-hidden-label-small"
                     type="text"

@@ -600,8 +600,8 @@ const ProjectsPage = () => {
     // };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className='projectList'>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="거래지원 관리" menuStep01="사이트 운영" menuStep02="거래지원 관리" />
 
                 <MainCard>
@@ -665,7 +665,7 @@ const ProjectsPage = () => {
 
                 <MainCard>
                     <Grid container spacing={0}>
-                        <Grid item xs={8} sm={0.7}>
+                        <Grid item xs={1.8} sm={1.2} md={1.1}>
                             <Typography variant="h6" color="inherit" onClick={() => filterClick(null)}>
                                 <a href="#">전체({totalDataGridRows.length})</a>
                             </Typography>
@@ -764,17 +764,22 @@ const ProjectsPage = () => {
                             ))}
                         </TableBody>
                     </Table>
-                    <TablePagination
-                        rowsPerPageOptions={[10, 25, 100]}
-                        component="div"
-                        count={dataGridRows.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                    />
                 </ContentLine>
-
+                <TablePagination
+                    sx={{
+                        border: '1px solid #e6ebf1',
+                        borderTop: 'none',
+                        boxShadow: 'none',
+                        borderRadius: '0 0 2px 2px'
+                    }}
+                    rowsPerPageOptions={[10, 25, 100]}
+                    component="div"
+                    count={dataGridRows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}

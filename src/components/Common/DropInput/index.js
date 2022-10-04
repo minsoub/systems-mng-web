@@ -8,12 +8,12 @@ const DropInput = ({ title, children, className }) => {
     return (
         <div className={cx(className)}>
             <div className={cx(`dropList`)}>
-                <Stack spacing={10} className={cx('borderTitle')}>
+                <Stack spacing={10} className={cx('borderTitle')} sx={{ minWidth: '60px' }}>
                     {title}
                 </Stack>
 
                 <div className={cx('dropList--input')}>
-                    <FormControl sx={{ minWidth: 250, boxSizing: 'border-box' }} size="medium">
+                    <FormControl sx={{ minWidth: 160, boxSizing: 'border-box', width: '100%' }} size="medium">
                         {children}
                     </FormControl>
                 </div>

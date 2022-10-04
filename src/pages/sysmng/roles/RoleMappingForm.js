@@ -453,8 +453,8 @@ const RoleMappingForm = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="사용자 맵핑" menuStep01="통합시스템 관리" menuStep02="Role 관리" menuStep03="사용자 맵핑" />
                 <MainCard>
                     <TopInputLayout>
@@ -495,7 +495,7 @@ const RoleMappingForm = () => {
                 </MainCard>
 
                 <Grid container alignItems="center" justifyContent="space-between" className="roleLayout">
-                    <Grid item md={4}>
+                    <Grid item xs={4}>
                         <ContentLine>
                             <DefaultDataGrid
                                 columns={columns}
@@ -509,7 +509,7 @@ const RoleMappingForm = () => {
                         </ContentLine>
                     </Grid>
 
-                    <Grid item md={7.8}>
+                    <Grid item xs={7.8}>
                         <Typography variant="h4" className="title">
                             등록된 사용자
                         </Typography>

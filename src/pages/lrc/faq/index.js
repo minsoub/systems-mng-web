@@ -12,8 +12,8 @@ const FaqContentsPage = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className="faqList">
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="콘텐츠 관리" menuStep01="사이트 운영" menuStep02="FAQ 관리" menuStep03="콘텐츠 관리" />
 
                 <Tabs value={value} onChange={tabChange} aria-label="basic tabs example" className="bottom--blank">

@@ -1,7 +1,18 @@
 .orderLayout {
     margin-bottom: 20px;
 }
-
+.projectList{
+    .inputLayout{
+        display: block;
+        >div{
+            display: inline-block;
+            margin-right:50px;
+        }
+        .borderTitle{
+            margin-top:5px;
+        }
+    }
+}
 .order__content--width {
     width: 100%;
     display: block;
@@ -40,9 +51,6 @@
     }
 }
 
-.catting__layout {
-    padding-left: 2rem;
-}
 .chatting--container {
     .list__download {
         text-decoration: underline;
@@ -381,5 +389,10 @@ input::file-selector-button {
         .tg-0lax__del {
             width: 50px;
         }
+    }
+}
+.projectsDetail{
+    .community{
+        textarea{width:100%;}
     }
 }

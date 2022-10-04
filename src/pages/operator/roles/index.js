@@ -201,8 +201,8 @@ const SiteRoleManagementPage = () => {
 
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="Role 리스트" menuStep01="사이트 관리" menuStep02="Role 관리" menuStep03="Role 리스트" />
 
                 <MainCard>

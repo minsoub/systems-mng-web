@@ -60,7 +60,7 @@ const Header = ({ open, handleDrawerToggle }) => {
     const theme = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
+    const matchDownMD = useMediaQuery(theme.breakpoints.down('xs'));
     const classes = useStyles();
     const iconBackColor = 'grey.100';
     const iconBackColorOpen = 'grey.200';
@@ -158,7 +158,7 @@ const Header = ({ open, handleDrawerToggle }) => {
                         {/* <StyledTableCell style={{ width: '1', height: 25 }} align="left" component="th" scope="row">
                             <HomeIcon color="primary" />
                         </StyledTableCell> */}
-                        <StyledTableCell style={{ height: 25 }} align="left" component="th" scope="row">
+                        <StyledTableCell sx={{minWidth: 90}} style={{ height: 25 }} align="left" component="th" scope="row">
                             <Typography variant="h6">관리 권한</Typography>
                         </StyledTableCell>
                         <StyledTableCell align="left" component="th" scope="row">

@@ -11,6 +11,7 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import moment from 'moment';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import './styles.module.scss';
+import './style.scss'
 import ContentLine from 'components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
 
@@ -331,7 +332,7 @@ function BoardSearchDialog(props) {
 
     return (
         <Dialog onClose={handleClose} open={open} maxWidth={1280}>
-            <DialogContent style={{ height: '1135px' }}>
+            <DialogContent style={{ height: '1135px' }} className="cpcMainContentsPopup">
                 <Typography sx={{ mt: 1, mb: 0 }} variant="h4" gutterBottom component="div" className="bottom--blank">
                     게시글 선택
                 </Typography>

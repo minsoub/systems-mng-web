@@ -222,8 +222,8 @@ const AccessMngPage = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className="accessList">
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="사용자 접근관리" menuStep01="사이트 관리" menuStep02="사용자 접근관리" />
 
                 <MainCard>

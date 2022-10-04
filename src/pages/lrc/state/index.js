@@ -348,8 +348,8 @@ const StatusRegForm = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75} className="stateMng">
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className="stateMng">
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="상태값 관리" menuStep01="사이트 운영" menuStep02="상태값 관리" menuStep03="상태값 관리" />
 
                 <ButtonLayout buttonName="bottom--blank__small">
@@ -399,59 +399,55 @@ const StatusRegForm = () => {
 
                     <Grid item xs={8} className="blank--layout">
                         <MainCard sx={{ height: 400 }} content={false} className="stateSubmit layout--inner" title="상태값 등록">
-                            <div className="bottom--blank">
-                                <FlexBox>
-                                    <DropInput title="상태명">
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="medium"
-                                            value={name}
-                                            name="name"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            fullWidth
-                                        />
-                                    </DropInput>
-                                    <DropInput title="상태명 (영문)">
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="text"
-                                            size="medium"
-                                            value={name_en}
-                                            name="name_en"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            fullWidth
-                                        />
-                                    </DropInput>
-                                </FlexBox>
+                            <div className="bottom--item">
+                                <DropInput title="상태명">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="medium"
+                                        value={name}
+                                        name="name"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+                                </DropInput>
+                                <DropInput title="상태명 (영문)">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="text"
+                                        size="medium"
+                                        value={name_en}
+                                        name="name_en"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+                                </DropInput>
                             </div>
-                            <div className="bottom--blank">
-                                <FlexBox>
-                                    <DropInput title="분류 위치">
-                                        <TextField
-                                            id="outlined-multiline-static"
-                                            inputProps={{ readOnly: true }}
-                                            value={parent_code_name}
-                                            name="parent_code_name"
-                                            size="medium"
-                                            fullWidth
-                                        />
-                                    </DropInput>
-                                    <DropInput title="정렬 순서">
-                                        <TextField
-                                            id="filled-hidden-label-small"
-                                            type="number"
-                                            size="medium"
-                                            value={order_no}
-                                            name="order_no"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            fullWidth
-                                        />
-                                    </DropInput>
-                                </FlexBox>
+                            <div className="bottom--item">
+                                <DropInput title="분류 위치">
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        inputProps={{ readOnly: true }}
+                                        value={parent_code_name}
+                                        name="parent_code_name"
+                                        size="medium"
+                                        fullWidth
+                                    />
+                                </DropInput>
+                                <DropInput title="정렬 순서">
+                                    <TextField
+                                        id="filled-hidden-label-small"
+                                        type="number"
+                                        size="medium"
+                                        value={order_no}
+                                        name="order_no"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+                                </DropInput>
                             </div>
                             <DropInput title="사용 여부">
                                 <RadioGroup

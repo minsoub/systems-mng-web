@@ -109,25 +109,25 @@ const LrcDashboard = () => {
     }, [responseData]);
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} sx={{ mb: -2.25 }}>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className="lrcDashboard">
+            <Grid item xs={12}>
                 <Typography variant="h3">거래지원 현황</Typography>
             </Grid>
             {dataStatus.map((item, index) => (
-                <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+                <Grid key={index} item xs={4}>
                     <AnalyticLrcForm id={item.id} title={item.name} count={item.count} child={item.children} />
                 </Grid>
             ))}
 
-            <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
+            <Grid item xs={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
 
-            <Grid item xs={12} sx={{ mb: -2.25 }}>
+            <Grid item xs={12}>
                 <Typography variant="h3">재단 통계</Typography>
             </Grid>
             {dataLine
                 .sort((a, b) => (a.order > b.order ? 1 : -1))
                 .map((item, index) => (
-                    <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+                    <Grid key={index} item xs={4}>
                         <AnalyticLrcCharts title={item.name} data={item.data} />
                     </Grid>
                 ))}
