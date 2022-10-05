@@ -103,6 +103,9 @@ const Header = ({ open, handleDrawerToggle }) => {
             //console.log(mySiteList);
 
             if (responseData.data.data.site_id === mySiteId) {
+                authData.roleId = responseData.data.data.id; // Role ID
+                localStorage.setItem('authenticated', JSON.stringify(authData));
+
                 // role과 site_id로 메뉴 조회
                 dispatch(activeRole({ roleId: responseData.data.data.id }));
             }
@@ -150,7 +153,7 @@ const Header = ({ open, handleDrawerToggle }) => {
                                 onClick={handleDrawerToggle}
                                 edge="start"
                                 color="secondary"
-                                sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
+                                sx={{ color: 'text.primary', bgcolor: 'grey.0', ml: -2 }}
                             >
                                 {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                             </IconButton>
@@ -158,24 +161,6 @@ const Header = ({ open, handleDrawerToggle }) => {
                         {/* <StyledTableCell style={{ width: '1', height: 25 }} align="left" component="th" scope="row">
                             <HomeIcon color="primary" />
                         </StyledTableCell> */}
-                        <StyledTableCell sx={{minWidth: 90}} style={{ height: 25 }} align="left" component="th" scope="row">
-                            <Typography variant="h6">관리 권한</Typography>
-                        </StyledTableCell>
-                        <StyledTableCell align="left" component="th" scope="row">
-                            <FormControl sx={{ m: 0, minWidth: 240, maxHeight: 35 }} size="small">
-                                <Select name="mySiteId" label="사이트명" size="small" value={mySiteId} onChange={handleChange}>
-                                    <MenuItem value="">
-                                        <em>Choose a Site Type</em>
-                                    </MenuItem>
-                                    {mySiteList.length > 0 &&
-                                        mySiteList.map((item, index) => (
-                                            <MenuItem key={index} value={item.site_id}>
-                                                {item.name}
-                                            </MenuItem>
-                                        ))}
-                                </Select>
-                            </FormControl>
-                        </StyledTableCell>
                         <StyledTableCell align="left" style={{ width: '40%', height: 25 }} component="th" scope="row"></StyledTableCell>
                         <StyledTableCell align="right" style={{ width: '22%', height: 25 }} component="th" scope="row">
                             <HeaderContent />

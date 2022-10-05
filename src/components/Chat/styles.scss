@@ -1,5 +1,5 @@
 // 색상표 함수
-$green: rgba(185, 216, 254, 0.7);
+$green: #40A9FF;
 $blue: white;
 $orange: #e38968;
 $gray: #92959e;
@@ -45,14 +45,14 @@ $gray: #92959e;
     color: rgba(0, 0, 0, 0.85);
 }
 .message {
-    color: rgba(0, 0, 0, 0.7);
+    color: #fff;
     padding: 18px 20px;
     line-height: 26px;
     font-size: 16px;
-    border-radius: 7px;
     position: relative;
     word-break: break-all;
     &:after {
+        /*
         bottom: 100%;
         right: 29px;
         border: 10px solid transparent;
@@ -63,9 +63,19 @@ $gray: #92959e;
         pointer-events: none;
         border-bottom-color: $green;
         margin-left: -10px;
+        */
     }
 }
-
+.msg--right {
+    .message {
+        border-radius: 10px 10px 0 10px;
+    }
+}
+.msg--left {
+    .message {
+        border-radius: 10px 10px 10px 0;
+    }
+}
 .my-message {
     background: $green;
     cursor: pointer;
@@ -89,14 +99,16 @@ $gray: #92959e;
     justify-items: right;
     margin-bottom: 30px;
     .message-data-time {
+        margin-top: 0.3rem;
         width: 100%;
         display: flex;
         justify-items: right;
+        justify-content: flex-end;
     }
 
     // 삭제하기 버튼
     .my-message__delete {
-        margin-top: 0.6rem;
+        margin-top: 0.1rem;
     }
 }
 
@@ -113,11 +125,12 @@ $gray: #92959e;
 // 공통 스타일
 .message-data-time {
     color: lighten($gray, 8%);
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .chat-message {
     padding: 30px;
+    background: #fff;
     .css-i44wyl {
         width: 100%;
     }
@@ -128,6 +141,11 @@ $gray: #92959e;
         resize: none;
         background: #ffffff;
         border: 1px solid #e6ebf1;
+    }
+    textarea {
+        width: 100%;
+        border-color: #d4d4d4;
+        margin-right: 1rem;
     }
 }
 

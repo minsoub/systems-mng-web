@@ -6,6 +6,7 @@ import MainLayout from 'layout/MainLayout';
 import MinimalLayout from 'layout/MinimalLayout';
 import SiteRegForm from 'pages/sysmng/site/SiteRegForm';
 import Sitemyprivacy from 'pages/operator/sitemyprivacy';
+import ProjectLink from 'pages/lrc/projectlink';
 
 // render - login
 const AuthLogin = Loadable(lazy(() => import('pages/auth/login')));
@@ -113,7 +114,7 @@ const AuthMngRegForm = Loadable(lazy(() => import('pages/sysmng/authmng/AuthMngR
 
 const LrcDashboard = Loadable(lazy(() => import('pages/lrc/dashboard/index')));
 const FileManagementPage = Loadable(lazy(() => import('pages/sysmng/filemng/index')));
-const FilemngRegForm = Loadable(lazy(() => import('pages/sysmng/filemng/FilemngRegForm')));
+const FilemngRegForm = Loadable(lazy(() => import('pages/sysmng/filemng/FileMngRegForm')));
 
 // 통합 시스템 관리 -> 접근 IP 관리
 const IpMngBoard = Loadable(lazy(() => import('pages/sysmng/ipmng')));
@@ -168,6 +169,11 @@ const MainRoutes = [
             {
                 path: '401',
                 element: <Unauthorized />
+            },
+            // Project Link
+            {
+                path: 'lrc/project/link/:id',
+                element: <ProjectLink />
             }
         ]
     },

@@ -125,7 +125,12 @@ function BoardSearchDialog(props) {
             end_date: moment().format('YYYY-MM-DD'),
             keyword
         };
-        searchBoardsForMain(boardMasterId, request);
+        console.log(boardMasterId);
+        if (boardMasterId === '') {
+            searchMainContents();
+        } else {
+            searchBoardsForMain(boardMasterId, request);
+        }
     }, []);
 
     useEffect(() => {

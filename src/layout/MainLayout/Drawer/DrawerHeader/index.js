@@ -17,9 +17,11 @@ const DrawerHeader = ({ open }) => {
     return (
         // only available in paid version
         <DrawerHeaderStyled theme={theme} open={open}>
-            <Stack direction="row" spacing={1} alignItems="center">
-                <InnerLogo />
-                {/* <Chip
+            <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
+                <Logo isIcon={!open} sx={{ width: open ? 'auto' : 35, height: 35 }} />
+                {/* 
+                    <InnerLogo />
+                    <Chip
                     label={process.env.REACT_APP_VERSION}
                     size="small"
                     sx={{ height: 16, '& .MuiChip-label': { fontSize: '0.625rem', py: 0.25 } }}

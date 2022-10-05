@@ -261,8 +261,7 @@ const FaqCategoryPage = () => {
                             >
                                 검색
                             </Button> */}
-
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
+                            <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={newClick}>
                                 신규
                             </Button>
                         </ButtonLayout>
@@ -279,24 +278,6 @@ const FaqCategoryPage = () => {
                         height={350}
                     />
                 </ContentLine>
-
-                <ButtonLayout buttonName="layout--button__bottom">
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick} sx={{ marginTop: '10px' }}>
-                        저장
-                    </Button>
-                    <Button
-                        disableElevation
-                        disabled={!isUpdate}
-                        size="medium"
-                        type="submit"
-                        variant="contained"
-                        color="secondary"
-                        onClick={deleteClick}
-                    >
-                        삭제
-                    </Button>
-                </ButtonLayout>
-
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <div className="bottom--item">
                         <DropInput title="언어 구분" className="bottom--blank">
@@ -350,7 +331,22 @@ const FaqCategoryPage = () => {
                         </DropInput>
                     </div>
                 </MainCard>
-
+                <ButtonLayout style={{ marginTop: '1rem', marginBottom: '2rem' }}>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                        저장
+                    </Button>
+                    <Button
+                        disableElevation
+                        disabled={!isUpdate}
+                        size="medium"
+                        type="submit"
+                        variant="outlined_d"
+                        color="secondary"
+                        onClick={deleteClick}
+                    >
+                        삭제
+                    </Button>
+                </ButtonLayout>
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}

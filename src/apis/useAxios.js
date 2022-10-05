@@ -76,6 +76,8 @@ const useAxios = () => {
         // 기존 리프레시 토큰으로 토큰 갱신
         axiosInstanceAuth.defaults.headers.common.Authorization = `Bearer ${authData.refreshToken}`;
         axiosInstanceAuth.defaults.headers.my_site_id = authData.siteId;
+        axiosInstanceAuth.defaults.headers.active_role = authData.roleId;
+
         try {
             setLoading(true);
             const ctrl = new AbortController();
@@ -126,12 +128,10 @@ const useAxios = () => {
                 }
                 if (authData === null || !authData.siteId) navigate('/login');
                 //console.log('authData:', authData);
-                let site_id = authData.siteId;
-
-                let Authorization = `Bearer ${authData.accessToken}`; // `Bearer ${accessToken}`;
                 // Token 처리
-                axiosInstance.defaults.headers.Authorization = Authorization;
-                axiosInstance.defaults.headers.my_site_id = site_id;
+                axiosInstance.defaults.headers.Authorization = `Bearer ${authData.accessToken}`;
+                axiosInstance.defaults.headers.my_site_id = authData.siteId;
+                axiosInstance.defaults.headers.active_role = authData.roleId;
             } else {
                 console.log('Authrozaton clear...');
                 axiosInstance.defaults.headers.Authorization = '';

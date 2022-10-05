@@ -5,6 +5,7 @@ import {
     Button,
     Grid,
     MenuItem,
+    InputLabel,
     Select,
     Table,
     TableBody,
@@ -36,6 +37,7 @@ import './styles.scss';
 import ContentLine from '../../../components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
 import { stubFalse } from 'lodash';
+import { PlusOutlined } from '@ant-design/icons';
 
 const ProjectsPage = () => {
     let isSubmitting = false;
@@ -339,10 +341,22 @@ const ProjectsPage = () => {
     const handleBlur = (e) => {
         console.log(e);
     };
-    const handleChange = (e) => {
-        //console.log(e.target.name);
-        //console.log(e.target.value);
-        //console.log(moment(e.target.value).format('YYYY.MM.DD'));
+    const resetPeriod= () => {
+        setPeriod(0);
+    };
+    const changeDate =(type,e)=>{
+        switch(type){
+            case 'start':
+                setStartDate(e);
+                break;
+            case 'end':
+                setEndDate(e);
+                break;
+            default:
+                break;
+        }
+    };
+    const handleChange = (e /*, name */) => {
         switch (e.target.name) {
             case 'keyword':
                 setKeyword(e.target.value);
@@ -369,6 +383,12 @@ const ProjectsPage = () => {
                 break;
             case 'process_code':
                 setProcess(e.target.value);
+                break;
+            case 'start_picker':
+                console.log(e.target.value);
+                break;
+            case 'end_picker':
+                console.log(e.target.value);
                 break;
             default:
                 break;
@@ -616,11 +636,20 @@ const ProjectsPage = () => {
                             startName="from_date"
                             endName="to_date"
                             addAll={true}
+                            changeDate={changeDate}
+                            resetPeriod={resetPeriod}
                         />
 
                         <InputLayout>
                             <DropInput title="계약상태">
-                                <Select name="contract_code" label="계정상태" value={contract_code} onChange={handleChange}>
+                            <InputLabel id="contract_code">계약상태</InputLabel>
+                                <Select
+                                    labelId="contract_code"
+                                    id="contract_code"
+                                    name="contract_code"
+                                    value={contract_code}
+                                    onChange={handleChange}
+                                >
                                     <MenuItem value="">전체</MenuItem>
                                     {statusList.map((item, index) => (
                                         <MenuItem key={index} value={item.id}>
@@ -631,6 +660,7 @@ const ProjectsPage = () => {
                             </DropInput>
 
                             <DropInput title="진행상태">
+                                <InputLabel id="process_code">진행상태</InputLabel>
                                 <Select name="process_code" label="계정상태" value={process_code} onChange={handleChange}>
                                     <MenuItem value="">전체</MenuItem>
                                     {processList.map((item, index) => (
@@ -655,15 +685,15 @@ const ProjectsPage = () => {
                     <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
                         검색
                     </Button>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={clearClick}>
                         초기화
                     </Button>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={ExcelDownloadClick}>
-                        엑셀 다운로드
+                    <Button disableElevation size="medium" type="submit" variant="outlined" color="primary" onClick={ExcelDownloadClick}>
+                        <PlusOutlined style={{ marginRight: '0.6rem' }} /> Excel 엑셀 다운로드
                     </Button>
                 </ButtonLayout>
 
-                <MainCard>
+                <MainCard bgcolor='#ddd'>
                     <Grid container spacing={0}>
                         <Grid item xs={1.8} sm={1.2} md={1.1}>
                             <Typography variant="h6" color="inherit" onClick={() => filterClick(null)}>

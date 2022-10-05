@@ -13,4 +13,7 @@
 
 .inputLayout {
     display: flex;
+    > div {
+        margin-right: 50px;
+    }
 }

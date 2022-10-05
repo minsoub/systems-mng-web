@@ -32,7 +32,7 @@ const MainContentsApis = () => {
         callApi('updateMainContents', {
             axiosInstance: axiosInstanceDefault,
             method: 'post',
-            url: `/mng/cpc/main/`,
+            url: `/mng/cpc/main`,
             requestConfig: data
         });
     };

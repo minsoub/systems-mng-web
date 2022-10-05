@@ -5,16 +5,20 @@ import ChatApi from 'apis/chat/chatapi';
 import MessageLeft from 'components/Chat/MessageLeft';
 import MessageRight from 'components/Chat/MessageRight';
 import ChattingRoom from 'components/Chat/ChattingRoom';
-import { Button, FormControl, TextField } from '@mui/material';
+import { Button, FormControl, TextField, Typography } from '@mui/material';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import DownloadIcon from '@mui/icons-material/Download';
+import { MailOutlined, DownloadOutlined, SearchOutlined } from '@ant-design/icons';
 import jwt from 'jsonwebtoken';
 import { nl2brToString } from 'utils/CommonUtils';
 import { Index } from '../../../components/Chat/TextInput';
 import { getDateFormatSecond } from 'utils/CommonUtils';
+import FlexBox from 'components/Common/FlexBox/index';
+import FoundationApi from 'apis/lrc/project/foundationapi';
 const Chat = forwardRef((props, ref) => {
     const { projectId, fileList, fileDownload, chatStart, fileSearch, children, tabindex, index, ...other } = props;
     const [resData, reqError, loading, { chatExistsAndSave, deleteChat, chatExcelDownload }] = ChatApi();
+    const [responseDataC, requestError, loadingData, { sendEmailToProjectUser }] = FoundationApi();
     const { siteId } = useSelector((state) => state.auth);
     const [
         clientError,
@@ -86,6 +90,22 @@ const Chat = forwardRef((props, ref) => {
             }
         };
     }, []);
+    // 메일전송 결과
+    /*
+    useEffect(() => {
+        if (!responseData) {
+            return;
+        }
+        switch (responseData.transactionId) {
+            case 'sendEmail':
+                console.log(responseData.data);
+                alert('전송을 완료하였습니다.');
+                break;
+            default:
+                break;
+        }
+    }, [responseData]);
+    */
 
     const chatExistCheckSend = () => {
         let authData = null;
@@ -474,21 +494,59 @@ const Chat = forwardRef((props, ref) => {
         console.log(data);
         sendRequest(data);
     };
-
+    const sendEmail = (param) => {
+        console.log(param);
+        if (param === 'KOR') {
+            if (confirm('국문 알림 메일을 발송하시겠습니까?')) {
+                sendEmailToProjectUser(projectId, param);
+            }
+        } else if (param === 'EN') {
+            if (confirm('영문 알림 메일을 발송하시겠습니까?')) {
+                sendEmailToProjectUser(projectId, param);
+            }
+        }
+    };
     return (
         <div className="chatting--container">
-            <ButtonLayout>
-                <button type="button" color="primary" className="list__download" onClick={excelDownload}>
-                    <DownloadIcon /> 내역 다운로드
-                </button>
-                <FormControl sx={{ minWidth: 100, boxSizing: 'border-box', marginRight: '0.5rem' }} size="medium">
-                    <TextField id="symbol" name="symbol" inputRef={refKeyword} type="text" size="small" />
-                </FormControl>
+            <FlexBox sx={{ p: '1rem 2rem', justifyContent: 'space-between', alignItems: 'center', bgcolor: '#fff' }}>
+                <Typography variant="h4">커뮤니케이션</Typography>
+                <ButtonLayout buttonName="communicate">
+                    <Button
+                        disableElevation
+                        size="medium"
+                        type="button"
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                            sendEmail('KOR');
+                        }}
+                    >
+                        <MailOutlined /> 국문 알림 메일 발송하기
+                    </Button>
+                    <Button
+                        disableElevation
+                        size="medium"
+                        type="button"
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                            sendEmail('EN');
+                        }}
+                    >
+                        <MailOutlined /> 영문 알림 메일 발송하기
+                    </Button>
+                    <Button color="secondary" variant="outlined" className="list__download" onClick={excelDownload}>
+                        <DownloadOutlined /> 내역 다운로드
+                    </Button>
+                    <FormControl sx={{ minWidth: 100, boxSizing: 'border-box' }} size="medium">
+                        <TextField id="symbol" name="symbol" inputRef={refKeyword} type="text" size="small" />
+                    </FormControl>
 
-                <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
-                    검색
-                </Button>
-            </ButtonLayout>
+                    <Button disableElevation size="medium" type="submit" variant="outlined" color="secondary" onClick={searchClick}>
+                        <SearchOutlined />
+                    </Button>
+                </ButtonLayout>
+            </FlexBox>
             <div className="chat--room">
                 <div className="chat--room__box" id="scrollId" ref={refChatArea}>
                     <ChattingRoom>

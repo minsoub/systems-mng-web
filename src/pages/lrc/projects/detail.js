@@ -136,7 +136,7 @@ const ProjectsDetailPage = () => {
                         <Tab label="프로젝트 관리" />
                         <Tab label="제출 서류 관리" />
                         <Tab label="변경 히스토리" />
-                        <Tab label="커뮤니티" />
+                        <Tab label="커뮤니케이션" />
                     </Tabs>
 
                     <ButtonLayout>

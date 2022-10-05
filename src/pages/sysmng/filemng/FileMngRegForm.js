@@ -4,17 +4,17 @@ import { Button, Checkbox, FormControlLabel, Grid, MenuItem, Select, TextField, 
 // third party
 import MainCard from 'components/Common/MainCard';
 import SiteApi from 'apis/site/siteapi';
-import FilemngApi from 'apis/filemng/filemngapi';
+import FileMngApi from 'apis/filemng/fileMngApi';
 import HeaderTitle from '../../../components/HeaderTitle';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import DropInput from '../../../components/Common/DropInput';
 
-const FilemngRegForm = () => {
+const FileMngRegForm = () => {
     let isSubmitting = false;
 
     const navigate = useNavigate();
     const { paramId, paramSiteId } = useParams();
-    const [responseData, requestError, loading, { fileDetail, fileUpdate, fileInsert }] = FilemngApi();
+    const [responseData, requestError, loading, { fileDetail, fileUpdate, fileInsert }] = FileMngApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
     const [itemList, setItemList] = useState([]); // 사이트 콤보박스
@@ -377,4 +377,4 @@ const FilemngRegForm = () => {
     );
 };
 
-export default FilemngRegForm;
+export default FileMngRegForm;

@@ -112,6 +112,7 @@ export function CheckBoxDataGrid({
         //setSelectionModel(selectionModel);
         selectionChange(selectionModel);
     }, [selectionModel]);
+
     let mHeight = 600;
 
     if (height) {

@@ -356,7 +356,7 @@ const StatusRegForm = () => {
                     <Button disableElevation size="medium" type="submit" name="saveBtn" variant="contained" onClick={saveClick}>
                         {btnSave}
                     </Button>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={cancelClick}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={cancelClick}>
                         취소
                     </Button>
                 </ButtonLayout>

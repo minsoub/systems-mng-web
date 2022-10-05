@@ -4,6 +4,7 @@ import LineApis from 'apis/lrc/line/lineapi';
 import { StsCheckbox } from './StsCheckbox';
 import cx from 'classnames';
 import './styles.scss';
+import StackLabel from 'components/Common/StackLabel';
 
 export const BusinessCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
     const [responseData, requestError, loading, { lineSearch }] = LineApis();
@@ -50,11 +51,9 @@ export const BusinessCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
     }, [responseData]);
     return (
         <>
-            <Grid container spacing={0} sx={{ mt: 1 }}>
-                <Stack spacing={10} className={cx('borderTitle')}>
-                    사업 계열
-                </Stack>
-                <Grid>
+            <Grid container spacing={0} sx={{ mt: 1, alignItems: 'center' }}>
+                <StackLabel title="사업 계열" />
+                <Grid xs={8} sm={10}>
                     {dataGridRows.map((item, index) => (
                         <StsCheckbox
                             className="checkedBox--width"

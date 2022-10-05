@@ -66,6 +66,17 @@ const MenuMngApi = () => {
             requestConfig: send_data
         });
     };
+    // 메뉴와 프로그램 매핑 삭제
+    const deleteProgramMenuMapping = (menu_id, site_id, data) => {
+        let send_data = { program_ids: data };
+        console.log(send_data);
+        callApi('deleteMappingData', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'post',
+            url: `/site/${site_id}/menu/${menu_id}/programs`,
+            requestConfig: send_data
+        });
+    };
     // 메뉴와 프로그램 연결된 프로그램 조회
     const registerProgramMenuSearch = (menu_id, site_id) => {
         callApi('mappingList', {
@@ -87,7 +98,8 @@ const MenuMngApi = () => {
             menumngDetail: getDetailData,
             menumngUpdate: updateProgramData,
             programMapping: registerProgramMenuMapping,
-            programMappingSearch: registerProgramMenuSearch
+            programMappingSearch: registerProgramMenuSearch,
+            programMappingDelete: deleteProgramMenuMapping
         }
     ];
 };
