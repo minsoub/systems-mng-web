@@ -17,6 +17,7 @@ import SearchDate from 'components/ContentManage/SearchDate';
 import ContentLine from '../../../components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
 import ReasonDialog from 'pages/popup/ReasonPopup';
+import { PlusOutlined } from '@ant-design/icons';
 // Log
 const ServiceLog = () => {
     const columns = [
@@ -331,19 +332,17 @@ const ServiceLog = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <Grid className={cx('bottom--blank__small')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
-                            검색
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
-                            초기화
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
-                            Excel
-                        </Button>
-                    </ButtonLayout>
-                </Grid>
+                <ButtonLayout style={{ marginBottom: '2rem' }}>
+                    <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={searchClick}>
+                        검색
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={clearClick}>
+                        초기화
+                    </Button>
+                    <Button disableElevation size="medium" type="submit" variant="outlined" color="primary" onClick={excelClick}>
+                        <PlusOutlined style={{ marginRight: '0.6rem' }} /> Excel
+                    </Button>
+                </ButtonLayout>
 
                 <ContentLine>
                     <DefaultDataGrid

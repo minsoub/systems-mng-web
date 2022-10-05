@@ -263,14 +263,14 @@ const LineMngPage = () => {
                                 disableElevation
                                 size="medium"
                                 type="submit"
-                                variant="contained"
+                                variant="outlined_d"
                                 color="secondary"
                                 onClick={searchClick}
                             >
                                 검색
                             </Button>
 
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
+                            <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={newClick}>
                                 신규
                             </Button>
                         </ButtonLayout>
@@ -290,60 +290,57 @@ const LineMngPage = () => {
                 </ContentLine>
 
                 <MainCard sx={{ mt: 2 }}>
-                    <TopInputLayout>
-                        <InputLayout>
-                            <DropInput title="계열 타입">
-                                <Select name="type" label="계얄타입" value={type} onChange={handleChange}>
-                                    <MenuItem value="BUSINESS">사업계열</MenuItem>
-                                    <MenuItem value="NETWORK">네트워크계열</MenuItem>
-                                </Select>
-                            </DropInput>
-
-                            <DropInput title="계열 명칭">
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="medium"
-                                    size="small"
-                                    value={name}
-                                    name="name"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    fullWidth
-                                />
-                            </DropInput>
-
-                            <DropInput title="사용여부">
-                                <RadioGroup
-                                    row
-                                    aria-labelledby="demo-row-radio-buttons-group-label"
-                                    name="use_yn"
-                                    value={use_yn}
-                                    onChange={handleChange}
-                                >
-                                    <FormControlLabel value="true" control={<Radio />} label="사용함" />
-                                    <FormControlLabel value="false" control={<Radio />} label="사용안함" />
-                                </RadioGroup>
-                            </DropInput>
-                        </InputLayout>
-
-                        <ButtonLayout>
-                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                                저장
-                            </Button>
-                            <Button
-                                disableElevation
-                                disabled={!isUpdate}
-                                size="medium"
-                                type="submit"
-                                variant="contained"
-                                color="secondary"
-                                onClick={deleteClick}
+                    <InputLayout>
+                        <DropInput title="계열 타입">
+                            <Select name="type" label="계얄타입" value={type} onChange={handleChange}>
+                                <MenuItem value="BUSINESS">사업계열</MenuItem>
+                                <MenuItem value="NETWORK">네트워크계열</MenuItem>
+                            </Select>
+                        </DropInput>
+                        <DropInput title="계열 명칭">
+                            <TextField
+                                id="filled-hidden-label-small"
+                                type="medium"
+                                size="small"
+                                value={name}
+                                name="name"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                fullWidth
+                            />
+                        </DropInput>
+                    </InputLayout>
+                    <InputLayout>
+                        <DropInput title="사용여부">
+                            <RadioGroup
+                                row
+                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                name="use_yn"
+                                value={use_yn}
+                                onChange={handleChange}
                             >
-                                삭제
-                            </Button>
-                        </ButtonLayout>
-                    </TopInputLayout>
+                                <FormControlLabel value="true" control={<Radio />} label="사용함" />
+                                <FormControlLabel value="false" control={<Radio />} label="사용안함" />
+                            </RadioGroup>
+                        </DropInput>
+                    </InputLayout>
                 </MainCard>
+                <ButtonLayout>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                        저장
+                    </Button>
+                    <Button
+                        disableElevation
+                        disabled={!isUpdate}
+                        size="medium"
+                        type="submit"
+                        variant="outlined_d"
+                        color="secondary"
+                        onClick={deleteClick}
+                    >
+                        삭제
+                    </Button>
+                </ButtonLayout>
 
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

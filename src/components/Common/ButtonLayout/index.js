@@ -9,17 +9,22 @@ import PropTypes from 'prop-types';
  * @returns {JSX.Element}
  * @constructor
  */
-const ButtonLayout = ({ children, buttonName }) => {
+const ButtonLayout = ({ children, buttonName, style }) => {
     ButtonLayout.defaultProps = {
         buttonName: ''
     };
 
-    return <div className={cx(`buttonLayout ${buttonName}`)}>{children}</div>;
+    return (
+        <div className={cx(`buttonLayout ${buttonName}`)} style={{ ...style }}>
+            {children}
+        </div>
+    );
 };
 
 export default ButtonLayout;
 
 ButtonLayout.propTypes = {
     buttonName: PropTypes.string.isRequired,
-    children: PropTypes.any
+    children: PropTypes.any,
+    style: PropTypes.any
 };

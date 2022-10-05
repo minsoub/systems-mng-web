@@ -46,11 +46,6 @@ body{
     font-size: 1.2rem;
 }
 
-// 상단 아래
-.css-dasaed-MuiGrid-root > .MuiGrid-item {
-    padding-top: 45px;
-}
-
 .css-dasaed-MuiGrid-root {
     margin-top: 0;
 }
@@ -98,7 +93,13 @@ legend,
     font-size: 14px;
 }
 
-.css-1g5oyi7-MuiDataGrid-root .MuiDataGrid-row {
+// .css-1g5oyi7-MuiDataGrid-root .MuiDataGrid-row {
+//     cursor: pointer;
+// }
+.MuiDataGrid-row {
+    cursor: pointer;
+}
+.MuiTableRow-hover{
     cursor: pointer;
 }
 
@@ -114,6 +115,7 @@ legend,
 .common-grid--layout {
     width: 100%;
     margin-bottom: 1.5rem;
+    background: #fff;
     overflow-x: auto;
     table {
         width: 100%;

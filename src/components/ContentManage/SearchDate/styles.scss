@@ -18,8 +18,12 @@
     .noneRadio {
         display: none;
     }
+    .date-checked {
+        margin-left: 1.5rem;
+    }
 }
 
 .result__list--input {
+    min-width: 328px;
     margin-right: 20px;
 }

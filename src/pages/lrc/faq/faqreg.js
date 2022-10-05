@@ -326,7 +326,7 @@ const FaqRegForm = () => {
                                     disableElevation
                                     size="small"
                                     type="submit"
-                                    variant="contained"
+                                    variant="outlined_d"
                                     color="secondary"
                                     onClick={listClick}
                                 >

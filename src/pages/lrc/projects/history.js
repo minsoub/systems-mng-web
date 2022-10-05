@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, FormControl, TextField, Typography } from '@mui/material';
+import { Grid, Button, FormControl, TextField, Typography } from '@mui/material';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
 import HistoryApi from 'apis/lrc/project/historyapi';
 import ContentLine from '../../../components/Common/ContentLine';
@@ -152,8 +152,8 @@ const ProjectHistory = (props) => {
     };
 
     return (
-        <>
-            <TopInputLayout className="bottom--blank__small">
+        <Grid sx={{ bgcolor: '#fff' }}>
+            <TopInputLayout sx={{ p: '1rem 2rem' }} className="bottom--blank__small">
                 <Typography variant="h4">변경 히스토리</Typography>
 
                 <ButtonLayout>
@@ -177,7 +177,7 @@ const ProjectHistory = (props) => {
                     selectionChange={handleSelectionChange}
                 />
             </ContentLine>
-        </>
+        </Grid>
     );
 };
 

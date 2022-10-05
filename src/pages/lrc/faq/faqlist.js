@@ -9,13 +9,13 @@ import ErrorScreen from 'components/ErrorScreen';
 import FaqApis from 'apis/lrc/faq/faqapi';
 import CategoryApis from 'apis/lrc/faq/categoryapi';
 import CategoryContents from './categorycontents';
-import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ContentLine from '../../../components/Common/ContentLine';
 import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
 import { getDateFormat } from 'utils/CommonUtils';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ButtonLayout from 'components/Common/ButtonLayout/index';
 const cx = classNames.bind(styles);
 
 const FaqContent = (props) => {
@@ -322,7 +322,7 @@ const FaqContent = (props) => {
 
     return (
         <div>
-            <MainCard>
+            <MainCard bgcolor="#d9d9d9">
                 <div className={cx('card__row')}>
                     {categorys.map((item, index) => (
                         <CategoryContents key={index} id={item.id} content={item.name} count={item.count} filterClick={filterClick} />
@@ -342,15 +342,15 @@ const FaqContent = (props) => {
                 />
             </ContentLine>
 
-            <TopInputLayout className="bottom--blank">
-                <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={orderClick}>
+            <ButtonLayout style={{ marginTop: '1rem' }}>
+                <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={orderClick}>
                     노출 순서 저장
                 </Button>
 
                 <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={regClick}>
                     등록
                 </Button>
-            </TopInputLayout>
+            </ButtonLayout>
 
             {errorMessage ? (
                 <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />

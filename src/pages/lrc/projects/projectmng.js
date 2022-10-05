@@ -692,16 +692,16 @@ const ProjectMng = (props) => {
         }
     };
 
-       // 재단정보 저장
+    // 재단정보 저장
     const foundationSave = () => {
         // 프로젝트명과 심벌의 경우 필수 조건
         if (refProject_name.current.value.length === 0) {
-          alert('프로젝트명을 입력해주세요.');
-          return;
+            alert('프로젝트명을 입력해주세요.');
+            return;
         }
         if (refSymbol.current.value.length === 0) {
-          alert('심볼을 입력해주세요.');
-          return;
+            alert('심볼을 입력해주세요.');
+            return;
         }
         const regex1 = /^[A-Z|a-z|0-9|]*$/;
         if (!regex1.test(refProject_name.current.value)) {
@@ -714,7 +714,6 @@ const ProjectMng = (props) => {
             alert('유효하지 않은 심볼입니다.');
             return;
         }
-
 
         if (confirm('저장하시겠습니까?')) {
             let saveData = {
@@ -756,18 +755,18 @@ const ProjectMng = (props) => {
             alert('KRW 상장가를 입력해주세요.');
             return;
         }
-      if (!krw_ico_date) {
-        alert('KRW 상장일을 입력해주세요.');
-        return;
-      }
+        if (!krw_ico_date) {
+            alert('KRW 상장일을 입력해주세요.');
+            return;
+        }
         if (!refPriceBTC.current.value) {
-          alert('BTC 상장가를 입력해주세요.');
-          return;
+            alert('BTC 상장가를 입력해주세요.');
+            return;
         }
 
         if (!btc_ico_date) {
-          alert('BTC 상장일을 입력해주세요.');
-          return;
+            alert('BTC 상장일을 입력해주세요.');
+            return;
         }
         if (confirm('저장하시겠습니까?')) {
             let ico_info_list = [];
@@ -956,15 +955,10 @@ const ProjectMng = (props) => {
     };
 
     return (
-        <Grid container alignItems="center" justifyContent="space-between">
+        <Grid container alignItems="center" justifyContent="space-between" className="officeinfo__grid">
             <Grid container spacing={0} sx={{ mt: 1 }} className="officeinfo__content--box">
                 <TopInputLayout className="officeinfo__content--align bottom--blank__small">
                     <Typography variant="h3">재단정보</Typography>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={foundationSave}>
-                            저장
-                        </Button>
-                    </ButtonLayout>
                 </TopInputLayout>
 
                 <div className="common__grid--rowTable">
@@ -1024,14 +1018,14 @@ const ProjectMng = (props) => {
                     </table>
                 </div>
             </Grid>
-
+            <ButtonLayout>
+                <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={foundationSave}>
+                    저장
+                </Button>
+            </ButtonLayout>
             <Grid container className="officeinfo__content--box">
                 <TopInputLayout className="officeinfo__content--align bottom--blank__small">
                     <Typography variant="h4">프로젝트 정보</Typography>
-
-                    <Button disableElevation size="medium" type="button" variant="contained" color="primary" onClick={projectSave}>
-                        저장
-                    </Button>
                 </TopInputLayout>
 
                 <ContentLine className="common__grid--rowTable">
@@ -1096,27 +1090,15 @@ const ProjectMng = (props) => {
                     </table>
                 </ContentLine>
             </Grid>
-
+            <ButtonLayout>
+                <Button disableElevation size="medium" type="button" variant="contained" color="primary" onClick={projectSave}>
+                    저장
+                </Button>
+            </ButtonLayout>
             <Grid container className="officeinfo__content--box">
                 <TopInputLayout className="officeinfo__content--align bottom--blank__small">
-                    <Typography variant="h3">마케팅 수량</Typography>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addMarketingList}>
-                            추가
-                        </Button>
-                        <Button
-                            disableElevation
-                            size="medium"
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            onClick={saveMarketingList}
-                        >
-                            저장
-                        </Button>
-                    </ButtonLayout>
+                    <Typography variant="h4">마케팅 수량</Typography>
                 </TopInputLayout>
-
                 <ContentLine container className="common__grid--rowTable">
                     <table>
                         <thead>
@@ -1159,7 +1141,7 @@ const ProjectMng = (props) => {
                                             onChange={(e) => handleActualQuantityChange(e, index)}
                                         />
                                     </td>
-                                    <td>
+                                    <td style={{ width: '100px' }}>
                                         {item.id === '' && (
                                             <IconButton aria-label="delete" onClick={(e) => deleteMarketingList(e, index)}>
                                                 <DeleteIcon />
@@ -1177,110 +1159,110 @@ const ProjectMng = (props) => {
                     </table>
                 </ContentLine>
             </Grid>
-
+            <ButtonLayout>
+                <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addMarketingList}>
+                    추가
+                </Button>
+                <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveMarketingList}>
+                    저장
+                </Button>
+            </ButtonLayout>
             <Grid container className="officeinfo__content--box">
                 <TopInputLayout className="officeinfo__content--align bottom--blank__small">
-                    <Typography variant="h3">검토 평가</Typography>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addReviewList}>
-                            추가
-                        </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={reviewSaveList}>
-                            저장
-                        </Button>
-                    </ButtonLayout>
+                    <Typography variant="h4">검토 평가</Typography>
                 </TopInputLayout>
-            </Grid>
-            <ContentLine container className="common__grid--reviewRowTable">
-                <table className="projectmng__evaluation">
-                    <thead>
-                        <tr>
-                            <th className="tg-0lax">평가 기관</th>
-                            <th className="tg-0lax">평가 결과</th>
-                            <th className="tg-1wig" colSpan="2">
-                                평가 자료
-                            </th>
-                            <th className="tg-0lax__del">삭제</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {reviewList.map((item, index) => (
+                <ContentLine container className="common__grid--reviewRowTable">
+                    <table className="projectmng__evaluation">
+                        <thead>
                             <tr>
-                                <td className="tg-0lax">
-                                    <TextField
-                                        id="outlined-multiline-static"
-                                        size="medium"
-                                        fullWidth
-                                        value={item.organization}
-                                        onChange={(e) => handleOrganizationChange(e, index)}
-                                    />
-                                </td>
-                                <td className="tg-0lax">
-                                    <TextField
-                                        id="outlined-multiline-static"
-                                        size="medium"
-                                        value={item.result}
-                                        fullWidth
-                                        onChange={(e) => handleResultChange(e, index)}
-                                    />
-                                </td>
-                                <td className="tg-0lax">
-                                    <TextField
-                                        id="outlined-multiline-static"
-                                        size="medium"
-                                        fullWidth
-                                        value={item.reference}
-                                        onChange={(e) => handleReferenceChange(e, index)}
-                                    />
-                                </td>
-                                <td className="tg-0lax">
-                                    <TextField
-                                        type="file"
-                                        size="medium"
-                                        fullWidth
-                                        onChange={(e) => fileHandleChange(e, index)}
-                                        inputProps={{
-                                            accept:
-                                                '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-                                        }}
-                                    />
-                                    {item.file_name && (
-                                        <div>
-                                            <a href="#" onClick={() => fileDownload(item.file_key, item.file_name)}>
-                                                {item.file_name}
-                                            </a>
-                                        </div>
-                                    )}
-                                </td>
-                                <td className="tg-0lax">
-                                    {item.id === '' && (
-                                        <IconButton aria-label="delete" onClick={(e) => deleteReviewList(e, index)}>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    )}
-                                    {item.id !== '' && (
-                                        <div>
-                                            <IconButton aria-label="delete" onClick={(e) => deleteReview(e, index, item.id)}>
+                                <th className="tg-0lax">평가 기관</th>
+                                <th className="tg-0lax">평가 결과</th>
+                                <th className="tg-1wig" colSpan="2">
+                                    평가 자료
+                                </th>
+                                <th className="tg-0lax__del">삭제</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {reviewList.map((item, index) => (
+                                <tr>
+                                    <td className="tg-0lax">
+                                        <TextField
+                                            id="outlined-multiline-static"
+                                            size="medium"
+                                            fullWidth
+                                            value={item.organization}
+                                            onChange={(e) => handleOrganizationChange(e, index)}
+                                        />
+                                    </td>
+                                    <td className="tg-0lax">
+                                        <TextField
+                                            id="outlined-multiline-static"
+                                            size="medium"
+                                            value={item.result}
+                                            fullWidth
+                                            onChange={(e) => handleResultChange(e, index)}
+                                        />
+                                    </td>
+                                    <td className="tg-0lax">
+                                        <TextField
+                                            id="outlined-multiline-static"
+                                            size="medium"
+                                            fullWidth
+                                            value={item.reference}
+                                            onChange={(e) => handleReferenceChange(e, index)}
+                                        />
+                                    </td>
+                                    <td className="tg-0lax">
+                                        <TextField
+                                            type="file"
+                                            size="medium"
+                                            fullWidth
+                                            onChange={(e) => fileHandleChange(e, index)}
+                                            inputProps={{
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                            }}
+                                        />
+                                        {item.file_name && (
+                                            <div>
+                                                <a href="#" onClick={() => fileDownload(item.file_key, item.file_name)}>
+                                                    {item.file_name}
+                                                </a>
+                                            </div>
+                                        )}
+                                    </td>
+                                    <td style={{ width:'100px' }} className="tg-0lax">
+                                        {item.id === '' && (
+                                            <IconButton aria-label="delete" onClick={(e) => deleteReviewList(e, index)}>
                                                 <DeleteIcon />
                                             </IconButton>
-                                        </div>
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </ContentLine>
-
+                                        )}
+                                        {item.id !== '' && (
+                                            <div>
+                                                <IconButton aria-label="delete" onClick={(e) => deleteReview(e, index, item.id)}>
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </div>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </ContentLine>
+            </Grid>
+            <ButtonLayout>
+                <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={addReviewList}>
+                    추가
+                </Button>
+                <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={reviewSaveList}>
+                    저장
+                </Button>
+            </ButtonLayout>
             <Grid container className="officeinfo__content--box">
                 <TopInputLayout className="officeinfo__content--align bottom--blank__small">
                     <Typography variant="h4">상장 정보</Typography>
-
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={icoSave}>
-                            저장
-                        </Button>
-                    </ButtonLayout>
                 </TopInputLayout>
 
                 <ContentLine container className="common__grid--rowTable">
@@ -1345,10 +1327,14 @@ const ProjectMng = (props) => {
                     </table>
                 </ContentLine>
             </Grid>
-
+            <ButtonLayout>
+                <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={icoSave}>
+                    저장
+                </Button>
+            </ButtonLayout>
             <Grid container className="officeinfo__content--box">
                 <TopInputLayout className="officeinfo__content--align bottom--blank__small">
-                    <Typography variant="h3">프로젝트 연결</Typography>
+                    <Typography variant="h4">프로젝트 연결</Typography>
                 </TopInputLayout>
                 <ContentLine container className="common__grid--rowTable">
                     <table>
@@ -1359,7 +1345,6 @@ const ProjectMng = (props) => {
                             <td colSpan={2}>
                                 <FlexBox classNames="projectmng__select">
                                     <TextField id="outlined-multiline-static" fullWidth name="keyword" inputRef={refKeyword} size="small" />
-                                    &nbsp;
                                     <Button
                                         disableElevation
                                         size="medium"
@@ -1395,7 +1380,7 @@ const ProjectMng = (props) => {
 
                         {projectLinkList.map((item, index) => (
                             <tr key={index}>
-                                <td>
+                                <td width="93%">
                                     {item.link_project_name} ( {item.link_project_symbol} )
                                 </td>
                                 <td>
@@ -1403,7 +1388,7 @@ const ProjectMng = (props) => {
                                         disableElevation
                                         size="medium"
                                         type="submit"
-                                        variant="contained"
+                                        variant="outlined"
                                         color="secondary"
                                         onClick={() => projectDisconnect(item.id)}
                                     >
@@ -1424,7 +1409,7 @@ const ProjectMng = (props) => {
             </Grid>
 
             <Grid container className="officeinfo__content--box">
-                <Grid className="bottom--blank__small">
+                <Grid className="officeinfo__content--align bottom--blank__small">
                     <Typography variant="h4">담당자 정보</Typography>
                 </Grid>
                 <ContentLine className="common__grid--userrowTable">
@@ -1432,7 +1417,6 @@ const ProjectMng = (props) => {
                         <tr>
                             <td colSpan={2}>
                                 <FlexBox classNames="projectmng__select">
-                                    &nbsp;
                                     <TextField
                                         id="outlined-multiline-static"
                                         fullWidth
@@ -1440,29 +1424,29 @@ const ProjectMng = (props) => {
                                         inputRef={refuserKeyword}
                                         size="small"
                                     />
-                                    &nbsp;
-                                    <Button
-                                        disableElevation
-                                        size="medium"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={projectUserdSearch}
-                                    >
-                                        검색
-                                    </Button>
-                                    &nbsp;
-                                    <Button
-                                        disableElevation
-                                        size="medium"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={userSave}
-                                    >
-                                        저장
-                                    </Button>
-                                    &nbsp;
+                                   <div className="button_group buton2ea">
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={projectUserdSearch}
+                                        >
+                                            검색
+                                        </Button>
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={userSave}
+                                            sx={{ ml: 1 }}
+                                        >
+                                            저장
+                                        </Button>
+                                    </div>
                                 </FlexBox>
                             </td>
                         </tr>
@@ -1536,8 +1520,7 @@ const ProjectMng = (props) => {
                                                 onChange={(e) => handleUserChange(e, 'email', index)}
                                             />
                                         </td>
-                                        <td>
-                                            {' '}
+                                        <td style={{ width: '100px' }}>
                                             <Button
                                                 disableElevation
                                                 size="medium"
@@ -1545,6 +1528,7 @@ const ProjectMng = (props) => {
                                                 variant="contained"
                                                 color="primary"
                                                 onClick={() => userDelete(item.project_id, item.id)}
+                                                sx={{ mx: 1 }}
                                             >
                                                 탈퇴
                                             </Button>

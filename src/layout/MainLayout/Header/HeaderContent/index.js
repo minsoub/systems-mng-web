@@ -10,7 +10,7 @@ import './styles.scss';
 // ==============================|| HEADER - CONTENT ||============================== //
 
 const HeaderContent = () => {
-    const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('md'));
+    const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('xs'));
 
     return (
         <div className="searchAndUser">

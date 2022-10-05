@@ -166,7 +166,7 @@ export default function FileSystemNavigator(navigation, site) {
         });
         return menu;
     };
-    return menuList.length > 0 && <Box sx={{ pt: 1 }}>{navGroups(menuList)}</Box>;
+    return <>{menuList.length > 0 && <Box sx={{ pt: 1, pb: 8 }}>{navGroups(menuList)}</Box>}</>;
     // return (
     //     <TreeView
     //         aria-label="file system navigator"

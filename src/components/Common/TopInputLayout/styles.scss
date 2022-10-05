@@ -2,7 +2,29 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    margin: 0 auto;
     align-items: center;
+
+
+
+    .MuiTabs-flexContainer {
+        button {
+            margin-right: 2rem;
+            padding: 0 8px 5px 8px;
+            min-width: auto;
+            &:last-child {
+                margin-right:0;
+                
+            }
+        }
+    }
+}
+
+.pagetab {
+    .topInputLayout {
+        width: 97%;
+        margin: 0 auto;
+    }
 }
 
 .bottomBlank {

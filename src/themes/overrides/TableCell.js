@@ -12,7 +12,8 @@ export default function TableCell(theme) {
                 head: {
                     fontWeight: 600,
                     paddingTop: 20,
-                    paddingBottom: 20
+                    paddingBottom: 20,
+                    backgroundColor: '#fafafa'
                 }
             }
         }

@@ -3,6 +3,7 @@ import { Button, Grid, TextField } from '@mui/material';
 import '../styles.scss';
 import ButtonLayout from '../../Common/ButtonLayout';
 import InputLayout from '../../Common/InputLayout';
+import FlexBox from 'components/Common/FlexBox/index';
 
 export const Index = ({ sendChat }) => {
     const [value, setValue] = useState('');
@@ -27,15 +28,15 @@ export const Index = ({ sendChat }) => {
     return (
         <>
             <Grid className="chat-message">
-                <InputLayout>
-                    <textarea rows="5" cols="80" id="standard-text" label="텍스트 입력" value={value} onChange={handleChange} />
+                <FlexBox sx={{ justifyContent: 'space-between' }}>
+                    <textarea rows="5" id="standard-text" label="텍스트 입력" value={value} onChange={handleChange} />
 
                     <ButtonLayout>
                         <Button variant="contained" color="primary" size="medium" className="button" onClick={sendData}>
                             전송
                         </Button>
                     </ButtonLayout>
-                </InputLayout>
+                </FlexBox>
             </Grid>
         </>
     );
