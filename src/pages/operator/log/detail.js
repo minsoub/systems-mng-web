@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button, FormControl, Grid, Table, TableBody, TableRow } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { makeStyles, withStyles } from '@mui/styles';
-import LogsApi from 'apis/logs/audit';
+import LogsApi from 'apis/apilogs/audit';
 import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';

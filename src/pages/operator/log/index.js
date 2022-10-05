@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Button, Grid } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
-import LogsApi from 'apis/logs/audit';
+import LogsApi from 'apis/apilogs/audit';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import HeaderTitle from '../../../components/HeaderTitle';

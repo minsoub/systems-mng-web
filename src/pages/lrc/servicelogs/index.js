@@ -5,7 +5,7 @@ import { Button, Grid, Table, TableRow } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import { GridToolbar } from '@mui/x-data-grid';
-import LogsApi from 'apis/logs/service';
+import LogsApi from 'apis/apilogs/service';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import { setSearchData } from 'store/reducers/logsearch';
