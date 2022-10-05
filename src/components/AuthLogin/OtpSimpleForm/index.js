@@ -36,6 +36,10 @@ const OtpSimpleForm = ({ result }) => {
         if (!responseData) {
             return;
         }
+        //거래지원 메신저 링크 이동
+        const moveUrl = sessionStorage.getItem('moveUrl');
+        sessionStorage.setItem('moveUrl', '');
+
         switch (responseData.transactionId) {
             case 'otplogin':
                 console.log('otplogin transaction id => ');
@@ -78,7 +82,12 @@ const OtpSimpleForm = ({ result }) => {
                         // 투자보호
                         navigate('/cpc/dashboard');
                     } else {
-                        navigate('/lrc/dashboard');
+                        if (moveUrl) {
+                            // 거래지원 메신저 링크로 바로 이동.
+                            navigate(moveUrl);
+                        } else {
+                            navigate('/lrc/dashboard');
+                        }
                     }
                 }
                 break;

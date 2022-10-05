@@ -6,6 +6,7 @@ import MainLayout from 'layout/MainLayout';
 import MinimalLayout from 'layout/MinimalLayout';
 import SiteRegForm from 'pages/sysmng/site/SiteRegForm';
 import Sitemyprivacy from 'pages/operator/sitemyprivacy';
+import ProjectLink from 'pages/lrc/projectlink';
 
 // render - login
 const AuthLogin = Loadable(lazy(() => import('pages/auth/login')));
@@ -168,6 +169,11 @@ const MainRoutes = [
             {
                 path: '401',
                 element: <Unauthorized />
+            },
+            // Project Link
+            {
+                path: 'lrc/project/link/:id',
+                element: <ProjectLink />
             }
         ]
     },
