@@ -341,13 +341,22 @@ const ProjectsPage = () => {
     const handleBlur = (e) => {
         console.log(e);
     };
+    const resetPeriod= () => {
+        setPeriod(0);
+    };
+    const changeDate =(type,e)=>{
+        switch(type){
+            case 'start':
+                setStartDate(e);
+                break;
+            case 'end':
+                setEndDate(e);
+                break;
+            default:
+                break;
+        }
+    };
     const handleChange = (e /*, name */) => {
-        //console.log(e.target.name);
-        //console.log(e.target.value);
-        //console.log(moment(e.target.value).format('YYYY.MM.DD'));
-        //if (name) {
-        //    document.getElementsByName(name).value(e.target.value);
-        //}
         switch (e.target.name) {
             case 'keyword':
                 setKeyword(e.target.value);
@@ -374,6 +383,12 @@ const ProjectsPage = () => {
                 break;
             case 'process_code':
                 setProcess(e.target.value);
+                break;
+            case 'start_picker':
+                console.log(e.target.value);
+                break;
+            case 'end_picker':
+                console.log(e.target.value);
                 break;
             default:
                 break;
@@ -621,6 +636,8 @@ const ProjectsPage = () => {
                             startName="from_date"
                             endName="to_date"
                             addAll={true}
+                            changeDate={changeDate}
+                            resetPeriod={resetPeriod}
                         />
 
                         <InputLayout>
