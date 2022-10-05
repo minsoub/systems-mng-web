@@ -25,10 +25,10 @@ export default function ThemeCustomization({ children }) {
             breakpoints: {
                 values: {
                     xs: 0,
-                    sm: 768,
-                    md: 1024,
-                    lg: 1266,
-                    xl: 1536
+                    sm: 0,
+                    md: 1280,
+                    lg: 1536,
+                    xl: 4860
                 }
             },
             direction: 'ltr',

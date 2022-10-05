@@ -9,6 +9,7 @@ import BoardSearchDialog from './popup';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import './styles.module.scss';
 import cx from 'classnames';
+import TopInputLayout from 'components/Common/TopInputLayout/index';
 
 const MainContents = () => {
     const [responseData, requestError, resLoading, { searchMainContents }] = MainContentsApi();
@@ -83,19 +84,19 @@ const MainContents = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="메인 관리" menuStep01="사이트 운영" menuStep02="메인 관리" menuStep03="콘텐츠 노출 관리" />
 
                 <TabContext value={tabIndex}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <TopInputLayout sx={{ borderBottom: 1, borderColor: 'divider' }} className="pagetab">
                         <TabList onChange={handleChange} aria-label="main contents tabs">
                             <Tab label="가상자산 동향" value="1" />
                             {/* <Tab label="블록체인 뉴스" value="2" /> */}
                             <Tab label="가상자산의 기초" value="3" />
                             <Tab label="인사이트 칼럼" value="4" />
                         </TabList>
-                    </Box>
+                    </TopInputLayout>
                     {/* 가상자산 동향 */}
                     <TabPanel value="1" className={cx('mainMng')}>
                         <TableContainer component={Paper}>

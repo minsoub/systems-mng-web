@@ -729,8 +729,8 @@ const AuthMngRegForm = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="권한 맵핑 등록" menuStep01="통합시스템 관리" menuStep02="권한 관리" menuStep03="권한 맵핑 등록" />
 
                 <MainCard>
@@ -836,7 +836,7 @@ const AuthMngRegForm = () => {
                                 </div>
 
                                 <Grid container spacing={0} sx={{ mt: 1 }}>
-                                    <Grid item xs={8} sm={12}>
+                                    <Grid item xs={12}>
                                         <ContentLine>
                                             <CheckBoxDataGrid
                                                 columns={programColumns}

@@ -254,8 +254,8 @@ const BoardMasterMng = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="게시판 관리" menuStep01="통합 관리" menuStep02="통합 게시판 관리" />
                 <MainCard>
                     <div className={cx('category')}>

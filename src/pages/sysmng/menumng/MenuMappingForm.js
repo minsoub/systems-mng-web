@@ -458,8 +458,8 @@ const MenuMappingForm = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="프로그램 연결" menuStep01="통합시스템 관리" menuStep02="메뉴 관리" menuStep03="프로그램 연결" />
 
                 <MainCard sx={{ mt: 1 }}>
@@ -501,7 +501,7 @@ const MenuMappingForm = () => {
 
                 {/* 콘텐츠 영역 */}
                 <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
-                    <Grid item md={3}>
+                    <Grid item xs={3}>
                         <MainCard>
                             <TreeView
                                 aria-label="controlled"
@@ -519,7 +519,7 @@ const MenuMappingForm = () => {
                             </TreeView>
                         </MainCard>
                     </Grid>
-                    <Grid item md={8.8}>
+                    <Grid item xs={8.8}>
                         <div className="layout--align">
                             <Item>연결된 프로그램 목록</Item>
 

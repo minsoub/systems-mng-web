@@ -70,8 +70,8 @@ const SiteLogDetail = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="사이트 관리" menuStep01="감사 로그 관리" menuStep02="감사로그 상세" />
 
                 <div className={cx('common-grid--layout')}>

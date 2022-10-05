@@ -15,13 +15,13 @@ import { drawerWidth } from 'config';
 
 const MainDrawer = ({ open, handleDrawerToggle, window, navigation }) => {
     const theme = useTheme();
-    const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
+    const matchDownMD = useMediaQuery(theme.breakpoints.down('xs'));
 
     // responsive drawer container
     const container = window !== undefined ? () => window().document.body : undefined;
 
     // header content
-    const drawerContent = useMemo(() => <DrawerContent navigation={navigation} />, []);
+    const drawerContent = useMemo(() => <DrawerContent open={open} navigation={navigation} />, [open]);
     const drawerHeader = useMemo(() => <DrawerHeader open={open} />, [open]);
 
     return (

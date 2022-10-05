@@ -5,6 +5,7 @@ import { Checkbox, FormControlLabel, Grid, Stack } from '@mui/material';
 import { StsCheckbox } from './StsCheckbox';
 import LineApis from 'apis/lrc/line/lineapi';
 import cx from 'classnames';
+import StackLabel from 'components/Common/StackLabel';
 
 export const NetworkCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
     const [responseData, requestError, loading, { lineSearch }] = LineApis();
@@ -49,10 +50,8 @@ export const NetworkCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
         }
     }, [responseData]);
     return (
-        <Grid container spacing={0} sx={{ mt: 1 }}>
-            <Stack spacing={10} className={cx('borderTitle')}>
-                네트워크 계열
-            </Stack>
+        <Grid container spacing={0} sx={{ mt: 1, alignItems: 'center' }}>
+            <StackLabel title="네트워크 계열" />
             <Grid item xs={8} sm={10}>
                 {dataGridRows.map((item, index) => (
                     <StsCheckbox

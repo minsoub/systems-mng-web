@@ -10,6 +10,7 @@ import BoardApi from 'apis/cpc/board/boardapi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import '../BoardList.module.scss';
+import './style.scss';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
@@ -308,8 +309,8 @@ const View = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsDigitalList">
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="가상자산의 기초" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="가상자산의 기초" />
                 <MainCard>
                     {/* 기간 검색 */}

@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Toolbar, useMediaQuery } from '@mui/material';
 import Drawer from './Drawer';
 import Header from './Header';
+import Footer from './Footer';
 import Breadcrumbs from 'components/Common/Breadcrumbs';
 
 // types
@@ -14,7 +15,7 @@ import { openDrawer } from 'store/reducers/menu';
 
 const MainLayout = () => {
     const theme = useTheme();
-    const matchDownLG = useMediaQuery(theme.breakpoints.down('xl'));
+    const matchDownLG = useMediaQuery(theme.breakpoints.down('xs'));
     const dispatch = useDispatch();
 
     const { drawerOpen } = useSelector((state) => state.menu);
@@ -60,11 +61,12 @@ const MainLayout = () => {
         <Box sx={{ display: 'flex', width: '100%' }}>
             <Header open={open} handleDrawerToggle={handleDrawerToggle} />
             <Drawer open={open} handleDrawerToggle={handleDrawerToggle} navigation={navigation} />
-            <Box component="main" sx={{ width: '100%', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
+            <Box component="main" sx={{ width: '100%', flexGrow: 1, pt: 3.2, px: 3, pb: 9, bgcolor: 'grey.100' }}>
                 <Toolbar />
                 <Breadcrumbs navigation={navigation} title titleBottom card={false} divider={false} />
                 <Outlet />
             </Box>
+            <Footer />
         </Box>
     );
 };

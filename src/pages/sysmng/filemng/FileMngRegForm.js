@@ -244,8 +244,8 @@ const FileMngRegForm = () => {
 
     return (
         <>
-            <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-                <Grid item xs={12} md={7} lg={12}>
+            <Grid container rowSpacing={4} columnSpacing={2.75}>
+                <Grid item xs={12}>
                     <HeaderTitle
                         titleNm="파일정보 등록"
                         menuStep01="통합시스템 관리"

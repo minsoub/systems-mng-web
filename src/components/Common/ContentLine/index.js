@@ -9,8 +9,8 @@ const ContentLine = forwardRef(({ children, className }) => {
             sx={{
                 border: '1px solid #e6ebf1',
                 boxShadow: 'none',
-                marginBottom: '1.5rem',
-                borderRadius: '2px'
+                borderRadius: '2px 2px 0 0',
+                overflowX: 'auto'
             }}
         >
             {children}

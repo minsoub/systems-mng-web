@@ -459,8 +459,8 @@ const SiteMenuMappingForm = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="프로그램 연결" menuStep01="사이트 관리" menuStep02="메뉴 관리" menuStep03="프로그램 연결" />
 
                 {/* 상단 */}
@@ -497,7 +497,7 @@ const SiteMenuMappingForm = () => {
 
                 {/* 콘텐츠 영역 */}
                 <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
-                    <Grid item md={3}>
+                    <Grid item xs={3.8}>
                         <MainCard sx={{ mt: 2 }} content={false}>
                             <TreeView
                                 aria-label="controlled"
@@ -511,7 +511,7 @@ const SiteMenuMappingForm = () => {
                             </TreeView>
                         </MainCard>
                     </Grid>
-                    <Grid item md={8.8}>
+                    <Grid item xs={8}>
                         <div className="layout--align">
                             <Item>연결된 프로그램 목록</Item>
 
@@ -521,7 +521,7 @@ const SiteMenuMappingForm = () => {
                         </div>
 
                         <Grid container spacing={0} sx={{ mt: 1 }}>
-                            <Grid item xs={8} sm={12}>
+                            <Grid item xs={12}>
                                 <ContentLine>
                                     <CheckBoxDataGrid
                                         columns={regColumns}
@@ -574,7 +574,7 @@ const SiteMenuMappingForm = () => {
                             </div>
 
                             <Grid container spacing={0} sx={{ mt: 1 }}>
-                                <Grid item xs={8} sm={12}>
+                                <Grid item xs={12}>
                                     <ContentLine>
                                         <CheckBoxDataGrid
                                             columns={searchColumns}

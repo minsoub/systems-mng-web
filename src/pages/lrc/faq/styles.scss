@@ -4,3 +4,17 @@
     padding: 20px 0 0 20px;
     @include leftRightAlign(40%);
 }
+.faqList{
+    .bottom--blank{
+        margin-top:10px;
+    }
+}
+.faqCategorylist{
+    .bottom--item{
+        margin-top:10px;margin-bottom:5px;
+        >div{display:inline-block;}
+    }
+    .layout--button__bottom{
+        margin-top:10px;
+    }
+}

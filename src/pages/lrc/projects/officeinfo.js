@@ -14,6 +14,7 @@ import {
     TextField,
     Typography
 } from '@mui/material';
+import { LinkOutlined } from '@ant-design/icons';
 import FoundationApi from 'apis/lrc/project/foundationapi';
 import StatusApi from 'apis/lrc/status/statusapi';
 import NumberFormat from 'react-number-format';
@@ -25,7 +26,7 @@ import DropInput from '../../../components/Common/DropInput';
 import './styles.scss';
 import cx from 'classnames';
 import FlexBox from '../../../components/Common/FlexBox';
-
+import PrivateReasonDialog from '../../popup/PrivateResonPopup';
 const OfficeInfo = (props) => {
     const navigate = useNavigate();
     const [
@@ -38,6 +39,7 @@ const OfficeInfo = (props) => {
             reviewSearch,
             projectSearch,
             userSearch,
+            userUnMaskingSearch,
             createUserSearch,
             icoSearch,
             officeSearch,
@@ -49,6 +51,10 @@ const OfficeInfo = (props) => {
     ] = FoundationApi();
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
     const { projectId, chatClose, children, tabindex, index, ...other } = props;
+
+    // Log reason Dialog
+    const [openReason, setOpenReason] = useState(false);
+    const [selectedValue, setSelectedValue] = useState('');
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -416,9 +422,9 @@ const OfficeInfo = (props) => {
         setValue(value);
     };
     // 검토 파일 다운로드
-    const fileDownload = (fileKey, fileName) => {
+    const fileDownload = (id, fileKey, fileName) => {
         setDownloadFileName(fileName);
-        fileReviewDownload(fileKey);
+        fileReviewDownload(projectId, id, fileKey);
     };
     const format = (num, decimals) =>
         num.toLocaleString('en-US', {
@@ -426,39 +432,57 @@ const OfficeInfo = (props) => {
             maximumFractionDigits: 4
         });
 
+    const reqUnMask = () => {
+        if (userList.length > 0) {
+            // 마스킹 해제 요청을 한다. (해당 요청은 내부망에서만 이루어질 것이다)
+            setOpenReason(true);
+        }
+    };
+
+    const handlePopupClose = (returnData) => {
+        setOpenReason(false);
+        // 데이터 처리
+        if (returnData.length !== 0) {
+            // 데이터 처리
+            console.log(returnData);
+            let reason = returnData;
+            userUnMaskingSearch(projectId, reason);
+        }
+    };
+
     return (
         <Grid container alignItems="center" justifyContent="space-between">
-            <div className="order__content--width">
-                <FlexBox>
-                    <Typography variant="h3">
-                        {officeInfo.project_name} ({officeInfo.symbol})
-                    </Typography>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="primary">
-                        {officeInfo.contract_name}
-                    </Button>
-                    <p className="order__content--checkList">{officeInfo.process_name}</p>
-                    {projectLink.length > 0 && (
-                        <FormControl sx={{ minWidth: 250, boxSizing: 'border-box' }} size="medium">
-                            <Select name="project_link" label="연결 프로젝트 선택" onChange={handleChange}>
-                                {projectLink.map((item, index) => (
-                                    <MenuItem key={index} value={item.link_project_id}>
-                                        {item.link_project_name} ( {item.link_project_symbol} )
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    )}
-                </FlexBox>
-            </div>
-
-            <Grid container spacing={0} sx={{ mt: 1 }}>
+            <Grid container className="officeinfo__content--box">
+                <div className="order__content--width">
+                    <Grid sx={{ p: '1rem 2rem '}}>
+                        <FlexBox>
+                            <Typography variant="h3">
+                                {officeInfo.project_name} ({officeInfo.symbol})
+                            </Typography>
+                            <div className="order__content--checkList">
+                                <p>{officeInfo.contract_name}</p>
+                                {officeInfo.process_name ? <p>{officeInfo.process_name}</p> : ''}
+                            </div>
+                            {projectLink.length > 0 && (
+                                <ButtonLayout buttonName="project_link" name="project_link" label="연결 프로젝트 선택">
+                                    {projectLink.map((item, index) => (
+                                        <Button key={index} value={item.link_project_id} variant="linked" onClick={handleChange}>
+                                            <LinkOutlined />
+                                            {item.link_project_name} ( {item.link_project_symbol} )
+                                        </Button>
+                                    ))}
+                                </ButtonLayout>
+                            )}
+                        </FlexBox>
+                    </Grid>
+                </div>
                 <FormControl sx={{ m: 0 }} fullWidth>
                     <TextField id="outlined-multiline-static" multiline rows={3} defaultValue={officeInfo.admin_memo} />
                 </FormControl>
             </Grid>
 
-            <Grid container className="officeinfo__content--box top2rem">
-                <Grid>
+            <Grid container className="officeinfo__content--box">
+                <Grid sx={{ p: '1rem 2rem ' }}>
                     <Typography variant="h4">프로젝트 정보</Typography>
                 </Grid>
 
@@ -484,16 +508,16 @@ const OfficeInfo = (props) => {
                         {projecInfo && (
                             <TableRow>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {projecInfo.business_name}
+                                    {projecInfo.business_name ? projecInfo.business_name : '-'}
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {projecInfo.network_name}
+                                    {projecInfo.network_name ? projecInfo.network_name : '-'}
                                 </TableCell>
                                 <TableCell style={{ width: '25%', lineBreak: 'anywhere' }} align="center" component="th" scope="row">
-                                    {projecInfo.whitepaper_link}
+                                    {projecInfo.whitepaper_link ? projecInfo.whitepaper_link : '-'}
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {projecInfo.create_date}
+                                    {projecInfo.create_date ? projecInfo.create_date : '-'}
                                 </TableCell>
                             </TableRow>
                         )}
@@ -501,13 +525,13 @@ const OfficeInfo = (props) => {
                     <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">컨트렉트 주소</TableCell>
+                                <TableCell align="center" component="th">컨트렉트 주소</TableCell>
                             </TableRow>
                         </TableHead>
                         {projecInfo && (
                             <TableRow>
-                                <TableCell component="th" scope="row">
-                                    {projecInfo.contract_address}
+                                <TableCell align="center" component="td" scope="row">
+                                    {projecInfo.contract_address ? projecInfo.contract_address : '-'}
                                 </TableCell>
                             </TableRow>
                         )}
@@ -516,7 +540,7 @@ const OfficeInfo = (props) => {
             </Grid>
 
             <Grid container className="officeinfo__content--box">
-                <Grid container spacing={0} sx={{ mt: 1 }}>
+                <Grid c sx={{ p: '1rem 2rem '}}>
                     <Typography variant="h4">담당자 정보</Typography>
                 </Grid>
 
@@ -541,24 +565,62 @@ const OfficeInfo = (props) => {
                         {userList.map((item, index) => (
                             <TableRow key={index}>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.user_name}
+                                    {item.user_name ? item.user_name : '_'}
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.phone}
+                                    {item.phone ? item.phone : '-'}
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.sns_id}
+                                    {item.sns_id ? item.sns_id : '-'}
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.email}
+                                    {item.email ? item.email : '-'}
                                 </TableCell>
                             </TableRow>
                         ))}
                     </Table>
                 </ContentLine>
             </Grid>
+
+            <ContentLine className="officeinfo__table__width">
+                <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell style={{ width: '25%' }} align="center">
+                                이름
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center">
+                                연락처
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center">
+                                SNS ID
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center">
+                                이메일주소
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    {userList.map((item, index) => (
+                        <TableRow key={index}>
+                            <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                {item.user_name}
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                {item.phone}
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                {item.sns_id}
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                {item.email}
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </Table>
+            </ContentLine>
+
             <Grid container className="officeinfo__content--box">
-                <Grid container spacing={0} sx={{ mt: 1 }}>
+                <Grid  sx={{ p: '1rem 2rem '}}>
                     <Typography variant="h4">마케팅 수량</Typography>
                 </Grid>
 
@@ -574,16 +636,20 @@ const OfficeInfo = (props) => {
                         {marketingList.map((item, index) => (
                             <TableRow key={index}>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    {item.symbol}
+                                    {item.symbol ? item.symbol : '-'}
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    <NumberFormat
-                                        value={item.minimum_quantity}
-                                        allowNegative={true}
-                                        displayType={'text'}
-                                        thousandSeparator={true}
-                                        prefix={''}
-                                    />
+                                    {item.minimum_quantity ? (
+                                        <NumberFormat
+                                            value={item.minimum_quantity}
+                                            allowNegative={true}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            prefix={''}
+                                        />
+                                    ) : (
+                                        '-'
+                                    )}
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
                                     <NumberFormat
@@ -601,32 +667,32 @@ const OfficeInfo = (props) => {
             </Grid>
 
             <Grid container className="officeinfo__content--box">
-                <Grid container spacing={0} sx={{ mt: 1 }}>
+                <Grid sx={{ p: '1rem 2rem '}}>
                     <Typography variant="h4">검토 평가</Typography>
                 </Grid>
                 <ContentLine className="officeinfo__table__width">
                     <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">평가 기관</TableCell>
-                                <TableCell align="center">평가 결과</TableCell>
-                                <TableCell align="center" colSpan="2">
+                                <TableCell component="th" align="center">평가 기관</TableCell>
+                                <TableCell component="th" align="center">평가 결과</TableCell>
+                                <TableCell component="th" align="center" colSpan="2">
                                     평가 자료
                                 </TableCell>
                             </TableRow>
                         </TableHead>
                         {reviewList.map((item, index) => (
                             <TableRow key={index}>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.organization}
+                                <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                    {item.organization ? item.organization : '-'}
                                 </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.result}
+                                <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                    {item.result ? item.result : '-'}
                                 </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.reference}
+                                <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                    {item.reference ? item.reference : '-'}
                                 </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
                                     <a href="#" onClick={() => fileDownload(item.file_key, item.file_name)}>
                                         {item.file_name}
                                     </a>
@@ -637,7 +703,7 @@ const OfficeInfo = (props) => {
                 </ContentLine>
             </Grid>
             <Grid container className="officeinfo__content--box">
-                <Grid container spacing={0} sx={{ mt: 1 }}>
+                <Grid sx={{ p: '1rem 2rem '}}>
                     <Typography variant="h4">서류 제출 현황</Typography>
                 </Grid>
                 <ContentLine className="officeinfo__table__width">
@@ -663,13 +729,15 @@ const OfficeInfo = (props) => {
                             </TableCell>
                             <TableCell component="th" scope="row" align="center">
                                 {file11
-                                    .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                    .filter((doc, idx) => idx < 2)
-                                    .map((doc, index) => (
-                                        <p>
-                                            {doc.item} {doc.item1}
-                                        </p>
-                                    ))}
+                                    ? file1
+                                        .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                        .filter((doc, idx) => idx < 2)
+                                        .map((doc, index) => (
+                                            <p key={index}>
+                                                {doc.item} {doc.item1}
+                                            </p>
+                                        ))
+                              : '-'}
                             </TableCell>
                             <TableCell component="th" scope="row" align="center">
                                 {file2
@@ -789,7 +857,7 @@ const OfficeInfo = (props) => {
             </Grid>
 
             <Grid container className="officeinfo__content--box">
-                <Grid container spacing={0} sx={{ mt: 1 }}>
+                <Grid sx={{ p: '1rem 2rem '}}>
                     <Typography variant="h4">상장 정보</Typography>
                 </Grid>
                 <ContentLine className="officeinfo__table__width">
@@ -804,10 +872,10 @@ const OfficeInfo = (props) => {
                         {icoList.map((item, index) => (
                             <TableRow key={index}>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    {item.market_info}
+                                    {item.market_info ? item.market_info : '-'}
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    {item.ico_date}
+                                    {item.ico_date ? item.ico_date : '-'}
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
                                     <NumberFormat
@@ -823,6 +891,7 @@ const OfficeInfo = (props) => {
                     </Table>
                 </ContentLine>
             </Grid>
+            <PrivateReasonDialog selectedValue={selectedValue} open={openReason} onClose={handlePopupClose} />
         </Grid>
     );
 };

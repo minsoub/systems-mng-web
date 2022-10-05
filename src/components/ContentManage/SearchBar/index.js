@@ -1,16 +1,14 @@
 import cx from 'classnames';
 import { FormControl, Stack, TextField } from '@mui/material';
 import './styles.scss';
-
+import StackLabel from '../../Common/StackLabel';
 // 검색단
 const SearchBar = ({ keyword, handleBlur, handleChange }) => {
     return (
         <div className={cx('searchBar')}>
-            <Stack spacing={10} className={cx('borderTitle')}>
-                검색어
-            </Stack>
+            <StackLabel title="검색어" />
 
-            <FormControl sx={{ minWidth: 400 }} size="medium">
+            <FormControl sx={{ minWidth: 350, width: '100%' }} size="medium">
                 <TextField
                     id="filled-hidden-label-small"
                     type="text"

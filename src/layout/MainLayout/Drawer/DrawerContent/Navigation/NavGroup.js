@@ -43,7 +43,7 @@ const NavGroup = ({ item }) => {
             subheader={
                 item.name &&
                 drawerOpen && (
-                    <Box sx={{ pl: 3, mb: 1.5 }}>
+                    <Box sx={{ pl: 3, pb: 1.5, mb: 1.5, borderBottom: '1px solid #d9d9d9' }}>
                         <Typography variant="subtitle2" color="textSecondary">
                             {item.name}
                         </Typography>

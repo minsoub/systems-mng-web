@@ -237,8 +237,8 @@ const FaqCategoryPage = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className="faqCategorylist">
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="카테고리 관리" menuStep01="사이트 운영" menuStep02="FAQ 관리" menuStep03="카테고리 관리" />
 
                 <MainCard>
@@ -261,8 +261,7 @@ const FaqCategoryPage = () => {
                             >
                                 검색
                             </Button> */}
-
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
+                            <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={newClick}>
                                 신규
                             </Button>
                         </ButtonLayout>
@@ -279,51 +278,31 @@ const FaqCategoryPage = () => {
                         height={350}
                     />
                 </ContentLine>
-
-                <ButtonLayout buttonName="layout--button__bottom">
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                        저장
-                    </Button>
-                    <Button
-                        disableElevation
-                        disabled={!isUpdate}
-                        size="medium"
-                        type="submit"
-                        variant="contained"
-                        color="secondary"
-                        onClick={deleteClick}
-                    >
-                        삭제
-                    </Button>
-                </ButtonLayout>
-
                 <MainCard sx={{ mt: 2 }} content={false}>
-                    <div className="bottom--blank">
-                        <FlexBox>
-                            <DropInput title="언어 구분" className="bottom--blank">
-                                <Select name="language" label="언어선택" value={language} onChange={handleChange}>
-                                    <MenuItem value="KO">국문</MenuItem>
-                                    <MenuItem value="EN">영문</MenuItem>
-                                </Select>
-                            </DropInput>
+                    <div className="bottom--item">
+                        <DropInput title="언어 구분" className="bottom--blank">
+                            <Select name="language" label="언어선택" value={language} onChange={handleChange}>
+                                <MenuItem value="KO">국문</MenuItem>
+                                <MenuItem value="EN">영문</MenuItem>
+                            </Select>
+                        </DropInput>
 
-                            <DropInput title="카테고리명">
-                                <TextField
-                                    id="filled-hidden-label-small"
-                                    type="text"
-                                    size="medium"
-                                    value={name}
-                                    name="name"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="Enter the Name"
-                                    fullWidth
-                                />
-                            </DropInput>
-                        </FlexBox>
+                        <DropInput title="카테고리명">
+                            <TextField
+                                id="filled-hidden-label-small"
+                                type="text"
+                                size="medium"
+                                value={name}
+                                name="name"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                placeholder="Enter the Name"
+                                fullWidth
+                            />
+                        </DropInput>
                     </div>
 
-                    <FlexBox>
+                    <div className="bottom--item">
                         <DropInput title="사용여부">
                             <RadioGroup
                                 row
@@ -350,9 +329,24 @@ const FaqCategoryPage = () => {
                                 fullWidth
                             />
                         </DropInput>
-                    </FlexBox>
+                    </div>
                 </MainCard>
-
+                <ButtonLayout style={{ marginTop: '1rem', marginBottom: '2rem' }}>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                        저장
+                    </Button>
+                    <Button
+                        disableElevation
+                        disabled={!isUpdate}
+                        size="medium"
+                        type="submit"
+                        variant="outlined_d"
+                        color="secondary"
+                        onClick={deleteClick}
+                    >
+                        삭제
+                    </Button>
+                </ButtonLayout>
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}

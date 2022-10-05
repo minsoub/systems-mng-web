@@ -362,8 +362,8 @@ const SiteRoleRegForm = () => {
             >
                 {({ errors, handleSubmit, isSubmitting, touched }) => (
                     <form noValidate onSubmit={handleSubmit}>
-                        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-                            <Grid item xs={12} md={7} lg={12}>
+                        <Grid container rowSpacing={4} columnSpacing={2.75}>
+                            <Grid item xs={12}>
                                 <HeaderTitle titleNm="Role 등록" menuStep01="사이트 관리" menuStep02="Role 관리" menuStep03="Role 등록" />
 
                                 <MainCard sx={{ mt: 2 }} className="program__layout">

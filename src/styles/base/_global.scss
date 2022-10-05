@@ -2,6 +2,11 @@
 @import 'commonColor';
 @import 'mixin';
 
+body{
+    min-width: 1280px;
+    overflow-x: auto;
+}
+
 // 공통 타이틀
 .borderTitle {
     width: 100px;
@@ -39,11 +44,6 @@
 .css-1ydvtxb-MuiButtonBase-root-MuiIconButton-root {
     margin-left: 0;
     font-size: 1.2rem;
-}
-
-// 상단 아래
-.css-dasaed-MuiGrid-root > .MuiGrid-item {
-    padding-top: 45px;
 }
 
 .css-dasaed-MuiGrid-root {
@@ -93,7 +93,13 @@ legend,
     font-size: 14px;
 }
 
-.css-1g5oyi7-MuiDataGrid-root .MuiDataGrid-row {
+// .css-1g5oyi7-MuiDataGrid-root .MuiDataGrid-row {
+//     cursor: pointer;
+// }
+.MuiDataGrid-row {
+    cursor: pointer;
+}
+.MuiTableRow-hover{
     cursor: pointer;
 }
 
@@ -109,7 +115,8 @@ legend,
 .common-grid--layout {
     width: 100%;
     margin-bottom: 1.5rem;
-
+    background: #fff;
+    overflow-x: auto;
     table {
         width: 100%;
     }
