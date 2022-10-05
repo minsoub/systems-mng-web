@@ -286,8 +286,8 @@ const Post = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12} className="contentsPressreleaseReg">
                 <HeaderTitle titleNm="보도자료" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="보도자료" />
 
                 <div className={cx('common-grid--layout')}>

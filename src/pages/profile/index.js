@@ -192,8 +192,8 @@ const ProfileUpdateForm = () => {
   };
 
   return (
-    <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-      <Grid item xs={12} md={7} lg={12}>
+    <Grid container rowSpacing={4} columnSpacing={2.75}>
+      <Grid item xs={12}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <Typography variant="h3">비밀번호 재설정</Typography>

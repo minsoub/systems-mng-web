@@ -244,8 +244,8 @@ const LineMngPage = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className="lineList">
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="계열 관리" menuStep01="사이트 운영" menuStep02="상태값 관리" menuStep03="계열 관리" />
 
                 <MainCard>
@@ -268,7 +268,7 @@ const LineMngPage = () => {
                                 onClick={searchClick}
                             >
                                 검색
-                            </Button> */}
+                            </Button>
 
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={newClick}>
                                 신규

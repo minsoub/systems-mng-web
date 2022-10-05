@@ -10,6 +10,7 @@ import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
 import '../BoardList.module.scss';
+import './style.scss';
 
 const Post = () => {
     const navigate = useNavigate();
@@ -211,8 +212,8 @@ const Post = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsDamageReg">
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="피해사례" />
 
                 <div className={cx('common-grid--layout')}>

@@ -217,22 +217,28 @@ const FaqRegForm = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="콘텐츠 관리" menuStep01="사이트 운영" menuStep02="FAQ 관리" menuStep03="콘텐츠 관리" />
 
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <Grid container spacing={0} sx={{ mt: 1 }}>
-                        <Grid item xs={8} sm={0.2}></Grid>
-                        <Grid item xs={8} sm={8}>
-                            <Table sx={{ width: 1000 }} stickyHeader aria-label="simple table">
+                        <Grid item xs={12} sm={0.2}></Grid>
+                        <Grid item xs={12} sm={12}>
+                            <Table stickyHeader aria-label="simple table">
                                 <TableBody>
                                     <TableRow>
-                                        <StyledTableCell component="th" scope="row" style={{ width: 200 }}>
+                                        <StyledTableCell
+                                            component="th"
+                                            scope="row"
+                                            xs={2}
+                                            sm={1}
+                                            sx={{ maxWidth: '250px', minWidth: '82px' }}
+                                        >
                                             카테고리 선택 <font color="red">*</font>
                                         </StyledTableCell>
-                                        <TableCell component="th" scope="row" style={{ width: 300 }}>
-                                            <FormControl sx={{ m: 0, minWidth: 180 }} size="small">
+                                        <TableCell component="th" scope="row" xs={10} sm={11}>
+                                            <FormControl sx={{ m: 0, minWidth: 110 }} size="small">
                                                 <Select
                                                     name="category_code"
                                                     label="카테고리명"
@@ -247,10 +253,10 @@ const FaqRegForm = () => {
                                                 </Select>
                                             </FormControl>
                                         </TableCell>
-                                        <StyledTableCell component="th" scope="row" style={{ width: 200 }}>
+                                        <StyledTableCell component="th" scope="row" xs={2} sm={1} sx={{ minWidth: '62px' }}>
                                             사용 여부 <font color="red">*</font>
                                         </StyledTableCell>
-                                        <TableCell component="th" scope="row" style={{ width: 300 }}>
+                                        <TableCell component="th" scope="row">
                                             <FormControl sx={{ m: 0 }} fullWidth>
                                                 <RadioGroup
                                                     row
@@ -266,10 +272,16 @@ const FaqRegForm = () => {
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <StyledTableCell component="th" scope="row" style={{ width: 200 }}>
+                                        <StyledTableCell
+                                            component="th"
+                                            scope="row"
+                                            xs={2}
+                                            sm={1}
+                                            sx={{ maxWidth: '250px', minWidth: '82px' }}
+                                        >
                                             제 목 <font color="red">*</font>
                                         </StyledTableCell>
-                                        <TableCell component="th" scope="row" colSpan={3} style={{ width: 680 }}>
+                                        <TableCell component="th" scope="row" colSpan={3} xs={10} sm={11}>
                                             <FormControl sx={{ m: 0 }} fullWidth>
                                                 <TextField
                                                     id="outlined-multiline-static"
@@ -281,10 +293,16 @@ const FaqRegForm = () => {
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <StyledTableCell component="th" scope="row" style={{ width: 200 }}>
+                                        <StyledTableCell
+                                            component="th"
+                                            scope="row"
+                                            xs={2}
+                                            sm={1}
+                                            sx={{ maxWidth: '250px', minWidth: '82px' }}
+                                        >
                                             내 용 <font color="red">*</font>
                                         </StyledTableCell>
-                                        <TableCell component="th" scope="row" colSpan={3} style={{ height: 200, width: 680 }}>
+                                        <TableCell component="th" scope="row" colSpan={3} style={{ height: 200 }} xs={10} sm={11}>
                                             <FormControl sx={{ m: 0 }} fullWidth>
                                                 <TextField
                                                     id="outlined-multiline-static"
@@ -301,9 +319,8 @@ const FaqRegForm = () => {
                             </Table>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={0} sx={{ mt: 1 }}>
-                        <Grid item xs={8} sm={0.2}></Grid>
-                        <Grid item xs={8} sm={0.1}>
+                    <Grid container justifyContent="space-between" spacing={0} sx={{ mt: 1 }}>
+                        <Grid item>
                             <FormControl sx={{ m: 1 }} size="small">
                                 <Button
                                     disableElevation
@@ -317,16 +334,12 @@ const FaqRegForm = () => {
                                 </Button>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={8} sm={9.5}></Grid>
-                        <Grid item xs={8} sm={0.7}>
+                        <Grid item>
                             <FormControl sx={{ m: 1 }} size="small">
                                 <Button disableElevation size="small" type="submit" variant="contained" color="primary" onClick={saveClick}>
                                     저장
                                 </Button>
                             </FormControl>
-                        </Grid>
-                        <Grid item xs={8} sm={0.1}></Grid>
-                        <Grid item xs={8} sm={0.7}>
                             <FormControl sx={{ m: 1 }} size="small">
                                 <Button
                                     disableElevation

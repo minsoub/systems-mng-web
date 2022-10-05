@@ -13,3 +13,21 @@
 .css-1hu2hhy-MuiTreeView-root {
     width: 100%;
 }
+
+.stateMng{
+    .bottom--item{
+        margin-bottom:10px;
+        >div{
+            display:inline-block;
+            margin-bottom:5px;
+            width:50%;
+            min-width: 260px;
+            .borderTitle{
+                min-width: 100px;
+            }
+            .styles_dropList--input__3dx-1{
+                width:70%
+            }
+        }
+    }
+}

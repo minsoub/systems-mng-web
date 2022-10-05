@@ -407,8 +407,8 @@ const SiteRoleMappingForm = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className="siterolesMapping">
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="사용자 맵핑" menuStep01="사이트 관리" menuStep02="Role 관리" menuStep03="사용자 맵핑" />
                 <MainCard style={{ display: 'flex', justifyContent: 'right' }}>
                     <TopInputLayout>
@@ -421,12 +421,12 @@ const SiteRoleMappingForm = () => {
                 </MainCard>
 
                 <Grid container alignItems="center" justifyContent="space-between" className="roleLayout">
-                    <Grid item md={4}>
+                    <Grid item md={3.8} sm={3.8} xs={12}>
                         <ContentLine>
                             <DefaultDataGrid
                                 columns={columns}
                                 rows={dataGridRows}
-                                height={855}
+                                height={844}
                                 handlePageChange={handlePage}
                                 handleGridClick={handleClick}
                                 handleGridDoubleClick={handleDoubleClick}
@@ -435,7 +435,7 @@ const SiteRoleMappingForm = () => {
                         </ContentLine>
                     </Grid>
 
-                    <Grid item md={7.8}>
+                    <Grid item md={8} sm={8} xs={12}>
                         <Typography variant="h4" className="title">
                             등록된 사용자
                         </Typography>

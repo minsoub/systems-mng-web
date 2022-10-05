@@ -118,3 +118,5 @@ package-lock.json
 
 # VS Code file
 .vscode/
+.env-local
+package.json

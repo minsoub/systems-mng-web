@@ -21,11 +21,11 @@ const SearchDate = ({
 
     return (
         <div className={cx(`result__list--date ${noneChecked}`)}>
-            <Stack spacing={10} className={cx('borderTitle')}>
+            <Stack sx={{ minWidth: 70 }} spacing={10} className={cx('borderTitle')}>
                 {title}
             </Stack>
             <div className="result__list--input">
-                <FormControl size="medium">
+                <FormControl size="medium" sx={{ marginBottom: '5px' }}>
                     <TextField name={startName} value={start_date} onBlur={handleBlur} onChange={handleChange} type="date" />
                 </FormControl>
                 <span className={cx('center')}> ~ </span>

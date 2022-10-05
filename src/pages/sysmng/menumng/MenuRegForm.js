@@ -529,8 +529,8 @@ const MenuRegForm = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75}>
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="메뉴 등록" menuStep01="통합시스템 관리" menuStep02="메뉴 관리" menuStep03="메뉴 등록" />
 
                 <MainCard>

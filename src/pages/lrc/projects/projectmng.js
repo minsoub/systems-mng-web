@@ -12,6 +12,7 @@ import TopInputLayout from '../../../components/Common/TopInputLayout';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import axiosInstanceDefault from '../../../apis/axiosDefault';
 import { doEncrypt } from '../../../utils/Crypt';
+import PrivateReasonDialog from '../../popup/PrivateResonPopup';
 
 const useStyles = makeStyles({
     tableRow: {
@@ -57,6 +58,7 @@ const ProjectMng = (props) => {
             projectSearch,
             updateProjectInfo,
             userSearch,
+            userUnMaskingSearch,
             createUserSearch,
             icoSearch,
             updateIcoList,
@@ -75,6 +77,10 @@ const ProjectMng = (props) => {
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
     const [resLineData, reqLineError, lineLoading, { lineSearch }] = LineApis();
     const { projectId, children, tabindex, index, ...other } = props;
+
+    // Log reason Dialog
+    const [openReason, setOpenReason] = useState(false);
+    const [selectedValue, setSelectedValue] = useState('');
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -119,6 +125,7 @@ const ProjectMng = (props) => {
     const refWhitepaper_link = useRef();
     const [create_date, setCreate_date] = useState('');
     const refContract_address = useRef();
+    const timerRef = useRef();
 
     // 상장정보 입력 항목 정의
     const refPriceKRW = useRef();
@@ -140,6 +147,8 @@ const ProjectMng = (props) => {
     // 다운로드 파일명 정의
     const [downloadFileName, setDownloadFileName] = useState('');
 
+    const [polling, setPolling] = useState(0);
+
     // onload
     useEffect(() => {
         // 상태값 조회
@@ -158,9 +167,67 @@ const ProjectMng = (props) => {
             // setErrorTitle('Error Message');
             // setErrorMessage(requestError);
             // setOpen(true);
-            alert(requestError.error.message);
+            //alert(requestError.error.message);
+            alert('에러가 발생하였습니다.');
         }
     }, [requestError]);
+
+    // 검토 평가 리스트가 변경되었을 때 호출된다.
+    useEffect(() => {
+        // polling start
+        console.log('reviewList data => ');
+        console.log(reviewList);
+        console.log(polling);
+        if (polling === 0) {
+            // 검토 평가 리스트에 파일정보가 아직 검사중인 경우
+            console.log('review file data search...');
+            let found = 0;
+            reviewList.map((item) => {
+                console.log(item.file_key);
+                console.log(item.file_status);
+                if (item.file_status === 'ING') {
+                    found = 1;
+                    console.log('review file found...');
+                    setPolling(1);
+                    //return;
+                }
+            });
+            console.log(found);
+            if (found === 0) {
+                setPolling(0);
+            }
+        } else {
+            // start 중이지만.. 끝났다면..
+            let found = 0;
+            reviewList.map((item) => {
+                if (item.file_status === 'ING') {
+                    found = 1;
+                    //return;
+                }
+            });
+            if (found === 0) {
+                setPolling(0);
+            }
+        }
+    }, [reviewList]);
+
+    // Polling Start
+    useEffect(() => {
+        console.log(polling);
+        if (polling === 1) {
+            // timer start
+            // 5초에 한번씩.. 조회
+            timerRef.current = setInterval(() => {
+                // 6. 검토 평가 조회
+                console.log('timer start...');
+                reviewSearch(projectId);
+            }, 8000);
+        } else {
+            // timer stop
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+        }
+    }, [polling]);
 
     // useEffect(() => {
     //     refContract_code.current.value = officeInfo.contract_code;
@@ -304,8 +371,25 @@ const ProjectMng = (props) => {
                 }
                 break;
             case 'getReviewList': // 검토 평가
+                console.log(responseData.data.data);
                 if (responseData.data.data && responseData.data.data.length > 0) {
+                    console.log(responseData.data.data);
                     setReviewList(responseData.data.data);
+                    let found = 0;
+
+                    responseData.data.data.map((item) => {
+                        console.log(item.file_key);
+                        console.log(item.file_status);
+                        if (item.file_status === 'ING') {
+                            found = 1;
+                            console.log('review file found...');
+                            setPolling(1);
+                        }
+                    });
+                    console.log(found);
+                    if (found === 0) {
+                        setPolling(0);
+                    }
                 } else {
                     setReviewList([]);
                 }
@@ -692,16 +776,16 @@ const ProjectMng = (props) => {
         }
     };
 
-       // 재단정보 저장
+    // 재단정보 저장
     const foundationSave = () => {
         // 프로젝트명과 심벌의 경우 필수 조건
         if (refProject_name.current.value.length === 0) {
-          alert('프로젝트명을 입력해주세요.');
-          return;
+            alert('프로젝트명을 입력해주세요.');
+            return;
         }
         if (refSymbol.current.value.length === 0) {
-          alert('심볼을 입력해주세요.');
-          return;
+            alert('심볼을 입력해주세요.');
+            return;
         }
         const regex1 = /^[A-Z|a-z|0-9|]*$/;
         if (!regex1.test(refProject_name.current.value)) {
@@ -714,7 +798,6 @@ const ProjectMng = (props) => {
             alert('유효하지 않은 심볼입니다.');
             return;
         }
-
 
         if (confirm('저장하시겠습니까?')) {
             let saveData = {
@@ -756,18 +839,18 @@ const ProjectMng = (props) => {
             alert('KRW 상장가를 입력해주세요.');
             return;
         }
-      if (!krw_ico_date) {
-        alert('KRW 상장일을 입력해주세요.');
-        return;
-      }
+        if (!krw_ico_date) {
+            alert('KRW 상장일을 입력해주세요.');
+            return;
+        }
         if (!refPriceBTC.current.value) {
-          alert('BTC 상장가를 입력해주세요.');
-          return;
+            alert('BTC 상장가를 입력해주세요.');
+            return;
         }
 
         if (!btc_ico_date) {
-          alert('BTC 상장일을 입력해주세요.');
-          return;
+            alert('BTC 상장일을 입력해주세요.');
+            return;
         }
         if (confirm('저장하시겠습니까?')) {
             let ico_info_list = [];
@@ -825,9 +908,9 @@ const ProjectMng = (props) => {
         marketingList.map((item) => {
             const { minimum_quantity, actual_quantity } = item;
             if (!item.symbol) {
-              alert('심볼을 입력해주세요.');
-              found = 1;
-              return;
+                alert('심볼을 입력해주세요.');
+                found = 1;
+                return;
             }
             if (!pattern.test(item.symbol)) {
                 alert('유효하지 않은 심볼입니다.');
@@ -873,9 +956,9 @@ const ProjectMng = (props) => {
     };
 
     // 검토 파일 다운로드
-    const fileDownload = (fileKey, fileName) => {
+    const fileDownload = (id, fileKey, fileName) => {
         setDownloadFileName(fileName);
-        fileReviewDownload(fileKey);
+        fileReviewDownload(projectId, id, fileKey);
     };
 
     // 프로젝트 (심볼) 검색
@@ -952,6 +1035,24 @@ const ProjectMng = (props) => {
             if (confirm('저장하시겠습니까?')) {
                 lrcUserSave(projectId, userList);
             }
+        }
+    };
+
+    const reqUnMask = () => {
+        if (userList.length > 0) {
+            // 마스킹 해제 요청을 한다. (해당 요청은 내부망에서만 이루어질 것이다)
+            setOpenReason(true);
+        }
+    };
+
+    const handlePopupClose = (returnData) => {
+        setOpenReason(false);
+        // 데이터 처리
+        if (returnData.length !== 0) {
+            // 데이터 처리
+            console.log(returnData);
+            let reason = returnData;
+            userUnMaskingSearch(projectId, reason);
         }
     };
 
@@ -1244,13 +1345,15 @@ const ProjectMng = (props) => {
                                                 '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                         }}
                                     />
-                                    {item.file_name && (
+                                    {item.file_key && item.file_status === 'CLEAN' && (
                                         <div>
-                                            <a href="#" onClick={() => fileDownload(item.file_key, item.file_name)}>
+                                            <a href="#" onClick={() => fileDownload(item.id, item.file_key, item.file_name)}>
                                                 {item.file_name}
                                             </a>
                                         </div>
                                     )}
+                                    {item.file_key && item.file_status === 'ING' && <div>{item.file_name} [검사중]</div>}
+                                    {item.file_key && item.file_status === 'INFECTED' && <div>{item.file_name} [감염파일]</div>}
                                 </td>
                                 <td className="tg-0lax">
                                     {item.id === '' && (
@@ -1463,6 +1566,16 @@ const ProjectMng = (props) => {
                                         저장
                                     </Button>
                                     &nbsp;
+                                    <Button
+                                        disableElevation
+                                        size="medium"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={reqUnMask}
+                                    >
+                                        UnMask
+                                    </Button>
                                 </FlexBox>
                             </td>
                         </tr>
@@ -1564,6 +1677,7 @@ const ProjectMng = (props) => {
                     </table>
                 </ContentLine>
             </Grid>
+            <PrivateReasonDialog selectedValue={selectedValue} open={openReason} onClose={handlePopupClose} />
         </Grid>
     );
 };

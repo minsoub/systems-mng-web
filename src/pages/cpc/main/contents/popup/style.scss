@@ -1,0 +1,11 @@
+.cpcMainContentsPopup{
+    .searchBar{
+        .borderTitle{min-width:50px;}
+        .css-1jq015e-MuiFormControl-root{min-width:290px;}
+    }
+    .buttonLayout{
+        &:nth-child(8){
+            margin-top:10px;
+        }
+    }
+}

@@ -1,3 +1,21 @@
 .ly-blank {
     margin-left: 20px;
 }
+
+
+.siteauthList{
+    .topInputLayout{
+        .inputLayout{
+            display: block;
+            >div{
+                display:inline-block;
+                &:nth-child(1){
+                    margin-bottom: 5px;
+                }
+            }
+        }
+        .buttonLayout {
+            button{min-width: 69px;}
+        }
+    }   
+}

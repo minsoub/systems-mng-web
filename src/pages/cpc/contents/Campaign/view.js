@@ -16,6 +16,7 @@ import { setSearchData } from 'store/reducers/cpc/CampaignSearch';
 import ContentLine from 'components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
 import styles from '../BoardList.module.scss';
+import './style.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
@@ -308,8 +309,8 @@ const View = () => {
     };
 
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            <Grid item xs={12} md={7} lg={12}>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsCampaignList">
+            <Grid item xs={12}>
                 <HeaderTitle titleNm="안전거래 캠페인" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="안전거래 캠페인" />
                 <MainCard>
                     {/* 기간 검색 */}
