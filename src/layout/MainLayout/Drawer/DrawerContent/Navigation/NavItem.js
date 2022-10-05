@@ -85,7 +85,7 @@ const NavItem = ({ item, level }) => {
     const itemHandler = (id) => {
         dispatch(activeItem({ openItem: [id] }));
     };
-    console.log('item.id', item.id, item.name);
+    //console.log('item.id', item.id, item.name);
     item.icon = menuIcon[item.id]; // icons.AppstoreOutlined;
     const Icon = item.icon;
     const itemIcon = item.icon ? <Icon style={{ fontSize: drawerOpen ? '1rem' : '1.25rem' }} /> : false;
