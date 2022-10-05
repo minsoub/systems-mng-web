@@ -55,7 +55,7 @@ const MenuMappingForm = () => {
         responseData,
         requestError,
         responseLoading,
-        { menumngSearch, menumngDetail, programMapping, programMappingSearch }
+        { menumngSearch, menumngDetail, programMapping, programMappingSearch, programMappingDelete }
     ] = MenuMngApi();
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
 
@@ -69,14 +69,14 @@ const MenuMappingForm = () => {
         {
             field: 'id',
             headerName: '프로그램 ID',
-            flex: 1,
+            flex: 0.5,
             headerAlign: 'center',
             align: 'center'
         },
         {
             field: 'name',
             headerName: '프로그램명',
-            flex: 1,
+            flex: 0.7,
             headerAlign: 'center',
             align: 'center'
         },
@@ -90,20 +90,13 @@ const MenuMappingForm = () => {
         {
             field: 'action_method',
             headerName: 'Action Type',
-            flex: 1,
+            flex: 0.5,
             headerAlign: 'center',
             align: 'center'
         },
         {
-            field: 'type',
-            headerName: '관리메뉴',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'is_use',
-            headerName: '사용여부',
+            field: 'action_url',
+            headerName: 'Action Url',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
@@ -113,14 +106,14 @@ const MenuMappingForm = () => {
         {
             field: 'id',
             headerName: '프로그램 ID',
-            flex: 1,
+            flex: 0.5,
             headerAlign: 'center',
             align: 'center'
         },
         {
             field: 'name',
             headerName: '프로그램명',
-            flex: 1,
+            flex: 0.7,
             headerAlign: 'center',
             align: 'center'
         },
@@ -134,20 +127,13 @@ const MenuMappingForm = () => {
         {
             field: 'action_method',
             headerName: 'Action Type',
-            flex: 1,
+            flex: 0.5,
             headerAlign: 'center',
             align: 'center'
         },
         {
-            field: 'type',
-            headerName: '관리메뉴',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'is_use',
-            headerName: '사용여부',
+            field: 'action_url',
+            headerName: 'Action Url',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
@@ -186,9 +172,10 @@ const MenuMappingForm = () => {
     const [inputs, setInputs] = useState({
         site_id: '',
         is_use: true,
-        keyword: ''
+        keyword: '',
+        program_site_id: ''
     });
-    const { site_id, is_use, keyword } = inputs;
+    const { site_id, is_use, keyword, program_site_id } = inputs;
 
     // onload
     useEffect(() => {
@@ -228,7 +215,8 @@ const MenuMappingForm = () => {
                     setSiteList(list);
                     setInputs({
                         ...inputs, // 기존 input 객체 복사
-                        site_id: list[1].id
+                        site_id: list[1].id,
+                        program_site_id: list[1].id
                     });
                     menumngSearch(list[1].id, is_use);
                 }
@@ -401,36 +389,29 @@ const MenuMappingForm = () => {
         }
     };
     // 연결 프로그램 목록에서 프로그램을 제거한다.
-    const minusRegister = () => {
+    const deleteMapping = () => {
+        let programs_ids = [];
         if (selectedRegisterRows.length > 0) {
             let newList = dataGridRegisterRows;
             selectedRegisterRows.map((id, Index) => {
                 newList = newList.filter((item) => item.id !== id);
                 setDataGridRegisterRows(newList);
                 setIsSave(true);
-                // dataGridRegisterRows.map((regData, idx) => {
-                //     if (id === regData.id) {
-                //         setDataGridRegisterRows((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
-                //         setIsSave(true);
-                //     }
-                // });
-                // let selectedData = { id: data.id, name: data.name, email: data.email };
-                // // 등록된 데이터가 없으면 등록해야 한다.
-                // dataGridRegisterRows.pop(selectedData);
+                programs_ids.push(id);
+                console.log(programs_ids);
+                if (programs_ids.length) {
+                    programMappingDelete(selected, site_id, programs_ids);
+                }
             });
         }
     };
-    // 프로그램 목로 - 검색
+    // 프로그램 목록 - 검색
     const programSearchClick = () => {
-        if (!keyword) {
-            alert('검색 단어를 입력하세요.');
-            return;
+        if (program_site_id === '전체검색') {
+            programTextSearch(site_id, true, keyword, true);
+        } else {
+            programTextSearch(program_site_id, true, keyword, false);
         }
-        if (!site_id) {
-            alert('사이트 구분을 선택하시고 조회하시기 바랍니다.');
-            return;
-        }
-        programTextSearch(site_id, true, keyword);
     };
     const keyPress = (e) => {
         if (e.key === 'Enter') {
@@ -455,9 +436,6 @@ const MenuMappingForm = () => {
         console.log(nodeIds);
         setSelected(nodeIds);
         setExpanded(nodeIds);
-        // 프로그램 목록 초기화
-        setSearchGridRows([]);
-        setSelectedSearchRows([]);
         // 선택한 노드에 대해서 상세 데이터를 조회한다.
         programMappingSearch(nodeIds, site_id);
     };
@@ -551,8 +529,8 @@ const MenuMappingForm = () => {
                                     size="medium"
                                     type="button"
                                     variant="contained"
-                                    color="secondary"
-                                    onClick={minusRegister}
+                                    color="error"
+                                    onClick={deleteMapping}
                                 >
                                     삭제
                                 </Button>
@@ -579,6 +557,18 @@ const MenuMappingForm = () => {
 
                             <div className="program--list">
                                 <div className="program--list__align">
+                                    <DropInput title="사이트 구분">
+                                        <Select name="program_site_id" label="사이트명" value={program_site_id} onChange={handleChange}>
+                                            <MenuItem value="전체검색">
+                                                <em>전체검색</em>
+                                            </MenuItem>
+                                            {siteList.map((item, index) => (
+                                                <MenuItem key={index} value={item.id}>
+                                                    {item.name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </DropInput>
                                     <InputLayout>
                                         <FormControl sx={{ minWidth: 250 }} size="medium">
                                             <TextField

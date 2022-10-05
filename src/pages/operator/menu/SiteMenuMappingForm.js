@@ -57,7 +57,7 @@ const SiteMenuMappingForm = () => {
         responseData,
         requestError,
         responseLoading,
-        { menumngSearch, menumngDetail, programMapping, programMappingSearch }
+        { menumngSearch, menumngDetail, programMapping, programMappingSearch, programMappingDelete }
     ] = MenuMngApi();
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
 
@@ -69,18 +69,18 @@ const SiteMenuMappingForm = () => {
 
     const regColumns = [
         {
-            field: 'id',
-            headerName: '프로그램 ID',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
+          field: 'id',
+          headerName: '프로그램 ID',
+          flex: 0.5,
+          headerAlign: 'center',
+          align: 'center'
         },
         {
-            field: 'name',
-            headerName: '프로그램명',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
+          field: 'name',
+          headerName: '프로그램명',
+          flex: 0.7,
+          headerAlign: 'center',
+          align: 'center'
         },
         {
             field: 'kind_name',
@@ -92,20 +92,13 @@ const SiteMenuMappingForm = () => {
         {
             field: 'action_method',
             headerName: 'Action Type',
-            flex: 1,
+            flex: 0.5,
             headerAlign: 'center',
             align: 'center'
         },
         {
-            field: 'type',
-            headerName: '관리메뉴',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'is_use',
-            headerName: '사용여부',
+            field: 'action_url',
+            headerName: 'Action Url',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
@@ -115,14 +108,14 @@ const SiteMenuMappingForm = () => {
         {
             field: 'id',
             headerName: '프로그램 ID',
-            flex: 1,
+            flex: 0.5,
             headerAlign: 'center',
             align: 'center'
         },
         {
             field: 'name',
             headerName: '프로그램명',
-            flex: 1,
+            flex: 0.7,
             headerAlign: 'center',
             align: 'center'
         },
@@ -136,20 +129,13 @@ const SiteMenuMappingForm = () => {
         {
             field: 'action_method',
             headerName: 'Action Type',
-            flex: 1,
+            flex: 0.5,
             headerAlign: 'center',
             align: 'center'
         },
         {
-            field: 'type',
-            headerName: '관리메뉴',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'is_use',
-            headerName: '사용여부',
+            field: 'action_url',
+            headerName: 'Action Url',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
@@ -400,32 +386,32 @@ const SiteMenuMappingForm = () => {
         }
     };
     // 연결 프로그램 목록에서 프로그램을 제거한다.
-    const minusRegister = () => {
+    const deleteMapping = () => {
+        let programs_ids = [];
         if (selectedRegisterRows.length > 0) {
             let newList = dataGridRegisterRows;
             selectedRegisterRows.map((id, Index) => {
                 newList = newList.filter((item) => item.id !== id);
                 setDataGridRegisterRows(newList);
                 setIsSave(true);
-                // dataGridRegisterRows.map((regData, idx) => {
-                //     if (id === regData.id) {
-                //         setDataGridRegisterRows((prevRows) => [...prevRows.slice(0, idx), ...prevRows.slice(idx + 1)]);
-                //         setIsSave(true);
-                //     }
-                // });
+                programs_ids.push(id);
+                if (programs_ids.length) {
+                    programMappingDelete(selected, site_id, programs_ids);
+                }
             });
         }
     };
-    // 프로그램 목로 - 검색
+    // 프로그램 목록 - 검색
     const programSearchClick = () => {
-        if (!keyword) {
-            alert('검색 단어를 입력하세요.');
-            return;
-        }
-        if (!site_id) {
-            alert('사이트 구분을 선택하시고 조회하시기 바랍니다.');
-            return;
-        }
+        // if (!keyword) {
+        //     alert('검색 단어를 입력하세요.');
+        //     return;
+        // }
+        // if (!site_id) {
+        //     alert('사이트 구분을 선택하시고 조회하시기 바랍니다.');
+        //     return;
+        // }
+        setSelectedSearchRows([]);
         programTextSearch(site_id, true, keyword);
     };
     const keyPress = (e) => {
@@ -529,14 +515,7 @@ const SiteMenuMappingForm = () => {
                         <div className="layout--align">
                             <Item>연결된 프로그램 목록</Item>
 
-                            <Button
-                                disableElevation
-                                size="medium"
-                                type="button"
-                                variant="contained"
-                                color="secondary"
-                                onClick={minusRegister}
-                            >
+                            <Button disableElevation size="medium" type="button" variant="contained" color="error" onClick={deleteMapping}>
                                 삭제
                             </Button>
                         </div>

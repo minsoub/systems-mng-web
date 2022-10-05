@@ -83,7 +83,7 @@ const AccessMngPage = () => {
     ];
 
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { accountMngSearch, accountList, accountDeletes }] = AccountApis();
+    const [responseData, requestError, loading, { accountMngSearch }] = AccountApis();
 
     // 그리드 선택된 row id
     const [selectedRows, setSelectedRows] = useState([]);
@@ -194,32 +194,6 @@ const AccessMngPage = () => {
         accountMngSearch(is_use, keyword);
     };
 
-    // new
-    const newClick = () => {
-        console.log('called register form');
-        navigate('/access/reg');
-    };
-
-    // delete
-    const deleteClick = () => {
-        if (selectedRows.length === 0) {
-            alert('삭제 할 계정에 대해서 체크박스를 선택하세요.');
-            return;
-        }
-        console.log(selectedRows);
-        if (confirm('선택한 계정에 대해서 삭제를 하시겠습니까?')) {
-            // 선택한 계정에 대해서 삭제를 수행한다.
-            let deleteIds = '';
-            let idx = 0;
-            selectedRows.map((data, index) => {
-                if (idx > 0) deleteIds = deleteIdx + '::';
-                deleteIds = deleteIds + data;
-                idx++;
-            });
-            console.log(deleteIds);
-            accountDeletes(deleteIds);
-        }
-    };
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
@@ -262,14 +236,6 @@ const AccessMngPage = () => {
                             >
                                 검색
                             </Button>
-                            {/* <Button disableElevation size="medium" type="submit" variant="contained" color="info" onClick={newClick}>
-                                등록
-                            </Button>
-
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="error" onClick={deleteClick}>
-                                삭제
-                            </Button> */}
-
                             <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
                                 초기화
                             </Button>

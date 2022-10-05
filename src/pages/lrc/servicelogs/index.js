@@ -5,7 +5,7 @@ import { Button, Grid, Table, TableRow } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import { GridToolbar } from '@mui/x-data-grid';
-import LogsApi from 'apis/servicelogs/index';
+import LogsApi from 'apis/logs/service';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import { setSearchData } from 'store/reducers/logsearch';
@@ -308,7 +308,7 @@ const ServiceLog = () => {
             // 데이터 처리
             console.log(returnData);
             let reason = returnData;
-            logExcelDownload(from_date, to_date, keyword, reason, '1');
+            logExcelDownload(from_date, to_date, keyword, reason);
         }
     };
 

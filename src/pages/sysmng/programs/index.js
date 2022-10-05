@@ -170,7 +170,7 @@ const ProgramManagementPage = () => {
     const isUseChange = (e) => {
         switch (e.target.name) {
             case 'is_use':
-                setIsUse(e.target.checked);
+              setIsUse(e.target.checked);
                 break;
             default:
                 break;
@@ -214,7 +214,7 @@ const ProgramManagementPage = () => {
             return;
         }
         console.log(site_id);
-        programSearch(site_id, true);
+        programSearch(site_id, is_use);
     };
 
     return (

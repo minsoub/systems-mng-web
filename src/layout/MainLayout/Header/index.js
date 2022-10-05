@@ -103,6 +103,9 @@ const Header = ({ open, handleDrawerToggle }) => {
             //console.log(mySiteList);
 
             if (responseData.data.data.site_id === mySiteId) {
+                authData.roleId = responseData.data.data.id; // Role ID
+                localStorage.setItem('authenticated', JSON.stringify(authData));
+
                 // role과 site_id로 메뉴 조회
                 dispatch(activeRole({ roleId: responseData.data.data.id }));
             }

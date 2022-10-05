@@ -1,7 +1,7 @@
 import axiosInstanceDefault from '../axiosDefault';
 import useAxios from '../useAxios';
 
-const FilemngApi = () => {
+const FileMngApi = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
 
     // 데이터 검색
@@ -12,15 +12,6 @@ const FilemngApi = () => {
             method: 'get',
             url: `/files?isUse=${is_use}`,
             requestConfig: {}
-        });
-    };
-
-    const getDelete = (id, data) => {
-        callApi('deleteData', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'put',
-            url: `/site/${id}`,
-            requestConfig: data
         });
     };
 
@@ -60,7 +51,6 @@ const FilemngApi = () => {
         loading,
         {
             fileSearch: getSearchData,
-            fileDelete: getDelete,
             fileInsert: insertFile,
             fileDetail: getDetailData,
             fileUpdate: updateData
@@ -68,4 +58,4 @@ const FilemngApi = () => {
     ];
 };
 
-export default FilemngApi;
+export default FileMngApi;

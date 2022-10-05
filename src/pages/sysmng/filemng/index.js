@@ -5,7 +5,7 @@ import { Button, Checkbox, FormControlLabel, Grid, MenuItem, Select } from '@mui
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import SiteApi from 'apis/site/siteapi';
-import FilemngApi from 'apis/filemng/filemngapi';
+import FileMngApi from 'apis/filemng/fileMngApi';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
@@ -68,7 +68,7 @@ const FileManagementPage = () => {
         }
     ];
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { fileSearch }] = FilemngApi();
+    const [responseData, requestError, loading, { fileSearch }] = FileMngApi();
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
 
     // 그리드 선택된 row id

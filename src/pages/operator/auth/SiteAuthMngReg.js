@@ -60,7 +60,7 @@ const SiteAuthMngRegForm = () => {
         responseData,
         requestError,
         responseLoading,
-        { menumngSearch, menumngDetail, programMapping, programMappingSearch }
+        { menumngSearch, menumngDetail, programMapping, programMappingSearch, programMappingDelete }
     ] = MenuMngApi();
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
     const [

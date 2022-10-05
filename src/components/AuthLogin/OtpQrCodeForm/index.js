@@ -81,12 +81,12 @@ const OtpQrCodeForm = ({ result }) => {
                     dispatch(activeLogin({ isLoggined: authData.isLoggined }));
                     dispatch(activeLoginDate({ loginDate: authData.loginDate }));
                     localStorage.setItem('authenticated', JSON.stringify(authData));
-                    if (authData.siteId === '62a15f4ae4129b518b133128') {
-                        // 투자보호
-                        navigate('/cpc/dashboard');
-                    } else {
-                        navigate('/lrc/dashboard');
-                    }
+                    // if (authData.siteId === '62a15f4ae4129b518b133128') {
+                    //     // 투자보호
+                    //     navigate('/cpc/dashboard');
+                    // } else {
+                    //     navigate('/lrc/dashboard');
+                    // }
                 }
                 break;
             default:

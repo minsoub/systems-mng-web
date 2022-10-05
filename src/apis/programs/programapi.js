@@ -15,12 +15,12 @@ const ProgramApi = () => {
         });
     };
     // 검색어를 통한 데이터 검색
-    const getTextSearchData = (site_id, is_use, keyword) => {
+    const getTextSearchData = (site_id, is_use, keyword, isWhole) => {
         const encodeKeyword = encodeURIComponent(keyword);
         callApi('programList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/site/${site_id}/programs?isUse=${is_use}&searchText=${encodeKeyword}`,
+            url: `/site/${site_id}/programs?isUse=${is_use}&searchText=${encodeKeyword}&isWhole=${isWhole}`,
             requestConfig: {}
         });
     };

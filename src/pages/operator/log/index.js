@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Button, Grid } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from '../../../components/DataGrid/DefaultDataGrid';
-import LogsApi from 'apis/servicelogs/index';
+import LogsApi from 'apis/logs/audit';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import HeaderTitle from '../../../components/HeaderTitle';
@@ -84,7 +84,7 @@ const SiteLogPage = () => {
     ];
     const navigate = useNavigate();
     const { siteId } = useSelector((state) => state.auth);
-    const [responseData, requestError, loading, { logLrcSearch, logExcelDownload }] = LogsApi();
+    const [responseData, requestError, loading, { auditLogSearch, auditLogExcelDownload }] = LogsApi();
 
     // 그리드 선택된 row id
     const [selectedRows, setSeletedRows] = useState([]);
@@ -117,7 +117,7 @@ const SiteLogPage = () => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
         //searchClick();
-        logLrcSearch(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'), '');
+        auditLogSearch(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'), '');
     }, []);
 
     // transaction error 처리
@@ -228,7 +228,7 @@ const SiteLogPage = () => {
     const searchClick = () => {
         console.log('searchClick called...');
         //roleComboSearch(is_use, type, site_id);
-        logLrcSearch(start_date, end_date, keyword);
+        auditLogSearch(start_date, end_date, keyword);
     };
 
     // Excel Download
@@ -243,7 +243,7 @@ const SiteLogPage = () => {
             // 데이터 처리
             console.log(returnData);
             let reason = returnData;
-            logExcelDownload(start_date, end_date, keyword, reason, '2');
+            auditLogExcelDownload(start_date, end_date, keyword, reason);
         }
     };
 

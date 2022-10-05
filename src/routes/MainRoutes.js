@@ -113,7 +113,7 @@ const AuthMngRegForm = Loadable(lazy(() => import('pages/sysmng/authmng/AuthMngR
 
 const LrcDashboard = Loadable(lazy(() => import('pages/lrc/dashboard/index')));
 const FileManagementPage = Loadable(lazy(() => import('pages/sysmng/filemng/index')));
-const FilemngRegForm = Loadable(lazy(() => import('pages/sysmng/filemng/FilemngRegForm')));
+const FilemngRegForm = Loadable(lazy(() => import('pages/sysmng/filemng/FileMngRegForm')));
 
 // 통합 시스템 관리 -> 접근 IP 관리
 const IpMngBoard = Loadable(lazy(() => import('pages/sysmng/ipmng')));

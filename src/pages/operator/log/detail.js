@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button, FormControl, Grid, Table, TableBody, TableRow } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { makeStyles, withStyles } from '@mui/styles';
-import LogsApi from 'apis/servicelogs/index';
+import LogsApi from 'apis/logs/audit';
 import HeaderTitle from 'components/HeaderTitle';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
@@ -21,7 +21,7 @@ const StyledTableCell = withStyles((theme) => ({
 const SiteLogDetail = () => {
     const navigate = useNavigate();
     const { paramId } = useParams();
-    const [responseData, requestError, loading, { logLrcDetail }] = LogsApi();
+    const [responseData, requestError, loading, { auditLogDetail }] = LogsApi();
     ////////////////////////////////////////////////////
     // 공통 에러 처리
     const [open, setOpen] = useState(false);
@@ -30,7 +30,7 @@ const SiteLogDetail = () => {
     const [logDetail, setLogDetail] = useState({});
     // onload
     useEffect(() => {
-        logLrcDetail(paramId);
+      auditLogDetail(paramId);
     }, []);
 
     // transaction error 처리
