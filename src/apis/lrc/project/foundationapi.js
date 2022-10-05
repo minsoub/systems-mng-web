@@ -389,6 +389,15 @@ const FoundationApi = () => {
         });
     };
 
+    const checkProject = (projectId) => {
+        callApi('checkProject', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/lrcmanagment/project/foundation-check/${projectId}`,
+            requestConfig: {}
+        });
+    };
+
     return [
         responseData,
         requestError,
@@ -423,7 +432,8 @@ const FoundationApi = () => {
             lrcUserRegister: lrcUserRegister,
             lrcUserDelete: lrcUserDelete,
             lrcUserSave: lrcUserSave,
-            sendEmailToProjectUser: sendEmailToProjectUser
+            sendEmailToProjectUser: sendEmailToProjectUser,
+            checkProject: checkProject
         }
     ];
 };
