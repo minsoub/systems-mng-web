@@ -26,7 +26,7 @@ import DropInput from '../../../components/Common/DropInput';
 import './styles.scss';
 import cx from 'classnames';
 import FlexBox from '../../../components/Common/FlexBox';
-
+import PrivateReasonDialog from '../../popup/PrivateResonPopup';
 const OfficeInfo = (props) => {
     const navigate = useNavigate();
     const [
@@ -39,6 +39,7 @@ const OfficeInfo = (props) => {
             reviewSearch,
             projectSearch,
             userSearch,
+            userUnMaskingSearch,
             createUserSearch,
             icoSearch,
             officeSearch,
@@ -50,6 +51,10 @@ const OfficeInfo = (props) => {
     ] = FoundationApi();
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
     const { projectId, chatClose, children, tabindex, index, ...other } = props;
+
+    // Log reason Dialog
+    const [openReason, setOpenReason] = useState(false);
+    const [selectedValue, setSelectedValue] = useState('');
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -417,15 +422,33 @@ const OfficeInfo = (props) => {
         setValue(value);
     };
     // 검토 파일 다운로드
-    const fileDownload = (fileKey, fileName) => {
+    const fileDownload = (id, fileKey, fileName) => {
         setDownloadFileName(fileName);
-        fileReviewDownload(fileKey);
+        fileReviewDownload(projectId, id, fileKey);
     };
     const format = (num, decimals) =>
         num.toLocaleString('en-US', {
             minimumFractionDigits: 4,
             maximumFractionDigits: 4
         });
+
+    const reqUnMask = () => {
+        if (userList.length > 0) {
+            // 마스킹 해제 요청을 한다. (해당 요청은 내부망에서만 이루어질 것이다)
+            setOpenReason(true);
+        }
+    };
+
+    const handlePopupClose = (returnData) => {
+        setOpenReason(false);
+        // 데이터 처리
+        if (returnData.length !== 0) {
+            // 데이터 처리
+            console.log(returnData);
+            let reason = returnData;
+            userUnMaskingSearch(projectId, reason);
+        }
+    };
 
     return (
         <Grid container alignItems="center" justifyContent="space-between">
@@ -558,6 +581,44 @@ const OfficeInfo = (props) => {
                     </Table>
                 </ContentLine>
             </Grid>
+
+            <ContentLine className="officeinfo__table__width">
+                <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell style={{ width: '25%' }} align="center">
+                                이름
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center">
+                                연락처
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center">
+                                SNS ID
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center">
+                                이메일주소
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    {userList.map((item, index) => (
+                        <TableRow key={index}>
+                            <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                {item.user_name}
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                {item.phone}
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                {item.sns_id}
+                            </TableCell>
+                            <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
+                                {item.email}
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </Table>
+            </ContentLine>
+
             <Grid container className="officeinfo__content--box">
                 <Grid  sx={{ p: '1rem 2rem '}}>
                     <Typography variant="h4">마케팅 수량</Typography>
@@ -830,6 +891,7 @@ const OfficeInfo = (props) => {
                     </Table>
                 </ContentLine>
             </Grid>
+            <PrivateReasonDialog selectedValue={selectedValue} open={openReason} onClose={handlePopupClose} />
         </Grid>
     );
 };
