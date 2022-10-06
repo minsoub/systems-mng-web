@@ -101,8 +101,8 @@ const MenuMngApi = () => {
     const authProgramMenuMapping = () => {
         callApi('authProgramMenuMapping', {
             axiosInstance: axiosInstanceDefault,
-            method: 'put',
-            url: `/auth/mapping/init`,
+            method: 'get',
+            url: `/auth/mapping`,
             requestConfig: {}
         });
     };
