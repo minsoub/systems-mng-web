@@ -76,7 +76,6 @@ const useAxios = () => {
         // 기존 리프레시 토큰으로 토큰 갱신
         axiosInstanceAuth.defaults.headers.common.Authorization = `Bearer ${authData.refreshToken}`;
         axiosInstanceAuth.defaults.headers.my_site_id = authData.siteId;
-        axiosInstanceAuth.defaults.headers.active_role = authData.roleId;
 
         try {
             setLoading(true);
@@ -180,6 +179,9 @@ const useAxios = () => {
                 //401 에러 처리(토큰만료)
                 console.log('401 Error !!!');
                 checkAuthError(err);
+                return;
+            } else if (err.response && err.response.status && err.response.status === 403) {
+                console.log('Authorize Error !!!');
                 return;
             }
             if (err.response) setError(err.response.data);
