@@ -20,6 +20,10 @@
             min-width: 76px;
             width: auto;
         }
+        .MuiFormControl-root {
+            min-width: 180px;
+            width: 100%;
+        }
     }
     .bottom--item{
         margin-bottom:10px;
@@ -32,8 +36,7 @@
                 min-width: 100px;
             }
             .styles_dropList--input__3dx-1{
-                width:auto;
-                min-width: 100px;
+                width: 100%;
             }
         }
     }

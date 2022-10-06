@@ -335,7 +335,6 @@ const View = () => {
                         handleChange={handleChange}
                         startName="start_date"
                         endName="end_date"
-                        addAll={true}
                         changeDate={changeDate}
                         resetPeriod={resetPeriod}
                     />
@@ -382,7 +381,7 @@ const View = () => {
                         columns={columns}
                         rows={dataGridRows}
                         pageSize={10}
-                        height={660}
+                        height={650}
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
