@@ -179,6 +179,21 @@ const View = () => {
     const handleBlur = (e) => {
         console.log(e);
     };
+    const resetPeriod= () => {
+        setPeriod(0);
+    };
+    const changeDate =(type,e)=>{
+        switch(type){
+            case 'start':
+                setStartDate(e);
+                break;
+            case 'end':
+                setEndDate(e);
+                break;
+            default:
+                break;
+        }
+    };
     const handleChange = (e) => {
         switch (e.target.name) {
             case 'start_date':
@@ -320,6 +335,9 @@ const View = () => {
                         handleChange={handleChange}
                         startName="start_date"
                         endName="end_date"
+                        addAll={true}
+                        changeDate={changeDate}
+                        resetPeriod={resetPeriod}
                     />
 
                     {/* 카테고리 영역 */}

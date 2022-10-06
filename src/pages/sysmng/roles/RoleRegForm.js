@@ -202,7 +202,21 @@ const RoleRegForm = () => {
             default:
         }
     }, [responseData]);
-
+    const resetPeriod = () => {
+        console.log('period');
+    };
+    const changeDate = (type, e) => {
+        switch (type) {
+            case 'start':
+                setValidStartDate(e);
+                break;
+            case 'end':
+                setValidEndDate(e);
+                break;
+            default:
+                break;
+        }
+    };
     const handleChange = (e) => {
         console.log(e);
         switch (e.target.name) {
@@ -423,6 +437,9 @@ const RoleRegForm = () => {
                                             startName="valid_start_date"
                                             endName="valid_end_date"
                                             title="유효 기간"
+                                            addAll={true}
+                                            changeDate={changeDate}
+                                            resetPeriod={resetPeriod}
                                         />
                                     </Grid>
 

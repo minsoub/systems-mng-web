@@ -167,7 +167,21 @@ const SiteRegForm = () => {
             setAdminEmail(returnData.row.email);
         }
     };
-
+    const resetPeriod = () => {
+        // setPeriod(0);
+    };
+    const changeDate = (type, e) => {
+        switch (type) {
+            case 'start':
+                setValidStartDate(e);
+                break;
+            case 'end':
+                setValidEndDate(e);
+                break;
+            default:
+                break;
+        }
+    };
     const handleChange = (e) => {
         switch (e.target.name) {
             case 'id':
@@ -388,6 +402,9 @@ const SiteRegForm = () => {
                                             startName="from_date"
                                             endName="to_date"
                                             title="유효 기간"
+                                            addAll={true}
+                                            changeDate={changeDate}
+                                            resetPeriod={resetPeriod}
                                         />
                                     </FlexBox>
 

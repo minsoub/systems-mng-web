@@ -143,6 +143,36 @@ const IpRegForm = () => {
             default:
         }
     }, [responseData]);
+    const handleBlur = (e) => {
+        console.log(e);
+    };
+    const resetPeriod = () => {
+        console.log('resetPeriod');
+    };
+    const changeDate =(type,e)=>{
+        switch(type){
+            case 'start':
+                setValidStartDate(e);
+                break;
+            case 'end':
+                setValidEndDate(e);
+                break;
+            default:
+                break;
+        }
+    };
+    const handleChange = (e) => {
+        switch (e.target.name) {
+            case 'start_date':
+                setValidStartDate(e.target.value);
+                break;
+            case 'end_date':
+                setValidEndDate(e.target.value);
+                break;
+            default:
+                break;
+        }
+    };
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
@@ -200,9 +230,15 @@ const IpRegForm = () => {
                                 start_date={valid_start_date}
                                 end_date={valid_end_date}
                                 noneChecked="noneChecked"
+                                title="유효 기간"
+                                period={period}
+                                handleBlur={handleBlur}
+                                handleChange={handleChange}
                                 startName="from_date"
                                 endName="to_date"
-                                title="유효 기간"
+                                addAll={true}
+                                changeDate={changeDate}
+                                resetPeriod={resetPeriod}
                             />
                         </FlexBox>
                     </div>

@@ -330,7 +330,21 @@ const AccessRegForm = () => {
             default:
         }
     }, [responseData]);
-
+    const resetPeriod = () => {
+        //setPeriod(0);
+    };
+    const changeDate = (type, e) => {
+        switch (type) {
+            case 'start':
+                setValidStartDate(e);
+                break;
+            case 'end':
+                setValidEndDate(e);
+                break;
+            default:
+                break;
+        }
+    };
     const handleChange = (e) => {
         switch (e.target.name) {
             case 'id':
@@ -694,6 +708,9 @@ const AccessRegForm = () => {
                                     startName="valid_start_date"
                                     endName="valid_end_date"
                                     title="유효 기간"
+                                    addAll={true}
+                                    changeDate={changeDate}
+                                    resetPeriod={resetPeriod}
                                 />
                             </Grid>
                             <DropInput title="계정상태">
