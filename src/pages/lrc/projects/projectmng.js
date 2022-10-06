@@ -1326,15 +1326,17 @@ const ProjectMng = (props) => {
                                                     '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                             }}
                                         />
-                                        {item.file_name && (
+                                        {item.file_key && item.file_status === 'CLEAN' && (
                                             <div>
-                                                <a href="#" onClick={() => fileDownload(item.file_key, item.file_name)}>
+                                                <a href="#" onClick={() => fileDownload(item.id, item.file_key, item.file_name)}>
                                                     {item.file_name}
                                                 </a>
                                             </div>
                                         )}
+                                        {item.file_key && item.file_status === 'ING' && <div>{item.file_name} [검사중]</div>}
+                                        {item.file_key && item.file_status === 'INFECTED' && <div>{item.file_name} [감염파일]</div>}
                                     </td>
-                                    <td style={{ width:'100px' }} className="tg-0lax">
+                                    <td style={{ width: '100px' }} className="tg-0lax">
                                         {item.id === '' && (
                                             <IconButton aria-label="delete" onClick={(e) => deleteReviewList(e, index)}>
                                                 <DeleteIcon />
@@ -1526,7 +1528,7 @@ const ProjectMng = (props) => {
                                         inputRef={refuserKeyword}
                                         size="small"
                                     />
-                                   <div className="button_group buton2ea">
+                                    <div className="button_group buton2ea">
                                         <Button
                                             disableElevation
                                             size="medium"
@@ -1547,6 +1549,16 @@ const ProjectMng = (props) => {
                                             sx={{ ml: 1 }}
                                         >
                                             저장
+                                        </Button>
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={reqUnMask}
+                                        >
+                                            UnMask
                                         </Button>
                                     </div>
                                 </FlexBox>
