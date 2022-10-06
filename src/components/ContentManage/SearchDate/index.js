@@ -81,7 +81,7 @@ const SearchDate = ({
     };
     return (
         <div className={cx(`result__list--date ${noneChecked}`)}>
-            <StackLabel title={title} />
+            <StackLabel title={title} titleWidth={120} />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DesktopDatePicker
                     label="연도. 월. 일"

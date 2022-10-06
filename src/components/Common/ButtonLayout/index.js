@@ -24,7 +24,7 @@ const ButtonLayout = ({ children, buttonName, style }) => {
 export default ButtonLayout;
 
 ButtonLayout.propTypes = {
-    buttonName: PropTypes.string.isRequired,
+    buttonName: PropTypes.string,
     children: PropTypes.any,
     style: PropTypes.any
 };

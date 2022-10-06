@@ -641,7 +641,7 @@ const ProjectsPage = () => {
                         />
 
                         <InputLayout>
-                            <DropInput title="계약상태">
+                            <DropInput title="계약상태" titleWidth={120}>
                             <InputLabel id="contract_code">계약상태</InputLabel>
                                 <Select
                                     labelId="contract_code"
@@ -659,7 +659,7 @@ const ProjectsPage = () => {
                                 </Select>
                             </DropInput>
 
-                            <DropInput title="진행상태">
+                            <DropInput title="진행상태" titleWidth={60}>
                                 <InputLabel id="process_code">진행상태</InputLabel>
                                 <Select
                                     labelId="process_code"
@@ -715,7 +715,7 @@ const ProjectsPage = () => {
 
                 <ContentLine>
                 <ScrollX>
-                        <Table fixedHeader={false} style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                        <Table fixedheader={false} style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                             <TableHead>
                                 <TableRow>
                                     <StyledTableCell style={{ width: '7%' }} align="center" rowSpan={2}>

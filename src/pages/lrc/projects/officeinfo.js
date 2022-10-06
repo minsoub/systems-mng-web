@@ -550,7 +550,7 @@ const OfficeInfo = (props) => {
                 </Grid>
 
                 <ContentLine className="officeinfo__table__width">
-                    <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell style={{ width: '25%' }} align="center">

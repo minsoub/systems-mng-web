@@ -52,8 +52,8 @@ export const BusinessCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
     return (
         <>
             <Grid container spacing={0} sx={{ mt: 1, alignItems: 'center' }}>
-                <StackLabel title="사업 계열" />
-                <Grid xs={8} sm={10}>
+                <StackLabel title="사업 계열" titleWidth={120}/>
+                <Grid item xs={8} sm={10}>
                     {dataGridRows.map((item, index) => (
                         <StsCheckbox
                             className="checkedBox--width"

@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import { Breadcrumb } from 'antd';
 import './styles.scss';
 import { StarOutlined } from '@ant-design/icons';
@@ -30,9 +30,9 @@ const HeaderTitle = ({ titleNm, menuStep01, menuStep02, menuStep03 }) => {
 
 export default HeaderTitle;
 
-HeaderTitle.PropTypes = {
-    titleNm: PropTypes.string.isRequired,
-    menuStep01: PropTypes.string.isRequired,
-    menuStep02: PropTypes.string.isRequired,
-    menuStep03: PropTypes.string.isRequired
+HeaderTitle.propTypes = {
+    titleNm: propTypes.string.isRequired,
+    menuStep01: propTypes.string.isRequired,
+    menuStep02: propTypes.string.isRequired,
+    menuStep03: propTypes.string
 };

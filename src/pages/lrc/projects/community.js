@@ -348,7 +348,7 @@ const ProjectCommunity = (props) => {
                     <div className="project__info--box">
                         <div className="project__info--download">
                             <Table
-                                fixedHeader={false}
+                                fixedheader={false}
                                 style={{ width: '100%', tableLayout: 'auto' }}
                                 stickyHeader
                                 aria-label="simple table"

@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 
 /**
  * title 제목
- * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{readonly border?: *, readonly elevation?: *, readonly contentSX?: *, readonly children?: *, readonly title?: *, readonly content?: *}> & React.RefAttributes<unknown>>}
+ * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{readonly border?: *, readonly elevation?: *, readonly contentSX?: *, readonly children?: *, readonly title?: *, readonly content?: *, readonly bgcolor?: *, readonly sx?: *, readonly addContClass?: *}> & React.RefAttributes<unknown>>}
  */
  const MainCard = forwardRef(({ border = true, children, content = true, elevation, title, bgcolor, sx, addContClass }, ref) => {
     return (
@@ -52,7 +52,8 @@ MainCard.propTypes = {
     content: PropTypes.bool,
     children: PropTypes.node,
     bgcolor: PropTypes.any,
-    sx: PropTypes.any
+    sx: PropTypes.any,
+    addContClass: PropTypes.string
 };
 
 export default MainCard;
