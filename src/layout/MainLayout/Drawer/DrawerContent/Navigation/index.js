@@ -1,111 +1,105 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import TreeView from '@mui/lab/TreeView';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem from '@mui/lab/TreeItem';
-import * as menuapi from 'apis/menu/menuapi';
 import { useNavigate } from 'react-router-dom';
-import MenuTreeItem from 'components/TreeMenu/MenuTreeItem';
-import SvgIcon from '@mui/material/SvgIcon';
 import NavGroup from './NavGroup';
 import { Box, Typography } from '@mui/material';
-import MenuMngApi from 'apis/menu/menumngapi';
 import RoleApi from 'apis/roles/roleapi';
 import { activeSite, activeRole, activeEmail, activeName, activeToken, activeLogin, activeLoginDate } from 'store/reducers/auth';
+import _ from 'lodash';
 
 export default function FileSystemNavigator(navigation, site) {
-    const navgate = useNavigate();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { siteId } = useSelector((state) => state.auth);
-    const { roleId } = useSelector((state) => state.auth);
+    // 사이트명, 권한
+    const { siteId, roleId } = useSelector((state) => state.auth);
+    // 메뉴 리스트
     const [menuList, setMenuList] = useState([]);
     //const data = menuapi.findmenus({}).items;
     //const [responseData, requestError, loading, { menumngSearch }] = MenuMngApi();
     const [responseData, requestError, loading, { roleRegisterTreeList }] = RoleApi();
-    const [site_id, setSiteId] = useState(siteId);
-    const [role_id, setRoleId] = useState(roleId);
+    //검색용 메뉴 데이터 생성
+    const menuData = [];
+    const expendsMenuId = [];
 
     //const data = menumngSearch(site_id, true);
     //  menuapi.findlist(site_id);
 
+    /**
+     * 사이트 ID 가 없을 때,
+     * 로컬스토리지 authenticated 가 있다면
+     * store 에 값들 저장하기
+     *
+     * 사이트 ID && 권한 있을 경우,
+     * 메뉴 리스트 호출해줌
+     */
     useEffect(() => {
         console.log('menusearch called...');
-        // let local_site_id;
         if (!siteId) {
             console.log('site is is null => reload');
             if (localStorage.hasOwnProperty('authenticated')) {
                 let authData = JSON.parse(localStorage.getItem('authenticated'));
                 dispatch(activeSite({ siteId: authData.siteId }));
-                dispatch(activeRole({ roleId: authData.roleId })); // Role Id
+                dispatch(activeRole({ roleId: authData.roleId }));
                 dispatch(activeEmail({ email: authData.email }));
                 dispatch(activeName({ name: authData.name }));
                 dispatch(activeToken({ accessToken: authData.accessToken }));
                 dispatch(activeLogin({ isLoggined: authData.isLoggined }));
                 dispatch(activeLoginDate({ loginDate: authData.loginDate }));
             } else {
-                navgate('/');
+                navigate('/');
             }
         }
+        // 메뉴 호출
         if (siteId && roleId) roleRegisterTreeList(roleId, siteId);
-        //menumngSearch(site_id, true);
-    }, []);
+    }, [siteId, roleId]);
 
+    /**
+     * 실패했을 경우,
+     * /login 으로 리다이렉팅
+     */
     useEffect(() => {
         if (requestError) {
             if (requestError.result === 'FAIL') {
-                console.log('error requestError');
-                console.log(requestError);
+                console.log('error requestError :', requestError);
                 if (requestError.error.code === 909 || !localStorage.hasOwnProperty('authenticated')) {
-                    // token expire
-                    //alert('로그인 유효기간이 만료되어 로그아웃되었습니다. 재로그인 하시기 바랍니다.');
-                    navgate('/login');
+                    navigate('/login');
                 }
             }
         }
     }, [requestError]);
-    useEffect(() => {
-        console.log(`useEffect site called..${siteId}`);
-        if (siteId) {
-            console.log('site => ' + siteId);
-            setSiteId(siteId);
-        }
-        if (roleId) {
-            setRoleId(roleId);
-            roleRegisterTreeList(roleId, siteId);
-            //menumngSearch(siteId, true);
-        }
-    }, [siteId, roleId]);
 
     useEffect(() => {
         if (!responseData) {
             return;
         }
-        console.log(responseData);
+        // 메뉴 리스트 url
+        const menuPathList = responseData.data.data.menu_list[0].child_menu_resources;
+        const menuUrl = _.map(menuPathList, 'url');
+        const currentUrl = window.location.pathname.toString();
         if (responseData.data) {
-            console.log(responseData.data);
-            console.log('menuData:', responseData.data.data.menu_list);
             setMenuList(responseData.data.data.menu_list);
             makeMenuData(responseData.data.data.menu_list);
         }
+
+        // 메뉴바에 있는 메뉴말고 강제로 다른 URL 로 이탈할 경우
+        if (!_.includes(menuUrl, window.location.pathname)) {
+            alert('접근 권한이 없습니다.');
+            navigate(-1);
+        }
     }, [responseData]);
 
-    //검색용 메뉴 데이터 생성
-    const menuData = [];
-    const expendMenuId = [];
+    // 메뉴
     const makeMenuData = (items) => {
         items.filtering;
         items.forEach((item) => {
             if (item.visible === true) {
-                //console.log('>>', item);
                 menuData.push(item);
                 if (item.type === 'GROUP') {
-                    expendMenuId.push(item.id);
+                    expendsMenuId.push(item.id);
                 }
 
                 if (item.children && item.child_menu_resources.length) {
-                    //children.length) {
-                    makeMenuData(item.child_menu_resources); // .children);
+                    makeMenuData(item.child_menu_resources);
                 }
             }
         });
@@ -122,7 +116,7 @@ export default function FileSystemNavigator(navigation, site) {
                 alert('보안 문제로 지원하지 않습니다!!!');
                 //window.open(selectItem.url, '_blank');
             } else {
-                navgate(selectItem.url);
+                navigate(selectItem.url);
             }
         }
     };
