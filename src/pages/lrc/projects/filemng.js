@@ -394,10 +394,9 @@ const FileMng = (props) => {
 
     return (
         <Grid container alignItems="center" justifyContent="space-between">
-            <Grid sx={{ p: '1rem 2rem' }}>
+            <Grid sx={{ width: '100%', p: '1rem 2rem', bgcolor: '#fff' }}>
                 <Typography variant="h4">제출 서류 관리</Typography>
             </Grid>
-
             <Grid container className="officeinfo__content--box">
                 <ContentLine container className="common__grid--rowTable filemng__table">
                     <table className="tg">
