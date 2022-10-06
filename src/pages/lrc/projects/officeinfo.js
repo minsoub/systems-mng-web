@@ -476,7 +476,7 @@ const OfficeInfo = (props) => {
                         </FlexBox>
                     </Grid>
                 </div>
-                <p>{officeInfo.admin_memo}</p>
+                <div style={{ width: '100%', padding: '2rem', borderTop: '1px solid #e6ebf1' }}>{officeInfo.admin_memo}</div>
             </Grid>
 
             <Grid container className="officeinfo__content--box">

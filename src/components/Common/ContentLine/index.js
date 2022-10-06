@@ -7,7 +7,6 @@ const ContentLine = forwardRef(({ children, className }) => {
         <Card
             className={className}
             sx={{
-                border: '1px solid #e6ebf1',
                 boxShadow: 'none',
                 borderRadius: '2px 2px 0 0',
                 overflowX: 'auto'
