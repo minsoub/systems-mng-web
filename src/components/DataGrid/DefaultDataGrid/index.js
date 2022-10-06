@@ -63,7 +63,7 @@ export function CustomDataGrid({
         selectionChange(selectionModel);
     }, [selectionModel]);
 
-    let mHeight = 600;
+    let mHeight = 500;
 
     if (height) {
         mHeight = height;

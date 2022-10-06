@@ -1,3 +1,4 @@
+.link {cursor: pointer;}
 .orderLayout {
     margin-bottom: 20px;
 }
@@ -98,6 +99,11 @@
         margin-bottom: 10px;
         &:hover {
             color: #1890ff;
+        }
+    }
+    .MuiPagination-root {
+        button {
+            margin-bottom: 0;
         }
     }
 }

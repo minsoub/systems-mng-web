@@ -111,7 +111,9 @@ const LrcDashboard = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="lrcDashboard">
             <Grid item xs={12}>
-                <Typography variant="h3">거래지원 현황</Typography>
+                <Grid sx={{ p: '1.625rem 1.5rem', bgcolor: '#fff' }}>
+                    <Typography variant="h3" sx={{ fontWeight: '700' }}>거래지원 현황</Typography>
+                </Grid>
             </Grid>
             {dataStatus.map((item, index) => (
                 <Grid key={index} item xs={4}>

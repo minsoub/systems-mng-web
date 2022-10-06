@@ -681,7 +681,7 @@ const ProjectsPage = () => {
                     </Grid>
                 </MainCard>
 
-                <ButtonLayout buttonName="bottom--blank__small">
+                <ButtonLayout style={{ marginBottom: '2.5rem' }}>
                     <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
                         검색
                     </Button>
@@ -756,38 +756,38 @@ const ProjectsPage = () => {
                         </TableHead>
                         <TableBody>
                             {dataGridRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
-                                <TableRow key={index} hover onClick={() => handleClick(item)}>
-                                    <TableCell style={{ width: '7%' }} align="center" component="th" scope="row">
+                                <TableRow key={index} hover className="link" onClick={() => handleClick(item)}>
+                                    <TableCell style={{ width: '7%' }} align="center" component="td" scope="row">
                                         {item.project_name}
                                     </TableCell>
-                                    <TableCell style={{ width: '5%' }} align="center" component="th" scope="row">
+                                    <TableCell style={{ width: '5%' }} align="center" component="td" scope="row">
                                         {item.symbol}
                                     </TableCell>
-                                    <TableCell style={{ width: '7.5%' }} align="center" component="th" scope="row">
+                                    <TableCell style={{ width: '7.5%' }} align="center" component="td" scope="row">
                                         {item.contract_name}
                                     </TableCell>
-                                    <TableCell style={{ width: '7.5%' }} align="center" component="th" scope="row">
+                                    <TableCell style={{ width: '7.5%' }} align="center" component="td" scope="row">
                                         {item.progress_name}
                                     </TableCell>
-                                    <TableCell style={{ width: '8%' }} align="center" component="th" scope="row">
+                                    <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
                                         {item.business_name}
                                     </TableCell>
-                                    <TableCell style={{ width: '8%' }} align="center" component="th" scope="row">
+                                    <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
                                         {item.network_name}
                                     </TableCell>
-                                    <TableCell style={{ width: '10%' }} align="center" component="th" scope="row">
+                                    <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
                                         {item.minimum_quantity}
                                     </TableCell>
-                                    <TableCell style={{ width: '10%' }} align="center" component="th" scope="row">
+                                    <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
                                         {item.actual_quantity}
                                     </TableCell>
-                                    <TableCell style={{ width: '15%' }} align="center" component="th" scope="row">
+                                    <TableCell style={{ width: '15%' }} align="center" component="td" scope="row">
                                         {item.project_link}
                                     </TableCell>
-                                    <TableCell style={{ width: '13%' }} align="center" component="th" scope="row">
+                                    <TableCell style={{ width: '13%' }} align="center" component="td" scope="row">
                                         {item.ico_date}
                                     </TableCell>
-                                    <TableCell style={{ width: '12%' }} align="center" component="th" scope="row">
+                                    <TableCell style={{ width: '12%' }} align="center" component="td" scope="row">
                                         {getDateFormat(item.create_date)}
                                     </TableCell>
                                 </TableRow>

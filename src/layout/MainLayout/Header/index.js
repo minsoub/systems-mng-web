@@ -144,28 +144,30 @@ const Header = ({ open, handleDrawerToggle }) => {
         <Toolbar>
             <div className="mainHeader">
                 <Table style={{ width: '100%', tableLayout: 'auto' }}>
-                    <TableRow>
-                        <StyledTableCell style={{ height: 25 }}>
-                            {/* 왼쪽 메뉴바 열고 닫기 */}
-                            <IconButton
-                                disableRipple
-                                aria-label="open drawer"
-                                onClick={handleDrawerToggle}
-                                edge="start"
-                                color="secondary"
-                                sx={{ color: 'text.primary', bgcolor: 'grey.0', ml: -2 }}
-                            >
-                                {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                            </IconButton>
-                        </StyledTableCell>
-                        {/* <StyledTableCell style={{ width: '1', height: 25 }} align="left" component="th" scope="row">
-                            <HomeIcon color="primary" />
-                        </StyledTableCell> */}
-                        <StyledTableCell align="left" style={{ width: '40%', height: 25 }} component="th" scope="row"></StyledTableCell>
-                        <StyledTableCell align="right" style={{ width: '22%', height: 25 }} component="th" scope="row">
-                            <HeaderContent />
-                        </StyledTableCell>
-                    </TableRow>
+                    <tbody>
+                        <TableRow>
+                            <StyledTableCell style={{ height: 25 }}>
+                                {/* 왼쪽 메뉴바 열고 닫기 */}
+                                <IconButton
+                                    disableRipple
+                                    aria-label="open drawer"
+                                    onClick={handleDrawerToggle}
+                                    edge="start"
+                                    color="secondary"
+                                    sx={{ color: 'text.primary', bgcolor: 'grey.0', ml: -2 }}
+                                >
+                                    {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                                </IconButton>
+                            </StyledTableCell>
+                            {/* <StyledTableCell style={{ width: '1', height: 25 }} align="left" component="th" scope="row">
+                                <HomeIcon color="primary" />
+                            </StyledTableCell> */}
+                            <StyledTableCell align="left" style={{ width: '40%', height: 25 }} component="th" scope="row"></StyledTableCell>
+                            <StyledTableCell align="right" style={{ width: '22%', height: 25 }} component="th" scope="row">
+                                <HeaderContent />
+                            </StyledTableCell>
+                        </TableRow>
+                    </tbody>
                 </Table>
             </div>
         </Toolbar>

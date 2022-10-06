@@ -4,7 +4,7 @@ import Navigation from './Navigation';
 import SimpleBar from 'components/third-party/SimpleBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { FormControl, Select, MenuItem } from '@mui/material';
+import { Grid, FormControl, Select, MenuItem } from '@mui/material';
 
 import jwt from 'jsonwebtoken';
 import RoleApi from 'apis/roles/roleapi';
@@ -113,26 +113,28 @@ const DrawerContent = ({ navigation, open }) => {
             sx={{
                 '& .simplebar-content': {
                     display: 'flex',
-                    flexDirection: 'column',
+                    flexDirection: 'column'
                 }
             }}
         >
-            {open && 
-                <FormControl sx={{ ml: 2.5, mb: 2.5, width: 220, maxHeight: 35 }} size="small">
-                    <Select name="mySiteId" label="사이트명" size="small" value={mySiteId} onChange={handleChange}>
-                        <MenuItem value="">
-                            <em>Choose a Site Type</em>
-                        </MenuItem>
-                        {mySiteList.length > 0 &&
-                            mySiteList.map((item, index) => (
-                                <MenuItem key={index} value={item.site_id}>
-                                    {item.name}
-                                </MenuItem>
-                            ))}
-                    </Select>
-                </FormControl>
-            }
-            <Navigation navigation={navigation} />
+            {open && (
+                <Grid sx={{ position: 'fixed', width: '259px', top: '58px', left:0, bgcolor: '#fff', zIndex: '1000', height: 35 }}>
+                    <FormControl sx={{ ml: 2.5, mb: 2.5, width: 220, maxHeight: 35 }} size="small">
+                        <Select name="mySiteId" label="사이트명" size="small" value={mySiteId} onChange={handleChange}>
+                            <MenuItem value="">
+                                <em>Choose a Site Type</em>
+                            </MenuItem>
+                            {mySiteList.length > 0 &&
+                                mySiteList.map((item, index) => (
+                                    <MenuItem key={index} value={item.site_id}>
+                                        {item.name}
+                                    </MenuItem>
+                                ))}
+                        </Select>
+                    </FormControl>
+                </Grid>
+            )}
+            <Navigation sx={{ marginTop: '4rem' }} navigation={navigation} />
             {/* <NavCard /> */}
         </SimpleBar>
     );

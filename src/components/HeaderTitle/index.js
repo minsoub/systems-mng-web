@@ -10,9 +10,9 @@ const HeaderTitle = ({ titleNm, menuStep01, menuStep02, menuStep03 }) => {
         <div className="admin--title">
             <div className='title'>
                 <h3>{titleNm}</h3>
-                <IconButton variant="text" size="small"  sx={{ width: 'auto', minWidth: 'auto'}}>
+                {/* <IconButton variant="text" size="small"  sx={{ width: 'auto', minWidth: 'auto'}}>
                     <StarOutlined />
-                </IconButton>
+                </IconButton> */}
             </div>
 
             <Breadcrumb>
