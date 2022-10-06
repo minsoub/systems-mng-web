@@ -14,9 +14,7 @@ const OtpLogin = Loadable(lazy(() => import('pages/auth/otpLogin')));
 const OtpSimpleLogin = Loadable(lazy(() => import('pages/auth/otpSimpleLogin')));
 const TmpPasswordForm = Loadable(lazy(() => import('pages/auth/tmpPasswordForm')));
 const ResetPasswordForm = Loadable(lazy(() => import('pages/auth/resetPasswordForm')));
-
 const SignUp = Loadable(lazy(() => import('pages/auth/signup')));
-
 const Unauthorized = Loadable(lazy(() => import('pages/auth/Unauthorized')));
 
 // profile - updateform

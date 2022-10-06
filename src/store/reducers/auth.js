@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const AUTH_ADD = 'auth/SET_DATA';
 const AUTH_DEL = 'auth/DEL_DATA';
 const AUTH_GET = 'auth/GET_DATA';
-const AUTH_ITEM_ADD = '`auth/ITEM_ADD';
+const AUTH_ITEM_ADD = 'auth/ITEM_ADD';
 
 // Action function => dispatch에서 호출
 export const setAuthData = (arg) => ({
