@@ -38,6 +38,7 @@ import ContentLine from '../../../components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
 import { stubFalse } from 'lodash';
 import { PlusOutlined } from '@ant-design/icons';
+import ScrollX from 'components/Common/ScrollX';
 
 const ProjectsPage = () => {
     let isSubmitting = false;
@@ -50,7 +51,7 @@ const ProjectsPage = () => {
             height: 35
         },
         table: {
-            minWidth: 650,
+            minWidth: 980,
             '& .MuiTableCell-root': {
                 borderLeft: '1px solid rgba(224, 224, 224, 1)'
             }
@@ -661,7 +662,13 @@ const ProjectsPage = () => {
 
                             <DropInput title="진행상태">
                                 <InputLabel id="process_code">진행상태</InputLabel>
-                                <Select name="process_code" label="계정상태" value={process_code} onChange={handleChange}>
+                                <Select
+                                    labelId="process_code"
+                                    id="process_code"
+                                    name="process_code"
+                                    value={process_code}
+                                    onChange={handleChange}
+                                >
                                     <MenuItem value="">전체</MenuItem>
                                     {processList.map((item, index) => (
                                         <MenuItem key={index} value={item.id}>
@@ -693,7 +700,7 @@ const ProjectsPage = () => {
                     </Button>
                 </ButtonLayout>
 
-                <MainCard bgcolor='#ddd'>
+                <MainCard bgcolor="#e5e5e5" addClass="tabs">
                     <Grid container spacing={0}>
                         <Grid item xs={1.8} sm={1.2} md={1.1}>
                             <Typography variant="h6" color="inherit" onClick={() => filterClick(null)}>
@@ -708,92 +715,94 @@ const ProjectsPage = () => {
                 </MainCard>
 
                 <ContentLine>
-                    <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell style={{ width: '7%' }} align="center" rowSpan={2}>
-                                    프로젝트명
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '5%' }} align="center" rowSpan={2}>
-                                    심볼
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '15%' }} align="center" colSpan={2}>
-                                    거래지원 현황
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '8%' }} align="center" rowSpan={2}>
-                                    사업 계열
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '8%' }} align="center" rowSpan={2}>
-                                    네트워크 계열
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '20%' }} align="center" colSpan={2}>
-                                    마케팅 수량
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '15%' }} align="center" rowSpan={2}>
-                                    연결 프로젝트
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '13%' }} align="center" rowSpan={2}>
-                                    상장일
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '12%' }} align="center" rowSpan={2}>
-                                    등록일시
-                                </StyledTableCell>
-                            </TableRow>
-                            <TableRow>
-                                <StyledTableCell style={{ width: '7.5%' }} align="center">
-                                    계약 상태
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '7.5%' }} align="center">
-                                    진행 상태
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '10%' }} align="center">
-                                    제안
-                                </StyledTableCell>
-                                <StyledTableCell style={{ width: '10%' }} align="center">
-                                    입금
-                                </StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {dataGridRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
-                                <TableRow key={index} hover className="link" onClick={() => handleClick(item)}>
-                                    <TableCell style={{ width: '7%' }} align="center" component="td" scope="row">
-                                        {item.project_name}
-                                    </TableCell>
-                                    <TableCell style={{ width: '5%' }} align="center" component="td" scope="row">
-                                        {item.symbol}
-                                    </TableCell>
-                                    <TableCell style={{ width: '7.5%' }} align="center" component="td" scope="row">
-                                        {item.contract_name}
-                                    </TableCell>
-                                    <TableCell style={{ width: '7.5%' }} align="center" component="td" scope="row">
-                                        {item.progress_name}
-                                    </TableCell>
-                                    <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
-                                        {item.business_name}
-                                    </TableCell>
-                                    <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
-                                        {item.network_name}
-                                    </TableCell>
-                                    <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                        {item.minimum_quantity}
-                                    </TableCell>
-                                    <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                        {item.actual_quantity}
-                                    </TableCell>
-                                    <TableCell style={{ width: '15%' }} align="center" component="td" scope="row">
-                                        {item.project_link}
-                                    </TableCell>
-                                    <TableCell style={{ width: '13%' }} align="center" component="td" scope="row">
-                                        {item.ico_date}
-                                    </TableCell>
-                                    <TableCell style={{ width: '12%' }} align="center" component="td" scope="row">
-                                        {getDateFormat(item.create_date)}
-                                    </TableCell>
+                <ScrollX>
+                        <Table fixedHeader={false} style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell style={{ width: '7%' }} align="center" rowSpan={2}>
+                                        프로젝트명
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ width: '5%' }} align="center" rowSpan={2}>
+                                        심볼
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ width: '15%' }} align="center" colSpan={2}>
+                                        거래지원 현황
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ width: '8%' }} align="center" rowSpan={2}>
+                                        사업 계열
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ width: '8%' }} align="center" rowSpan={2}>
+                                        네트워크 계열
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ width: '20%' }} align="center" colSpan={2}>
+                                        마케팅 수량
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ width: '15%' }} align="center" rowSpan={2}>
+                                        연결 프로젝트
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ width: '13%' }} align="center" rowSpan={2}>
+                                        상장일
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ width: '12%' }} align="center" rowSpan={2}>
+                                        등록일시
+                                    </StyledTableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                                <TableRow>
+                                    <StyledTableCell style={{ width: '7.5%' }} align="center">
+                                        계약 상태
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ width: '7.5%' }} align="center">
+                                        진행 상태
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ width: '10%' }} align="center">
+                                        제안
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ width: '10%' }} align="center">
+                                        입금
+                                    </StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {dataGridRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
+                                    <TableRow key={index} hover className="link" onClick={() => handleClick(item)}>
+                                        <TableCell style={{ width: '7%' }} align="center" component="td" scope="row">
+                                            {item.project_name}
+                                        </TableCell>
+                                        <TableCell style={{ width: '5%' }} align="center" component="td" scope="row">
+                                            {item.symbol}
+                                        </TableCell>
+                                        <TableCell style={{ width: '7.5%' }} align="center" component="td" scope="row">
+                                            {item.contract_name}
+                                        </TableCell>
+                                        <TableCell style={{ width: '7.5%' }} align="center" component="td" scope="row">
+                                            {item.progress_name}
+                                        </TableCell>
+                                        <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
+                                            {item.business_name}
+                                        </TableCell>
+                                        <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
+                                            {item.network_name}
+                                        </TableCell>
+                                        <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
+                                            {item.minimum_quantity}
+                                        </TableCell>
+                                        <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
+                                            {item.actual_quantity}
+                                        </TableCell>
+                                        <TableCell style={{ width: '15%' }} align="center" component="td" scope="row">
+                                            {item.project_link}
+                                        </TableCell>
+                                        <TableCell style={{ width: '13%' }} align="center" component="td" scope="row">
+                                            {item.ico_date}
+                                        </TableCell>
+                                        <TableCell style={{ width: '12%' }} align="center" component="td" scope="row">
+                                            {getDateFormat(item.create_date)}
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </ScrollX>
                 </ContentLine>
                 <TablePagination
                     sx={{

@@ -379,7 +379,7 @@ const StatusRegForm = () => {
                 </Grid>
                 <Grid container xs={12}>
                     <Grid item xs={4}>
-                        <MainCard>
+                        <MainCard addContClass="column2over">
                             <TreeView
                                 aria-label="controlled"
                                 //defaultExpanded={expanded}
@@ -398,7 +398,7 @@ const StatusRegForm = () => {
                     </Grid>
 
                     <Grid item xs={8} className="blank--layout">
-                        <MainCard sx={{ height: 400 }} content={false} className="stateSubmit layout--inner" title="상태값 등록">
+                        <MainCard sx={{ height: 400 }} content={false} className="stateSubmit layout--inner" addContClass="column2over" title="상태값 등록">
                             <div className="bottom--item">
                                 <DropInput title="상태명">
                                     <TextField

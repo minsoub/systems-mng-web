@@ -8,7 +8,7 @@ const SearchBar = ({ keyword, handleBlur, handleChange }) => {
         <div className={cx('searchBar')}>
             <StackLabel title="검색어" />
 
-            <FormControl sx={{ minWidth: 350, width: '100%' }} size="medium">
+            <FormControl sx={{ minWidth: 250, width: '100%' }} size="medium">
                 <TextField
                     id="filled-hidden-label-small"
                     type="text"

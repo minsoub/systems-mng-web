@@ -476,9 +476,7 @@ const OfficeInfo = (props) => {
                         </FlexBox>
                     </Grid>
                 </div>
-                <FormControl sx={{ m: 0 }} fullWidth>
-                    <TextField id="outlined-multiline-static" multiline rows={3} defaultValue={officeInfo.admin_memo} />
-                </FormControl>
+                <p>{officeInfo.admin_memo}</p>
             </Grid>
 
             <Grid container className="officeinfo__content--box">

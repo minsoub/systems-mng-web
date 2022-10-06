@@ -116,6 +116,7 @@ $gray: #92959e;
 .msg--left__speechBubble {
     display: grid;
     justify-items: left;
+    margin-bottom: 30px;
 
     .message-data-time {
         display: flex;
