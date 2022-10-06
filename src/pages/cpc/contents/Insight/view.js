@@ -360,7 +360,7 @@ const View = () => {
 
                     {/* 카테고리 영역 */}
                     <div className={cx('category')}>
-                        <Stack spacing={10} className={cx('borderTitle')}>
+                        <Stack sx={{ minWidth: '120px' }} spacing={10} className={cx('borderTitle')}>
                             카테고리
                         </Stack>
 
