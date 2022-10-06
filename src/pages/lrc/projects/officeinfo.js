@@ -454,7 +454,7 @@ const OfficeInfo = (props) => {
         <Grid container alignItems="center" justifyContent="space-between">
             <Grid container className="officeinfo__content--box">
                 <div className="order__content--width">
-                    <Grid sx={{ p: '1rem 2rem '}}>
+                    <Grid sx={{ p: '1rem 2rem ' }}>
                         <FlexBox>
                             <Typography variant="h3">
                                 {officeInfo.project_name} ({officeInfo.symbol})
@@ -523,7 +523,9 @@ const OfficeInfo = (props) => {
                     <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center" component="th">컨트렉트 주소</TableCell>
+                                <TableCell align="center" component="th">
+                                    컨트렉트 주소
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         {projecInfo && (
@@ -538,8 +540,13 @@ const OfficeInfo = (props) => {
             </Grid>
 
             <Grid container className="officeinfo__content--box">
-                <Grid c sx={{ p: '1rem 2rem '}}>
+                <Grid c sx={{ p: '1rem 2rem ' }}>
                     <Typography variant="h4">담당자 정보</Typography>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={reqUnMask}>
+                            마스킹 해제요청
+                        </Button>
+                    </ButtonLayout>
                 </Grid>
 
                 <ContentLine className="officeinfo__table__width">
@@ -580,7 +587,7 @@ const OfficeInfo = (props) => {
                 </ContentLine>
             </Grid>
             <Grid container className="officeinfo__content--box">
-                <Grid  sx={{ p: '1rem 2rem '}}>
+                <Grid sx={{ p: '1rem 2rem ' }}>
                     <Typography variant="h4">마케팅 수량</Typography>
                 </Grid>
 
@@ -627,7 +634,7 @@ const OfficeInfo = (props) => {
             </Grid>
 
             <Grid container className="officeinfo__content--box">
-                <Grid sx={{ p: '1rem 2rem '}}>
+                <Grid sx={{ p: '1rem 2rem ' }}>
                     <Typography variant="h4">검토 평가</Typography>
                 </Grid>
                 <ContentLine className="officeinfo__table__width">
@@ -658,9 +665,13 @@ const OfficeInfo = (props) => {
                                         {item.reference ? item.reference : '-'}
                                     </TableCell>
                                     <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
-                                        <a href="#" onClick={() => fileDownload(item.file_key, item.file_name)}>
-                                            {item.file_name}
-                                        </a>
+                                        {item.file_key && item.file_status === 'CLEAN' && (
+                                            <a href="#" onClick={() => fileDownload(item.id, item.file_key, item.file_name)}>
+                                                {item.file_name}
+                                            </a>
+                                        )}
+                                        {item.file_key && item.file_status === 'ING' && <div>{item.file_name} [검사중]</div>}
+                                        {item.file_key && item.file_status === 'INFECTED' && <div>{item.file_name} [감염파일]</div>}
                                     </TableCell>
                                 </TableRow>
                             ))
@@ -684,7 +695,7 @@ const OfficeInfo = (props) => {
                 </ContentLine>
             </Grid>
             <Grid container className="officeinfo__content--box">
-                <Grid sx={{ p: '1rem 2rem '}}>
+                <Grid sx={{ p: '1rem 2rem ' }}>
                     <Typography variant="h4">서류 제출 현황</Typography>
                 </Grid>
                 <ContentLine className="officeinfo__table__width">
@@ -858,7 +869,7 @@ const OfficeInfo = (props) => {
             </Grid>
 
             <Grid container className="officeinfo__content--box">
-                <Grid sx={{ p: '1rem 2rem '}}>
+                <Grid sx={{ p: '1rem 2rem ' }}>
                     <Typography variant="h4">상장 정보</Typography>
                 </Grid>
                 <ContentLine className="officeinfo__table__width">
