@@ -126,7 +126,7 @@ const ProjectsDetailPage = () => {
         //chatRef.current.chatClose();
     };
     return (
-        <Grid className='projectsDetail' container rowSpacing={4} columnSpacing={2.75}>
+        <Grid className="projectsDetail" container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
                 <HeaderTitle titleNm="거래지원 관리" menuStep01="사이트 운영" menuStep02="거래지원 관리" menuStep03="재단 정보" />
 
@@ -140,7 +140,15 @@ const ProjectsDetailPage = () => {
                     </Tabs>
 
                     <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                        <Button
+                            disableElevation
+                            sx={{ bgcolor: '#fff', color: '#262626' }}
+                            size="medium"
+                            type="submit"
+                            variant="outlined"
+                            color="secondary"
+                            onClick={listClick}
+                        >
                             목록
                         </Button>
                     </ButtonLayout>
