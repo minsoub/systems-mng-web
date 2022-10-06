@@ -382,7 +382,7 @@ const SiteRoleRegForm = () => {
 
                                 <MainCard sx={{ mt: 2 }} className="program__layout">
                                     <Grid className="role--blank">
-                                        <DropInput title="Role ID">
+                                        <DropInput title="Role ID" titleWidth={120}>
                                             <FlexBox>
                                                 <InputLayout>
                                                     <FormControl sx={{ minWidth: 250 }} size="medium">
@@ -435,7 +435,7 @@ const SiteRoleRegForm = () => {
 
                                     <Grid className="role--blank">
                                         <FlexBox>
-                                            <DropInput title="Role Name">
+                                            <DropInput title="Role Name" titleWidth={120}>
                                                 <TextField
                                                     id="filled-hidden-label-small"
                                                     type="text"
@@ -450,7 +450,7 @@ const SiteRoleRegForm = () => {
                                                 />
                                             </DropInput>
 
-                                            <DropInput title="사용여부">
+                                            <DropInput title="사용여부" style={{ marginLeft: '2rem' }}>
                                                 <FormControlLabel
                                                     control={
                                                         <Checkbox
@@ -469,7 +469,7 @@ const SiteRoleRegForm = () => {
                                     </Grid>
 
                                     <FlexBox>
-                                        <DropInput title="사이트 구분">
+                                        <DropInput title="사이트 구분" titleWidth={120}>
                                             <Select name="site_id" label="사이트명" value={site_id}>
                                                 {siteList.map((item, index) => (
                                                     <MenuItem key={index} value={item.id}>
@@ -479,7 +479,7 @@ const SiteRoleRegForm = () => {
                                             </Select>
                                         </DropInput>
 
-                                        <DropInput title="운영 구분">
+                                        <DropInput title="운영 구분" style={{ marginLeft: '2rem' }}>
                                             <Select name="type" label="구분" value={type} onChange={typeChanged}>
                                                 <MenuItem value="ADMIN">ADMIN</MenuItem>
                                                 <MenuItem value="USER">USER</MenuItem>

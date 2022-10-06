@@ -212,7 +212,7 @@ const SiteRoleManagementPage = () => {
                     </Grid>
                     <TopInputLayout>
                         <InputLayout>
-                            <DropInput title="사용여부">
+                            <DropInput title="사용여부" titleWidth={120}>
                                 <RadioGroup
                                     row
                                     aria-labelledby="demo-row-radio-buttons-group-label"

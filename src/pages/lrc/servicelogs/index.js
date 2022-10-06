@@ -342,7 +342,6 @@ const ServiceLog = () => {
                         handleChange={handleChange}
                         startName="from_date"
                         endName="to_date"
-                        addAll={true}
                         changeDate={changeDate}
                         resetPeriod={resetPeriod}
                     />

@@ -5,9 +5,9 @@ import StackLabel from '../../Common/StackLabel';
 const cx = classNames.bind(styles);
 
 // 드롭형식 input 박스
-const DropInput = ({ title, children, className, titleWidth }) => {
+const DropInput = ({ title, children, className, titleWidth, style }) => {
     return (
-        <div className={cx(className)}>
+        <div className={cx(className)} style={{ ...style }}>
             <div className={cx(`dropList`)}>
                 <StackLabel title={title} titleWidth={titleWidth} />
 
