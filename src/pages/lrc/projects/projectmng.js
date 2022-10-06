@@ -1448,7 +1448,7 @@ const ProjectMng = (props) => {
                         <tr>
                             <td colSpan={2}>
                                 <FlexBox classNames="projectmng__select">
-                                    <TextField id="outlined-multiline-static" fullWidth name="keyword" inputRef={refKeyword} size="small" />
+                                    <TextField id="outlined-multiline-static" fullWidth name="keyword" inputRef={refKeyword} size="small" sx={{marginRight:'2rem'}}/>
                                     <Button
                                         disableElevation
                                         size="medium"

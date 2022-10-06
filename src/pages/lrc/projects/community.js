@@ -295,7 +295,7 @@ const ProjectCommunity = (props) => {
         setPage(Number(newPage - 1));
     };
     useEffect(() => {
-        setViewPage(page+1);
+        setViewPage(page + 1);
     },[page])
 
     const fileSearch = (projectId, fileKey) => {
