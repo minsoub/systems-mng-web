@@ -128,7 +128,7 @@ const Profile = () => {
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
                     {/* <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} /> */}
                     <Avatar size="large" icon={<UserOutlined />} />
-                    <Typography>홍길동</Typography>
+                    {/*<Typography>홍길동</Typography>*/}
                 </Stack>
             </ButtonBase>
             <Popper
