@@ -187,11 +187,11 @@ const SiteLogPage = () => {
     const handleBlur = (e) => {
         console.log(e);
     };
-    const resetPeriod= () => {
-        setPeriod(0);
+    const resetPeriod = () => {
+        //setPeriod(0);
     };
-    const changeDate =(type,e)=>{
-        switch(type){
+    const changeDate = (type, e) => {
+        switch (type) {
             case 'start':
                 setStartDate(e);
                 break;
