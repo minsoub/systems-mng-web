@@ -63,7 +63,7 @@ function PrivateReasonDialog(props) {
                             value={keyword}
                             name="keyword"
                             onChange={handleChange}
-                            placeholder="Input the Description"
+                            placeholder=""
                             fullWidth
                         />
                     </FormControl>
