@@ -1546,7 +1546,6 @@ const ProjectMng = (props) => {
                                             variant="contained"
                                             color="primary"
                                             onClick={userSave}
-                                            sx={{ ml: 1 }}
                                         >
                                             저장
                                         </Button>
@@ -1558,7 +1557,7 @@ const ProjectMng = (props) => {
                                             color="primary"
                                             onClick={reqUnMask}
                                         >
-                                            UnMask
+                                            마스킹 해제
                                         </Button>
                                     </div>
                                 </FlexBox>

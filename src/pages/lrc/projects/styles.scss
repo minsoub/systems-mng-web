@@ -207,7 +207,13 @@
         justify-content: center;
     }
     .buton2ea {
-        min-width: 140px;
+        min-width: 225px;
+        button {
+            margin-right: 0.3rem;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
     }
 }
 input::file-selector-button {
@@ -343,7 +349,7 @@ input::file-selector-button {
         .css-199jxd5-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root,
         .css-wb57ya-MuiFormControl-root-MuiTextField-root,
         .css-wb57ya-MuiFormControl-root-MuiTextField-root {
-            width: 87%;
+            width: 85%;
         }
         .tg-0lax-left {
             .css-wb57ya-MuiFormControl-root-MuiTextField-root {
