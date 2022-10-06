@@ -287,12 +287,16 @@ const ProjectCommunity = (props) => {
     };
     // 페이징 변경 이벤트
     const handlePage = (page) => {};
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [page, setPage] = useState(0);
+    const [viewPage, setViewPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(1);
 
     const handleChangePage = (event, newPage) => {
-        setPage(newPage);
+        setPage(Number(newPage - 1));
     };
+    useEffect(() => {
+        setViewPage(page+1);
+    },[page])
 
     const fileSearch = (projectId, fileKey) => {
         fileDetailSearch(projectId, fileKey);
@@ -376,7 +380,7 @@ const ProjectCommunity = (props) => {
                             </Table>
                             <CustomPagination
                                 total={fileList.length}
-                                page={page}
+                                page={viewPage}
                                 count={Number(Math.ceil(fileList.length / rowsPerPage))}
                                 shape="rounded"
                                 color="primary"
