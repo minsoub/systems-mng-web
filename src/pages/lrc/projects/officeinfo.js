@@ -645,7 +645,8 @@ const OfficeInfo = (props) => {
                                 </TableCell>
                             </TableRow>
                         </TableHead>
-                        {reviewList.length > 0 ? reviewList.map((item, index) => (
+                        {reviewList.length > 0 ? (
+                            reviewList.map((item, index) => (
                                 <TableRow key={index}>
                                     <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
                                         {item.organization ? item.organization : '-'}
@@ -663,7 +664,7 @@ const OfficeInfo = (props) => {
                                     </TableCell>
                                 </TableRow>
                             ))
-                        :
+                        ) : (
                             <TableRow>
                                 <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
                                     -
@@ -677,7 +678,8 @@ const OfficeInfo = (props) => {
                                 <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
                                     -
                                 </TableCell>
-                            </TableRow>}
+                            </TableRow>
+                        )}
                     </Table>
                 </ContentLine>
             </Grid>
@@ -868,25 +870,39 @@ const OfficeInfo = (props) => {
                                 <TableCell align="center">상장가</TableCell>
                             </TableRow>
                         </TableHead>
-                        {icoList.map((item, index) => (
+                        {icoList.length > 0 ? (
+                            icoList.map((item, index) => (
+                                <TableRow key={index}>
+                                    <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                        {item.market_info ? item.market_info : '-'}
+                                    </TableCell>
+                                    <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                        {item.ico_date ? item.ico_date : '-'}
+                                    </TableCell>
+                                    <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
+                                        <NumberFormat
+                                            value={item.price}
+                                            allowNegative={true}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            prefix={''}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
                             <TableRow key={index}>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    {item.market_info ? item.market_info : '-'}
+                                    -
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    {item.ico_date ? item.ico_date : '-'}
+                                    -
                                 </TableCell>
                                 <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    <NumberFormat
-                                        value={item.price}
-                                        allowNegative={true}
-                                        displayType={'text'}
-                                        thousandSeparator={true}
-                                        prefix={''}
-                                    />
+                                    -
                                 </TableCell>
                             </TableRow>
-                        ))}
+                        )}
                     </Table>
                 </ContentLine>
             </Grid>
