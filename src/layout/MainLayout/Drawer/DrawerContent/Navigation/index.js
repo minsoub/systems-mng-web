@@ -83,8 +83,8 @@ export default function FileSystemNavigator(navigation, site) {
 
         // 메뉴바에 있는 메뉴말고 강제로 다른 URL 로 이탈할 경우
         if (!_.includes(menuUrl, window.location.pathname)) {
-            alert('접근 권한이 없습니다.');
-            navigate(-1);
+            // alert('접근 권한이 없습니다.');
+            // navigate(-1);
         }
     }, [responseData]);
 
