@@ -51,7 +51,6 @@ const ProjectsPage = () => {
             height: 35
         },
         table: {
-            minWidth: 980,
             '& .MuiTableCell-root': {
                 borderLeft: '1px solid rgba(224, 224, 224, 1)'
             }
