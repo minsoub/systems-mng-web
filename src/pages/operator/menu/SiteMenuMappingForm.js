@@ -560,7 +560,7 @@ const SiteMenuMappingForm = () => {
                                         disableElevation
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         onClick={programSearchClick}
                                         className={cx('layout--button--rightBlank')}
                                         color="secondary"

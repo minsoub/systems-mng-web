@@ -506,7 +506,7 @@ const SiteMenuRegForm = () => {
                 </ButtonLayout>
                 <Grid xs={12} container>
                     <Grid item xs={4} className="menu--submit">
-                        <MainCard>
+                        <MainCard addContClass="column2over">
                             <TreeView
                                 aria-label="controlled"
                                 //defaultExpanded={expanded}
@@ -525,7 +525,7 @@ const SiteMenuRegForm = () => {
                     </Grid>
 
                     <Grid item xs={8} className="menu--right">
-                        <MainCard>
+                        <MainCard addContClass="column2over">
                             <FlexBox>
                                 <DropInput title="메뉴 ID" titleWidth={90} className="bottom--blank">
                                     <TextField

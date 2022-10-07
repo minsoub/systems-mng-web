@@ -504,7 +504,7 @@ const SiteRoleRegForm = () => {
                                         disabled={isDisabled}
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         color="secondary"
                                         onClick={deleteClick}
                                     >
@@ -515,7 +515,7 @@ const SiteRoleRegForm = () => {
                                         disabled={isSubmitting}
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         color="secondary"
                                         onClick={listClick}
                                     >

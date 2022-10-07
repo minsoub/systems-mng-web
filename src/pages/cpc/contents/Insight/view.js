@@ -385,11 +385,11 @@ const View = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
                 <ButtonLayout buttonName="bottom--blank__small">
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={clearClick}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" onClick={clearClick}>
                         초기화
                     </Button>
 
-                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" onClick={searchClick}>
                         검색
                     </Button>
                 </ButtonLayout>
@@ -407,7 +407,7 @@ const View = () => {
                 </MainCard>
                 <Grid className={cx(' searchPointColor')}>
                     <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
+                        <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={deleteClick}>
                             선택 삭제
                         </Button>
                         <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>
