@@ -542,11 +542,15 @@ const OfficeInfo = (props) => {
             <Grid container className="officeinfo__content--box">
                 <Grid c sx={{ width: '100%', p: '1rem 2rem', display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="h4">담당자 정보</Typography>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={reqUnMask}>
-                            마스킹 해제
-                        </Button>
-                    </ButtonLayout>
+                    {userList.length > 0 ? (
+                        <ButtonLayout>
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={reqUnMask}>
+                                마스킹 해제
+                            </Button>
+                        </ButtonLayout>
+                    ) : (
+                        ''
+                    )}
                 </Grid>
 
                 <ContentLine className="officeinfo__table__width">
@@ -579,7 +583,7 @@ const OfficeInfo = (props) => {
                                     {item.sns_id ? item.sns_id : '-'}
                                 </TableCell>
                                 <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.email ? item.email : '-'}
+                                    {item.email ? item.email : item.user_email}
                                 </TableCell>
                             </TableRow>
                         ))}

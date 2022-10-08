@@ -364,9 +364,13 @@ const FileMng = (props) => {
         }
     };
 
-    const fileDownload = (fileKey, fileName) => {
-        setDownloadFileName(fileName);
-        fileDocumentDownload(fileKey);
+    const fileDownload = (file_status, fileKey, fileName) => {
+        if (file_status === 'CLEAN') {
+            setDownloadFileName(fileName);
+            fileDocumentDownload(fileKey);
+        } else {
+            alert('파일을 다운로드 받을 수가 없습니다.');
+        }
     };
 
     const tabChange = (event, value) => {
@@ -484,7 +488,8 @@ const FileMng = (props) => {
                                                 <button
                                                     className="filemng__file--downlaod"
                                                     type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                    disabled={item.file_status === 'CLEAN' ? false : true}
+                                                    onClick={() => fileDownload(item.file_status, item.file_key, item.file_name)}
                                                 >
                                                     {item.file_name}
                                                 </button>

@@ -1,16 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import {
-    Button,
-    TableCell,
-    TextField,
-    Typography,
-    Table,
-    TableBody,
-    TableHead,
-    TableRow,
-    Tooltip
-} from '@mui/material';
+import { Button, TableCell, TextField, Typography, Table, TableBody, TableHead, TableRow, Tooltip } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import Chat from './chat';
 import ChatApi from 'apis/chat/chatapi';
@@ -113,6 +103,11 @@ const ProjectCommunity = (props) => {
     const [fileList, setFileList] = useState([]);
     const [fileName, setFileName] = useState('');
 
+    // polling
+    const [polling, setPolling] = useState(0);
+    const timerRef = useRef();
+    const timerCount = useRef();
+
     ////////////////////////////////////////////////////
     // 공통 에러 처리
     const [open, setOpen] = useState(false);
@@ -140,6 +135,8 @@ const ProjectCommunity = (props) => {
             //console.log(`tab value => ${data}`);
             setValue(parseInt(data, 10));
         }
+        setPolling(0);
+        timerCount.current = 0;
     }, [paramId]);
 
     // transaction error 처리
@@ -171,6 +168,71 @@ const ProjectCommunity = (props) => {
                 break;
         }
     }, [responseData]);
+
+    // Chat 파일 리스트가 변경되었을 때 호출된다.
+    useEffect(() => {
+        // polling start
+        console.log('fileList data => ');
+        console.log(fileList);
+        console.log(polling);
+        if (polling === 0) {
+            // hat 파일 리스트에 파일정보가 아직 검사중인 경우
+            console.log('chat file data search...');
+            let found = 0;
+            fileList.map((item) => {
+                console.log(item.file_key);
+                console.log(item.file_status);
+                if (item.file_status === 'ING') {
+                    found = 1;
+                    console.log('chat file found...');
+                    setPolling(1);
+                    //return;
+                }
+            });
+            console.log(found);
+            if (found === 0) {
+                setPolling(0);
+            }
+        } else {
+            // start 중이지만.. 끝났다면..
+            let found = 0;
+            console.log(timerCount.current);
+            if (timerCount.current > 100) {
+                setPolling(0);
+                return;
+            }
+            fileList.map((item) => {
+                if (item.file_status === 'ING') {
+                    found = 1;
+                    //return;
+                }
+            });
+            if (found === 0) {
+                setPolling(0);
+            }
+        }
+    }, [fileList]);
+
+    // Polling Start
+    useEffect(() => {
+        console.log(polling);
+        console.log(timerCount.current);
+        if (polling === 1 && timerCount.current < 100) {
+            // timer start
+            // 5초에 한번씩.. 조회
+            timerRef.current = setInterval(() => {
+                // 6. 검토 평가 조회
+                console.log('timer start...');
+                getChatFileList(paramId);
+                timerCount.current = timerCount.current + 1;
+            }, 8000);
+        } else {
+            // timer stop
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+            timerCount.current = 0;
+        }
+    }, [polling]);
 
     useEffect(() => {
         if (!resData) {
@@ -270,8 +332,19 @@ const ProjectCommunity = (props) => {
 
     // 파일을 다운로드 한다.
     const FileDownload = (key, name) => {
-        setFileName(name);
-        getChatFile(key);
+        // 파일 다운로드 할 수 있는지 상태를 체크한다.
+        let found = 0;
+        fileList.map((item, index) => {
+            if (item.id === key && item.file_status === 'CLEAN') {
+                found = 1;
+            }
+        });
+        if (found === 1) {
+            setFileName(name);
+            getChatFile(key);
+        } else {
+            alert('다운로드 할 수 있는 상태가 아닙니다.');
+        }
     };
     const sendEmail = (param) => {
         console.log(param);
@@ -296,7 +369,7 @@ const ProjectCommunity = (props) => {
     };
     useEffect(() => {
         setViewPage(page + 1);
-    },[page])
+    }, [page]);
 
     const fileSearch = (projectId, fileKey) => {
         fileDetailSearch(projectId, fileKey);
@@ -358,12 +431,15 @@ const ProjectCommunity = (props) => {
                                         <TableRow key={index} hover>
                                             <TableCell align="left" component="td" scope="row" sx={{ width: '88%' }}>
                                                 <div>{item.user_type_name}</div>
-                                                <div>{item.file_name}</div>
+                                                {item.file_status === 'CLEAN' && <div>{item.file_name}</div>}
+                                                {item.file_status === 'ING' && <div>{item.file_name} [검사중]</div>}
+                                                {item.file_status === 'INFECTED' && <div>{item.file_name} [감염파일]</div>}
                                                 <div style={{ color: '#aaa' }}>{getDateFormat(item.create_date)}</div>
                                             </TableCell>
                                             <TableCell align="right" component="td" scope="row">
                                                 <Tooltip title={item.file_name}>
                                                     <Button
+                                                        disabled={item.file_status === 'CLEAN' ? false : true}
                                                         variant="outlined"
                                                         startIcon={<AttachFileOutlinedIcon />}
                                                         size="small"

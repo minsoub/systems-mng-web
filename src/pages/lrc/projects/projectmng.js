@@ -126,6 +126,7 @@ const ProjectMng = (props) => {
     const [create_date, setCreate_date] = useState('');
     const refContract_address = useRef();
     const timerRef = useRef();
+    const timerCount = useRef();
 
     // 상장정보 입력 항목 정의
     const refPriceKRW = useRef();
@@ -149,6 +150,8 @@ const ProjectMng = (props) => {
 
     const [polling, setPolling] = useState(0);
 
+    const refMasking = useRef();
+
     // onload
     useEffect(() => {
         // 상태값 조회
@@ -157,6 +160,9 @@ const ProjectMng = (props) => {
         lineSearch('BUSINESS');
         // 네트워크 계열
         lineSearch('NETWORK');
+        refMasking.current = 0; // unmasking
+        setPolling(0);
+        timerCount.current = 0;
     }, []);
 
     // transaction error 처리
@@ -199,6 +205,11 @@ const ProjectMng = (props) => {
         } else {
             // start 중이지만.. 끝났다면..
             let found = 0;
+            console.log(timerCount.current);
+            if (timerCount.current > 100) {
+                setPolling(0);
+                return;
+            }
             reviewList.map((item) => {
                 if (item.file_status === 'ING') {
                     found = 1;
@@ -214,7 +225,7 @@ const ProjectMng = (props) => {
     // Polling Start
     useEffect(() => {
         console.log(polling);
-        if (polling === 1) {
+        if (polling === 1 && timerCount.current < 100) {
             // timer start
             // 5초에 한번씩.. 조회
             timerRef.current = setInterval(() => {
@@ -226,6 +237,7 @@ const ProjectMng = (props) => {
             // timer stop
             clearInterval(timerRef.current);
             timerRef.current = null;
+            timerCount.current = 0;
         }
     }, [polling]);
 
@@ -1032,6 +1044,17 @@ const ProjectMng = (props) => {
     // 담당자 정보 저장
     const userSave = () => {
         if (userList.length > 0) {
+            let found = 0;
+
+            userList.map((item, index) => {
+                if (item.user_email.indexOf('*') !== -1) {
+                    found = 1;
+                }
+            });
+            if (found === 1) {
+                alert('마스킹 해제 요청을 하지 않았습니다!!!');
+                return;
+            }
             if (confirm('저장하시겠습니까?')) {
                 lrcUserSave(projectId, userList);
             }
@@ -1053,6 +1076,7 @@ const ProjectMng = (props) => {
             console.log(returnData);
             let reason = returnData;
             userUnMaskingSearch(projectId, reason);
+            refMasking.current = 1;
         }
     };
 
