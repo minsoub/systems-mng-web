@@ -31,7 +31,16 @@ const AuthMngRegForm = () => {
         responseData,
         requestError,
         responseLoading,
-        { menumngSearch, menumngDetail, programMapping, programMappingSearch, programMappingDelete }
+        {
+            menumngSearch,
+            menumngDetail,
+            programMapping,
+            programMappingSearch,
+            initAuthProgramMenuMapping,
+            authProgramMenuMapping,
+            programMenuMapping,
+            initProgramMenuMapping
+        }
     ] = MenuMngApi();
     const [rData, rError, rLoading, { programTextSearch }] = ProgramApi();
     const [
@@ -333,12 +342,38 @@ const AuthMngRegForm = () => {
                     setDataGridProgramRows([]);
                 }
                 break;
+            case 'initAuthProgramMenuMapping':
+            case 'authProgramMenuMapping':
+            case 'initProgramMenuMapping':
+            case 'programMenuMapping':
+                alert('완료');
+                break;
             default:
         }
     }, [responseData]);
 
-    const handleClose = () => {
-        setVisible(false);
+    const handleInitAuthProgramMenuMapping = () => {
+        if (confirm('전체 권한 X 프로그램 초기화됩니다. \n 실행하시겠습니까?')) {
+            initAuthProgramMenuMapping();
+        }
+    };
+
+    const handleAuthProgramMenuMapping = () => {
+        if (confirm('전체 권한 X 프로그램(현재 메뉴X프로그램 기준) 매핑됩니다. \n 실행하시겠습니까?')) {
+            authProgramMenuMapping();
+        }
+    };
+
+    const handleProgramMenuMapping = () => {
+        if (confirm('전체 메뉴 X 프로그램(현재 menu_program_specification 기준) 매핑됩니다. \n 실행하시겠습니까?')) {
+            programMenuMapping();
+        }
+    };
+
+    const handleInitProgramMenuMapping = () => {
+        if (confirm('전체 메뉴 X 프로그램 초기화 됩니다.\n 실행하시겠습니까?')) {
+            initProgramMenuMapping();
+        }
     };
 
     // 사이트 구분, 타입, 롤명으로 데이터를 조회한다.
@@ -777,6 +812,46 @@ const AuthMngRegForm = () => {
                                 onClick={searchClick}
                             >
                                 검색
+                            </Button>
+                            <Button
+                                disableElevation
+                                size="small"
+                                type="submit"
+                                color="error"
+                                variant="contained"
+                                onClick={handleInitProgramMenuMapping}
+                            >
+                                메뉴X프로그램 초기화
+                            </Button>
+                            <Button
+                                disableElevation
+                                size="small"
+                                type="submit"
+                                color="warning"
+                                variant="contained"
+                                onClick={handleProgramMenuMapping}
+                            >
+                                메뉴X프로그램 매핑
+                            </Button>
+                            <Button
+                                disableElevation
+                                size="small"
+                                type="submit"
+                                color="error"
+                                variant="contained"
+                                onClick={handleInitAuthProgramMenuMapping}
+                            >
+                                권한X프로그램 초기화
+                            </Button>
+                            <Button
+                                disableElevation
+                                size="small"
+                                type="submit"
+                                color="warning"
+                                variant="contained"
+                                onClick={handleAuthProgramMenuMapping}
+                            >
+                                권한X프로그램 매핑
                             </Button>
                         </ButtonLayout>
                     </TopInputLayout>

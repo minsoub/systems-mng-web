@@ -196,7 +196,7 @@ legend,
 html [type='button'],
 [type='reset'],
 [type='submit'] {
-    border-radius: 2px !important;
+    border-radius: 4px !important;
 }
 
 .css-15oiqrv-MuiPaper-root-MuiCard-root {
@@ -274,7 +274,8 @@ html [type='button'],
 }
 
 .bottom--blank__small {
-    margin-bottom: 0.6rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 .layout--align {
@@ -360,6 +361,6 @@ html [type='button'],
     background: #fff;
 }
 
-.css-l1kfty-MuiPaper-root-MuiDialog-paper{
+.MuiDialog-paper{
     max-width: none;
 }

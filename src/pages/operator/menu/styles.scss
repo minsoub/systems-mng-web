@@ -23,3 +23,24 @@
 .layout--align {
     @include leftRightAlign;
 }
+.menu--right {
+    .cardCon {
+        .MuiGrid-root {
+            > div {
+                width: 50%;
+                &:first-child {
+                    margin-right: 2rem;
+                }
+                .MuiFormControl-root {
+                    min-width: 200px;
+                    width: 100%;
+                }
+                > div {
+                    > div { 
+                        &:last-child {width: 100%;}
+                    }
+                }
+            }
+        }
+    }
+}

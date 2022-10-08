@@ -540,17 +540,17 @@ const OfficeInfo = (props) => {
             </Grid>
 
             <Grid container className="officeinfo__content--box">
-                <Grid c sx={{ p: '1rem 2rem ' }}>
+                <Grid c sx={{ width: '100%', p: '1rem 2rem', display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="h4">담당자 정보</Typography>
                     <ButtonLayout>
                         <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={reqUnMask}>
-                            마스킹 해제요청
+                            마스킹 해제
                         </Button>
                     </ButtonLayout>
                 </Grid>
 
                 <ContentLine className="officeinfo__table__width">
-                    <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell style={{ width: '25%' }} align="center">

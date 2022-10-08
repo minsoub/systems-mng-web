@@ -1448,7 +1448,14 @@ const ProjectMng = (props) => {
                         <tr>
                             <td colSpan={2}>
                                 <FlexBox classNames="projectmng__select">
-                                    <TextField id="outlined-multiline-static" fullWidth name="keyword" inputRef={refKeyword} size="small" />
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        fullWidth
+                                        name="keyword"
+                                        inputRef={refKeyword}
+                                        size="small"
+                                        sx={{ marginRight: '2rem' }}
+                                    />
                                     <Button
                                         disableElevation
                                         size="medium"
@@ -1546,7 +1553,6 @@ const ProjectMng = (props) => {
                                             variant="contained"
                                             color="primary"
                                             onClick={userSave}
-                                            sx={{ ml: 1 }}
                                         >
                                             저장
                                         </Button>
@@ -1558,7 +1564,7 @@ const ProjectMng = (props) => {
                                             color="primary"
                                             onClick={reqUnMask}
                                         >
-                                            UnMask
+                                            마스킹 해제
                                         </Button>
                                     </div>
                                 </FlexBox>

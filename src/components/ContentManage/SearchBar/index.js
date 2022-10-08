@@ -6,7 +6,7 @@ import StackLabel from '../../Common/StackLabel';
 const SearchBar = ({ keyword, handleBlur, handleChange }) => {
     return (
         <div className={cx('searchBar')}>
-            <StackLabel title="검색어" />
+            <StackLabel title="검색어" titleWidth={120} />
 
             <FormControl sx={{ width: 250 }} size="medium">
                 <TextField

@@ -51,7 +51,7 @@ export const NetworkCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
     }, [responseData]);
     return (
         <Grid container spacing={0} sx={{ mt: 1, alignItems: 'center' }}>
-            <StackLabel title="네트워크 계열" />
+            <StackLabel title="네트워크 계열" titleWidth={120} />
             <Grid item xs={8} sm={10}>
                 {dataGridRows.map((item, index) => (
                     <StsCheckbox

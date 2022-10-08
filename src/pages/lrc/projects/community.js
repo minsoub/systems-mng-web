@@ -295,7 +295,7 @@ const ProjectCommunity = (props) => {
         setPage(Number(newPage - 1));
     };
     useEffect(() => {
-        setViewPage(page+1);
+        setViewPage(page + 1);
     },[page])
 
     const fileSearch = (projectId, fileKey) => {
@@ -348,7 +348,7 @@ const ProjectCommunity = (props) => {
                     <div className="project__info--box">
                         <div className="project__info--download">
                             <Table
-                                fixedHeader={false}
+                                fixedheader={false}
                                 style={{ width: '100%', tableLayout: 'auto' }}
                                 stickyHeader
                                 aria-label="simple table"

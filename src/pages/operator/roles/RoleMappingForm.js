@@ -488,7 +488,7 @@ const SiteRoleMappingForm = () => {
                                     disableElevation
                                     size="medium"
                                     type="button"
-                                    variant="contained"
+                                    variant="outlined_d"
                                     color="secondary"
                                     onClick={userSearchClick}
                                 >

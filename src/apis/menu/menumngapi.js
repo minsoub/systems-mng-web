@@ -87,6 +87,46 @@ const MenuMngApi = () => {
         });
     };
 
+    // 권한 X 프로그램 초기화
+    const initAuthProgramMenuMapping = () => {
+        callApi('initAuthProgramMenuMapping', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/auth/mapping/init`,
+            requestConfig: {}
+        });
+    };
+
+    // 권한 X 프로그램 매핑
+    const authProgramMenuMapping = () => {
+        callApi('authProgramMenuMapping', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/auth/mapping`,
+            requestConfig: {}
+        });
+    };
+
+    // 메뉴 X 프로그램 매핑
+    const programMenuMapping = () => {
+        callApi('programMenuMapping', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/menu/mapping`,
+            requestConfig: {}
+        });
+    };
+
+    // 메뉴 X 프로그램 초기화
+    const initProgramMenuMapping = () => {
+        callApi('initProgramMenuMapping', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/menu/mapping/init`,
+            requestConfig: {}
+        });
+    };
+
     return [
         responseData,
         requestError,
@@ -99,7 +139,11 @@ const MenuMngApi = () => {
             menumngUpdate: updateProgramData,
             programMapping: registerProgramMenuMapping,
             programMappingSearch: registerProgramMenuSearch,
-            programMappingDelete: deleteProgramMenuMapping
+            programMappingDelete: deleteProgramMenuMapping,
+            initAuthProgramMenuMapping: initAuthProgramMenuMapping,
+            authProgramMenuMapping: authProgramMenuMapping,
+            programMenuMapping: programMenuMapping,
+            initProgramMenuMapping: initProgramMenuMapping
         }
     ];
 };

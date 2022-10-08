@@ -75,6 +75,9 @@ const DrawerContent = ({ navigation, open }) => {
             //console.log(mySiteList);
 
             if (responseData.data.data.site_id === mySiteId) {
+                authData.roleId = responseData.data.data.id; // Role ID
+                localStorage.setItem('authenticated', JSON.stringify(authData));
+
                 // role과 site_id로 메뉴 조회
                 dispatch(activeRole({ roleId: responseData.data.data.id }));
             }
@@ -118,7 +121,7 @@ const DrawerContent = ({ navigation, open }) => {
             }}
         >
             {open && (
-                <Grid sx={{ position: 'fixed', width: '259px', top: '58px', left:0, bgcolor: '#fff', zIndex: '1000', height: 35 }}>
+                <Grid sx={{ position: 'fixed', width: '259px', top: '58px', left: 0, bgcolor: '#fff', zIndex: '1000', height: 35 }}>
                     <FormControl sx={{ ml: 2.5, mb: 2.5, width: 220, maxHeight: 35 }} size="small">
                         <Select name="mySiteId" label="사이트명" size="small" value={mySiteId} onChange={handleChange}>
                             <MenuItem value="">

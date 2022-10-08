@@ -12,7 +12,13 @@
 .faqCategorylist{
     .bottom--item{
         margin-top:10px;margin-bottom:5px;
-        >div{display:inline-block;}
+        > div {
+            display:inline-block;
+            margin-right: 3rem;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
     }
     .layout--button__bottom{
         margin-top:10px;

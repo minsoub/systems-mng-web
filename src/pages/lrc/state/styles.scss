@@ -12,10 +12,19 @@
 
 .css-1hu2hhy-MuiTreeView-root {
     width: 100%;
+    margin-bottom: 0;
 }
 .stateMng{
     .styles_dropList__DUdrc {
         margin-right: 2rem;
+        .css-1ppoywa-MuiStack-root {
+            min-width: 76px;
+            width: auto;
+        }
+        .MuiFormControl-root {
+            min-width: 180px;
+            width: 100%;
+        }
     }
     .bottom--item{
         margin-bottom:10px;
@@ -28,7 +37,7 @@
                 min-width: 100px;
             }
             .styles_dropList--input__3dx-1{
-                width:70%
+                width: 100%;
             }
         }
     }

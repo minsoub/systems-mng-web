@@ -515,7 +515,7 @@ const SiteMenuMappingForm = () => {
                         <div className="layout--align">
                             <Item>연결된 프로그램 목록</Item>
 
-                            <Button disableElevation size="medium" type="button" variant="contained" color="error" onClick={deleteMapping}>
+                            <Button disableElevation size="medium" type="button" variant="outlined_d" color="secondary" onClick={deleteMapping}>
                                 삭제
                             </Button>
                         </div>
@@ -560,7 +560,7 @@ const SiteMenuMappingForm = () => {
                                         disableElevation
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         onClick={programSearchClick}
                                         className={cx('layout--button--rightBlank')}
                                         color="secondary"

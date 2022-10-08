@@ -212,7 +212,7 @@ const SiteRoleManagementPage = () => {
                     </Grid>
                     <TopInputLayout>
                         <InputLayout>
-                            <DropInput title="사용여부">
+                            <DropInput title="사용여부" titleWidth={120}>
                                 <RadioGroup
                                     row
                                     aria-labelledby="demo-row-radio-buttons-group-label"
@@ -230,7 +230,7 @@ const SiteRoleManagementPage = () => {
                                 disableElevation
                                 size="medium"
                                 type="submit"
-                                variant="contained"
+                                variant="outlined_d"
                                 onClick={searchClick}
                                 color="secondary"
                             >
@@ -239,7 +239,7 @@ const SiteRoleManagementPage = () => {
                             <Button disableElevation size="medium" type="submit" variant="contained" onClick={newClick} color="primary">
                                 등록
                             </Button>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={listClick}>
                                 초기화
                             </Button>
                         </ButtonLayout>

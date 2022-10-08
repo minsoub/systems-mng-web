@@ -365,7 +365,6 @@ function BoardSearchDialog(props) {
                         handleChange={handleChange}
                         startName="start_date"
                         endName="end_date"
-                        addAll={true}
                         changeDate={changeDate}
                         resetPeriod={resetPeriod}
                     />

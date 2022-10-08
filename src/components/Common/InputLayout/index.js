@@ -14,6 +14,6 @@ const InputLayout = ({ children, gridClass }) => {
 export default InputLayout;
 
 InputLayout.propTypes = {
-    gridClass: PropTypes.string.isRequired,
+    gridClass: PropTypes.string,
     children: PropTypes.any
 };

@@ -335,14 +335,13 @@ const View = () => {
                         handleChange={handleChange}
                         startName="start_date"
                         endName="end_date"
-                        addAll={true}
                         changeDate={changeDate}
                         resetPeriod={resetPeriod}
                     />
 
                     {/* 카테고리 영역 */}
                     <div className={cx('category')}>
-                        <Stack spacing={10} className={cx('borderTitle')}>
+                        <Stack sx={{ minWidth: '120px' }} spacing={10} className={cx('borderTitle')}>
                             카테고리
                         </Stack>
 
@@ -368,11 +367,11 @@ const View = () => {
                 </MainCard>
 
                 <ButtonLayout buttonName="bottom--blank__small">
-                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={clearClick}>
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="outlined_d" onClick={clearClick}>
                         초기화
                     </Button>
 
-                    <Button disableElevation size="medium" type="submit" color="secondary" variant="contained" onClick={searchClick}>
+                    <Button disableElevation size="medium" type="submit" color="secondary" variant="outlined_d" onClick={searchClick}>
                         검색
                     </Button>
                 </ButtonLayout>
@@ -382,7 +381,7 @@ const View = () => {
                         columns={columns}
                         rows={dataGridRows}
                         pageSize={10}
-                        height={660}
+                        height={650}
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
@@ -390,8 +389,8 @@ const View = () => {
                     />
                 </ContentLine>
                 <Grid className={cx(' searchPointColor')}>
-                    <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" variant="contained" onClick={deleteClick}>
+                    <ButtonLayout buttonName="bottom--blank__small">
+                        <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={deleteClick}>
                             선택 삭제
                         </Button>
                         <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>

@@ -506,7 +506,7 @@ const SiteMenuRegForm = () => {
                 </ButtonLayout>
                 <Grid xs={12} container>
                     <Grid item xs={4} className="menu--submit">
-                        <MainCard>
+                        <MainCard addContClass="column2over">
                             <TreeView
                                 aria-label="controlled"
                                 //defaultExpanded={expanded}
@@ -525,9 +525,9 @@ const SiteMenuRegForm = () => {
                     </Grid>
 
                     <Grid item xs={8} className="menu--right">
-                        <MainCard>
+                        <MainCard addContClass="column2over">
                             <FlexBox>
-                                <DropInput title="메뉴 ID" className="bottom--blank">
+                                <DropInput title="메뉴 ID" titleWidth={90} className="bottom--blank">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -542,7 +542,7 @@ const SiteMenuRegForm = () => {
                                     />
                                 </DropInput>
 
-                                <DropInput title="메뉴명" className="bottom--blank">
+                                <DropInput title="메뉴명" titleWidth={90} className="bottom--blank">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -557,7 +557,7 @@ const SiteMenuRegForm = () => {
                                 </DropInput>
                             </FlexBox>
                             <FlexBox>
-                                <DropInput title="상위 메뉴 ID" className="bottom--blank">
+                                <DropInput title="상위 메뉴 ID" titleWidth={90} className="bottom--blank">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -571,7 +571,7 @@ const SiteMenuRegForm = () => {
                                         fullWidth
                                     />
                                 </DropInput>
-                                <DropInput title="상위 메뉴명" className="bottom--blank">
+                                <DropInput title="상위 메뉴명" titleWidth={90} className="bottom--blank">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -587,7 +587,7 @@ const SiteMenuRegForm = () => {
                                 </DropInput>
                             </FlexBox>
                             <FlexBox>
-                                <DropInput title="정렬 순서" className="bottom--blank">
+                                <DropInput title="정렬 순서" titleWidth={90} className="bottom--blank">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -601,7 +601,7 @@ const SiteMenuRegForm = () => {
                                         fullWidth
                                     />
                                 </DropInput>
-                                <DropInput title="사용 여부" className="bottom--blank">
+                                <DropInput title="사용 여부" titleWidth={90} className="bottom--blank">
                                     <FormControlLabel
                                         control={
                                             <Checkbox
@@ -617,7 +617,7 @@ const SiteMenuRegForm = () => {
                                 </DropInput>
                             </FlexBox>
                             <FlexBox>
-                                <DropInput title="메뉴 URL" className="bottom--blank">
+                                <DropInput title="메뉴 URL" titleWidth={90} className="bottom--blank">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -631,7 +631,7 @@ const SiteMenuRegForm = () => {
                                         fullWidth
                                     />
                                 </DropInput>
-                                <DropInput title="메뉴 타입" className="bottom--blank">
+                                <DropInput title="메뉴 타입" titleWidth={90} className="bottom--blank">
                                     <Select name="type" label="메뉴 타입" value={type} onChange={handleChange}>
                                         <MenuItem value="ITEM">ITEM</MenuItem>
                                         <MenuItem value="GROUP">GROUP</MenuItem>
@@ -639,7 +639,7 @@ const SiteMenuRegForm = () => {
                                 </DropInput>
                             </FlexBox>
                             <FlexBox>
-                                <DropInput title="Target" className="bottom--blank">
+                                <DropInput title="Target" titleWidth={90} className="bottom--blank">
                                     <FormControlLabel
                                         control={
                                             <Checkbox
@@ -653,7 +653,7 @@ const SiteMenuRegForm = () => {
                                         label="사용함"
                                     />
                                 </DropInput>
-                                <DropInput title="메뉴 아이콘" className="bottom--blank">
+                                <DropInput title="메뉴 아이콘" titleWidth={90} className="bottom--blank">
                                     <Select name="icon" label="메뉴 아이콘" value={icon} onChange={handleChange}>
                                         <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
                                         <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
@@ -661,7 +661,7 @@ const SiteMenuRegForm = () => {
                                 </DropInput>
                             </FlexBox>
                             <FlexBox>
-                                <DropInput title="External Link" className="bottom--blank">
+                                <DropInput title="External Link" titleWidth={90} className="bottom--blank">
                                     <FormControlLabel
                                         control={
                                             <Checkbox
@@ -675,7 +675,7 @@ const SiteMenuRegForm = () => {
                                         label="외부링크 사용함"
                                     />
                                 </DropInput>
-                                <DropInput title="비고" className="bottom--blank">
+                                <DropInput title="비고" titleWidth={90} className="bottom--blank">
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"

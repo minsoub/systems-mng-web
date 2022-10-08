@@ -400,7 +400,7 @@ const StatusRegForm = () => {
                     <Grid item xs={8} className="blank--layout">
                         <MainCard sx={{ height: 400 }} content={false} className="stateSubmit layout--inner" addContClass="column2over" title="상태값 등록">
                             <div className="bottom--item">
-                                <DropInput title="상태명">
+                                <DropInput title="상태명" titleWidth={78}>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -412,7 +412,7 @@ const StatusRegForm = () => {
                                         fullWidth
                                     />
                                 </DropInput>
-                                <DropInput title="상태명 (영문)">
+                                <DropInput title="상태명 (영문)" titleWidth={78}>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -426,7 +426,7 @@ const StatusRegForm = () => {
                                 </DropInput>
                             </div>
                             <div className="bottom--item">
-                                <DropInput title="분류 위치">
+                                <DropInput title="분류 위치" titleWidth={78}>
                                     <TextField
                                         id="outlined-multiline-static"
                                         inputProps={{ readOnly: true }}
@@ -436,7 +436,7 @@ const StatusRegForm = () => {
                                         fullWidth
                                     />
                                 </DropInput>
-                                <DropInput title="정렬 순서">
+                                <DropInput title="정렬 순서" titleWidth={78}>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="number"

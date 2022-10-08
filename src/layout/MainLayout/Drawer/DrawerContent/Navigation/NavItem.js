@@ -9,7 +9,8 @@ import {
     DiffOutlined, // 상태값 관리
     FileOutlined, // 서비스로그조회
     DesktopOutlined, // 메인관리
-    UserSwitchOutlined, // 컨텐츠관리, 사용자접근관리
+    FileAddOutlined, // 컨텐츠관리
+    UserSwitchOutlined, // 사용자접근관리
     UsergroupAddOutlined, // Role관리
     BarsOutlined, // 메뉴관리
     AuditOutlined, // 권한관리
@@ -32,7 +33,8 @@ const icons = {
     DiffOutlined, // 상태값 관리
     FileOutlined, // 서비스로그조회
     DesktopOutlined, // 메인관리
-    UserSwitchOutlined, // 컨텐츠관리, 사용자접근관리
+    FileAddOutlined, // 컨텐츠관리
+    UserSwitchOutlined, // 사용자접근관리
     UsergroupAddOutlined, // Role관리
     BarsOutlined, // 메뉴관리
     AuditOutlined, // 권한관리

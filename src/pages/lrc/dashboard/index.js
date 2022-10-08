@@ -116,7 +116,7 @@ const LrcDashboard = () => {
                 </Grid>
             </Grid>
             {dataStatus.map((item, index) => (
-                <Grid key={index} item xs={4}>
+                <Grid key={index} item xs={3}>
                     <AnalyticLrcForm id={item.id} title={item.name} count={item.count} child={item.children} />
                 </Grid>
             ))}
