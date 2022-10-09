@@ -502,7 +502,8 @@ const AccessRegForm = () => {
         if (paramId) {
             accessUpdate(id, requestData);
         } else {
-            accountInsert(requestData);
+            alert('잘 못된 접근입니다.');
+            // accountInsert(requestData); // 사용자 접근관리에서는 신규 등록이 없다.
         }
     };
 
