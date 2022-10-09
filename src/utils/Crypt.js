@@ -106,6 +106,7 @@ export const doDecrypt = async (cipherText) => {
 
 export const doEncryptRSA = (plainText) => {
     try {
+        if (plainText.length === 0) return '';
         rsaEncrypt.setPublicKey(base64.decode(sessionStorage.getItem('rsaPublicKey')));
         return rsaEncrypt.encrypt(plainText);
     } catch (e) {

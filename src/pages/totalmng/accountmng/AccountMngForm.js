@@ -279,12 +279,22 @@ const AccountMngForm = () => {
                             alert('이름을 입력해 주세요.');
                             return;
                         }
+                        // 패스워드는 수정 모드일 때 생략이 가능하다. 다른 정보 저장 목적.
                         if (password === '' && !paramId) {
                             // setErrorTitle('입력 오류');
                             // setErrorMessage('Password를 입력하지 않았습니다');
                             // setOpen(true);
                             alert('비밀번호를 입력해 주세요.');
                             return;
+                        }
+                        // 비밀번호 입력 시 유효성 체크
+                        if (password.length > 0) {
+                            // 비밀번호 로직 체크
+                            const regex = /^.*(?=^.{8,64}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[~!@#$%^*]).*$/; // /^(?=.*\d)(?=.*[a-zA-Z~!@#$%^&*_])[0-9a-zA-Z~!@#$%^&*_]{8,64}$/;
+                            if (!regex.test(password)) {
+                                alert('패스워드 형식에 일치하지 않습니다.');
+                                return;
+                            }
                         }
                         if (valid_start_date === '' || valid_end_date === '') {
                             alert('계정의 유효기간을 선택해 주세요.');

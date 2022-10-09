@@ -1,5 +1,6 @@
 import axiosInstanceDefault from '../axiosDefault';
 import useAxios from '../useAxios';
+import { doEncrypt, doEncryptRSA } from 'utils/Crypt';
 
 const AccountApis = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
@@ -60,29 +61,54 @@ const AccountApis = () => {
 
     // 통합시스템 관리 - 계정 등록
     const insertData = (data) => {
-        callApi('insertData', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'post',
-            url: '/account',
-            requestConfig: data
+        let a = doEncryptRSA(data.email);
+        let b = doEncryptRSA(data.name);
+        let c = doEncryptRSA(data.password);
+        console.log(c);
+        Promise.all([a, b, c]).then((values) => {
+            data.email = values[0];
+            data.name = values[1];
+            data.password = values[2];
+            callApi('insertData', {
+                axiosInstance: axiosInstanceDefault,
+                method: 'post',
+                url: '/account',
+                requestConfig: data
+            });
         });
     };
     // 통합시스템 관리 - 계정 수정
     const updateData = (id, data) => {
-        callApi('updateData', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'put',
-            url: `/account/${id}`,
-            requestConfig: data
+        let a = doEncryptRSA(data.email);
+        let b = doEncryptRSA(data.name);
+        let c = doEncryptRSA(data.password);
+        console.log(c);
+        Promise.all([a, b, c]).then((values) => {
+            data.email = values[0];
+            data.name = values[1];
+            data.password = values[2];
+            callApi('updateData', {
+                axiosInstance: axiosInstanceDefault,
+                method: 'put',
+                url: `/account/${id}`,
+                requestConfig: data
+            });
         });
     };
 
+    // 사이트 관리 - 사용자 접근 관리 정보 수정
     const updateAccessData = (id, data) => {
-        callApi('updateAccessData', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'put',
-            url: `/access/${id}`,
-            requestConfig: data
+        let a = doEncryptRSA(data.email);
+        let b = doEncryptRSA(data.name);
+        Promise.all([a, b]).then((values) => {
+            data.email = values[0];
+            data.name = values[1];
+            callApi('updateAccessData', {
+                axiosInstance: axiosInstanceDefault,
+                method: 'put',
+                url: `/access/${id}`,
+                requestConfig: data
+            });
         });
     };
 
@@ -148,23 +174,42 @@ const AccountApis = () => {
         });
     };
 
-    // 통합관리 - 데이터 수정
+    // 통합관리 - 계정 데이터 수정
     const updateMng = (id, data) => {
-        callApi('updateData', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'put',
-            url: `/accountmng/${id}`,
-            requestConfig: data
+        let a = doEncryptRSA(data.email);
+        let b = doEncryptRSA(data.name);
+        let c = doEncryptRSA(data.password);
+
+        console.log(c);
+        Promise.all([a, b, c]).then((values) => {
+            data.email = values[0];
+            data.name = values[1];
+            data.password = values[2];
+            callApi('updateData', {
+                axiosInstance: axiosInstanceDefault,
+                method: 'put',
+                url: `/accountmng/${id}`,
+                requestConfig: data
+            });
         });
     };
 
     // 통합관리 > 계정 등록
     const insertMngAccount = (data) => {
-        callApi('insertData', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'post',
-            url: '/accountmng',
-            requestConfig: data
+        let a = doEncryptRSA(data.email);
+        let b = doEncryptRSA(data.name);
+        let c = doEncryptRSA(data.password);
+        console.log(c);
+        Promise.all([a, b, c]).then((values) => {
+            data.email = values[0];
+            data.name = values[1];
+            data.password = values[2];
+            callApi('insertData', {
+                axiosInstance: axiosInstanceDefault,
+                method: 'post',
+                url: '/accountmng',
+                requestConfig: data
+            });
         });
     };
 
