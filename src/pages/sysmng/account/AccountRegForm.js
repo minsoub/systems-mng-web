@@ -412,6 +412,15 @@ const AccountRegForm = () => {
             alert('비밀번호를 입력해 주세요.');
             return;
         }
+        // 비밀번호 입력 시 유효성 체크
+        if (password.length > 0) {
+            // 비밀번호 로직 체크
+            const regex = /^.*(?=^.{8,64}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[~!@#$%^*]).*$/; // /^(?=.*\d)(?=.*[a-zA-Z~!@#$%^&*_])[0-9a-zA-Z~!@#$%^&*_]{8,64}$/;
+            if (!regex.test(password)) {
+                alert('패스워드 형식에 일치하지 않습니다.');
+                return;
+            }
+        }
         if ((status === 'INIT_REQUEST' || status === 'INIT_REGISTER' || !paramId) && password === '') {
             // setErrorTitle('입력 오류');
             // setErrorMessage('Password를 입력하지 않았습니다.');
@@ -710,7 +719,6 @@ const AccountRegForm = () => {
                                 />
                             </DropInput>
                             <DropInput title="사용여부">
-
                                 <FormControlLabel
                                     control={
                                         <Checkbox
