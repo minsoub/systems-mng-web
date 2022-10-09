@@ -156,6 +156,16 @@ const RoleApi = () => {
         });
     };
 
+    // 권한 redis 초기화
+    const roleRedisInit = (role_id, data) => {
+        callApi('roleRedisInit', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/adm/redis/init`,
+            requestConfig: data
+        });
+    };
+
     return [
         responseData,
         requestError,
@@ -174,7 +184,8 @@ const RoleApi = () => {
             roleMappingRegisterSave: roleMappingRegisterSave,
             roleRegisterDelete: roleRegisterDelete,
             roleRegisterTreeList: roleRegisterTreeList,
-            roleMenuSave: roleMenuSave
+            roleMenuSave: roleMenuSave,
+            roleRedisInit: roleRedisInit
         }
     ];
 };

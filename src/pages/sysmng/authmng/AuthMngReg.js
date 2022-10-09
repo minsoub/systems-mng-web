@@ -47,7 +47,7 @@ const AuthMngRegForm = () => {
         roleRequestData,
         roleRequestError,
         roleLoading,
-        { roleComboSearch, roleRegisterSearch, roleRegisterTreeList, roleMenuSave }
+        { roleComboSearch, roleRegisterSearch, roleRegisterTreeList, roleMenuSave, roleRedisInit }
     ] = RoleApi();
 
     const { roleType, roleId } = useParams();
@@ -346,6 +346,7 @@ const AuthMngRegForm = () => {
             case 'authProgramMenuMapping':
             case 'initProgramMenuMapping':
             case 'programMenuMapping':
+            case 'roleRedisInit':
                 alert('완료');
                 break;
             default:
@@ -373,6 +374,12 @@ const AuthMngRegForm = () => {
     const handleInitProgramMenuMapping = () => {
         if (confirm('전체 메뉴 X 프로그램 초기화 됩니다.\n 실행하시겠습니까?')) {
             initProgramMenuMapping();
+        }
+    };
+
+    const handleRoleRedisInit = () => {
+        if (confirm('레디스 초기화 됩니다.\n 실행하시겠습니까?')) {
+            roleRedisInit();
         }
     };
 
@@ -813,50 +820,56 @@ const AuthMngRegForm = () => {
                             >
                                 검색
                             </Button>
-                            <Button
-                                disableElevation
-                                size="small"
-                                type="submit"
-                                color="error"
-                                variant="contained"
-                                onClick={handleInitProgramMenuMapping}
-                            >
-                                메뉴X프로그램 초기화
-                            </Button>
-                            <Button
-                                disableElevation
-                                size="small"
-                                type="submit"
-                                color="warning"
-                                variant="contained"
-                                onClick={handleProgramMenuMapping}
-                            >
-                                메뉴X프로그램 매핑
-                            </Button>
-                            <Button
-                                disableElevation
-                                size="small"
-                                type="submit"
-                                color="error"
-                                variant="contained"
-                                onClick={handleInitAuthProgramMenuMapping}
-                            >
-                                권한X프로그램 초기화
-                            </Button>
-                            <Button
-                                disableElevation
-                                size="small"
-                                type="submit"
-                                color="warning"
-                                variant="contained"
-                                onClick={handleAuthProgramMenuMapping}
-                            >
-                                권한X프로그램 매핑
-                            </Button>
                         </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
-
+                <MainCard>
+                    <ButtonLayout>
+                        <Button disableElevation size="medium" type="submit" color="primary" variant="contained" onClick={handleRoleRedisInit}>
+                            레디스 초기화
+                        </Button>
+                        <Button
+                            disableElevation
+                            size="small"
+                            type="submit"
+                            color="error"
+                            variant="contained"
+                            onClick={handleInitProgramMenuMapping}
+                        >
+                            메뉴X프로그램 초기화
+                        </Button>
+                        <Button
+                            disableElevation
+                            size="small"
+                            type="submit"
+                            color="warning"
+                            variant="contained"
+                            onClick={handleProgramMenuMapping}
+                        >
+                            메뉴X프로그램 매핑
+                        </Button>
+                        <Button
+                            disableElevation
+                            size="small"
+                            type="submit"
+                            color="error"
+                            variant="contained"
+                            onClick={handleInitAuthProgramMenuMapping}
+                        >
+                            권한X프로그램 초기화
+                        </Button>
+                        <Button
+                            disableElevation
+                            size="small"
+                            type="submit"
+                            color="warning"
+                            variant="contained"
+                            onClick={handleAuthProgramMenuMapping}
+                        >
+                            권한X프로그램 매핑
+                        </Button>
+                    </ButtonLayout>
+                </MainCard>
                 <Grid xs={12} container>
                     <Grid item xs={4}>
                         <MainCard>
