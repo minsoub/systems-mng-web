@@ -549,11 +549,11 @@ db.menu_program_specification.insertMany([
       },
       {
         action_method : 'GET',
-        action_url : '/api/v1//auth/mapping/init'
+        action_url : '/api/v1/auth/mapping/init'
       },
       {
         action_method : 'GET',
-        action_url : '/api/v1//auth/mapping/init'
+        action_url : '/api/v1/auth/mapping/init'
       },
       {
         action_method : 'GET',
