@@ -1,4 +1,5 @@
 import axiosInstanceDefault from '../axiosDefault';
+import axiosInstanceAuth from '../axiosAuth';
 import useAxios from '../useAxios';
 
 const RoleApi = () => {
@@ -156,6 +157,16 @@ const RoleApi = () => {
         });
     };
 
+    // 권한 redis 초기화
+    const roleRedisInit = (role_id, data) => {
+        callApi('roleRedisInit', {
+            axiosInstance: axiosInstanceAuth,
+            method: 'get',
+            url: `/adm/redis/init`,
+            requestConfig: data
+        });
+    };
+
     return [
         responseData,
         requestError,
@@ -174,7 +185,8 @@ const RoleApi = () => {
             roleMappingRegisterSave: roleMappingRegisterSave,
             roleRegisterDelete: roleRegisterDelete,
             roleRegisterTreeList: roleRegisterTreeList,
-            roleMenuSave: roleMenuSave
+            roleMenuSave: roleMenuSave,
+            roleRedisInit: roleRedisInit
         }
     ];
 };

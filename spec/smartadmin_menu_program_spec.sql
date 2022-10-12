@@ -549,11 +549,11 @@ db.menu_program_specification.insertMany([
       },
       {
         action_method : 'GET',
-        action_url : '/api/v1//auth/mapping/init'
+        action_url : '/api/v1/auth/mapping/init'
       },
       {
         action_method : 'GET',
-        action_url : '/api/v1//auth/mapping/init'
+        action_url : '/api/v1/auth/mapping'
       },
       {
         action_method : 'GET',
@@ -630,6 +630,16 @@ db.menu_program_specification.insertMany([
       {
         action_method : 'PUT',
         action_url : '/api/v1/site/{site_id}/file'
+      }
+    ]
+},
+{
+    path: '/sitemyprivacy',
+    element: '<SitemyprivacyPage />',
+    programs: [
+      {
+        action_method : 'GET',
+        action_url : '/api/v1/access/logs'
       }
     ]
 }
