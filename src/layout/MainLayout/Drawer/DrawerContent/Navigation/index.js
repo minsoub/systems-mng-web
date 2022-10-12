@@ -50,14 +50,14 @@ export default function FileSystemNavigator(navigation, site) {
         });
         const unCheckMenuList = ['/cpc/dashboard'];
         const interLink = _.union(_.concat(_.flatten(groupUrl), menuUrl, unCheckMenuList));
-        console.log('interLink--->', interLink);
-        console.log('items--->', items);
-        console.log('있나없나--->', !_.includes(interLink, window.location.pathname.toString()));
-
-        if (!_.includes(interLink, window.location.pathname.toString())) {
-            alert('접근 권한이 없습니다.');
-            navigate(-1);
-        }
+        // console.log('interLink--->', interLink);
+        // console.log('items--->', items);
+        // console.log('있나없나--->', !_.includes(interLink, window.location.pathname.toString()));
+        //
+        // if (!_.includes(interLink, window.location.pathname.toString())) {
+        //     alert('접근 권한이 없습니다.');
+        //     navigate(-1);
+        // }
     };
 
     //const data = menumngSearch(site_id, true);
