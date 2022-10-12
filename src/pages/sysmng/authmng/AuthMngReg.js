@@ -673,11 +673,16 @@ const AuthMngRegForm = () => {
         });
         if (found === 0) {
             // 1단계에서는 없다. - 2단계
+            let foundItemId;
             checkMenuData.map((item, index) => {
                 item.child_menu_resources.map((child, idx) => {
+                    // 2 step
                     if (child.id === id) {
                         found = 1;
-                        item.visible = checkValue;
+                        foundItemId = item.id;
+                        if (checkValue === true) {
+                            item.visible = checkValue;
+                        }
                         child.visible = checkValue;
                         if (child.child_menu_resources.length > 0) {
                             child.child_menu_resources.map((sub, i) => {
@@ -686,6 +691,18 @@ const AuthMngRegForm = () => {
                         }
                     }
                 });
+                // UnVisible일 때 1단계에 대해서 Unvisble할 지 판단해야 한다.
+                if (found === 1 && checkValue === false) {
+                    found = 0;
+                    item.child_menu_resources.map((child, idx) => {
+                        if (child.id !== id && item.id === foundItemId && child.visible === true) {
+                            console.log('2 step found ......');
+                            found = 1;
+                        }
+                    });
+                    if (found === 0) item.visible = checkValue;
+                    found = 1;
+                }
             });
             console.log('2');
             console.log(found);
@@ -697,12 +714,36 @@ const AuthMngRegForm = () => {
                         child.child_menu_resources.map((sub, i) => {
                             if (sub.id === id) {
                                 found = 1;
-                                item.visible = checkValue;
-                                child.visible = checkValue;
+                                // Visible일 때는 중위/상위 Visuble
+                                if (checkValue === true) {
+                                    item.visible = checkValue;
+                                    child.visible = checkValue;
+                                }
                                 sub.visible = checkValue;
                             }
                         });
+
+                        if (found === 1 && checkValue === false) {
+                            found = 0;
+                            child.child_menu_resources.map((sub, i) => {
+                                if (sub.id !== id) {
+                                    if (sub.visible === true) {
+                                        found = 1;
+                                    }
+                                }
+                            });
+                            if (found === 0) {
+                                child.visible = checkValue;
+                            }
+                            found = 1;
+                        }
                     });
+                    // found = 0;
+                    // if (checkValue === false) {
+                    //     item.child_menu_resources.map((child, idx) => {
+
+                    //     });
+                    // }
                 });
             }
         }
@@ -825,7 +866,14 @@ const AuthMngRegForm = () => {
                 </MainCard>
                 <MainCard>
                     <ButtonLayout>
-                        <Button disableElevation size="medium" type="submit" color="primary" variant="contained" onClick={handleRoleRedisInit}>
+                        <Button
+                            disableElevation
+                            size="medium"
+                            type="submit"
+                            color="primary"
+                            variant="contained"
+                            onClick={handleRoleRedisInit}
+                        >
                             레디스 초기화
                         </Button>
                         <Button
