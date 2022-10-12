@@ -632,5 +632,15 @@ db.menu_program_specification.insertMany([
         action_url : '/api/v1/site/{site_id}/file'
       }
     ]
+},
+{
+    path: '/sitemyprivacy',
+    element: '<SitemyprivacyPage />',
+    programs: [
+      {
+        action_method : 'GET',
+        action_url : '/api/v1/access/logs'
+      }
+    ]
 }
 ]);
