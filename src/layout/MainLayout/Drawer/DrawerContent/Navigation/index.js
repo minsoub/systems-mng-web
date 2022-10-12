@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import NavGroup from './NavGroup';
-import { Box, Typography } from '@mui/material';
 import RoleApi from 'apis/roles/roleapi';
 import { activeSite, activeRole, activeEmail, activeName, activeToken, activeLogin, activeLoginDate } from 'store/reducers/auth';
+import NavGroup from './NavGroup';
+import { Box, Typography } from '@mui/material';
 import _ from 'lodash';
 
 export default function FileSystemNavigator(navigation, site) {
@@ -19,7 +19,46 @@ export default function FileSystemNavigator(navigation, site) {
     const [responseData, requestError, loading, { roleRegisterTreeList }] = RoleApi();
     //검색용 메뉴 데이터 생성
     const menuData = [];
-    const expendsMenuId = [];
+
+    /**
+     * 권한있어 접근 가능한 url과
+     * 현재 url location 비교하여 접근 방지
+     * @param items --> 데이터
+     */
+    const makeMenuData = (items) => {
+        // Type === 'GROUP'
+        const group = [];
+        const groupUrl = [];
+        // 메뉴 URL
+        const menuUrl = [];
+        items.filtering;
+        // 메뉴 찾기
+        const findChild = (menu) => _.mapValues(menu, 'child_menu_resources');
+        // 메뉴 합치기
+        const sumChild = (item) => _.flatten(Object.values(findChild(item)).map((k) => k));
+        /**
+         * type 이 ITEM 인 것들 MenuUrl 에 값 push
+         * type 이 GROUP 이라면, 새로운 배열에 하위 메뉴 url 담기
+         */
+        sumChild(items).map((v) => {
+            if (v.type === 'ITEM') {
+                menuUrl.push(v.url);
+            } else {
+                group.push(v);
+                groupUrl.push(sumChild(group).map((v) => v.url));
+            }
+        });
+        const unCheckMenuList = ['/cpc/dashboard'];
+        const interLink = _.union(_.concat(_.flatten(groupUrl), menuUrl, unCheckMenuList));
+        console.log('interLink--->', interLink);
+        console.log('items--->', items);
+        console.log('있나없나--->', !_.includes(interLink, window.location.pathname.toString()));
+
+        if (!_.includes(interLink, window.location.pathname.toString())) {
+            alert('접근 권한이 없습니다.');
+            navigate(-1);
+        }
+    };
 
     //const data = menumngSearch(site_id, true);
     //  menuapi.findlist(site_id);
@@ -72,38 +111,11 @@ export default function FileSystemNavigator(navigation, site) {
         if (!responseData) {
             return;
         }
-        // 메뉴 리스트 url
-        const menuPathList = responseData.data.data.menu_list[0].child_menu_resources;
-        const menuUrl = _.map(menuPathList, 'url');
-        const currentUrl = window.location.pathname.toString();
         if (responseData.data) {
             setMenuList(responseData.data.data.menu_list);
             makeMenuData(responseData.data.data.menu_list);
         }
-
-        // 메뉴바에 있는 메뉴말고 강제로 다른 URL 로 이탈할 경우
-        if (!_.includes(menuUrl, window.location.pathname)) {
-            // alert('접근 권한이 없습니다.');
-            // navigate(-1);
-        }
     }, [responseData]);
-
-    // 메뉴
-    const makeMenuData = (items) => {
-        items.filtering;
-        items.forEach((item) => {
-            if (item.visible === true) {
-                menuData.push(item);
-                if (item.type === 'GROUP') {
-                    expendsMenuId.push(item.id);
-                }
-
-                if (item.children && item.child_menu_resources.length) {
-                    makeMenuData(item.child_menu_resources);
-                }
-            }
-        });
-    };
 
     const handleMenu = (event, nodeId) => {
         console.log('handleMenu called....');
