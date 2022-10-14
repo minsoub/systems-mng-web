@@ -1027,13 +1027,15 @@ const ProjectMng = (props) => {
         }
 
         // 이미 등록되어 있는지 체크한다.
+        found = 0;
         userList.map((item, idx) => {
             if (item.email === email) {
+                found = 1;
                 alert('이미 등록된 사용자입니다.');
                 return;
             }
         });
-        lrcUserRegister(projectId, id, email);
+        if (found === 0) lrcUserRegister(projectId, id, email);
     };
     // 담당자 탈퇴 처리
     const userDelete = (project_id, id) => {
