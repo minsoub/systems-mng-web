@@ -1299,6 +1299,13 @@ const ProjectMng = (props) => {
                 </TopInputLayout>
                 <ContentLine container className="common__grid--reviewRowTable">
                     <table className="projectmng__evaluation">
+                        <colgroup>
+                            <col />
+                            <col />
+                            <col />
+                            <col width="30%" />
+                            <col width="100" />
+                        </colgroup>
                         <thead>
                             <tr>
                                 <th className="tg-0lax">평가 기관</th>
@@ -1339,11 +1346,13 @@ const ProjectMng = (props) => {
                                             onChange={(e) => handleReferenceChange(e, index)}
                                         />
                                     </td>
-                                    <td className="tg-0lax">
+                                    <td
+                                        className="tg-0lax"
+                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 20px' }}
+                                    >
                                         <TextField
                                             type="file"
                                             size="medium"
-                                            fullWidth
                                             onChange={(e) => fileHandleChange(e, index)}
                                             inputProps={{
                                                 accept:

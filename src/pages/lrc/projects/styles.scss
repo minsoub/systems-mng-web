@@ -206,7 +206,9 @@
         justify-content: center;
     }
     .buton2ea {
-        min-width: 234px;
+        flex-shrink: 0;
+        min-width: 260px;
+        text-align: right;
         button {
             margin-right: 0.3rem;
             &:last-child {
@@ -348,7 +350,8 @@ input::file-selector-button {
         .css-199jxd5-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root,
         .css-wb57ya-MuiFormControl-root-MuiTextField-root,
         .css-wb57ya-MuiFormControl-root-MuiTextField-root {
-            width: 79%;
+            width: 100%;
+            flex-grow: 1;
         }
         .tg-0lax-left {
             .css-wb57ya-MuiFormControl-root-MuiTextField-root {
