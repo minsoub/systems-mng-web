@@ -83,6 +83,7 @@ const OfficeInfo = (props) => {
     const [file9, setFile9] = useState([]); // 규제준수 확약서
     const [file10, setFile10] = useState([]); // 기타
     const [file11, setFile11] = useState([]); // 별첨
+    const [file12, setFile12] = useState([]); // 주주명부
     // 다운로드 파일명 정의
     const [downloadFileName, setDownloadFileName] = useState('');
     // onload
@@ -239,6 +240,8 @@ const OfficeInfo = (props) => {
                             setFile10((prevRows) => [...prevRows, data]);
                         } else if (item.type === 'PERSONAL_INFO_REQ') {
                             setFile11((prevRows) => [...prevRows, data]);
+                        } else if (item.type === 'SHAREHOLDER') {
+                            setFile12((prevRows) => [...prevRows, data]);
                         }
                     });
                 }
@@ -822,13 +825,25 @@ const OfficeInfo = (props) => {
                         </TableRow>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">9. 규제준수 확약서</TableCell>
-                                <TableCell align="center">10. 윤리서약서</TableCell>
-                                <TableCell align="center">11. 기타</TableCell>
-                                <TableCell align="center"></TableCell>
+                                <TableCell align="center">9. 주주명부</TableCell>
+                                <TableCell align="center">10. 규제준수 확약서</TableCell>
+                                <TableCell align="center">11. 윤리서약서</TableCell>
+                                <TableCell align="center">12. 기타</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableRow>
+                            <TableCell component="th" scope="row" align="center">
+                                {file12.length > 0
+                                    ? file12
+                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                          .filter((doc, idx) => idx < 2)
+                                          .map((doc, index) => (
+                                              <p key={index}>
+                                                  {doc.item} {doc.item1}
+                                              </p>
+                                          ))
+                                    : '-'}
+                            </TableCell>
                             <TableCell component="th" scope="row" align="center">
                                 {file9.length > 0
                                     ? file9
@@ -866,7 +881,6 @@ const OfficeInfo = (props) => {
                                           ))
                                     : '-'}
                             </TableCell>
-                            <TableCell component="th" scope="row"></TableCell>
                         </TableRow>
                     </Table>
                 </ContentLine>

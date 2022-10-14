@@ -341,11 +341,11 @@ const ProjectsPage = () => {
     const handleBlur = (e) => {
         console.log(e);
     };
-    const resetPeriod= () => {
+    const resetPeriod = () => {
         setPeriod(0);
     };
-    const changeDate =(type,e)=>{
-        switch(type){
+    const changeDate = (type, e) => {
+        switch (type) {
             case 'start':
                 setStartDate(e);
                 break;
@@ -545,6 +545,8 @@ const ProjectsPage = () => {
         setDataGridRows([]);
         setTotalDataGridRows([]);
         setSeletedRows([]);
+
+        searchClick();
     };
     const clearCategory = () => {
         categoryList.map((category, index) => {
@@ -620,7 +622,7 @@ const ProjectsPage = () => {
     // };
 
     return (
-        <Grid container rowSpacing={4} columnSpacing={2.75} className='projectList'>
+        <Grid container rowSpacing={4} columnSpacing={2.75} className="projectList">
             <Grid item xs={12}>
                 <HeaderTitle titleNm="거래지원 관리" menuStep01="사이트 운영" menuStep02="거래지원 관리" />
 
@@ -642,7 +644,7 @@ const ProjectsPage = () => {
 
                         <InputLayout>
                             <DropInput title="계약상태" titleWidth={120}>
-                            <InputLabel id="contract_code">계약상태</InputLabel>
+                                <InputLabel id="contract_code">계약상태</InputLabel>
                                 <Select
                                     labelId="contract_code"
                                     id="contract_code"
@@ -714,7 +716,7 @@ const ProjectsPage = () => {
                 </MainCard>
 
                 <ContentLine>
-                <ScrollX>
+                    <ScrollX>
                         <Table fixedheader={false} style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                             <TableHead>
                                 <TableRow>

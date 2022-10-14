@@ -1015,6 +1015,17 @@ const ProjectMng = (props) => {
 
     // 담당자 추가
     const userAdd = (id, email) => {
+        let found = 0;
+        userList.map((item, index) => {
+            if (item.user_email.indexOf('*') !== -1) {
+                found = 1;
+            }
+        });
+        if (found === 1) {
+            alert('마스킹 해제 요청을 하지 않았습니다!!!');
+            return;
+        }
+
         // 이미 등록되어 있는지 체크한다.
         userList.map((item, idx) => {
             if (item.email === email) {
