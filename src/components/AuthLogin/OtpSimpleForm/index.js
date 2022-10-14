@@ -81,6 +81,8 @@ const OtpSimpleForm = ({ result }) => {
                     if (authData.siteId === '62a15f4ae4129b518b133128') {
                         // 투자보호
                         navigate('/cpc/dashboard');
+                    } else if (authData.siteId === '62a15f4ae4129b518b133129') {
+                        navigate('/main/dashboard');
                     } else {
                         if (moveUrl) {
                             // 거래지원 메신저 링크로 바로 이동.

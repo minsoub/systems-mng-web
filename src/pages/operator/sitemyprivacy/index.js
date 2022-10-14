@@ -121,11 +121,11 @@ const SiteMyPrivacy = () => {
 
     // 페이징 변경 이벤트
     const handlePage = (page) => {};
-    const resetPeriod= () => {
+    const resetPeriod = () => {
         setPeriod(0);
     };
-    const changeDate =(type,e)=>{
-        switch(type){
+    const changeDate = (type, e) => {
+        switch (type) {
             case 'start':
                 setStartDate(e);
                 break;
@@ -198,7 +198,7 @@ const SiteMyPrivacy = () => {
                         handleChange={handleChange}
                         startName="start_date"
                         endName="end_date"
-                        addAll={true}
+                        addAll={false}
                         changeDate={changeDate}
                         resetPeriod={resetPeriod}
                     />
