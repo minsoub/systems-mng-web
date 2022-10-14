@@ -39,6 +39,7 @@ const FileMng = (props) => {
     const [fileList9, setFileList9] = useState([]);
     const [fileList10, setFileList10] = useState([]);
     const [fileList11, setFileList11] = useState([]);
+    const [fileList12, setFileList12] = useState([]);
 
     // 제출 서류 관련 데이터 리스트 정보 (URL)
     const [docList1, setDocList1] = useState([]);
@@ -52,6 +53,7 @@ const FileMng = (props) => {
     const [docList9, setDocList9] = useState([]);
     const [docList10, setDocList10] = useState([]);
     const [docList11, setDocList11] = useState([]);
+    const [docList12, setDocList12] = useState([]);
     const [downloadFileName, setDownloadFileName] = useState('');
 
     const styles = {
@@ -79,6 +81,7 @@ const FileMng = (props) => {
         url9: '',
         url10: '',
         url11: '',
+        url12: '',
         file1: '',
         file2: '',
         file3: '',
@@ -89,7 +92,8 @@ const FileMng = (props) => {
         file8: '',
         file9: '',
         file10: '',
-        file11: ''
+        file11: '',
+        file12: ''
     });
     const {
         url1,
@@ -103,6 +107,7 @@ const FileMng = (props) => {
         url9,
         url10,
         url11,
+        url12,
         file1,
         file2,
         file3,
@@ -113,7 +118,8 @@ const FileMng = (props) => {
         file8,
         file9,
         file10,
-        file11
+        file11,
+        file12
     } = inputs;
     // onload
     useEffect(() => {
@@ -152,6 +158,7 @@ const FileMng = (props) => {
                     let file9 = [];
                     let file10 = [];
                     let file11 = [];
+                    let file12 = [];
                     fileList.map((file, index) => {
                         switch (file.type) {
                             case 'IPO_APPLICATION':
@@ -187,6 +194,8 @@ const FileMng = (props) => {
                             case 'PERSONAL_INFO_REQ':
                                 file11.push(file);
                                 break;
+                            case 'SHAREHOLDER':
+                                file12.push(file);
                             default:
                                 break;
                         }
@@ -202,6 +211,7 @@ const FileMng = (props) => {
                     setFileList9(file9);
                     setFileList10(file10);
                     setFileList11(file11);
+                    setFileList11(file12);
                 }
                 break;
             case 'getUrlList':
@@ -218,6 +228,7 @@ const FileMng = (props) => {
                     let file9 = [];
                     let file10 = [];
                     let file11 = [];
+                    let file12 = [];
                     urlList.map((file, index) => {
                         switch (file.type) {
                             case 'IPO_APPLICATION':
@@ -253,6 +264,9 @@ const FileMng = (props) => {
                             case 'PERSONAL_INFO_REQ':
                                 file11.push(file);
                                 break;
+                            case 'SHAREHOLDER':
+                                file12.push(file);
+                                break;
                             default:
                                 break;
                         }
@@ -268,6 +282,7 @@ const FileMng = (props) => {
                     setDocList9(file9);
                     setDocList10(file10);
                     setDocList11(file11);
+                    setDocList11(file12);
                 }
                 break;
             case 'insertData':
@@ -1072,8 +1087,93 @@ const FileMng = (props) => {
                                     ))}
                                 </td>
                             </tr>
+
                             <tr>
-                                <th className="tg-0pky">9. 규제준수 확약서</th>
+                                <th className="tg-0pky">9. 주주명부</th>
+                                <td className="tg-0pky">
+                                    {/* <FlexBox>
+                                        <TextField
+                                            id="url9"
+                                            name="url9"
+                                            size="medium"
+                                            value={url9}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            fullWidth
+                                        />
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => urlSave('REGULATORY_COMPLIANCE', url9)}
+                                        >
+                                            저장
+                                        </Button>
+                                    </FlexBox> */}
+                                    {docList12.map((item, index) => (
+                                        <div className="filemng__file--list" key={index}>
+                                            {/* 사용자 아이디 */}
+                                            <h6 className="filemng__file--id">{item.email}</h6>
+                                            <div className="filemng__file--con">
+                                                {/* url 주소 */}
+                                                <p className="filemng__file--url">
+                                                    <a href={item.url} target="_blank" rel="noreferrer noopener">
+                                                        {item.url}
+                                                    </a>
+                                                </p>
+                                                {/* 날짜 */}
+                                                <p className="filemng__file--date">{item.create_date.substring(0, 10)}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </td>
+                                <td className="tg-0pky">
+                                    {/* <FlexBox>
+                                        <TextField
+                                            type="file"
+                                            id="file9"
+                                            name="file9"
+                                            size="medium"
+                                            fullWidth
+                                            onChange={fileHandleChange}
+                                            inputProps={{
+                                                accept:
+                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                            }}
+                                        />
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="button"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => fileSave('ETHICAL_WRITE_AUTH', file9)}
+                                        >
+                                            업로드
+                                        </Button>
+                                    </FlexBox> */}
+                                    {fileList12.map((item, index) => (
+                                        <div key={index} className="filemng__file--list">
+                                            <h6 className="filemng__file--id">{item.email}</h6>
+                                            <div className="filemng__file--con">
+                                                <button
+                                                    className="filemng__file--downlaod"
+                                                    type="button"
+                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                >
+                                                    {item.file_name}
+                                                </button>
+                                                <p className="filemng__file--date">{item.create_date.substring(0, 10)}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th className="tg-0pky">10. 규제준수 확약서</th>
                                 <td className="tg-0pky">
                                     {/* <FlexBox>
                                         <TextField
@@ -1156,7 +1256,7 @@ const FileMng = (props) => {
                                 </td>
                             </tr>
                             <tr>
-                                <th className="tg-0pky">10. 윤리서약서</th>
+                                <th className="tg-0pky">11. 윤리서약서</th>
                                 <td className="tg-0pky">
                                     {/* <FlexBox>
                                         <TextField
@@ -1240,7 +1340,7 @@ const FileMng = (props) => {
                             </tr>
 
                             <tr>
-                                <th className="tg-0pky">11. 기타</th>
+                                <th className="tg-0pky">12. 기타</th>
                                 <td className="tg-0pky">
                                     {/* <FlexBox>
                                         <TextField
