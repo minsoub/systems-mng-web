@@ -1348,7 +1348,7 @@ const ProjectMng = (props) => {
                                     </td>
                                     <td
                                         className="tg-0lax"
-                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 20px' }}
+                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 5%' }}
                                     >
                                         <TextField
                                             type="file"
