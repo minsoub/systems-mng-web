@@ -491,6 +491,7 @@ const SiteRoleMappingForm = () => {
                                     variant="outlined_d"
                                     color="secondary"
                                     onClick={userSearchClick}
+                                    style={{ marginLeft: '20px' }}
                                 >
                                     검색
                                 </Button>

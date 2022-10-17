@@ -52,3 +52,22 @@
 // .MuiPaper-elevation {
 //     cursor: pointer;
 // }
+
+.roles_reg{
+    .inputLayout > div{
+        margin-right:0px;
+    }
+    .result__list--date{
+        min-width:auto;
+        .css-1xdpdky-MuiStack-root{
+            min-width:auto;
+        }
+    }
+    .css-10dsau7-MuiGrid-root{
+        >div{
+            &:nth-child(1){
+                margin-right:20px;
+            }
+        }
+    }
+}

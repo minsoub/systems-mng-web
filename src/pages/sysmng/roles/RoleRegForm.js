@@ -381,7 +381,7 @@ const RoleRegForm = () => {
             >
                 {({ errors, handleSubmit, isSubmitting, touched }) => (
                     <form noValidate onSubmit={handleSubmit}>
-                        <Grid container rowSpacing={4} columnSpacing={2.75}>
+                        <Grid container rowSpacing={4} columnSpacing={2.75} className="roles_reg">
                             <Grid item xs={12}>
                                 <HeaderTitle
                                     titleNm="Role 등록"

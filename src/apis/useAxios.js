@@ -182,7 +182,7 @@ const useAxios = () => {
                 return;
             } else if (err.response && err.response.status && err.response.status === 403) {
                 console.log('Authorize Error !!!');
-                alert("권한이 없습니다.")
+                alert("권한이 없습니다.");
                 return;
             }
             if (err.response) setError(err.response.data);

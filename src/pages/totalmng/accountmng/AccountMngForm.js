@@ -337,7 +337,7 @@ const AccountMngForm = () => {
                 }}
             >
                 {({ errors, handleSubmit, isSubmitting, touched, values }) => (
-                    <form noValidate onSubmit={handleSubmit}>
+                    <form noValidate onSubmit={handleSubmit} className="accountmng_reg">
                         <Grid container rowSpacing={4} columnSpacing={2.75}>
                             <Grid item xs={12}>
                                 <HeaderTitle titleNm="계정 관리" menuStep01="통합 관리" menuStep02="계정 관리" />
