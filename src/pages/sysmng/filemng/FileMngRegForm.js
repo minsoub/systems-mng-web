@@ -255,7 +255,7 @@ const FileMngRegForm = () => {
 
                     <MainCard sx={{ mt: 2 }}>
                         <Grid container>
-                            <DropInput title="사이트명">
+                            <DropInput title="사이트명" style={{ marginRight: '2rem' }}>
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
                                     <MenuItem value="">
                                         <em>Choose a Site Type</em>
@@ -267,7 +267,7 @@ const FileMngRegForm = () => {
                                     ))}
                                 </Select>
                             </DropInput>
-                            <DropInput title="파일사이즈(M)">
+                            <DropInput title="파일사이즈(M)" style={{ marginRight: '2rem' }}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -337,13 +337,13 @@ const FileMngRegForm = () => {
                                     disableElevation
                                     size="medium"
                                     type="button"
-                                    variant="contained"
+                                    variant="outlined_d"
                                     color="secondary"
                                     onClick={minusClick}
                                 >
                                     -
                                 </Button>
-                                <DropInput title="파일확장자">
+                                <DropInput title="파일확장자" style={{ marginLeft: '2rem' }}>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -364,10 +364,10 @@ const FileMngRegForm = () => {
                         <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
                             저장
                         </Button>
-                        <Button disableElevation size="medium" type="button" variant="contained" color="secondary" onClick={newClick}>
+                        <Button disableElevation size="medium" type="button" variant="outlined_d" color="secondary" onClick={newClick}>
                             신규
                         </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                        <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={listClick}>
                             리스트
                         </Button>
                     </ButtonLayout>

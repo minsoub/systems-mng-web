@@ -15,6 +15,7 @@ import SearchDate from '../../../components/ContentManage/SearchDate';
 import ContentLine from '../../../components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
 import ReasonDialog from 'pages/popup/ReasonPopup';
+import { PlusOutlined } from '@ant-design/icons';
 const SiteLogPage = () => {
     let isSubmitting = false;
     const columns = [
@@ -290,7 +291,8 @@ const SiteLogPage = () => {
                     <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
                         검색
                     </Button>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={excelClick}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined" color="primary" onClick={excelClick}>
+                        <PlusOutlined style={{ marginRight: '0.6rem' }} />
                         Excel
                     </Button>
                 </ButtonLayout>

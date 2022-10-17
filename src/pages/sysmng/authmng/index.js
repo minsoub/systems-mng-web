@@ -261,7 +261,7 @@ const AuthManagementPage = () => {
                 <MainCard>
                     <TopInputLayout>
                         <InputLayout gridClass="gridClass">
-                            <DropInput title="사이트명">
+                            <DropInput title="사이트명" titleWidth={80} style={{ marginRight: '2rem' }}>
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                     <MenuItem value="">
                                         <em>Choose a Site Type</em>
@@ -274,7 +274,7 @@ const AuthManagementPage = () => {
                                 </Select>
                             </DropInput>
 
-                            <DropInput title="Role Type">
+                            <DropInput title="Role Type" titleWidth={80}>
                                 <Select name="type" label="Role Type" value={type} onChange={typeChanged}>
                                     <MenuItem value="ADMIN">ADMIN</MenuItem>
                                     <MenuItem value="USER">USER</MenuItem>
@@ -294,7 +294,7 @@ const AuthManagementPage = () => {
                                 size="medium"
                                 color="secondary"
                                 type="submit"
-                                variant="contained"
+                                variant="outlined_d"
                                 onClick={searchClick}
                             >
                                 검색

@@ -819,7 +819,7 @@ const AuthMngRegForm = () => {
                 <MainCard>
                     <TopInputLayout>
                         <FlexBox>
-                            <DropInput title="사이트 구분">
+                            <DropInput title="사이트 구분" style={{ marginRight: '2rem' }}>
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
                                     <MenuItem value="">
                                         <em>Choose a Site Type</em>
@@ -832,7 +832,7 @@ const AuthMngRegForm = () => {
                                 </Select>
                             </DropInput>
 
-                            <DropInput title="Type">
+                            <DropInput title="Type" style={{ marginRight: '2rem' }}>
                                 <Select name="type" label="Role Type" value={type} onChange={handleChange}>
                                     <MenuItem value="ADMIN">ADMIN</MenuItem>
                                     <MenuItem value="USER">USER</MenuItem>
@@ -856,7 +856,7 @@ const AuthMngRegForm = () => {
                                 size="medium"
                                 type="submit"
                                 color="secondary"
-                                variant="contained"
+                                variant="outlined_d"
                                 onClick={searchClick}
                             >
                                 검색
@@ -963,7 +963,7 @@ const AuthMngRegForm = () => {
                                         disableElevation
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         onClick={programMappingSave}
                                         color="secondary"
                                     >
