@@ -841,7 +841,7 @@ const SiteAuthMngRegForm = () => {
                                 disableElevation
                                 size="medium"
                                 type="submit"
-                                variant="contained"
+                                variant="outlined_d"
                                 color="secondary"
                                 onClick={searchClick}
                             >
@@ -897,7 +897,7 @@ const SiteAuthMngRegForm = () => {
                                     disableElevation
                                     size="medium"
                                     type="button"
-                                    variant="contained"
+                                    variant="outlined_d"
                                     color="secondary"
                                     onClick={programMappingSave}
                                 >
