@@ -22,12 +22,12 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import AccountApis from 'apis/account/accountapis';
 import SiteApi from 'apis/site/siteapi';
-import HeaderTitle from '../../../components/HeaderTitle';
-import DropInput from '../../../components/Common/DropInput';
-import ButtonLayout from '../../../components/Common/ButtonLayout';
-import './styles.scss';
+import HeaderTitle from 'components/HeaderTitle';
+import DropInput from 'components/Common/DropInput';
+import ButtonLayout from 'components/Common/ButtonLayout';
 import cx from 'classnames';
-import SearchDate from '../../../components/ContentManage/SearchDate';
+import SearchDate from 'components/ContentManage/SearchDate';
+import './styles.scss';
 
 const AccountMngForm = () => {
     let isSubmitting = false;

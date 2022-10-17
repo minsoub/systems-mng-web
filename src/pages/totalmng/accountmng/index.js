@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, FormControl, Grid, MenuItem, OutlinedInput, Select } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
-import CheckBoxDataGrid from '../../../components/DataGrid/CheckBoxDataGrid';
+import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import AccountApis from 'apis/account/accountapis';
 import ErrorScreen from 'components/ErrorScreen';
-import ButtonLayout from '../../../components/Common/ButtonLayout';
-import TopInputLayout from '../../../components/Common/TopInputLayout';
-import InputLayout from '../../../components/Common/InputLayout';
-import HeaderTitle from '../../../components/HeaderTitle';
-import ContentLine from '../../../components/Common/ContentLine';
+import ButtonLayout from 'components/Common/ButtonLayout';
+import TopInputLayout from 'components/Common/TopInputLayout';
+import InputLayout from 'components/Common/InputLayout';
+import HeaderTitle from 'components/HeaderTitle';
+import ContentLine from 'components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
 
 const AccountMng = () => {

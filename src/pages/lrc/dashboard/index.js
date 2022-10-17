@@ -50,7 +50,6 @@ const LrcDashboard = () => {
     useEffect(() => {
         setDataGridLineRows([]);
         foundationSearch();
-        lineSearch();
     }, []);
 
     // transaction error 처리
@@ -82,6 +81,7 @@ const LrcDashboard = () => {
                 } else {
                     setDataGridRows([]);
                 }
+                lineSearch();
                 break;
             case 'getLineList':
                 if (responseData.data.data && responseData.data.data.length > 0) {
