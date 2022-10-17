@@ -643,7 +643,7 @@ const AccessRegForm = () => {
 
                     <MainCard sx={{ mt: 2 }}>
                         <div className="bottom--blank">
-                            <DropInput title="이름">
+                            <DropInput title="이름" titleWidth={90}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -657,7 +657,7 @@ const AccessRegForm = () => {
                                     fullWidth
                                 />
                             </DropInput>
-                            <DropInput title="이메일 주소">
+                            <DropInput title="이메일 주소" titleWidth={90}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -712,9 +712,10 @@ const AccessRegForm = () => {
                                     addAll={true}
                                     changeDate={changeDate}
                                     resetPeriod={resetPeriod}
+                                    titleWidth={90}
                                 />
                             </Grid>
-                            <DropInput title="계정상태">
+                            <DropInput title="계정상태" titleWidth={90}>
                                 <Grid>
                                     <TextField
                                         name="currentStatus"
@@ -735,7 +736,7 @@ const AccessRegForm = () => {
                         </div>
 
                         <div className="bottom--blank">
-                            <DropInput title="로그인 실패">
+                            <DropInput title="로그인 실패" titleWidth={90}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -747,7 +748,7 @@ const AccessRegForm = () => {
                                     fullWidth
                                 />
                             </DropInput>
-                            <DropInput title="사용여부">
+                            <DropInput title="사용여부" titleWidth={90}>
                                 <RadioGroup
                                     row
                                     aria-labelledby="demo-row-radio-buttons-group-label"
@@ -790,7 +791,7 @@ const AccessRegForm = () => {
                                 disabled={isSubmitting}
                                 size="medium"
                                 type="button"
-                                variant="contained"
+                                variant="outlined_d"
                                 color="secondary"
                                 onClick={listClick}
                             >
@@ -806,7 +807,7 @@ const AccessRegForm = () => {
                                 disableElevation
                                 size="medium"
                                 type="button"
-                                variant="contained"
+                                variant="outlined_d"
                                 color="secondary"
                                 onClick={minusRegister}
                             >
@@ -841,7 +842,7 @@ const AccessRegForm = () => {
                     <MainCard>
                         <TopInputLayout>
                             <div className="selectBoxSet">
-                                <DropInput title="사이트명">
+                                <DropInput title="사이트명" titleWidth={90}>
                                     <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                         <MenuItem value="">
                                             <em>Choose a Site Type</em>
@@ -856,7 +857,7 @@ const AccessRegForm = () => {
                                     </Select>
                                 </DropInput>
 
-                                <DropInput title="운영권한">
+                                <DropInput title="운영권한" titleWidth={90} style={{ marginLeft: '2rem' }}>
                                     <Select name="role_id" label="운영권한" value={role_id} onChange={roleChanged}>
                                         <MenuItem value="">
                                             <em>Choose a Role Type</em>

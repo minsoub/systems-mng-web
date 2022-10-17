@@ -803,7 +803,7 @@ const SiteAuthMngRegForm = () => {
                 <MainCard>
                     <TopInputLayout>
                         <FlexBox>
-                            <DropInput title="사이트 구분">
+                            <DropInput title="사이트 구분" titleWidth={70}>
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
                                     {siteList
                                         .filter((item) => item.id === siteId)
@@ -815,14 +815,14 @@ const SiteAuthMngRegForm = () => {
                                 </Select>
                             </DropInput>
 
-                            <DropInput title="Type">
+                            <DropInput title="Type" titleWidth={70} style={{ margin: '0 2rem' }}>
                                 <Select name="type" label="Role Type" value={type} onChange={handleChange}>
                                     <MenuItem value="ADMIN">ADMIN</MenuItem>
                                     <MenuItem value="USER">USER</MenuItem>
                                 </Select>
                             </DropInput>
 
-                            <DropInput title="Role Name">
+                            <DropInput title="Role Name" titleWidth={70}>
                                 <Select name="role_id" label="Role Name" value={role_id} onChange={handleChange}>
                                     <MenuItem value="">
                                         <em>Choose a Role Name</em>
@@ -841,7 +841,7 @@ const SiteAuthMngRegForm = () => {
                                 disableElevation
                                 size="medium"
                                 type="submit"
-                                variant="contained"
+                                variant="outlined_d"
                                 color="secondary"
                                 onClick={searchClick}
                             >
@@ -897,7 +897,7 @@ const SiteAuthMngRegForm = () => {
                                     disableElevation
                                     size="medium"
                                     type="button"
-                                    variant="contained"
+                                    variant="outlined_d"
                                     color="secondary"
                                     onClick={programMappingSave}
                                 >
