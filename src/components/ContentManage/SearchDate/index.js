@@ -20,12 +20,14 @@ const SearchDate = ({
     title = '기간 검색',
     addAll,
     changeDate,
-    resetPeriod
+    resetPeriod,
+    titleWidth
 }) => {
     const [start_date2, setStartDate] = useState();
     const [end_date2, setEndDate] = useState();
     const [start_view_date, setStartViewDate] = useState();
     const [end_view_date, setEndViewDate] = useState();
+    const titleWidthVal = titleWidth?titleWidth:120;
     SearchDate.defaultProps = {
         noneChecked: null,
         period: null
@@ -74,7 +76,7 @@ const SearchDate = ({
     };
     return (
         <div className={cx(`result__list--date ${noneChecked}`)}>
-            <StackLabel title={title} titleWidth={120} />
+            <StackLabel title={title} titleWidth={titleWidthVal} />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DesktopDatePicker
                     label="연도. 월. 일"
