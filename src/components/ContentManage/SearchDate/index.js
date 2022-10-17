@@ -22,7 +22,6 @@ const SearchDate = ({
     changeDate,
     resetPeriod
 }) => {
-    const now = new Date();
     const [start_date2, setStartDate] = useState();
     const [end_date2, setEndDate] = useState();
     const [start_view_date, setStartViewDate] = useState();
@@ -58,17 +57,11 @@ const SearchDate = ({
         setEndViewDate(end_date2.$y + '-' + (end_date2.$M + 1) + '-' + end_date2.$D);
     }, [end_date2]);
     useEffect(() => {
-        if (!start_view_date){
-            setStartViewDate(new Date());
-            return;
-        }
+        if (!start_view_date) return;
         changeDate('start', getFormatDate(new Date(start_view_date)));
     }, [start_view_date]);
     useEffect(() => {
-        if (!end_view_date) {
-            setEndViewDate(new Date());
-            return;
-        }
+        if (!end_view_date) setEndViewDate(new Date());
         changeDate('end', getFormatDate(new Date(end_view_date)));
     }, [end_view_date]);
     const getFormatDate = (date) =>{
