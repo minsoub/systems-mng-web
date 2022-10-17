@@ -392,7 +392,7 @@ const RoleRegForm = () => {
 
                                 <MainCard sx={{ mt: 2 }} className="program__layout">
                                     <Grid className="role--blank">
-                                        <DropInput title="Role ID">
+                                        <DropInput title="Role ID" titleWidth={70}>
                                             <FlexBox>
                                                 <InputLayout>
                                                     <FormControl sx={{ minWidth: 250 }} size="medium">
@@ -440,12 +440,13 @@ const RoleRegForm = () => {
                                             addAll={true}
                                             changeDate={changeDate}
                                             resetPeriod={resetPeriod}
+                                            titleWidth={70}
                                         />
                                     </Grid>
 
                                     <Grid className="role--blank">
                                         <FlexBox>
-                                            <DropInput title="Role Name">
+                                            <DropInput title="Role Name" titleWidth={70}>
                                                 <TextField
                                                     id="filled-hidden-label-small"
                                                     type="text"
@@ -479,7 +480,7 @@ const RoleRegForm = () => {
                                     </Grid>
 
                                     <FlexBox>
-                                        <DropInput title="사이트 구분">
+                                        <DropInput title="사이트 구분" titleWidth={70}>
                                             <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                                 <MenuItem value="">
                                                     <em>Choose a Site Type</em>
@@ -517,7 +518,7 @@ const RoleRegForm = () => {
                                         disabled={isDisabled}
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         color="secondary"
                                         onClick={deleteClick}
                                     >
@@ -528,7 +529,7 @@ const RoleRegForm = () => {
                                         disabled={isSubmitting}
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         color="secondary"
                                         onClick={listClick}
                                     >

@@ -559,7 +559,7 @@ const MenuRegForm = () => {
                                 disableElevation
                                 size="medium"
                                 type="submit"
-                                variant="contained"
+                                variant="outlined_d"
                                 onClick={searchClick}
                                 color="secondary"
                             >
@@ -592,7 +592,7 @@ const MenuRegForm = () => {
                     <Grid item xs={8} className="menu--right">
                         <MainCard>
                             <FlexBox>
-                                <DropInput title="메뉴 ID" className="bottom--blank">
+                                <DropInput title="메뉴 ID" className="bottom--blank"  titleWidth={80} style={{ marginRight: '2rem' }}>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -607,7 +607,7 @@ const MenuRegForm = () => {
                                     />
                                 </DropInput>
 
-                                <DropInput title="메뉴명" className="bottom--blank">
+                                <DropInput title="메뉴명" className="bottom--blank"  titleWidth={80}>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -622,7 +622,7 @@ const MenuRegForm = () => {
                                 </DropInput>
                             </FlexBox>
                             <FlexBox>
-                                <DropInput title="상위 메뉴 ID" className="bottom--blank">
+                                <DropInput title="상위 메뉴 ID" className="bottom--blank"  titleWidth={80} style={{ marginRight: '2rem' }}>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -636,7 +636,7 @@ const MenuRegForm = () => {
                                         fullWidth
                                     />
                                 </DropInput>
-                                <DropInput title="상위 메뉴명" className="bottom--blank">
+                                <DropInput title="상위 메뉴명" className="bottom--blank"  titleWidth={80}>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -652,7 +652,7 @@ const MenuRegForm = () => {
                                 </DropInput>
                             </FlexBox>
                             <FlexBox>
-                                <DropInput title="정렬 순서" className="bottom--blank">
+                                <DropInput title="정렬 순서" className="bottom--blank"  titleWidth={80} style={{ marginRight: '2rem' }}>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -666,7 +666,7 @@ const MenuRegForm = () => {
                                         fullWidth
                                     />
                                 </DropInput>
-                                <DropInput title="사용 여부" className="bottom--blank">
+                                <DropInput title="사용 여부" className="bottom--blank"  titleWidth={80}>
                                     <FormControlLabel
                                         control={
                                             <Checkbox
@@ -682,7 +682,7 @@ const MenuRegForm = () => {
                                 </DropInput>
                             </FlexBox>
                             <FlexBox>
-                                <DropInput title="메뉴 URL" className="bottom--blank">
+                                <DropInput title="메뉴 URL" className="bottom--blank"  titleWidth={80} style={{ marginRight: '2rem' }}>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"
@@ -696,7 +696,7 @@ const MenuRegForm = () => {
                                         fullWidth
                                     />
                                 </DropInput>
-                                <DropInput title="메뉴 타입" className="bottom--blank">
+                                <DropInput title="메뉴 타입" className="bottom--blank"  titleWidth={80}>
                                     <Select name="type" label="메뉴 타입" value={type} onChange={handleChange}>
                                         <MenuItem value="ITEM">ITEM</MenuItem>
                                         <MenuItem value="GROUP">GROUP</MenuItem>
@@ -704,7 +704,7 @@ const MenuRegForm = () => {
                                 </DropInput>
                             </FlexBox>
                             <FlexBox>
-                                <DropInput title="Target" className="bottom--blank">
+                                <DropInput title="Target" className="bottom--blank"  titleWidth={80} style={{ marginRight: '2rem' }}>
                                     <FormControlLabel
                                         control={
                                             <Checkbox
@@ -718,7 +718,7 @@ const MenuRegForm = () => {
                                         label="사용함"
                                     />
                                 </DropInput>
-                                <DropInput title="메뉴 아이콘">
+                                <DropInput title="메뉴 아이콘" titleWidth={80}>
                                     <Select name="icon" label="메뉴 아이콘" value={icon} onChange={handleChange}>
                                         <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
                                         <MenuItem value="ChromeOutlined">ChromeOutlined</MenuItem>
@@ -727,7 +727,7 @@ const MenuRegForm = () => {
                             </FlexBox>
 
                             <FlexBox>
-                                <DropInput title="External Link">
+                                <DropInput title="External Link" titleWidth={80} style={{ marginRight: '2rem' }}>
                                     <FormControlLabel
                                         control={
                                             <Checkbox
@@ -741,7 +741,7 @@ const MenuRegForm = () => {
                                         label="외부링크 사용함"
                                     />
                                 </DropInput>
-                                <DropInput title="비고">
+                                <DropInput title="비고" titleWidth={80}>
                                     <TextField
                                         id="filled-hidden-label-small"
                                         type="text"

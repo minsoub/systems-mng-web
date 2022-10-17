@@ -208,7 +208,7 @@ const SiteMyPrivacy = () => {
                 </MainCard>
 
                 <ButtonLayout buttonName="bottom--blank__small">
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={searchClick}>
                         조회
                     </Button>
                 </ButtonLayout>

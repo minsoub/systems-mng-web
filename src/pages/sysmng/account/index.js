@@ -272,7 +272,7 @@ const AccountManagementPage = () => {
                             <Button disableElevation size="medium" type="submit" variant="contained" color="error" onClick={deleteClick}>
                                 삭제
                             </Button>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={listClick}>
                                 초기화
                             </Button>
                         </ButtonLayout>

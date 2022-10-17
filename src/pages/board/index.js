@@ -300,14 +300,7 @@ const BoardMasterMng = () => {
                 </MainCard>
                 <Grid className={cx(' searchPointColor')}>
                     <ButtonLayout>
-                        <Button
-                            disableElevation
-                            size="medium"
-                            type="submit"
-                            variant="contained"
-                            color="secondary"
-                            onClick={addClick}
-                        >
+                        <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={addClick}>
                             신규
                         </Button>
                     </ButtonLayout>

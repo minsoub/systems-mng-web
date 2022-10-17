@@ -3,10 +3,11 @@ import { FormControl, Stack, TextField } from '@mui/material';
 import './styles.scss';
 import StackLabel from '../../Common/StackLabel';
 // 검색단
-const SearchBar = ({ keyword, handleBlur, handleChange }) => {
+const SearchBar = ({ keyword, handleBlur, handleChange, titleWidth }) => {
+    const titleWidthVal = titleWidth ? titleWidth : 120;
     return (
         <div className={cx('searchBar')}>
-            <StackLabel title="검색어" titleWidth={120} />
+            <StackLabel title="검색어" titleWidth={titleWidthVal} />
 
             <FormControl sx={{ width: 250 }} size="medium">
                 <TextField

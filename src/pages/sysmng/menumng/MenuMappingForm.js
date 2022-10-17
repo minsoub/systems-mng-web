@@ -490,7 +490,7 @@ const MenuMappingForm = () => {
                                 size="medium"
                                 color="secondary"
                                 type="submit"
-                                variant="contained"
+                                variant="outlined_d"
                                 onClick={searchClick}
                             >
                                 검색
@@ -590,7 +590,7 @@ const MenuMappingForm = () => {
                                         disableElevation
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         onClick={programSearchClick}
                                         className={cx('layout--button--rightBlank')}
                                         색

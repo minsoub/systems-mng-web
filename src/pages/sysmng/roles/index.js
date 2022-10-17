@@ -266,13 +266,13 @@ const RoleManagementPage = () => {
 
                 <MainCard>
                     {/* 검색바 */}
-                    <SearchBar keyword={keyword} handleChange={handleChange} />
+                    <SearchBar keyword={keyword} handleChange={handleChange} titleWidth={70} />
                     <Grid item xs={12}>
                         <Stack spacing={1}>&nbsp;</Stack>
                     </Grid>
                     <TopInputLayout>
                         <InputLayout>
-                            <DropInput title="사이트 구분">
+                            <DropInput title="사이트 구분" titleWidth={70}>
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged} placeholder="사이트명">
                                     {siteList.map((item, index) => (
                                         <MenuItem key={index} value={item.id}>
@@ -282,7 +282,7 @@ const RoleManagementPage = () => {
                                 </Select>
                             </DropInput>
 
-                            <DropInput title="사용여부">
+                            <DropInput title="사용여부" titleWidth={70}>
                                 <RadioGroup
                                     row
                                     aria-labelledby="demo-row-radio-buttons-group-label"
@@ -301,7 +301,7 @@ const RoleManagementPage = () => {
                                 disableElevation
                                 size="medium"
                                 type="submit"
-                                variant="contained"
+                                variant="outlined_d"
                                 onClick={searchClick}
                                 color="secondary"
                             >
@@ -311,7 +311,7 @@ const RoleManagementPage = () => {
                             <Button disableElevation size="medium" type="submit" variant="contained" onClick={newClick} color="primary">
                                 등록
                             </Button>
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={listClick}>
                                 초기화
                             </Button>
                         </ButtonLayout>

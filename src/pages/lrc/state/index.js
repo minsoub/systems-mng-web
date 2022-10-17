@@ -449,7 +449,7 @@ const StatusRegForm = () => {
                                     />
                                 </DropInput>
                             </div>
-                            <DropInput title="사용 여부">
+                            <DropInput title="사용 여부" titleWidth={78}>
                                 <RadioGroup
                                     row
                                     aria-labelledby="demo-row-radio-buttons-group-label"

@@ -484,7 +484,7 @@ const BoardMngRegForm = () => {
             <Grid item xs={12}>
                 <HeaderTitle titleNm="게시판 생성" menuStep01="통합 관리" menuStep02="통합 게시판 관리" />
 
-                <div className={cx('common-grid--layout2')}>
+                <div className={cx('common-grid--layout2')} style={{ background: '#fff' }}>
                     <table className={cx('two-column-table')}>
                         <tbody>
                             <tr>
@@ -728,7 +728,7 @@ const BoardMngRegForm = () => {
 
                 <TopInputLayout>
                     <InputLayout>
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                        <Button disableElevation size="small" type="submit" variant="outlined_d" color="secondary" onClick={listClick}>
                             목록
                         </Button>
                     </InputLayout>

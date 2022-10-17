@@ -344,7 +344,7 @@ const AccountMngForm = () => {
 
                                 <MainCard sx={{ mt: 2 }}>
                                     <div className="layout--aline account--blank">
-                                        <DropInput title="이메일 주소">
+                                        <DropInput title="이메일 주소" titleWidth={70}>
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
@@ -375,7 +375,7 @@ const AccountMngForm = () => {
                                     </div>
 
                                     <div className="account--blank">
-                                        <DropInput title="이름">
+                                        <DropInput title="이름" titleWidth={70}>
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
@@ -392,7 +392,7 @@ const AccountMngForm = () => {
                                     </div>
 
                                     <div className="account--blank">
-                                        <DropInput title="비밀번호" className="account--blank">
+                                        <DropInput title="비밀번호" titleWidth={70} className="account--blank">
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="password"
@@ -421,9 +421,10 @@ const AccountMngForm = () => {
                                             addAll={true}
                                             changeDate={changeDate}
                                             resetPeriod={resetPeriod}
+                                            titleWidth={70}
                                         />
                                     </Grid>
-                                    <DropInput title="사용여부" className="account--blank">
+                                    <DropInput title="사용여부" titleWidth={70} className="account--blank">
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
@@ -455,7 +456,7 @@ const AccountMngForm = () => {
                                         disabled={isSubmitting}
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         color="secondary"
                                         onClick={newClick}
                                     >
@@ -477,7 +478,7 @@ const AccountMngForm = () => {
                                         disabled={isSubmitting}
                                         size="medium"
                                         type="submit"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         color="secondary"
                                         onClick={listClick}
                                     >

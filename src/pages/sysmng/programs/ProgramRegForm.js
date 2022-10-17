@@ -234,7 +234,7 @@ const ProgramRegForm = () => {
 
                     <MainCard sx={{ mt: 2 }}>
                         <Grid container>
-                            <DropInput title="사이트명">
+                            <DropInput title="사이트명" titleWidth={80} style={{ marginRight: '2rem' }}>
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={handleChange}>
                                     <MenuItem value="">
                                         <em>Choose a Site Type</em>
@@ -246,7 +246,7 @@ const ProgramRegForm = () => {
                                     ))}
                                 </Select>
                             </DropInput>
-                            <DropInput title="관리메뉴">
+                            <DropInput title="관리메뉴" titleWidth={80}>
                                 <Select name="type" label="관리메뉴" value={type} onChange={handleChange}>
                                     <MenuItem value="ADMIN">관리자용 메뉴</MenuItem>
                                     <MenuItem value="USER">사용자용 메뉴</MenuItem>
@@ -255,7 +255,7 @@ const ProgramRegForm = () => {
                         </Grid>
 
                         <Grid container className="bottom--blank__top">
-                            <DropInput title="프로그램 ID">
+                            <DropInput title="프로그램 ID" titleWidth={80} style={{ marginRight: '2rem' }}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -270,7 +270,7 @@ const ProgramRegForm = () => {
                                 />
                             </DropInput>
 
-                            <DropInput title="프로그램명">
+                            <DropInput title="프로그램명" titleWidth={80}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -286,7 +286,7 @@ const ProgramRegForm = () => {
                         </Grid>
 
                         <Grid container className="bottom--blank__top">
-                            <DropInput title="분류명">
+                            <DropInput title="분류명" titleWidth={80} style={{ marginRight: '2rem' }}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -299,7 +299,7 @@ const ProgramRegForm = () => {
                                     fullWidth
                                 />
                             </DropInput>
-                            <DropInput title="Action Type">
+                            <DropInput title="Action Type" titleWidth={80}>
                                 <Select name="action_method" label="관리메뉴" value={action_method} onChange={handleChange}>
                                     <MenuItem value="GET">GET</MenuItem>
                                     <MenuItem value="POST">POST</MenuItem>
@@ -310,7 +310,7 @@ const ProgramRegForm = () => {
                         </Grid>
 
                         <Grid container className="bottom--blank__top">
-                            <DropInput title="Action URL">
+                            <DropInput title="Action URL" titleWidth={80} style={{ marginRight: '2rem' }}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -324,7 +324,7 @@ const ProgramRegForm = () => {
                                 />
                             </DropInput>
 
-                            <DropInput title="사용여부">
+                            <DropInput title="사용여부" titleWidth={80}>
                                 <FormControlLabel
                                     control={
                                         <Checkbox
@@ -341,7 +341,7 @@ const ProgramRegForm = () => {
                         </Grid>
 
                         <Grid container className="bottom--blank__top">
-                            <DropInput title="비고">
+                            <DropInput title="비고" titleWidth={80} >
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -374,7 +374,7 @@ const ProgramRegForm = () => {
                             disabled={isSubmitting}
                             size="medium"
                             type="button"
-                            variant="contained"
+                            variant="outlined_d"
                             color="secondary"
                             onClick={newClick}
                         >
@@ -385,7 +385,7 @@ const ProgramRegForm = () => {
                             disabled={isSubmitting}
                             size="medium"
                             type="submit"
-                            variant="contained"
+                            variant="outlined_d"
                             color="secondary"
                             onClick={listClick}
                         >
