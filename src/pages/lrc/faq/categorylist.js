@@ -280,14 +280,14 @@ const FaqCategoryPage = () => {
                 </ContentLine>
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <div className="bottom--item">
-                        <DropInput title="언어 구분" className="bottom--blank">
+                        <DropInput title="언어 구분" className="bottom--blank" titleWidth={70}>
                             <Select name="language" label="언어선택" value={language} onChange={handleChange}>
                                 <MenuItem value="KO">국문</MenuItem>
                                 <MenuItem value="EN">영문</MenuItem>
                             </Select>
                         </DropInput>
 
-                        <DropInput title="카테고리명">
+                        <DropInput title="카테고리명" titleWidth={70}>
                             <TextField
                                 id="filled-hidden-label-small"
                                 type="text"
@@ -303,7 +303,7 @@ const FaqCategoryPage = () => {
                     </div>
 
                     <div className="bottom--item">
-                        <DropInput title="사용여부">
+                        <DropInput title="사용여부" titleWidth={70}>
                             <RadioGroup
                                 row
                                 aria-labelledby="demo-row-radio-buttons-group-label"
@@ -316,7 +316,7 @@ const FaqCategoryPage = () => {
                             </RadioGroup>
                         </DropInput>
 
-                        <DropInput title="노출순서">
+                        <DropInput title="노출순서" titleWidth={70}>
                             <TextField
                                 id="filled-hidden-label-small"
                                 type="number"
