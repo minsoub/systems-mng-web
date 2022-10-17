@@ -61,7 +61,7 @@ const SearchDate = ({
         changeDate('start', getFormatDate(new Date(start_view_date)));
     }, [start_view_date]);
     useEffect(() => {
-        if (!end_view_date) setEndViewDate(new Date());
+        if (!end_view_date) return;
         changeDate('end', getFormatDate(new Date(end_view_date)));
     }, [end_view_date]);
     const getFormatDate = (date) =>{
