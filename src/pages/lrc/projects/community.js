@@ -433,16 +433,18 @@ const ProjectCommunity = (props) => {
                                             </TableCell>
                                             <TableCell align="right" component="td" scope="row">
                                                 <Tooltip title={item.file_name}>
-                                                    <Button
-                                                        disabled={item.file_status === 'CLEAN' ? false : true}
-                                                        variant="outlined"
-                                                        startIcon={<AttachFileOutlinedIcon />}
-                                                        size="small"
-                                                        sx={{ minWidth: '120px' }}
-                                                        onClick={() => FileDownload(item.id, item.file_name)}
-                                                    >
-                                                        파일 다운로드
-                                                    </Button>
+                                                    <span>
+                                                        <Button
+                                                            disabled={item.file_status === 'CLEAN' ? false : true}
+                                                            variant="outlined"
+                                                            startIcon={<AttachFileOutlinedIcon />}
+                                                            size="small"
+                                                            sx={{ minWidth: '120px' }}
+                                                            onClick={() => FileDownload(item.id, item.file_name)}
+                                                        >
+                                                            파일 다운로드
+                                                        </Button>
+                                                    </span>
                                                 </Tooltip>
                                             </TableCell>
                                         </TableRow>
@@ -455,7 +457,7 @@ const ProjectCommunity = (props) => {
                                 count={Number(Math.ceil(fileList.length / rowsPerPage))}
                                 shape="rounded"
                                 color="primary"
-                                rows_per_page={rowsPerPage}
+                                rowPerPage={rowsPerPage}
                                 boundary_count={2}
                                 on_change={handleChangePage}
                             />

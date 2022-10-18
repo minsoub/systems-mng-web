@@ -90,7 +90,7 @@ const MainContents = () => {
 
                 <TabContext value={tabIndex}>
                     <TopInputLayout sx={{ borderBottom: 1, borderColor: 'divider' }} className="pagetab">
-                        <TabList onChange={handleChange} aria-label="main contents tabs">
+                        <TabList onChange={handleChange} aria-label="main contents tabs" sx={{ minHeight: '32px' }}>
                             <Tab label="가상자산 동향" value="1" />
                             {/* <Tab label="블록체인 뉴스" value="2" /> */}
                             <Tab label="가상자산의 기초" value="3" />

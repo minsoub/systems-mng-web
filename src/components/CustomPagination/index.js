@@ -1,13 +1,13 @@
 import React,{useEffect} from 'react';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 
 import { styled } from '@mui/material/styles';
 import FlexBox from 'components/Common/FlexBox/index';
 
 // eslint-disable-next-line react/prop-types
-const CustomPagination = ({ total, page, count, color, rows_per_page, boundary_count, on_change }) => {
+const CustomPagination = ({ total, page, count, color, boundary_count, on_change }) => {
     useEffect(() => {
         console.log(page);
     }, [page]);
@@ -20,7 +20,7 @@ const CustomPagination = ({ total, page, count, color, rows_per_page, boundary_c
                 shape="rounded"
                 color={color}
                 // defaultPage={1}
-                rowsPerPage={rows_per_page}
+                // rowsPerPage={rowPerPage}
                 boundaryCount={boundary_count}
                 showFirstButton
                 showLastButton
@@ -33,12 +33,12 @@ const CustomPagination = ({ total, page, count, color, rows_per_page, boundary_c
 
 export default CustomPagination;
 
-CustomPagination.PropTypes = {
-    total: PropTypes.string.isRequired,
-    page: PropTypes.string.isRequired,
-    count: PropTypes.number.isRequired,
-    color: PropTypes.string,
-    rows_per_page: PropTypes.number.isRequired,
-    boundary_count: PropTypes.number,
-    on_change: PropTypes.func
+CustomPagination.propTypes = {
+    total: propTypes.any.isRequired,
+    page: propTypes.any.isRequired,
+    count: propTypes.number.isRequired,
+    color: propTypes.string,
+    // rows_per_page: propTypes.number.isRequired,
+    boundary_count: propTypes.number,
+    on_change: propTypes.func
 };
