@@ -142,7 +142,7 @@ const SiteLogDetail = () => {
                 </div>
 
                 <ButtonLayout>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={listClick}>
                         목록
                     </Button>
                 </ButtonLayout>

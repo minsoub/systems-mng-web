@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FormControl, FormControlLabel, RadioGroup, Radio, Stack, TextField } from '@mui/material';
 import cx from 'classnames';
 import './styles.scss';
-import StackLabel from '../../Common/StackLabel';
+import StackLabel from 'components/Common/StackLabel';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -20,13 +20,14 @@ const SearchDate = ({
     title = '기간 검색',
     addAll,
     changeDate,
-    resetPeriod
+    resetPeriod,
+    titleWidth
 }) => {
-    const now = new Date();
     const [start_date2, setStartDate] = useState();
     const [end_date2, setEndDate] = useState();
     const [start_view_date, setStartViewDate] = useState();
     const [end_view_date, setEndViewDate] = useState();
+    const titleWidthVal = titleWidth?titleWidth:120;
     SearchDate.defaultProps = {
         noneChecked: null,
         period: null
@@ -58,17 +59,11 @@ const SearchDate = ({
         setEndViewDate(end_date2.$y + '-' + (end_date2.$M + 1) + '-' + end_date2.$D);
     }, [end_date2]);
     useEffect(() => {
-        if (!start_view_date){
-            setStartViewDate(new Date());
-            return;
-        }
+        if (!start_view_date) return;
         changeDate('start', getFormatDate(new Date(start_view_date)));
     }, [start_view_date]);
     useEffect(() => {
-        if (!end_view_date) {
-            setEndViewDate(new Date());
-            return;
-        }
+        if (!end_view_date) return;
         changeDate('end', getFormatDate(new Date(end_view_date)));
     }, [end_view_date]);
     const getFormatDate = (date) =>{
@@ -81,7 +76,7 @@ const SearchDate = ({
     };
     return (
         <div className={cx(`result__list--date ${noneChecked}`)}>
-            <StackLabel title={title} titleWidth={120} />
+            <StackLabel title={title} titleWidth={titleWidthVal} />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DesktopDatePicker
                     label="연도. 월. 일"

@@ -35,7 +35,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import { forwardRef, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
@@ -78,7 +78,7 @@ const menuIcon = {
     '62aaae7b22252d51722db8e7': icons.SettingOutlined,                      // 통합게시판 관리
     // 고객지원 사이트관리자
     'MENU_3c36442e601448b7a701c8df651e39d7': icons.DesktopOutlined,         // 메인 관리
-    'MENU_80aee08e7c8240518df173f97be54c78': icons.FileAddOutlined,         // 콘텐츠 관리
+    'MENU_80aee08e7c8240518df173f97be54c78': icons.FileAddOutlined,         // 컨텐츠 관리
     'MENU_3a0d00a2baf644a8a7a8e56fa29d2359': icons.AuditOutlined,           // 권한 관리
     // 거래지원 사이트 소유자
     'MENU_cfda4ccd3dd64f368500e4c29a7805a7': icons.QuestionCircleOutlined,  // FAQ 관리
@@ -115,6 +115,7 @@ const NavSub = ({ item, level }) => {
 
     const [selected, setSelected] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
+    const location = useLocation();
 
     let itemTarget = '_self';
     if (item.target) {
@@ -147,15 +148,30 @@ const NavSub = ({ item, level }) => {
 
     // active menu item on page load
     useEffect(() => {
-        const currentIndex = document.location.pathname
-            .toString()
-            .split('/')
-            .findIndex((id) => id === item.id);
-        if (currentIndex > -1) {
-            dispatch(activeItem({ openItem: [item.id] }));
-        }
+        // const currentIndex = document.location.pathname
+        //     .toString()
+        //     .split('/')
+        //     .findIndex((id) => id === item.id);
+        // if (currentIndex > -1) {
+        //     dispatch(activeItem({ openItem: [item.id] }));
+        //     if (item.child_menu_resources.length > 0) {
+        //         setOpen(true);
+        //     }
+        // }
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        // console.log('sub', location.pathname, item);
+        item.child_menu_resources.map((child) => {
+            if (location.pathname === child.url) {
+                //dispatch(activeItem({ openItem: [item.id] }));
+                setOpen(true);
+            }
+        });
+        // eslint-disable-next-line
+    }, [location]);
+
     const textColor = 'text.primary';
     const iconSelectedColor = 'primary.main';
 

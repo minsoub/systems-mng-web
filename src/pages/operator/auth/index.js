@@ -243,7 +243,7 @@ const SiteAuthManagementPage = () => {
                 <MainCard>
                     <TopInputLayout>
                         <InputLayout>
-                            <DropInput title="사이트명">
+                            <DropInput title="사이트명" titleWidth={90}>
                                 <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                     <MenuItem value="">
                                         <em>Choose a Site Type</em>
@@ -258,13 +258,13 @@ const SiteAuthManagementPage = () => {
                                 </Select>
                             </DropInput>
 
-                            <DropInput title="Role Type">
+                            <DropInput title="Role Type" titleWidth={90}>
                                 <Select name="type" label="Role Type" value={type} onChange={typeChanged}>
                                     <MenuItem value="ADMIN">ADMIN</MenuItem>
                                     <MenuItem value="USER">USER</MenuItem>
                                 </Select>
                             </DropInput>
-                            <DropInput title="사용여부">
+                            <DropInput title="사용여부" titleWidth={90}>
                                 <RadioGroup
                                     row
                                     aria-labelledby="demo-row-radio-buttons-group-label"
@@ -283,14 +283,14 @@ const SiteAuthManagementPage = () => {
                                 disableElevation
                                 size="medium"
                                 type="submit"
-                                variant="contained"
+                                variant="outlined_d"
                                 color="secondary"
                                 onClick={searchClick}
                             >
                                 검색
                             </Button>
 
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={listClick}>
                                 초기화
                             </Button>
                         </ButtonLayout>

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { forwardRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     AppstoreOutlined, // 대시보드
@@ -73,6 +73,7 @@ const NavItem = ({ item, level }) => {
     const dispatch = useDispatch();
     const menu = useSelector((state) => state.menu);
     const { drawerOpen, openItem } = menu;
+    const location = useLocation();
 
     let itemTarget = '_self';
     if (item.target) {
@@ -85,6 +86,7 @@ const NavItem = ({ item, level }) => {
     }
 
     const itemHandler = (id) => {
+        // console.log('메뉴 클릭');
         dispatch(activeItem({ openItem: [id] }));
     };
     //console.log('item.id', item.id, item.name);
@@ -95,15 +97,23 @@ const NavItem = ({ item, level }) => {
 
     // active menu item on page load
     useEffect(() => {
-        const currentIndex = document.location.pathname
-            .toString()
-            .split('/')
-            .findIndex((id) => id === item.id);
-        if (currentIndex > -1) {
+        // const currentIndex = document.location.pathname
+        //     .toString()
+        //     .split('/')
+        //     .findIndex((id) => id === item.id);
+        // if (currentIndex > -1) {
+        //     dispatch(activeItem({ openItem: [item.id] }));
+        // }
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        // console.log('item', location.pathname, item.url);
+        if (location.pathname === item.url) {
             dispatch(activeItem({ openItem: [item.id] }));
         }
         // eslint-disable-next-line
-    }, []);
+    }, [location]);
 
     const textColor = 'text.primary';
     const iconSelectedColor = 'primary.main';

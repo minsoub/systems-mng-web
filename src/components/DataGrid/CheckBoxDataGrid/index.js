@@ -8,6 +8,9 @@ import './style.scss';
 
 function customCheckbox(theme) {
     return {
+        '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: '#ddd'
+        },
         '& .MuiCheckbox-root svg': {
             width: 14,
             height: 14,

@@ -298,7 +298,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 콘텐츠를 체크하세요.');
+            alert('삭제 할 컨텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);
@@ -324,7 +324,7 @@ const View = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsDamageList">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="피해사례" />
+                <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="피해사례" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate
@@ -356,8 +356,8 @@ const View = () => {
                             <FormControlLabel value="" control={<Radio />} label="전체" />
                             {resBoardMaster &&
                                 resBoardMaster.data.data.is_use_category &&
-                                resBoardMaster.data.data.categories.map((category) => (
-                                    <FormControlLabel value={category} control={<Radio />} label={category} />
+                                resBoardMaster.data.data.categories.map((category, index) => (
+                                    <FormControlLabel key={index} value={category} control={<Radio />} label={category} />
                                 ))}
                         </RadioGroup>
                     </div>
@@ -366,7 +366,7 @@ const View = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <ButtonLayout buttonName="bottom--blank__small">
+                <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '40px' }}>
                     <Button disableElevation size="medium" type="submit" color="secondary" variant="outlined_d" onClick={clearClick}>
                         초기화
                     </Button>
@@ -388,7 +388,7 @@ const View = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </ContentLine>
-                <Grid className={cx(' searchPointColor')}>
+                <Grid className={cx(' searchPointColor')} sx={{ mt: '20px' }}>
                     <ButtonLayout buttonName="bottom--blank__small">
                         <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={deleteClick}>
                             선택 삭제

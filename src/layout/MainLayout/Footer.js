@@ -5,7 +5,7 @@ import footer_logo from 'assets/images/footer_logo.png';
 import { Box, Stack, Typography } from '@mui/material';
 
 const Footer = () => (
-  <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: '17px 81px', mt: 'auto', position: 'fixed', zIndex: '10000', background: '#000', bottom:'0', width: '100%'}}>
+  <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: '17px 81px', mt: 'auto', position: 'fixed', zIndex: '1300', background: '#000', bottom:'0', width: '100%'}}>
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <img width='152' src={footer_logo} alt='스마트어드민' />
       <Typography sx={{ ml: 2, color: '#888', fontSize: '12px' }}variant="caption" color="divider">스마트어드민</Typography>

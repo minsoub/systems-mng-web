@@ -22,12 +22,12 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import AccountApis from 'apis/account/accountapis';
 import SiteApi from 'apis/site/siteapi';
-import HeaderTitle from '../../../components/HeaderTitle';
-import DropInput from '../../../components/Common/DropInput';
-import ButtonLayout from '../../../components/Common/ButtonLayout';
-import './styles.scss';
+import HeaderTitle from 'components/HeaderTitle';
+import DropInput from 'components/Common/DropInput';
+import ButtonLayout from 'components/Common/ButtonLayout';
 import cx from 'classnames';
-import SearchDate from '../../../components/ContentManage/SearchDate';
+import SearchDate from 'components/ContentManage/SearchDate';
+import './styles.scss';
 
 const AccountMngForm = () => {
     let isSubmitting = false;
@@ -337,14 +337,14 @@ const AccountMngForm = () => {
                 }}
             >
                 {({ errors, handleSubmit, isSubmitting, touched, values }) => (
-                    <form noValidate onSubmit={handleSubmit}>
+                    <form noValidate onSubmit={handleSubmit} className="accountmng_reg">
                         <Grid container rowSpacing={4} columnSpacing={2.75}>
                             <Grid item xs={12}>
                                 <HeaderTitle titleNm="계정 관리" menuStep01="통합 관리" menuStep02="계정 관리" />
 
                                 <MainCard sx={{ mt: 2 }}>
                                     <div className="layout--aline account--blank">
-                                        <DropInput title="이메일 주소">
+                                        <DropInput title="이메일 주소" titleWidth={70}>
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
@@ -375,7 +375,7 @@ const AccountMngForm = () => {
                                     </div>
 
                                     <div className="account--blank">
-                                        <DropInput title="이름">
+                                        <DropInput title="이름" titleWidth={70}>
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
@@ -392,7 +392,7 @@ const AccountMngForm = () => {
                                     </div>
 
                                     <div className="account--blank">
-                                        <DropInput title="비밀번호" className="account--blank">
+                                        <DropInput title="비밀번호" titleWidth={70} className="account--blank">
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="password"
@@ -421,9 +421,10 @@ const AccountMngForm = () => {
                                             addAll={true}
                                             changeDate={changeDate}
                                             resetPeriod={resetPeriod}
+                                            titleWidth={70}
                                         />
                                     </Grid>
-                                    <DropInput title="사용여부" className="account--blank">
+                                    <DropInput title="사용여부" titleWidth={70} className="account--blank">
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
@@ -455,7 +456,7 @@ const AccountMngForm = () => {
                                         disabled={isSubmitting}
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         color="secondary"
                                         onClick={newClick}
                                     >
@@ -477,7 +478,7 @@ const AccountMngForm = () => {
                                         disabled={isSubmitting}
                                         size="medium"
                                         type="submit"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         color="secondary"
                                         onClick={listClick}
                                     >

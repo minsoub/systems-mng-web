@@ -494,7 +494,7 @@ const SiteMenuRegForm = () => {
     };
 
     return (
-        <Grid container rowSpacing={4} columnSpacing={2.75}>
+        <Grid container rowSpacing={4} columnSpacing={2.5}>
             <Grid item xs={12}>
                 {/* header top */}
                 <HeaderTitle titleNm="메뉴 등록" menuStep01="사이트 관리" menuStep02="메뉴 관리" menuStep03="메뉴 등록" />

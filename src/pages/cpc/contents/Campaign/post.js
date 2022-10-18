@@ -289,7 +289,7 @@ const Post = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsCampaignReg">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="안전거래 캠페인" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="안전거래 캠페인" />
+                <HeaderTitle titleNm="안전거래 캠페인" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="안전거래 캠페인" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>
@@ -382,7 +382,7 @@ const Post = () => {
 
                 <TopInputLayout>
                     <InputLayout>
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                        <Button disableElevation size="small" type="submit" variant="outlined_d" color="secondary" onClick={listClick}>
                             목록
                         </Button>
                     </InputLayout>

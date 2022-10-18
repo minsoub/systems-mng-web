@@ -350,7 +350,7 @@ function BoardSearchDialog(props) {
     };
 
     return (
-        <Dialog onClose={handleClose} open={open} maxWidth={1280}>
+        <Dialog onClose={handleClose} open={open}>
             <DialogContent style={{ height: '1135px' }} className="cpcMainContentsPopup">
                 <Typography sx={{ mt: 1, mb: 0 }} variant="h4" gutterBottom component="div" className="bottom--blank">
                     게시글 선택

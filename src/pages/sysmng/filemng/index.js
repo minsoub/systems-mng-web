@@ -261,7 +261,7 @@ const FileManagementPage = () => {
                                 disableElevation
                                 size="medium"
                                 type="submit"
-                                variant="contained"
+                                variant="outlined_d"
                                 color="secondary"
                                 onClick={searchClick}
                             >

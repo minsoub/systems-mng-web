@@ -60,7 +60,7 @@ const View = () => {
         },
         {
             field: 'contents',
-            headerName: '콘텐츠',
+            headerName: '컨텐츠',
             flex: 1,
             headerAlign: 'center',
             align: 'left',
@@ -299,7 +299,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 콘텐츠를 체크하세요.');
+            alert('삭제 할 컨텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);
@@ -325,7 +325,7 @@ const View = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
-                <HeaderTitle titleNm="보도자료" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="보도자료" />
+                <HeaderTitle titleNm="보도자료" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="보도자료" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate
@@ -336,7 +336,6 @@ const View = () => {
                         handleChange={handleChange}
                         startName="start_date"
                         endName="end_date"
-                        addAll={true}
                         changeDate={changeDate}
                         resetPeriod={resetPeriod}
                     />
@@ -345,12 +344,12 @@ const View = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <ButtonLayout buttonName="bottom--blank__small">
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '40px' }}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={clearClick}>
                         초기화
                     </Button>
 
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={searchClick}>
                         검색
                     </Button>
                 </ButtonLayout>
@@ -369,8 +368,8 @@ const View = () => {
                     />
                 </ContentLine>
 
-                <ButtonLayout>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={deleteClick}>
+                <ButtonLayout style={{ marginTop: '20px' }}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={deleteClick}>
                         선택 삭제
                     </Button>
                     <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>

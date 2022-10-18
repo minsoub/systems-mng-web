@@ -45,7 +45,7 @@ const AnalyticLrcForm = ({ color, id, title, count, child, percentage, isLoss, e
 
     return (
         <div className={createClassName(id).className}>
-            <MainCard contentSX={{ p: 2.25 }} className={cx('gridCardColor')}>
+            <MainCard contentSX={{ pl: 2.25 }} className={cx('gridCardColor')}>
                 <Stack spacing={0.5} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Stack>
                         <Typography variant="h4" color="white" style={{ fontSize: '0.845rem', fontWeight: '500' }}>
@@ -67,7 +67,7 @@ const AnalyticLrcForm = ({ color, id, title, count, child, percentage, isLoss, e
 
             <Grid container spacing={0} sx={{ mt: 1 }}></Grid>
             {child.map((item, index) => (
-                <div className="child">
+                <div className="child" key={index}>
                     <MainCard contentSX={{ mt: 1, p: 0.25 }}>
                         <Stack spacing={0.5}>
                             <Grid item container direction="row" alignItems="center" justifyContent="left">

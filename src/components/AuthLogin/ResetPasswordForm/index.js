@@ -27,6 +27,8 @@ const ResetPasswordForm = () => {
             if (siteId === '62a15f4ae4129b518b133128') {
                 // 투자보호
                 navigate('/cpc/dashboard');
+            } else if (siteId === '62a15f4ae4129b518b133129') {
+                navigate('/main/dashboard');
             } else {
                 navigate('/lrc/dashboard');
             }

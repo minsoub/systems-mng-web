@@ -717,7 +717,7 @@ const ProjectsPage = () => {
 
                 <ContentLine>
                     <ScrollX>
-                        <Table fixedheader={false} style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                        <Table style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                             <TableHead>
                                 <TableRow>
                                     <StyledTableCell style={{ width: '7%' }} align="center" rowSpan={2}>

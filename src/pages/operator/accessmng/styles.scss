@@ -15,7 +15,11 @@
 .accessReg{
     .bottom--blank{
         display:block;
+        
         >div{
+            &:nth-child(1){
+                margin-right:20px;
+            }
             width: 45%;
             display: inline-block;
             min-width: 300px;
@@ -25,6 +29,8 @@
             }
         }
         &:nth-child(2){
+            .css-1xdpdky-MuiStack-root{min-width:auto;}
+            
             >div{
                 &:nth-child(2){
                     &:nth-child(2){

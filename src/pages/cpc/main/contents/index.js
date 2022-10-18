@@ -86,11 +86,11 @@ const MainContents = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
-                <HeaderTitle titleNm="메인 관리" menuStep01="사이트 운영" menuStep02="메인 관리" menuStep03="콘텐츠 노출 관리" />
+                <HeaderTitle titleNm="메인 관리" menuStep01="사이트 운영" menuStep02="메인 관리" menuStep03="컨텐츠 노출 관리" />
 
                 <TabContext value={tabIndex}>
                     <TopInputLayout sx={{ borderBottom: 1, borderColor: 'divider' }} className="pagetab">
-                        <TabList onChange={handleChange} aria-label="main contents tabs">
+                        <TabList onChange={handleChange} aria-label="main contents tabs" sx={{ minHeight: '32px' }}>
                             <Tab label="가상자산 동향" value="1" />
                             {/* <Tab label="블록체인 뉴스" value="2" /> */}
                             <Tab label="가상자산의 기초" value="3" />
@@ -98,7 +98,7 @@ const MainContents = () => {
                         </TabList>
                     </TopInputLayout>
                     {/* 가상자산 동향 */}
-                    <TabPanel value="1" className={cx('mainMng')}>
+                    <TabPanel value="1" className={cx('mainMng')} sx={{ p: '20px 0' }}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
@@ -135,7 +135,7 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <ButtonLayout buttonName="layout__blank--top">
+                        <ButtonLayout style={{ marginTop: '20px' }}>
                             <Button variant="contained" onClick={() => handleClickOpen('CPC_TREND')}>
                                 게시글 선택
                             </Button>
@@ -180,7 +180,7 @@ const MainContents = () => {
                         </ButtonLayout>
                     </TabPanel> */}
                     {/* 가상자산의 기초 */}
-                    <TabPanel value="3" className={cx('mainMng')}>
+                    <TabPanel value="3" className={cx('mainMng')} sx={{ p: '20px 0' }}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
@@ -212,14 +212,14 @@ const MainContents = () => {
                             </Table>
                         </TableContainer>
 
-                        <ButtonLayout buttonName="layout__blank--top">
+                        <ButtonLayout style={{ marginTop: '20px' }}>
                             <Button variant="contained" onClick={() => handleClickOpen('CPC_DIGITAL_ASSET')}>
                                 게시글 선택
                             </Button>
                         </ButtonLayout>
                     </TabPanel>
                     {/* 인사이트 칼럼 */}
-                    <TabPanel value="4" className={cx('mainMng')}>
+                    <TabPanel value="4" className={cx('mainMng')} sx={{ p: '20px 0' }}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
@@ -250,7 +250,7 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <ButtonLayout buttonName={cx('layout__blank--top')}>
+                        <ButtonLayout style={{ marginTop: '20px' }}>
                             <Button variant="contained" onClick={() => handleClickOpen('CPC_INSIGHT_COLUMN')}>
                                 게시글 선택
                             </Button>

@@ -11,6 +11,9 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     WebkitFontSmoothing: 'auto',
     letterSpacing: 'normal',
 
+    '& .MuiDataGrid-columnHeaders': {
+        backgroundColor: '#ddd'
+    },
     '& .MuiDataGrid-columnsContainer': {
         backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d'
     },

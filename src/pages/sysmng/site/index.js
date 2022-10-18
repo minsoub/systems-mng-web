@@ -224,7 +224,7 @@ const SiteManagementPage = () => {
                                 등록
                             </Button>
 
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                            <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={listClick}>
                                 리스트
                             </Button>
                         </ButtonLayout>

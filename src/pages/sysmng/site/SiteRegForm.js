@@ -348,7 +348,7 @@ const SiteRegForm = () => {
 
                                 <MainCard sx={{ mt: 2 }}>
                                     <FlexBox classNames="siteRegForm__blank">
-                                        <DropInput title="사이트 ID">
+                                        <DropInput title="사이트 ID" titleWidth={70}>
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
@@ -362,7 +362,7 @@ const SiteRegForm = () => {
                                                 fullWidth
                                             />
                                         </DropInput>
-                                        <DropInput title="사이트명">
+                                        <DropInput title="사이트명" titleWidth={70} style={{ marginLeft: '2rem' }}>
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
@@ -405,11 +405,12 @@ const SiteRegForm = () => {
                                             addAll={true}
                                             changeDate={changeDate}
                                             resetPeriod={resetPeriod}
+                                            titleWidth={70}
                                         />
                                     </FlexBox>
 
                                     <FlexBox classNames="siteRegForm__blank">
-                                        <DropInput title="비고">
+                                        <DropInput title="비고" titleWidth={70}>
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
@@ -423,7 +424,7 @@ const SiteRegForm = () => {
                                             />
                                         </DropInput>
                                         <div className="inputLayout">
-                                            <DropInput title="담당자 ID">
+                                            <DropInput title="담당자 ID" titleWidth={70} style={{ marginLeft: '2rem' }}>
                                                 <TextField
                                                     id="filled-hidden-label-small"
                                                     type="text"
@@ -440,7 +441,7 @@ const SiteRegForm = () => {
                                                 disableElevation
                                                 size="medium"
                                                 type="button"
-                                                variant="contained"
+                                                variant="outlined_d"
                                                 color="secondary"
                                                 onClick={accountSearch}
                                             >
@@ -450,7 +451,7 @@ const SiteRegForm = () => {
                                     </FlexBox>
 
                                     <FlexBox>
-                                        <DropInput title="전화번호">
+                                        <DropInput title="전화번호" titleWidth={70}>
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
@@ -463,7 +464,7 @@ const SiteRegForm = () => {
                                             />
                                         </DropInput>
 
-                                        <DropInput title="이메일 주소">
+                                        <DropInput title="이메일 주소" titleWidth={70} style={{ marginLeft: '2rem' }}>
                                             <TextField
                                                 id="filled-hidden-label-small"
                                                 type="text"
@@ -494,7 +495,7 @@ const SiteRegForm = () => {
                                         disabled={isSubmitting}
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         color="secondary"
                                         onClick={newClick}
                                     >
@@ -505,7 +506,7 @@ const SiteRegForm = () => {
                                         disabled={isDeleted}
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         color="secondary"
                                         onClick={deleteClick}
                                     >
@@ -516,7 +517,7 @@ const SiteRegForm = () => {
                                         disabled={isSubmitting}
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         color="secondary"
                                         onClick={listClick}
                                     >

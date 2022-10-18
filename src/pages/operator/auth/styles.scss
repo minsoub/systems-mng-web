@@ -15,7 +15,25 @@
             }
         }
         .buttonLayout {
-            button{min-width: 69px;}
+            button{min-width: 71px;}
         }
     }   
+}
+
+.siteauthReg{
+    .css-10dsau7-MuiGrid-root{
+        >div{
+            margin-right:20px;
+            .css-131oivd-MuiStack-root{min-width:30px;}
+            .css-rpmzzj-MuiFormControl-root{min-width:200px;}
+        }
+    }
+    .css-116imn1-MuiGrid-root{
+        >.css-1sthlmf-MuiGrid-root{
+            &:nth-child(2){
+                margin-top:38px;
+            }
+        }
+    }
+    
 }

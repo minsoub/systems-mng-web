@@ -614,7 +614,7 @@ const AccountRegForm = () => {
 
                     <MainCard border={true}>
                         <div className="account--layout">
-                            <DropInput title="이름">
+                            <DropInput title="이름" titleWidth={70} style={{ marginRight: '2rem' }}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -628,7 +628,7 @@ const AccountRegForm = () => {
                                 />
                             </DropInput>
 
-                            <DropInput title="이메일 주소">
+                            <DropInput title="이메일 주소" titleWidth={70}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -647,7 +647,7 @@ const AccountRegForm = () => {
                                 size="medium"
                                 type="button"
                                 disabled={isUpdate}
-                                variant="contained"
+                                variant="outlined_d"
                                 color="secondary"
                                 onClick={emailDuplicateCheck}
                             >
@@ -656,7 +656,7 @@ const AccountRegForm = () => {
                         </div>
 
                         <div className="account--layout">
-                            <DropInput title="비밀번호">
+                            <DropInput title="비밀번호" titleWidth={70} style={{ marginRight: '2rem' }}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="password"
@@ -683,9 +683,10 @@ const AccountRegForm = () => {
                                     addAll={true}
                                     changeDate={changeDate}
                                     resetPeriod={resetPeriod}
+                                    titleWidth={70}
                                 />
                             </Grid>
-                            <DropInput title="계정상태">
+                            <DropInput title="계정상태" titleWidth={70} style={{ marginLeft: '2rem' }}>
                                 <Select name="status" label="계정상태" value={status} onChange={statusChanged}>
                                     <MenuItem value="NORMAL">정상</MenuItem>
                                     <MenuItem value="INIT_OTP_REQUEST">초기화요청(OTP)</MenuItem>
@@ -701,13 +702,13 @@ const AccountRegForm = () => {
                         </div>
 
                         <div className="inputLayout">
-                            <DropInput title="전송여부">
+                            <DropInput title="전송여부" titleWidth={70}>
                                 <FormControlLabel
                                     control={<Checkbox name="send_chk" value={send_chk} onBlur={handleBlur} onChange={handleChange} />}
                                     label="체크시 패스워드 초기화 메일 전송"
                                 />
                             </DropInput>
-                            <DropInput title="로그인 실패">
+                            <DropInput title="로그인 실패" titleWidth={70}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -750,7 +751,7 @@ const AccountRegForm = () => {
                                 disabled={isSubmitting}
                                 size="medium"
                                 type="button"
-                                variant="contained"
+                                variant="outlined_d"
                                 color="secondary"
                                 onClick={newClick}
                             >
@@ -761,7 +762,7 @@ const AccountRegForm = () => {
                                 disabled={isSubmitting}
                                 size="medium"
                                 type="button"
-                                variant="contained"
+                                variant="outlined_d"
                                 color="secondary"
                                 onClick={listClick}
                             >
@@ -780,7 +781,7 @@ const AccountRegForm = () => {
                                         disableElevation
                                         size="medium"
                                         type="button"
-                                        variant="contained"
+                                        variant="outlined_d"
                                         color="secondary"
                                         onClick={minusRegister}
                                     >
@@ -822,7 +823,7 @@ const AccountRegForm = () => {
                     <MainCard>
                         <TopInputLayout>
                             <InputLayout>
-                                <DropInput title="사이트명">
+                                <DropInput title="사이트명" titleWidth={70} style={{ marginRight: '2rem' }}>
                                     <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                         <MenuItem value="">
                                             <em>Choose a Site Type</em>
@@ -835,7 +836,7 @@ const AccountRegForm = () => {
                                     </Select>
                                 </DropInput>
 
-                                <DropInput title="운영권한">
+                                <DropInput title="운영권한" titleWidth={70}>
                                     <Select name="role_id" label="운영권한" value={role_id} onChange={roleChanged}>
                                         <MenuItem value="">
                                             <em>Choose a Role Type</em>

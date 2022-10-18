@@ -190,7 +190,7 @@ const Post = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
-                <HeaderTitle titleNm="블록체인 뉴스" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="블록체인 뉴스" />
+                <HeaderTitle titleNm="블록체인 뉴스" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="블록체인 뉴스" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>

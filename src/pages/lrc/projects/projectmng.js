@@ -1250,7 +1250,7 @@ const ProjectMng = (props) => {
                         </thead>
                         <tbody>
                             {marketingList.map((item, index) => (
-                                <tr>
+                                <tr key={index}>
                                     <td>
                                         <TextField
                                             id="outlined-multiline-static"
@@ -1312,6 +1312,13 @@ const ProjectMng = (props) => {
                 </TopInputLayout>
                 <ContentLine container className="common__grid--reviewRowTable">
                     <table className="projectmng__evaluation">
+                        <colgroup>
+                            <col />
+                            <col />
+                            <col />
+                            <col width="30%" />
+                            <col width="100" />
+                        </colgroup>
                         <thead>
                             <tr>
                                 <th className="tg-0lax">평가 기관</th>
@@ -1324,7 +1331,7 @@ const ProjectMng = (props) => {
                         </thead>
                         <tbody>
                             {reviewList.map((item, index) => (
-                                <tr>
+                                <tr key={index}>
                                     <td className="tg-0lax">
                                         <TextField
                                             id="outlined-multiline-static"
@@ -1352,11 +1359,13 @@ const ProjectMng = (props) => {
                                             onChange={(e) => handleReferenceChange(e, index)}
                                         />
                                     </td>
-                                    <td className="tg-0lax">
+                                    <td
+                                        className="tg-0lax"
+                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 2rem' }}
+                                    >
                                         <TextField
                                             type="file"
                                             size="medium"
-                                            fullWidth
                                             onChange={(e) => fileHandleChange(e, index)}
                                             inputProps={{
                                                 accept:

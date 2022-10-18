@@ -420,12 +420,7 @@ const ProjectCommunity = (props) => {
                 {fileList.length > 0 ? (
                     <div className="project__info--box">
                         <div className="project__info--download">
-                            <Table
-                                fixedheader={false}
-                                style={{ width: '100%', tableLayout: 'auto' }}
-                                stickyHeader
-                                aria-label="simple table"
-                            >
+                            <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                                 <TableBody>
                                     {fileList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
                                         <TableRow key={index} hover>
@@ -438,16 +433,18 @@ const ProjectCommunity = (props) => {
                                             </TableCell>
                                             <TableCell align="right" component="td" scope="row">
                                                 <Tooltip title={item.file_name}>
-                                                    <Button
-                                                        disabled={item.file_status === 'CLEAN' ? false : true}
-                                                        variant="outlined"
-                                                        startIcon={<AttachFileOutlinedIcon />}
-                                                        size="small"
-                                                        sx={{ minWidth: '120px' }}
-                                                        onClick={() => FileDownload(item.id, item.file_name)}
-                                                    >
-                                                        파일 다운로드
-                                                    </Button>
+                                                    <span>
+                                                        <Button
+                                                            disabled={item.file_status === 'CLEAN' ? false : true}
+                                                            variant="outlined"
+                                                            startIcon={<AttachFileOutlinedIcon />}
+                                                            size="small"
+                                                            sx={{ minWidth: '120px' }}
+                                                            onClick={() => FileDownload(item.id, item.file_name)}
+                                                        >
+                                                            파일 다운로드
+                                                        </Button>
+                                                    </span>
                                                 </Tooltip>
                                             </TableCell>
                                         </TableRow>
@@ -460,7 +457,7 @@ const ProjectCommunity = (props) => {
                                 count={Number(Math.ceil(fileList.length / rowsPerPage))}
                                 shape="rounded"
                                 color="primary"
-                                rows_per_page={rowsPerPage}
+                                rowPerPage={rowsPerPage}
                                 boundary_count={2}
                                 on_change={handleChangePage}
                             />

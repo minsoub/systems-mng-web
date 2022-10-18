@@ -289,7 +289,7 @@ const LineMngPage = () => {
                     />
                 </ContentLine>
 
-                <MainCard sx={{ mt: 2 }}>
+                <MainCard sx={{ mt: 2.5 }}>
                     <InputLayout>
                         <DropInput title="계열 타입">
                             <Select name="type" label="계얄타입" value={type} onChange={handleChange}>
@@ -297,11 +297,12 @@ const LineMngPage = () => {
                                 <MenuItem value="NETWORK">네트워크계열</MenuItem>
                             </Select>
                         </DropInput>
+
                         <DropInput title="계열 명칭">
                             <TextField
                                 id="filled-hidden-label-small"
                                 type="medium"
-                                size="small"
+                                size="medium"
                                 value={name}
                                 name="name"
                                 onBlur={handleBlur}

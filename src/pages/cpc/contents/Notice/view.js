@@ -276,7 +276,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 콘텐츠를 체크하세요.');
+            alert('삭제 할 컨텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);
@@ -302,7 +302,7 @@ const View = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
-                <HeaderTitle titleNm="공지사항" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="공지사항" />
+                <HeaderTitle titleNm="공지사항" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="공지사항" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate
@@ -320,7 +320,7 @@ const View = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <ButtonLayout buttonName="bottom--blank__small">
+                <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '40px' }}>
                     <Button disableElevation size="medium" type="submit" color="secondary" variant="outlined_d" onClick={clearClick}>
                         초기화
                     </Button>
@@ -341,7 +341,7 @@ const View = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </ContentLine>
-                <ButtonLayout buttonName="layout__blank--top">
+                <ButtonLayout style={{ marginTop: '20px' }}>
                     <Button disableElevation size="medium" type="submit" color="secondary" variant="outlined_d" onClick={deleteClick}>
                         선택 삭제
                     </Button>

@@ -207,8 +207,8 @@ const SiteMyPrivacy = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} />
                 </MainCard>
 
-                <ButtonLayout buttonName="bottom--blank__small">
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '40px' }}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={searchClick}>
                         조회
                     </Button>
                 </ButtonLayout>
