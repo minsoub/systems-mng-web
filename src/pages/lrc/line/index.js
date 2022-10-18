@@ -297,11 +297,12 @@ const LineMngPage = () => {
                                 <MenuItem value="NETWORK">네트워크계열</MenuItem>
                             </Select>
                         </DropInput>
+
                         <DropInput title="계열 명칭">
                             <TextField
                                 id="filled-hidden-label-small"
                                 type="medium"
-                                size="small"
+                                size="medium"
                                 value={name}
                                 name="name"
                                 onBlur={handleBlur}
