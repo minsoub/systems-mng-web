@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FormControl, FormControlLabel, RadioGroup, Radio, Stack, TextField } from '@mui/material';
 import cx from 'classnames';
 import './styles.scss';
-import StackLabel from '../../Common/StackLabel';
+import StackLabel from 'components/Common/StackLabel';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';

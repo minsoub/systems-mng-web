@@ -214,7 +214,7 @@ const Post = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsDamageReg">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="피해사례" />
+                <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="피해사례" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>

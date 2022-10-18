@@ -932,7 +932,7 @@ const AuthMngRegForm = () => {
                         </MainCard>
                     </Grid>
 
-                    {/* 콘텐츠 영역 */}
+                    {/* 컨텐츠 영역 */}
                     <Grid item xs={8} className="blank--layout">
                         <div className="layout--align">
                             <Item>Role : {role_name}</Item>

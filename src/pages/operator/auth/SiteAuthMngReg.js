@@ -798,7 +798,7 @@ const SiteAuthMngRegForm = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="siteauthReg">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="권한 맵핑 등록" menuStep01="사이트 관리" menuStep02="권한 관리" menuStep03="권한 맵핑 등록" />
+                <HeaderTitle titleNm="권한 맵핑 관리" menuStep01="사이트 관리" menuStep02="권한 관리" menuStep03="권한 맵핑 관리" />
 
                 <MainCard>
                     <TopInputLayout>
@@ -865,7 +865,7 @@ const SiteAuthMngRegForm = () => {
                         </MainCard>
                     </Grid>
 
-                    {/* 콘텐츠 영역 */}
+                    {/* 컨텐츠 영역 */}
                     <Grid item xs={8} className="blank--layout">
                         <Grid container spacing={0} sx={{ mt: 1 }}>
                             <div className="layout--align">

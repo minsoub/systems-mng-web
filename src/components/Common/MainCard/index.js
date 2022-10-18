@@ -23,14 +23,14 @@ const cx = classNames.bind(styles);
             }}
             className={cx('content', addContClass)}
         >
-            {/* 콘텐츠 제목 */}
+            {/* 컨텐츠 제목 */}
             {title && (
                 <Typography variant="h4" className={cx('contentTilte')}>
                     {title}
                 </Typography>
             )}
 
-            {/* 콘텐츠 내용물 */}
+            {/* 컨텐츠 내용물 */}
             {content && <div className={cx('cardCon')}>{children}</div>}
             {!content && children}
         </Card>
