@@ -35,7 +35,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import { forwardRef, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
@@ -115,6 +115,7 @@ const NavSub = ({ item, level }) => {
 
     const [selected, setSelected] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
+    const location = useLocation();
 
     let itemTarget = '_self';
     if (item.target) {
@@ -153,9 +154,18 @@ const NavSub = ({ item, level }) => {
             .findIndex((id) => id === item.id);
         if (currentIndex > -1) {
             dispatch(activeItem({ openItem: [item.id] }));
+            if (item.child_menu_resources.length > 0) {
+                setOpen(true);
+            }
         }
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        //console.log('sub', location.pathname, item);
+        // eslint-disable-next-line
+    }, [location]);
+
     const textColor = 'text.primary';
     const iconSelectedColor = 'primary.main';
 
