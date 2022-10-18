@@ -289,7 +289,7 @@ const LineMngPage = () => {
                     />
                 </ContentLine>
 
-                <MainCard sx={{ mt: 2 }}>
+                <MainCard sx={{ mt: 2.5 }}>
                     <InputLayout>
                         <DropInput title="계열 타입">
                             <Select name="type" label="계얄타입" value={type} onChange={handleChange}>

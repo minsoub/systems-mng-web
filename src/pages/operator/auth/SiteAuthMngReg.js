@@ -853,7 +853,7 @@ const SiteAuthMngRegForm = () => {
 
                 <Grid container xs={12}>
                     <Grid item xs={4} className="treeArea">
-                        <MainCard sx={{ mt: 2 }} content={false}>
+                        <MainCard content={false} sx={{ height: '100%' }}>
                             <TreeView
                                 aria-label="controlled"
                                 defaultCollapseIcon={<ExpandMoreIcon />}

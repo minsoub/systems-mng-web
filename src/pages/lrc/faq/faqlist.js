@@ -342,7 +342,7 @@ const FaqContent = (props) => {
                 />
             </ContentLine>
 
-            <ButtonLayout style={{ marginTop: '1rem' }}>
+            <ButtonLayout style={{ marginTop: '1.25rem' }}>
                 <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={orderClick}>
                     노출 순서 저장
                 </Button>
