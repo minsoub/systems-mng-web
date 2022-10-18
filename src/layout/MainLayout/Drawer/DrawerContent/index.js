@@ -12,7 +12,7 @@ import { activeSite, activeRole } from 'store/reducers/auth';
 // ==============================|| DRAWER CONTENT ||============================== //
 
 const DrawerContent = ({ navigation, open }) => {
-    const { siteId } = useSelector((state) => state.auth);
+    const { siteId, beforeSiteId } = useSelector((state) => state.auth);
     //console.log(`site change => ${siteId}`);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -84,6 +84,12 @@ const DrawerContent = ({ navigation, open }) => {
         }
     }, [responseData]);
     // 입력 박스 입력 시 호출
+    useEffect(() => {
+        if (!beforeSiteId) return;
+        console.log('beforeSiteId--------------', beforeSiteId);
+        //setMySiteId(beforeSiteId);
+        changesiteType(beforeSiteId);
+    }, [beforeSiteId]);
     const handleChange = (e) => {
         sessionStorage.setItem('beforeSiteID', mySiteId);
         // console.log(authData, mySiteList, mySiteId, e.target.value);
@@ -129,7 +135,7 @@ const DrawerContent = ({ navigation, open }) => {
             {open && (
                 <Grid sx={{ position: 'fixed', width: '259px', top: '58px', left: 0, bgcolor: '#fff', zIndex: '1000', height: 35 }}>
                     <FormControl sx={{ ml: 2.5, mb: 2.5, width: 220, maxHeight: 35 }} size="small">
-                        <Select name="mySiteId" label="사이트명" size="small" value={mySiteId} onChange={handleChange}>
+                        <Select name="mySiteId" label="사이트명" size="small" value={mySiteId} onChange={handleChange} id="chooseSiteType">
                             <MenuItem value="">
                                 <em>Choose a Site Type</em>
                             </MenuItem>

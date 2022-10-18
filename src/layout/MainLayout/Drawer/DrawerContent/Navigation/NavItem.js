@@ -86,7 +86,7 @@ const NavItem = ({ item, level }) => {
     }
 
     const itemHandler = (id) => {
-        console.log('메뉴 클릭');
+        // console.log('메뉴 클릭');
         dispatch(activeItem({ openItem: [id] }));
     };
     //console.log('item.id', item.id, item.name);
@@ -97,21 +97,21 @@ const NavItem = ({ item, level }) => {
 
     // active menu item on page load
     useEffect(() => {
-        const currentIndex = document.location.pathname
-            .toString()
-            .split('/')
-            .findIndex((id) => id === item.id);
-        if (currentIndex > -1) {
-            dispatch(activeItem({ openItem: [item.id] }));
-        }
+        // const currentIndex = document.location.pathname
+        //     .toString()
+        //     .split('/')
+        //     .findIndex((id) => id === item.id);
+        // if (currentIndex > -1) {
+        //     dispatch(activeItem({ openItem: [item.id] }));
+        // }
         // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
         // console.log('item', location.pathname, item.url);
-        // if (location.pathname === item.url) {
-        //     dispatch(activeItem({ openItem: [item.id] }));
-        // }
+        if (location.pathname === item.url) {
+            dispatch(activeItem({ openItem: [item.id] }));
+        }
         // eslint-disable-next-line
     }, [location]);
 

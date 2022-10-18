@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axiosInstanceAuth from './axiosAuth';
-import { activeToken, activeRefreshToken } from 'store/reducers/auth';
+import { activeToken, activeRefreshToken, activeBeforeSite } from 'store/reducers/auth';
 import { dispatch } from '../store';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,7 +15,7 @@ const useAxios = () => {
     const navigate = useNavigate();
     // Refresh 토큰용
     const dispatch = useDispatch();
-    const { accessToken, refreshToken, activeBeforeSite } = useSelector((state) => state.auth);
+    const { accessToken, refreshToken, beforeSiteId } = useSelector((state) => state.auth);
     const refRequestInfo = useRef([]); // transaction 백업
     const refFailCount = useRef(0); // 인증실패 횟수
     const refRefreshChecker = useRef(''); // 최초 토큰갱신 요청 확인용 키
@@ -182,9 +182,10 @@ const useAxios = () => {
                 return;
             } else if (err.response && err.response.status && err.response.status === 403) {
                 console.log('Authorize Error !!!');
-                //console.log(authData);
                 alert('권한이 없습니다.');
-                navigate(-1);
+                const getBeforeSiteID = sessionStorage.getItem('beforeSiteID');
+                dispatch(activeBeforeSite({ beforeSiteId: getBeforeSiteID }));
+                //navigate(-1);
                 return;
             }
             if (err.response) setError(err.response.data);

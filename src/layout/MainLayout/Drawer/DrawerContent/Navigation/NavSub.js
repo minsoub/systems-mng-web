@@ -163,12 +163,12 @@ const NavSub = ({ item, level }) => {
 
     useEffect(() => {
         // console.log('sub', location.pathname, item);
-        // item.child_menu_resources.map((child) => {
-        //     if (location.pathname === child.url) {
-        //         //dispatch(activeItem({ openItem: [item.id] }));
-        //         setOpen(true);
-        //     }
-        // });
+        item.child_menu_resources.map((child) => {
+            if (location.pathname === child.url) {
+                //dispatch(activeItem({ openItem: [item.id] }));
+                setOpen(true);
+            }
+        });
         // eslint-disable-next-line
     }, [location]);
 
