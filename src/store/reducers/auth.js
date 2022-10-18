@@ -22,6 +22,7 @@ export const setAuthSite = (site) => ({
 // 데이터 정의
 const initialState = {
     siteId: '',
+    beforeSiteId: '',
     roleId: '',
     email: '',
     name: '',
@@ -64,7 +65,9 @@ const auth = createSlice({
         activeSite(state, action) {
             state.siteId = action.payload.siteId;
         },
-
+        activeBeforeSite(state, action) {
+            state.beforeSiteId = action.payload.beforeSiteId;
+        },
         activeRole(state, action) {
             state.roleId = action.payload.roleId;
         },
@@ -97,6 +100,7 @@ export default auth.reducer;
 
 export const {
     activeSite,
+    activeBeforeSite,
     activeRole,
     activeEmail,
     activeName,

@@ -83,18 +83,22 @@ const DrawerContent = ({ navigation, open }) => {
             }
         }
     }, [responseData]);
-
     // 입력 박스 입력 시 호출
     const handleChange = (e) => {
+        sessionStorage.setItem('beforeSiteID', mySiteId);
+        // console.log(authData, mySiteList, mySiteId, e.target.value);
         if (!e.target.value) {
             return;
         }
-        setMySiteId(e.target.value);
+        changesiteType(e.target.value);
+    };
+    const changesiteType = (siteId) => {
+        setMySiteId(siteId);
         // 변경된 사이트를 통해서 다시 메뉴를 리로드해야 한다.
-        authData.siteId = e.target.value;
+        authData.siteId = siteId;
         // role define
         mySiteList.map((item, index) => {
-            if (item.site_id === e.target.value) {
+            if (item.site_id === siteId) {
                 authData.roleId = item.id; // Role ID
                 dispatch(activeRole({ roleId: item.id })); // Role ID
             }
@@ -102,14 +106,14 @@ const DrawerContent = ({ navigation, open }) => {
         localStorage.setItem('authenticated', JSON.stringify(authData)); // 토큰 재저장
         //console.log(authData);
         // menu reload
-        dispatch(activeSite({ siteId: e.target.value }));
+        dispatch(activeSite({ siteId: siteId }));
         if (authData.siteId === '62a15f4ae4129b518b133128') {
             // 투자보호
             navigate('/cpc/dashboard');
         } else {
             navigate('/lrc/dashboard');
         }
-    };
+    }
 
     return (
         <SimpleBar
