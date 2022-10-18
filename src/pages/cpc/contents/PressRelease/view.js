@@ -344,12 +344,12 @@ const View = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <ButtonLayout buttonName="bottom--blank__small">
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={clearClick}>
+                <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '40px' }}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={clearClick}>
                         초기화
                     </Button>
 
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={searchClick}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={searchClick}>
                         검색
                     </Button>
                 </ButtonLayout>
@@ -368,8 +368,8 @@ const View = () => {
                     />
                 </ContentLine>
 
-                <ButtonLayout>
-                    <Button disableElevation size="medium" type="submit" variant="contained" color="secondary" onClick={deleteClick}>
+                <ButtonLayout style={{ marginTop: '20px' }}>
+                    <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={deleteClick}>
                         선택 삭제
                     </Button>
                     <Button disableElevation size="medium" type="submit" variant="contained" onClick={addClick}>

@@ -135,7 +135,7 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <ButtonLayout buttonName="layout__blank--top">
+                        <ButtonLayout style={{ marginTop: '20px' }}>
                             <Button variant="contained" onClick={() => handleClickOpen('CPC_TREND')}>
                                 게시글 선택
                             </Button>
@@ -180,7 +180,7 @@ const MainContents = () => {
                         </ButtonLayout>
                     </TabPanel> */}
                     {/* 가상자산의 기초 */}
-                    <TabPanel value="3" className={cx('mainMng')}>
+                    <TabPanel value="3" className={cx('mainMng')} sx={{ p: '20px 0' }}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
@@ -212,14 +212,14 @@ const MainContents = () => {
                             </Table>
                         </TableContainer>
 
-                        <ButtonLayout buttonName="layout__blank--top">
+                        <ButtonLayout style={{ marginTop: '20px' }}>
                             <Button variant="contained" onClick={() => handleClickOpen('CPC_DIGITAL_ASSET')}>
                                 게시글 선택
                             </Button>
                         </ButtonLayout>
                     </TabPanel>
                     {/* 인사이트 칼럼 */}
-                    <TabPanel value="4" className={cx('mainMng')}>
+                    <TabPanel value="4" className={cx('mainMng')} sx={{ p: '20px 0' }}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
@@ -250,7 +250,7 @@ const MainContents = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <ButtonLayout buttonName={cx('layout__blank--top')}>
+                        <ButtonLayout style={{ marginTop: '20px' }}>
                             <Button variant="contained" onClick={() => handleClickOpen('CPC_INSIGHT_COLUMN')}>
                                 게시글 선택
                             </Button>

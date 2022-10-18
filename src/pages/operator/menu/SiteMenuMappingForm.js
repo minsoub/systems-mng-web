@@ -497,21 +497,21 @@ const SiteMenuMappingForm = () => {
 
                 {/* 컨텐츠 영역 */}
                 <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
-                    <Grid item xs={3.8}>
-                        <MainCard sx={{ mt: 2 }} content={false}>
+                    <Grid item xs={4} className="menu--submit">
+                        <MainCard sx={{ m: 0, p: 0, height: '100%' }} content={false}>
                             <TreeView
                                 aria-label="controlled"
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 780, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ p: 0, height: '100%', flexGrow: 1, overflowY: 'auto' }}
                                 onNodeToggle={handleToggle}
                             >
                                 {renderTreeItem(menudata)}
                             </TreeView>
                         </MainCard>
                     </Grid>
-                    <Grid item xs={8}>
+                    <Grid item xs={8} className="menu--right">
                         <div className="layout--align">
                             <Item>연결된 프로그램 목록</Item>
 

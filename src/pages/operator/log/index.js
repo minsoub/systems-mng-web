@@ -287,7 +287,7 @@ const SiteLogPage = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <ButtonLayout buttonName="bottom--blank__small">
+                <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '40px' }}>
                     <Button disableElevation size="medium" type="submit" variant="contained" onClick={searchClick}>
                         검색
                     </Button>

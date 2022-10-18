@@ -344,7 +344,7 @@ const View = () => {
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
-                <ButtonLayout buttonName="bottom--blank__small">
+                <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '40px' }}>
                     <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={clearClick}>
                         초기화
                     </Button>
@@ -365,7 +365,7 @@ const View = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </ContentLine>
-                <Grid className={cx('searchPointColor')}>
+                <Grid className={cx('searchPointColor')} sx={{ mt: '20px' }}>
                     <ButtonLayout buttonName="bottom--blank__small">
                         <Button disableElevation size="medium" type="submit" variant="outlined_d" onClick={deleteClick}>
                             선택 삭제

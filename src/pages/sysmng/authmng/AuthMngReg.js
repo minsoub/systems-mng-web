@@ -920,12 +920,12 @@ const AuthMngRegForm = () => {
                 </MainCard>
                 <Grid xs={12} container>
                     <Grid item xs={4}>
-                        <MainCard>
+                        <MainCard sx={{ mb: 0, p: 0, height: '100%' }}>
                             <TreeView
                                 aria-label="controlled"
                                 defaultCollapseIcon={<ExpandMoreIcon />}
                                 defaultExpandIcon={<ChevronRightIcon />}
-                                sx={{ height: 800, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ m: 0, height: '100%', flexGrow: 1, overflowY: 'auto' }}
                             >
                                 {renderTreeItem(menudata)}
                             </TreeView>

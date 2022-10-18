@@ -421,12 +421,12 @@ const SiteRoleMappingForm = () => {
                 </MainCard>
 
                 <Grid container alignItems="center" justifyContent="space-between" className="roleLayout">
-                    <Grid item md={3.8} sm={3.8} xs={12}>
-                        <ContentLine>
+                    <Grid item md={4} sm={4} xs={12} className="menu--submit">
+                        <ContentLine sx={{ height: '100%' }}>
                             <DefaultDataGrid
                                 columns={columns}
                                 rows={dataGridRows}
-                                height={844}
+                                height={856}
                                 handlePageChange={handlePage}
                                 handleGridClick={handleClick}
                                 handleGridDoubleClick={handleDoubleClick}
@@ -435,10 +435,12 @@ const SiteRoleMappingForm = () => {
                         </ContentLine>
                     </Grid>
 
-                    <Grid item md={8} sm={8} xs={12}>
-                        <Typography variant="h4" className="title">
-                            등록된 사용자
-                        </Typography>
+                    <Grid item md={8} sm={8} xs={12} className="menu--right">
+                        <div className="role--layout__search">
+                            <Typography variant="h4" className="title">
+                                등록된 사용자
+                            </Typography>
+                        </div>
 
                         <Stack spacing={5}>
                             <ContentLine>

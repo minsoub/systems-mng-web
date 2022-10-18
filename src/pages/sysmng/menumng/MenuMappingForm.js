@@ -501,15 +501,15 @@ const MenuMappingForm = () => {
 
                 {/* 컨텐츠 영역 */}
                 <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
-                    <Grid item xs={3}>
-                        <MainCard>
+                    <Grid item xs={4} className="menu--submit">
+                        <MainCard sx={{ height: '100%', mb: 0, p: 0 }}>
                             <TreeView
                                 aria-label="controlled"
                                 // defaultExpanded={expanded}
                                 defaultCollapseIcon={<MinusSquare />}
                                 defaultExpandIcon={<PlusSquare />}
                                 defaultEndIcon={<CloseSquare />}
-                                sx={{ height: 855, flexGrow: 1, overflowY: 'auto' }}
+                                sx={{ m: 0, flexGrow: 1, overflowY: 'auto' }}
                                 //expanded={expanded}
                                 //selected={selected}
                                 onNodeToggle={handleToggle}
@@ -519,8 +519,8 @@ const MenuMappingForm = () => {
                             </TreeView>
                         </MainCard>
                     </Grid>
-                    <Grid item xs={8.8}>
-                        <div className="layout--align">
+                    <Grid item xs={8} className="menu--right">
+                        <Grid container spacing={0} sx={{ mt: 1 }} className="layout--align">
                             <Item>연결된 프로그램 목록</Item>
 
                             <ButtonLayout>
@@ -535,10 +535,7 @@ const MenuMappingForm = () => {
                                     삭제
                                 </Button>
                             </ButtonLayout>
-                        </div>
-
-                        <Grid container spacing={0} sx={{ mt: 1 }}>
-                            <Grid item xs={8} sm={12}>
+                            <Grid item xs={8} sm={12} sx={{ mt: '8px' }}>
                                 <ContentLine>
                                     <CheckBoxDataGrid
                                         columns={regColumns}
@@ -552,7 +549,7 @@ const MenuMappingForm = () => {
                                 </ContentLine>
                             </Grid>
                         </Grid>
-                        <Grid container spacing={0} sx={{ mt: 2 }} className="layout--align">
+                        <Grid container spacing={0} sx={{ mt: 2.5 }} className="layout--align">
                             <Item>프로그램 목록</Item>
 
                             <div className="program--list">

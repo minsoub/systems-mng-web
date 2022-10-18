@@ -382,7 +382,7 @@ const Post = () => {
 
                 <TopInputLayout>
                     <InputLayout>
-                        <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={listClick}>
+                        <Button disableElevation size="small" type="submit" variant="outlined_d" color="secondary" onClick={listClick}>
                             목록
                         </Button>
                     </InputLayout>
