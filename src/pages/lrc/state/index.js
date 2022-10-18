@@ -360,12 +360,11 @@ const StatusRegForm = () => {
                         취소
                     </Button>
                 </ButtonLayout>
-                <Grid container xs={12}>
+                <Grid item>
                     <div align="left">
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    defaultChecked
                                     checked={is_use}
                                     name="is_use"
                                     value={is_use}
@@ -377,7 +376,7 @@ const StatusRegForm = () => {
                         />
                     </div>
                 </Grid>
-                <Grid container xs={12}>
+                <Grid container>
                     <Grid item xs={4}>
                         <MainCard addContClass="column2over">
                             <TreeView

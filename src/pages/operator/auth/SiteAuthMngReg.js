@@ -851,7 +851,7 @@ const SiteAuthMngRegForm = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <Grid container xs={12}>
+                <Grid container>
                     <Grid item xs={4} className="treeArea">
                         <MainCard content={false} sx={{ height: '100%' }}>
                             <TreeView

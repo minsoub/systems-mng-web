@@ -356,8 +356,8 @@ const View = () => {
                             <FormControlLabel value="" control={<Radio />} label="전체" />
                             {resBoardMaster &&
                                 resBoardMaster.data.data.is_use_category &&
-                                resBoardMaster.data.data.categories.map((category) => (
-                                    <FormControlLabel value={category} control={<Radio />} label={category} />
+                                resBoardMaster.data.data.categories.map((category, index) => (
+                                    <FormControlLabel key={index} value={category} control={<Radio />} label={category} />
                                 ))}
                         </RadioGroup>
                     </div>

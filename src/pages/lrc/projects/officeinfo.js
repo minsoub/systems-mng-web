@@ -10,6 +10,7 @@ import {
     Table,
     TableCell,
     TableHead,
+    TableBody,
     TableRow,
     TextField,
     Typography
@@ -505,23 +506,24 @@ const OfficeInfo = (props) => {
                                 </TableCell>
                             </TableRow>
                         </TableHead>
-
-                        {projecInfo && (
-                            <TableRow>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {projecInfo.business_name ? projecInfo.business_name : '-'}
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {projecInfo.network_name ? projecInfo.network_name : '-'}
-                                </TableCell>
-                                <TableCell style={{ width: '25%', lineBreak: 'anywhere' }} align="center" component="th" scope="row">
-                                    {projecInfo.whitepaper_link ? projecInfo.whitepaper_link : '-'}
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {projecInfo.create_date ? projecInfo.create_date : '-'}
-                                </TableCell>
-                            </TableRow>
-                        )}
+                        <TableBody>
+                            {projecInfo && (
+                                <TableRow>
+                                    <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                        {projecInfo.business_name ? projecInfo.business_name : '-'}
+                                    </TableCell>
+                                    <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                        {projecInfo.network_name ? projecInfo.network_name : '-'}
+                                    </TableCell>
+                                    <TableCell style={{ width: '25%', lineBreak: 'anywhere' }} align="center" component="td" scope="row">
+                                        {projecInfo.whitepaper_link ? projecInfo.whitepaper_link : '-'}
+                                    </TableCell>
+                                    <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                        {projecInfo.create_date ? projecInfo.create_date : '-'}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
                     </Table>
                     <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
@@ -531,19 +533,21 @@ const OfficeInfo = (props) => {
                                 </TableCell>
                             </TableRow>
                         </TableHead>
-                        {projecInfo && (
-                            <TableRow>
-                                <TableCell align="center" component="td" scope="row">
-                                    {projecInfo.contract_address ? projecInfo.contract_address : '-'}
-                                </TableCell>
-                            </TableRow>
-                        )}
+                        <TableBody>
+                            {projecInfo && (
+                                <TableRow>
+                                    <TableCell align="center" component="td" scope="row">
+                                        {projecInfo.contract_address ? projecInfo.contract_address : '-'}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
                     </Table>
                 </ContentLine>
             </Grid>
 
             <Grid container className="officeinfo__content--box">
-                <Grid c sx={{ width: '100%', p: '1rem 2rem', display: 'flex', justifyContent: 'space-between' }}>
+                <Grid sx={{ width: '100%', p: '1rem 2rem', display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="h4">담당자 정보</Typography>
                     {userList.length > 0 ? (
                         <ButtonLayout>
@@ -560,36 +564,38 @@ const OfficeInfo = (props) => {
                     <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell style={{ width: '25%' }} align="center">
+                                <TableCell style={{ width: '25%' }} align="center" component="th">
                                     이름
                                 </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center">
+                                <TableCell style={{ width: '25%' }} align="center" component="th">
                                     연락처
                                 </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center">
+                                <TableCell style={{ width: '25%' }} align="center" component="th">
                                     SNS ID
                                 </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center">
+                                <TableCell style={{ width: '25%' }} align="center" component="th">
                                     이메일주소
                                 </TableCell>
                             </TableRow>
                         </TableHead>
-                        {userList.map((item, index) => (
-                            <TableRow key={index}>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.user_name ? item.user_name : '_'}
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.phone ? item.phone : '-'}
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.sns_id ? item.sns_id : '-'}
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="th" scope="row">
-                                    {item.email ? item.email : item.user_email}
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                        <TableBody>
+                            {userList.map((item, index) => (
+                                <TableRow key={index}>
+                                    <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                        {item.user_name ? item.user_name : '_'}
+                                    </TableCell>
+                                    <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                        {item.phone ? item.phone : '-'}
+                                    </TableCell>
+                                    <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                        {item.sns_id ? item.sns_id : '-'}
+                                    </TableCell>
+                                    <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                        {item.email ? item.email : item.user_email}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
                     </Table>
                 </ContentLine>
             </Grid>
@@ -602,40 +608,48 @@ const OfficeInfo = (props) => {
                     <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">심볼</TableCell>
-                                <TableCell align="center">제안받은 수량</TableCell>
-                                <TableCell align="center">입금 완료된 수량</TableCell>
+                                <TableCell align="center" component="th">
+                                    심볼
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    제안받은 수량
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    입금 완료된 수량
+                                </TableCell>
                             </TableRow>
                         </TableHead>
-                        {marketingList.map((item, index) => (
-                            <TableRow key={index}>
-                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    {item.symbol ? item.symbol : '-'}
-                                </TableCell>
-                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    {item.minimum_quantity ? (
+                        <TableBody>
+                            {marketingList.map((item, index) => (
+                                <TableRow key={index}>
+                                    <TableCell style={{ width: '33%' }} align="center" component="td" scope="row">
+                                        {item.symbol ? item.symbol : '-'}
+                                    </TableCell>
+                                    <TableCell style={{ width: '33%' }} align="center" component="td" scope="row">
+                                        {item.minimum_quantity ? (
+                                            <NumberFormat
+                                                value={item.minimum_quantity}
+                                                allowNegative={true}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={''}
+                                            />
+                                        ) : (
+                                            '-'
+                                        )}
+                                    </TableCell>
+                                    <TableCell style={{ width: '33%' }} align="center" component="td" scope="row">
                                         <NumberFormat
-                                            value={item.minimum_quantity}
+                                            value={item.actual_quantity}
                                             allowNegative={true}
                                             displayType={'text'}
                                             thousandSeparator={true}
                                             prefix={''}
                                         />
-                                    ) : (
-                                        '-'
-                                    )}
-                                </TableCell>
-                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    <NumberFormat
-                                        value={item.actual_quantity}
-                                        allowNegative={true}
-                                        displayType={'text'}
-                                        thousandSeparator={true}
-                                        prefix={''}
-                                    />
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
                     </Table>
                 </ContentLine>
             </Grid>
@@ -659,45 +673,47 @@ const OfficeInfo = (props) => {
                                 </TableCell>
                             </TableRow>
                         </TableHead>
-                        {reviewList.length > 0 ? (
-                            reviewList.map((item, index) => (
-                                <TableRow key={index}>
+                        <TableBody>
+                            {reviewList.length > 0 ? (
+                                reviewList.map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                            {item.organization ? item.organization : '-'}
+                                        </TableCell>
+                                        <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                            {item.result ? item.result : '-'}
+                                        </TableCell>
+                                        <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                            {item.reference ? item.reference : '-'}
+                                        </TableCell>
+                                        <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
+                                            {item.file_key && item.file_status === 'CLEAN' && (
+                                                <a href="#" onClick={() => fileDownload(item.id, item.file_key, item.file_name)}>
+                                                    {item.file_name}
+                                                </a>
+                                            )}
+                                            {item.file_key && item.file_status === 'ING' && <div>{item.file_name} [검사중]</div>}
+                                            {item.file_key && item.file_status === 'INFECTED' && <div>{item.file_name} [감염파일]</div>}
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            ) : (
+                                <TableRow>
                                     <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
-                                        {item.organization ? item.organization : '-'}
+                                        -
                                     </TableCell>
                                     <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
-                                        {item.result ? item.result : '-'}
+                                        -
                                     </TableCell>
                                     <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
-                                        {item.reference ? item.reference : '-'}
+                                        -
                                     </TableCell>
                                     <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
-                                        {item.file_key && item.file_status === 'CLEAN' && (
-                                            <a href="#" onClick={() => fileDownload(item.id, item.file_key, item.file_name)}>
-                                                {item.file_name}
-                                            </a>
-                                        )}
-                                        {item.file_key && item.file_status === 'ING' && <div>{item.file_name} [검사중]</div>}
-                                        {item.file_key && item.file_status === 'INFECTED' && <div>{item.file_name} [감염파일]</div>}
+                                        -
                                     </TableCell>
                                 </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
-                                    -
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
-                                    -
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
-                                    -
-                                </TableCell>
-                                <TableCell style={{ width: '25%' }} align="center" component="td" scope="row">
-                                    -
-                                </TableCell>
-                            </TableRow>
-                        )}
+                            )}
+                        </TableBody>
                     </Table>
                 </ContentLine>
             </Grid>
@@ -709,179 +725,209 @@ const OfficeInfo = (props) => {
                     <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">1. 거래지원 신청서</TableCell>
-                                <TableCell align="center">2. [별첨-1]개인정보 요청서</TableCell>
-                                <TableCell align="center">3. 개인정보 수집 및 이용동의서</TableCell>
-                                <TableCell align="center">4. 프로젝트 백서</TableCell>
+                                <TableCell align="center" component="th">
+                                    1. 거래지원 신청서
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    2. [별첨-1]개인정보 요청서
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    3. 개인정보 수집 및 이용동의서
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    4. 프로젝트 백서
+                                </TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableRow>
-                            <TableCell component="th" scope="row" align="center">
-                                {file1.length > 0
-                                    ? file1
-                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                          .filter((doc, idx) => idx < 2)
-                                          .map((doc, index) => (
-                                              <p>
-                                                  {doc.item} {doc.item1}
-                                              </p>
-                                          ))
-                                    : '-'}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="center">
-                                {file11.length > 0
-                                    ? file11
-                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                          .filter((doc, idx) => idx < 2)
-                                          .map((doc, index) => (
-                                              <p key={index}>
-                                                  {doc.item} {doc.item1}
-                                              </p>
-                                          ))
-                                    : '-'}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="center">
-                                {file2.length > 0
-                                    ? file2
-                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                          .filter((doc, idx) => idx < 2)
-                                          .map((doc, index) => (
-                                              <p key={index}>
-                                                  {doc.item} {doc.item1}
-                                              </p>
-                                          ))
-                                    : '-'}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="center">
-                                {file3.length > 0
-                                    ? file3
-                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                          .filter((doc, idx) => idx < 2)
-                                          .map((doc, index) => (
-                                              <p key={index}>
-                                                  {doc.item} {doc.item1}
-                                              </p>
-                                          ))
-                                    : '-'}
-                            </TableCell>
-                        </TableRow>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell component="td" scope="row" align="center">
+                                    {file1.length > 0
+                                        ? file1
+                                              .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                              .filter((doc, idx) => idx < 2)
+                                              .map((doc, index) => (
+                                                  <p key={index}>
+                                                      {doc.item} {doc.item1}
+                                                  </p>
+                                              ))
+                                        : '-'}
+                                </TableCell>
+                                <TableCell component="td" scope="row" align="center">
+                                    {file11.length > 0
+                                        ? file11
+                                              .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                              .filter((doc, idx) => idx < 2)
+                                              .map((doc, index) => (
+                                                  <p key={index}>
+                                                      {doc.item} {doc.item1}
+                                                  </p>
+                                              ))
+                                        : '-'}
+                                </TableCell>
+                                <TableCell component="td" scope="row" align="center">
+                                    {file2.length > 0
+                                        ? file2
+                                              .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                              .filter((doc, idx) => idx < 2)
+                                              .map((doc, index) => (
+                                                  <p key={index}>
+                                                      {doc.item} {doc.item1}
+                                                  </p>
+                                              ))
+                                        : '-'}
+                                </TableCell>
+                                <TableCell component="td" scope="row" align="center">
+                                    {file3.length > 0
+                                        ? file3
+                                              .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                              .filter((doc, idx) => idx < 2)
+                                              .map((doc, index) => (
+                                                  <p key={index}>
+                                                      {doc.item} {doc.item1}
+                                                  </p>
+                                              ))
+                                        : '-'}
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">5. 기술 검토 보고서</TableCell>
-                                <TableCell align="center">6. 토큰 분배 계획서(Token matrix)</TableCell>
-                                <TableCell align="center">7. 법률 검토 의견서</TableCell>
-                                <TableCell align="center">8. 사업자 등록증</TableCell>
+                                <TableCell align="center" component="th">
+                                    5. 기술 검토 보고서
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    6. 토큰 분배 계획서(Token matrix)
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    7. 법률 검토 의견서
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    8. 사업자 등록증
+                                </TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableRow>
-                            <TableCell component="th" scope="row" align="center">
-                                {file4.length > 0
-                                    ? file4
-                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                          .filter((doc, idx) => idx < 2)
-                                          .map((doc, index) => (
-                                              <p key={index}>
-                                                  {doc.item} {doc.item1}
-                                              </p>
-                                          ))
-                                    : '-'}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="center">
-                                {file5.length > 0
-                                    ? file5
-                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                          .filter((doc, idx) => idx < 2)
-                                          .map((doc, index) => (
-                                              <p key={index}>
-                                                  {doc.item} {doc.item1}
-                                              </p>
-                                          ))
-                                    : '-'}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="center">
-                                {file6.length > 0
-                                    ? file6
-                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                          .filter((doc, idx) => idx < 2)
-                                          .map((doc, index) => (
-                                              <p key={index}>
-                                                  {doc.item} {doc.item1}
-                                              </p>
-                                          ))
-                                    : '-'}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="center">
-                                {file7.length > 0
-                                    ? file7
-                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                          .filter((doc, idx) => idx < 2)
-                                          .map((doc, index) => (
-                                              <p key={index}>
-                                                  {doc.item} {doc.item1}
-                                              </p>
-                                          ))
-                                    : '-'}
-                            </TableCell>
-                        </TableRow>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell component="td" scope="row" align="center">
+                                    {file4.length > 0
+                                        ? file4
+                                              .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                              .filter((doc, idx) => idx < 2)
+                                              .map((doc, index) => (
+                                                  <p key={index}>
+                                                      {doc.item} {doc.item1}
+                                                  </p>
+                                              ))
+                                        : '-'}
+                                </TableCell>
+                                <TableCell component="td" scope="row" align="center">
+                                    {file5.length > 0
+                                        ? file5
+                                              .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                              .filter((doc, idx) => idx < 2)
+                                              .map((doc, index) => (
+                                                  <p key={index}>
+                                                      {doc.item} {doc.item1}
+                                                  </p>
+                                              ))
+                                        : '-'}
+                                </TableCell>
+                                <TableCell component="td" scope="row" align="center">
+                                    {file6.length > 0
+                                        ? file6
+                                              .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                              .filter((doc, idx) => idx < 2)
+                                              .map((doc, index) => (
+                                                  <p key={index}>
+                                                      {doc.item} {doc.item1}
+                                                  </p>
+                                              ))
+                                        : '-'}
+                                </TableCell>
+                                <TableCell component="td" scope="row" align="center">
+                                    {file7.length > 0
+                                        ? file7
+                                              .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                              .filter((doc, idx) => idx < 2)
+                                              .map((doc, index) => (
+                                                  <p key={index}>
+                                                      {doc.item} {doc.item1}
+                                                  </p>
+                                              ))
+                                        : '-'}
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">9. 주주명부</TableCell>
-                                <TableCell align="center">10. 규제준수 확약서</TableCell>
-                                <TableCell align="center">11. 윤리서약서</TableCell>
-                                <TableCell align="center">12. 기타</TableCell>
+                                <TableCell align="center" component="th">
+                                    9. 주주명부
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    10. 규제준수 확약서
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    11. 윤리서약서
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    12. 기타
+                                </TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableRow>
-                            <TableCell component="th" scope="row" align="center">
-                                {file12.length > 0
-                                    ? file12
-                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                          .filter((doc, idx) => idx < 2)
-                                          .map((doc, index) => (
-                                              <p key={index}>
-                                                  {doc.item} {doc.item1}
-                                              </p>
-                                          ))
-                                    : '-'}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="center">
-                                {file9.length > 0
-                                    ? file9
-                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                          .filter((doc, idx) => idx < 2)
-                                          .map((doc, index) => (
-                                              <p key={index}>
-                                                  {doc.item} {doc.item1}
-                                              </p>
-                                          ))
-                                    : '-'}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="center">
-                                {file8.length > 0
-                                    ? file8
-                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                          .filter((doc, idx) => idx < 2)
-                                          .map((doc, index) => (
-                                              <p key={index}>
-                                                  {doc.item} {doc.item1}
-                                              </p>
-                                          ))
-                                    : '-'}
-                            </TableCell>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell component="td" scope="row" align="center">
+                                    {file12.length > 0
+                                        ? file12
+                                              .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                              .filter((doc, idx) => idx < 2)
+                                              .map((doc, index) => (
+                                                  <p key={index}>
+                                                      {doc.item} {doc.item1}
+                                                  </p>
+                                              ))
+                                        : '-'}
+                                </TableCell>
+                                <TableCell component="td" scope="row" align="center">
+                                    {file9.length > 0
+                                        ? file9
+                                              .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                              .filter((doc, idx) => idx < 2)
+                                              .map((doc, index) => (
+                                                  <p key={index}>
+                                                      {doc.item} {doc.item1}
+                                                  </p>
+                                              ))
+                                        : '-'}
+                                </TableCell>
+                                <TableCell component="td" scope="row" align="center">
+                                    {file8.length > 0
+                                        ? file8
+                                              .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                              .filter((doc, idx) => idx < 2)
+                                              .map((doc, index) => (
+                                                  <p key={index}>
+                                                      {doc.item} {doc.item1}
+                                                  </p>
+                                              ))
+                                        : '-'}
+                                </TableCell>
 
-                            <TableCell component="th" scope="row" align="center">
-                                {file10.length > 0
-                                    ? file10
-                                          .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
-                                          .filter((doc, idx) => idx < 2)
-                                          .map((doc, index) => (
-                                              <p key={index}>
-                                                  {doc.item} {doc.item1}
-                                              </p>
-                                          ))
-                                    : '-'}
-                            </TableCell>
-                        </TableRow>
+                                <TableCell component="td" scope="row" align="center">
+                                    {file10.length > 0
+                                        ? file10
+                                              .sort((a, b) => (a.d.create_date > b.d.create_date ? 1 : -1))
+                                              .filter((doc, idx) => idx < 2)
+                                              .map((doc, index) => (
+                                                  <p key={index}>
+                                                      {doc.item} {doc.item1}
+                                                  </p>
+                                              ))
+                                        : '-'}
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
                     </Table>
                 </ContentLine>
             </Grid>
@@ -894,44 +940,52 @@ const OfficeInfo = (props) => {
                     <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">마켓 정보</TableCell>
-                                <TableCell align="center">상장일</TableCell>
-                                <TableCell align="center">상장가</TableCell>
+                                <TableCell align="center" component="th">
+                                    마켓 정보
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    상장일
+                                </TableCell>
+                                <TableCell align="center" component="th">
+                                    상장가
+                                </TableCell>
                             </TableRow>
                         </TableHead>
-                        {icoList.length > 0 ? (
-                            icoList.map((item, index) => (
+                        <TableBody>
+                            {icoList.length > 0 ? (
+                                icoList.map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell style={{ width: '33%' }} align="center" component="td" scope="row">
+                                            {item.market_info ? item.market_info : '-'}
+                                        </TableCell>
+                                        <TableCell style={{ width: '33%' }} align="center" component="td" scope="row">
+                                            {item.ico_date ? item.ico_date : '-'}
+                                        </TableCell>
+                                        <TableCell style={{ width: '33%' }} align="center" component="td" scope="row">
+                                            <NumberFormat
+                                                value={item.price}
+                                                allowNegative={true}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={''}
+                                            />
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            ) : (
                                 <TableRow key={index}>
-                                    <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                        {item.market_info ? item.market_info : '-'}
+                                    <TableCell style={{ width: '33%' }} align="center" component="td" scope="row">
+                                        -
                                     </TableCell>
-                                    <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                        {item.ico_date ? item.ico_date : '-'}
+                                    <TableCell style={{ width: '33%' }} align="center" component="td" scope="row">
+                                        -
                                     </TableCell>
-                                    <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                        <NumberFormat
-                                            value={item.price}
-                                            allowNegative={true}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            prefix={''}
-                                        />
+                                    <TableCell style={{ width: '33%' }} align="center" component="td" scope="row">
+                                        -
                                     </TableCell>
                                 </TableRow>
-                            ))
-                        ) : (
-                            <TableRow key={index}>
-                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    -
-                                </TableCell>
-                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    -
-                                </TableCell>
-                                <TableCell style={{ width: '33%' }} align="center" component="th" scope="row">
-                                    -
-                                </TableCell>
-                            </TableRow>
-                        )}
+                            )}
+                        </TableBody>
                     </Table>
                 </ContentLine>
             </Grid>
