@@ -15,7 +15,7 @@ const useAxios = () => {
     const navigate = useNavigate();
     // Refresh 토큰용
     const dispatch = useDispatch();
-    const { accessToken, refreshToken } = useSelector((state) => state.auth);
+    const { accessToken, refreshToken, activeBeforeSite } = useSelector((state) => state.auth);
     const refRequestInfo = useRef([]); // transaction 백업
     const refFailCount = useRef(0); // 인증실패 횟수
     const refRefreshChecker = useRef(''); // 최초 토큰갱신 요청 확인용 키
@@ -182,7 +182,7 @@ const useAxios = () => {
                 return;
             } else if (err.response && err.response.status && err.response.status === 403) {
                 console.log('Authorize Error !!!');
-                console.log(authData);
+                //console.log(authData);
                 alert('권한이 없습니다.');
                 navigate(-1);
                 return;
