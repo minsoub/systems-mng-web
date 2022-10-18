@@ -108,7 +108,10 @@ const NavItem = ({ item, level }) => {
     }, []);
 
     useEffect(() => {
-        //console.log('item', location.pathname, item);
+        // console.log('item', location.pathname, item.url);
+        // if (location.pathname === item.url) {
+        //     dispatch(activeItem({ openItem: [item.id] }));
+        // }
         // eslint-disable-next-line
     }, [location]);
 

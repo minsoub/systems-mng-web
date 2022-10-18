@@ -148,21 +148,27 @@ const NavSub = ({ item, level }) => {
 
     // active menu item on page load
     useEffect(() => {
-        const currentIndex = document.location.pathname
-            .toString()
-            .split('/')
-            .findIndex((id) => id === item.id);
-        if (currentIndex > -1) {
-            dispatch(activeItem({ openItem: [item.id] }));
-            if (item.child_menu_resources.length > 0) {
-                setOpen(true);
-            }
-        }
+        // const currentIndex = document.location.pathname
+        //     .toString()
+        //     .split('/')
+        //     .findIndex((id) => id === item.id);
+        // if (currentIndex > -1) {
+        //     dispatch(activeItem({ openItem: [item.id] }));
+        //     if (item.child_menu_resources.length > 0) {
+        //         setOpen(true);
+        //     }
+        // }
         // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
-        //console.log('sub', location.pathname, item);
+        // console.log('sub', location.pathname, item);
+        // item.child_menu_resources.map((child) => {
+        //     if (location.pathname === child.url) {
+        //         //dispatch(activeItem({ openItem: [item.id] }));
+        //         setOpen(true);
+        //     }
+        // });
         // eslint-disable-next-line
     }, [location]);
 
