@@ -523,7 +523,7 @@ const OfficeInfo = (props) => {
                             </TableRow>
                         )}
                     </Table>
-                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                    <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center" component="th">
@@ -557,7 +557,7 @@ const OfficeInfo = (props) => {
                 </Grid>
 
                 <ContentLine className="officeinfo__table__width">
-                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                    <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell style={{ width: '25%' }} align="center">
@@ -599,7 +599,7 @@ const OfficeInfo = (props) => {
                 </Grid>
 
                 <ContentLine className="officeinfo__table__width">
-                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                    <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">심볼</TableCell>
@@ -645,7 +645,7 @@ const OfficeInfo = (props) => {
                     <Typography variant="h4">검토 평가</Typography>
                 </Grid>
                 <ContentLine className="officeinfo__table__width">
-                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                    <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell component="th" align="center">
@@ -706,7 +706,7 @@ const OfficeInfo = (props) => {
                     <Typography variant="h4">서류 제출 현황</Typography>
                 </Grid>
                 <ContentLine className="officeinfo__table__width">
-                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                    <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">1. 거래지원 신청서</TableCell>
@@ -891,7 +891,7 @@ const OfficeInfo = (props) => {
                     <Typography variant="h4">상장 정보</Typography>
                 </Grid>
                 <ContentLine className="officeinfo__table__width">
-                    <Table fixedheader={false} style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
+                    <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">마켓 정보</TableCell>

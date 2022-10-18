@@ -420,12 +420,7 @@ const ProjectCommunity = (props) => {
                 {fileList.length > 0 ? (
                     <div className="project__info--box">
                         <div className="project__info--download">
-                            <Table
-                                fixedheader={false}
-                                style={{ width: '100%', tableLayout: 'auto' }}
-                                stickyHeader
-                                aria-label="simple table"
-                            >
+                            <Table style={{ width: '100%', tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                                 <TableBody>
                                     {fileList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
                                         <TableRow key={index} hover>

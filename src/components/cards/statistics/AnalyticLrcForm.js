@@ -67,7 +67,7 @@ const AnalyticLrcForm = ({ color, id, title, count, child, percentage, isLoss, e
 
             <Grid container spacing={0} sx={{ mt: 1 }}></Grid>
             {child.map((item, index) => (
-                <div className="child">
+                <div className="child" key={index}>
                     <MainCard contentSX={{ mt: 1, p: 0.25 }}>
                         <Stack spacing={0.5}>
                             <Grid item container direction="row" alignItems="center" justifyContent="left">
