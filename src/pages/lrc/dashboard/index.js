@@ -109,7 +109,7 @@ const LrcDashboard = () => {
     }, [responseData]);
 
     return (
-        <Grid container rowSpacing={4} columnSpacing={2.75} className="lrcDashboard">
+        <Grid container rowSpacing={3} columnSpacing={2.75} className="lrcDashboard">
             <Grid item xs={12}>
                 <Grid sx={{ p: '1.625rem 1.5rem', bgcolor: '#fff' }}>
                     <Typography variant="h3" sx={{ fontWeight: '700' }}>거래지원 현황</Typography>
@@ -123,8 +123,10 @@ const LrcDashboard = () => {
 
             <Grid item xs={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
 
-            <Grid item xs={12}>
-                <Typography variant="h3">재단 통계</Typography>
+            <Grid item xs={12} sx={{ mt: 2 }}>
+                <Typography variant="h3" sx={{ background: '#fff', p: '1.625rem 1.5rem' }}>
+                    재단 통계
+                </Typography>
             </Grid>
             {dataLine
                 .sort((a, b) => (a.order > b.order ? 1 : -1))

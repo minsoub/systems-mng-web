@@ -45,7 +45,7 @@ const AnalyticLrcForm = ({ color, id, title, count, child, percentage, isLoss, e
 
     return (
         <div className={createClassName(id).className}>
-            <MainCard contentSX={{ p: 2.25 }} className={cx('gridCardColor')}>
+            <MainCard contentSX={{ pl: 2.25 }} className={cx('gridCardColor')}>
                 <Stack spacing={0.5} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Stack>
                         <Typography variant="h4" color="white" style={{ fontSize: '0.845rem', fontWeight: '500' }}>

@@ -6,7 +6,7 @@ import PieChart, { Legend, Export, Series, Label, Font, Connector, HoverStyle, T
 const AnalyticLrcCharts = ({ title, data }) => {
     return (
         <div>
-            <MainCard contentSX={{ p: 2.25 }}>
+            <MainCard contentSX={{ p: '2rem 2.25rem' }}>
                 <Stack spacing={0.5}>
                     <PieChart
                         id="pie"

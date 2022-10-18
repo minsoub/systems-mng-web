@@ -98,7 +98,7 @@ const MainContents = () => {
                         </TabList>
                     </TopInputLayout>
                     {/* 가상자산 동향 */}
-                    <TabPanel value="1" className={cx('mainMng')}>
+                    <TabPanel value="1" className={cx('mainMng')} sx={{ p: '20px 0' }}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>

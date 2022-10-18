@@ -278,7 +278,7 @@ const FaqCategoryPage = () => {
                         height={350}
                     />
                 </ContentLine>
-                <MainCard sx={{ mt: 2 }} content={false}>
+                <MainCard sx={{ mt: 2.5 }} content={false}>
                     <div className="bottom--item">
                         <DropInput title="언어 구분" className="bottom--blank" titleWidth={70}>
                             <Select name="language" label="언어선택" value={language} onChange={handleChange}>

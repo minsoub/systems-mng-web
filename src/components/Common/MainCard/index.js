@@ -18,7 +18,7 @@ const cx = classNames.bind(styles);
             sx={{
                 ...sx,
                 border: border && '1px solid #e6ebf1',
-                marginBottom: !title && '1.5rem',
+                marginBottom: !title && '20px',
                 bgcolor: bgcolor
             }}
             className={cx('content', addContClass)}
