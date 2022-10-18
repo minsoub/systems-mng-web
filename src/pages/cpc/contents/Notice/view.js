@@ -341,7 +341,7 @@ const View = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </ContentLine>
-                <ButtonLayout buttonName="layout__blank--top">
+                <ButtonLayout style={{ marginTop: '20px' }}>
                     <Button disableElevation size="medium" type="submit" color="secondary" variant="outlined_d" onClick={deleteClick}>
                         선택 삭제
                     </Button>

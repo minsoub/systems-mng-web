@@ -369,7 +369,7 @@ const View = () => {
                     />
                 </ContentLine>
 
-                <ButtonLayout buttonName="bottom--blank__small">
+                <ButtonLayout buttonName="bottom--blank__small" style={{ marginTop: '20px' }}>
                     <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={deleteClick}>
                         선택 삭제
                     </Button>

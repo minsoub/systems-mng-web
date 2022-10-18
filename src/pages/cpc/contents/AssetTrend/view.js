@@ -367,7 +367,7 @@ const View = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </ContentLine>
-                <Grid className={cx(' searchPointColor')}>
+                <Grid className={cx(' searchPointColor')} sx={{ mt: '20px' }}>
                     <ButtonLayout buttonName="bottom--blank__small">
                         <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={deleteClick}>
                             선택 삭제

@@ -18,7 +18,13 @@ const FaqContentsPage = () => {
                 <HeaderTitle titleNm="컨텐츠 관리" menuStep01="사이트 운영" menuStep02="FAQ 관리" menuStep03="컨텐츠 관리" />
 
                 <TopInputLayout className="pagetab">
-                    <Tabs value={value} onChange={tabChange} aria-label="basic tabs example" className="bottom--blank">
+                    <Tabs
+                        value={value}
+                        onChange={tabChange}
+                        aria-label="basic tabs example"
+                        className="bottom--blank"
+                        sx={{ minHeight: '32px' }}
+                    >
                         <Tab label="국문" />
                         <Tab label="영문" />
                     </Tabs>

@@ -129,9 +129,14 @@ const ProjectsDetailPage = () => {
         <Grid className="projectsDetail" container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
                 <HeaderTitle titleNm="거래지원 관리" menuStep01="사이트 운영" menuStep02="거래지원 관리" menuStep03="재단 정보" />
-
-                <TopInputLayout className="layout--button__bottom">
-                    <Tabs value={value} onChange={tabChange} aria-label="basic tabs example">
+                <TopInputLayout className="pagetab">
+                    <Tabs
+                        value={value}
+                        onChange={tabChange}
+                        className="bottom--blank"
+                        aria-label="basic tabs example"
+                        sx={{ minHeight: '32px' }}
+                    >
                         <Tab label="재단 정보" />
                         <Tab label="프로젝트 관리" />
                         <Tab label="제출 서류 관리" />

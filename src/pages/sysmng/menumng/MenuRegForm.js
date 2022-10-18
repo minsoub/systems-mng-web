@@ -575,7 +575,7 @@ const MenuRegForm = () => {
 
                 <Grid xs={12} container>
                     <Grid item xs={4}>
-                        <MainCard>
+                        <MainCard sx={{ height: '100%' }}>
                             <TreeView
                                 aria-label="controlled"
                                 defaultCollapseIcon={<MinusSquare />}
@@ -590,7 +590,7 @@ const MenuRegForm = () => {
                     </Grid>
 
                     <Grid item xs={8} className="menu--right">
-                        <MainCard>
+                        <MainCard sx={{ height: '100%' }}>
                             <FlexBox>
                                 <DropInput title="메뉴 ID" className="bottom--blank"  titleWidth={80} style={{ marginRight: '2rem' }}>
                                     <TextField
