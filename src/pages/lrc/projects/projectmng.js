@@ -1250,7 +1250,7 @@ const ProjectMng = (props) => {
                         </thead>
                         <tbody>
                             {marketingList.map((item, index) => (
-                                <tr>
+                                <tr key={index}>
                                     <td>
                                         <TextField
                                             id="outlined-multiline-static"
@@ -1331,7 +1331,7 @@ const ProjectMng = (props) => {
                         </thead>
                         <tbody>
                             {reviewList.map((item, index) => (
-                                <tr>
+                                <tr key={index}>
                                     <td className="tg-0lax">
                                         <TextField
                                             id="outlined-multiline-static"
