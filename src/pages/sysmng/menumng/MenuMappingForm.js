@@ -501,7 +501,7 @@ const MenuMappingForm = () => {
 
                 {/* 컨텐츠 영역 */}
                 <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
-                    <Grid item xs={3}>
+                    <Grid item xs={4} className="menu--submit">
                         <MainCard sx={{ height: '100%', mb: 0, p: 0 }}>
                             <TreeView
                                 aria-label="controlled"
@@ -519,7 +519,7 @@ const MenuMappingForm = () => {
                             </TreeView>
                         </MainCard>
                     </Grid>
-                    <Grid item xs={8.8} >
+                    <Grid item xs={8} className="menu--right">
                         <Grid container spacing={0} sx={{ mt: 1 }} className="layout--align">
                             <Item>연결된 프로그램 목록</Item>
 
