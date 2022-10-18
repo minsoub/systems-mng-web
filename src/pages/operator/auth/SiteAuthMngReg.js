@@ -771,7 +771,7 @@ const SiteAuthMngRegForm = () => {
                         visible={item.visible}
                         //nodeSelect={() => handleSelect(item.id, item.name)}
                         visibleChange={visibleChange}
-                        dataClick={() => handleSelect(item.id, item.name)}
+                        dataclick={() => handleSelect(item.id, item.name)}
                     >
                         {renderTreeItem(item.child_menu_resources)}
                     </CheckBoxTreeItem>
