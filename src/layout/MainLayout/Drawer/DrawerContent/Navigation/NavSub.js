@@ -46,6 +46,8 @@ import { activeItem } from 'store/reducers/menu';
 import NavItem from './NavItem';
 import Transitions from 'components/Common/Transitions';
 
+//lib import
+import {getSwapLink} from './SwapLinkURL';
 // ==============================|| NAVIGATION - LIST Sub GROUP ||============================== //
 // icons
 const icons = {
@@ -146,25 +148,14 @@ const NavSub = ({ item, level }) => {
         setAnchorEl(null);
     };
 
-    // active menu item on page load
     useEffect(() => {
-        // const currentIndex = document.location.pathname
-        //     .toString()
-        //     .split('/')
-        //     .findIndex((id) => id === item.id);
-        // if (currentIndex > -1) {
-        //     dispatch(activeItem({ openItem: [item.id] }));
-        //     if (item.child_menu_resources.length > 0) {
-        //         setOpen(true);
-        //     }
-        // }
-        // eslint-disable-next-line
-    }, []);
-
-    useEffect(() => {
-        // console.log('sub', location.pathname, item);
+        //console.log('sub', location.pathname, item);
         item.child_menu_resources.map((child) => {
-            if (location.pathname === child.url) {
+            // console.log(getSwapLink(location.pathname).toString());
+            const currentIndex = getSwapLink(location.pathname).toString().indexOf(child.url);
+            // console.log('sub', location.pathname, child.url, currentIndex);
+            // if (location.pathname === child.url) {
+            if (currentIndex > -1) {
                 //dispatch(activeItem({ openItem: [item.id] }));
                 setOpen(true);
             }

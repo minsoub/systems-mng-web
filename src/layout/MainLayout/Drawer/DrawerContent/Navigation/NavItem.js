@@ -24,6 +24,8 @@ import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography } 
 // project import
 import { activeItem } from 'store/reducers/menu';
 
+//lib import
+import {getSwapLink} from './SwapLinkURL';
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
 // icons
 const icons = {
@@ -108,8 +110,10 @@ const NavItem = ({ item, level }) => {
     }, []);
 
     useEffect(() => {
-        // console.log('item', location.pathname, item.url);
-        if (location.pathname === item.url) {
+        const currentIndex = getSwapLink(location.pathname).toString().indexOf(item.url);
+        // console.log('item', location.pathname, item.url, currentIndex);
+        // if (location.pathname === item.url) {
+        if (currentIndex > -1) {
             dispatch(activeItem({ openItem: [item.id] }));
         }
         // eslint-disable-next-line
