@@ -56,7 +56,12 @@ const Post = () => {
         uploader: {
             insertImageAsBase64URI: false,
             url: process.env.REACT_APP_DEFAULT_API_URL + '/mng/cpc/board/upload',
-            headers: { Authorization: `${Authorization}`, site_id: process.env.REACT_APP_DEFAULT_SITE_ID },
+            headers: {
+                Authorization: `${Authorization}`,
+                site_id: process.env.REACT_APP_DEFAULT_SITE_ID,
+                my_site_id: authData.siteId,
+                active_role: authData.roleId
+            },
             filesVariableName() {
                 return 'files';
             }
