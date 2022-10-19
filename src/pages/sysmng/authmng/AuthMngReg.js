@@ -918,7 +918,7 @@ const AuthMngRegForm = () => {
                         </Button>
                     </ButtonLayout>
                 </MainCard>
-                <Grid xs={12} container>
+                <Grid container>
                     <Grid item xs={4}>
                         <MainCard sx={{ mb: 0, p: 0, height: '100%' }}>
                             <TreeView

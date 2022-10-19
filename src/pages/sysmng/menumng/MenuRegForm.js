@@ -573,7 +573,7 @@ const MenuRegForm = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                <Grid xs={12} container>
+                <Grid container>
                     <Grid item xs={4}>
                         <MainCard sx={{ height: '100%' }}>
                             <TreeView

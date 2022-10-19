@@ -590,7 +590,6 @@ const MenuMappingForm = () => {
                                         variant="outlined_d"
                                         onClick={programSearchClick}
                                         className={cx('layout--button--rightBlank')}
-                                        색
                                         color="secondary"
                                     >
                                         검색
