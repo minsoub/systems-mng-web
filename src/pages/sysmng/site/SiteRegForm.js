@@ -378,15 +378,7 @@ const SiteRegForm = () => {
                                         </DropInput>
 
                                         <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    defaultChecked
-                                                    name="is_use"
-                                                    value={is_use}
-                                                    onBlur={handleBlur}
-                                                    onChange={handleChange}
-                                                />
-                                            }
+                                            control={<Checkbox name="is_use" value={is_use} onBlur={handleBlur} onChange={handleChange} />}
                                             label="사용함"
                                         />
                                     </FlexBox>

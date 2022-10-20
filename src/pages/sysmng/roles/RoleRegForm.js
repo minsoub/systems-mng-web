@@ -465,7 +465,6 @@ const RoleRegForm = () => {
                                                 <FormControlLabel
                                                     control={
                                                         <Checkbox
-                                                            defaultChecked
                                                             checked={is_use}
                                                             name="is_use"
                                                             value={is_use}
