@@ -196,6 +196,7 @@ const FileMng = (props) => {
                                 break;
                             case 'SHAREHOLDER':
                                 file12.push(file);
+                                break;
                             default:
                                 break;
                         }
@@ -211,7 +212,7 @@ const FileMng = (props) => {
                     setFileList9(file9);
                     setFileList10(file10);
                     setFileList11(file11);
-                    setFileList11(file12);
+                    setFileList12(file12);
                 }
                 break;
             case 'getUrlList':
@@ -282,7 +283,7 @@ const FileMng = (props) => {
                     setDocList9(file9);
                     setDocList10(file10);
                     setDocList11(file11);
-                    setDocList11(file12);
+                    setDocList12(file12);
                 }
                 break;
             case 'insertData':
