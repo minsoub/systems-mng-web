@@ -19,26 +19,28 @@ const AnalyticLrcForm = ({ color, id, title, count, child, percentage, isLoss, e
     const createClassName = (id) => {
         switch (id) {
             default:
-                return 'default_color';
+                return {
+                    className: 'default_color'
+                };
             case '4769abb1-5ab7-4bea-8126-9a90debc0c44': // 접수중
                 return {
                     className: 'color_a',
-                    icon: <CopyFilled style={{ fontSize: 40, color: '#fff' }} />
+                    // icon: <CopyFilled style={{ fontSize: 40, color: '#fff' }} />
                 };
             case 'fde71dc5-756c-4343-bdcc-b419855095a9': // 검토중
                 return {
                     className: 'color_b',
-                    icon: <ClockCircleOutlined style={{ fontSize: 40, color: '#fff' }} />
+                    // icon: <ClockCircleOutlined style={{ fontSize: 40, color: '#fff' }} />
                 };
             case '371edf0e-e770-4ede-b9f7-7e9945d8273e': // 보류
                 return {
                     className: 'color_c',
-                    icon: <StopOutlined style={{ fontSize: 40, color: '#fff' }} />
+                    // icon: <StopOutlined style={{ fontSize: 40, color: '#fff' }} />
                 };
             case '48ef9ce3-7b47-4512-b3a0-dcb32c718e67': // 상장완료
                 return {
                     className: 'color_d',
-                    icon: <PieChartOutlined style={{ fontSize: 40, color: '#fff' }} />
+                    // icon: <PieChartOutlined style={{ fontSize: 40, color: '#fff' }} />
                 };
         }
     };

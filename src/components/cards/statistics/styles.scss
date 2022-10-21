@@ -3,10 +3,18 @@
 .gridCardColor {
     background-color: #000;
 }
+.default_color {
+    > div {
+       &:first-child {
+           background-color: #13c2c2;
+       }
+   }
+}
+
 .color_a {
      > div {
         &:first-child {
-            background-color: #1890FF;
+            background-color: #13c2c2;
         }
     }
 }
@@ -22,7 +30,7 @@
 .color_c {
     > div {
        &:first-child {
-               background-color: #434343;
+               background-color: #13c2c2;
        }
    }
 }
@@ -30,7 +38,7 @@
 .color_d {
     > div {
        &:first-child {
-               background-color: #FF4D4F;
+               background-color: #13c2c2;
        }
    }
 }
