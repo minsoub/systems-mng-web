@@ -591,7 +591,8 @@ const FileMng = (props) => {
                                                 <button
                                                     className="filemng__file--downlaod"
                                                     type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                    disabled={item.file_status === 'CLEAN' ? false : true}
+                                                    onClick={() => fileDownload(item.file_status, item.file_key, item.file_name)}
                                                 >
                                                     {item.file_name}
                                                 </button>
@@ -669,7 +670,8 @@ const FileMng = (props) => {
                                                 <button
                                                     className="filemng__file--downlaod"
                                                     type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                    disabled={item.file_status === 'CLEAN' ? false : true}
+                                                    onClick={() => fileDownload(item.file_status, item.file_key, item.file_name)}
                                                 >
                                                     {item.file_name}
                                                 </button>
@@ -745,7 +747,8 @@ const FileMng = (props) => {
                                                 <button
                                                     className="filemng__file--downlaod"
                                                     type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                    disabled={item.file_status === 'CLEAN' ? false : true}
+                                                    onClick={() => fileDownload(item.file_status, item.file_key, item.file_name)}
                                                 >
                                                     {item.file_name}
                                                 </button>
@@ -828,7 +831,8 @@ const FileMng = (props) => {
                                                 <button
                                                     className="filemng__file--downlaod"
                                                     type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                    disabled={item.file_status === 'CLEAN' ? false : true}
+                                                    onClick={() => fileDownload(item.file_status, item.file_key, item.file_name)}
                                                 >
                                                     {item.file_name}
                                                 </button>
@@ -911,7 +915,8 @@ const FileMng = (props) => {
                                                 <button
                                                     className="filemng__file--downlaod"
                                                     type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                    disabled={item.file_status === 'CLEAN' ? false : true}
+                                                    onClick={() => fileDownload(item.file_status, item.file_key, item.file_name)}
                                                 >
                                                     {item.file_name}
                                                 </button>
@@ -994,7 +999,8 @@ const FileMng = (props) => {
                                                 <button
                                                     className="filemng__file--downlaod"
                                                     type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                    disabled={item.file_status === 'CLEAN' ? false : true}
+                                                    onClick={() => fileDownload(item.file_status, item.file_key, item.file_name)}
                                                 >
                                                     {item.file_name}
                                                 </button>
@@ -1077,7 +1083,8 @@ const FileMng = (props) => {
                                                 <button
                                                     className="filemng__file--downlaod"
                                                     type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                    disabled={item.file_status === 'CLEAN' ? false : true}
+                                                    onClick={() => fileDownload(item.file_status, item.file_key, item.file_name)}
                                                 >
                                                     {item.file_name}
                                                 </button>
@@ -1161,7 +1168,8 @@ const FileMng = (props) => {
                                                 <button
                                                     className="filemng__file--downlaod"
                                                     type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                    disabled={item.file_status === 'CLEAN' ? false : true}
+                                                    onClick={() => fileDownload(item.file_status, item.file_key, item.file_name)}
                                                 >
                                                     {item.file_name}
                                                 </button>
@@ -1245,7 +1253,8 @@ const FileMng = (props) => {
                                                 <button
                                                     className="filemng__file--downlaod"
                                                     type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                    disabled={item.file_status === 'CLEAN' ? false : true}
+                                                    onClick={() => fileDownload(item.file_status, item.file_key, item.file_name)}
                                                 >
                                                     {item.file_name}
                                                 </button>
@@ -1328,7 +1337,8 @@ const FileMng = (props) => {
                                                 <button
                                                     className="filemng__file--downlaod"
                                                     type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                    disabled={item.file_status === 'CLEAN' ? false : true}
+                                                    onClick={() => fileDownload(item.file_status, item.file_key, item.file_name)}
                                                 >
                                                     {item.file_name}
                                                 </button>
@@ -1412,7 +1422,8 @@ const FileMng = (props) => {
                                                 <button
                                                     className="filemng__file--downlaod"
                                                     type="button"
-                                                    onClick={() => fileDownload(item.file_key, item.file_name)}
+                                                    disabled={item.file_status === 'CLEAN' ? false : true}
+                                                    onClick={() => fileDownload(item.file_status, item.file_key, item.file_name)}
                                                 >
                                                     {item.file_name}
                                                 </button>
