@@ -120,7 +120,7 @@ const useAxios = () => {
         console.log('>> axiosFetch url : %s', url);
 
         try {
-            if (url.indexOf('adm') === -1) {
+            if (url.indexOf('/adm') === -1) {
                 let authData = null;
                 if (localStorage.hasOwnProperty('authenticated')) {
                     authData = JSON.parse(localStorage.getItem('authenticated'));
