@@ -799,7 +799,7 @@ const ProjectMng = (props) => {
             alert('심볼을 입력해주세요.');
             return;
         }
-        const regex1 = /^[A-Z|a-z|0-9|]*$/;
+        const regex1 = /^[a-zA-Z0-9\s]*$/;
         if (!regex1.test(refProject_name.current.value)) {
             alert('유효하지 않은 프로젝트명입니다.');
             return;
@@ -1361,7 +1361,12 @@ const ProjectMng = (props) => {
                                     </td>
                                     <td
                                         className="tg-0lax"
-                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 2rem' }}
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            padding: '1.5rem 2rem'
+                                        }}
                                     >
                                         <TextField
                                             type="file"
