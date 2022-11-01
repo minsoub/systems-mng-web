@@ -325,15 +325,15 @@ const MainRoutes = [
             },
             // 빗썸 경제연구소
             {
-                path: 'cpc/contents/enconomic-research/list',
+                path: 'cpc/contents/economic-research/list',
                 element: <CpcEconomicResearchMng />
             },
             {
-                path: 'cpc/contents/enconomic-research/reg',
+                path: 'cpc/contents/economic-research/reg',
                 element: <CpcEconomicResearchMngForm />
             },
             {
-                path: 'cpc/contents/enconomic-research/reg/:boardId',
+                path: 'cpc/contents/economic-research/reg/:boardId',
                 element: <CpcEconomicResearchMngForm />
             },
             // 이벤트
