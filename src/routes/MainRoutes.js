@@ -60,6 +60,16 @@ const CpcNoticeMngForm = Loadable(lazy(() => import('pages/cpc/contents/Notice/p
 // 보도자료
 const CpcPressReleaseMng = Loadable(lazy(() => import('pages/cpc/contents/PressRelease/view')));
 const CpcPressReleaseForm = Loadable(lazy(() => import('pages/cpc/contents/PressRelease/post')));
+// 빗썸 경제연구소
+const CpcEconomicResearchMng = Loadable(lazy(() => import('pages/cpc/contents/EconomicResearch/view')));
+const CpcEconomicResearchMngForm = Loadable(lazy(() => import('pages/cpc/contents/EconomicResearch/post')));
+// 이벤트
+const CpcEventMng = Loadable(lazy(() => import('pages/cpc/contents/Event/view')));
+const CpcEventMngForm = Loadable(lazy(() => import('pages/cpc/contents/Event/post')));
+// 코인팅
+const CpcCointinghMng = Loadable(lazy(() => import('pages/cpc/contents/Cointing/view')));
+const CpcCointingMngForm = Loadable(lazy(() => import('pages/cpc/contents/Cointing/post')));
+
 // -----------------------
 // render - 고객보호센터 - 사기신고 관리
 // const CpcFraudReportMng = Loadable(lazy(() => import('pages/cpc/fraudReport/view')));
@@ -313,6 +323,46 @@ const MainRoutes = [
                 path: 'cpc/contents/digital-asset-trend/reg/:boardId',
                 element: <CpcDigitalAssetTrendMngForm />
             },
+            // 빗썸 경제연구소
+            {
+                path: 'cpc/contents/enconomic-research/list',
+                element: <CpcEconomicResearchMng />
+            },
+            {
+                path: 'cpc/contents/enconomic-research/reg',
+                element: <CpcEconomicResearchMngForm />
+            },
+            {
+                path: 'cpc/contents/enconomic-research/reg/:boardId',
+                element: <CpcEconomicResearchMngForm />
+            },
+            // 이벤트
+            {
+                path: 'cpc/contents/event/list',
+                element: <CpcEventMng />
+            },
+            {
+                path: 'cpc/contents/event/reg',
+                element: <CpcEventMngForm />
+            },
+            {
+                path: 'cpc/contents/event/reg/:boardId',
+                element: <CpcEventMngForm />
+            },
+            // 코인팅
+            {
+                path: 'cpc/contents/cointing/list',
+                element: <CpcCointingMng />
+            },
+            {
+                path: 'cpc/contents/cointing/reg',
+                element: <CpcCointingMngForm />
+            },
+            {
+                path: 'cpc/contents/cointing/reg/:boardId',
+                element: <CpcCointingMngForm />
+            },
+
             // {
             //     path: 'cpc/contents/blockchain-news/list',
             //     element: <CpcBlockChainNewsMng />

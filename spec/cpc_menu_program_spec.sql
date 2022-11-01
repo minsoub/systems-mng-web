@@ -310,5 +310,131 @@ db.menu_program_specification.insertMany([
       action_url : '/api/v1/mng/cpc/board/{boardMasterId}'
     },
     ]
+},
+// 빗썸 경제연구소
+{
+    path: '/cpc/contents/economic-research/list',
+    element: '<CpcEconomicResearchMng />',
+    programs: [
+    {
+      action_method : 'DELETE',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}/{boardId}'
+    },{
+      action_method : 'GET',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}'
+    },
+    {
+      action_method : 'PUT',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}/{boardId}'
+    },
+    {
+      action_method : 'GET',
+      action_url : '/api/v1/mng/cpc/board/board-types'
+    },
+    {
+      action_method : 'GET',
+      action_url : '/api/v1/mng/cpc/board/pagination-types'
+    },
+    {
+      action_method : 'GET',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}/{boardId}'
+    },
+    {
+      action_method : 'DELETE',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}/bulk-delete'
+    },
+    {
+      action_method : 'POST',
+      action_url : '/api/v1/mng/cpc/board/upload'
+    },
+    {
+      action_method : 'POST',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}'
+    },
+    ]
+},
+// 이벤트
+{
+    path: '/cpc/contents/event/list',
+    element: '<CpcEventeMng />',
+    programs: [
+    {
+      action_method : 'DELETE',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}/{boardId}'
+    },{
+      action_method : 'GET',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}'
+    },
+    {
+      action_method : 'PUT',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}/{boardId}'
+    },
+    {
+      action_method : 'GET',
+      action_url : '/api/v1/mng/cpc/board/board-types'
+    },
+    {
+      action_method : 'GET',
+      action_url : '/api/v1/mng/cpc/board/pagination-types'
+    },
+    {
+      action_method : 'GET',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}/{boardId}'
+    },
+    {
+      action_method : 'DELETE',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}/bulk-delete'
+    },
+    {
+      action_method : 'POST',
+      action_url : '/api/v1/mng/cpc/board/upload'
+    },
+    {
+      action_method : 'POST',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}'
+    },
+    ]
+},
+// 이벤트
+{
+    path: '/cpc/contents/cointing/list',
+    element: '<CpcCointingeMng />',
+    programs: [
+    {
+      action_method : 'DELETE',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}/{boardId}'
+    },{
+      action_method : 'GET',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}'
+    },
+    {
+      action_method : 'PUT',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}/{boardId}'
+    },
+    {
+      action_method : 'GET',
+      action_url : '/api/v1/mng/cpc/board/board-types'
+    },
+    {
+      action_method : 'GET',
+      action_url : '/api/v1/mng/cpc/board/pagination-types'
+    },
+    {
+      action_method : 'GET',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}/{boardId}'
+    },
+    {
+      action_method : 'DELETE',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}/bulk-delete'
+    },
+    {
+      action_method : 'POST',
+      action_url : '/api/v1/mng/cpc/board/upload'
+    },
+    {
+      action_method : 'POST',
+      action_url : '/api/v1/mng/cpc/board/{boardMasterId}'
+    },
+    ]
 }
 ]);
