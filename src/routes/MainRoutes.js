@@ -67,7 +67,7 @@ const CpcEconomicResearchMngForm = Loadable(lazy(() => import('pages/cpc/content
 const CpcEventMng = Loadable(lazy(() => import('pages/cpc/contents/Event/view')));
 const CpcEventMngForm = Loadable(lazy(() => import('pages/cpc/contents/Event/post')));
 // 코인팅
-const CpcCointinghMng = Loadable(lazy(() => import('pages/cpc/contents/Cointing/view')));
+const CpcCointingMng = Loadable(lazy(() => import('pages/cpc/contents/Cointing/view')));
 const CpcCointingMngForm = Loadable(lazy(() => import('pages/cpc/contents/Cointing/post')));
 
 // -----------------------
