@@ -260,7 +260,7 @@ const View = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/cpc/contents/campaign/reg/${rowData.id}`);
+            navigate(`/cpc/contents/cointing/reg/${rowData.id}`);
         }
     };
 
@@ -320,7 +320,7 @@ const View = () => {
     // 등록
     const addClick = () => {
         console.log('addClick called...');
-        navigate('/cpc/contents/campaign/reg');
+        navigate('/cpc/contents/cointing/reg');
     };
 
     return (
