@@ -163,6 +163,11 @@ const ProjectMng = (props) => {
         refMasking.current = 0; // unmasking
         setPolling(0);
         timerCount.current = 0;
+        return () => {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+            timerCount.current = 0;
+        };
     }, []);
 
     // transaction error 처리
