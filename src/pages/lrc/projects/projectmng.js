@@ -170,11 +170,16 @@ const ProjectMng = (props) => {
         if (requestError) {
             console.log('error requestError');
             console.log(requestError);
+            if (requestError.error.message === 'PROJECT_NAME_DUPLICATE') {
+                alert('사용할 수 없는 프로젝트 이름입니다.');
+            } else {
+                alert('에러가 발생하였습니다.');
+            }
+
             // setErrorTitle('Error Message');
             // setErrorMessage(requestError);
             // setOpen(true);
             //alert(requestError.error.message);
-            alert('에러가 발생하였습니다.');
         }
     }, [requestError]);
 
