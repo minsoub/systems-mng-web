@@ -499,7 +499,7 @@ const MenuMappingForm = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                {/* 컨텐츠 영역 */}
+                {/* 콘텐츠 영역 */}
                 <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
                     <Grid item xs={4} className="menu--submit">
                         <MainCard sx={{ height: '100%', mb: 0, p: 0 }}>

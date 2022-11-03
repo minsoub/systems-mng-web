@@ -1,7 +1,7 @@
-// Action Type - Notice data
-const SEARCH_ADD = 'cpc/Notice/SET_DATA';
-const SEARCH_DEL = 'cpc/Notice/DEL_DATA';
-const SEARCH_GET = 'cpc/Notice/GET_DATA';
+// Action Type - Campaign data
+const SEARCH_ADD = 'cpc/Campaign/SET_DATA';
+const SEARCH_DEL = 'cpc/Campaign/DEL_DATA';
+const SEARCH_GET = 'cpc/Campaign/GET_DATA';
 
 // Action function => dispatch에서 호출
 export const setSearchData = (arg) => ({
@@ -18,12 +18,11 @@ const initialState = {
     reduceFromDate: '',
     reduceToDate: '',
     reducePeriod: '',
-    reduceCategory: '',
     reduceKeyword: ''
 };
 
 // 초기 데이터 리듀서
-const NoticeSearchReducer = (state = initialState, action) => {
+const EconomicResearchSearchReducer = (state = initialState, action) => {
     const { type, data } = action;
     switch (action.type) {
         case SEARCH_ADD:
@@ -41,4 +40,4 @@ const NoticeSearchReducer = (state = initialState, action) => {
     }
 };
 
-export default NoticeSearchReducer;
+export default EconomicResearchSearchReducer;

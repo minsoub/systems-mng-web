@@ -19,6 +19,7 @@ const Post = () => {
     const boardMasterId = 'CPC_NOTICE';
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoard, createBoard, updateBoard, deleteBoard }] = BoardApi();
+    const [categories, setCategories] = useState([]);
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -34,6 +35,7 @@ const Post = () => {
 
     // 입력 값
     const [id, setId] = useState('');
+    const [category, setCategory] = useState([]); // category array
     const [is_set_notice, setIsSetNotice] = useState(false);
     const [title, setTitle] = useState('');
     const [tags, setTags] = useState([]);
@@ -106,11 +108,13 @@ const Post = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
@@ -131,6 +135,9 @@ const Post = () => {
                 setSuggestions(tempSuggestions);
             }
         }
+        if (resBoardMaster.data.data.is_use_category) {
+            setCategories(resBoardMaster.data.data.categories);
+        }
     }, [resBoardMaster]);
 
     useEffect(() => {
@@ -145,6 +152,7 @@ const Post = () => {
         }
         switch (responseData.transactionId) {
             case 'getBoard':
+                setCategory(responseData.data.data.category);
                 setIsSetNotice(responseData.data.data.is_set_notice);
                 setTitle(responseData.data.data.title);
                 setContent(responseData.data.data.contents);
@@ -195,6 +203,25 @@ const Post = () => {
         }
     };
 
+    // checkbox 선택 이벤트
+    const handleCheckboxChange = (e) => {
+        console.log(e.target.checked);
+
+        if (e.target.checked) {
+            // checked
+            setCategory((prevRows) => [...prevRows, e.target.name]);
+        } else {
+            // unchecked
+            if (category.length > 0) {
+                category.map((item, index) => {
+                    if (item === e.target.name) {
+                        setCategory((prevRows) => [...prevRows.slice(0, index), ...prevRows.slice(index + 1)]);
+                    }
+                });
+            }
+        }
+    };
+
     // 목록
     const listClick = () => {
         console.log('listClick called...');
@@ -202,6 +229,10 @@ const Post = () => {
     };
 
     const isValidate = () => {
+        if (category.length === 0) {
+            alert('카테고리를 선택해 주세요.');
+            return false;
+        }
         if (!title) {
             alert('제목을 입력해 주세요.');
             return false;
@@ -226,7 +257,8 @@ const Post = () => {
                 is_set_notice,
                 title,
                 contents: content,
-                tags: inputTags
+                tags: inputTags,
+                category
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
@@ -256,7 +288,8 @@ const Post = () => {
                 is_set_notice,
                 title,
                 contents: content,
-                tags: inputTags
+                tags: inputTags,
+                category
             };
             const formData = new FormData();
             formData.append('boardRequest', new Blob([JSON.stringify(data)], { type: 'application/json' }));
@@ -268,7 +301,7 @@ const Post = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
-                <HeaderTitle titleNm="공지사항" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="공지사항" />
+                <HeaderTitle titleNm="공지사항" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="공지사항" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>
@@ -280,6 +313,27 @@ const Post = () => {
                                         control={<Checkbox checked={is_set_notice} name="is_set_notice" onChange={handleChange} />}
                                         label="게시글 최상단에 고정"
                                     />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className={'tb--title'}>카테고리</th>
+                                <td>
+                                    {resBoardMaster &&
+                                        resBoardMaster.data.data.is_use_category &&
+                                        resBoardMaster.data.data.categories.map((data, index) => (
+                                            <FormControlLabel
+                                                key={index}
+                                                value={data}
+                                                control={
+                                                    <Checkbox
+                                                        name={data}
+                                                        checked={category.indexOf(data) !== -1}
+                                                        onChange={handleCheckboxChange}
+                                                    />
+                                                }
+                                                label={data}
+                                            />
+                                        ))}
                                 </td>
                             </tr>
                             <tr>

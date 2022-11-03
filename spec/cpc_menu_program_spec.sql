@@ -22,7 +22,7 @@ db.menu_program_specification.insertMany([
     },
     ]
 },
-// 고객보호센터 - 컨텐츠 관리
+// 고객보호센터 - 콘텐츠 관리
 {
     path: '/cpc/contents/damage-case/list',
     element: '<CpcDamageCaseMng />',

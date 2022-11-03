@@ -7,7 +7,7 @@ import {
     DiffOutlined, // 상태값 관리
     FileOutlined, // 서비스로그조회
     DesktopOutlined, // 메인관리
-    FileAddOutlined, // 컨텐츠관리
+    FileAddOutlined, // 콘텐츠관리
     UserSwitchOutlined, // 사용자접근관리
     UsergroupAddOutlined, // Role관리
     BarsOutlined, // 메뉴관리
@@ -47,7 +47,7 @@ import NavItem from './NavItem';
 import Transitions from 'components/Common/Transitions';
 
 //lib import
-import {getSwapLink} from './SwapLinkURL';
+import { getSwapLink } from './SwapLinkURL';
 // ==============================|| NAVIGATION - LIST Sub GROUP ||============================== //
 // icons
 const icons = {
@@ -57,7 +57,7 @@ const icons = {
     DiffOutlined, // 상태값 관리
     FileOutlined, // 서비스로그조회
     DesktopOutlined, // 메인관리
-    FileAddOutlined, // 컨텐츠관리
+    FileAddOutlined, // 콘텐츠관리
     UserSwitchOutlined, // 사용자접근관리
     UsergroupAddOutlined, // Role관리
     BarsOutlined, // 메뉴관리
@@ -66,26 +66,26 @@ const icons = {
     SettingOutlined // 나머지 통합관리 메뉴들 (피그마참조)
 };
 const menuIcon = {
-    '62aaafe022252d51722db8f0': icons.QuestionCircleOutlined,               // FAQ 관리
-    '62aaaf7b22252d51722db8ee': icons.DiffOutlined,                         // 상태값 관리
-    'MENU_a576d06485eb442dadd56ae19dc1e70c': icons.DesktopOutlined,         // 메인 관리
-    'MENU_534746312d434de5b911f14b3b14cdf7': icons.FileAddOutlined,         // 컨텐츠 관리
-    'MENU_fd04e3a3416948c296f974e60e5e8b32': icons.UsergroupAddOutlined,    // Role 관리
-    '62aaaedd22252d51722db8ea': icons.BarsOutlined,                         // 메뉴 관리
-    '62aaaef222252d51722db8eb': icons.AuditOutlined,                        // 권한 관리
-    '62aaadba22252d51722db8e3': icons.UsergroupAddOutlined,                 // Role 관리
-    '62aaadd822252d51722db8e4': icons.BarsOutlined,                         // 메뉴 관리
-    '62aaadf122252d51722db8e5': icons.SettingOutlined,                      // 프로그램 관리
-    '62aaae4e22252d51722db8e6': icons.AuditOutlined,                        // 권한 관리
-    '62aaae7b22252d51722db8e7': icons.SettingOutlined,                      // 통합게시판 관리
+    '62aaafe022252d51722db8f0': icons.QuestionCircleOutlined, // FAQ 관리
+    '62aaaf7b22252d51722db8ee': icons.DiffOutlined, // 상태값 관리
+    MENU_a576d06485eb442dadd56ae19dc1e70c: icons.DesktopOutlined, // 메인 관리
+    MENU_534746312d434de5b911f14b3b14cdf7: icons.FileAddOutlined, // 콘텐츠 관리
+    MENU_fd04e3a3416948c296f974e60e5e8b32: icons.UsergroupAddOutlined, // Role 관리
+    '62aaaedd22252d51722db8ea': icons.BarsOutlined, // 메뉴 관리
+    '62aaaef222252d51722db8eb': icons.AuditOutlined, // 권한 관리
+    '62aaadba22252d51722db8e3': icons.UsergroupAddOutlined, // Role 관리
+    '62aaadd822252d51722db8e4': icons.BarsOutlined, // 메뉴 관리
+    '62aaadf122252d51722db8e5': icons.SettingOutlined, // 프로그램 관리
+    '62aaae4e22252d51722db8e6': icons.AuditOutlined, // 권한 관리
+    '62aaae7b22252d51722db8e7': icons.SettingOutlined, // 통합게시판 관리
     // 고객지원 사이트관리자
-    'MENU_3c36442e601448b7a701c8df651e39d7': icons.DesktopOutlined,         // 메인 관리
-    'MENU_80aee08e7c8240518df173f97be54c78': icons.FileAddOutlined,         // 컨텐츠 관리
-    'MENU_3a0d00a2baf644a8a7a8e56fa29d2359': icons.AuditOutlined,           // 권한 관리
+    MENU_3c36442e601448b7a701c8df651e39d7: icons.DesktopOutlined, // 메인 관리
+    MENU_80aee08e7c8240518df173f97be54c78: icons.FileAddOutlined, // 콘텐츠 관리
+    MENU_3a0d00a2baf644a8a7a8e56fa29d2359: icons.AuditOutlined, // 권한 관리
     // 거래지원 사이트 소유자
-    'MENU_cfda4ccd3dd64f368500e4c29a7805a7': icons.QuestionCircleOutlined,  // FAQ 관리
-    'MENU_1d9ba27ba00143fca4cf4888a0224bdf': icons.DiffOutlined,            // 상태값 관리
-    'MENU_5c3d549a94b84ce886e095aa5e692aea': icons.AuditOutlined,           // 권한 관리
+    MENU_cfda4ccd3dd64f368500e4c29a7805a7: icons.QuestionCircleOutlined, // FAQ 관리
+    MENU_1d9ba27ba00143fca4cf4888a0224bdf: icons.DiffOutlined, // 상태값 관리
+    MENU_5c3d549a94b84ce886e095aa5e692aea: icons.AuditOutlined // 권한 관리
 };
 // mini-menu - wrapper
 const PopperStyled = styled(Popper)(({ theme }) => ({
@@ -272,7 +272,7 @@ const NavSub = ({ item, level }) => {
                         anchorEl={anchorEl}
                         placement="right-start"
                         style={{
-                        zIndex: 2001
+                            zIndex: 2001
                         }}
                         popperOptions={{
                             modifiers: [{ name: 'offset', options: { offset: [-12, 1] } }]

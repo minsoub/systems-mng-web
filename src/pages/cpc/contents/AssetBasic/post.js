@@ -119,11 +119,13 @@ const Post = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
@@ -290,7 +292,7 @@ const Post = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsDigitalReg">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="가상자산의 기초" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="가상자산의 기초" />
+                <HeaderTitle titleNm="가상자산의 기초" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="가상자산의 기초" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>

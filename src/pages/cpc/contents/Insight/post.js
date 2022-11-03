@@ -37,7 +37,7 @@ const Post = () => {
 
     // 입력 값
     const [id, setId] = useState('');
-    const [category, setCategory] = useState('');
+    //const [category, setCategory] = useState('');
     const [title, setTitle] = useState('');
     const [thumbnail, setThumbnail] = useState('');
     const [description, setDescription] = useState('');
@@ -121,11 +121,13 @@ const Post = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
@@ -160,7 +162,7 @@ const Post = () => {
         }
         switch (responseData.transactionId) {
             case 'getBoard':
-                setCategory(responseData.data.data.category);
+                //setCategory(responseData.data.data.category);
                 setTitle(responseData.data.data.title);
                 setThumbnail(responseData.data.data.thumbnail);
                 setDescription(responseData.data.data.description);
@@ -202,9 +204,9 @@ const Post = () => {
     };
     const handleChange = (e) => {
         switch (e.target.name) {
-            case 'category':
-                setCategory(e.target.value);
-                break;
+            // case 'category':
+            //     setCategory(e.target.value);
+            //     break;
             case 'thumbnail':
                 setThumbnail(e.target.value);
                 break;
@@ -229,10 +231,10 @@ const Post = () => {
     };
 
     const isValidate = () => {
-        if (!category) {
-            alert('카테고리를 선택해 주세요.');
-            return false;
-        }
+        // if (!category) {
+        //     alert('카테고리를 선택해 주세요.');
+        //     return false;
+        // }
         if (!title) {
             alert('제목을 입력해 주세요.');
             return false;
@@ -254,7 +256,6 @@ const Post = () => {
                 return tag.text;
             });
             const data = {
-                category,
                 title,
                 description,
                 thumbnail,
@@ -289,7 +290,6 @@ const Post = () => {
             });
             const data = {
                 id,
-                category,
                 title,
                 description,
                 thumbnail,
@@ -308,12 +308,12 @@ const Post = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsInsightReg">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="인사이트 칼럼" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="인사이트 칼럼" />
+                <HeaderTitle titleNm="오피니언 칼럼" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="오피니언 칼럼" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>
                         <tbody>
-                            <tr>
+                            {/* <tr>
                                 <th className={'tb--title'}>카테고리</th>
                                 <td>
                                     <Select name="category" label="카테고리" value={category} onChange={handleChange}>
@@ -321,14 +321,9 @@ const Post = () => {
                                         <MenuItem value="전문가 칼럼">전문가 칼럼</MenuItem>
                                         <MenuItem value="오피니언 칼럼">오피니언 칼럼</MenuItem>
                                         <MenuItem value="빗썸경제연구소">빗썸경제연구소</MenuItem>
-                                        {/* {categories.map((category, index) => {
-                                        <MenuItem key={index} value={category}>
-                                            {category}
-                                        </MenuItem>;
-                                    })} */}
                                     </Select>
                                 </td>
-                            </tr>
+                            </tr> */}
                             <tr>
                                 <th className={'tb--title'}>제목</th>
                                 <td>

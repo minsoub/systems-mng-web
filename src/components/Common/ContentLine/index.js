@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { Card } from '@mui/material';
 
-// 컨텐츠 테두리 라인
+// 콘텐츠 테두리 라인
 const ContentLine = forwardRef(({ children, className }, ref) => {
     return (
         <Card

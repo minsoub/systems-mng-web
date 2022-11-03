@@ -125,11 +125,13 @@ const View = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
@@ -145,6 +147,7 @@ const View = () => {
             category
         };
         searchBoardList(boardMasterId, request);
+        console.log(resBoardMaster);
     }, [resBoardMaster]);
 
     useEffect(() => {
@@ -179,11 +182,11 @@ const View = () => {
     const handleBlur = (e) => {
         console.log(e);
     };
-    const resetPeriod= () => {
+    const resetPeriod = () => {
         setPeriod(0);
     };
-    const changeDate =(type,e)=>{
-        switch(type){
+    const changeDate = (type, e) => {
+        switch (type) {
             case 'start':
                 setStartDate(e);
                 break;
@@ -298,7 +301,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 컨텐츠를 체크하세요.');
+            alert('삭제 할 콘텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);
@@ -324,7 +327,7 @@ const View = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsDamageList">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="피해사례" />
+                <HeaderTitle titleNm="피해사례" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="피해사례" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate
@@ -356,8 +359,8 @@ const View = () => {
                             <FormControlLabel value="" control={<Radio />} label="전체" />
                             {resBoardMaster &&
                                 resBoardMaster.data.data.is_use_category &&
-                                resBoardMaster.data.data.categories.map((category, index) => (
-                                    <FormControlLabel key={index} value={category} control={<Radio />} label={category} />
+                                resBoardMaster.data.data.categories.map((data, index) => (
+                                    <FormControlLabel key={index} value={data} control={<Radio />} label={data} />
                                 ))}
                         </RadioGroup>
                     </div>

@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
  * title 제목
  * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{readonly border?: *, readonly elevation?: *, readonly contentSX?: *, readonly children?: *, readonly title?: *, readonly content?: *, readonly bgcolor?: *, readonly sx?: *, readonly addContClass?: *}> & React.RefAttributes<unknown>>}
  */
- const MainCard = forwardRef(({ border = true, children, content = true, elevation, title, bgcolor, sx, addContClass }, ref) => {
+const MainCard = forwardRef(({ border = true, children, content = true, elevation, title, bgcolor, sx, addContClass }, ref) => {
     return (
         <Card
             elevation={elevation || 0}
@@ -23,14 +23,14 @@ const cx = classNames.bind(styles);
             }}
             className={cx('content', addContClass)}
         >
-            {/* 컨텐츠 제목 */}
+            {/* 콘텐츠 제목 */}
             {title && (
                 <Typography variant="h4" className={cx('contentTilte')}>
                     {title}
                 </Typography>
             )}
 
-            {/* 컨텐츠 내용물 */}
+            {/* 콘텐츠 내용물 */}
             {content && <div className={cx('cardCon')}>{children}</div>}
             {!content && children}
         </Card>
