@@ -36,9 +36,6 @@ const OtpSimpleForm = ({ result }) => {
         if (!responseData) {
             return;
         }
-        //거래지원 메신저 링크 이동
-        const moveUrl = sessionStorage.getItem('moveUrl');
-        sessionStorage.setItem('moveUrl', '');
 
         switch (responseData.transactionId) {
             case 'otplogin':
@@ -84,12 +81,7 @@ const OtpSimpleForm = ({ result }) => {
                     } else if (authData.siteId === '62a15f4ae4129b518b133129') {
                         navigate('/main/dashboard');
                     } else {
-                        if (moveUrl) {
-                            // 거래지원 메신저 링크로 바로 이동.
-                            navigate(moveUrl);
-                        } else {
-                            navigate('/lrc/dashboard');
-                        }
+                        navigate('/lrc/dashboard');
                     }
                 }
                 break;
