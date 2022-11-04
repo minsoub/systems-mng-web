@@ -436,5 +436,32 @@ db.menu_program_specification.insertMany([
       action_url : '/api/v1/mng/cpc/board/{boardMasterId}'
     },
     ]
+}, 
+// 찾아가는 교육
+{
+    path: '/cpc/education/list',
+    element: '<CpcEducationMng />',
+    programs: [
+      {
+        action_method: 'GET',
+        action_url: '/api/v1/mng/cpc/education/masking'
+      },
+      {
+        action_method: 'GET',
+        action_url: '/api/v1/mng/cpc/education/unmasking'        
+      },
+      {
+        action_method: 'GET',
+        action_url: '/api/v1/mng/cpc/education/{id}/masking'
+      },
+      {
+        action_method: 'GET',
+        action_url: '/api/v1/mng/cpc/education/{id}/unmasking'        
+      },
+      {
+        action_method: 'PUT',
+        action_url: '/api/v1/mng/cpc/education/{id}'
+      }      
+    ]
 }
 ]);
