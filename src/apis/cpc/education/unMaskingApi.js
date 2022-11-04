@@ -19,12 +19,24 @@ const UnMaskingApis = () => {
         });
     };
 
+    // 신청자 관리 상세 조회 - 마스킹 해제
+    const getEducationUnMasking = (request) => {
+        const id = request.id;
+        const reason = request.reason;
+        callApi('getEducationMasking', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/cpc/education/${id}/masking?reason=${reason}`,
+            requestConfig: {}
+        });
+    };
     return [
         responseData,
         requestError,
         loading,
         {
-            searchEducationList: getUnMaskings
+            searchEducationList: getUnMaskings,
+            searchEducation: getEducationUnMasking
         }
     ];
 };
