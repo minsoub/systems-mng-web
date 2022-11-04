@@ -11,7 +11,7 @@ import SearchBar from 'components/ContentManage/SearchBar';
 import moment from 'moment';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import './styles.module.scss';
-import './style.scss'
+import './style.scss';
 import ContentLine from 'components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
 
@@ -151,7 +151,7 @@ function BoardSearchDialog(props) {
                     setBlockchainNews(responseData.data.data.blockchain_news);
 
                     switch (boardMasterId) {
-                        case 'CPC_DIGITAL_ASSET':
+                        case 'CPC_ECONOMIC_RESEARCH':
                             setSelectedBoardRows(responseData.data.data.digital_asset_basic);
                             break;
                         case 'CPC_INSIGHT_COLUMN':
@@ -193,11 +193,11 @@ function BoardSearchDialog(props) {
     const handleBlur = (e) => {
         console.log(e);
     };
-    const resetPeriod= () => {
+    const resetPeriod = () => {
         setPeriod(0);
     };
-    const changeDate =(type,e)=>{
-        switch(type){
+    const changeDate = (type, e) => {
+        switch (type) {
             case 'start':
                 setStartDate(e);
                 break;
@@ -284,7 +284,7 @@ function BoardSearchDialog(props) {
         if (confirm('저장 하시겠습니까?')) {
             const data = {
                 digital_asset_basic:
-                    boardMasterId === 'CPC_DIGITAL_ASSET'
+                    boardMasterId === 'CPC_ECONOMIC_RESEARCH'
                         ? selectedBoardRows.map((item) => item.id)
                         : digital_asset_basic.map((item) => item.id),
                 insight_column:
