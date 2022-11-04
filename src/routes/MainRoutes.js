@@ -60,6 +60,9 @@ const CpcNoticeMngForm = Loadable(lazy(() => import('pages/cpc/contents/Notice/p
 // 보도자료
 const CpcPressReleaseMng = Loadable(lazy(() => import('pages/cpc/contents/PressRelease/view')));
 const CpcPressReleaseForm = Loadable(lazy(() => import('pages/cpc/contents/PressRelease/post')));
+// 찾아가는 교육 관리 - 신청자
+const CpcEducationMng = Loadable(lazy(() => import('pages/cpc/contents/Education/view')));
+const CpcEducationForm = Loadable(lazy(() => import('pages/cpc/contents/Education/post')));
 // -----------------------
 // render - 고객보호센터 - 사기신고 관리
 // const CpcFraudReportMng = Loadable(lazy(() => import('pages/cpc/fraudReport/view')));
@@ -352,6 +355,22 @@ const MainRoutes = [
                 path: 'cpc/contents/press-release/reg/:boardId',
                 element: <CpcPressReleaseForm />
             },
+            // 찾아가는 교육 관리 - 신청자 관리
+            {
+                path: 'cpc/education/list',
+                element: <CpcEducationMng />
+            },
+            // 찾아가는 교육 관리 - 신청자 등록(삭제예정)
+            // {
+            //     path: 'cpc/education/reg',
+            //     element: <CpcEducationForm />
+            // },
+            // 찾아가는 교육 관리 - 신청자 수정
+            // {
+            //     path: 'cpc/education/reg/:boardId',
+            //     element: <CpcEducationForm />
+            // },
+
             // 고객보호센터 - 사기신고 관리
             // {
             //     path: 'cpc/fraud-report/list',
