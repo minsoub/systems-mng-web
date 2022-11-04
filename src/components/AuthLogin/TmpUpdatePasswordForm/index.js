@@ -14,6 +14,7 @@ import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import jwt from 'jsonwebtoken';
 import useAuthorized from 'apis/auth/auths';
 import Dot from '../../Common/Dot';
+import base64 from 'base-64';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -24,7 +25,7 @@ const TmpUpdatePasswordForm = ({ result }) => {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    const [responseData, requestError, loading, { actionPasswordUpdate }] = useAuthorized();
+    const [responseData, requestError, loading, { actionPasswordUpdate, actionInit, actionRsaPublicKey }] = useAuthorized();
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -34,6 +35,14 @@ const TmpUpdatePasswordForm = ({ result }) => {
         event.preventDefault();
         console.log('handleMouseDownPassword');
     };
+
+    useEffect(() => {
+        // InitData가 없다면.
+        if (!localStorage.hasOwnProperty('InitData')) {
+            actionInit();
+            actionRsaPublicKey();
+        }
+    }, []);
 
     // transaction error 처리
     useEffect(() => {
@@ -56,6 +65,20 @@ const TmpUpdatePasswordForm = ({ result }) => {
         }
         console.log(responseData.transactionId);
         switch (responseData.transactionId) {
+            case 'initLogin':
+                if (responseData.data) {
+                    console.log(responseData.data);
+                    console.log(base64.decode(responseData.data.init_data));
+                    localStorage.setItem('initData', responseData.data.init_data);
+                }
+                break;
+            case 'rsaPublicKey':
+                if (responseData.data) {
+                    console.log(responseData.data);
+                    console.log(base64.decode(responseData.data.public_key));
+                    sessionStorage.setItem('rsaPublicKey', responseData.data.public_key);
+                }
+                break;
             case 'passupdate':
                 console.log(responseData);
                 if (responseData.data) {
