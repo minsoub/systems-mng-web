@@ -18,12 +18,24 @@ const MaskingApis = () => {
         });
     };
 
+    // 신청자 관리 상세 조회 - 마스킹
+    const getEducationMasking = (request) => {
+        const id = request.id;
+        callApi('getEducationMasking', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/cpc/education/${id}/masking`,
+            requestConfig: {}
+        });
+    };
+
     return [
         responseData,
         requestError,
         loading,
         {
-            searchEducationList: getMaskings
+            searchEducationList: getMaskings,
+            searchEducation: getEducationMasking
         }
     ];
 };
