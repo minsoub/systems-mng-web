@@ -81,7 +81,9 @@ const View = () => {
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoardList, deleteBoardList }] = BoardApi();
 
-    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.cpcEconomicResearchSearchReducer);
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceCategory, reduceKeyword } = useSelector(
+        (state) => state.cpcEconomicResearchSearchReducer
+    );
     const dispatch = useDispatch();
 
     // 그리드 선택된 row id
