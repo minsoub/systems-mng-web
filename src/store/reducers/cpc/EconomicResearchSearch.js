@@ -18,6 +18,7 @@ const initialState = {
     reduceFromDate: '',
     reduceToDate: '',
     reducePeriod: '',
+    reduceCategory: '',
     reduceKeyword: ''
 };
 

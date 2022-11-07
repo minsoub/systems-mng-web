@@ -105,6 +105,7 @@ const View = () => {
     const [start_date, setStartDate] = useState('');
     const [end_date, setEndDate] = useState('');
     const [period, setPeriod] = useState('1');
+    const [category, setCategory] = useState('');
     const [keyword, setKeyword] = useState('');
 
     // 상태 값
@@ -121,6 +122,7 @@ const View = () => {
         if (reduceToDate) setEndDate(reduceToDate);
         if (reduceKeyword) setKeyword(reduceKeyword);
         if (reducePeriod) setPeriod(reducePeriod);
+        if (reduceCategory) setCategory(reduceCategory);
 
         setIsSearch(true);
     }, []);
@@ -153,7 +155,8 @@ const View = () => {
         const request = {
             start_date,
             end_date,
-            keyword
+            keyword,
+            category
         };
         searchBoardList(boardMasterId, request);
     }, [resBoardMaster]);
@@ -175,7 +178,8 @@ const View = () => {
                 const request = {
                     start_date,
                     end_date,
-                    keyword
+                    keyword,
+                    category
                 };
                 searchBoardList(boardMasterId, request);
                 break;
@@ -217,6 +221,9 @@ const View = () => {
             case 'period':
                 setPeriod(e.target.value);
                 setDateFromToSet(e.target.value);
+                break;
+            case 'category':
+                setCategory(e.target.value);
                 break;
             case 'keyword':
                 setKeyword(e.target.value);
@@ -275,6 +282,7 @@ const View = () => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
         setPeriod('1');
+        setCategory('');
         setKeyword('');
     };
 
@@ -284,7 +292,8 @@ const View = () => {
         const request = {
             start_date,
             end_date,
-            keyword
+            keyword,
+            category
         };
         searchBoardList(boardMasterId, request);
 
@@ -293,7 +302,8 @@ const View = () => {
             reduceFromDate: start_date,
             reduceToDate: end_date,
             reducePeriod: period,
-            reduceKeyword: keyword
+            reduceKeyword: keyword,
+            reduceCategory: category
         };
         dispatch(setSearchData(searchData));
     };
@@ -342,7 +352,28 @@ const View = () => {
                         changeDate={changeDate}
                         resetPeriod={resetPeriod}
                     />
+                    {/* 카테고리 영역 */}
+                    <div className={cx('category')}>
+                        <Stack sx={{ minWidth: '120px' }} spacing={10} className={cx('borderTitle')}>
+                            카테고리
+                        </Stack>
 
+                        {/* 전체 */}
+                        <RadioGroup
+                            row
+                            aria-labelledby="category-radio-buttons-group-label"
+                            name="category"
+                            value={category}
+                            onChange={handleChange}
+                        >
+                            <FormControlLabel value="" control={<Radio />} label="전체" />
+                            {resBoardMaster &&
+                                resBoardMaster.data.data.is_use_category &&
+                                resBoardMaster.data.data.categories.map((data, index) => (
+                                    <FormControlLabel key={index} value={data} control={<Radio />} label={data} />
+                                ))}
+                        </RadioGroup>
+                    </div>
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>

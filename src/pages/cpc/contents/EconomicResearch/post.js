@@ -37,6 +37,7 @@ const Post = () => {
 
     // 입력 값
     const [id, setId] = useState('');
+    const [category, setCategory] = useState('칼럼'); //초기화
     // 제목
     const [title, setTitle] = useState('');
     // 썸네일 이미지
@@ -150,6 +151,9 @@ const Post = () => {
                 setSuggestions(tempSuggestions);
             }
         }
+        if (resBoardMaster.data.data.is_use_category) {
+            setCategories(resBoardMaster.data.data.categories);
+        }
     }, [resBoardMaster]);
 
     useEffect(() => {
@@ -165,6 +169,7 @@ const Post = () => {
         switch (responseData.transactionId) {
             case 'getBoard':
                 setTitle(responseData.data.data.title);
+                setCategory(responseData.data.data.category);
                 setThumbnail(responseData.data.data.thumbnail);
                 setDescription(responseData.data.data.description);
                 setContent(responseData.data.data.contents);
@@ -207,6 +212,9 @@ const Post = () => {
             case 'thumbnail':
                 setThumbnail(e.target.value);
                 break;
+            case 'category':
+                setCategory(e.target.value);
+                break;
             case 'description':
                 setDescription(e.target.value);
                 break;
@@ -225,6 +233,10 @@ const Post = () => {
     };
 
     const isValidate = () => {
+        if (!category) {
+            alert('카테고리를 선택해 주세요.');
+            return false;
+        }
         if (!title) {
             alert('제목을 입력해 주세요.');
             return false;
@@ -247,6 +259,7 @@ const Post = () => {
             });
             const data = {
                 title,
+                category,
                 description,
                 thumbnail,
                 contents: content,
@@ -280,6 +293,7 @@ const Post = () => {
             const data = {
                 id,
                 title,
+                category,
                 description,
                 thumbnail,
                 contents: content,
@@ -301,6 +315,15 @@ const Post = () => {
                 <div className={cx('common-grid--layout')}>
                     <table>
                         <tbody>
+                            <tr>
+                                <th className={'tb--title'}>카테고리</th>
+                                <td>
+                                    <Select name="category" label="카테고리" value={category} onChange={handleChange}>
+                                        <MenuItem value="칼럼">칼럼</MenuItem>
+                                        <MenuItem value="영상">영상</MenuItem>
+                                    </Select>
+                                </td>
+                            </tr>
                             <tr>
                                 <th className={'tb--title'}>제목</th>
                                 <td>
