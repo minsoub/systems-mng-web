@@ -22,6 +22,7 @@ const Post = () => {
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoard, createBoard, updateBoard, deleteBoard }] = BoardApi();
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
+    const [categories, setCategories] = useState([]);
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
