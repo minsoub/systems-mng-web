@@ -361,15 +361,15 @@ const MainRoutes = [
                 element: <CpcEducationMng />
             },
             // 찾아가는 교육 관리 - 신청자 등록(삭제예정)
-            // {
-            //     path: 'cpc/education/reg',
-            //     element: <CpcEducationForm />
-            // },
+            {
+                path: 'cpc/education/reg',
+                element: <CpcEducationForm />
+            },
             // 찾아가는 교육 관리 - 신청자 수정
-            // {
-            //     path: 'cpc/education/reg/:boardId',
-            //     element: <CpcEducationForm />
-            // },
+            {
+                path: 'cpc/education/reg/:educationId',
+                element: <CpcEducationForm />
+            },
 
             // 고객보호센터 - 사기신고 관리
             // {
