@@ -4,9 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
-import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import EducationMaskingApi from 'apis/cpc/education/maskingApi';
-import EducationUnMaskingApi from 'apis/cpc/education/unMaskingApi';
 import ErrorScreen from 'components/ErrorScreen';
 import moment from 'moment';
 import HeaderTitle from 'components/HeaderTitle';
@@ -16,6 +15,7 @@ import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/DamageCaseSearch';
 import ContentLine from 'components/Common/ContentLine';
+import MaskingDialog from './MaskingDialog';
 import { getDateFormat } from 'utils/CommonUtils';
 import './style.scss';
 
@@ -80,8 +80,9 @@ const View = () => {
     const navigate = useNavigate();
     // 마스킹 상태
     const [isMasking, setIsMasking] = useState(true);
+    const [isMaskingModal, setIsMaskingModal] = useState(false);
 
-    const [responseData, requestError, resLoading, { searchEducationList }] = isMasking ? EducationMaskingApi() : EducationUnMaskingApi();
+    const [responseData, requestError, resLoading, { searchEducationList, searchUnMaskingList }] = EducationMaskingApi();
 
     const { reduceFromDate, reduceToDate, reducePeriod, reduceCategory, reduceKeyword } = useSelector(
         (state) => state.cpcDamageCaseSearchReducer
@@ -109,7 +110,7 @@ const View = () => {
     const [start_date, setStartDate] = useState('');
     const [end_date, setEndDate] = useState('');
     const [period, setPeriod] = useState('1');
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState(null);
     const [keyword, setKeyword] = useState('');
 
     // 상태 값
@@ -133,7 +134,6 @@ const View = () => {
 
     useEffect(() => {
         if (isSearch) {
-            // searchBoardMaster(boardMasterId);
             const request = {
                 start_date,
                 end_date,
@@ -173,16 +173,6 @@ const View = () => {
             default:
         }
     }, [responseData]);
-
-    useEffect(() => {
-        const request = {
-            start_date,
-            end_date,
-            keyword,
-            category
-        };
-        searchEducationList(request);
-    }, [isMasking]);
 
     const handleClose = () => {
         setVisible(false);
@@ -305,8 +295,25 @@ const View = () => {
     };
 
     // 마스킹 상태 변경
-    const handleMasking = () => {
-        setIsMasking((prev) => !prev);
+    const handleMasking = (reason) => {
+        console.log({ reason });
+        setIsMaskingModal(false);
+        setIsMasking(false);
+        const request = {
+            start_date,
+            end_date,
+            keyword,
+            category
+        };
+        searchUnMaskingList({ ...request, reason });
+    };
+
+    const handleMaskingModal = () => {
+        setIsMaskingModal((prev) => !prev);
+    };
+
+    const handleMaskingModalClose = () => {
+        setIsMaskingModal(false);
     };
 
     return (
@@ -341,7 +348,7 @@ const View = () => {
                             value={category}
                             onChange={handleChange}
                         >
-                            <FormControlLabel value="" control={<Radio />} label="전체" />
+                            <FormControlLabel value={null} control={<Radio />} label="전체" />
                             <FormControlLabel value={false} control={<Radio />} label={'교육신청'} />
                             <FormControlLabel value={true} control={<Radio />} label={'답변완료'} />
                         </RadioGroup>
@@ -351,23 +358,62 @@ const View = () => {
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
 
-                <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '40px' }}>
-                    <div>
-                        <Button disableElevation size="medium" type="submit" color="secondary" variant="outlined_d" onClick={clearClick}>
-                            초기화
-                        </Button>
+                <div className={cx('cpcEducationButtonWrapper')}>
+                    <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '20px' }}>
+                        <div>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                color="secondary"
+                                variant="outlined_d"
+                                onClick={clearClick}
+                            >
+                                초기화
+                            </Button>
 
-                        <Button disableElevation size="medium" type="submit" color="secondary" variant="outlined_d" onClick={searchClick}>
-                            검색
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                color="secondary"
+                                variant="outlined_d"
+                                onClick={searchClick}
+                            >
+                                검색
+                            </Button>
+                        </div>
+                    </ButtonLayout>
+                    <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '20px' }}>
+                        <Button
+                            disableElevation
+                            size="medium"
+                            type="submit"
+                            variant="contained"
+                            color="secondary"
+                            style={{ width: 144 }}
+                            onClick={() => {
+                                if (isMasking) {
+                                    handleMaskingModal();
+                                } else {
+                                    const request = {
+                                        start_date,
+                                        end_date,
+                                        keyword,
+                                        category
+                                    };
+                                    searchEducationList(request);
+                                    setIsMasking(true);
+                                }
+                            }}
+                        >
+                            {isMasking ? '마스킹 해제' : '마스킹 설정'}
                         </Button>
-                    </div>
-                    <Button disableElevation size="medium" type="submit" color="secondary" variant="outlined_d" onClick={handleMasking}>
-                        마스킹 해제
-                    </Button>
-                </ButtonLayout>
+                    </ButtonLayout>
+                </div>
 
                 <ContentLine>
-                    <CheckBoxDataGrid
+                    <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
                         pageSize={10}
@@ -378,6 +424,7 @@ const View = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </ContentLine>
+                <MaskingDialog open={isMaskingModal} onClose={handleMaskingModalClose} onMasking={handleMasking} />
             </Grid>
         </Grid>
     );
