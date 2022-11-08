@@ -169,7 +169,7 @@ const MainContents = () => {
                         </TableContainer>
 
                         <ButtonLayout style={{ marginTop: '20px' }}>
-                            <Button variant="contained" onClick={() => handleClickOpen('CPC_ENCONOMIC_RESEARCH')}>
+                            <Button variant="contained" onClick={() => handleClickOpen('CPC_ECONOMIC_RESEARCH')}>
                                 게시글 선택
                             </Button>
                         </ButtonLayout>
