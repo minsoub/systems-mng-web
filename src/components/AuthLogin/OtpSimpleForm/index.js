@@ -24,7 +24,6 @@ const OtpSimpleForm = ({ result }) => {
         if (requestError) {
             if (requestError.message === 'INVALID_OTP_NUMBER') {
                 setErrMsg('OTP 번호를 다시 입력해 주세요');
-                return;
             } else {
                 alert('요청 정보 처리에 오류가 발생하였습니다.');
             }

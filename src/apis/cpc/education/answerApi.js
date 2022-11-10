@@ -14,8 +14,7 @@ const AnswerApi = () => {
             axiosInstance: axiosInstanceDefault,
             method: 'put',
             url: `/api/v1/mng/cpc/education/${id}`,
-            requestConfig: {},
-            data: {
+            requestConfig: {
                 id,
                 isEmail,
                 answer,
