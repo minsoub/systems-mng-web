@@ -14,34 +14,44 @@ import cx from 'classnames';
 import '../BoardList.module.scss';
 import './style.scss';
 
+const educationInitialState = {
+    id: '', // ID
+    name: '', // 이름
+    email: '', // 이메일주소
+    sale_phone: '', // 휴대폰번호
+    content: '', // 신청내용
+    desire_date: getDateFormat(moment().format('YYYY-MM-DD')), // 교육희망일
+    is_answer_complete: false, // 답변여부
+    is_consignment_agreement: false, // 개인정보 위탁 동의
+    is_use_agreement: false, // 개인정보 수집 및 이용동의
+    is_email: false, // 메일전송여부
+    answer: '', // 답변
+    create_date: getDateFormat(moment().format('YYYY-MM-DD')), // 생성일자
+    update_date: getDateFormat(moment().format('YYYY-MM-DD')), // 답변일자
+    update_account_id: '' // 답변자 ID
+};
+
 const Post = () => {
     const navigate = useNavigate();
     const { educationId } = useParams();
     const [responseData, requestError, resLoading, { searchEducation, searchUnMaskingEducation }] = EducationApi();
     const [answerData, answerError, answerLoading, { sendAnswer }] = EducationAnswerApi();
     // education 정보
-    const [educationInfo, setEducationInfo] = useState({
-        id: '', // ID
-        name: '이브이', // 이름
-        email: 'test@test.com', // 이메일주소
-        phone: '010-1111-1111', // 휴대폰번호
-        content: '', // 신청내용
-        desireDate: getDateFormat(moment().format('YYYY-MM-DD')), // 교육희망일
-        isAnswerComplete: false, // 답변여부
-        isConsignmentAgreement: true, // 개인정보 위탁 동의
-        isUseAgreement: true, // 개인정보 수집 및 이용동의
-        isEmail: true, // 메일전송여부
-        answer: '', // 답변
-        createDate: getDateFormat(moment().format('YYYY-MM-DD')), // 생성일자
-        updateDate: getDateFormat(moment().format('YYYY-MM-DD')), // 답변일자
-        updateAccountId: '' // 답변자 ID
-    });
+    const [educationInfo, setEducationInfo] = useState(educationInitialState);
     // 마스킹 상태
     const [isMasking, setIsMasking] = useState(true);
     const [isMaskingModal, setIsMaskingModal] = useState(false);
 
     // 공통 에러처리
+    const [open, setOpen] = useState(false);
+    const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
 
     const handleBlur = (e) => {
         console.log(e);
@@ -52,8 +62,8 @@ const Post = () => {
             case 'answer':
                 setEducationInfo((prev) => ({ ...prev, answer: e.target.value }));
                 break;
-            case 'isEmail':
-                setEducationInfo((prev) => ({ ...prev, isEmail: e.target.checked }));
+            case 'is_email':
+                setEducationInfo((prev) => ({ ...prev, is_email: e.target.checked }));
                 break;
             default:
                 break;
@@ -61,9 +71,8 @@ const Post = () => {
     };
 
     const handleMasking = (reason) => {
-        console.log({ reason });
         setIsMaskingModal(false);
-        setIsMasking(true);
+        setIsMasking(false);
         const data = {
             id: educationInfo.id,
             reason
@@ -87,30 +96,29 @@ const Post = () => {
 
     // 저장
     const saveClick = () => {
-        console.log('saveClick called...');
         if (!educationInfo.answer.length) return;
         if (confirm('저장 하시겠습니까?')) {
             const data = {
                 id: educationInfo.id,
-                isEmail: educationInfo.isEmail,
+                isEmail: educationInfo.is_email,
                 answer: educationInfo.answer,
                 isMasking
             };
 
-            console.log(data);
             sendAnswer(data);
         }
     };
 
     useEffect(() => {
-        console.log({ educationId });
         if (educationId) {
             searchEducation({ id: educationId });
         }
     }, [educationId]);
 
     useEffect(() => {
-        console.log({ responseData });
+        if (responseData) {
+            setEducationInfo(responseData.data.data);
+        }
     }, [responseData]);
 
     useEffect(() => {
@@ -165,7 +173,7 @@ const Post = () => {
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>교육 희망일</th>
-                                <td>{educationInfo.desireDate}</td>
+                                <td>{educationInfo.desire_date}</td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>내용</th>
@@ -173,11 +181,11 @@ const Post = () => {
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>개인정보 위탁 동의</th>
-                                <td>{educationInfo.isConsignmentAgreement ? 'Y' : 'N'}</td>
+                                <td>{educationInfo.is_consignment_agreement ? 'Y' : 'N'}</td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>개인정보 수집 및 이용 동의</th>
-                                <td>{educationInfo.isUseAgreement ? 'Y' : 'N'}</td>
+                                <td>{educationInfo.is_use_agreement ? 'Y' : 'N'}</td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>답변하기</th>
@@ -198,7 +206,7 @@ const Post = () => {
                                             />
                                         </FormControl>
                                         <FormControlLabel
-                                            name={'isEmail'}
+                                            name={'is_email'}
                                             onChange={handleChange}
                                             label={'이메일로 답변하기'}
                                             control={<Checkbox />}

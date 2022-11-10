@@ -13,7 +13,7 @@ import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { setSearchData } from 'store/reducers/cpc/DamageCaseSearch';
+import { setSearchData } from 'store/reducers/cpc/EducationSearch';
 import ContentLine from 'components/Common/ContentLine';
 import MaskingDialog from './MaskingDialog';
 import { getDateFormat } from 'utils/CommonUtils';
@@ -27,15 +27,22 @@ const View = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 100
+            maxWidth: 100,
+            valueGetter: ({ value }) => {
+                if (dataGridRows.length) {
+                    return dataGridRows.findIndex((row) => row.id === value) + 1;
+                }
+                return 0;
+            }
         },
         {
-            field: 'category',
+            field: 'is_answer_complete',
             headerName: '상태',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 200
+            maxWidth: 200,
+            valueGetter: ({ value }) => (value ? '답변완료' : '교육신청')
         },
         {
             field: 'name',
@@ -53,7 +60,7 @@ const View = () => {
             maxWidth: 200
         },
         {
-            field: 'phone',
+            field: 'sale_phone',
             headerName: '휴대폰 번호',
             flex: 1,
             headerAlign: 'center',
@@ -61,20 +68,22 @@ const View = () => {
             maxWidth: 350
         },
         {
-            field: 'desireDate',
+            field: 'desire_date',
             headerName: '교육희망일',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 350
+            maxWidth: 350,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         },
         {
-            field: 'createDate',
+            field: 'create_date',
             headerName: '등록일시',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 350
+            maxWidth: 350,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         }
     ];
     const navigate = useNavigate();
@@ -85,12 +94,10 @@ const View = () => {
     const [responseData, requestError, resLoading, { searchEducationList, searchUnMaskingList }] = EducationMaskingApi();
 
     const { reduceFromDate, reduceToDate, reducePeriod, reduceCategory, reduceKeyword } = useSelector(
-        (state) => state.cpcDamageCaseSearchReducer
+        (state) => state.cpcEducationSearchReducer
     );
     const dispatch = useDispatch();
 
-    // 그리드 선택된 row id
-    const [selectedRows, setSeletedRows] = useState([]);
     // 그리드 목록 데이터
     const [dataGridRows, setDataGridRows] = useState([]);
 
@@ -174,9 +181,6 @@ const View = () => {
         }
     }, [responseData]);
 
-    const handleClose = () => {
-        setVisible(false);
-    };
     const handleBlur = (e) => {
         console.log(e);
     };
@@ -245,11 +249,7 @@ const View = () => {
     };
 
     //체크박스 선택된 row id 저장
-    const handleSelectionChange = (item) => {
-        if (item) {
-            setSeletedRows(item);
-        }
-    };
+    const handleSelectionChange = (item) => {};
     // 페이징 변경 이벤트
     const handlePage = (page) => {};
 
@@ -334,10 +334,10 @@ const View = () => {
                         resetPeriod={resetPeriod}
                     />
 
-                    {/* 카테고리 영역 */}
+                    {/* 상태 영역 */}
                     <div className={cx('category')}>
                         <Stack sx={{ minWidth: '120px' }} spacing={10} className={cx('borderTitle')}>
-                            카테고리
+                            상태
                         </Stack>
 
                         {/* 전체 */}
@@ -424,6 +424,9 @@ const View = () => {
                         selectionChange={handleSelectionChange}
                     />
                 </ContentLine>
+                {errorMessage && (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                )}
                 <MaskingDialog open={isMaskingModal} onClose={handleMaskingModalClose} onMasking={handleMasking} />
             </Grid>
         </Grid>

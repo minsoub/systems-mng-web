@@ -12,13 +12,14 @@ import cpcCampaignSearchReducer from './cpc/CampaignSearch';
 import cpcDamageCaseSearchReducer from './cpc/DamageCaseSearch';
 import cpcDigitalAssetBasicSearchReducer from './cpc/DigitalAssetBasicSearch';
 import cpcDigitalAssetTrendSearchReducer from './cpc/DigitalAssetTrendSearch';
-import cpcInsightColumnSearchReducer from './cpc/InsightColumnSearch';
-import cpcNoticeSearchReducer from './cpc/NoticeSearch';
-import cpcFraudReportSearchReducer from './cpc/FraudReportSearch';
-import cpcLegalCounselingSearchReducer from './cpc/LegalCounselingSearch';
-import cpcEventSearchReducer from './cpc/EventSearch';
-import cpcPressReleaseSearchReducer from './cpc/PressReleaseSearch';
 import cpcEconomicResearchSearchReducer from './cpc/EconomicResearchSearch';
+import cpcEducationSearchReducer from './cpc/EducationSearch';
+import cpcEventSearchReducer from './cpc/EventSearch';
+import cpcFraudReportSearchReducer from './cpc/FraudReportSearch';
+import cpcInsightColumnSearchReducer from './cpc/InsightColumnSearch';
+import cpcLegalCounselingSearchReducer from './cpc/LegalCounselingSearch';
+import cpcNoticeSearchReducer from './cpc/NoticeSearch';
+import cpcPressReleaseSearchReducer from './cpc/PressReleaseSearch';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -33,13 +34,14 @@ const reducers = combineReducers({
     cpcDamageCaseSearchReducer,
     cpcDigitalAssetBasicSearchReducer,
     cpcDigitalAssetTrendSearchReducer,
-    cpcInsightColumnSearchReducer,
-    cpcNoticeSearchReducer,
-    cpcFraudReportSearchReducer,
-    cpcLegalCounselingSearchReducer,
+    cpcEconomicResearchSearchReducer,
+    cpcEducationSearchReducer,
     cpcEventSearchReducer,
-    cpcPressReleaseSearchReducer,
-    cpcEconomicResearchSearchReducer
+    cpcFraudReportSearchReducer,
+    cpcInsightColumnSearchReducer,
+    cpcLegalCounselingSearchReducer,
+    cpcNoticeSearchReducer,
+    cpcPressReleaseSearchReducer
 });
 
 export default reducers;

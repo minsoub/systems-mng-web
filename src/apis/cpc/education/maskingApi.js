@@ -66,7 +66,7 @@ const MaskingApis = () => {
         callApi('getEducationMasking', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/mng/cpc/education/${id}/masking`,
+            url: `/mng/cpc/education/${id}/unmasking`,
             requestConfig: {
                 params: {
                     reason
