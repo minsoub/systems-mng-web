@@ -7,18 +7,18 @@ const AnswerApi = () => {
     // 신청자 관리 답변 저장
     const putAnswer = (request) => {
         const id = request.id;
-        const isEmail = request.isEmail;
+        const is_email = request.isEmail;
         const answer = request.answer;
-        const isMasking = request.isMasking;
+        const is_masking = request.isMasking;
         callApi('putAnswer', {
             axiosInstance: axiosInstanceDefault,
             method: 'put',
-            url: `/api/v1/mng/cpc/education/${id}`,
+            url: `/mng/cpc/education/${id}`,
             requestConfig: {
                 id,
-                isEmail,
+                is_email,
                 answer,
-                isMasking
+                is_masking
             }
         });
     };
