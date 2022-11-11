@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import { setSearchData } from 'store/reducers/cpc/EducationSearch';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
@@ -86,8 +86,6 @@ const View = () => {
         }
     ];
     const navigate = useNavigate();
-    // 마스킹 상태
-    const [isMasking, setIsMasking] = useState(true);
 
     // Log reason Dialog
     const [openReason, setOpenReason] = useState(false);
@@ -270,7 +268,7 @@ const View = () => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
         setPeriod('1');
-        setCategory('');
+        setCategory(null);
         setKeyword('');
     };
 
@@ -297,11 +295,9 @@ const View = () => {
 
     // 마스킹 상태 변경
     const handleReasonPopupClose = (reason) => {
-        console.log({ reason });
         setOpenReason(false);
 
         if (reason.length > 0) {
-            setIsMasking(false);
             const request = {
                 start_date,
                 end_date,
@@ -314,18 +310,7 @@ const View = () => {
 
     const handleReasonPopupOpen = () => {
         if (dataGridRows.length) {
-            if (isMasking) {
-                setOpenReason((prev) => !prev);
-            } else {
-                const request = {
-                    start_date,
-                    end_date,
-                    keyword,
-                    category
-                };
-                searchEducationList(request);
-                setIsMasking(true);
-            }
+            setOpenReason((prev) => !prev);
         }
     };
 
@@ -397,7 +382,11 @@ const View = () => {
                             </Button>
                         </div>
                     </ButtonLayout>
-                    <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '20px' }}>
+                    <ButtonLayout
+                        buttonName="bottom--blank__small"
+                        style={{ width: '100%', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '20px' }}
+                    >
+                        <Typography variant={'h5'}>{`총 ${dataGridRows.length} 건`}</Typography>
                         <Button
                             disableElevation
                             size="medium"
@@ -407,7 +396,7 @@ const View = () => {
                             style={{ width: 144 }}
                             onClick={handleReasonPopupOpen}
                         >
-                            {isMasking ? '마스킹 해제' : '마스킹 설정'}
+                            마스킹 해제
                         </Button>
                     </ButtonLayout>
                 </div>
