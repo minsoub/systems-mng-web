@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, TextareaAutosize } from '@mui/material';
 import moment from 'moment';
@@ -74,7 +74,6 @@ const Post = () => {
 
     // 마스킹 상태 변경
     const handleReasonPopupClose = (reason) => {
-        console.log({ reason });
         setOpenReason(false);
         if (reason.length > 0) {
             setIsMasking(false);
@@ -90,7 +89,7 @@ const Post = () => {
         if (isMasking) {
             setOpenReason((prev) => !prev);
         } else {
-            searchEducation({ id: educationInfo.id });
+            // searchEducation({ id: educationInfo.id });
             setIsMasking(true);
         }
     };
@@ -104,15 +103,20 @@ const Post = () => {
     // 저장
     const saveClick = () => {
         if (!educationInfo.answer.length) return;
-        if (confirm('저장 하시겠습니까?')) {
-            const data = {
-                id: educationInfo.id,
-                isEmail: educationInfo.is_email,
-                answer: educationInfo.answer,
-                isMasking
-            };
-
-            sendAnswer(data);
+        const data = {
+            id: educationInfo.id,
+            isEmail: educationInfo.is_email,
+            answer: educationInfo.answer,
+            isMasking
+        };
+        if (educationInfo.is_email) {
+            if (confirm(`현재 입력된 답변 내용이 제보자의 이메일 주소로 발송됩니다.\n저장 하시겠습니까?`)) {
+                sendAnswer(data);
+            }
+        } else {
+            if (confirm('저장 하시겠습니까?')) {
+                sendAnswer(data);
+            }
         }
     };
 
@@ -130,7 +134,9 @@ const Post = () => {
     }, [responseData]);
 
     useEffect(() => {
-        console.log({ answerData });
+        if (answerData && answerData.data && answerData.data.result === 'SUCCESS') {
+            alert('저장되었습니다.');
+        }
     }, [answerData]);
 
     // transaction error 처리
@@ -230,7 +236,7 @@ const Post = () => {
                             color="secondary"
                             onClick={handleReasonPopupOpen}
                         >
-                            {isMasking ? '마스킹 해제' : '마스킹 설정'}
+                            마스킹 해제
                         </Button>
                         <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
                             저장
