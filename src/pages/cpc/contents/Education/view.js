@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -15,9 +15,9 @@ import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/EducationSearch';
 import ContentLine from 'components/Common/ContentLine';
-import MaskingDialog from './MaskingDialog';
 import { getDateFormat } from 'utils/CommonUtils';
 import './style.scss';
+import PrivateReasonDialog from '../../../popup/PrivateResonPopup';
 
 const View = () => {
     const columns = [
@@ -89,7 +89,9 @@ const View = () => {
     const navigate = useNavigate();
     // 마스킹 상태
     const [isMasking, setIsMasking] = useState(true);
-    const [isMaskingModal, setIsMaskingModal] = useState(false);
+
+    // Log reason Dialog
+    const [openReason, setOpenReason] = useState(false);
 
     const [responseData, requestError, resLoading, { searchEducationList, searchUnMaskingList }] = EducationMaskingApi();
 
@@ -214,7 +216,8 @@ const View = () => {
                 setDateFromToSet(e.target.value);
                 break;
             case 'category':
-                setCategory(e.target.value);
+                console.log('2222', e.target.value === '');
+                setCategory(e.target.value === '' ? null : e.target.value);
                 break;
             case 'keyword':
                 setKeyword(e.target.value);
@@ -295,9 +298,9 @@ const View = () => {
     };
 
     // 마스킹 상태 변경
-    const handleMasking = (reason) => {
+    const handleReasonPopupClose = (reason) => {
         console.log({ reason });
-        setIsMaskingModal(false);
+        setOpenReason(false);
         setIsMasking(false);
         const request = {
             start_date,
@@ -308,12 +311,8 @@ const View = () => {
         searchUnMaskingList({ ...request, reason });
     };
 
-    const handleMaskingModal = () => {
-        setIsMaskingModal((prev) => !prev);
-    };
-
-    const handleMaskingModalClose = () => {
-        setIsMaskingModal(false);
+    const handleReasonPopupOpen = () => {
+        setOpenReason((prev) => !prev);
     };
 
     return (
@@ -394,7 +393,7 @@ const View = () => {
                             style={{ width: 144 }}
                             onClick={() => {
                                 if (isMasking) {
-                                    handleMaskingModal();
+                                    handleReasonPopupOpen();
                                 } else {
                                     const request = {
                                         start_date,
@@ -427,7 +426,7 @@ const View = () => {
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}
-                <MaskingDialog open={isMaskingModal} onClose={handleMaskingModalClose} onMasking={handleMasking} />
+                <PrivateReasonDialog open={openReason} onClose={handleReasonPopupClose} />
             </Grid>
         </Grid>
     );
