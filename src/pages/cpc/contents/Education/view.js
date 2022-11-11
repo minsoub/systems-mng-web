@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { setSearchData } from 'store/reducers/cpc/EducationSearch';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import EducationMaskingApi from 'apis/cpc/education/maskingApi';
@@ -13,11 +13,10 @@ import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { setSearchData } from 'store/reducers/cpc/EducationSearch';
 import ContentLine from 'components/Common/ContentLine';
+import PrivateReasonDialog from 'pages/popup/PrivateResonPopup';
 import { getDateFormat } from 'utils/CommonUtils';
 import './style.scss';
-import PrivateReasonDialog from '../../../popup/PrivateResonPopup';
 
 const View = () => {
     const columns = [
@@ -216,7 +215,6 @@ const View = () => {
                 setDateFromToSet(e.target.value);
                 break;
             case 'category':
-                console.log('2222', e.target.value === '');
                 setCategory(e.target.value === '' ? null : e.target.value);
                 break;
             case 'keyword':
@@ -301,18 +299,34 @@ const View = () => {
     const handleReasonPopupClose = (reason) => {
         console.log({ reason });
         setOpenReason(false);
-        setIsMasking(false);
-        const request = {
-            start_date,
-            end_date,
-            keyword,
-            category
-        };
-        searchUnMaskingList({ ...request, reason });
+
+        if (reason.length > 0) {
+            setIsMasking(false);
+            const request = {
+                start_date,
+                end_date,
+                keyword,
+                category
+            };
+            searchUnMaskingList({ ...request, reason });
+        }
     };
 
     const handleReasonPopupOpen = () => {
-        setOpenReason((prev) => !prev);
+        if (dataGridRows.length) {
+            if (isMasking) {
+                setOpenReason((prev) => !prev);
+            } else {
+                const request = {
+                    start_date,
+                    end_date,
+                    keyword,
+                    category
+                };
+                searchEducationList(request);
+                setIsMasking(true);
+            }
+        }
     };
 
     return (
@@ -391,20 +405,7 @@ const View = () => {
                             variant="contained"
                             color="secondary"
                             style={{ width: 144 }}
-                            onClick={() => {
-                                if (isMasking) {
-                                    handleReasonPopupOpen();
-                                } else {
-                                    const request = {
-                                        start_date,
-                                        end_date,
-                                        keyword,
-                                        category
-                                    };
-                                    searchEducationList(request);
-                                    setIsMasking(true);
-                                }
-                            }}
+                            onClick={handleReasonPopupOpen}
                         >
                             {isMasking ? '마스킹 해제' : '마스킹 설정'}
                         </Button>

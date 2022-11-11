@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, MenuItem, Select, TextareaAutosize } from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, TextareaAutosize } from '@mui/material';
 import moment from 'moment';
 import EducationApi from 'apis/cpc/education/maskingApi';
 import EducationAnswerApi from 'apis/cpc/education/answerApi';
@@ -8,7 +8,7 @@ import ErrorScreen from 'components/ErrorScreen';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from 'components/HeaderTitle';
-import MaskingModal from './MaskingDialog';
+import PrivateReasonDialog from 'pages/popup/PrivateResonPopup';
 import { getDateFormat } from 'utils/CommonUtils';
 import cx from 'classnames';
 import '../BoardList.module.scss';
@@ -40,7 +40,9 @@ const Post = () => {
     const [educationInfo, setEducationInfo] = useState(educationInitialState);
     // 마스킹 상태
     const [isMasking, setIsMasking] = useState(true);
-    const [isMaskingModal, setIsMaskingModal] = useState(false);
+
+    // Log reason Dialog
+    const [openReason, setOpenReason] = useState(false);
 
     // 공통 에러처리
     const [open, setOpen] = useState(false);
@@ -70,22 +72,27 @@ const Post = () => {
         }
     };
 
-    const handleMasking = (reason) => {
-        setIsMaskingModal(false);
-        setIsMasking(false);
-        const data = {
-            id: educationInfo.id,
-            reason
-        };
-        searchUnMaskingEducation(data);
+    // 마스킹 상태 변경
+    const handleReasonPopupClose = (reason) => {
+        console.log({ reason });
+        setOpenReason(false);
+        if (reason.length > 0) {
+            setIsMasking(false);
+            const data = {
+                id: educationInfo.id,
+                reason
+            };
+            searchUnMaskingEducation(data);
+        }
     };
 
-    const handleMaskingModal = () => {
-        setIsMaskingModal((prev) => !prev);
-    };
-
-    const handleMaskingModalClose = () => {
-        setIsMaskingModal(false);
+    const handleReasonPopupOpen = () => {
+        if (isMasking) {
+            setOpenReason((prev) => !prev);
+        } else {
+            searchEducation({ id: educationInfo.id });
+            setIsMasking(true);
+        }
     };
 
     // 목록
@@ -117,25 +124,15 @@ const Post = () => {
 
     useEffect(() => {
         if (responseData) {
-            setEducationInfo(responseData.data.data);
+            const { answer, is_email } = responseData.data.data;
+            setEducationInfo({ ...responseData.data.data, answer: answer || '', is_email: is_email || false });
         }
     }, [responseData]);
-
-    useEffect(() => {
-        console.log({ requestError });
-    }, [requestError]);
 
     useEffect(() => {
         console.log({ answerData });
     }, [answerData]);
 
-    useEffect(() => {
-        console.log({ answerError });
-    }, [answerError]);
-
-    useEffect(() => {
-        console.log({ educationInfo });
-    }, [educationInfo]);
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
@@ -209,7 +206,7 @@ const Post = () => {
                                             name={'is_email'}
                                             onChange={handleChange}
                                             label={'이메일로 답변하기'}
-                                            control={<Checkbox />}
+                                            control={<Checkbox checked={educationInfo.is_email} />}
                                             labelPlacement={'end'}
                                         />
                                     </FormGroup>
@@ -231,14 +228,7 @@ const Post = () => {
                             type="submit"
                             variant="contained"
                             color="secondary"
-                            onClick={() => {
-                                if (isMasking) {
-                                    handleMaskingModal();
-                                } else {
-                                    searchEducation(educationInfo.id);
-                                    setIsMasking(true);
-                                }
-                            }}
+                            onClick={handleReasonPopupOpen}
                         >
                             {isMasking ? '마스킹 해제' : '마스킹 설정'}
                         </Button>
@@ -250,8 +240,8 @@ const Post = () => {
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}
+                <PrivateReasonDialog open={openReason} onClose={handleReasonPopupClose} />
             </Grid>
-            <MaskingModal open={isMaskingModal} onClose={handleMaskingModalClose} onMasking={handleMasking} />
         </Grid>
     );
 };
