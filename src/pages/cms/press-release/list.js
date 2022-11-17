@@ -36,7 +36,7 @@ const PressreleaseList = () => {
     const [from_date, setStartDate] = useState(''); // 검색 시작일
     const [to_date, setEndDate] = useState(''); // 검색 종료일
     // const [period, setPeriod] = useState('1'); // 검색 일 묶음 타입 0:전체, 1:오늘, 2:한달, 3:3달
-    const [viewState, setViewState] = useState(''); // 선택한 카테고리
+    const [viewState, setViewState] = useState(0); // 보도자료 상태
     const [selectedValue,setSelectedValue] = useState(''); // 선택라인
     const StyledTableCell = withStyles((theme) => ({
         root: {
@@ -105,7 +105,7 @@ const PressreleaseList = () => {
     // 초기화
     const clearClick = () => {
         setKeyword('');
-        setViewState('');
+        setViewState(0);
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
     };
@@ -143,7 +143,7 @@ const PressreleaseList = () => {
                     <Grid>
                         <InputLayout gridClass={styles.keywordWrap}>
                             <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={keyword}/>
-                            <DropInput title="상태" titleWidth={60}>
+                            <DropInput title="상태" titleWidth={40} className={styles.dropdownWrap}>
                                 <InputLabel id="view_state">상태</InputLabel>
                                 <Select labelId="view_state" id="view_state" name="view_state" value={viewState} onChange={handleChange}>
                                     <MenuItem value="0">전체</MenuItem>

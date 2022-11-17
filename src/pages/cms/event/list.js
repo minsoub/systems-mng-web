@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
     Button,
+    TextField,
+    Pagination,
     Grid,
     MenuItem,
     InputLabel,
@@ -30,14 +32,15 @@ import TableHeader from 'components/Table/TableHeader';
 import ErrorScreen from 'components/ErrorScreen';
 import ScrollX from 'components/Common/ScrollX';
 import styles from './styles.module.scss';
+import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark';
 
 const EventList = () => {
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [from_date, setStartDate] = useState(''); // 검색 시작일
     const [to_date, setEndDate] = useState(''); // 검색 종료일
     // const [period, setPeriod] = useState('1'); // 검색 일 묶음 타입 0:전체, 1:오늘, 2:한달, 3:3달
-    const [viewState, setViewState] = useState(''); // 선택한 카테고리
-    const [typeState, setTypeState] = useState(''); // 선택한 카테고리
+    const [typeState, setTypeState] = useState(0); // 선택한 유형
+    const [viewState, setViewState] = useState(0); // 선택한 상태
     const [selectedValue,setSelectedValue] = useState(''); // 선택라인
     const StyledTableCell = withStyles((theme) => ({
         root: {
@@ -109,15 +112,17 @@ const EventList = () => {
     // 초기화
     const clearClick = () => {
         setKeyword('');
-        setViewState('');
-        setTypeState('');
+        setViewState(0);
+        setTypeState(0);
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
     };
     const handleChangePage = (event, newPage) => {
+        console.log(event, newPage);
         // setPage(newPage);
     };
     const handleChangeRowsPerPage = (event) => {
+        console.log(event);
         // setRowsPerPage(+event.target.value);
         // setPage(0);
     };
@@ -148,19 +153,19 @@ const EventList = () => {
                     <Grid>
                         <InputLayout gridClass={styles.keywordWrap}>
                             <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={keyword}/>
-                            <DropInput title="유형" titleWidth={60}>
+                            <DropInput title="유형" titleWidth={40} className={styles.dropdownWrap}>
                                 <InputLabel id="type_state">유형</InputLabel>
                                 <Select labelId="type_state" id="type_state" name="type_state" value={typeState} onChange={handleChange}>
-                                    <MenuItem value="">전체</MenuItem>
+                                    <MenuItem value="0">전체</MenuItem>
                                     <MenuItem value="1">게시</MenuItem>
                                     <MenuItem value="2">참여</MenuItem>
                                     <MenuItem value="3">링크</MenuItem>
                                 </Select>
                             </DropInput>
-                            <DropInput title="상태" titleWidth={60}>
+                            <DropInput title="상태" titleWidth={40} className={styles.dropdownWrap}>
                                 <InputLabel id="view_state">상태</InputLabel>
                                 <Select labelId="view_state" id="view_state" name="view_state" value={viewState} onChange={handleChange}>
-                                    <MenuItem value="">전체</MenuItem>
+                                    <MenuItem value="0">전체</MenuItem>
                                     <MenuItem value="1">공개</MenuItem>
                                     <MenuItem value="2">비공개</MenuItem>
                                 </Select>
@@ -269,6 +274,13 @@ const EventList = () => {
                         </Table>
                     </ScrollX>
                 </ContentLine>
+                <Pagination
+                    count={700}
+                    page={1}
+                    onChange={handleChangePage}
+                    color="primary"
+                    variant="combined"
+                />
                 <TablePagination
                     sx={{
                         border: '1px solid #e6ebf1',
@@ -278,12 +290,17 @@ const EventList = () => {
                     }}
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={0}
+                    count={50}
                     rowsPerPage={10}
                     page={0}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
+                <Pagination count={500} defaultPage={1} page={1} color="primary" onChange={handleChangePage} />
+                <TextField disabled={true} value='기본 텍스트필드'/>
+                {/* <TextField id="outlined-basic" label="Outlined" disabled={true} />
+                <TextField id="filled-basic" label="Filled" variant="filled" />
+                <TextField id="standard-basic" label="Standard" variant="standard" /> */}
             </Grid>
         </Grid>
     );

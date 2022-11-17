@@ -23,7 +23,6 @@ const Post = () => {
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoard, createBoard, updateBoard, deleteBoard }] = BoardApi();
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
-    const editParam = {editName:'editorName', value:'<b>내용을 입력하세요</b>'};
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -66,7 +65,8 @@ const Post = () => {
 
     // 웹에디터
     const editorRef = useRef(null);
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState(null);
+    const editParam = {editName:'editorName', value:content};
     const config = {
         language: 'ko',
         readonly: false,
@@ -357,7 +357,7 @@ const Post = () => {
                                         config={config}
                                         onBlur={(newContent) => setContent(newContent)}
                                     />
-                                    <Editor props={editParam} />
+                                    {content && <Editor props={editParam} />}
                                 </td>
                             </tr>
                             <tr>

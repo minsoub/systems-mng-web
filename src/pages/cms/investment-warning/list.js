@@ -143,7 +143,7 @@ const InvestmentWarningList = () => {
                     <Grid>
                         <InputLayout gridClass={styles.keywordWrap}>
                             <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={keyword}/>
-                            <DropInput title="상태" titleWidth={60}>
+                            <DropInput title="상태" titleWidth={40} className={styles.dropdownWrap}>
                                 <InputLabel id="view_state">상태</InputLabel>
                                 <Select labelId="view_state" id="view_state" name="view_state" value={viewState} onChange={handleChange}>
                                     <MenuItem value="0">전체</MenuItem>

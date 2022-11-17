@@ -33,7 +33,7 @@ import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark';
 
 const CategoryList = () => {
     const [keyword, setKeyword] = useState(''); //검색 키워드
-    const [categoryState, setCategoryState] = useState(''); // 카테고리 사용상태
+    const [categoryState, setCategoryState] = useState(0); // 카테고리 사용상태
     const [selectedValue,setSelectedValue] = useState(''); // 선택라인
     const StyledTableCell = withStyles((theme) => ({
         root: {
@@ -76,7 +76,7 @@ const CategoryList = () => {
     // 초기화
     const clearClick = () => {
         setKeyword('');
-        setCategoryState('');
+        setCategoryState(0);
     };
     const handleChangePage = (event, newPage) => {
         // setPage(newPage);
@@ -112,7 +112,7 @@ const CategoryList = () => {
                     <Grid>
                         <InputLayout>
                             <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={keyword}/>
-                            <DropInput title="상태" titleWidth={60}>
+                            <DropInput title="상태" titleWidth={40} className={styles.dropdownWrap}>
                                 <InputLabel id="category_state">상태</InputLabel>
                                 <Select
                                     labelId="category_state"
@@ -121,7 +121,7 @@ const CategoryList = () => {
                                     value={categoryState}
                                     onChange={handleChange}
                                 >
-                                    <MenuItem value="">전체</MenuItem>
+                                    <MenuItem value="0">전체</MenuItem>
                                     <MenuItem value="1">사용</MenuItem>
                                     <MenuItem value="2">미사용</MenuItem>
                                 </Select>

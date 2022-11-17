@@ -37,8 +37,8 @@ const NoticeList = () => {
     const [from_date, setStartDate] = useState(''); // 검색 시작일
     const [to_date, setEndDate] = useState(''); // 검색 종료일
     // const [period, setPeriod] = useState('1'); // 검색 일 묶음 타입 0:전체, 1:오늘, 2:한달, 3:3달
-    const [bannerNotice, setBannerNotice] = useState(''); // 배너 공지 상태
-    const [bannerState, setBannerState] = useState(''); // 배너 공개상태
+    const [bannerNotice, setBannerNotice] = useState(0); // 배너 공지 상태
+    const [bannerState, setBannerState] = useState(0); // 배너 공개상태
     const [categoryState, setCategoryState] = useState(''); // 선택한 카테고리
     const [categoryList, setCategoryList] = useState([]); // 카테고리 전체 리스트
     const [selectedValue,setSelectedValue] = useState(''); // 선택라인
@@ -120,8 +120,8 @@ const NoticeList = () => {
         setKeyword('');
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
-        setBannerNotice('');
-        setBannerState('');
+        setBannerNotice(0);
+        setBannerState(0);
         setCategoryState('');
     };
     const handleChangePage = (event, newPage) => {
@@ -186,7 +186,7 @@ const NoticeList = () => {
                                     value={bannerNotice}
                                     onChange={handleChange}
                                 >
-                                    <MenuItem value="">전체</MenuItem>
+                                    <MenuItem value="0">전체</MenuItem>
                                     <MenuItem value="1">비노출</MenuItem>
                                     <MenuItem value="2">노출</MenuItem>
                                 </Select>
@@ -201,7 +201,7 @@ const NoticeList = () => {
                                     value={bannerState}
                                     onChange={handleChange}
                                 >
-                                    <MenuItem value="">전체</MenuItem>
+                                    <MenuItem value="0">전체</MenuItem>
                                     <MenuItem value="1">공개</MenuItem>
                                     <MenuItem value="2">비공개</MenuItem>
                                 </Select>

@@ -9,9 +9,9 @@ const Editor = (props) => {
     // onload
     useEffect(() => {
         //console.log(props);
-        console.log(authData);
+        //console.log(authData);
         //console.log(synapEditorConfig['editor.autoSave.period'] = '1');
-        console.log(synapEditorConfig);
+        //console.log(synapEditorConfig);
         synapEditorConfig['editor.upload.image.api'] =  process.env.REACT_APP_DEFAULT_API_URL + '/mng/cpc/board/upload';
         synapEditorConfig['editor.upload.image.headers'] = {
             Authorization: `${Authorization}`,
