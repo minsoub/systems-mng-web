@@ -275,6 +275,16 @@ const EventList = () => {
                     </ScrollX>
                 </ContentLine>
                 <Pagination
+                    sx={{
+                        background: '#fff',
+                        padding: '10px 0',
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}
+                    showFirstButton showLastButton
+                    count={500} variant="outlined" shape="rounded" onChange={handleChangePage}
+                />
+                {/* <Pagination
                     count={700}
                     page={1}
                     onChange={handleChangePage}
@@ -296,7 +306,8 @@ const EventList = () => {
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
-                <Pagination count={500} defaultPage={1} page={1} color="primary" onChange={handleChangePage} />
+                <Pagination count={500} defaultPage={1} page={1} color="primary" onChange={handleChangePage} /> */}
+                
                 <TextField disabled={true} value='기본 텍스트필드'/>
                 {/* <TextField id="outlined-basic" label="Outlined" disabled={true} />
                 <TextField id="filled-basic" label="Filled" variant="filled" />
