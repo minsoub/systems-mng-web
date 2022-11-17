@@ -13,6 +13,7 @@ import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from 'components/HeaderTitle';
+import Editor from 'components/editor/index';
 import cx from 'classnames';
 
 const Post = () => {
@@ -22,6 +23,7 @@ const Post = () => {
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoard, createBoard, updateBoard, deleteBoard }] = BoardApi();
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
+    const editParam = {editName:'editorName', value:'<b>내용을 입력하세요</b>'};
 
     ////////////////////////////////////////////////////
     // 공통 에러 처리
@@ -355,6 +357,7 @@ const Post = () => {
                                         config={config}
                                         onBlur={(newContent) => setContent(newContent)}
                                     />
+                                    <Editor props={editParam} />
                                 </td>
                             </tr>
                             <tr>

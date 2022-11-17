@@ -384,12 +384,6 @@ const ProjectsPage = () => {
             case 'process_code':
                 setProcess(e.target.value);
                 break;
-            case 'start_picker':
-                console.log(e.target.value);
-                break;
-            case 'end_picker':
-                console.log(e.target.value);
-                break;
             default:
                 break;
         }

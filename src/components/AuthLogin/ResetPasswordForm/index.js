@@ -29,6 +29,8 @@ const ResetPasswordForm = () => {
                 navigate('/cpc/dashboard');
             } else if (siteId === '62a15f4ae4129b518b133129') {
                 navigate('/main/dashboard');
+            } else if (siteId === 'SITE_aa776861f48e455281dd2abd373dd258') {
+                navigate('/cms/dashboard');
             } else {
                 navigate('/lrc/dashboard');
             }

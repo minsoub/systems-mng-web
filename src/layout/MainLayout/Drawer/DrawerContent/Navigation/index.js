@@ -111,6 +111,7 @@ export default function FileSystemNavigator(navigation, site) {
         if (!responseData) {
             return;
         }
+        // console.log(responseData.data);
         if (responseData.data) {
             setMenuList(responseData.data.data.menu_list);
             makeMenuData(responseData.data.data.menu_list);

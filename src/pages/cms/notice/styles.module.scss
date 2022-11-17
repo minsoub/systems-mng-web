@@ -1,0 +1,8 @@
+.keywordWrap{
+    margin-bottom: 20px;
+}
+.notceList{
+    :global(.result__list--date){
+        margin-bottom: 0px;
+    }
+}

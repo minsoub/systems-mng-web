@@ -68,7 +68,9 @@ const menuIcon = {
     MENU_39b075b1f55d4eabbc48778fd53f1775: icons.FundOutlined, // 거래지원 관리
     MENU_dfb5f1aa691e4ab9ad5edb7bd85ffdb9: icons.FileOutlined, // 서비스 로그 관리
     MENU_5c468030abdc4e0ca21839ab7c07919d: icons.UserSwitchOutlined, // 사용자 접근관리
-    MENU_d6a6c286798f4891828a92ea24c694fd: icons.SettingOutlined // 계정 관리
+    MENU_d6a6c286798f4891828a92ea24c694fd: icons.SettingOutlined, // 계정 관리
+    // 통합콘텐츠 사이트 관리자
+    MENU_37c9b9529ba64ac095614850ab722a2e: icons.SettingOutlined // 사용자 접근 관리
 };
 const NavItem = ({ item, level }) => {
     const theme = useTheme();

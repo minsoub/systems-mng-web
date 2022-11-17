@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { lazy } from 'react';
 
 // project import
@@ -134,6 +135,23 @@ const FilemngRegForm = Loadable(lazy(() => import('pages/sysmng/filemng/FileMngR
 // 통합 시스템 관리 -> 접근 IP 관리
 const IpMngBoard = Loadable(lazy(() => import('pages/sysmng/ipmng')));
 const IpMngRegForm = Loadable(lazy(() => import('pages/sysmng/ipmng/ipRegForm')));
+
+// 통합 콘텐츠 사이트 관리자
+const CmsDashboard = Loadable(lazy(() => import('pages/cms/dashboard/index')));
+// 공시사항 관리 리스트
+const CmsNoticeList = Loadable(lazy(() => import('pages/cms/notice/list')));
+// 카테고리 관리 리스트
+const CmsCategoryList = Loadable(lazy(() => import('pages/cms/notice/categorylist')));
+// 보도자료 관리 리스트
+const CmsPressreleaseList = Loadable(lazy(() => import('pages/cms/press-release/list')));
+// 이벤트 관리 리스트
+const CmsEventList = Loadable(lazy(() => import('pages/cms/event/list')));
+// 가상자산 검토보고서 관리 리스트
+const CmsReviewReportList = Loadable(lazy(() => import('pages/cms/review-report/list')));
+// 투자유의지정 안내 관리 리스트
+const InvestmentWarningList = Loadable(lazy(() => import('pages/cms/investment-warning/list')));
+// 빗썸 경제연구소
+const EconomicResearchList = Loadable(lazy(() => import('pages/cms/economic-research/list')));
 
 const MainRoutes = [
     {
@@ -621,7 +639,107 @@ const MainRoutes = [
             {
                 path: 'ipmng/reg',
                 element: <IpMngRegForm />
-            }
+            },
+            // 통합콘텐츠 - 대시보드
+            {
+                path: 'cms/dashboard',
+                element: <CmsDashboard />
+            },
+            // 통합콘텐츠 - 공지사항 관리 - 리스트
+            {
+                path: 'cms/notice/list',
+                element: <CmsNoticeList />
+            },
+            // 통합콘텐츠 - 공지사항 관리 - 등록
+            {
+                path: 'cms/notice/reg',
+                element: <CmsDashboard />
+            },
+            // 통합콘텐츠 - 공지사항 관리 - 상세/수정
+            {
+                path: 'cms/notice/reg/:paramId',
+                element: <CmsDashboard />
+            },
+            // 통합콘텐츠 - 카테고리 관리 - 리스트
+            {
+                path: 'cms/notice/categorylist',
+                element: <CmsCategoryList />
+            },
+            // 통합콘텐츠 - 보도자료 관리 - 리스트
+            {
+                path: 'cms/press-release/list',
+                element: <CmsPressreleaseList />
+            },
+            // 통합콘텐츠 - 보도자료 관리 - 등록
+            {
+                path: 'cms/press-release/reg',
+                element: <CmsDashboard />
+            },
+            // 통합콘텐츠 - 보도자료 관리 - 상세/수정
+            {
+                path: 'cms/press-release/reg/:paramId',
+                element: <CmsDashboard />
+            },
+            // 통합콘텐츠 - 이벤트 관리 - 리스트
+            {
+                path: 'cms/event/list',
+                element: <CmsEventList />
+            },
+            // 통합콘텐츠 - 이벤트 관리 - 등록
+            {
+                path: 'cms/event/reg',
+                element: <CmsDashboard />
+            },
+            // 통합콘텐츠 - 이벤트 관리 - 상세/수정
+            {
+                path: 'cms/event/reg/:paramId',
+                element: <CmsDashboard />
+            },
+            // 통합콘텐츠 - 가상자산 검토보고서 관리 - 리스트
+            {
+                path: 'cms/review-report/list',
+                element: <CmsReviewReportList />
+            },
+            // 통합콘텐츠 - 가상자산 검토보고서 관리 - 등록
+            {
+                path: 'cms/review-report/reg',
+                element: <CmsDashboard />
+            },
+            // 통합콘텐츠 - 가상자산 검토보고서 관리 - 상세/수정
+            {
+                path: 'cms/review-report/reg/:paramId',
+                element: <CmsDashboard />
+            },
+            // 통합콘텐츠 - 투자유의지정 안내 관리 - 리스트
+            {
+                path: 'cms/investment-warning/list',
+                element: <InvestmentWarningList />
+            },
+            // 통합콘텐츠 - 투자유의지정 안내 관리 - 등록
+            {
+                path: 'cms/investment-warning/reg',
+                element: <CmsDashboard />
+            },
+            // 통합콘텐츠 - 투자유의지정 안내 관리 - 상세/수정
+            {
+                path: 'cms/investment-warning/reg/:paramId',
+                element: <CmsDashboard />
+            },
+            // 통합콘텐츠 - 빗썸 경제연구소 관리 - 리스트
+            {
+                path: 'cms/economic-research/list',
+                element: <EconomicResearchList />
+            },
+            // 통합콘텐츠 - 빗썸 경제연구소 관리 - 등록
+            {
+                path: 'cms/economic-research/reg',
+                element: <CmsDashboard />
+            },
+            // 통합콘텐츠 - 빗썸 경제연구소 관리 - 상세/수정
+            {
+                path: 'cms/economic-research/reg/:paramId',
+                element: <CmsDashboard />
+            },
         ]
     }
 ];
