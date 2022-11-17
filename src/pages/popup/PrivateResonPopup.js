@@ -9,6 +9,7 @@ import {
     Button,
     Grid,
     Stack,
+    DialogActions,
     DialogTitle,
     Dialog,
     Alert,
@@ -51,7 +52,7 @@ function PrivateReasonDialog(props) {
 
     return (
         <Dialog onClose={handleClose} open={open}>
-            <DialogTitle>개인정보 열람 사유입력</DialogTitle>
+            <DialogTitle style={{ fontWeight: 700 }}>개인정보 열람 사유입력</DialogTitle>
 
             <MainCard sx={{ mt: 0 }}>
                 <Stack direction="row" spacing={1}>
@@ -67,14 +68,16 @@ function PrivateReasonDialog(props) {
                             fullWidth
                         />
                     </FormControl>
-                    <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={handleClose}>
-                        적용
-                    </Button>
-                    <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={closePopup}>
-                        닫기
-                    </Button>
                 </Stack>
             </MainCard>
+            <DialogActions style={{ justifyContent: 'center', marginTop: -20 }}>
+                <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={closePopup}>
+                    닫기
+                </Button>
+                <Button disableElevation size="small" type="submit" variant="contained" color="secondary" onClick={handleClose}>
+                    적용
+                </Button>
+            </DialogActions>
         </Dialog>
     );
 }
