@@ -22,7 +22,6 @@ const educationInitialState = {
     content: '', // 신청내용
     desire_date: getDateFormat(moment().format('YYYY-MM-DD')), // 교육희망일
     is_answer_complete: false, // 답변여부
-    is_consignment_agreement: false, // 개인정보 위탁 동의
     is_use_agreement: false, // 개인정보 수집 및 이용동의
     is_email: false, // 메일전송여부
     answer: '', // 답변
@@ -181,10 +180,6 @@ const Post = () => {
                             <tr>
                                 <th className={'tb--title'}>내용</th>
                                 <td>{educationInfo.content}</td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'}>개인정보 위탁 동의</th>
-                                <td>{educationInfo.is_consignment_agreement ? 'Y' : 'N'}</td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>개인정보 수집 및 이용 동의</th>
