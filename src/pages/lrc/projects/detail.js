@@ -9,8 +9,8 @@ import FileMng from './filemng';
 import ProjectHistory from './history';
 import ProjectCommunity from './community';
 import HeaderTitle from 'components/HeaderTitle';
-import TopInputLayout from '../../../components/Common/TopInputLayout';
-import ButtonLayout from '../../../components/Common/ButtonLayout';
+import TopInputLayout from 'components/Common/TopInputLayout';
+import ButtonLayout from 'components/Common/ButtonLayout';
 import './styles.scss';
 const ProjectsDetailPage = () => {
     const columns = [

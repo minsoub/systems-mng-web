@@ -27,7 +27,7 @@ const Editor = (props) => {
     }, []);
     return (
         <div>
-            <div style={{height: '400px', 'textAlign': 'left', color: 'black'}}>
+            <div style={{width:'98%', height: '400px', 'textAlign': 'left', color: 'black'}}>
                 <div id={props.props.editName}></div>
             </div>
         </div>

@@ -140,6 +140,7 @@ const IpMngRegForm = Loadable(lazy(() => import('pages/sysmng/ipmng/ipRegForm'))
 const CmsDashboard = Loadable(lazy(() => import('pages/cms/dashboard/index')));
 // 공시사항 관리 리스트
 const CmsNoticeList = Loadable(lazy(() => import('pages/cms/notice/list')));
+const NoticeView = Loadable(lazy(() => import('pages/cms/notice/reg')));
 // 카테고리 관리 리스트
 const CmsCategoryList = Loadable(lazy(() => import('pages/cms/notice/categorylist')));
 // 보도자료 관리 리스트
@@ -653,7 +654,7 @@ const MainRoutes = [
             // 통합콘텐츠 - 공지사항 관리 - 등록
             {
                 path: 'cms/notice/reg',
-                element: <CmsDashboard />
+                element: <NoticeView />
             },
             // 통합콘텐츠 - 공지사항 관리 - 상세/수정
             {

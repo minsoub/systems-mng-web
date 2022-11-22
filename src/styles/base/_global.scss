@@ -139,6 +139,10 @@ legend,
                 width: 100%;
             }
         }
+        .width5{width:5%;}
+        .width15{width:15%;}
+        .width20{width:20%;}
+        .width40{width:40%;}
     }
 }
 
@@ -363,4 +367,57 @@ html [type='button'],
 
 .MuiDialog-paper{
     max-width: none;
+}
+
+
+
+
+
+
+// 통합게시판 부분
+.common-board--layout {
+    width: 100%;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    background: #fff;
+    overflow-x: auto;
+    table {
+        width: 100%;
+    }
+
+    tr {
+        border: 1px solid #f0f0f0;
+
+        th {
+            padding: 1rem;
+            background-color: #fafafb;
+            width: 10%;
+        }
+
+        td {
+            width: 90%;
+            border: 1px solid #f0f0f0;
+            padding: 10px;
+
+            // input {
+            //     width: 100%;
+            // }
+            .copyText{
+                line-height: 38px;
+                margin-right: 20px;
+            }
+            &.add_file{
+                em{color:#999;font-size: 0.8rem;vertical-align: bottom;margin-left: 3px;}
+            }
+        }
+        .width5{width:5%;}
+        .width7{width:7%;}
+        .width15{width:15%;}
+        .width18{width:18%;}
+        .width20{width:20%;}
+        .width40{width:40%;}
+    }
+}
+.board--layout__title{
+    margin: 30px 0 10px 0;
 }

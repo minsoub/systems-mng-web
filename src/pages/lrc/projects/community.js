@@ -5,7 +5,7 @@ import MainCard from 'components/Common/MainCard';
 import Chat from './chat';
 import ChatApi from 'apis/chat/chatapi';
 import FoundationApi from 'apis/lrc/project/foundationapi';
-import TopInputLayout from '../../../components/Common/TopInputLayout';
+import TopInputLayout from 'components/Common/TopInputLayout';
 import { Empty } from 'antd';
 import './styles.scss';
 import { getDateFormat } from 'utils/CommonUtils';

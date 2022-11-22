@@ -4,19 +4,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
     Button,
     Grid,
+    Pagination,
     MenuItem,
     InputLabel,
     Select,
-    Checkbox,
     Table,
     TableBody,
     TableCell,
     TableHead,
-    TablePagination,
     Radio,
     TableRow
 } from '@mui/material';
-import { makeStyles, withStyles } from '@mui/styles';
+import { withStyles } from '@mui/styles';
 import moment from 'moment';
 import MainCard from 'components/Common/MainCard';
 import HeaderTitle from 'components/HeaderTitle';
@@ -30,7 +29,6 @@ import ContentLine from 'components/Common/ContentLine';
 import ErrorScreen from 'components/ErrorScreen';
 import ScrollX from 'components/Common/ScrollX';
 import styles from './styles.module.scss';
-import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark';
 
 const NoticeList = () => {
     const [keyword, setKeyword] = useState(''); //검색 키워드
@@ -42,6 +40,7 @@ const NoticeList = () => {
     const [categoryState, setCategoryState] = useState(''); // 선택한 카테고리
     const [categoryList, setCategoryList] = useState([]); // 카테고리 전체 리스트
     const [selectedValue,setSelectedValue] = useState(''); // 선택라인
+    const navigate = useNavigate();
     const StyledTableCell = withStyles((theme) => ({
         root: {
             padding: '0px 16px',
@@ -132,7 +131,9 @@ const NoticeList = () => {
         // setPage(0);
     };
     // 그리드 클릭
-    const handleClick = (rowData) => {
+    const handleClick = (e) => {
+        console.log(e);
+        navigate(`/cms/notice/reg`);
         //if (rowData && rowData.field && rowData.field !== '__check__') {
         // navigate(`/projects/detail/${rowData.id}`);
         //}
@@ -266,7 +267,7 @@ const NoticeList = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableRow hover className="link" onClick={() => handleClick()}>
+                                <TableRow hover className="link" onClick={handleClick}>
                                     <TableCell style={{ width: '7%' }} align="center" component="td" scope="row">
                                         <Radio
                                             checked={selectedValue === 'a'}
@@ -301,7 +302,7 @@ const NoticeList = () => {
                                         1,000,000
                                     </TableCell>
                                 </TableRow>
-                                <TableRow hover className="link" onClick={() => handleClick()}>
+                                <TableRow hover className="link" onClick={handleClick}>
                                     <TableCell style={{ width: '7%' }} align="center" component="td" scope="row">
                                         <Radio
                                             checked={selectedValue === 'b'}
@@ -340,20 +341,15 @@ const NoticeList = () => {
                         </Table>
                     </ScrollX>
                 </ContentLine>
-                <TablePagination
+                <Pagination
                     sx={{
-                        border: '1px solid #e6ebf1',
-                        borderTop: 'none',
-                        boxShadow: 'none',
-                        borderRadius: '0 0 2px 2px'
+                        background: '#fff',
+                        padding: '10px 0',
+                        display: 'flex',
+                        justifyContent: 'center'
                     }}
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={0}
-                    rowsPerPage={10}
-                    page={0}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    showFirstButton showLastButton
+                    count={500} variant="outlined" shape="rounded" onChange={handleChangePage}
                 />
             </Grid>
         </Grid>

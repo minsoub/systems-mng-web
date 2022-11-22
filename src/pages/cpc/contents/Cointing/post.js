@@ -13,7 +13,6 @@ import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from 'components/HeaderTitle';
-import Editor from 'components/editor/index';
 import cx from 'classnames';
 
 const Post = () => {
@@ -66,7 +65,6 @@ const Post = () => {
     // 웹에디터
     const editorRef = useRef(null);
     const [content, setContent] = useState(null);
-    const editParam = {editName:'editorName', value:content};
     const config = {
         language: 'ko',
         readonly: false,
@@ -357,7 +355,6 @@ const Post = () => {
                                         config={config}
                                         onBlur={(newContent) => setContent(newContent)}
                                     />
-                                    {content && <Editor props={editParam} />}
                                 </td>
                             </tr>
                             <tr>
@@ -380,11 +377,13 @@ const Post = () => {
                                     />
                                 </td>
                             </tr>
-                            {createAccountName && (
+                            {createAccountName ? (
                                 <tr>
                                     <th className={'tb--title'}>등록자</th>
                                     <td>{createAccountName}</td>
                                 </tr>
+                            ) : (
+                                <></>
                             )}
                         </tbody>
                     </table>
