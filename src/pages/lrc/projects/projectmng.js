@@ -1711,7 +1711,7 @@ const ProjectMng = (props) => {
                                                 onClick={() => userDelete(item.project_id, item.id)}
                                                 sx={{ mx: 1 }}
                                             >
-                                                탈퇴
+                                                삭제
                                             </Button>
                                         </td>
                                     </tr>
