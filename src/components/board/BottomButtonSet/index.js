@@ -29,7 +29,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState }) => {
         navigate(`/cms/${type}/list`);
     };
     useEffect(() => {
-        console.log(changeEditState, editMode);
+        // console.log(changeEditState, editMode);
     }, []);
     return (
         <Grid className={styles.button_layout}>

@@ -7,14 +7,17 @@ import {
     MenuItem,
     InputLabel,
     Select,
-    Checkbox,
+    Box,
     Table,
     TableBody,
     TableCell,
     TableHead,
-    TablePagination,
+    Pagination,
     Radio,
-    TableRow
+    TableRow,
+    Typography,
+    TextField,
+    Modal
 } from '@mui/material';
 import { makeStyles, withStyles } from '@mui/styles';
 import moment from 'moment';
@@ -29,12 +32,14 @@ import TableHeader from 'components/Table/TableHeader';
 import ErrorScreen from 'components/ErrorScreen';
 import ScrollX from 'components/Common/ScrollX';
 import styles from './styles.module.scss';
-import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark';
+import CategoryModal from './component/CategoryModal';
 
 const CategoryList = () => {
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [categoryState, setCategoryState] = useState(0); // 카테고리 사용상태
     const [selectedValue,setSelectedValue] = useState(''); // 선택라인
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const StyledTableCell = withStyles((theme) => ({
         root: {
             padding: '0px 16px',
@@ -81,25 +86,11 @@ const CategoryList = () => {
     const handleChangePage = (event, newPage) => {
         // setPage(newPage);
     };
-    const handleChangeRowsPerPage = (event) => {
-        // setRowsPerPage(+event.target.value);
-        // setPage(0);
-    };
     // 그리드 클릭
     const handleClick = (rowData) => {
         //if (rowData && rowData.field && rowData.field !== '__check__') {
         // navigate(`/projects/detail/${rowData.id}`);
         //}
-    };
-    const checkedItemHandler = (id, isChecked) => {
-        // setIsAllChecked(false);
-        // if (isChecked) {
-        //     checkedBusinessItems.add(id);
-        //     setCheckedBusinessItems(checkedBusinessItems);
-        // } else if (!isChecked && checkedBusinessItems.has(id)) {
-        //     checkedBusinessItems.delete(id);
-        //     setCheckedBusinessItems(checkedBusinessItems);
-        // }
     };
     useEffect(() => {
         
@@ -137,7 +128,7 @@ const CategoryList = () => {
                         검색
                     </Button>
                 </ButtonLayout>
-                <TableHeader />
+                <TableHeader type="category" newAdd={handleOpen} />
                 <ContentLine>
                     <ScrollX>
                         <Table style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
@@ -149,7 +140,7 @@ const CategoryList = () => {
                                     <StyledTableCell style={{ width: '30%' }} align="center">
                                         카테고리명
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ width: '5%' }} align="center">
+                                    <StyledTableCell style={{ width: '8%' }} align="center">
                                         상태
                                     </StyledTableCell>
                                     <StyledTableCell style={{ width: '12%' }} align="center">
@@ -217,22 +208,18 @@ const CategoryList = () => {
                         </Table>
                     </ScrollX>
                 </ContentLine>
-                <TablePagination
+                <Pagination
                     sx={{
-                        border: '1px solid #e6ebf1',
-                        borderTop: 'none',
-                        boxShadow: 'none',
-                        borderRadius: '0 0 2px 2px'
+                        background: '#fff',
+                        padding: '10px 0',
+                        display: 'flex',
+                        justifyContent: 'center'
                     }}
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={0}
-                    rowsPerPage={10}
-                    page={0}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    showFirstButton showLastButton
+                    count={500} variant="outlined" shape="rounded" onChange={handleChangePage}
                 />
             </Grid>
+            <CategoryModal open={open} onClose={handleClose} />
         </Grid>
     );
 };

@@ -21,6 +21,13 @@ import cpcLegalCounselingSearchReducer from './cpc/LegalCounselingSearch';
 import cpcNoticeSearchReducer from './cpc/NoticeSearch';
 import cpcPressReleaseSearchReducer from './cpc/PressReleaseSearch';
 
+import cmsNotice from './cms/NoticeSearch';
+import cmsPressRelease from './cms/PressRelease';
+import cmsReviewReport from './cms/ReviewReport';
+import cmsInvestmentWarning from './cms/InvestmentWarning';
+import cmsEconomicResearch from './cms/EconomicResearch';
+import cmsEvent from './cms/EventSearch';
+
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
@@ -41,7 +48,14 @@ const reducers = combineReducers({
     cpcInsightColumnSearchReducer,
     cpcLegalCounselingSearchReducer,
     cpcNoticeSearchReducer,
-    cpcPressReleaseSearchReducer
+    cpcPressReleaseSearchReducer,
+
+    cmsNotice,
+    cmsPressRelease,
+    cmsReviewReport,
+    cmsInvestmentWarning,
+    cmsEconomicResearch,
+    cmsEvent
 });
 
 export default reducers;

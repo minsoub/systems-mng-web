@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Typography, Button, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { clipboardShare } from 'utils/CommonUtils';
 import cx from 'classnames';
 
 const PostSetting = ({ type, editMode }) => {
@@ -17,6 +18,10 @@ const PostSetting = ({ type, editMode }) => {
             default:
                 return;
         }
+    };
+
+    const shareURLCopy = () => {
+        clipboardShare('URL 주소가 클립보드에 복사되었습니다.');
     };
     return (
         <>
@@ -70,7 +75,7 @@ const PostSetting = ({ type, editMode }) => {
                             <th className={'tb--title'}>게시글 URL</th>
                             <td className={'width15'} colSpan="3">
                                 <span className="copyText">https://www.bithumb.com/events/123122</span>
-                                <Button disableElevation size="medium" type="button" variant="outlined_d" color="secondary">
+                                <Button disableElevation size="medium" type="button" variant="outlined_d" color="secondary" onClick={shareURLCopy}>
                                     복사하기
                                 </Button>
                             </td>

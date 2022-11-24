@@ -145,14 +145,19 @@ const NoticeView = Loadable(lazy(() => import('pages/cms/notice/reg')));
 const CmsCategoryList = Loadable(lazy(() => import('pages/cms/notice/categorylist')));
 // 보도자료 관리 리스트
 const CmsPressreleaseList = Loadable(lazy(() => import('pages/cms/press-release/list')));
+const PressReleaseView = Loadable(lazy(() => import('pages/cms/press-release/reg')));
 // 이벤트 관리 리스트
 const CmsEventList = Loadable(lazy(() => import('pages/cms/event/list')));
+const EventView = Loadable(lazy(() => import('pages/cms/event/reg')));
 // 가상자산 검토보고서 관리 리스트
 const CmsReviewReportList = Loadable(lazy(() => import('pages/cms/review-report/list')));
+const ReviewReportView = Loadable(lazy(() => import('pages/cms/review-report/reg')));
 // 투자유의지정 안내 관리 리스트
 const InvestmentWarningList = Loadable(lazy(() => import('pages/cms/investment-warning/list')));
+const InvestmentWarningView = Loadable(lazy(() => import('pages/cms/investment-warning/reg')));
 // 빗썸 경제연구소
 const EconomicResearchList = Loadable(lazy(() => import('pages/cms/economic-research/list')));
+const EconomicResearchView = Loadable(lazy(() => import('pages/cms/economic-research/reg')));
 
 const MainRoutes = [
     {
@@ -659,7 +664,7 @@ const MainRoutes = [
             // 통합콘텐츠 - 공지사항 관리 - 상세/수정
             {
                 path: 'cms/notice/reg/:paramId',
-                element: <CmsDashboard />
+                element: <NoticeView />
             },
             // 통합콘텐츠 - 카테고리 관리 - 리스트
             {
@@ -674,12 +679,12 @@ const MainRoutes = [
             // 통합콘텐츠 - 보도자료 관리 - 등록
             {
                 path: 'cms/press-release/reg',
-                element: <CmsDashboard />
+                element: <PressReleaseView />
             },
             // 통합콘텐츠 - 보도자료 관리 - 상세/수정
             {
                 path: 'cms/press-release/reg/:paramId',
-                element: <CmsDashboard />
+                element: <PressReleaseView />
             },
             // 통합콘텐츠 - 이벤트 관리 - 리스트
             {
@@ -689,12 +694,12 @@ const MainRoutes = [
             // 통합콘텐츠 - 이벤트 관리 - 등록
             {
                 path: 'cms/event/reg',
-                element: <CmsDashboard />
+                element: <EventView />
             },
             // 통합콘텐츠 - 이벤트 관리 - 상세/수정
             {
                 path: 'cms/event/reg/:paramId',
-                element: <CmsDashboard />
+                element: <EventView />
             },
             // 통합콘텐츠 - 가상자산 검토보고서 관리 - 리스트
             {
@@ -704,12 +709,12 @@ const MainRoutes = [
             // 통합콘텐츠 - 가상자산 검토보고서 관리 - 등록
             {
                 path: 'cms/review-report/reg',
-                element: <CmsDashboard />
+                element: <ReviewReportView />
             },
             // 통합콘텐츠 - 가상자산 검토보고서 관리 - 상세/수정
             {
                 path: 'cms/review-report/reg/:paramId',
-                element: <CmsDashboard />
+                element: <ReviewReportView />
             },
             // 통합콘텐츠 - 투자유의지정 안내 관리 - 리스트
             {
@@ -719,12 +724,12 @@ const MainRoutes = [
             // 통합콘텐츠 - 투자유의지정 안내 관리 - 등록
             {
                 path: 'cms/investment-warning/reg',
-                element: <CmsDashboard />
+                element: <InvestmentWarningView />
             },
             // 통합콘텐츠 - 투자유의지정 안내 관리 - 상세/수정
             {
                 path: 'cms/investment-warning/reg/:paramId',
-                element: <CmsDashboard />
+                element: <InvestmentWarningView />
             },
             // 통합콘텐츠 - 빗썸 경제연구소 관리 - 리스트
             {
@@ -734,12 +739,12 @@ const MainRoutes = [
             // 통합콘텐츠 - 빗썸 경제연구소 관리 - 등록
             {
                 path: 'cms/economic-research/reg',
-                element: <CmsDashboard />
+                element: <EconomicResearchView />
             },
             // 통합콘텐츠 - 빗썸 경제연구소 관리 - 상세/수정
             {
                 path: 'cms/economic-research/reg/:paramId',
-                element: <CmsDashboard />
+                element: <EconomicResearchView />
             },
         ]
     }

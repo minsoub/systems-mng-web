@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import {
     Button,
     Grid,
@@ -12,7 +13,7 @@ import {
     TableBody,
     TableCell,
     TableHead,
-    TablePagination,
+    Pagination,
     Radio,
     TableRow
 } from '@mui/material';
@@ -29,6 +30,7 @@ import ContentLine from 'components/Common/ContentLine';
 import TableHeader from 'components/Table/TableHeader';
 import ErrorScreen from 'components/ErrorScreen';
 import ScrollX from 'components/Common/ScrollX';
+import { activeFromDate, activeToDate, activeViewState, activeKeyword, activePageNum } from 'store/reducers/cms/EconomicResearch';
 import styles from './styles.module.scss';
 
 const EconomicResearchList = () => {
@@ -38,12 +40,15 @@ const EconomicResearchList = () => {
     // const [period, setPeriod] = useState('1'); // 검색 일 묶음 타입 0:전체, 1:오늘, 2:한달, 3:3달
     const [viewState, setViewState] = useState(''); // 선택한 카테고리
     const [selectedValue,setSelectedValue] = useState(''); // 선택라인
+    const navigate = useNavigate();
     const StyledTableCell = withStyles((theme) => ({
         root: {
             padding: '0px 16px',
             height: 35
         }
     }))(TableCell);
+    const { reduceFromDate, reduceToDate, reduceKeyword, reduceViewState } = useSelector((state) => state.cmsEconomicResearch);
+    const dispatch = useDispatch();
     ////////////////////////////////////////////////////
     // 공통 에러 처리
     const [open, setOpen] = useState(false);
@@ -101,6 +106,10 @@ const EconomicResearchList = () => {
         console.log('searchClick called...');
         console.log(keyword, '|', from_date, '|', to_date);
         console.log(viewState);
+        dispatch(activeFromDate({ reduceFromDate: from_date }));
+        dispatch(activeToDate({ reduceToDate: to_date }));
+        dispatch(activeKeyword({ reduceKeyword: keyword }));
+        dispatch(activeViewState({ reduceViewState: viewState }));
     };
     // 초기화
     const clearClick = () => {
@@ -112,28 +121,23 @@ const EconomicResearchList = () => {
     const handleChangePage = (event, newPage) => {
         // setPage(newPage);
     };
-    const handleChangeRowsPerPage = (event) => {
-        // setRowsPerPage(+event.target.value);
-        // setPage(0);
-    };
     // 그리드 클릭
-    const handleClick = (rowData) => {
+    const handleClick = (e) => {
+        console.log(e);
+        navigate(`/cms/economic-research/reg/355533534`);
         //if (rowData && rowData.field && rowData.field !== '__check__') {
         // navigate(`/projects/detail/${rowData.id}`);
         //}
     };
-    const checkedItemHandler = (id, isChecked) => {
-        // setIsAllChecked(false);
-        // if (isChecked) {
-        //     checkedBusinessItems.add(id);
-        //     setCheckedBusinessItems(checkedBusinessItems);
-        // } else if (!isChecked && checkedBusinessItems.has(id)) {
-        //     checkedBusinessItems.delete(id);
-        //     setCheckedBusinessItems(checkedBusinessItems);
-        // }
-    };
     useEffect(() => {
-        
+        setStartDate(moment().format('YYYY-MM-DD'));
+        setEndDate(moment().format('YYYY-MM-DD'));
+
+        // reduce 상태값을 사용하여 검색을 수행한다.
+        if (reduceFromDate) setStartDate(reduceFromDate);
+        if (reduceToDate) setEndDate(reduceToDate);
+        if (reduceKeyword) setKeyword(reduceKeyword);
+        if (reduceViewState) setViewState(reduceViewState);
     }, []);
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="economicResearchList">
@@ -175,7 +179,7 @@ const EconomicResearchList = () => {
                         검색
                     </Button>
                 </ButtonLayout>
-                <TableHeader />
+                <TableHeader type="economic-research" />
                 <ContentLine>
                     <ScrollX>
                         <Table style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
@@ -187,7 +191,7 @@ const EconomicResearchList = () => {
                                     <StyledTableCell style={{ width: '30%' }} align="center">
                                         제목
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ width: '5%' }} align="center">
+                                    <StyledTableCell style={{ width: '8%' }} align="center">
                                         상태
                                     </StyledTableCell>
                                     <StyledTableCell style={{ width: '12%' }} align="center">
@@ -205,7 +209,7 @@ const EconomicResearchList = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableRow hover className="link" onClick={() => handleClick()}>
+                                <TableRow hover className="link" onClick={handleClick}>
                                     <TableCell align="center" component="td" scope="row">
                                         2
                                     </TableCell>
@@ -228,7 +232,7 @@ const EconomicResearchList = () => {
                                         10,000,000
                                     </TableCell>
                                 </TableRow>
-                                <TableRow hover className="link" onClick={() => handleClick()}>
+                                <TableRow hover className="link" onClick={handleClick}>
                                     <TableCell align="center" component="td" scope="row">
                                         1
                                     </TableCell>
@@ -255,20 +259,15 @@ const EconomicResearchList = () => {
                         </Table>
                     </ScrollX>
                 </ContentLine>
-                <TablePagination
+                <Pagination
                     sx={{
-                        border: '1px solid #e6ebf1',
-                        borderTop: 'none',
-                        boxShadow: 'none',
-                        borderRadius: '0 0 2px 2px'
+                        background: '#fff',
+                        padding: '10px 0',
+                        display: 'flex',
+                        justifyContent: 'center'
                     }}
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={0}
-                    rowsPerPage={10}
-                    page={0}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    showFirstButton showLastButton
+                    count={500} variant="outlined" shape="rounded" onChange={handleChangePage}
                 />
             </Grid>
         </Grid>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, TextField, Button } from '@mui/material';
 import TopInputLayout from 'components/Common/TopInputLayout';
+import { humanFileSize } from 'utils/CommonUtils';
 import styles from './styles.module.scss';
 import cx from 'classnames';
 
@@ -30,7 +31,7 @@ const ShareSetting = ({ type, editMode }) => {
         }
     }
     useEffect(() => {
-        console.log('editMode', editMode);
+        // console.log('editMode', editMode);
     }, [editMode]);
 
     // 입력 박스 입력 시 호출
@@ -54,33 +55,13 @@ const ShareSetting = ({ type, editMode }) => {
         // 3.2MB로 계산하기
         formData.append('fileSize', humanFileSize(file_part.size, true, 2));
 
-        //console.log(formData);
-        insertChatFile(formData);
+        console.log(file_part);
+        console.log(file);
+        console.log(file_part.type);
+        console.log(humanFileSize(file_part.size, true, 2));
+        //insertChatFile(formData);
     };
-    function byteString(index) {
-        const units = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; //  : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 
-        // eslint-disable-next-line security/detect-object-injection
-        return units[index];
-    }
-    function humanFileSize(bytes, si = false, dp = 1) {
-        const thresh = si ? 1000 : 1024;
-
-        if (Math.abs(bytes) < thresh) {
-            return bytes + ' B';
-        }
-
-        //const units = si ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-        let u = -1;
-        const r = 10 ** dp;
-
-        do {
-            bytes /= thresh;
-            ++u;
-        } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < 8 - 1); // units.length - 1);
-
-        return bytes.toFixed(dp) + ' ' + byteString(u); // units[u];
-    }
     return (
         <>
             <div className="board--layout__title">
@@ -172,7 +153,7 @@ const ShareSetting = ({ type, editMode }) => {
                         <tr>
                             <th className={'tb--title'}>버튼명</th>
                             <td>
-                            {editMode ? (
+                                {editMode ? (
                                     <TextField
                                         type="text"
                                         size="small"
@@ -186,7 +167,6 @@ const ShareSetting = ({ type, editMode }) => {
                                 ) : (
                                     <>자세히 보기</>
                                 )}
-                                
                             </td>
                         </tr>
                     </tbody>

@@ -409,6 +409,14 @@ html [type='button'],
             &.add_file{
                 em{color:#999;font-size: 0.8rem;vertical-align: bottom;margin-left: 3px;}
             }
+            &.event_type{
+                .css-1xdpdky-MuiStack-root{
+                    display:none;
+                }
+                .result__list--date{
+                    margin-bottom: 0;
+                }
+            }
         }
         .width5{width:5%;}
         .width7{width:7%;}

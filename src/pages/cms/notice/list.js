@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import {
     Button,
     Grid,
@@ -29,6 +30,15 @@ import ContentLine from 'components/Common/ContentLine';
 import ErrorScreen from 'components/ErrorScreen';
 import ScrollX from 'components/Common/ScrollX';
 import styles from './styles.module.scss';
+import {
+    activeFromDate,
+    activeToDate,
+    activeCategory,
+    activeBannerNoti,
+    activeBannerState,
+    activeKeyword,
+    activePageNum
+} from 'store/reducers/cms/NoticeSearch';
 
 const NoticeList = () => {
     const [keyword, setKeyword] = useState(''); //검색 키워드
@@ -47,6 +57,8 @@ const NoticeList = () => {
             height: 35
         }
     }))(TableCell);
+    const { reduceFromDate, reduceToDate, reduceCategory, reduceBannerNoti, reduceBannerState, reduceKeyword } = useSelector((state) => state.cmsNotice);
+    const dispatch = useDispatch();
     ////////////////////////////////////////////////////
     // 공통 에러 처리
     const [open, setOpen] = useState(false);
@@ -86,7 +98,7 @@ const NoticeList = () => {
             case 'category_state': // 카테고리 변경시
                 setCategoryState(e.target.value);
                 break;
-            case 'radio-buttons':
+            case 'selectRadio':
                 setSelectedValue(e.target.value);
                 break;
             default:
@@ -113,6 +125,13 @@ const NoticeList = () => {
         console.log('searchClick called...');
         console.log(keyword, '|', from_date, '|', to_date);
         console.log(bannerNotice, '|', bannerState, '|', categoryState);
+        // 검색 조건에 대해서 상태를 저장한다.
+        dispatch(activeFromDate({ reduceFromDate: from_date }));
+        dispatch(activeToDate({ reduceToDate: to_date }));
+        dispatch(activeKeyword({ reduceKeyword: keyword }));
+        dispatch(activeCategory({ reduceCategory: categoryState }));
+        dispatch(activeBannerNoti({ reduceBannerNoti: bannerNotice }));
+        dispatch(activeBannerState({ reduceBannerState: bannerState }));
     };
     // 초기화
     const clearClick = () => {
@@ -126,30 +145,28 @@ const NoticeList = () => {
     const handleChangePage = (event, newPage) => {
         // setPage(newPage);
     };
-    const handleChangeRowsPerPage = (event) => {
-        // setRowsPerPage(+event.target.value);
-        // setPage(0);
-    };
     // 그리드 클릭
     const handleClick = (e) => {
-        console.log(e);
-        navigate(`/cms/notice/reg`);
+        if (e.target.name === 'selectRadio') return;
+        navigate(`/cms/notice/reg/123456789`);
         //if (rowData && rowData.field && rowData.field !== '__check__') {
         // navigate(`/projects/detail/${rowData.id}`);
         //}
     };
-    const checkedItemHandler = (id, isChecked) => {
-        // setIsAllChecked(false);
-        // if (isChecked) {
-        //     checkedBusinessItems.add(id);
-        //     setCheckedBusinessItems(checkedBusinessItems);
-        // } else if (!isChecked && checkedBusinessItems.has(id)) {
-        //     checkedBusinessItems.delete(id);
-        //     setCheckedBusinessItems(checkedBusinessItems);
-        // }
+    const newListAdd = () => {
+        navigate(`/cms/notice/reg`);
     };
     useEffect(() => {
-        
+        setStartDate(moment().format('YYYY-MM-DD'));
+        setEndDate(moment().format('YYYY-MM-DD'));
+
+        // reduce 상태값을 사용하여 검색을 수행한다.
+        if (reduceFromDate) setStartDate(reduceFromDate);
+        if (reduceToDate) setEndDate(reduceToDate);
+        if (reduceCategory) setCategoryState(reduceCategory);
+        if (reduceKeyword) setKeyword(reduceKeyword);
+        if (reduceBannerNoti) setBannerNotice(reduceBannerNoti);
+        if (reduceBannerState) setBannerState(reduceBannerState);
     }, []);
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className={styles.notceList}>
@@ -217,7 +234,7 @@ const NoticeList = () => {
                             handleChange={handleChange}
                             startName="from_date"
                             endName="to_date"
-                            noneChecked={"noneChecked"}
+                            noneChecked="noneChecked"
                             changeDate={changeDate}
                             resetPeriod={resetPeriod}
                         />
@@ -231,7 +248,7 @@ const NoticeList = () => {
                         검색
                     </Button>
                 </ButtonLayout>
-                <TableHeader />
+                <TableHeader type="notice" />
                 <ContentLine>
                     <ScrollX>
                         <Table style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
@@ -249,7 +266,7 @@ const NoticeList = () => {
                                     <StyledTableCell style={{ width: '5%' }} align="center">
                                         배너
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ width: '5%' }} align="center">
+                                    <StyledTableCell style={{ width: '8%' }} align="center">
                                         상태
                                     </StyledTableCell>
                                     <StyledTableCell style={{ width: '12%' }} align="center">
@@ -273,7 +290,7 @@ const NoticeList = () => {
                                             checked={selectedValue === 'a'}
                                             onChange={handleChange}
                                             value="a"
-                                            name="radio-buttons"
+                                            name="selectRadio"
                                             inputProps={{ 'aria-label': 'A' }}
                                         />
                                     </TableCell>
@@ -293,7 +310,7 @@ const NoticeList = () => {
                                         2022-03-15 12:00:00
                                     </TableCell>
                                     <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                    2022-03-15 12:00:00
+                                        2022-03-15 12:00:00
                                     </TableCell>
                                     <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
                                         UserID
@@ -308,7 +325,7 @@ const NoticeList = () => {
                                             checked={selectedValue === 'b'}
                                             onChange={handleChange}
                                             value="b"
-                                            name="radio-buttons"
+                                            name="selectRadio"
                                             inputProps={{ 'aria-label': 'B' }}
                                         />
                                     </TableCell>
@@ -348,8 +365,12 @@ const NoticeList = () => {
                         display: 'flex',
                         justifyContent: 'center'
                     }}
-                    showFirstButton showLastButton
-                    count={500} variant="outlined" shape="rounded" onChange={handleChangePage}
+                    showFirstButton
+                    showLastButton
+                    count={500}
+                    variant="outlined"
+                    shape="rounded"
+                    onChange={handleChangePage}
                 />
             </Grid>
         </Grid>

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import HeaderTitle from 'components/HeaderTitle';
 import PostSetting from 'components/board/PostSetting';
@@ -9,19 +10,22 @@ import BottomButtonSet from 'components/board/BottomButtonSet';
 import styles from './styles.module.scss';
 
 const NoticeView = () => {
-    // 입력 값
-    const [id, setId] = useState('');
-    // 제목
-    const [title, setTitle] = useState('');
     //수정모드
     const [editMode, setEditMode] = useState(false);
-    
+    //상세번호
+    const { paramId } = useParams();
     const changeEditState = () => {
         setEditMode(true);
     };
     useEffect(() => {
-        console.log('editMode', editMode);
+        // console.log('editMode', editMode);
     }, [editMode]);
+    useEffect(() => {
+        console.log('paramId', paramId);
+        if (!paramId) {
+            setEditMode(true);
+        }
+    }, [paramId]);
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className={styles.notceView}>
             <Grid item xs={12}>

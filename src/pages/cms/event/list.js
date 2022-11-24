@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import {
     Button,
     TextField,
@@ -31,6 +32,14 @@ import ContentLine from 'components/Common/ContentLine';
 import TableHeader from 'components/Table/TableHeader';
 import ErrorScreen from 'components/ErrorScreen';
 import ScrollX from 'components/Common/ScrollX';
+import {
+    activeFromDate,
+    activeToDate,
+    activeViewState,
+    activeKeyword,
+    activeEventType,
+    activePageNum
+} from 'store/reducers/cms/EventSearch';
 import styles from './styles.module.scss';
 import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark';
 
@@ -42,12 +51,15 @@ const EventList = () => {
     const [typeState, setTypeState] = useState(0); // 선택한 유형
     const [viewState, setViewState] = useState(0); // 선택한 상태
     const [selectedValue,setSelectedValue] = useState(''); // 선택라인
+    const navigate = useNavigate();
     const StyledTableCell = withStyles((theme) => ({
         root: {
             padding: '0px 16px',
             height: 35
         }
     }))(TableCell);
+    const { reduceFromDate, reduceToDate, reduceKeyword, reduceEventType, reduceViewState } = useSelector((state) => state.cmsEvent);
+    const dispatch = useDispatch();
     ////////////////////////////////////////////////////
     // 공통 에러 처리
     const [open, setOpen] = useState(false);
@@ -108,6 +120,12 @@ const EventList = () => {
         console.log('searchClick called...');
         console.log(keyword, '|', from_date, '|', to_date);
         console.log(viewState, '|', typeState);
+
+        dispatch(activeFromDate({ reduceFromDate: from_date }));
+        dispatch(activeToDate({ reduceToDate: to_date }));
+        dispatch(activeKeyword({ reduceKeyword: keyword }));
+        dispatch(activeViewState({ reduceViewState: viewState }));
+        dispatch(activeEventType({ reduceEventType: typeState }));
     };
     // 초기화
     const clearClick = () => {
@@ -121,13 +139,10 @@ const EventList = () => {
         console.log(event, newPage);
         // setPage(newPage);
     };
-    const handleChangeRowsPerPage = (event) => {
-        console.log(event);
-        // setRowsPerPage(+event.target.value);
-        // setPage(0);
-    };
     // 그리드 클릭
-    const handleClick = (rowData) => {
+    const handleClick = (e) => {
+        // console.log(e);
+        navigate(`/cms/event/reg/45464564`);
         //if (rowData && rowData.field && rowData.field !== '__check__') {
         // navigate(`/projects/detail/${rowData.id}`);
         //}
@@ -143,7 +158,15 @@ const EventList = () => {
         // }
     };
     useEffect(() => {
-        
+        setStartDate(moment().format('YYYY-MM-DD'));
+        setEndDate(moment().format('YYYY-MM-DD'));
+
+        // reduce 상태값을 사용하여 검색을 수행한다.
+        if (reduceFromDate) setStartDate(reduceFromDate);
+        if (reduceToDate) setEndDate(reduceToDate);
+        if (reduceKeyword) setKeyword(reduceKeyword);
+        if (reduceViewState) setViewState(reduceViewState);
+        if (reduceEventType) setTypeState(reduceEventType);
     }, []);
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="eventList">
@@ -194,7 +217,7 @@ const EventList = () => {
                         검색
                     </Button>
                 </ButtonLayout>
-                <TableHeader />
+                <TableHeader type="event" />
                 <ContentLine>
                     <ScrollX>
                         <Table style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
@@ -206,7 +229,7 @@ const EventList = () => {
                                     <StyledTableCell style={{ width: '30%' }} align="center">
                                         제목
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ width: '5%' }} align="center">
+                                    <StyledTableCell style={{ width: '8%' }} align="center">
                                         상태
                                     </StyledTableCell>
                                     <StyledTableCell style={{ width: '12%' }} align="center">
@@ -224,7 +247,7 @@ const EventList = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableRow hover className="link" onClick={() => handleClick()}>
+                                <TableRow hover className="link" onClick={handleClick}>
                                     <TableCell align="center" component="td" scope="row">
                                         2
                                     </TableCell>
@@ -247,7 +270,7 @@ const EventList = () => {
                                         10,000,000
                                     </TableCell>
                                 </TableRow>
-                                <TableRow hover className="link" onClick={() => handleClick()}>
+                                <TableRow hover className="link" onClick={handleClick}>
                                     <TableCell align="center" component="td" scope="row">
                                         1
                                     </TableCell>
