@@ -13,6 +13,8 @@ import ButtonLayout from '../../../components/Common/ButtonLayout';
 import axiosInstanceDefault from '../../../apis/axiosDefault';
 import { doEncrypt } from '../../../utils/Crypt';
 import PrivateReasonDialog from '../../popup/PrivateResonPopup';
+import { decimalPoint } from 'utils/DecimalPointCheck';
+import { DecimalPointRegex } from 'utils/Regex';
 
 const useStyles = makeStyles({
     tableRow: {
@@ -132,6 +134,8 @@ const ProjectMng = (props) => {
     const refPriceKRW = useRef();
     const refPriceBTC = useRef();
     const [krw_ico_date, setKrw_ico_date] = useState('');
+    const [priceKRW, setPriceKRW] = useState('');
+    const [priceBTC, setPriceBTC] = useState('');
     const [btc_ico_date, setBtc_ico_date] = useState('');
 
     // 프로젝트 연결 검색 항목 정의
@@ -572,8 +576,6 @@ const ProjectMng = (props) => {
         console.log(e);
     };
     const handleChange = (e) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
         switch (e.target.name) {
             case 'contract_code':
                 // 진행상태 출력.
@@ -599,6 +601,17 @@ const ProjectMng = (props) => {
             case 'krw_ico_date':
                 setKrw_ico_date(e.target.value);
                 break;
+            case 'price_krw':
+                if (DecimalPointRegex.test(e.target.value)) {
+                    setPriceKRW(e.target.value);
+                }
+                break;
+            case 'price_btc':
+                if (DecimalPointRegex.test(e.target.value)) {
+                    setPriceBTC(e.target.value);
+                }
+                break;
+
             default:
                 break;
         }
@@ -656,18 +669,25 @@ const ProjectMng = (props) => {
     };
     // 마케팅 수량 관련 항목
     const handleMinimumQuantityChange = (evt, idx) => {
-        const newData = marketingList.map((item, index) => {
-            if (idx !== index) return item;
-            return { ...item, minimum_quantity: evt.target.value };
-        });
-        setMarketingList(newData);
+        if (DecimalPointRegex.test(evt.target.value)) {
+            const newData = marketingList.map((item, index) => {
+                if (idx !== index) {
+                    return item;
+                }
+
+                return { ...item, minimum_quantity: evt.target.value };
+            });
+            setMarketingList(newData);
+        }
     };
     const handleActualQuantityChange = (evt, idx) => {
-        const newData = marketingList.map((item, index) => {
-            if (idx !== index) return item;
-            return { ...item, actual_quantity: evt.target.value };
-        });
-        setMarketingList(newData);
+        if (DecimalPointRegex.test(evt.target.value)) {
+            const newData = marketingList.map((item, index) => {
+                if (idx !== index) return item;
+                return { ...item, actual_quantity: evt.target.value };
+            });
+            setMarketingList(newData);
+        }
     };
     // 검토평가 - 평가 기관
     const handleOrganizationChange = (evt, idx) => {
@@ -807,11 +827,6 @@ const ProjectMng = (props) => {
         }
         if (refSymbol.current.value.length === 0) {
             alert('심볼을 입력해주세요.');
-            return;
-        }
-        const regex1 = /^[a-zA-Z0-9\s]*$/;
-        if (!regex1.test(refProject_name.current.value)) {
-            alert('유효하지 않은 프로젝트명입니다.');
             return;
         }
 
@@ -1271,24 +1286,30 @@ const ProjectMng = (props) => {
                                         />
                                     </td>
                                     <td>
-                                        <TextField
-                                            id="outlined-multiline-static"
-                                            size="medium"
-                                            value={item.minimum_quantity}
-                                            onKeyPress={numberCheck}
-                                            fullWidth
-                                            onChange={(e) => handleMinimumQuantityChange(e, index)}
-                                        />
+                                        <div className={'decimal_point_td'}>
+                                            <TextField
+                                                id="outlined-multiline-static"
+                                                size="medium"
+                                                value={item.minimum_quantity}
+                                                onKeyPress={numberCheck}
+                                                fullWidth
+                                                onChange={(e) => handleMinimumQuantityChange(e, index)}
+                                            />
+                                            <span>{decimalPoint(item.minimum_quantity)}</span>
+                                        </div>
                                     </td>
                                     <td>
-                                        <TextField
-                                            id="outlined-multiline-static"
-                                            size="medium"
-                                            value={item.actual_quantity}
-                                            onKeyPress={numberCheck}
-                                            fullWidth
-                                            onChange={(e) => handleActualQuantityChange(e, index)}
-                                        />
+                                        <div className={'decimal_point_td'}>
+                                            <TextField
+                                                id="outlined-multiline-static"
+                                                size="medium"
+                                                value={item.actual_quantity}
+                                                onKeyPress={numberCheck}
+                                                fullWidth
+                                                onChange={(e) => handleActualQuantityChange(e, index)}
+                                            />
+                                            <span>{decimalPoint(item.actual_quantity)}</span>
+                                        </div>
                                     </td>
                                     <td style={{ width: '100px' }}>
                                         {item.id === '' && (
@@ -1455,13 +1476,19 @@ const ProjectMng = (props) => {
                                     />
                                 </td>
                                 <td>
-                                    <TextField
-                                        id="outlined-multiline-static"
-                                        size="medium"
-                                        inputRef={refPriceKRW}
-                                        onKeyPress={numberCheck}
-                                        fullWidth
-                                    />
+                                    <div className={'decimal_point_td'}>
+                                        <TextField
+                                            id="outlined-multiline-static"
+                                            size="medium"
+                                            name="price_krw"
+                                            value={priceKRW}
+                                            onChange={handleChange}
+                                            inputRef={refPriceKRW}
+                                            onKeyPress={numberCheck}
+                                            fullWidth
+                                        />
+                                        <span>{decimalPoint(priceKRW)}</span>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -1479,13 +1506,19 @@ const ProjectMng = (props) => {
                                     />
                                 </td>
                                 <td>
-                                    <TextField
-                                        id="outlined-multiline-static"
-                                        size="medium"
-                                        inputRef={refPriceBTC}
-                                        onKeyPress={numberCheck}
-                                        fullWidth
-                                    />
+                                    <div className={'decimal_point_td'}>
+                                        <TextField
+                                            id="outlined-multiline-static"
+                                            name="price_btc"
+                                            size="medium"
+                                            value={priceBTC}
+                                            onChange={handleChange}
+                                            inputRef={refPriceBTC}
+                                            onKeyPress={numberCheck}
+                                            fullWidth
+                                        />
+                                        <span>{decimalPoint(priceBTC)}</span>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
