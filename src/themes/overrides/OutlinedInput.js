@@ -17,6 +17,9 @@ export default function OutlinedInput(theme) {
                     '&:hover .MuiOutlinedInput-notchedOutline': {
                         borderColor: theme.palette.primary.light
                     },
+                    '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
+                        borderColor: theme.palette.grey[300]
+                    },
                     '&.Mui-focused': {
                         boxShadow: `0 0 0 2px ${alpha(theme.palette.primary.main, 0.2)}`,
                         '& .MuiOutlinedInput-notchedOutline': {

@@ -5,14 +5,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import DropInput from 'components/Common/DropInput';
-import SearchDate from 'components/ContentManage/SearchDate';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import Editor from 'components/editor/index';
 import { humanFileSize } from 'utils/CommonUtils';
 import cx from 'classnames';
 import moment from 'moment';
 import EventModal from './EventModal';
+import CustomTextfield from './component/CustomTextfield';
 import styles from './styles.module.scss';
 
 const DetailContens = ({ type, editMode }) => {
@@ -21,11 +20,13 @@ const DetailContens = ({ type, editMode }) => {
     // 카테고리1
     const [category1, setCategory1] = useState(0);
     // 카테고리2 리스트
-    const [categoryList2, setCategoryList2] = useState(["카테1","카테2","카테3","카테4","카테5"]);
+    const [categoryList2, setCategoryList2] = useState(['카테1', '카테2', '카테3', '카테4', '카테5']);
     // 카테고리2
     const [category2, setCategory2] = useState(0);
     // 제목
-    const [title, setTitle] = useState('');
+    const [title, setTitle] = useState(
+        '전기통신금융사기 주의 안내(공공기관, 수사기관 사칭) 제목이 길어지는 경우 모두 출력합니다. 제목이 길어지는 경우 모두 출력합니다. 제목이 길어지는 경우 모두 출력합니다.'
+    );
     // 상단고정 여부
     const [notiTopType, setNotiTopType] = useState('1');
     // 공개 여부 상태
@@ -56,6 +57,8 @@ const DetailContens = ({ type, editMode }) => {
     const [eventJoinMsg, setEventJoinMsg] = useState('');
     // 이벤트 중복 참여 메시지
     const [eventOverlapMsg, setEventOverlapMsg] = useState('');
+    // 버튼, 버튼명 필드
+    const [disableBtnBool, setDisableBtnBool] = useState(false);
 
     // 파일 정보
     const [file_part, setFilePart] = useState(); //파일 정보
@@ -89,10 +92,38 @@ const DetailContens = ({ type, editMode }) => {
                 .format('YYYY.MM.DD')
         );
     }, []);
+    useEffect(() => {
+        const private_btn = document.querySelector('.private_btn');
+        if (!private_btn) return;
+        if (targetPerson === '2') {
+            private_btn.classList.add('Mui-disabled');
+        } else {
+            private_btn.classList.remove('Mui-disabled');
+        }
+    }, [targetPerson]);
+    useEffect(() => {
+        switch (eventType) {
+            case '1':
+                setDisableBtnBool(true);
+                break;
+            case '2':
+                setDisableBtnBool(false);
+                setTargetPerson(1);
+                break;
+            case '3':
+                setDisableBtnBool(false);
+                setTargetPerson(1);
+                break;
+            default:
+                return;
+        }
+    }, [eventType]);
     const typeChanged = (e) => {
         switch (e.target.name) {
             case 'cate1':
                 setCategory1(e.target.value);
+                console.log(e.target.value);
+                setCategoryList2(['카테고리1', '카테고리1', '카테고리1', '카테고리1', '카테고리1', '카테고리1']);
                 break;
             case 'cate2':
                 setCategory2(e.target.value);
@@ -111,57 +142,40 @@ const DetailContens = ({ type, editMode }) => {
                 break;
             case 'targetPerson':
                 setTargetPerson(e.target.value);
-                const private_btn = document.querySelector('.private_btn');
-                if(e.target.value === '2'){
-                    private_btn.classList.add('Mui-disabled')
-                }else{
-                    private_btn.classList.remove('Mui-disabled')
-                }
                 break;
             default:
                 return;
         }
     };
-    const handleBlur = () => {};
     const handleChange = (e) => {
         switch (e.target.name) {
             case 'title':
                 setTitle(e.target.value);
                 break;
             case 'eventBtnName':
+                if (e.target.value.length > 10) return;
                 setEventBtnName(e.target.value);
                 break;
             case 'eventBtnColor':
+                if (e.target.value.length > 10) return;
                 setEventBtnColor(e.target.value);
                 break;
             case 'eventLink':
                 setEventLink(e.target.value);
                 break;
             case 'eventJoinMsg':
+                if (e.target.value.length > 20) return;
                 setEventJoinMsg(e.target.value);
                 break;
             case 'eventOverlapMsg':
+                if (e.target.value.length > 20) return;
                 setEventOverlapMsg(e.target.value);
                 break;
             default:
                 return;
         }
     };
-    // 날자 변경 함수
-    const changeDate = (type, e) => {
-        switch (type) {
-            case 'start':
-                setStartDate(e);
-                break;
-            case 'end':
-                setEndDate(e);
-                break;
-            default:
-                break;
-        }
-    };
-    // 날자 검색 타입 초기화 함수
-    const resetPeriod = () => {};
+
     // 입력 박스 입력 시 호출
     const fileHandleChange = (e) => {
         if (!e.target.files[0]) {
@@ -238,9 +252,9 @@ const DetailContens = ({ type, editMode }) => {
                                         value={category2}
                                         onChange={typeChanged}
                                     >
-                                        {categoryList1.map((item, index) => {
+                                        {categoryList2.map((item, index) => {
                                             return (
-                                                <MenuItem value={index} key={item}>
+                                                <MenuItem value={index} key={index}>
                                                     {item}
                                                 </MenuItem>
                                             );
@@ -257,23 +271,13 @@ const DetailContens = ({ type, editMode }) => {
                     <tr>
                         <th className={'tb--title'}>제목</th>
                         <td className={'width15'} colSpan="7">
-                            {editMode ? (
-                                <TextField
-                                    type="text"
-                                    size="small"
-                                    value={title}
-                                    name="title"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    placeholder="제목을 입력해 주세요."
-                                    fullWidth
-                                />
-                            ) : (
-                                <>
-                                    전기통신금융사기 주의 안내(공공기관, 수사기관 사칭) 제목이 길어지는 경우 모두 출력합니다. 제목이
-                                    길어지는 경우 모두 출력합니다. 제목이 길어지는 경우 모두 출력합니다.
-                                </>
-                            )}
+                            <CustomTextfield
+                                editMode={editMode}
+                                value={title}
+                                name="title"
+                                change={handleChange}
+                                holder="제목을 입력해 주세요."
+                            />
                         </td>
                     </tr>
                     {type === 'notice' ? (
@@ -473,59 +477,57 @@ const DetailContens = ({ type, editMode }) => {
                                             </Select>
                                             <div className="eventDateWrap">
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                    {eventType === '2'?
-                                                        (
-                                                            <>
-                                                                <DateTimePicker
-                                                                    className="event_start_date"
-                                                                    renderInput={(props) => <TextField {...props} />}
-                                                                    label="연도. 월. 일 시:분"
-                                                                    inputFormat="YYYY-MM-DD A hh:mm"
-                                                                    value={startDate}
-                                                                    onChange={(newValue) => {
-                                                                        setStartDate(newValue);
-                                                                    }}
-                                                                />
-                                                                <span className={styles.event_wave}> ~ </span>
-                                                                <DateTimePicker
-                                                                    className="event_end_date"
-                                                                    renderInput={(props) => <TextField {...props} />}
-                                                                    label="연도. 월. 일 시:분"
-                                                                    inputFormat="YYYY-MM-DD A hh:mm"
-                                                                    value={endDate}
-                                                                    onChange={(newValue) => {
-                                                                        setEndDate(newValue);
-                                                                    }}
-                                                                />
-                                                            </>
-                                                        ):(
-                                                            <>
-                                                                <DateTimePicker
-                                                                    disabled
-                                                                    className="event_start_date"
-                                                                    renderInput={(props) => <TextField {...props} />}
-                                                                    label="연도. 월. 일 시:분"
-                                                                    inputFormat="YYYY-MM-DD A hh:mm"
-                                                                    value={startDate}
-                                                                    onChange={(newValue) => {
-                                                                        setStartDate(newValue);
-                                                                    }}
-                                                                />
-                                                                <span className={styles.event_wave}> ~ </span>
-                                                                <DateTimePicker
-                                                                    disabled
-                                                                    className="event_end_date"
-                                                                    renderInput={(props) => <TextField {...props} />}
-                                                                    label="연도. 월. 일 시:분"
-                                                                    inputFormat="YYYY-MM-DD A hh:mm"
-                                                                    value={endDate}
-                                                                    onChange={(newValue) => {
-                                                                        setEndDate(newValue);
-                                                                    }}
-                                                                />
-                                                            </>
-                                                        )
-                                                    }
+                                                    {eventType === '2' ? (
+                                                        <>
+                                                            <DateTimePicker
+                                                                className="event_start_date"
+                                                                renderInput={(props) => <TextField {...props} />}
+                                                                label="연도. 월. 일 시:분"
+                                                                inputFormat="YYYY-MM-DD A hh:mm"
+                                                                value={startDate}
+                                                                onChange={(newValue) => {
+                                                                    setStartDate(newValue);
+                                                                }}
+                                                            />
+                                                            <span className={styles.event_wave}> ~ </span>
+                                                            <DateTimePicker
+                                                                className="event_end_date"
+                                                                renderInput={(props) => <TextField {...props} />}
+                                                                label="연도. 월. 일 시:분"
+                                                                inputFormat="YYYY-MM-DD A hh:mm"
+                                                                value={endDate}
+                                                                onChange={(newValue) => {
+                                                                    setEndDate(newValue);
+                                                                }}
+                                                            />
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <DateTimePicker
+                                                                disabled
+                                                                className="event_start_date"
+                                                                renderInput={(props) => <TextField {...props} />}
+                                                                label="연도. 월. 일 시:분"
+                                                                inputFormat="YYYY-MM-DD A hh:mm"
+                                                                value={startDate}
+                                                                onChange={(newValue) => {
+                                                                    setStartDate(newValue);
+                                                                }}
+                                                            />
+                                                            <span className={styles.event_wave}> ~ </span>
+                                                            <DateTimePicker
+                                                                disabled
+                                                                className="event_end_date"
+                                                                renderInput={(props) => <TextField {...props} />}
+                                                                label="연도. 월. 일 시:분"
+                                                                inputFormat="YYYY-MM-DD A hh:mm"
+                                                                value={endDate}
+                                                                onChange={(newValue) => {
+                                                                    setEndDate(newValue);
+                                                                }}
+                                                            />
+                                                        </>
+                                                    )}
                                                 </LocalizationProvider>
                                             </div>
                                         </>
@@ -540,30 +542,57 @@ const DetailContens = ({ type, editMode }) => {
                                 <td className={'width15'} colSpan="3">
                                     {editMode ? (
                                         <>
-                                            <Select
-                                                className={styles.detail_select}
-                                                name="targetPerson"
-                                                label="참여 대상"
-                                                value={targetPerson}
-                                                onChange={typeChanged}
-                                            >
-                                                <MenuItem value="1">로그인 회원</MenuItem>
-                                                <MenuItem value="2">비로그인 회원</MenuItem>
-                                            </Select>
-                                            <Button
-                                                className={`${styles.insert_private} private_btn`}
-                                                disableElevation
-                                                size="medium"
-                                                type="button"
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={() =>{
-                                                    handleOpen(1);
-                                                }}
-                                                
-                                            >
-                                                개인정보 수집 및 이용 동의 입력
-                                            </Button>
+                                            {eventType != '1' ? (
+                                                <>
+                                                    <Select
+                                                        className={styles.detail_select}
+                                                        name="targetPerson"
+                                                        label="참여 대상"
+                                                        value={targetPerson}
+                                                        onChange={typeChanged}
+                                                    >
+                                                        <MenuItem value="1">로그인 회원</MenuItem>
+                                                        <MenuItem value="2">비로그인 회원</MenuItem>
+                                                    </Select>
+                                                    <Button
+                                                        className={`${styles.insert_private} private_btn`}
+                                                        disableElevation
+                                                        size="medium"
+                                                        type="button"
+                                                        variant="contained"
+                                                        color="primary"
+                                                        onClick={() =>{
+                                                            handleOpen(1);
+                                                        }}
+                                                    >
+                                                        개인정보 수집 및 이용 동의 입력
+                                                    </Button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Select
+                                                        disabled
+                                                        className={styles.detail_select}
+                                                        name="targetPerson"
+                                                        label="참여 대상"
+                                                        value={targetPerson}
+                                                    >
+                                                        <MenuItem value="1">로그인 회원</MenuItem>
+                                                        <MenuItem value="2">비로그인 회원</MenuItem>
+                                                    </Select>
+                                                    <Button
+                                                        disabled
+                                                        className={`${styles.insert_private} private_btn`}
+                                                        disableElevation
+                                                        size="medium"
+                                                        type="button"
+                                                        variant="contained"
+                                                        color="primary"
+                                                    >
+                                                        개인정보 수집 및 이용 동의 입력
+                                                    </Button>
+                                                </>
+                                            )}
                                         </>
                                     ) : (
                                         <>
@@ -575,7 +604,9 @@ const DetailContens = ({ type, editMode }) => {
                                                 type="button"
                                                 variant="contained"
                                                 color="primary"
-                                                onClick={()=>{handleOpen(0)}}
+                                                onClick={() => {
+                                                    handleOpen(0);
+                                                }}
                                             >
                                                 참여자 정보 다운로드
                                             </Button>
@@ -586,56 +617,41 @@ const DetailContens = ({ type, editMode }) => {
                             <tr>
                                 <th className={'tb--title'}>버튼명</th>
                                 <td className={'width15'} colSpan="3">
-                                    {editMode ? (
-                                        <TextField
-                                            type="text"
-                                            size="small"
-                                            value={eventBtnName}
-                                            name="eventBtnName"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="버튼명을 입력해 주세요."
-                                            fullWidth
-                                        />
-                                    ) : (
-                                        <>참여하기</>
-                                    )}
+                                    <CustomTextfield
+                                        typeNum={eventType}
+                                        editMode={editMode}
+                                        value={eventBtnName}
+                                        name="eventBtnName"
+                                        change={handleChange}
+                                        holder="버튼명을 입력해 주세요."
+                                        accessWap={[2, 3]}
+                                    />
                                 </td>
                                 <th className="tb--title">버튼 색상</th>
                                 <td className="width15" colSpan="3">
-                                    {editMode ? (
-                                        <TextField
-                                            type="text"
-                                            size="small"
-                                            value={eventBtnColor}
-                                            name="eventBtnColor"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="버튼색상을 입력해 주세요."
-                                            fullWidth
-                                        />
-                                    ) : (
-                                        <>#fff</>
-                                    )}
+                                    <CustomTextfield
+                                        typeNum={eventType}
+                                        editMode={editMode}
+                                        value={eventBtnColor}
+                                        name="eventBtnColor"
+                                        change={handleChange}
+                                        holder="버튼색상을 입력해 주세요."
+                                        accessWap={[2, 3]}
+                                    />
                                 </td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>버튼 링크경로</th>
                                 <td className={'width15'} colSpan="7">
-                                    {editMode ? (
-                                        <TextField
-                                            type="text"
-                                            size="small"
-                                            value={eventLink}
-                                            name="eventLink"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="링크를 입력해 주세요."
-                                            fullWidth
-                                        />
-                                    ) : (
-                                        <>-</>
-                                    )}
+                                    <CustomTextfield
+                                        typeNum={eventType}
+                                        editMode={editMode}
+                                        value={eventLink}
+                                        name="eventLink"
+                                        change={handleChange}
+                                        holder="링크를 입력해 주세요."
+                                        accessWap={[3]}
+                                    />
                                 </td>
                             </tr>
                             <tr>
@@ -644,39 +660,29 @@ const DetailContens = ({ type, editMode }) => {
                                 </th>
                                 <th className={'tb--title'}>참여 완료 시</th>
                                 <td className={'width15'} colSpan="6">
-                                    {editMode ? (
-                                        <TextField
-                                            type="text"
-                                            size="small"
-                                            value={eventJoinMsg}
-                                            name="eventJoinMsg"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="메세지를 입력해 주세요."
-                                            fullWidth
-                                        />
-                                    ) : (
-                                        <>응모하였습니다. 참여해 주셔서 감사합니다.</>
-                                    )}
+                                    <CustomTextfield
+                                        typeNum={eventType}
+                                        editMode={editMode}
+                                        value={eventJoinMsg}
+                                        name="eventJoinMsg"
+                                        change={handleChange}
+                                        holder="메세지를 입력해 주세요."
+                                        accessWap={[2]}
+                                    />
                                 </td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>중복 완료 시</th>
                                 <td className={'width15'} colSpan="6">
-                                    {editMode ? (
-                                        <TextField
-                                            type="text"
-                                            size="small"
-                                            value={eventOverlapMsg}
-                                            name="eventOverlapMsg"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            placeholder="메세지를 입력해 주세요."
-                                            fullWidth
-                                        />
-                                    ) : (
-                                        <>이미 응모하신 이벤트입니다.</>
-                                    )}
+                                    <CustomTextfield
+                                        typeNum={eventType}
+                                        editMode={editMode}
+                                        value={eventOverlapMsg}
+                                        name="eventOverlapMsg"
+                                        change={handleChange}
+                                        holder="메세지를 입력해 주세요."
+                                        accessWap={[2]}
+                                    />
                                 </td>
                             </tr>
                         </>
