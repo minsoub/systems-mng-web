@@ -30,6 +30,36 @@ export const decimalPoint = (value) => {
             case 8:
                 result = '소수점 여덟자리';
                 break;
+            case 9:
+                result = '소수점 아홉자리';
+                break;
+            case 10:
+                result = '소수점 열자리';
+                break;
+            case 11:
+                result = '소수점 열한자리';
+                break;
+            case 12:
+                result = '소수점 열두자리';
+                break;
+            case 13:
+                result = '소수점 열세자리';
+                break;
+            case 14:
+                result = '소수점 열네자리';
+                break;
+            case 15:
+                result = '소수점 열다섯자리';
+                break;
+            case 16:
+                result = '소수점 열여섯자리';
+                break;
+            case 17:
+                result = '소수점 열일곱자리';
+                break;
+            case 18:
+                result = '소수점 열여덟자리';
+                break;
             default:
                 break;
         }
