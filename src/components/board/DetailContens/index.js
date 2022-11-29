@@ -19,20 +19,20 @@ import styles from './styles.module.scss';
 const DetailContens = ({ type, editMode }) => {
     // 카테고리1 리스트
     const [categoryList1, setCategoryList1] = useState([
-        { name: '카테1', value: 1 },
-        { name: '카테2', value: 2 },
-        { name: '카테3', value: 3 },
-        { name: '카테4', value: 4 }
+        { name: '카테1', id: 1 },
+        { name: '카테2', id: 2 },
+        { name: '카테3', id: 3 },
+        { name: '카테4', id: 4 }
     ]);
     // 카테고리1
     const [category1, setCategory1] = useState(2);
     // 카테고리2 리스트
     const [categoryList2, setCategoryList2] = useState([
-        { name: '카테고리1', value: 1 },
-        { name: '카테고리2', value: 2 },
-        { name: '카테고리3', value: 3 },
-        { name: '카테고리4', value: 4 },
-        { name: '카테고리5', value: 5 }
+        { name: '카테고리1', id: 1 },
+        { name: '카테고리2', id: 2 },
+        { name: '카테고리3', id: 3 },
+        { name: '카테고리4', id: 4 },
+        { name: '카테고리5', id: 5 }
     ]);
     // 카테고리2
     const [category2, setCategory2] = useState(3);
@@ -44,15 +44,15 @@ const DetailContens = ({ type, editMode }) => {
     const [notiTopType, setNotiTopType] = useState(1);
     // 상단고정 셀렉박스
     const notiSelectList = [
-        { name: '일반', value: 1 },
-        { name: '고정', value: 2 }
+        { name: '일반', id: 1 },
+        { name: '고정', id: 2 }
     ];
     // 공개 여부 상태
     const [visibleState, setVisibleState] = useState(1);
     // 공개여부 셀렉박스
     const visibleSelectList = [
-        { name: '공개', value: 1 },
-        { name: '비공개', value: 2 }
+        { name: '공개', id: 1 },
+        { name: '비공개', id: 2 }
     ];
     // 게시예약
     const [reservationState, setReservationState] = useState(false);
@@ -238,28 +238,17 @@ const DetailContens = ({ type, editMode }) => {
                                         </FormGroup>
                                     </FormControl>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        {reservationState ? (
-                                            <DateTimePicker
-                                                className="event_start_date"
-                                                renderInput={(props) => <TextField {...props} />}
-                                                label="연도. 월. 일 시:분"
-                                                inputFormat="YYYY-MM-DD A hh:mm"
-                                                value={reservationDate}
-                                                onChange={(newValue) => {
-                                                    setReservationDate(newValue);
-                                                }}
-                                            />
-                                        ) : (
-                                            <DateTimePicker
-                                                className="event_start_date"
-                                                renderInput={(props) => <TextField {...props} />}
-                                                label="연도. 월. 일 시:분"
-                                                inputFormat="YYYY-MM-DD A hh:mm"
-                                                value={reservationDate}
-                                                disabled
-                                                onChange={(newValue) => {}}
-                                            />
-                                        )}
+                                        <DateTimePicker
+                                            disabled={!reservationState}
+                                            className="event_start_date"
+                                            renderInput={(props) => <TextField {...props} />}
+                                            label="연도. 월. 일 시:분"
+                                            inputFormat="YYYY-MM-DD A hh:mm"
+                                            value={reservationDate}
+                                            onChange={(newValue) => {
+                                                setReservationDate(newValue);
+                                            }}
+                                        />
                                     </LocalizationProvider>
                                 </>
                             ) : (

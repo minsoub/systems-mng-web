@@ -19,17 +19,19 @@ const EventContents = ({ editMode, handleOpen }) => {
     // 개인정보 수집 및  이용동의
     const [privateText, setPrivateText] = useState('');
     // 이벤트 버튼명
-    const [eventBtnName, setEventBtnName] = useState('');
+    const [eventBtnName, setEventBtnName] = useState('버튼명');
     // 버튼 색상
-    const [eventBtnColor, setEventBtnColor] = useState('');
+    const [eventBtnColor, setEventBtnColor] = useState('#ff0000');
     // 버튼 링크 경로
-    const [eventLink, setEventLink] = useState('');
+    const [eventLink, setEventLink] = useState('https://www.bithumb.com/');
     // 이벤트 참여 완료 메시지
-    const [eventJoinMsg, setEventJoinMsg] = useState('');
+    const [eventJoinMsg, setEventJoinMsg] = useState('응모완료 되었습니다.');
     // 이벤트 중복 참여 메시지
-    const [eventOverlapMsg, setEventOverlapMsg] = useState('');
+    const [eventOverlapMsg, setEventOverlapMsg] = useState('이미 참여 하였습니다.');
     // 버튼, 버튼명 필드
     const [disableBtnBool, setDisableBtnBool] = useState(false);
+    // 이벤트 기간필드
+    const [disableEventDateBool, setDisableEventDateBool] = useState(false);
 
     useEffect(() => {
         setStartDate(
@@ -46,25 +48,28 @@ const EventContents = ({ editMode, handleOpen }) => {
     useEffect(() => {
         const private_btn = document.querySelector('.private_btn');
         if (!private_btn) return;
-        if (targetPerson === '2') {
+        if ((targetPerson === '2' && !disableBtnBool) || eventType === '1') {
             private_btn.classList.add('Mui-disabled');
         } else {
             private_btn.classList.remove('Mui-disabled');
         }
-    }, [targetPerson]);
+    }, [targetPerson, disableBtnBool, eventType]);
 
     useEffect(() => {
         switch (eventType) {
             case '1':
+                setDisableEventDateBool(true);
                 setDisableBtnBool(true);
                 break;
             case '2':
+                setDisableEventDateBool(false);
                 setDisableBtnBool(false);
-                setTargetPerson(1);
+                //setTargetPerson(1);
                 break;
             case '3':
+                setDisableEventDateBool(true);
                 setDisableBtnBool(false);
-                setTargetPerson(1);
+                //setTargetPerson(1);
                 break;
             default:
                 return;
@@ -127,57 +132,29 @@ const EventContents = ({ editMode, handleOpen }) => {
                             </Select>
                             <div className="eventDateWrap">
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    {eventType === '2' ? (
-                                        <>
-                                            <DateTimePicker
-                                                className="event_start_date"
-                                                renderInput={(props) => <TextField {...props} />}
-                                                label="연도. 월. 일 시:분"
-                                                inputFormat="YYYY-MM-DD A hh:mm"
-                                                value={startDate}
-                                                onChange={(newValue) => {
-                                                    setStartDate(newValue);
-                                                }}
-                                            />
-                                            <span className={styles.event_wave}> ~ </span>
-                                            <DateTimePicker
-                                                className="event_end_date"
-                                                renderInput={(props) => <TextField {...props} />}
-                                                label="연도. 월. 일 시:분"
-                                                inputFormat="YYYY-MM-DD A hh:mm"
-                                                value={endDate}
-                                                onChange={(newValue) => {
-                                                    setEndDate(newValue);
-                                                }}
-                                            />
-                                        </>
-                                    ) : (
-                                        <>
-                                            <DateTimePicker
-                                                disabled
-                                                className="event_start_date"
-                                                renderInput={(props) => <TextField {...props} />}
-                                                label="연도. 월. 일 시:분"
-                                                inputFormat="YYYY-MM-DD A hh:mm"
-                                                value={startDate}
-                                                onChange={(newValue) => {
-                                                    setStartDate(newValue);
-                                                }}
-                                            />
-                                            <span className={styles.event_wave}> ~ </span>
-                                            <DateTimePicker
-                                                disabled
-                                                className="event_end_date"
-                                                renderInput={(props) => <TextField {...props} />}
-                                                label="연도. 월. 일 시:분"
-                                                inputFormat="YYYY-MM-DD A hh:mm"
-                                                value={endDate}
-                                                onChange={(newValue) => {
-                                                    setEndDate(newValue);
-                                                }}
-                                            />
-                                        </>
-                                    )}
+                                    <DateTimePicker
+                                        disabled={disableEventDateBool}
+                                        className="event_start_date"
+                                        renderInput={(props) => <TextField {...props} />}
+                                        label="연도. 월. 일 시:분"
+                                        inputFormat="YYYY-MM-DD A hh:mm"
+                                        value={startDate}
+                                        onChange={(newValue) => {
+                                            setStartDate(newValue);
+                                        }}
+                                    />
+                                    <span className={styles.event_wave}> ~ </span>
+                                    <DateTimePicker
+                                        disabled={disableEventDateBool}
+                                        className="event_end_date"
+                                        renderInput={(props) => <TextField {...props} />}
+                                        label="연도. 월. 일 시:분"
+                                        inputFormat="YYYY-MM-DD A hh:mm"
+                                        value={endDate}
+                                        onChange={(newValue) => {
+                                            setEndDate(newValue);
+                                        }}
+                                    />
                                 </LocalizationProvider>
                             </div>
                         </>
@@ -192,57 +169,31 @@ const EventContents = ({ editMode, handleOpen }) => {
                 <td className={'width15'} colSpan="3">
                     {editMode ? (
                         <>
-                            {eventType != '1' ? (
-                                <>
-                                    <Select
-                                        className={styles.detail_select}
-                                        name="targetPerson"
-                                        label="참여 대상"
-                                        value={targetPerson}
-                                        onChange={typeChanged}
-                                    >
-                                        <MenuItem value="1">로그인 회원</MenuItem>
-                                        <MenuItem value="2">비로그인 회원</MenuItem>
-                                    </Select>
-                                    <Button
-                                        className={`${styles.insert_private} private_btn`}
-                                        disableElevation
-                                        size="medium"
-                                        type="button"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() =>{
-                                            handleOpen(1);
-                                        }}
-                                    >
-                                        개인정보 수집 및 이용 동의 입력
-                                    </Button>
-                                </>
-                            ) : (
-                                <>
-                                    <Select
-                                        disabled
-                                        className={styles.detail_select}
-                                        name="targetPerson"
-                                        label="참여 대상"
-                                        value={targetPerson}
-                                    >
-                                        <MenuItem value="1">로그인 회원</MenuItem>
-                                        <MenuItem value="2">비로그인 회원</MenuItem>
-                                    </Select>
-                                    <Button
-                                        disabled
-                                        className={`${styles.insert_private} private_btn`}
-                                        disableElevation
-                                        size="medium"
-                                        type="button"
-                                        variant="contained"
-                                        color="primary"
-                                    >
-                                        개인정보 수집 및 이용 동의 입력
-                                    </Button>
-                                </>
-                            )}
+                            <Select
+                                disabled={disableBtnBool}
+                                className={styles.detail_select}
+                                name="targetPerson"
+                                label="참여 대상"
+                                value={targetPerson}
+                                onChange={typeChanged}
+                            >
+                                <MenuItem value="1">로그인 회원</MenuItem>
+                                <MenuItem value="2">비로그인 회원</MenuItem>
+                            </Select>
+                            <Button
+                                disabled={disableBtnBool}
+                                className={`${styles.insert_private} private_btn`}
+                                disableElevation
+                                size="medium"
+                                type="button"
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {
+                                    handleOpen(1);
+                                }}
+                            >
+                                개인정보 수집 및 이용 동의 입력
+                            </Button>
                         </>
                     ) : (
                         <>

@@ -48,7 +48,7 @@ const NoticeList = () => {
     const [bannerNotice, setBannerNotice] = useState(0); // 배너 공지 상태
     const [bannerState, setBannerState] = useState(0); // 배너 공개상태
     const [categoryState, setCategoryState] = useState(1); // 선택한 카테고리
-    const [categoryList, setCategoryList] = useState([{name:'카테고리1'}]); // 카테고리 전체 리스트
+    const [categoryList, setCategoryList] = useState([{name:'카테고리1',id:1}]); // 카테고리 전체 리스트
     const [selectedValue,setSelectedValue] = useState(''); // 선택라인
     const navigate = useNavigate();
     const StyledTableCell = withStyles((theme) => ({
@@ -140,7 +140,7 @@ const NoticeList = () => {
         setEndDate(moment().format('YYYY-MM-DD'));
         setBannerNotice(0);
         setBannerState(0);
-        setCategoryState('');
+        setCategoryState(0);
     };
     const handleChangePage = (event, newPage) => {
         // setPage(newPage);
@@ -152,9 +152,6 @@ const NoticeList = () => {
         //if (rowData && rowData.field && rowData.field !== '__check__') {
         // navigate(`/projects/detail/${rowData.id}`);
         //}
-    };
-    const newListAdd = () => {
-        navigate(`/cms/notice/reg`);
     };
     useEffect(() => {
         setStartDate(moment().format('YYYY-MM-DD'));
@@ -185,7 +182,7 @@ const NoticeList = () => {
                                     value={categoryState}
                                     onChange={handleChange}
                                 >
-                                    <MenuItem value="">전체</MenuItem>
+                                    <MenuItem value="0">전체</MenuItem>
                                     {categoryList.map((item, index) => (
                                         <MenuItem key={index} value={item.id}>
                                             {item.name}
