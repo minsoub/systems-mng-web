@@ -47,8 +47,8 @@ const NoticeList = () => {
     // const [period, setPeriod] = useState('1'); // 검색 일 묶음 타입 0:전체, 1:오늘, 2:한달, 3:3달
     const [bannerNotice, setBannerNotice] = useState(0); // 배너 공지 상태
     const [bannerState, setBannerState] = useState(0); // 배너 공개상태
-    const [categoryState, setCategoryState] = useState(''); // 선택한 카테고리
-    const [categoryList, setCategoryList] = useState([]); // 카테고리 전체 리스트
+    const [categoryState, setCategoryState] = useState(1); // 선택한 카테고리
+    const [categoryList, setCategoryList] = useState([{name:'카테고리1'}]); // 카테고리 전체 리스트
     const [selectedValue,setSelectedValue] = useState(''); // 선택라인
     const navigate = useNavigate();
     const StyledTableCell = withStyles((theme) => ({

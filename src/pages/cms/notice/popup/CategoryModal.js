@@ -4,7 +4,7 @@ import { Button, MenuItem, Select, Box, TextField, Modal } from '@mui/material';
 import styles from './styles.module.scss';
 const CategoryModal = ({ open, onClose }) => {
     const [categoryValue, setCategoryValue] = useState('');
-    const [stateValue, setStateValue] = useState('');
+    const [stateValue, setStateValue] = useState('1');
 
     const handleChange = (event) => {
         setCategoryValue(event.target.value);
@@ -16,7 +16,7 @@ const CategoryModal = ({ open, onClose }) => {
     useEffect(() => {
         if (!open){
             setCategoryValue('');
-            setStateValue('');
+            setStateValue('1');
         }
     }, [open]);
     return (

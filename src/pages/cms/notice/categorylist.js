@@ -32,7 +32,7 @@ import TableHeader from 'components/Table/TableHeader';
 import ErrorScreen from 'components/ErrorScreen';
 import ScrollX from 'components/Common/ScrollX';
 import styles from './styles.module.scss';
-import CategoryModal from './component/CategoryModal';
+import CategoryModal from './popup/CategoryModal';
 
 const CategoryList = () => {
     const [keyword, setKeyword] = useState(''); //검색 키워드

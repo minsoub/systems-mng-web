@@ -1,10 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Button, MenuItem, Select, Box, TextField, Modal } from '@mui/material';
-import CustomTextfield from './component/CustomTextfield';
+import { Select, MenuItem, TextField, Button } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import moment from 'moment';
+import CustomTextfield from './CustomTextfield';
 import styles from './styles.module.scss';
-const EventContents = ({ editMode }) => {
-
+const EventContents = ({ editMode, handleOpen }) => {
     // 이벤트 유형
     const [eventType, setEventType] = useState('1');
     // 이벤트 시작일

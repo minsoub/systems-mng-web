@@ -126,8 +126,7 @@ const ShareSetting = ({ type, editMode }) => {
                                             className="file__upload--field"
                                             onChange={fileHandleChange}
                                             inputProps={{
-                                                accept:
-                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept: '.jpg, .jpeg, .png, .gif'
                                             }}
                                         />
                                         &nbsp;

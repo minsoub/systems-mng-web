@@ -11,54 +11,55 @@ import { humanFileSize } from 'utils/CommonUtils';
 import cx from 'classnames';
 import moment from 'moment';
 import EventModal from './EventModal';
-import CustomTextfield from './component/CustomTextfield';
+import CustomTextfield from './CustomTextfield';
+import EventContents from './EventContents';
+import CustomSelectBox from './CustomSelectBox';
 import styles from './styles.module.scss';
 
 const DetailContens = ({ type, editMode }) => {
     // 카테고리1 리스트
-    const [categoryList1, setCategoryList1] = useState(["카테1","카테2","카테3","카테4","카테5"]);
+    const [categoryList1, setCategoryList1] = useState([
+        { name: '카테1', value: 1 },
+        { name: '카테2', value: 2 },
+        { name: '카테3', value: 3 },
+        { name: '카테4', value: 4 }
+    ]);
     // 카테고리1
-    const [category1, setCategory1] = useState(0);
+    const [category1, setCategory1] = useState(2);
     // 카테고리2 리스트
-    const [categoryList2, setCategoryList2] = useState(['카테1', '카테2', '카테3', '카테4', '카테5']);
+    const [categoryList2, setCategoryList2] = useState([
+        { name: '카테고리1', value: 1 },
+        { name: '카테고리2', value: 2 },
+        { name: '카테고리3', value: 3 },
+        { name: '카테고리4', value: 4 },
+        { name: '카테고리5', value: 5 }
+    ]);
     // 카테고리2
-    const [category2, setCategory2] = useState(0);
+    const [category2, setCategory2] = useState(3);
     // 제목
     const [title, setTitle] = useState(
         '전기통신금융사기 주의 안내(공공기관, 수사기관 사칭) 제목이 길어지는 경우 모두 출력합니다. 제목이 길어지는 경우 모두 출력합니다. 제목이 길어지는 경우 모두 출력합니다.'
     );
     // 상단고정 여부
-    const [notiTopType, setNotiTopType] = useState('1');
+    const [notiTopType, setNotiTopType] = useState(1);
+    // 상단고정 셀렉박스
+    const notiSelectList = [
+        { name: '일반', value: 1 },
+        { name: '고정', value: 2 }
+    ];
     // 공개 여부 상태
-    const [visibleState, setVisibleState] = useState('1');
+    const [visibleState, setVisibleState] = useState(1);
+    // 공개여부 셀렉박스
+    const visibleSelectList = [
+        { name: '공개', value: 1 },
+        { name: '비공개', value: 2 }
+    ];
     // 게시예약
     const [reservationState, setReservationState] = useState(false);
     // 게시 예약일자
     const [reservationDate, setReservationDate] = useState(moment().format('YYYY.MM.DD'));
     // 내용
     const [contentsData, setContentsData] = useState('');
-    // 이벤트 유형
-    const [eventType, setEventType] = useState('1');
-    // 이벤트 시작일
-    const [startDate, setStartDate] = useState(moment().format('YYYY.MM.DD'));
-    // 이벤트 종료일
-    const [endDate, setEndDate] = useState(moment().format('YYYY.MM.DD'));
-    // 참여대상
-    const [targetPerson, setTargetPerson] = useState('1');
-    // 개인정보 수집 및  이용동의
-    const [privateText, setPrivateText] = useState('');
-    // 이벤트 버튼명
-    const [eventBtnName, setEventBtnName] = useState('');
-    // 버튼 색상
-    const [eventBtnColor, setEventBtnColor] = useState('');
-    // 버튼 링크 경로
-    const [eventLink, setEventLink] = useState('');
-    // 이벤트 참여 완료 메시지
-    const [eventJoinMsg, setEventJoinMsg] = useState('');
-    // 이벤트 중복 참여 메시지
-    const [eventOverlapMsg, setEventOverlapMsg] = useState('');
-    // 버튼, 버튼명 필드
-    const [disableBtnBool, setDisableBtnBool] = useState(false);
 
     // 파일 정보
     const [file_part, setFilePart] = useState(); //파일 정보
@@ -81,49 +82,13 @@ const DetailContens = ({ type, editMode }) => {
                 .add(+1, 'days')
                 .format('YYYY.MM.DD')
         );
-        setStartDate(
-            moment()
-                .add(+1, 'days')
-                .format('YYYY.MM.DD')
-        );
-        setEndDate(
-            moment()
-                .add(+2, 'days')
-                .format('YYYY.MM.DD')
-        );
     }, []);
-    useEffect(() => {
-        const private_btn = document.querySelector('.private_btn');
-        if (!private_btn) return;
-        if (targetPerson === '2') {
-            private_btn.classList.add('Mui-disabled');
-        } else {
-            private_btn.classList.remove('Mui-disabled');
-        }
-    }, [targetPerson]);
-    useEffect(() => {
-        switch (eventType) {
-            case '1':
-                setDisableBtnBool(true);
-                break;
-            case '2':
-                setDisableBtnBool(false);
-                setTargetPerson(1);
-                break;
-            case '3':
-                setDisableBtnBool(false);
-                setTargetPerson(1);
-                break;
-            default:
-                return;
-        }
-    }, [eventType]);
     const typeChanged = (e) => {
         switch (e.target.name) {
             case 'cate1':
                 setCategory1(e.target.value);
                 console.log(e.target.value);
-                setCategoryList2(['카테고리1', '카테고리1', '카테고리1', '카테고리1', '카테고리1', '카테고리1']);
+                // setCategoryList2(['카테고리1', '카테고리1', '카테고리1', '카테고리1', '카테고리1', '카테고리1']);
                 break;
             case 'cate2':
                 setCategory2(e.target.value);
@@ -137,12 +102,6 @@ const DetailContens = ({ type, editMode }) => {
             case 'reservationState':
                 setReservationState(e.target.checked);
                 break;
-            case 'eventType':
-                setEventType(e.target.value);
-                break;
-            case 'targetPerson':
-                setTargetPerson(e.target.value);
-                break;
             default:
                 return;
         }
@@ -151,25 +110,6 @@ const DetailContens = ({ type, editMode }) => {
         switch (e.target.name) {
             case 'title':
                 setTitle(e.target.value);
-                break;
-            case 'eventBtnName':
-                if (e.target.value.length > 10) return;
-                setEventBtnName(e.target.value);
-                break;
-            case 'eventBtnColor':
-                if (e.target.value.length > 10) return;
-                setEventBtnColor(e.target.value);
-                break;
-            case 'eventLink':
-                setEventLink(e.target.value);
-                break;
-            case 'eventJoinMsg':
-                if (e.target.value.length > 20) return;
-                setEventJoinMsg(e.target.value);
-                break;
-            case 'eventOverlapMsg':
-                if (e.target.value.length > 20) return;
-                setEventOverlapMsg(e.target.value);
                 break;
             default:
                 return;
@@ -218,55 +158,29 @@ const DetailContens = ({ type, editMode }) => {
                         <th className={'tb--title'}>조회수</th>
                         <td className={'width15'}>12,456</td>
                     </tr>
-                    {type === 'notice' ? (
+                    {type === 'notice' && (
                         <tr>
                             <th className={'tb--title'}>카테고리1</th>
                             <td className={'width15'}>
-                                {editMode ? (
-                                    <Select
-                                        className={styles.detail_select}
-                                        name="cate1"
-                                        label="카테고리1"
-                                        value={category1}
-                                        onChange={typeChanged}
-                                    >
-                                        {categoryList1.map((item, index) => {
-                                            return (
-                                                <MenuItem value={index} key={item}>
-                                                    {item}
-                                                </MenuItem>
-                                            );
-                                        })}
-                                    </Select>
-                                ) : (
-                                    <>일반</>
-                                )}
+                                <CustomSelectBox
+                                    editMode={editMode}
+                                    value={category1}
+                                    name="cate1"
+                                    change={typeChanged}
+                                    selectList={categoryList1}
+                                />
                             </td>
                             <th className={'tb--title'}>카테고리2</th>
                             <td className={'width15'} colSpan="5">
-                                {editMode ? (
-                                    <Select
-                                        className={styles.detail_select}
-                                        name="cate2"
-                                        label="카테고리2"
-                                        value={category2}
-                                        onChange={typeChanged}
-                                    >
-                                        {categoryList2.map((item, index) => {
-                                            return (
-                                                <MenuItem value={index} key={index}>
-                                                    {item}
-                                                </MenuItem>
-                                            );
-                                        })}
-                                    </Select>
-                                ) : (
-                                    <>-</>
-                                )}
+                                <CustomSelectBox
+                                    editMode={editMode}
+                                    value={category2}
+                                    name="cate2"
+                                    change={typeChanged}
+                                    selectList={categoryList2}
+                                />
                             </td>
                         </tr>
-                    ) : (
-                        <></>
                     )}
                     <tr>
                         <th className={'tb--title'}>제목</th>
@@ -280,32 +194,23 @@ const DetailContens = ({ type, editMode }) => {
                             />
                         </td>
                     </tr>
-                    {type === 'notice' ? (
+                    {type === 'notice' && (
                         <tr>
                             <th className={'tb--title'}>상단 고정</th>
                             <td className={'width15'}>
-                                {editMode ? (
-                                    <Select
-                                        className={styles.detail_select}
-                                        name="notiTopType"
-                                        label="상단고정"
-                                        value={notiTopType}
-                                        onChange={typeChanged}
-                                    >
-                                        <MenuItem value="1">일반</MenuItem>
-                                        <MenuItem value="2">고정</MenuItem>
-                                    </Select>
-                                ) : (
-                                    <>일반</>
-                                )}
+                                <CustomSelectBox
+                                    editMode={editMode}
+                                    value={notiTopType}
+                                    name="notiTopType"
+                                    change={typeChanged}
+                                    selectList={notiSelectList}
+                                />
                             </td>
                             <th className={'tb--title'}>배너 공지</th>
                             <td className={'width15'} colSpan="5">
                                 비노출
                             </td>
                         </tr>
-                    ) : (
-                        <></>
                     )}
                     <tr>
                         <th className={'tb--title'}>상태</th>
@@ -334,23 +239,25 @@ const DetailContens = ({ type, editMode }) => {
                                     </FormControl>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         {reservationState ? (
-                                            <DesktopDatePicker
-                                                label="연도. 월. 일"
-                                                inputFormat="YYYY-MM-DD"
-                                                value={reservationDate} // 변수바뀜 확인필요
+                                            <DateTimePicker
+                                                className="event_start_date"
+                                                renderInput={(props) => <TextField {...props} />}
+                                                label="연도. 월. 일 시:분"
+                                                inputFormat="YYYY-MM-DD A hh:mm"
+                                                value={reservationDate}
                                                 onChange={(newValue) => {
                                                     setReservationDate(newValue);
                                                 }}
-                                                renderInput={(params) => <TextField {...params} />}
                                             />
                                         ) : (
-                                            <DesktopDatePicker
-                                                label="연도. 월. 일"
-                                                inputFormat="YYYY-MM-DD"
-                                                value={reservationDate} // 변수바뀜 확인필요
+                                            <DateTimePicker
+                                                className="event_start_date"
+                                                renderInput={(props) => <TextField {...props} />}
+                                                label="연도. 월. 일 시:분"
+                                                inputFormat="YYYY-MM-DD A hh:mm"
+                                                value={reservationDate}
                                                 disabled
                                                 onChange={(newValue) => {}}
-                                                renderInput={(params) => <TextField {...params} />}
                                             />
                                         )}
                                     </LocalizationProvider>
@@ -373,7 +280,7 @@ const DetailContens = ({ type, editMode }) => {
                             )}
                         </td>
                     </tr>
-                    {type === 'review-report' || type === 'economic-research' ? (
+                    {(type === 'review-report' || type === 'economic-research') && (
                         <tr>
                             <th className="tb--title">썸네일</th>
                             <td className="width15 add_file" colSpan="7">
@@ -390,8 +297,7 @@ const DetailContens = ({ type, editMode }) => {
                                             className="file__upload--field"
                                             onChange={fileHandleChange}
                                             inputProps={{
-                                                accept:
-                                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                                accept: '.jpg, .jpeg, .png, .gif'
                                             }}
                                         />
                                         &nbsp;
@@ -414,8 +320,6 @@ const DetailContens = ({ type, editMode }) => {
                                 )}
                             </td>
                         </tr>
-                    ) : (
-                        <></>
                     )}
                     <tr>
                         <th className="tb--title">첨부파일</th>
@@ -457,238 +361,7 @@ const DetailContens = ({ type, editMode }) => {
                             )}
                         </td>
                     </tr>
-                    {type === 'event' ? (
-                        <>
-                            <tr>
-                                <th className="tb--title">유형</th>
-                                <td className="width15 event_type" colSpan="3">
-                                    {editMode ? (
-                                        <>
-                                            <Select
-                                                className={styles.event_select}
-                                                name="eventType"
-                                                label="이벤트 유형"
-                                                value={eventType}
-                                                onChange={typeChanged}
-                                            >
-                                                <MenuItem value="1">일반</MenuItem>
-                                                <MenuItem value="2">참여</MenuItem>
-                                                <MenuItem value="3">링크</MenuItem>
-                                            </Select>
-                                            <div className="eventDateWrap">
-                                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                    {eventType === '2' ? (
-                                                        <>
-                                                            <DateTimePicker
-                                                                className="event_start_date"
-                                                                renderInput={(props) => <TextField {...props} />}
-                                                                label="연도. 월. 일 시:분"
-                                                                inputFormat="YYYY-MM-DD A hh:mm"
-                                                                value={startDate}
-                                                                onChange={(newValue) => {
-                                                                    setStartDate(newValue);
-                                                                }}
-                                                            />
-                                                            <span className={styles.event_wave}> ~ </span>
-                                                            <DateTimePicker
-                                                                className="event_end_date"
-                                                                renderInput={(props) => <TextField {...props} />}
-                                                                label="연도. 월. 일 시:분"
-                                                                inputFormat="YYYY-MM-DD A hh:mm"
-                                                                value={endDate}
-                                                                onChange={(newValue) => {
-                                                                    setEndDate(newValue);
-                                                                }}
-                                                            />
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <DateTimePicker
-                                                                disabled
-                                                                className="event_start_date"
-                                                                renderInput={(props) => <TextField {...props} />}
-                                                                label="연도. 월. 일 시:분"
-                                                                inputFormat="YYYY-MM-DD A hh:mm"
-                                                                value={startDate}
-                                                                onChange={(newValue) => {
-                                                                    setStartDate(newValue);
-                                                                }}
-                                                            />
-                                                            <span className={styles.event_wave}> ~ </span>
-                                                            <DateTimePicker
-                                                                disabled
-                                                                className="event_end_date"
-                                                                renderInput={(props) => <TextField {...props} />}
-                                                                label="연도. 월. 일 시:분"
-                                                                inputFormat="YYYY-MM-DD A hh:mm"
-                                                                value={endDate}
-                                                                onChange={(newValue) => {
-                                                                    setEndDate(newValue);
-                                                                }}
-                                                            />
-                                                        </>
-                                                    )}
-                                                </LocalizationProvider>
-                                            </div>
-                                        </>
-                                    ) : (
-                                        <>
-                                            참여형 <br />
-                                            (이벤트 기간 : 2022-10-25 12:00 ~ 2022-11-25 12:00)
-                                        </>
-                                    )}
-                                </td>
-                                <th className={'tb--title'}>참여 대상</th>
-                                <td className={'width15'} colSpan="3">
-                                    {editMode ? (
-                                        <>
-                                            {eventType != '1' ? (
-                                                <>
-                                                    <Select
-                                                        className={styles.detail_select}
-                                                        name="targetPerson"
-                                                        label="참여 대상"
-                                                        value={targetPerson}
-                                                        onChange={typeChanged}
-                                                    >
-                                                        <MenuItem value="1">로그인 회원</MenuItem>
-                                                        <MenuItem value="2">비로그인 회원</MenuItem>
-                                                    </Select>
-                                                    <Button
-                                                        className={`${styles.insert_private} private_btn`}
-                                                        disableElevation
-                                                        size="medium"
-                                                        type="button"
-                                                        variant="contained"
-                                                        color="primary"
-                                                        onClick={() =>{
-                                                            handleOpen(1);
-                                                        }}
-                                                    >
-                                                        개인정보 수집 및 이용 동의 입력
-                                                    </Button>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <Select
-                                                        disabled
-                                                        className={styles.detail_select}
-                                                        name="targetPerson"
-                                                        label="참여 대상"
-                                                        value={targetPerson}
-                                                    >
-                                                        <MenuItem value="1">로그인 회원</MenuItem>
-                                                        <MenuItem value="2">비로그인 회원</MenuItem>
-                                                    </Select>
-                                                    <Button
-                                                        disabled
-                                                        className={`${styles.insert_private} private_btn`}
-                                                        disableElevation
-                                                        size="medium"
-                                                        type="button"
-                                                        variant="contained"
-                                                        color="primary"
-                                                    >
-                                                        개인정보 수집 및 이용 동의 입력
-                                                    </Button>
-                                                </>
-                                            )}
-                                        </>
-                                    ) : (
-                                        <>
-                                            로그인 회원
-                                            <Button
-                                                className={styles.down_user}
-                                                disableElevation
-                                                size="medium"
-                                                type="button"
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={() => {
-                                                    handleOpen(0);
-                                                }}
-                                            >
-                                                참여자 정보 다운로드
-                                            </Button>
-                                        </>
-                                    )}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'}>버튼명</th>
-                                <td className={'width15'} colSpan="3">
-                                    <CustomTextfield
-                                        typeNum={eventType}
-                                        editMode={editMode}
-                                        value={eventBtnName}
-                                        name="eventBtnName"
-                                        change={handleChange}
-                                        holder="버튼명을 입력해 주세요."
-                                        accessWap={[2, 3]}
-                                    />
-                                </td>
-                                <th className="tb--title">버튼 색상</th>
-                                <td className="width15" colSpan="3">
-                                    <CustomTextfield
-                                        typeNum={eventType}
-                                        editMode={editMode}
-                                        value={eventBtnColor}
-                                        name="eventBtnColor"
-                                        change={handleChange}
-                                        holder="버튼색상을 입력해 주세요."
-                                        accessWap={[2, 3]}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'}>버튼 링크경로</th>
-                                <td className={'width15'} colSpan="7">
-                                    <CustomTextfield
-                                        typeNum={eventType}
-                                        editMode={editMode}
-                                        value={eventLink}
-                                        name="eventLink"
-                                        change={handleChange}
-                                        holder="링크를 입력해 주세요."
-                                        accessWap={[3]}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'} rowSpan="2">
-                                    메시지
-                                </th>
-                                <th className={'tb--title'}>참여 완료 시</th>
-                                <td className={'width15'} colSpan="6">
-                                    <CustomTextfield
-                                        typeNum={eventType}
-                                        editMode={editMode}
-                                        value={eventJoinMsg}
-                                        name="eventJoinMsg"
-                                        change={handleChange}
-                                        holder="메세지를 입력해 주세요."
-                                        accessWap={[2]}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'}>중복 완료 시</th>
-                                <td className={'width15'} colSpan="6">
-                                    <CustomTextfield
-                                        typeNum={eventType}
-                                        editMode={editMode}
-                                        value={eventOverlapMsg}
-                                        name="eventOverlapMsg"
-                                        change={handleChange}
-                                        holder="메세지를 입력해 주세요."
-                                        accessWap={[2]}
-                                    />
-                                </td>
-                            </tr>
-                        </>
-                    ) : (
-                        <></>
-                    )}
+                    {type === 'event' && <EventContents editMode={editMode} handleOpen={handleOpen} />}
                 </tbody>
             </table>
             <EventModal open={open} onClose={handleClose} modalType={modalType} />
