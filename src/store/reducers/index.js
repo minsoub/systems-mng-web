@@ -27,6 +27,8 @@ import cmsReviewReport from './cms/ReviewReport';
 import cmsInvestmentWarning from './cms/InvestmentWarning';
 import cmsEconomicResearch from './cms/EconomicResearch';
 import cmsEvent from './cms/EventSearch';
+import cmsDetailData from './cms/DetailData';
+import cmsDetailEventData from './cms/DetailEventData';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -55,7 +57,9 @@ const reducers = combineReducers({
     cmsReviewReport,
     cmsInvestmentWarning,
     cmsEconomicResearch,
-    cmsEvent
+    cmsEvent,
+    cmsDetailData,
+    cmsDetailEventData
 });
 
 export default reducers;

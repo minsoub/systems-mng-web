@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect } from 'react';
 
 const Editor = (props) => {
@@ -8,7 +9,7 @@ const Editor = (props) => {
     let Authorization = `Bearer ${authData.accessToken}`;
     // onload
     useEffect(() => {
-        //console.log(props);
+        console.log(props);
         //console.log(authData);
         //console.log(synapEditorConfig['editor.autoSave.period'] = '1');
         //console.log(synapEditorConfig);
@@ -19,7 +20,6 @@ const Editor = (props) => {
             my_site_id: authData.siteId,
             active_role: authData.roleId
         };
-        /*eslint no-undef: "off"*/
         window[props.props.editName] = new SynapEditor(props.props.editName, synapEditorConfig, props.props.value);
         return(() => {
             delete window[props.props.editName];

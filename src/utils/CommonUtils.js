@@ -90,3 +90,33 @@ export const clipboardShare = (text) => {
         alert('URL 주소가 클립보드에 복사되었습니다.');
     }
 };
+
+export const changeDateType = (dateT) => {
+    let returnDateT = '';
+    let items = '';
+    let times = '';
+    const findNum = dateT.indexOf('PM');
+    if (findNum > 0) {
+        returnDateT = dateT.replace('PM', 'T');
+        items = returnDateT.split(' ');
+        times = items[2].split(':');
+        if (Number(times[0]) === 12) {
+            returnDateT = items[0] + ' ' + items[1] + ' ' + Number(times[0]) + ':' + times[1];
+        } else {
+            returnDateT = items[0] + ' ' + items[1] + ' ' + (Number(times[0]) + 12) + ':' + times[1];
+        }
+    } else {
+        returnDateT = dateT.replace('AM', 'T');
+        items = returnDateT.split(' ');
+        if (items.length > 1) {
+            times = items[2].split(':');
+            if (Number(times[0]) === 12) {
+                times[0] = '00';
+                returnDateT = items[0] + ' ' + items[1] + ' ' + times[0] + ':' + times[1];
+            }
+        } else {
+            returnDateT += ' T 00:00';
+        }
+    }
+    return returnDateT;
+};

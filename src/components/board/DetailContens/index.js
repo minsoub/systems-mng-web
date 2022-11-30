@@ -1,13 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Select, MenuItem, TextField, Checkbox, FormControl, FormGroup, FormControlLabel, Button } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import Editor from 'components/editor/index';
-import { humanFileSize } from 'utils/CommonUtils';
+import { humanFileSize, changeDateType } from 'utils/CommonUtils';
+import {
+    activeNotiCategory1,
+    activeNotiCategory2,
+    activeTitle,
+    activeTopFixable,
+    activePostState,
+    activeReservation,
+    activeReservationDate,
+} from 'store/reducers/cms/DetailData';
 import cx from 'classnames';
 import moment from 'moment';
 import EventModal from './EventModal';
@@ -17,6 +27,7 @@ import CustomSelectBox from './CustomSelectBox';
 import styles from './styles.module.scss';
 
 const DetailContens = ({ type, editMode }) => {
+    const dispatch = useDispatch();
     // 카테고리1 리스트
     const [categoryList1, setCategoryList1] = useState([
         { name: '카테1', id: 1 },
@@ -57,14 +68,14 @@ const DetailContens = ({ type, editMode }) => {
     // 게시예약
     const [reservationState, setReservationState] = useState(false);
     // 게시 예약일자
-    const [reservationDate, setReservationDate] = useState(moment().format('YYYY.MM.DD'));
+    const [reservationDate, setReservationDate] = useState(moment().format('YYYY.MM.DD A hh:mm'));
     // 내용
     const [contentsData, setContentsData] = useState('');
 
     // 파일 정보
     const [file_part, setFilePart] = useState(); //파일 정보
     const [file, setFile] = useState(''); // 첨부파일
-    const editParam = { editName: 'editorName', value: '<b>여기 입력 고고</b>' }; // 에디터 설정관련
+    const editParam = { editName: 'contentsEditor', value: '<b>여기 입력 고고</b>' }; // 에디터 설정관련
 
     //팝업 오픈 관련 설정
     const [open, setOpen] = useState(false);
@@ -76,11 +87,12 @@ const DetailContens = ({ type, editMode }) => {
     const handleClose = () => setOpen(false);
 
     useEffect(() => {
-        // console.log(type, editMode);
         setReservationDate(
-            moment()
-                .add(+1, 'days')
-                .format('YYYY.MM.DD')
+            changeDateType(
+                moment()
+                    .add(+1, 'days')
+                    .format('YYYY-MM-DD')
+            )
         );
     }, []);
     const typeChanged = (e) => {
@@ -88,7 +100,6 @@ const DetailContens = ({ type, editMode }) => {
             case 'cate1':
                 setCategory1(e.target.value);
                 console.log(e.target.value);
-                // setCategoryList2(['카테고리1', '카테고리1', '카테고리1', '카테고리1', '카테고리1', '카테고리1']);
                 break;
             case 'cate2':
                 setCategory2(e.target.value);
@@ -143,6 +154,27 @@ const DetailContens = ({ type, editMode }) => {
         console.log(humanFileSize(file_part.size, true, 2));
         // insertChatFile(formData);
     };
+    useEffect(() => {
+        dispatch(activeNotiCategory1({ reduceNotiCategory1: category1 }));
+    }, [category1]);
+    useEffect(() => {
+        dispatch(activeNotiCategory2({ reduceNotiCategory2: category2 }));
+    }, [category2]);
+    useEffect(() => {
+        dispatch(activeTitle({ reduceTitle: title }));
+    }, [title]);
+    useEffect(() => {
+        dispatch(activeTopFixable({ reduceTopFixable: notiTopType }));
+    }, [notiTopType]);
+    useEffect(() => {
+        dispatch(activePostState({ reducePostState: visibleState }));
+    }, [visibleState]);
+    useEffect(() => {
+        dispatch(activeReservation({ reduceReservation: reservationState }));
+    }, [reservationState]);
+    useEffect(() => {
+        dispatch(activeReservationDate({ reduceReservationDate: reservationDate }));
+    }, [reservationDate]);
 
     return (
         <div className={cx('common-board--layout')}>
@@ -242,11 +274,11 @@ const DetailContens = ({ type, editMode }) => {
                                             disabled={!reservationState}
                                             className="event_start_date"
                                             renderInput={(props) => <TextField {...props} />}
-                                            label="연도. 월. 일 시:분"
+                                            label="게시 예약일시"
                                             inputFormat="YYYY-MM-DD A hh:mm"
                                             value={reservationDate}
                                             onChange={(newValue) => {
-                                                setReservationDate(newValue);
+                                                setReservationDate(changeDateType(moment(newValue.$d).format('YYYY-MM-DD A hh:mm')));
                                             }}
                                         />
                                     </LocalizationProvider>

@@ -1,13 +1,29 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Select, MenuItem, TextField, Button } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { changeDateType } from 'utils/CommonUtils';
 import moment from 'moment';
+import {
+    activeEventType,
+    activeEventStartDate,
+    activeEventEndDate,
+    activeEventJoinUser,
+    activeEventPrivateTxt,
+    activeEventBtnName,
+    activeEventBtnColor,
+    activeEventBtnLink,
+    activeEventSuccessMsg,
+    activeEventOverlapMsg
+} from 'store/reducers/cms/DetailEventData';
 import CustomTextfield from './CustomTextfield';
 import styles from './styles.module.scss';
 const EventContents = ({ editMode, handleOpen }) => {
+    const dispatch = useDispatch();
     // 이벤트 유형
     const [eventType, setEventType] = useState('1');
     // 이벤트 시작일
@@ -35,14 +51,18 @@ const EventContents = ({ editMode, handleOpen }) => {
 
     useEffect(() => {
         setStartDate(
-            moment()
-                .add(+1, 'days')
-                .format('YYYY.MM.DD')
+            changeDateType(
+                moment()
+                    .add(+1, 'days')
+                    .format('YYYY-MM-DD')
+            )
         );
         setEndDate(
-            moment()
-                .add(+2, 'days')
-                .format('YYYY.MM.DD')
+            changeDateType(
+                moment()
+                    .add(+2, 'days')
+                    .format('YYYY-MM-DD')
+            )
         );
     }, []);
     useEffect(() => {
@@ -112,6 +132,36 @@ const EventContents = ({ editMode, handleOpen }) => {
                 return;
         }
     };
+    useEffect(() => {
+        dispatch(activeEventType({ reduceEventType: eventType }));
+    }, [eventType]);
+    useEffect(() => {
+        dispatch(activeEventStartDate({ reduceEventStartDate: startDate }));
+    }, [startDate]);
+    useEffect(() => {
+        dispatch(activeEventEndDate({ reduceEventEndDate: endDate }));
+    }, [endDate]);
+    useEffect(() => {
+        dispatch(activeEventJoinUser({ reduceEventJoinUser: targetPerson }));
+    }, [targetPerson]);
+    useEffect(() => {
+        dispatch(activeEventPrivateTxt({ reduceEventPrivateTxt: privateText }));
+    }, [privateText]);
+    useEffect(() => {
+        dispatch(activeEventBtnName({ reduceEventBtnName: eventBtnName }));
+    }, [eventBtnName]);
+    useEffect(() => {
+        dispatch(activeEventBtnColor({ reduceEventBtnColor: eventBtnColor }));
+    }, [eventBtnColor]);
+    useEffect(() => {
+        dispatch(activeEventBtnLink({ reduceEventBtnLink: eventLink }));
+    }, [eventLink]);
+    useEffect(() => {
+        dispatch(activeEventSuccessMsg({ reduceEventSuccessMsg: eventJoinMsg }));
+    }, [eventJoinMsg]);
+    useEffect(() => {
+        dispatch(activeEventOverlapMsg({ reduceEventOverlapMsg: eventOverlapMsg }));
+    }, [eventOverlapMsg]);
     return (
         <>
             <tr>
@@ -136,11 +186,11 @@ const EventContents = ({ editMode, handleOpen }) => {
                                         disabled={disableEventDateBool}
                                         className="event_start_date"
                                         renderInput={(props) => <TextField {...props} />}
-                                        label="연도. 월. 일 시:분"
+                                        label="이벤트 시작일시"
                                         inputFormat="YYYY-MM-DD A hh:mm"
                                         value={startDate}
                                         onChange={(newValue) => {
-                                            setStartDate(newValue);
+                                            setStartDate(changeDateType(moment(newValue.$d).format('YYYY-MM-DD A hh:mm')));
                                         }}
                                     />
                                     <span className={styles.event_wave}> ~ </span>
@@ -148,11 +198,11 @@ const EventContents = ({ editMode, handleOpen }) => {
                                         disabled={disableEventDateBool}
                                         className="event_end_date"
                                         renderInput={(props) => <TextField {...props} />}
-                                        label="연도. 월. 일 시:분"
+                                        label="이벤트 종료일시"
                                         inputFormat="YYYY-MM-DD A hh:mm"
                                         value={endDate}
                                         onChange={(newValue) => {
-                                            setEndDate(newValue);
+                                            setEndDate(changeDateType(moment(newValue.$d).format('YYYY-MM-DD A hh:mm')));
                                         }}
                                     />
                                 </LocalizationProvider>

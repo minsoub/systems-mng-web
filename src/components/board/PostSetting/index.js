@@ -1,10 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { activeUpdateDate, activeTopNoti } from 'store/reducers/cms/DetailData';
 import { Typography, Button, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import { clipboardShare } from 'utils/CommonUtils';
 import cx from 'classnames';
 
 const PostSetting = ({ type, editMode }) => {
+    const dispatch = useDispatch();
     const [isDateUpdate, setIsDateUpdate] = useState(1);
     const [isBoardTopState, setIsBoardTopState] = useState(1);
     const handleChange = (e) => {
@@ -19,7 +22,12 @@ const PostSetting = ({ type, editMode }) => {
                 return;
         }
     };
-
+    useEffect(() => {
+        dispatch(activeUpdateDate({ reduceUpdateDate: isDateUpdate }));
+    },[isDateUpdate]);
+    useEffect(() => {
+        dispatch(activeTopNoti({ reduceTopNoti: isBoardTopState }));
+    },[isBoardTopState]);
     const shareURLCopy = () => {
         clipboardShare('URL 주소가 클립보드에 복사되었습니다.');
     };

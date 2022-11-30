@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, TextField, Button } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { activeShareTitle, activeShareDesc, activeShareBtnName } from 'store/reducers/cms/DetailData';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import { humanFileSize } from 'utils/CommonUtils';
 import styles from './styles.module.scss';
@@ -7,6 +9,7 @@ import cx from 'classnames';
 
 // eslint-disable-next-line react/prop-types
 const ShareSetting = ({ type, editMode }) => {
+    const dispatch = useDispatch();
     // 파일 정보
     const [file_part, setFilePart] = useState();
     const [file, setFile] = useState('');
@@ -29,7 +32,16 @@ const ShareSetting = ({ type, editMode }) => {
             default:
                 return;
         }
-    }
+    };
+    useEffect(() => {
+        dispatch(activeShareTitle({ reduceShareTitle: shareTitle }));
+    },[shareTitle]);
+    useEffect(() => {
+        dispatch(activeShareDesc({ reduceShareDesc: shareDesc }));
+    },[shareDesc]);
+    useEffect(() => {
+        dispatch(activeShareBtnName({ reduceShareBtnName: shareButtonName }));
+    },[shareButtonName]);
     useEffect(() => {
         // console.log('editMode', editMode);
     }, [editMode]);
