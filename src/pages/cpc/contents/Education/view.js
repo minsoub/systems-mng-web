@@ -59,7 +59,7 @@ const View = () => {
             maxWidth: 200
         },
         {
-            field: 'sale_phone',
+            field: 'phone',
             headerName: '휴대폰 번호',
             flex: 1,
             headerAlign: 'center',
