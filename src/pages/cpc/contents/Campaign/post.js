@@ -299,7 +299,7 @@ const Post = () => {
                 <HeaderTitle
                     titleNm="투자자 보호 캠페인"
                     menuStep01="사이트 운영"
-                    menuStep02="콘텐츠 관리"
+                    menuStep02="컨텐츠 관리"
                     menuStep03="투자자 보호 캠페인"
                 />
 

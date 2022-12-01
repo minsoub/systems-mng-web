@@ -285,7 +285,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 콘텐츠를 체크하세요.');
+            alert('삭제할 컨텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);
@@ -311,7 +311,7 @@ const View = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
-                <HeaderTitle titleNm="블록체인 뉴스" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="블록체인 뉴스" />
+                <HeaderTitle titleNm="블록체인 뉴스" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="블록체인 뉴스" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate

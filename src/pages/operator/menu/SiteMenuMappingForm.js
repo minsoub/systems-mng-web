@@ -495,7 +495,7 @@ const SiteMenuMappingForm = () => {
                     </TopInputLayout>
                 </MainCard>
 
-                {/* 콘텐츠 영역 */}
+                {/* 컨텐츠 영역 */}
                 <Grid container alignItems="center" justifyContent="space-between" className="layout--out">
                     <Grid item xs={4} className="menu--submit">
                         <MainCard sx={{ m: 0, p: 0, height: '100%' }} content={false}>

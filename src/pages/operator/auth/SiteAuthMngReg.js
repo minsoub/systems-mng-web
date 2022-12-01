@@ -865,7 +865,7 @@ const SiteAuthMngRegForm = () => {
                         </MainCard>
                     </Grid>
 
-                    {/* 콘텐츠 영역 */}
+                    {/* 컨텐츠 영역 */}
                     <Grid item xs={8} className="blank--layout">
                         <Grid container spacing={0} sx={{ mt: 1 }}>
                             <div className="layout--align">
