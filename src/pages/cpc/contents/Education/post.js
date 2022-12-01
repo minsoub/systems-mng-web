@@ -159,7 +159,7 @@ const Post = () => {
                         <tbody>
                             <tr>
                                 <th className={'tb--title'}>상태</th>
-                                <td>접수</td>
+                                <td>{educationInfo.is_answer_complete ? '답변완료' : '교육신청'}</td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>이름</th>
