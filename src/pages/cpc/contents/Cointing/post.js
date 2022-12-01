@@ -230,6 +230,10 @@ const Post = () => {
             alert('제목을 입력해 주세요.');
             return false;
         }
+        if (!thumbnail) {
+            alert('이미지를 등록해 주세요.');
+            return false;
+        }
         if (!content) {
             alert('내용을 입력해 주세요.');
             return false;
