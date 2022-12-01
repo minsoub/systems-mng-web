@@ -169,7 +169,6 @@ const Post = () => {
                 setContent(responseData.data.data.contents);
                 setContributor(responseData.data.data.contributor);
                 setCreateAccountName(responseData.data.data.create_account_name);
-
                 if (responseData.data.data.tags) {
                     const tempTags = responseData.data.data.tags.map((tag) => {
                         return {
@@ -184,6 +183,7 @@ const Post = () => {
                 alert('등록되었습니다.');
                 setId(responseData.data.data.id);
                 setCreateAccountName(responseData.data.data.create_account_name);
+                listClick();
                 break;
             case 'updateBoard':
                 alert('저장되었습니다.');
@@ -239,6 +239,10 @@ const Post = () => {
             alert('제목을 입력해 주세요.');
             return false;
         }
+        if (!thumbnail) {
+            alert('이미지를 등록해 주세요.');
+            return false;
+        }
         if (!content) {
             alert('내용을 입력해 주세요.');
             return false;
@@ -251,6 +255,10 @@ const Post = () => {
         console.log('addClick called...');
 
         if (!isValidate()) return;
+        if (!contributor) {
+            alert('기고자를 선택해 주세요.');
+            return;
+        }
         if (confirm('등록 하시겠습니까?')) {
             const inputTags = tags.map((tag) => {
                 return tag.text;
@@ -308,7 +316,7 @@ const Post = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsInsightReg">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="오피니언 칼럼" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="오피니언 칼럼" />
+                <HeaderTitle titleNm="오피니언 칼럼" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="오피니언 칼럼" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>

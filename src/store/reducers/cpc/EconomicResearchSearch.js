@@ -1,7 +1,7 @@
-// Action Type - Campaign data
-const SEARCH_ADD = 'cpc/Campaign/SET_DATA';
-const SEARCH_DEL = 'cpc/Campaign/DEL_DATA';
-const SEARCH_GET = 'cpc/Campaign/GET_DATA';
+// Action Type - EconomicResearch data
+const SEARCH_ADD = 'cpc/EconomicResearch/SET_DATA';
+const SEARCH_DEL = 'cpc/EconomicResearch/DEL_DATA';
+const SEARCH_GET = 'cpc/EconomicResearch/GET_DATA';
 
 // Action function => dispatch에서 호출
 export const setSearchData = (arg) => ({

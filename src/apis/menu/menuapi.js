@@ -101,7 +101,7 @@ const menus = [
                 children: [
                     {
                         id: 'dealmng19',
-                        title: '콘텐츠 관리',
+                        title: '컨텐츠 관리',
                         type: 'item',
                         url: '/faq/list',
                         auth: true,
@@ -173,7 +173,7 @@ const menus = [
                 children: [
                     {
                         id: 'cpcmaincontents',
-                        title: '콘텐츠 노출 관리',
+                        title: '컨텐츠 노출 관리',
                         type: 'item',
                         url: '/cpc/main/contents/list',
                         auth: true,
@@ -185,7 +185,7 @@ const menus = [
             },
             {
                 id: 'cpccontents',
-                title: '콘텐츠 관리',
+                title: '컨텐츠 관리',
                 type: 'collapse',
                 auth: true,
                 icon: icons.ChromeOutlined,
