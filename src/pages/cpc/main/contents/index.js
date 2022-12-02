@@ -86,7 +86,7 @@ const MainContents = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
-                <HeaderTitle titleNm="컨텐츠 노출 관리" menuStep01="사이트 운영" menuStep02="메인 관리" menuStep03="컨텐츠 노출 관리" />
+                <HeaderTitle titleNm="콘텐츠 노출 관리" menuStep01="사이트 운영" menuStep02="메인 관리" menuStep03="콘텐츠 노출 관리" />
 
                 <TabContext value={tabIndex}>
                     <TopInputLayout sx={{ borderBottom: 1, borderColor: 'divider' }} className="pagetab">
