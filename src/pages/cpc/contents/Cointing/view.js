@@ -12,7 +12,7 @@ import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { setSearchData } from 'store/reducers/cpc/CampaignSearch';
+import { setSearchData } from 'store/reducers/cpc/CointingSearch';
 import ContentLine from 'components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
 import styles from '../BoardList.module.scss';

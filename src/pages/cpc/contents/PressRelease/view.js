@@ -367,7 +367,7 @@ const View = () => {
                         columns={columns}
                         rows={dataGridRows}
                         pageSize={5}
-                        height={1400}
+                        height={660}
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}
