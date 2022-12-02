@@ -239,8 +239,8 @@ const Post = () => {
             alert('제목을 입력해 주세요.');
             return false;
         }
-        if (!thumbnail) {
-            alert('이미지를 등록해 주세요.');
+        if (!thumbnail && !thumbnailFile) {
+            alert('썸네일 이미지를 등록해 주세요.');
             return false;
         }
         if (!content) {
