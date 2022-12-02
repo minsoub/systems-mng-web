@@ -156,6 +156,9 @@ const View = () => {
             if (requestError.result === 'FAIL') {
                 console.log('error requestError');
                 console.log(requestError);
+                if (requestError.error.code === 'F018') {
+                    alert('메인화면에 노출되고 있어 삭제할 수 없습니다.');
+                }
                 setErrorTitle('Error Message');
                 setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
                 setOpen(true);
