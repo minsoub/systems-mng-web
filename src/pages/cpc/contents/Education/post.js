@@ -109,7 +109,7 @@ const Post = () => {
             isMasking
         };
         if (educationInfo.is_email) {
-            if (confirm(`현재 입력된 답변 내용이 제보자의 이메일 주소로 발송됩니다.\n저장 하시겠습니까?`)) {
+            if (confirm(`현재 입력된 답변 내용이 신청자의 이메일 주소로 발송됩니다.\n저장 하시겠습니까?`)) {
                 sendAnswer(data);
             }
         } else {
