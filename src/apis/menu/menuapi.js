@@ -91,6 +91,16 @@ const menus = [
                 parents_menu_id: 'xxx'
             },
             {
+                id: 'projectusersmng',
+                title: '재단 사용자 관리',
+                type: 'item',
+                url: '/lrc/project-users-mng',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
+            },
+            {
                 id: 'dealmng2',
                 title: 'FAQ 관리',
                 type: 'collapse',
