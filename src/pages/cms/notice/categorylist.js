@@ -23,6 +23,7 @@ import { makeStyles, withStyles } from '@mui/styles';
 import moment from 'moment';
 import MainCard from 'components/Common/MainCard';
 import HeaderTitle from 'components/HeaderTitle';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import SearchBar from 'components/ContentManage/SearchBar';
 import InputLayout from 'components/Common/InputLayout';
 import DropInput from 'components/Common/DropInput';
@@ -35,6 +36,109 @@ import styles from './styles.module.scss';
 import CategoryModal from './popup/CategoryModal';
 
 const CategoryList = () => {
+    const columns = [
+        {
+            field: 'id',
+            headerName: 'No.',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 100,
+            valueGetter: ({ value }) => {
+                if (dataGridRows.length) {
+                    return dataGridRows.findIndex((row) => row.id === value) + 1;
+                }
+                return 0;
+            }
+        },
+        {
+            field: 'name',
+            headerName: '카테고리명',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'left'
+        },
+        {
+            field: 'is_use',
+            headerName: '상태',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150,
+            valueGetter: ({ value }) => {
+                if (value === '0') {
+                    return '비사용';
+                } else {
+                    return '사용';
+                }
+            }
+        },
+        {
+            field: 'create_date',
+            headerName: '등록일시',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            minWidth: 200,
+            valueGetter: ({ value }) => {
+                console.log('-------------------------row의 다른값 체크후 변환 처리');
+                let setValue = '고정';
+                dataGridRows.map((row) => {
+                    if (row.create_date === value) {
+                        setValue = row.id;
+                    }
+                });
+                return setValue;
+            }
+        },
+        {
+            field: 'create_account_email',
+            headerName: '등록담당자',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            minWidth: 150
+        },
+        {
+            field: 'update_date',
+            headerName: '업데이트일시',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            minWidth: 200
+        },
+        {
+            field: 'update_account_email',
+            headerName: '업데이트 담당자',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            minWidth: 150
+        }
+    ];
+    // 그리드 목록 데이터
+    const [dataGridRows, setDataGridRows] = useState([
+        {
+            id: 2,
+            name: '카테고리명2',
+            is_use: '0',
+            create_date: '2022-03-18 12:00:00',
+            create_account_email: 'UserID',
+            update_date: '2022-03-19 12:00:00',
+            update_account_email: 'UserID',
+            ad: 'asdf'
+        },
+        {
+            id: 1,
+            name: '카테고리명1',
+            is_use: '1',
+            create_date: '2022-03-15 12:00:00',
+            create_account_email: 'UserID',
+            update_date: '2022-03-15 12:00:00',
+            update_account_email: 'UserID'
+        }
+    ]);
+
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [categoryState, setCategoryState] = useState(0); // 카테고리 사용상태
     const [selectedValue,setSelectedValue] = useState(''); // 선택라인
@@ -87,11 +191,13 @@ const CategoryList = () => {
         // setPage(newPage);
     };
     // 그리드 클릭
-    const handleClick = (rowData) => {
-        //if (rowData && rowData.field && rowData.field !== '__check__') {
-        // navigate(`/projects/detail/${rowData.id}`);
-        //}
-    };
+    const handleClick = (rowData) => {};
+    // 페이징 변경 이벤트
+    const handlePage = (page) => {};
+    // 그리드 더블 클릭
+    const handleDoubleClick = (rowData) => {};
+    //체크박스 선택된 row id 저장
+    const handleSelectionChange = (item) => {};
     useEffect(() => {
         
     }, []);
@@ -130,94 +236,17 @@ const CategoryList = () => {
                 </ButtonLayout>
                 <TableHeader type="category" newAdd={handleOpen} />
                 <ContentLine>
-                    <ScrollX>
-                        <Table style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <StyledTableCell style={{ width: '5%' }} align="center">
-                                        No.
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '30%' }} align="center">
-                                        카테고리명
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '8%' }} align="center">
-                                        상태
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '12%' }} align="center">
-                                        등록일시
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '12%' }} align="center">
-                                        등록담당자
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '12%' }} align="center">
-                                        업데이트일시
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '12%' }} align="center">
-                                        업데이트 담당자
-                                    </StyledTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow hover className="link" onClick={() => handleClick()}>
-                                    <TableCell style={{ width: '5%' }} align="center" component="td" scope="row">
-                                        2
-                                    </TableCell>
-                                    <TableCell style={{ width: '7.5%' }} align="left" component="td" scope="row">
-                                        카테고리명2
-                                    </TableCell>
-                                    <TableCell style={{ width: '7.5%' }} align="center" component="td" scope="row">
-                                        사용
-                                    </TableCell>
-                                    <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
-                                        2022-03-15 12:00:00
-                                    </TableCell>
-                                    <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
-                                        UserID
-                                    </TableCell>
-                                    <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                        -
-                                    </TableCell>
-                                    <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                        -
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow hover className="link" onClick={() => handleClick()}>
-                                    <TableCell style={{ width: '5%' }} align="center" component="td" scope="row">
-                                        1
-                                    </TableCell>
-                                    <TableCell style={{ width: '7.5%' }} align="left" component="td" scope="row">
-                                        카테고리명1
-                                    </TableCell>
-                                    <TableCell style={{ width: '7.5%' }} align="center" component="td" scope="row">
-                                        비사용
-                                    </TableCell>
-                                    <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
-                                        2022-03-15 12:00:00
-                                    </TableCell>
-                                    <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
-                                        UserID
-                                    </TableCell>
-                                    <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                        2022-03-15 12:00:00
-                                    </TableCell>
-                                    <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                        UserID
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </ScrollX>
+                    <DefaultDataGrid
+                        columns={columns}
+                        rows={dataGridRows}
+                        pageSize={10}
+                        height={660}
+                        handlePageChange={handlePage}
+                        handleGridClick={handleClick}
+                        handleGridDoubleClick={handleDoubleClick}
+                        selectionChange={handleSelectionChange}
+                    />
                 </ContentLine>
-                <Pagination
-                    sx={{
-                        background: '#fff',
-                        padding: '10px 0',
-                        display: 'flex',
-                        justifyContent: 'center'
-                    }}
-                    showFirstButton showLastButton
-                    count={500} variant="outlined" shape="rounded" onChange={handleChangePage}
-                />
             </Grid>
             <CategoryModal open={open} onClose={handleClose} />
         </Grid>

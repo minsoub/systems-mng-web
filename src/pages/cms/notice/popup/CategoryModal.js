@@ -14,11 +14,19 @@ const CategoryModal = ({ open, onClose }) => {
     };
     useEffect(() => {}, []);
     useEffect(() => {
-        if (!open){
+        if (!open) {
             setCategoryValue('');
             setStateValue('1');
         }
     }, [open]);
+    const onDelete = () => {
+        // 삭제 기능 제작
+        onClose();
+    };
+    const onSave = () => {
+        // 추가 기능 제작
+        onClose();
+    };
     return (
         <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box className={`${styles.modal_wrap}`}>
@@ -78,6 +86,7 @@ const CategoryModal = ({ open, onClose }) => {
                                         variant="contained"
                                         color="primary"
                                         className={styles.buttons}
+                                        onClick={onDelete}
                                     >
                                         삭제
                                     </Button>
@@ -88,6 +97,7 @@ const CategoryModal = ({ open, onClose }) => {
                                         variant="contained"
                                         color="primary"
                                         className={styles.buttons}
+                                        onClick={onSave}
                                     >
                                         저장
                                     </Button>

@@ -1,0 +1,27 @@
+.css-3yvf2w-MuiDataGrid-root {
+    font-size: 14px;
+}
+
+.MuiDataGrid-columnHeader {
+    background-color: rgba(238, 238, 238, 0.7);
+    height: 55px;
+}
+
+.desc_container {
+    h3 {
+        font-size: 17px;
+        font-weight: 700;
+    }
+    p {
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+.pagination {
+    place-content: center;
+}
+.gridLayout {
+    height: 600px;
+    width: 100%;
+    color: rgba(0, 0, 0, 0.5);
+}
