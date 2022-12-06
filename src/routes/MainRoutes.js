@@ -28,6 +28,7 @@ const FaqCategoryPage = Loadable(lazy(() => import('pages/lrc/faq/categorylist')
 const FaqContentsPage = Loadable(lazy(() => import('pages/lrc/faq/index')));
 const FaqRegForm = Loadable(lazy(() => import('pages/lrc/faq/faqreg')));
 const ProjectUserMngPage = Loadable(lazy(() => import('pages/lrc/project-users-mng')));
+const SystemCheckMng = Loadable(lazy(() => import('pages/lrc/system-check-mng')));
 // render - 고객보호센터 - 대시보드
 const CpcDashboard = Loadable(lazy(() => import('pages/cpc/dashboard')));
 const MainDashboard = Loadable(lazy(() => import('pages/sysmng/dashboard')));
@@ -229,6 +230,7 @@ const MainRoutes = [
                 path: 'lrc/project-users-mng',
                 element: <ProjectUserMngPage />
             },
+
             {
                 path: 'status/list',
                 element: <StatusRegForm />
@@ -260,6 +262,10 @@ const MainRoutes = [
             {
                 path: 'service/log/:paramId',
                 element: <ServiceDetail />
+            },
+            {
+                path: '/lrc/system-check-mng',
+                element: <SystemCheckMng />
             },
             // 고객보호센터 - 대시보드
             {
