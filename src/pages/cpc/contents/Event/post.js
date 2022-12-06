@@ -184,6 +184,7 @@ const Post = () => {
                 alert('등록되었습니다.');
                 setId(responseData.data.data.id);
                 setCreateAccountName(responseData.data.data.create_account_name);
+                listClick();
                 break;
             case 'updateBoard':
                 alert('저장되었습니다.');
@@ -227,6 +228,10 @@ const Post = () => {
     const isValidate = () => {
         if (!title) {
             alert('제목을 입력해 주세요.');
+            return false;
+        }
+        if (!thumbnail && !thumbnailFile) {
+            alert('썸네일 이미지를 등록해 주세요.');
             return false;
         }
         if (!content) {
@@ -296,7 +301,7 @@ const Post = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsCampaignReg">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="이벤트" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="이벤트" />
+                <HeaderTitle titleNm="이벤트" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="이벤트" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>

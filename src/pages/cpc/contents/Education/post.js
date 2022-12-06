@@ -18,7 +18,7 @@ const educationInitialState = {
     id: '', // ID
     name: '', // 이름
     email: '', // 이메일주소
-    sale_phone: '', // 휴대폰번호
+    cell_phone: '', // 휴대폰번호
     content: '', // 신청내용
     desire_date: getDateFormat(moment().format('YYYY-MM-DD')), // 교육희망일
     is_answer_complete: false, // 답변여부
@@ -109,7 +109,7 @@ const Post = () => {
             isMasking
         };
         if (educationInfo.is_email) {
-            if (confirm(`현재 입력된 답변 내용이 제보자의 이메일 주소로 발송됩니다.\n저장 하시겠습니까?`)) {
+            if (confirm(`현재 입력된 답변 내용이 신청자의 이메일 주소로 발송됩니다.\n저장 하시겠습니까?`)) {
                 sendAnswer(data);
             }
         } else {
@@ -159,7 +159,7 @@ const Post = () => {
                         <tbody>
                             <tr>
                                 <th className={'tb--title'}>상태</th>
-                                <td>접수</td>
+                                <td>{educationInfo.is_answer_complete ? '답변완료' : '교육신청'}</td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>이름</th>
@@ -171,7 +171,7 @@ const Post = () => {
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>휴대폰 번호</th>
-                                <td>{educationInfo.phone}</td>
+                                <td>{educationInfo.cell_phone}</td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>교육 희망일</th>

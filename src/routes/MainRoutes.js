@@ -35,7 +35,7 @@ const MainDashboard = Loadable(lazy(() => import('pages/sysmng/dashboard')));
 // render - 고객보호센터 - 메인 관리
 const CpcMainContentsMng = Loadable(lazy(() => import('pages/cpc/main/contents')));
 // -----------------------
-// 사이트 운영/콘텐츠 관리
+// 사이트 운영/컨텐츠 관리
 // 피해사례
 const CpcDamageCaseMng = Loadable(lazy(() => import('pages/cpc/contents/Damage/view')));
 const CpcDamageCaseMngForm = Loadable(lazy(() => import('pages/cpc/contents/Damage/post')));
@@ -268,7 +268,7 @@ const MainRoutes = [
                 path: 'cpc/main/contents/list',
                 element: <CpcMainContentsMng />
             },
-            // 고객보호센터 - 콘텐츠 관리
+            // 고객보호센터 - 컨텐츠 관리
             {
                 path: 'cpc/contents/damage-case/list',
                 element: <CpcDamageCaseMng />

@@ -19,6 +19,7 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/DigitalAssetTrendSearch';
 import ContentLine from 'components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
+import DefaultThumbnail from 'assets/images/default_thumbnail.png';
 
 const View = () => {
     const boardThumbnailUrl = process.env.REACT_APP_BOARD_SERVER_URL;
@@ -52,7 +53,12 @@ const View = () => {
                 <div className="div_thumbnail">
                     <img
                         className="img_thumbnail"
-                        src={params.value && (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)}
+                        src={
+                            params.value === ''
+                                ? DefaultThumbnail
+                                : params.value &&
+                                  (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)
+                        }
                         alt={`${params.row.title} 썸네일 이미지`}
                     />
                 </div>
@@ -61,7 +67,7 @@ const View = () => {
         },
         {
             field: 'contents',
-            headerName: '콘텐츠',
+            headerName: '컨텐츠',
             flex: 1,
             headerAlign: 'center',
             align: 'left',
@@ -138,6 +144,9 @@ const View = () => {
             if (requestError.result === 'FAIL') {
                 console.log('error requestError');
                 console.log(requestError);
+                if (requestError.error.code === 'F018') {
+                    alert('메인화면에 노출되고 있어 삭제할 수 없습니다.');
+                }
                 setErrorTitle('Error Message');
                 setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
                 setOpen(true);
@@ -302,7 +311,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 콘텐츠를 체크하세요.');
+            alert('삭제할 컨텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);
@@ -328,7 +337,7 @@ const View = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2} className="cpcContentsDigitalTrendList">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="이지코노미" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="이지코노미" />
+                <HeaderTitle titleNm="이지코노미" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="이지코노미" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate

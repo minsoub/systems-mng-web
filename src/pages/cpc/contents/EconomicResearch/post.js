@@ -128,6 +128,9 @@ const Post = () => {
             if (requestError.result === 'FAIL') {
                 console.log('error requestError');
                 console.log(requestError);
+                if (requestError.error.code === 'F018') {
+                    alert('메인화면에 노출되고 있어 삭제할 수 없습니다.');
+                }
                 setErrorTitle('Error Message');
                 setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
                 setOpen(true);
@@ -190,6 +193,7 @@ const Post = () => {
                 alert('등록되었습니다.');
                 setId(responseData.data.data.id);
                 setCreateAccountName(responseData.data.data.create_account_name);
+                listClick();
                 break;
             case 'updateBoard':
                 alert('저장되었습니다.');
@@ -240,6 +244,10 @@ const Post = () => {
         }
         if (!title) {
             alert('제목을 입력해 주세요.');
+            return false;
+        }
+        if (!thumbnail && !thumbnailFile) {
+            alert('썸네일 이미지를 등록해 주세요.');
             return false;
         }
         if (!content) {
@@ -311,7 +319,7 @@ const Post = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsCampaignReg">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="빗썸 경제연구소" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="빗썸 경제연구소" />
+                <HeaderTitle titleNm="빗썸 경제연구소" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="빗썸 경제연구소" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>

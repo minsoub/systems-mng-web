@@ -15,6 +15,7 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/CampaignSearch';
 import ContentLine from 'components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
+import DefaultThumbnail from 'assets/images/default_thumbnail.png';
 import styles from '../BoardList.module.scss';
 import './style.scss';
 import classNames from 'classnames/bind';
@@ -52,7 +53,12 @@ const View = () => {
                 <div className="div_thumbnail">
                     <img
                         className="img_thumbnail"
-                        src={params.value && (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)}
+                        src={
+                            params.value === ''
+                                ? DefaultThumbnail
+                                : params.value &&
+                                  (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)
+                        }
                         alt={`${params.row.title} 썸네일 이미지`}
                     />
                 </div>
@@ -61,7 +67,7 @@ const View = () => {
         },
         {
             field: 'contents',
-            headerName: '콘텐츠',
+            headerName: '컨텐츠',
             flex: 1,
             headerAlign: 'center',
             align: 'left',
@@ -302,7 +308,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 콘텐츠를 체크하세요.');
+            alert('삭제할 컨텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);
@@ -331,7 +337,7 @@ const View = () => {
                 <HeaderTitle
                     titleNm="투자자 보호 캠페인"
                     menuStep01="사이트 운영"
-                    menuStep02="콘텐츠 관리"
+                    menuStep02="컨텐츠 관리"
                     menuStep03="투자자 보호 캠페인"
                 />
                 <MainCard>

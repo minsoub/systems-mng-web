@@ -184,6 +184,7 @@ const Post = () => {
                 alert('등록되었습니다.');
                 setId(responseData.data.data.id);
                 setCreateAccountName(responseData.data.data.create_account_name);
+                listClick();
                 break;
             case 'updateBoard':
                 alert('저장되었습니다.');
@@ -227,6 +228,10 @@ const Post = () => {
     const isValidate = () => {
         if (!title) {
             alert('제목을 입력해 주세요.');
+            return false;
+        }
+        if (!thumbnail && !thumbnailFile) {
+            alert('썸네일 이미지를 등록해 주세요.');
             return false;
         }
         if (!content) {
@@ -299,7 +304,7 @@ const Post = () => {
                 <HeaderTitle
                     titleNm="투자자 보호 캠페인"
                     menuStep01="사이트 운영"
-                    menuStep02="콘텐츠 관리"
+                    menuStep02="컨텐츠 관리"
                     menuStep03="투자자 보호 캠페인"
                 />
 
