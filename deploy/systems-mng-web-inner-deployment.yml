@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: systems-mng-web-inner
+  namespace: NAMESPACE
+  labels:
+    app: systems-mng-web-inner
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: systems-mng-web-inner
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: systems-mng-web-inner
+    spec:
+      containers:
+        - name: systems-mng-web-inner
+          image: AWS_ECR_URI
+          ports:
+            - containerPort: 3000
+          resources: {}

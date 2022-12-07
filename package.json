@@ -90,6 +90,7 @@
         "start": "env-cmd -f .env-local react-scripts start",
         "build:dev": "env-cmd -f .env-dev react-scripts build",
         "build:eks-dev": "env-cmd -f .env-eks react-scripts build",
+        "build:eks-dev": "env-cmd -f .env-eks-inner react-scripts build",
         "build:qa": "env-cmd -f .env-qa react-scripts build",
         "build:prod": "env-cmd -f .env-prod react-scripts build",
         "dev-start": "env-cmd -f .env-dev react-scripts start",
