@@ -277,7 +277,8 @@ const View = () => {
         const request = {
             start_date,
             end_date,
-            keyword
+            keyword,
+            category
         };
         searchBoardList(boardMasterId, request);
 
