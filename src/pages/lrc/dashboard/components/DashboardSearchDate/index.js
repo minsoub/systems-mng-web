@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-const SearchDate = ({
+const DashboardSearchDate = ({
     start_date,
     handleBlur,
     handleChange,
@@ -30,18 +30,22 @@ const SearchDate = ({
     const [start_view_date, setStartViewDate] = useState();
     const [end_view_date, setEndViewDate] = useState();
     const titleWidthVal = titleWidth ? titleWidth : 120;
-    SearchDate.defaultProps = {
+
+    DashboardSearchDate.defaultProps = {
         noneChecked: null,
         period: null
     };
+
     useEffect(() => {
         if (!start_date) return;
         setStartViewDate(start_date);
     }, [start_date]);
+
     useEffect(() => {
         if (!end_date) return;
         setEndViewDate(end_date);
     }, [end_date]);
+
     useEffect(() => {
         if (!start_date2) return;
         if (!start_date2.$y || !start_date2.$M || !start_date2.$D) return;
@@ -55,6 +59,7 @@ const SearchDate = ({
         resetPeriod();
         setStartViewDate(start_date2.$y + '-' + (start_date2.$M + 1) + '-' + start_date2.$D);
     }, [start_date2]);
+
     useEffect(() => {
         if (!end_date2) return;
         if (
@@ -66,14 +71,17 @@ const SearchDate = ({
         resetPeriod();
         setEndViewDate(end_date2.$y + '-' + (end_date2.$M + 1) + '-' + end_date2.$D);
     }, [end_date2]);
+
     useEffect(() => {
         if (!start_view_date) return;
         changeDate('start', getFormatDate(new Date(start_view_date)));
     }, [start_view_date]);
+
     useEffect(() => {
         if (!end_view_date) return;
         changeDate('end', getFormatDate(new Date(end_view_date)));
     }, [end_view_date]);
+
     const getFormatDate = (date) => {
         let year = date.getFullYear();
         var month = 1 + date.getMonth();
@@ -82,6 +90,7 @@ const SearchDate = ({
         day = day >= 10 ? day : '0' + day;
         return year + '-' + month + '-' + day;
     };
+
     return (
         <div className={cx(`result__list--date ${noneChecked}`)} style={style}>
             <StackLabel title={title} titleWidth={titleWidthVal} />
@@ -126,13 +135,12 @@ const SearchDate = ({
                 onChange={handleChange}
             >
                 <FormControlLabel value="1" control={<Radio />} label="오늘" />
-                <FormControlLabel value="2" control={<Radio />} label="어제" />
-                <FormControlLabel value="3" control={<Radio />} label="1개월" />
-                <FormControlLabel value="4" control={<Radio />} label="3개월" />
-                {addAll && <FormControlLabel value="5" control={<Radio />} label="전체" />}
+                <FormControlLabel value="2" control={<Radio />} label="최근 7일" />
+                <FormControlLabel value="3" control={<Radio />} label="최근 30일" />
+                <FormControlLabel value="4" control={<Radio />} label="전체" />
             </RadioGroup>
         </div>
     );
 };
 
-export default SearchDate;
+export default DashboardSearchDate;

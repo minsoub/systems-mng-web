@@ -24,22 +24,22 @@ const AnalyticLrcForm = ({ color, id, title, count, child, percentage, isLoss, e
                 };
             case '4769abb1-5ab7-4bea-8126-9a90debc0c44': // 접수중
                 return {
-                    className: 'color_a',
+                    className: 'color_a'
                     // icon: <CopyFilled style={{ fontSize: 40, color: '#fff' }} />
                 };
             case 'fde71dc5-756c-4343-bdcc-b419855095a9': // 검토중
                 return {
-                    className: 'color_b',
+                    className: 'color_b'
                     // icon: <ClockCircleOutlined style={{ fontSize: 40, color: '#fff' }} />
                 };
             case '371edf0e-e770-4ede-b9f7-7e9945d8273e': // 보류
                 return {
-                    className: 'color_c',
+                    className: 'color_c'
                     // icon: <StopOutlined style={{ fontSize: 40, color: '#fff' }} />
                 };
             case '48ef9ce3-7b47-4512-b3a0-dcb32c718e67': // 상장완료
                 return {
-                    className: 'color_d',
+                    className: 'color_d'
                     // icon: <PieChartOutlined style={{ fontSize: 40, color: '#fff' }} />
                 };
         }
@@ -72,22 +72,22 @@ const AnalyticLrcForm = ({ color, id, title, count, child, percentage, isLoss, e
                 <div className="child" key={index}>
                     <MainCard contentSX={{ mt: 1, p: 0.25 }}>
                         <Stack spacing={0.5}>
-                            <Grid item container direction="row" alignItems="center" justifyContent="left">
-                                <Grid key={index} item justify="left">
-                                    <Typography variant="h6" sx={{ fontSize: '1rem', color: '#8c8c8c' }}>
+                            <div>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 40, margin: 'auto' }}>
+                                    <Typography variant="h6" sx={{ fontSize: '1rem', color: '#777777', whiteSpace: 'nowrap' }}>
                                         {item.name}
                                     </Typography>
                                     <Typography
                                         variant="h6"
                                         color="inherit"
-                                        sx={{ fontSize: '1.5rem', fontWeight: '700', color: '#262626' }}
+                                        sx={{ fontSize: '1.5rem', fontWeight: '700', color: '#777777', whiteSpace: 'nowrap' }}
                                     >
                                         <a href="#" onClick={() => detailUrl(id, item.id)}>
                                             <b>{item.count}</b> 건
                                         </a>
                                     </Typography>
-                                </Grid>
-                            </Grid>
+                                </div>
+                            </div>
                         </Stack>
                     </MainCard>
                     <Grid container spacing={0} sx={{ mt: 1 }}></Grid>
