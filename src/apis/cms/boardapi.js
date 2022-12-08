@@ -37,13 +37,35 @@ const BoardApis = () => {
         });
     };
 
+    // 게시글 수정
+    const updateBoard = (boardKey, boardId, data) => {
+        callApi('updateBoard', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/mng/cms/${boardKey}/${boardId}`,
+            requestConfig: data
+        });
+    };
+
+    // 게시글 삭제
+    const deleteBoard = (boardKey, boardId) => {
+        callApi('deleteBoard', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'delete',
+            url: `/mng/cms/${boardKey}/${boardId}`,
+            requestConfig: {}
+        });
+    };
+
     return [
         responseData,
         requestError,
         loading,
         {
             searchBoardList: getBoards,
-            createBoard: createBoard,
+            createBoard,
+            updateBoard,
+            deleteBoard
         }
     ];
 };

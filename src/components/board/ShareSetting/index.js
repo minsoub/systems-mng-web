@@ -10,38 +10,36 @@ import cx from 'classnames';
 // eslint-disable-next-line react/prop-types
 const ShareSetting = ({ type, editMode }) => {
     const dispatch = useDispatch();
+    // 인풋 관리
+    const [inputs, setInputs] = useState({
+        shareTitle: '',
+        shareDesc: '',
+        shareBtnName: ''
+    });
+    const { shareTitle, shareDesc, shareBtnName } = inputs;
     // 파일 정보
     const [file_part, setFilePart] = useState();
     const [file, setFile] = useState('');
 
-    const [shareTitle, setShareTitle] = useState('');
-    const [shareDesc, setShareDesc] = useState('');
-    const [shareButtonName, setShareButtonName] = useState('');
     const handleBlur = () => {};
-    const handleChange = (e) => {
-        switch (e.target.name) {
-            case 'title':
-                setShareTitle(e.target.value);
+    const onChange = (e) => {
+        const { name, value } = e.target;
+        setInputs({
+            ...inputs,
+            [name]: value
+        });
+        switch (name) {
+            case 'shareTitle':
+                dispatch(activeShareTitle({ reduceShareTitle: value }));
                 break;
-            case 'desc':
-                setShareDesc(e.target.value);
+            case 'shareDesc':
+                dispatch(activeShareDesc({ reduceShareDesc: value }));
                 break;
-            case 'buttonName':
-                setShareButtonName(e.target.value);
+            case 'shareBtnName':
+                dispatch(activeShareBtnName({ reduceShareBtnName: value }));
                 break;
-            default:
-                return;
         }
     };
-    useEffect(() => {
-        dispatch(activeShareTitle({ reduceShareTitle: shareTitle }));
-    },[shareTitle]);
-    useEffect(() => {
-        dispatch(activeShareDesc({ reduceShareDesc: shareDesc }));
-    },[shareDesc]);
-    useEffect(() => {
-        dispatch(activeShareBtnName({ reduceShareBtnName: shareButtonName }));
-    },[shareButtonName]);
     useEffect(() => {
         // console.log('editMode', editMode);
     }, [editMode]);
@@ -92,9 +90,9 @@ const ShareSetting = ({ type, editMode }) => {
                                         type="text"
                                         size="small"
                                         value={shareTitle}
-                                        name="title"
+                                        name="shareTitle"
                                         onBlur={handleBlur}
-                                        onChange={handleChange}
+                                        onChange={onChange}
                                         placeholder="공유할 페이지 제목을 입력하세요."
                                         fullWidth
                                     />
@@ -111,9 +109,9 @@ const ShareSetting = ({ type, editMode }) => {
                                         type="text"
                                         size="small"
                                         value={shareDesc}
-                                        name="desc"
+                                        name="shareDesc"
                                         onBlur={handleBlur}
-                                        onChange={handleChange}
+                                        onChange={onChange}
                                         placeholder="공유할 페이지 설명을 입력하세요."
                                         fullWidth
                                     />
@@ -168,10 +166,10 @@ const ShareSetting = ({ type, editMode }) => {
                                     <TextField
                                         type="text"
                                         size="small"
-                                        value={shareButtonName}
-                                        name="buttonName"
+                                        value={shareBtnName}
+                                        name="shareBtnName"
                                         onBlur={handleBlur}
-                                        onChange={handleChange}
+                                        onChange={onChange}
                                         placeholder="공유 버튼명을 입력해 주세요."
                                         fullWidth
                                     />

@@ -118,6 +118,7 @@ const CategoryList = () => {
     const [dataGridRows, setDataGridRows] = useState([]);
     //통신 데이터
     const [responseData, requestError, loading, { searchBoardList }] = BoardApi();
+    const [dataTotal, setDataTotal] = useState(0); //데이터 전체 숫자
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [categoryState, setCategoryState] = useState(0); // 카테고리 사용상태
     const [selectRowData, setSelectRowData] = useState(null); // 선택한 데이터
@@ -140,6 +141,16 @@ const CategoryList = () => {
         setErrorTitle('');
         setErrorMessage('');
     };
+    // transaction error 처리
+    useEffect(() => {
+        if (requestError) {
+            console.log('error requestError');
+            console.log(requestError);
+            setErrorTitle('Error Message');
+            setErrorMessage(requestError);
+            setOpen(true);
+        }
+    }, [requestError]);
     ////////////////////////////////////////////////////
     const handleChange = (e /*, name */) => {
         switch (e.target.name) {
@@ -166,6 +177,11 @@ const CategoryList = () => {
     const clearClick = () => {
         setKeyword('');
         setCategoryState(0);
+        const request = {
+            keyword: '',
+            is_use: 0
+        };
+        searchBoardList('notices/categories', request);
     };
 
     // 그리드 클릭
@@ -190,6 +206,7 @@ const CategoryList = () => {
             case 'getBoards':
                 if (responseData.data.data) {
                     // console.log(responseData.data.data);
+                    setDataTotal(Number(responseData.data.data.total_counts));
                     setDataGridRows(responseData.data.data.contents);
                 } else {
                     setDataGridRows([]);
@@ -232,9 +249,9 @@ const CategoryList = () => {
                         검색
                     </Button>
                 </ButtonLayout>
-                <TableHeader type="category" newAdd={handleOpen} />
+                <TableHeader type="category" newAdd={handleOpen} dataTotal={dataTotal} />
                 <ContentLine>
-                     <DefaultDataGrid
+                    <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
                         pageSize={10}
@@ -247,6 +264,9 @@ const CategoryList = () => {
                 </ContentLine>
             </Grid>
             <CategoryModal open={open} onClose={handleClose} selectRowData={selectRowData} />
+            {errorMessage && (
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+            )}
         </Grid>
     );
 };

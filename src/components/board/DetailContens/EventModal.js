@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button, MenuItem, Select, Box, TextField, Modal } from '@mui/material';
 import styles from './styles.module.scss';
 const EventModal = ({ open, onClose, modalType }) => {
@@ -90,3 +91,9 @@ const EventModal = ({ open, onClose, modalType }) => {
 };
 
 export default EventModal;
+
+EventModal.propTypes = {
+    open: PropTypes.bool,
+    onClose: PropTypes.func,
+    modalType: PropTypes.number
+};

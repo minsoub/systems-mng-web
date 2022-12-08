@@ -24,30 +24,27 @@ import CustomTextfield from './CustomTextfield';
 import styles from './styles.module.scss';
 const EventContents = ({ editMode, handleOpen }) => {
     const dispatch = useDispatch();
-    // 이벤트 유형
-    const [eventType, setEventType] = useState('1');
     // 이벤트 시작일
     const [startDate, setStartDate] = useState(moment().format('YYYY.MM.DD'));
     // 이벤트 종료일
     const [endDate, setEndDate] = useState(moment().format('YYYY.MM.DD'));
-    // 참여대상
-    const [targetPerson, setTargetPerson] = useState('1');
     // 개인정보 수집 및  이용동의
     const [privateText, setPrivateText] = useState('');
-    // 이벤트 버튼명
-    const [eventBtnName, setEventBtnName] = useState('버튼명');
-    // 버튼 색상
-    const [eventBtnColor, setEventBtnColor] = useState('#ff0000');
-    // 버튼 링크 경로
-    const [eventLink, setEventLink] = useState('https://www.bithumb.com/');
-    // 이벤트 참여 완료 메시지
-    const [eventJoinMsg, setEventJoinMsg] = useState('응모완료 되었습니다.');
-    // 이벤트 중복 참여 메시지
-    const [eventOverlapMsg, setEventOverlapMsg] = useState('이미 참여 하였습니다.');
-    // 버튼, 버튼명 필드
+    // 버튼, 버튼명 필드 사용여부
     const [disableBtnBool, setDisableBtnBool] = useState(false);
-    // 이벤트 기간필드
+    // 이벤트 기간필드 사용여부
     const [disableEventDateBool, setDisableEventDateBool] = useState(false);
+    // 인풋 관리
+    const [inputs, setInputs] = useState({
+        eventBtnName: '', // 버튼명
+        eventBtnColor: '', // 버튼 색상
+        eventLink: '', // 버튼 링크경로
+        eventJoinMsg: '', // 참여 완료시 메시지
+        eventOverlapMsg: '', // 중복 참여시 메시지
+        eventType: 1, // 이벤트 유형
+        targetPerson: 1 // 참여대상
+    });
+    const { eventBtnName, eventBtnColor, eventLink, eventJoinMsg, eventOverlapMsg, eventType, targetPerson } = inputs;
 
     useEffect(() => {
         setStartDate(
@@ -68,7 +65,7 @@ const EventContents = ({ editMode, handleOpen }) => {
     useEffect(() => {
         const private_btn = document.querySelector('.private_btn');
         if (!private_btn) return;
-        if ((targetPerson === '2' && !disableBtnBool) || eventType === '1') {
+        if ((targetPerson === 2 && !disableBtnBool) || eventType === 1) {
             private_btn.classList.add('Mui-disabled');
         } else {
             private_btn.classList.remove('Mui-disabled');
@@ -77,16 +74,16 @@ const EventContents = ({ editMode, handleOpen }) => {
 
     useEffect(() => {
         switch (eventType) {
-            case '1':
+            case 1:
                 setDisableEventDateBool(true);
                 setDisableBtnBool(true);
                 break;
-            case '2':
+            case 2:
                 setDisableEventDateBool(false);
                 setDisableBtnBool(false);
                 //setTargetPerson(1);
                 break;
-            case '3':
+            case 3:
                 setDisableEventDateBool(true);
                 setDisableBtnBool(false);
                 //setTargetPerson(1);
@@ -95,42 +92,12 @@ const EventContents = ({ editMode, handleOpen }) => {
                 return;
         }
     }, [eventType]);
-    const typeChanged = (e) => {
-        switch (e.target.name) {
-            case 'eventType':
-                setEventType(e.target.value);
-                break;
-            case 'targetPerson':
-                setTargetPerson(e.target.value);
-                break;
-            default:
-                return;
-        }
-    };
-    const handleChange = (e) => {
-        switch (e.target.name) {
-            case 'eventBtnName':
-                if (e.target.value.length > 10) return;
-                setEventBtnName(e.target.value);
-                break;
-            case 'eventBtnColor':
-                if (e.target.value.length > 10) return;
-                setEventBtnColor(e.target.value);
-                break;
-            case 'eventLink':
-                setEventLink(e.target.value);
-                break;
-            case 'eventJoinMsg':
-                if (e.target.value.length > 20) return;
-                setEventJoinMsg(e.target.value);
-                break;
-            case 'eventOverlapMsg':
-                if (e.target.value.length > 20) return;
-                setEventOverlapMsg(e.target.value);
-                break;
-            default:
-                return;
-        }
+    const onChange = (e) => {
+        const { name, value } = e.target;
+        setInputs({
+            ...inputs,
+            [name]: value
+        });
     };
     useEffect(() => {
         dispatch(activeEventType({ reduceEventType: eventType }));
@@ -174,11 +141,11 @@ const EventContents = ({ editMode, handleOpen }) => {
                                 name="eventType"
                                 label="이벤트 유형"
                                 value={eventType}
-                                onChange={typeChanged}
+                                onChange={onChange}
                             >
-                                <MenuItem value="1">일반</MenuItem>
-                                <MenuItem value="2">참여</MenuItem>
-                                <MenuItem value="3">링크</MenuItem>
+                                <MenuItem value={1}>일반</MenuItem>
+                                <MenuItem value={2}>참여</MenuItem>
+                                <MenuItem value={3}>링크</MenuItem>
                             </Select>
                             <div className="eventDateWrap">
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -225,10 +192,10 @@ const EventContents = ({ editMode, handleOpen }) => {
                                 name="targetPerson"
                                 label="참여 대상"
                                 value={targetPerson}
-                                onChange={typeChanged}
+                                onChange={onChange}
                             >
-                                <MenuItem value="1">로그인 회원</MenuItem>
-                                <MenuItem value="2">비로그인 회원</MenuItem>
+                                <MenuItem value={1}>로그인 회원</MenuItem>
+                                <MenuItem value={2}>비로그인 회원</MenuItem>
                             </Select>
                             <Button
                                 disabled={disableBtnBool}
@@ -273,7 +240,7 @@ const EventContents = ({ editMode, handleOpen }) => {
                         editMode={editMode}
                         value={eventBtnName}
                         name="eventBtnName"
-                        change={handleChange}
+                        change={onChange}
                         holder="버튼명을 입력해 주세요."
                         accessWap={[2, 3]}
                     />
@@ -285,7 +252,7 @@ const EventContents = ({ editMode, handleOpen }) => {
                         editMode={editMode}
                         value={eventBtnColor}
                         name="eventBtnColor"
-                        change={handleChange}
+                        change={onChange}
                         holder="버튼색상을 입력해 주세요."
                         accessWap={[2, 3]}
                     />
@@ -299,7 +266,7 @@ const EventContents = ({ editMode, handleOpen }) => {
                         editMode={editMode}
                         value={eventLink}
                         name="eventLink"
-                        change={handleChange}
+                        change={onChange}
                         holder="링크를 입력해 주세요."
                         accessWap={[3]}
                     />
@@ -316,21 +283,21 @@ const EventContents = ({ editMode, handleOpen }) => {
                         editMode={editMode}
                         value={eventJoinMsg}
                         name="eventJoinMsg"
-                        change={handleChange}
+                        change={onChange}
                         holder="메세지를 입력해 주세요."
                         accessWap={[2]}
                     />
                 </td>
             </tr>
             <tr>
-                <th className={'tb--title'}>중복 완료 시</th>
+                <th className={'tb--title'}>중복 참여 시</th>
                 <td className={'width15'} colSpan="6">
                     <CustomTextfield
                         typeNum={eventType}
                         editMode={editMode}
                         value={eventOverlapMsg}
                         name="eventOverlapMsg"
-                        change={handleChange}
+                        change={onChange}
                         holder="메세지를 입력해 주세요."
                         accessWap={[2]}
                     />

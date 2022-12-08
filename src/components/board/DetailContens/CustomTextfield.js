@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TextField } from '@mui/material';
-const CustomTextfield = ({ typeNum=0, editMode, value, name, change, holder, accessWap=[0] }) => {
+import PropTypes from 'prop-types';
+const CustomTextfield = ({ typeNum, editMode, value, name, change, holder, accessWap }) => {
     const [disAble, setDisAble] = useState(false);
     useEffect(() => {
         // console.log(typeNum, accessWap.indexOf(Number(typeNum)));
-        // eslint-disable-next-line react/prop-types
         if (accessWap.indexOf(Number(typeNum)) > -1) {
             setDisAble(false);
         } else {
@@ -20,3 +19,17 @@ const CustomTextfield = ({ typeNum=0, editMode, value, name, change, holder, acc
 };
 
 export default CustomTextfield;
+CustomTextfield.defaultProps = {
+    typeNum: 0,
+    accessWap: [0]
+};
+
+CustomTextfield.propTypes = {
+    typeNum: PropTypes.number,
+    editMode: PropTypes.bool,
+    value: PropTypes.string,
+    name: PropTypes.string,
+    change: PropTypes.func,
+    holder: PropTypes.string,
+    accessWap: PropTypes.array
+};

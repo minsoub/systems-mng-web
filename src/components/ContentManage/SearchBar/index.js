@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import PropTypes from 'prop-types';
 import { FormControl, Stack, TextField } from '@mui/material';
 import './styles.scss';
 import StackLabel from '../../Common/StackLabel';
@@ -27,3 +28,10 @@ const SearchBar = ({ keyword, handleBlur, handleChange, titleWidth }) => {
 };
 
 export default SearchBar;
+
+SearchBar.propTypes = {
+    keyword: PropTypes.string,
+    handleBlur: PropTypes.func,
+    handleChange: PropTypes.func,
+    titleWidth: PropTypes.number
+};

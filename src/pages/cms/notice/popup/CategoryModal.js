@@ -1,12 +1,12 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button, MenuItem, Select, Box, TextField, Modal } from '@mui/material';
 import BoardApi from 'apis/cms/boardapi';
 import styles from './styles.module.scss';
 const CategoryModal = ({ open, onClose, selectRowData }) => {
     //통신 데이터
-    const [responseData, requestError, loading, { createBoard }] = BoardApi();
+    const [responseData, requestError, loading, { createBoard, updateBoard, deleteBoard }] = BoardApi();
 
     const [categoryValue, setCategoryValue] = useState('');
     const [stateValue, setStateValue] = useState('1');
@@ -18,6 +18,7 @@ const CategoryModal = ({ open, onClose, selectRowData }) => {
         setStateValue(event.target.value);
     };
     useEffect(() => {
+        console.log('selectRowData', selectRowData);
         if (!selectRowData) return;
         setCategoryValue(selectRowData.name);
         setStateValue(selectRowData.is_use ? 1 : 2);
@@ -30,10 +31,13 @@ const CategoryModal = ({ open, onClose, selectRowData }) => {
     }, [open]);
     const onDelete = () => {
         // 삭제 기능 제작
-        onClose();
+        if (confirm('삭제 하시겠습니까?')) {
+            deleteBoard('notices/categories', selectRowData.id);
+        }
     };
     const onSave = () => {
-        if (!categoryValue || !categoryValue.replace(/\s/g, '')) { // 공백제거 추가
+        // 공백제거 추가
+        if (!categoryValue || !categoryValue.replace(/\s/g, '')) {
             alert('카테고리명을 입력하세요.');
             return;
         }
@@ -45,7 +49,7 @@ const CategoryModal = ({ open, onClose, selectRowData }) => {
 
             if (selectRowData) {
                 // 업데이트
-                onClose();
+                updateBoard('notices/categories', selectRowData.id, data);
             } else {
                 createBoard('notices/categories', data);
             }
@@ -57,7 +61,12 @@ const CategoryModal = ({ open, onClose, selectRowData }) => {
         }
         switch (responseData.transactionId) {
             case 'createBoard':
+            case 'updateBoard':
                 alert('등록되었습니다.');
+                onClose('reload');
+                break;
+            case 'deleteBoard':
+                alert('삭제되었습니다.');
                 onClose('reload');
                 break;
             default:
@@ -116,17 +125,19 @@ const CategoryModal = ({ open, onClose, selectRowData }) => {
                                     >
                                         취소
                                     </Button>
-                                    <Button
-                                        disableElevation
-                                        size="medium"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                        className={styles.buttons}
-                                        onClick={onDelete}
-                                    >
-                                        삭제
-                                    </Button>
+                                    {selectRowData && (
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            className={styles.buttons}
+                                            onClick={onDelete}
+                                        >
+                                            삭제
+                                        </Button>
+                                    )}
                                     <Button
                                         disableElevation
                                         size="medium"
@@ -149,3 +160,9 @@ const CategoryModal = ({ open, onClose, selectRowData }) => {
 };
 
 export default CategoryModal;
+
+CategoryModal.propTypes = {
+    open: PropTypes.bool,
+    onClose: PropTypes.func,
+    selectRowData: PropTypes.object
+};
