@@ -45,7 +45,7 @@ const MessageLeft = ({ id, message, timestamp, displayName, fileList, fileDownlo
                         </div>
                     ) : (
                         <div key={id} className="message other-message" data-message-id={id}>
-                            {nl2br(message.message)}
+                            <p dangerouslySetInnerHTML={{ __html: message.message }}></p>
                         </div>
                     )}
                     <h5 className="message-data-time">
