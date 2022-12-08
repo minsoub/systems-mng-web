@@ -331,7 +331,7 @@ const EventList = () => {
                 />
                 <Pagination count={500} defaultPage={1} page={1} color="primary" onChange={handleChangePage} /> */}
                 
-                <TextField disabled={true} value='기본 텍스트필드'/>
+                {/* <TextField disabled={true} value='기본 텍스트필드'/> */}
                 {/* <TextField id="outlined-basic" label="Outlined" disabled={true} />
                 <TextField id="filled-basic" label="Filled" variant="filled" />
                 <TextField id="standard-basic" label="Standard" variant="standard" /> */}

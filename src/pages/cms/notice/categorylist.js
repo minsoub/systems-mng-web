@@ -31,9 +31,10 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import ContentLine from 'components/Common/ContentLine';
 import TableHeader from 'components/Table/TableHeader';
 import ErrorScreen from 'components/ErrorScreen';
-import ScrollX from 'components/Common/ScrollX';
 import styles from './styles.module.scss';
+import BoardApi from 'apis/cms/boardapi';
 import CategoryModal from './popup/CategoryModal';
+import { getDateFormat } from 'utils/CommonUtils';
 
 const CategoryList = () => {
     const columns = [
@@ -43,7 +44,7 @@ const CategoryList = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 100,
+            maxWidth: 70,
             valueGetter: ({ value }) => {
                 if (dataGridRows.length) {
                     return dataGridRows.findIndex((row) => row.id === value) + 1;
@@ -64,12 +65,12 @@ const CategoryList = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 150,
+            maxWidth: 80,
             valueGetter: ({ value }) => {
-                if (value === '0') {
-                    return '비사용';
-                } else {
+                if (value) {
                     return '사용';
+                } else {
+                    return '미사용';
                 }
             }
         },
@@ -79,17 +80,8 @@ const CategoryList = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            minWidth: 200,
-            valueGetter: ({ value }) => {
-                console.log('-------------------------row의 다른값 체크후 변환 처리');
-                let setValue = '고정';
-                dataGridRows.map((row) => {
-                    if (row.create_date === value) {
-                        setValue = row.id;
-                    }
-                });
-                return setValue;
-            }
+            maxWidth: 150,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
         },
         {
             field: 'create_account_email',
@@ -97,7 +89,7 @@ const CategoryList = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            minWidth: 150
+            maxWidth: 200
         },
         {
             field: 'update_date',
@@ -105,7 +97,10 @@ const CategoryList = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            minWidth: 200
+            maxWidth: 150,
+            valueGetter: ({ value }) => {
+                return value ? `${getDateFormat(value)}` : '-';
+            }
         },
         {
             field: 'update_account_email',
@@ -113,43 +108,28 @@ const CategoryList = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            minWidth: 150
+            maxWidth: 200,
+            valueGetter: ({ value }) => {
+                return value ? value : '-';
+            }
         }
     ];
     // 그리드 목록 데이터
-    const [dataGridRows, setDataGridRows] = useState([
-        {
-            id: 2,
-            name: '카테고리명2',
-            is_use: '0',
-            create_date: '2022-03-18 12:00:00',
-            create_account_email: 'UserID',
-            update_date: '2022-03-19 12:00:00',
-            update_account_email: 'UserID',
-            ad: 'asdf'
-        },
-        {
-            id: 1,
-            name: '카테고리명1',
-            is_use: '1',
-            create_date: '2022-03-15 12:00:00',
-            create_account_email: 'UserID',
-            update_date: '2022-03-15 12:00:00',
-            update_account_email: 'UserID'
-        }
-    ]);
-
+    const [dataGridRows, setDataGridRows] = useState([]);
+    //통신 데이터
+    const [responseData, requestError, loading, { searchBoardList }] = BoardApi();
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [categoryState, setCategoryState] = useState(0); // 카테고리 사용상태
-    const [selectedValue,setSelectedValue] = useState(''); // 선택라인
+    const [selectRowData, setSelectRowData] = useState(null); // 선택한 데이터
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const StyledTableCell = withStyles((theme) => ({
-        root: {
-            padding: '0px 16px',
-            height: 35
+    const handleClose = (loadState) => {
+        if (loadState === 'reload') {
+            searchClick();
+        } else {
+            setSelectRowData(null);
         }
-    }))(TableCell);
+        setOpen(false);
+    };
     ////////////////////////////////////////////////////
     // 공통 에러 처리
     const [open, setOpen] = useState(false);
@@ -161,10 +141,6 @@ const CategoryList = () => {
         setErrorMessage('');
     };
     ////////////////////////////////////////////////////
-
-    const handleBlur = (e) => {
-        // console.log(e);
-    };
     const handleChange = (e /*, name */) => {
         switch (e.target.name) {
             case 'keyword': //키워드 변경시
@@ -180,18 +156,23 @@ const CategoryList = () => {
     // 검색
     const searchClick = () => {
         console.log('searchClick called...');
-        console.log(keyword, '|', categoryState);
+        const request = {
+            keyword,
+            is_use: categoryState
+        };
+        searchBoardList('notices/categories', request);
     };
     // 초기화
     const clearClick = () => {
         setKeyword('');
         setCategoryState(0);
     };
-    const handleChangePage = (event, newPage) => {
-        // setPage(newPage);
-    };
+
     // 그리드 클릭
-    const handleClick = (rowData) => {};
+    const handleClick = (rowData) => {
+        setSelectRowData(rowData.row);
+        handleOpen();
+    };
     // 페이징 변경 이벤트
     const handlePage = (page) => {};
     // 그리드 더블 클릭
@@ -199,8 +180,25 @@ const CategoryList = () => {
     //체크박스 선택된 row id 저장
     const handleSelectionChange = (item) => {};
     useEffect(() => {
-        
+        searchClick();
     }, []);
+    useEffect(() => {
+        if (!responseData) {
+            return;
+        }
+        switch (responseData.transactionId) {
+            case 'getBoards':
+                if (responseData.data.data) {
+                    // console.log(responseData.data.data);
+                    setDataGridRows(responseData.data.data.contents);
+                } else {
+                    setDataGridRows([]);
+                }
+                break;
+            default:
+                return;
+        }
+    }, [responseData]);
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="categoryist">
             <Grid item xs={12}>
@@ -208,7 +206,7 @@ const CategoryList = () => {
                 <MainCard>
                     <Grid>
                         <InputLayout>
-                            <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={keyword}/>
+                            <SearchBar handleChange={handleChange} keyword={keyword}/>
                             <DropInput title="상태" titleWidth={40} className={styles.dropdownWrap}>
                                 <InputLabel id="category_state">상태</InputLabel>
                                 <Select
@@ -236,7 +234,7 @@ const CategoryList = () => {
                 </ButtonLayout>
                 <TableHeader type="category" newAdd={handleOpen} />
                 <ContentLine>
-                    <DefaultDataGrid
+                     <DefaultDataGrid
                         columns={columns}
                         rows={dataGridRows}
                         pageSize={10}
@@ -248,9 +246,21 @@ const CategoryList = () => {
                     />
                 </ContentLine>
             </Grid>
-            <CategoryModal open={open} onClose={handleClose} />
+            <CategoryModal open={open} onClose={handleClose} selectRowData={selectRowData} />
         </Grid>
     );
 };
 
 export default CategoryList;
+
+/*
+valueGetter: (value) => {
+    // console.log('-------------------------row의 다른값 체크후 변환 처리', value.row);
+    let setValue = '고정';
+    // dataGridRows.map((row) => {
+    //     if (row.create_date === value) {
+    //         setValue = row.id;
+    //     }
+    // });
+    return setValue;
+}*/

@@ -1,8 +1,13 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Button, MenuItem, Select, Box, TextField, Modal } from '@mui/material';
+import BoardApi from 'apis/cms/boardapi';
 import styles from './styles.module.scss';
-const CategoryModal = ({ open, onClose }) => {
+const CategoryModal = ({ open, onClose, selectRowData }) => {
+    //통신 데이터
+    const [responseData, requestError, loading, { createBoard }] = BoardApi();
+
     const [categoryValue, setCategoryValue] = useState('');
     const [stateValue, setStateValue] = useState('1');
 
@@ -12,7 +17,11 @@ const CategoryModal = ({ open, onClose }) => {
     const stateChange = (event) => {
         setStateValue(event.target.value);
     };
-    useEffect(() => {}, []);
+    useEffect(() => {
+        if (!selectRowData) return;
+        setCategoryValue(selectRowData.name);
+        setStateValue(selectRowData.is_use ? 1 : 2);
+    }, [selectRowData]);
     useEffect(() => {
         if (!open) {
             setCategoryValue('');
@@ -24,9 +33,37 @@ const CategoryModal = ({ open, onClose }) => {
         onClose();
     };
     const onSave = () => {
-        // 추가 기능 제작
-        onClose();
+        if (!categoryValue || !categoryValue.replace(/\s/g, '')) { // 공백제거 추가
+            alert('카테고리명을 입력하세요.');
+            return;
+        }
+        if (confirm('저장 하시겠습니까?')) {
+            const data = {
+                name: categoryValue,
+                is_use: Number(stateValue) === 1 ? true : false
+            };
+
+            if (selectRowData) {
+                // 업데이트
+                onClose();
+            } else {
+                createBoard('notices/categories', data);
+            }
+        }
     };
+    useEffect(() => {
+        if (!responseData) {
+            return;
+        }
+        switch (responseData.transactionId) {
+            case 'createBoard':
+                alert('등록되었습니다.');
+                onClose('reload');
+                break;
+            default:
+                return;
+        }
+    }, [responseData]);
     return (
         <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box className={`${styles.modal_wrap}`}>
@@ -61,8 +98,8 @@ const CategoryModal = ({ open, onClose }) => {
                                         value={stateValue}
                                         onChange={stateChange}
                                     >
-                                        <MenuItem value="1">일반</MenuItem>
-                                        <MenuItem value="2">고정</MenuItem>
+                                        <MenuItem value="1">사용</MenuItem>
+                                        <MenuItem value="2">미사용</MenuItem>
                                 </Select>
                                 </td>
                             </tr>
