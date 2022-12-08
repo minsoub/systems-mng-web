@@ -654,7 +654,7 @@ const ProjectMng = (props) => {
         // if (!pattern.test(e.target.value) && !(e.target.value === '')) {
         //     e.preventDefault();
         // }
-        console.log(e.target.value);
+        // console.log(e.target.value);
         if (!/[0-9.]/.test(e.key)) {
             e.preventDefault();
         }
