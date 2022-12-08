@@ -14,7 +14,7 @@ import axiosInstanceDefault from '../../../apis/axiosDefault';
 import { doEncrypt } from '../../../utils/Crypt';
 import PrivateReasonDialog from '../../popup/PrivateResonPopup';
 import { decimalPoint } from 'utils/DecimalPointCheck';
-import { DecimalPointRegex } from 'utils/Regex';
+import { DecimalPointRegex, Decimal4PointRegex, Decimal8PointRegex } from 'utils/Regex';
 
 const useStyles = makeStyles({
     tableRow: {
@@ -602,12 +602,12 @@ const ProjectMng = (props) => {
                 setKrw_ico_date(e.target.value);
                 break;
             case 'price_krw':
-                if (DecimalPointRegex.test(e.target.value)) {
+                if (Decimal4PointRegex.test(e.target.value)) {
                     setPriceKRW(e.target.value);
                 }
                 break;
             case 'price_btc':
-                if (DecimalPointRegex.test(e.target.value)) {
+                if (Decimal8PointRegex.test(e.target.value)) {
                     setPriceBTC(e.target.value);
                 }
                 break;
@@ -654,7 +654,7 @@ const ProjectMng = (props) => {
         // if (!pattern.test(e.target.value) && !(e.target.value === '')) {
         //     e.preventDefault();
         // }
-        console.log(e.target.value);
+        // console.log(e.target.value);
         if (!/[0-9.]/.test(e.key)) {
             e.preventDefault();
         }

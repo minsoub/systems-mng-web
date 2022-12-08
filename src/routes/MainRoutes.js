@@ -27,7 +27,8 @@ const LineMngPage = Loadable(lazy(() => import('pages/lrc/line/index')));
 const FaqCategoryPage = Loadable(lazy(() => import('pages/lrc/faq/categorylist')));
 const FaqContentsPage = Loadable(lazy(() => import('pages/lrc/faq/index')));
 const FaqRegForm = Loadable(lazy(() => import('pages/lrc/faq/faqreg')));
-
+const ProjectUserMngPage = Loadable(lazy(() => import('pages/lrc/project-users-mng')));
+const SystemCheckMng = Loadable(lazy(() => import('pages/lrc/system-check-mng')));
 // render - 고객보호센터 - 대시보드
 const CpcDashboard = Loadable(lazy(() => import('pages/cpc/dashboard')));
 const MainDashboard = Loadable(lazy(() => import('pages/sysmng/dashboard')));
@@ -70,7 +71,6 @@ const CpcEventMngForm = Loadable(lazy(() => import('pages/cpc/contents/Event/pos
 // 코인팅
 const CpcCointingMng = Loadable(lazy(() => import('pages/cpc/contents/Cointing/view')));
 const CpcCointingMngForm = Loadable(lazy(() => import('pages/cpc/contents/Cointing/post')));
-
 
 // 찾아가는 교육 관리 - 신청자
 const CpcEducationMng = Loadable(lazy(() => import('pages/cpc/contents/Education/view')));
@@ -227,6 +227,11 @@ const MainRoutes = [
                 element: <ProjectsDetailPage />
             },
             {
+                path: 'lrc/project-users-mng',
+                element: <ProjectUserMngPage />
+            },
+
+            {
                 path: 'status/list',
                 element: <StatusRegForm />
             },
@@ -257,6 +262,10 @@ const MainRoutes = [
             {
                 path: 'service/log/:paramId',
                 element: <ServiceDetail />
+            },
+            {
+                path: '/lrc/system-check-mng',
+                element: <SystemCheckMng />
             },
             // 고객보호센터 - 대시보드
             {
