@@ -107,17 +107,44 @@ export function CheckBoxDataGrid({
 }) {
     const [selectionModel, setSelectionModel] = useState([]);
     const [page, setPage] = useState(1);
+    const [gridDatas, setGridDatas] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const handlePage = (page, details) => {
         handlePageChange(page + 1);
         setPage(page + 1);
     };
-
+    const loadServerRows = (page, data) => {
+        return new Promise((resolve) => {
+            resolve(data.slice((page - 1) * pageSize, page * pageSize));
+        });
+    };
     useEffect(() => {
         console.log('change selectionModel:', selectionModel);
         //setSelectionModel(selectionModel);
         selectionChange(selectionModel);
     }, [selectionModel]);
+
+    useEffect(() => {
+        let active = true;
+        if (rows.length) {
+            (async () => {
+                setLoading(true);
+                const newRows = await loadServerRows(page, rows);
+
+                if (!active) {
+                    return;
+                }
+
+                setGridDatas(newRows);
+                setLoading(false);
+            })();
+        }
+
+        return () => {
+            active = false;
+        };
+    }, [page, rows]);
 
     let mHeight = 600;
 
@@ -136,17 +163,20 @@ export function CheckBoxDataGrid({
                         Pagination: CheckBoxPagination
                     }}
                     className={className}
-                    rows={rows}
+                    rows={gridDatas}
+                    rowCount={rows.length}
                     columns={columns}
                     onPageChange={handlePage}
                     onCellClick={handleGridClick}
                     onCellDoubleClick={handleGridDoubleClick}
                     isCellEditable={(params) => false}
+                    pagination
+                    paginationMode="server"
+                    loading={loading}
                     disableSelectionOnClick
                     selectionModel={selectionModel}
                     onSelectionModelChange={(newSelectionModel) => {
-                        const reverse = [...newSelectionModel].reverse();
-                        setSelectionModel(reverse.filter((_, index) => index >= (page - 1) * pageSize && index < page * pageSize));
+                        setSelectionModel(newSelectionModel);
                     }}
                     keepNonExistentRowsSelected
                 />
