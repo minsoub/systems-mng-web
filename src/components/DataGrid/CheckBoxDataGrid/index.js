@@ -105,11 +105,14 @@ export function CheckBoxDataGrid({
     pageSize,
     className
 }) {
+    const [selectionModel, setSelectionModel] = useState([]);
+    const [page, setPage] = useState(1);
+
     const handlePage = (page, details) => {
         handlePageChange(page + 1);
+        setPage(page + 1);
     };
 
-    const [selectionModel, setSelectionModel] = useState([]);
     useEffect(() => {
         console.log('change selectionModel:', selectionModel);
         //setSelectionModel(selectionModel);
@@ -142,8 +145,8 @@ export function CheckBoxDataGrid({
                     disableSelectionOnClick
                     selectionModel={selectionModel}
                     onSelectionModelChange={(newSelectionModel) => {
-                        console.log('newSelectionModel:', newSelectionModel);
-                        setSelectionModel(newSelectionModel);
+                        const reverse = [...newSelectionModel].reverse();
+                        setSelectionModel(reverse.filter((_, index) => index >= (page - 1) * pageSize && index < page * pageSize));
                     }}
                     keepNonExistentRowsSelected
                 />
