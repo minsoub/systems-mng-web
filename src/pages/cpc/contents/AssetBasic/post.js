@@ -119,11 +119,13 @@ const Post = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
@@ -178,6 +180,7 @@ const Post = () => {
                 alert('등록되었습니다.');
                 setId(responseData.data.data.id);
                 setCreateAccountName(responseData.data.data.create_account_name);
+                listClick();
                 break;
             case 'updateBoard':
                 alert('저장되었습니다.');
@@ -221,6 +224,10 @@ const Post = () => {
     const isValidate = () => {
         if (!title) {
             alert('제목을 입력해 주세요.');
+            return false;
+        }
+        if (!thumbnail && !thumbnailFile) {
+            alert('썸네일 이미지를 등록해 주세요.');
             return false;
         }
         if (!content) {

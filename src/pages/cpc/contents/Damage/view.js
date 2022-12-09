@@ -125,11 +125,13 @@ const View = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
@@ -145,6 +147,7 @@ const View = () => {
             category
         };
         searchBoardList(boardMasterId, request);
+        console.log(resBoardMaster);
     }, [resBoardMaster]);
 
     useEffect(() => {
@@ -179,11 +182,11 @@ const View = () => {
     const handleBlur = (e) => {
         console.log(e);
     };
-    const resetPeriod= () => {
+    const resetPeriod = () => {
         setPeriod(0);
     };
-    const changeDate =(type,e)=>{
-        switch(type){
+    const changeDate = (type, e) => {
+        switch (type) {
             case 'start':
                 setStartDate(e);
                 break;
@@ -275,6 +278,10 @@ const View = () => {
     // 검색
     const searchClick = () => {
         console.log('searchClick called...');
+        if (keyword.length === 1) {
+            alert('검색어를 2글자 이상 입력해 주세요.');
+            return;
+        }
         const request = {
             start_date,
             end_date,
@@ -298,7 +305,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 컨텐츠를 체크하세요.');
+            alert('삭제할 컨텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);
@@ -356,8 +363,8 @@ const View = () => {
                             <FormControlLabel value="" control={<Radio />} label="전체" />
                             {resBoardMaster &&
                                 resBoardMaster.data.data.is_use_category &&
-                                resBoardMaster.data.data.categories.map((category, index) => (
-                                    <FormControlLabel key={index} value={category} control={<Radio />} label={category} />
+                                resBoardMaster.data.data.categories.map((data, index) => (
+                                    <FormControlLabel key={index} value={data} control={<Radio />} label={data} />
                                 ))}
                         </RadioGroup>
                     </div>

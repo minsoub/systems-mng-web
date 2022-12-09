@@ -69,18 +69,18 @@ const SiteMenuMappingForm = () => {
 
     const regColumns = [
         {
-          field: 'id',
-          headerName: '프로그램 ID',
-          flex: 0.5,
-          headerAlign: 'center',
-          align: 'center'
+            field: 'id',
+            headerName: '프로그램 ID',
+            flex: 0.5,
+            headerAlign: 'center',
+            align: 'center'
         },
         {
-          field: 'name',
-          headerName: '프로그램명',
-          flex: 0.7,
-          headerAlign: 'center',
-          align: 'center'
+            field: 'name',
+            headerName: '프로그램명',
+            flex: 0.7,
+            headerAlign: 'center',
+            align: 'center'
         },
         {
             field: 'kind_name',
@@ -515,7 +515,14 @@ const SiteMenuMappingForm = () => {
                         <div className="layout--align">
                             <Item>연결된 프로그램 목록</Item>
 
-                            <Button disableElevation size="medium" type="button" variant="outlined_d" color="secondary" onClick={deleteMapping}>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="button"
+                                variant="outlined_d"
+                                color="secondary"
+                                onClick={deleteMapping}
+                            >
                                 삭제
                             </Button>
                         </div>

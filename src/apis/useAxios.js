@@ -25,6 +25,7 @@ const useAxios = () => {
         sessionStorage.removeItem('checker');
         // actionLoadingSpinner(false);
         navigate('/401');
+        alert('30분간 사용되지 않아 자동 로그아웃 되었습니다.\n로그인 페이지로 이동합니다.');
     };
 
     // 인증실패 처리

@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
  * title 제목
  * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{readonly border?: *, readonly elevation?: *, readonly contentSX?: *, readonly children?: *, readonly title?: *, readonly content?: *, readonly bgcolor?: *, readonly sx?: *, readonly addContClass?: *}> & React.RefAttributes<unknown>>}
  */
- const MainCard = forwardRef(({ border = true, children, content = true, elevation, title, bgcolor, sx, addContClass }, ref) => {
+const MainCard = forwardRef(({ border = true, children, content = true, elevation, title, bgcolor, sx, addContClass }, ref) => {
     return (
         <Card
             elevation={elevation || 0}

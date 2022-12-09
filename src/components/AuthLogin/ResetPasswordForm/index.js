@@ -24,7 +24,7 @@ const ResetPasswordForm = () => {
         if (paramId) {
             setTitle('임시 비밀번호 발급');
         } else {
-            setTitle('본인 확인 요청');
+            setTitle('본인 확인');
         }
         // InitData가 없다면.
         if (!localStorage.hasOwnProperty('InitData')) {
@@ -51,7 +51,7 @@ const ResetPasswordForm = () => {
         if (requestError) {
             console.log('>> requestError <<');
             console.log(requestError);
-            alert('임시비밀번호 요청에 오류가 발생하였습니다.');
+            alert('임시비밀번호 발급에 오류가 발생하였습니다.');
         }
     }, [requestError]);
 

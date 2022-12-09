@@ -12,9 +12,10 @@ import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { setSearchData } from 'store/reducers/cpc/CampaignSearch';
+import { setSearchData } from 'store/reducers/cpc/PressReleaseSearch';
 import ContentLine from 'components/Common/ContentLine';
 import { getDateFormat } from 'utils/CommonUtils';
+import DefaultThumbnail from 'assets/images/default_thumbnail.png';
 import styles from '../BoardList.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
@@ -51,7 +52,12 @@ const View = () => {
                 <div className="div_thumbnail">
                     <img
                         className="img_thumbnail"
-                        src={params.value && (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)}
+                        src={
+                            params.value === ''
+                                ? DefaultThumbnail
+                                : params.value &&
+                                  (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)
+                        }
                         alt={`${params.row.title} 썸네일 이미지`}
                     />
                 </div>
@@ -80,7 +86,7 @@ const View = () => {
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoardList, deleteBoardList }] = BoardApi();
 
-    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.cpcCampaignSearchReducer);
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.cpcPressReleaseSearchReducer);
     const dispatch = useDispatch();
 
     // 그리드 선택된 row id
@@ -134,11 +140,13 @@ const View = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
@@ -186,11 +194,11 @@ const View = () => {
     const handleBlur = (e) => {
         console.log(e);
     };
-    const resetPeriod= () => {
+    const resetPeriod = () => {
         setPeriod(0);
     };
-    const changeDate =(type,e)=>{
-        switch(type){
+    const changeDate = (type, e) => {
+        switch (type) {
             case 'start':
                 setStartDate(e);
                 break;
@@ -278,6 +286,10 @@ const View = () => {
     // 검색
     const searchClick = () => {
         console.log('searchClick called...');
+        if (keyword.length === 1) {
+            alert('검색어를 2글자 이상 입력해 주세요.');
+            return;
+        }
         const request = {
             start_date,
             end_date,
@@ -299,7 +311,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 컨텐츠를 체크하세요.');
+            alert('삭제할 컨텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);
@@ -359,7 +371,7 @@ const View = () => {
                         columns={columns}
                         rows={dataGridRows}
                         pageSize={5}
-                        height={1400}
+                        height={660}
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
                         handleGridDoubleClick={handleDoubleClick}

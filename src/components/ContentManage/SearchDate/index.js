@@ -4,6 +4,7 @@ import cx from 'classnames';
 import './styles.scss';
 import StackLabel from 'components/Common/StackLabel';
 import dayjs from 'dayjs';
+import moment from 'moment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -42,7 +43,11 @@ const SearchDate = ({
     },[end_date]);
     useEffect(() => {
         if (!start_date2) return;
-        if(getFormatDate(new Date(start_date2.$y + '-' + (start_date2.$M + 1) + '-' + start_date2.$D))>getFormatDate(new Date(end_view_date))){
+        if (!start_date2.$y || !start_date2.$M || !start_date2.$D) return;
+        if (
+            getFormatDate(new Date(start_date2.$y + '-' + (start_date2.$M + 1) + '-' + start_date2.$D)) >
+            getFormatDate(new Date(end_view_date))
+        ) {
             alert('기간 검색에서 시작일이 종료일보다 클 수 없습니다.');
             return;
         }
@@ -51,7 +56,9 @@ const SearchDate = ({
     },[start_date2]);
     useEffect(() => {
         if (!end_date2) return;
-        if(getFormatDate(new Date(start_view_date))>getFormatDate(new Date(end_date2.$y + '-' + (end_date2.$M + 1) + '-' + end_date2.$D))){
+        if (
+            getFormatDate(new Date(start_view_date)) > getFormatDate(new Date(end_date2.$y + '-' + (end_date2.$M + 1) + '-' + end_date2.$D))
+        ) {
             alert('기간 검색에서 종료일이 시작일보다 작을 수 없습니다.');
             return;
         }

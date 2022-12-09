@@ -12,6 +12,7 @@ import '../BoardList.module.scss';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
+import DefaultThumbnail from 'assets/images/default_thumbnail.png';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/InsightColumnSearch';
@@ -39,14 +40,14 @@ const View = () => {
             align: 'center',
             maxWidth: 100
         },
-        {
-            field: 'category',
-            headerName: '카테고리',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 200
-        },
+        // {
+        //     field: 'category',
+        //     headerName: '카테고리',
+        //     flex: 1,
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     maxWidth: 200
+        // },
         {
             field: 'thumbnail',
             headerName: '썸네일 이미지',
@@ -57,7 +58,12 @@ const View = () => {
                 <div className="div_thumbnail">
                     <img
                         className="img_thumbnail"
-                        src={params.value && (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)}
+                        src={
+                            params.value === ''
+                                ? DefaultThumbnail
+                                : params.value &&
+                                  (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)
+                        }
                         alt={`${params.row.title} 썸네일 이미지`}
                     />
                 </div>
@@ -129,7 +135,7 @@ const View = () => {
         if (reduceToDate) setEndDate(reduceToDate);
         if (reduceKeyword) setKeyword(reduceKeyword);
         if (reducePeriod) setPeriod(reducePeriod);
-        if (reduceCategory) setCategory(reduceCategory);
+        //if (reduceCategory) setCategory(reduceCategory);
 
         setIsSearch(true);
     }, []);
@@ -144,11 +150,16 @@ const View = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                if (requestError.error.code === 'F018') {
+                    alert('메인화면에 노출되고 있어 삭제할 수 없습니다.');
+                }
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
@@ -160,8 +171,7 @@ const View = () => {
         const request = {
             start_date,
             end_date,
-            keyword,
-            category
+            keyword
         };
         searchBoardList(boardMasterId, request);
     }, [resBoardMaster]);
@@ -183,8 +193,7 @@ const View = () => {
                 const request = {
                     start_date,
                     end_date,
-                    keyword,
-                    category
+                    keyword
                 };
                 searchBoardList(boardMasterId, request);
                 break;
@@ -198,11 +207,11 @@ const View = () => {
     const handleBlur = (e) => {
         console.log(e);
     };
-    const resetPeriod= () => {
+    const resetPeriod = () => {
         setPeriod(0);
     };
-    const changeDate =(type,e)=>{
-        switch(type){
+    const changeDate = (type, e) => {
+        switch (type) {
             case 'start':
                 setStartDate(e);
                 break;
@@ -226,9 +235,6 @@ const View = () => {
             case 'period':
                 setPeriod(e.target.value);
                 setDateFromToSet(e.target.value);
-                break;
-            case 'category':
-                setCategory(e.target.value);
                 break;
             case 'keyword':
                 setKeyword(e.target.value);
@@ -287,18 +293,20 @@ const View = () => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
         setPeriod('1');
-        setCategory('');
         setKeyword('');
     };
 
     // 검색
     const searchClick = () => {
         console.log('searchClick called...');
+        if (keyword.length === 1) {
+            alert('검색어를 2글자 이상 입력해 주세요.');
+            return;
+        }
         const request = {
             start_date,
             end_date,
-            keyword,
-            category
+            keyword
         };
         searchBoardList(boardMasterId, request);
 
@@ -307,8 +315,7 @@ const View = () => {
             reduceFromDate: start_date,
             reduceToDate: end_date,
             reducePeriod: period,
-            reduceKeyword: keyword,
-            reduceCategory: category
+            reduceKeyword: keyword
         };
         dispatch(setSearchData(searchData));
     };
@@ -317,7 +324,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 컨텐츠를 체크하세요.');
+            alert('삭제할 컨텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);
@@ -343,7 +350,7 @@ const View = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
-                <HeaderTitle titleNm="인사이트 칼럼" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="인사이트 칼럼" />
+                <HeaderTitle titleNm="오피니언 칼럼" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="오피니언 칼럼" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate
@@ -359,13 +366,13 @@ const View = () => {
                     />
 
                     {/* 카테고리 영역 */}
-                    <div className={cx('category')}>
+                    {/* <div className={cx('category')}>
                         <Stack sx={{ minWidth: '120px' }} spacing={10} className={cx('borderTitle')}>
                             카테고리
-                        </Stack>
+                        </Stack> */}
 
-                        {/* 전체 */}
-                        <RadioGroup
+                    {/* 전체 */}
+                    {/* <RadioGroup
                             row
                             aria-labelledby="category-radio-buttons-group-label"
                             name="category"
@@ -379,7 +386,7 @@ const View = () => {
                                     <FormControlLabel value={category} control={<Radio />} label={category} />
                                 ))}
                         </RadioGroup>
-                    </div>
+                    </div> */}
 
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />

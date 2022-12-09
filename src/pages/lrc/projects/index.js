@@ -60,83 +60,11 @@ const ProjectsPage = () => {
     const StyledTableCell = withStyles((theme) => ({
         root: {
             padding: '0px 16px',
-            height: 35
+            height: 35,
+            whiteSpace: 'nowrap'
         }
     }))(TableCell);
 
-    const columns = [
-        {
-            field: 'id',
-            headerName: '프로젝트명',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'symbol',
-            headerName: '심볼',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'type',
-            headerName: '거래지원 현황',
-            width: 300,
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            renderCell: (params) => {
-                <div>
-                    <Typography>{params.value.name}</Typography>
-                    <Typography color="textSecondary">{params.value.title}</Typography>
-                </div>;
-            }
-        },
-        {
-            field: 'business_name',
-            headerName: '사업 계열',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'network_name',
-            headerName: '네트워크 계열',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'valid_end_date',
-            headerName: '마케팅 수량',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'project_link',
-            headerName: '연결 프로젝트',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'ico_date',
-            headerName: '상장일',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'create_date',
-            headerName: '등록일시',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            valueGetter: ({ value }) => `${getDateFormat(value)}`
-        }
-    ];
     const navigate = useNavigate();
     const { paramId1, paramId2 } = useParams();
     const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
@@ -720,32 +648,35 @@ const ProjectsPage = () => {
                         <Table style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <StyledTableCell style={{ width: '7%' }} align="center" rowSpan={2}>
+                                    <StyledTableCell align="center" rowSpan={2}>
                                         프로젝트명
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ width: '5%' }} align="center" rowSpan={2}>
+                                    <StyledTableCell align="center" rowSpan={2}>
                                         심볼
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ width: '15%' }} align="center" colSpan={2}>
+                                    <StyledTableCell align="center" colSpan={2}>
                                         거래지원 현황
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ width: '8%' }} align="center" rowSpan={2}>
+                                    <StyledTableCell align="center" rowSpan={2}>
                                         사업 계열
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ width: '8%' }} align="center" rowSpan={2}>
+                                    <StyledTableCell align="center" rowSpan={2}>
                                         네트워크 계열
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ width: '20%' }} align="center" colSpan={2}>
+                                    <StyledTableCell align="center" colSpan={2}>
                                         마케팅 수량
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ width: '15%' }} align="center" rowSpan={2}>
+                                    <StyledTableCell align="center" rowSpan={2}>
                                         연결 프로젝트
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ width: '13%' }} align="center" rowSpan={2}>
+                                    <StyledTableCell align="center" rowSpan={2}>
                                         상장일
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ width: '12%' }} align="center" rowSpan={2}>
+                                    <StyledTableCell align="center" rowSpan={2}>
                                         등록일시
+                                    </StyledTableCell>
+                                    <StyledTableCell align="center" rowSpan={2}>
+                                        최근 접속일시
                                     </StyledTableCell>
                                 </TableRow>
                                 <TableRow>
@@ -778,10 +709,10 @@ const ProjectsPage = () => {
                                         <TableCell style={{ width: '7.5%' }} align="center" component="td" scope="row">
                                             {item.progress_name}
                                         </TableCell>
-                                        <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
+                                        <TableCell style={{ width: '6%' }} align="center" component="td" scope="row">
                                             {item.business_name}
                                         </TableCell>
-                                        <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
+                                        <TableCell style={{ width: '7%' }} align="center" component="td" scope="row">
                                             {item.network_name}
                                         </TableCell>
                                         <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
@@ -790,13 +721,16 @@ const ProjectsPage = () => {
                                         <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
                                             {item.actual_quantity}
                                         </TableCell>
-                                        <TableCell style={{ width: '15%' }} align="center" component="td" scope="row">
+                                        <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
                                             {item.project_link}
                                         </TableCell>
-                                        <TableCell style={{ width: '13%' }} align="center" component="td" scope="row">
+                                        <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
                                             {item.ico_date}
                                         </TableCell>
-                                        <TableCell style={{ width: '12%' }} align="center" component="td" scope="row">
+                                        <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
+                                            {getDateFormat(item.create_date)}
+                                        </TableCell>
+                                        <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
                                             {getDateFormat(item.create_date)}
                                         </TableCell>
                                     </TableRow>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import CheckBoxDataGrid from 'components/DataGrid/CheckBoxDataGrid';
 import BoardMasterApi from 'apis/cpc/board/boardmasterapi';
@@ -26,6 +26,14 @@ const View = () => {
             headerAlign: 'center',
             align: 'center',
             maxWidth: 100
+        },
+        {
+            field: 'category',
+            headerName: '카테고리',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150
         },
         {
             field: 'title',
@@ -57,7 +65,9 @@ const View = () => {
     const [resBoardMaster, boardMasterError, loading, { searchBoardMaster }] = BoardMasterApi();
     const [responseData, requestError, resLoading, { searchBoardList, deleteBoardList }] = BoardApi();
 
-    const { reduceFromDate, reduceToDate, reducePeriod, reduceKeyword } = useSelector((state) => state.cpcNoticeSearchReducer);
+    const { reduceFromDate, reduceToDate, reducePeriod, reduceCategory, reduceKeyword } = useSelector(
+        (state) => state.cpcNoticeSearchReducer
+    );
     const dispatch = useDispatch();
 
     // 그리드 선택된 row id
@@ -82,6 +92,7 @@ const View = () => {
     const [end_date, setEndDate] = useState('');
     const [period, setPeriod] = useState('1');
     const [keyword, setKeyword] = useState('');
+    const [category, setCategory] = useState('');
 
     // 상태 값
     const [isSearch, setIsSearch] = useState(false);
@@ -97,6 +108,7 @@ const View = () => {
         if (reduceToDate) setEndDate(reduceToDate);
         if (reduceKeyword) setKeyword(reduceKeyword);
         if (reducePeriod) setPeriod(reducePeriod);
+        if (reduceCategory) setCategory(reduceCategory);
 
         setIsSearch(true);
     }, []);
@@ -111,11 +123,13 @@ const View = () => {
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
-            console.log('error requestError');
-            console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
-            setOpen(true);
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
+            }
         }
     }, [requestError]);
 
@@ -127,7 +141,8 @@ const View = () => {
         const request = {
             start_date,
             end_date,
-            keyword
+            keyword,
+            category
         };
         searchBoardList(boardMasterId, request);
     }, [resBoardMaster]);
@@ -163,11 +178,11 @@ const View = () => {
     const handleBlur = (e) => {
         console.log(e);
     };
-    const resetPeriod= () => {
+    const resetPeriod = () => {
         setPeriod(0);
     };
-    const changeDate =(type,e)=>{
-        switch(type){
+    const changeDate = (type, e) => {
+        switch (type) {
             case 'start':
                 setStartDate(e);
                 break;
@@ -191,6 +206,9 @@ const View = () => {
             case 'period':
                 setPeriod(e.target.value);
                 setDateFromToSet(e.target.value);
+                break;
+            case 'category':
+                setCategory(e.target.value);
                 break;
             case 'keyword':
                 setKeyword(e.target.value);
@@ -249,16 +267,22 @@ const View = () => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
         setPeriod('1');
+        setCategory('');
         setKeyword('');
     };
 
     // 검색
     const searchClick = () => {
         console.log('searchClick called...');
+        if (keyword.length === 1) {
+            alert('검색어를 2글자 이상 입력해 주세요.');
+            return;
+        }
         const request = {
             start_date,
             end_date,
-            keyword
+            keyword,
+            category
         };
         searchBoardList(boardMasterId, request);
 
@@ -267,7 +291,8 @@ const View = () => {
             reduceFromDate: start_date,
             reduceToDate: end_date,
             reducePeriod: period,
-            reduceKeyword: keyword
+            reduceKeyword: keyword,
+            reduceCategory: category
         };
         dispatch(setSearchData(searchData));
     };
@@ -276,7 +301,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 컨텐츠를 체크하세요.');
+            alert('삭제할 컨텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);
@@ -316,7 +341,28 @@ const View = () => {
                         changeDate={changeDate}
                         resetPeriod={resetPeriod}
                     />
+                    {/* 카테고리 영역 */}
+                    <div className={cx('category')}>
+                        <Stack sx={{ minWidth: '120px' }} spacing={10} className={cx('borderTitle')}>
+                            카테고리
+                        </Stack>
 
+                        {/* 전체 */}
+                        <RadioGroup
+                            row
+                            aria-labelledby="category-radio-buttons-group-label"
+                            name="category"
+                            value={category}
+                            onChange={handleChange}
+                        >
+                            <FormControlLabel value="" control={<Radio />} label="전체" />
+                            {resBoardMaster &&
+                                resBoardMaster.data.data.is_use_category &&
+                                resBoardMaster.data.data.categories.map((category, index) => (
+                                    <FormControlLabel key={index} value={category} control={<Radio />} label={category} />
+                                ))}
+                        </RadioGroup>
+                    </div>
                     {/* 검색바 */}
                     <SearchBar keyword={keyword} handleChange={handleChange} handleBlur={handleBlur} />
                 </MainCard>
