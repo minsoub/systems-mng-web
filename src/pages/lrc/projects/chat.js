@@ -539,7 +539,18 @@ const Chat = forwardRef((props, ref) => {
                         <DownloadOutlined /> 내역 다운로드
                     </Button>
                     <FormControl sx={{ minWidth: 100, boxSizing: 'border-box' }} size="medium">
-                        <TextField id="symbol" name="symbol" inputRef={refKeyword} type="text" size="small" />
+                        <TextField
+                            id="symbol"
+                            name="symbol"
+                            inputRef={refKeyword}
+                            type="text"
+                            size="small"
+                            onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
+                                    searchClick();
+                                }
+                            }}
+                        />
                     </FormControl>
 
                     <Button disableElevation size="medium" type="submit" variant="outlined" color="secondary" onClick={searchClick}>
