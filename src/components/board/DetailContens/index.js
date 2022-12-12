@@ -35,8 +35,7 @@ const DetailContens = ({ type, editMode }) => {
         { name: '카테3', id: 3 },
         { name: '카테4', id: 4 }
     ]);
-    // 카테고리1
-    const [category1, setCategory1] = useState(2);
+
     // 카테고리2 리스트
     const [categoryList2, setCategoryList2] = useState([
         { name: '카테고리1', id: 1 },
@@ -45,28 +44,19 @@ const DetailContens = ({ type, editMode }) => {
         { name: '카테고리4', id: 4 },
         { name: '카테고리5', id: 5 }
     ]);
-    // 카테고리2
-    const [category2, setCategory2] = useState(3);
-    // 제목
-    const [title, setTitle] = useState(
-        '전기통신금융사기 주의 안내(공공기관, 수사기관 사칭) 제목이 길어지는 경우 모두 출력합니다. 제목이 길어지는 경우 모두 출력합니다. 제목이 길어지는 경우 모두 출력합니다.'
-    );
-    // 상단고정 여부
-    const [notiTopType, setNotiTopType] = useState(1);
+
     // 상단고정 셀렉박스
     const notiSelectList = [
         { name: '일반', id: 1 },
         { name: '고정', id: 2 }
     ];
-    // 공개 여부 상태
-    const [visibleState, setVisibleState] = useState(1);
+
     // 공개여부 셀렉박스
     const visibleSelectList = [
         { name: '공개', id: 1 },
         { name: '비공개', id: 2 }
     ];
-    // 게시예약
-    const [reservationState, setReservationState] = useState(false);
+
     // 게시 예약일자
     const [reservationDate, setReservationDate] = useState(moment().format('YYYY.MM.DD A hh:mm'));
     // 내용
@@ -76,6 +66,17 @@ const DetailContens = ({ type, editMode }) => {
     const [file_part, setFilePart] = useState(); //파일 정보
     const [file, setFile] = useState(''); // 첨부파일
     const editParam = { editName: 'contentsEditor', value: '<b>여기 입력 고고</b>' }; // 에디터 설정관련
+
+    // 인풋 관리
+    const [inputs, setInputs] = useState({
+        title: '', // 제목
+        category1: 1, // 카테고리1
+        category2: 1, // 카테고리2
+        notiTopType: 1, // 상단고정
+        visibleState: 1, // 공개 상태
+        reservationState: false // 게시예약
+    });
+    const { title, category1, category2, notiTopType, visibleState, reservationState } = inputs;
 
     //팝업 오픈 관련 설정
     const [open, setOpen] = useState(false);
@@ -95,35 +96,18 @@ const DetailContens = ({ type, editMode }) => {
             )
         );
     }, []);
-    const typeChanged = (e) => {
-        switch (e.target.name) {
-            case 'cate1':
-                setCategory1(e.target.value);
-                console.log(e.target.value);
-                break;
-            case 'cate2':
-                setCategory2(e.target.value);
-                break;
-            case 'notiTopType':
-                setNotiTopType(e.target.value);
-                break;
-            case 'visibleState':
-                setVisibleState(e.target.value);
-                break;
-            case 'reservationState':
-                setReservationState(e.target.checked);
-                break;
-            default:
-                return;
-        }
-    };
-    const handleChange = (e) => {
-        switch (e.target.name) {
-            case 'title':
-                setTitle(e.target.value);
-                break;
-            default:
-                return;
+    const onChange = (e) => {
+        const { name, value, checked } = e.target;
+        if (name === 'reservationState') {
+            setInputs({
+                ...inputs,
+                [name]: checked
+            });
+        } else {
+            setInputs({
+                ...inputs,
+                [name]: value
+            });
         }
     };
 
@@ -155,6 +139,7 @@ const DetailContens = ({ type, editMode }) => {
         // insertChatFile(formData);
     };
     useEffect(() => {
+        console.log(category1);
         dispatch(activeNotiCategory1({ reduceNotiCategory1: category1 }));
     }, [category1]);
     useEffect(() => {
@@ -197,8 +182,8 @@ const DetailContens = ({ type, editMode }) => {
                                 <CustomSelectBox
                                     editMode={editMode}
                                     value={category1}
-                                    name="cate1"
-                                    change={typeChanged}
+                                    name="category1"
+                                    change={onChange}
                                     selectList={categoryList1}
                                 />
                             </td>
@@ -207,8 +192,8 @@ const DetailContens = ({ type, editMode }) => {
                                 <CustomSelectBox
                                     editMode={editMode}
                                     value={category2}
-                                    name="cate2"
-                                    change={typeChanged}
+                                    name="category2"
+                                    change={onChange}
                                     selectList={categoryList2}
                                 />
                             </td>
@@ -221,7 +206,7 @@ const DetailContens = ({ type, editMode }) => {
                                 editMode={editMode}
                                 value={title}
                                 name="title"
-                                change={handleChange}
+                                change={onChange}
                                 holder="제목을 입력해 주세요."
                             />
                         </td>
@@ -234,7 +219,7 @@ const DetailContens = ({ type, editMode }) => {
                                     editMode={editMode}
                                     value={notiTopType}
                                     name="notiTopType"
-                                    change={typeChanged}
+                                    change={onChange}
                                     selectList={notiSelectList}
                                 />
                             </td>
@@ -254,7 +239,7 @@ const DetailContens = ({ type, editMode }) => {
                                         name="visibleState"
                                         label="공개 여부"
                                         value={visibleState}
-                                        onChange={typeChanged}
+                                        onChange={onChange}
                                     >
                                         <MenuItem value="1">공개</MenuItem>
                                         <MenuItem value="2">비공개</MenuItem>
@@ -263,7 +248,7 @@ const DetailContens = ({ type, editMode }) => {
                                         <FormGroup aria-label="position" row>
                                             <FormControlLabel
                                                 name="reservationState"
-                                                control={<Checkbox onChange={typeChanged} />}
+                                                control={<Checkbox onChange={onChange} />}
                                                 label="게시 예약"
                                                 sx={{ ml: 1 }}
                                             />
