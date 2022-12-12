@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Grid, TextField } from '@mui/material';
+import JoditEditor from 'jodit-react';
 import '../styles.scss';
 import ButtonLayout from '../../Common/ButtonLayout';
 import InputLayout from '../../Common/InputLayout';
 import FlexBox from 'components/Common/FlexBox/index';
 
 export const Index = ({ sendChat }) => {
+    const editorRef = useRef(null);
     const [value, setValue] = useState('');
+
+    const config = {
+        language: 'ko',
+        readonly: false,
+        placeholder: '내용을 입력하세요.',
+        enableDragAndDropFileToEditor: true,
+        imageDefaultWidth: null,
+        width: '100%',
+        height: 300
+    };
+
     const sendData = () => {
         if (value) {
             let data = value;
@@ -28,15 +41,13 @@ export const Index = ({ sendChat }) => {
     return (
         <>
             <Grid className="chat-message">
-                <FlexBox sx={{ justifyContent: 'space-between' }}>
-                    <textarea rows="5" id="standard-text" label="텍스트 입력" value={value} onChange={handleChange} />
-
-                    <ButtonLayout>
-                        <Button variant="contained" color="primary" size="medium" className="button" onClick={sendData}>
-                            전송
-                        </Button>
-                    </ButtonLayout>
-                </FlexBox>
+                {/*<textarea rows="5" id="standard-text" label="텍스트 입력" value={value} onChange={handleChange} />*/}
+                <JoditEditor ref={editorRef} value={value} config={config} onBlur={(newContent) => setValue(newContent)} />
+                <ButtonLayout style={{ width: '100%', justifyContent: 'center', marginTop: 30 }}>
+                    <Button variant="contained" color="primary" size="medium" className="button" onClick={sendData}>
+                        전송하기
+                    </Button>
+                </ButtonLayout>
             </Grid>
         </>
     );
