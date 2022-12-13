@@ -67,7 +67,7 @@ const View = () => {
         },
         {
             field: 'contents',
-            headerName: '컨텐츠',
+            headerName: '콘텐츠',
             flex: 1,
             headerAlign: 'center',
             align: 'left',
@@ -315,7 +315,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제할 컨텐츠를 체크하세요.');
+            alert('삭제할 콘텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);
@@ -341,7 +341,7 @@ const View = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2} className="cpcContentsDigitalTrendList">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="이지코노미" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="이지코노미" />
+                <HeaderTitle titleNm="이지코노미" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="이지코노미" />
                 <MainCard>
                     {/* 기간 검색 */}
                     <SearchDate
