@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import {
     Button,
     Grid,
@@ -19,8 +18,6 @@ import {
     TextField,
     Modal
 } from '@mui/material';
-import { makeStyles, withStyles } from '@mui/styles';
-import moment from 'moment';
 import MainCard from 'components/Common/MainCard';
 import HeaderTitle from 'components/HeaderTitle';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
@@ -151,6 +148,9 @@ const CategoryList = () => {
             setOpen(true);
         }
     }, [requestError]);
+    useEffect(() => {
+        console.log(loading);
+    }, [loading]);
     ////////////////////////////////////////////////////
     const handleChange = (e /*, name */) => {
         switch (e.target.name) {
