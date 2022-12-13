@@ -301,7 +301,7 @@ const Post = () => {
         <Grid container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
                 {/* 등록 페이지 */}
-                <HeaderTitle titleNm="이지코노미" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="이지코노미" />
+                <HeaderTitle titleNm="이지코노미" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="이지코노미" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>

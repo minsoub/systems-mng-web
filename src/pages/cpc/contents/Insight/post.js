@@ -319,7 +319,7 @@ const Post = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="cpcContentsInsightReg">
             <Grid item xs={12}>
-                <HeaderTitle titleNm="오피니언 칼럼" menuStep01="사이트 운영" menuStep02="컨텐츠 관리" menuStep03="오피니언 칼럼" />
+                <HeaderTitle titleNm="오피니언 칼럼" menuStep01="사이트 운영" menuStep02="콘텐츠 관리" menuStep03="오피니언 칼럼" />
 
                 <div className={cx('common-grid--layout')}>
                     <table>

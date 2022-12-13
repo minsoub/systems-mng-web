@@ -135,7 +135,6 @@ export function CheckBoxDataGrid({
                 if (!active) {
                     return;
                 }
-
                 setGridDatas(newRows);
                 setLoading(false);
             })();
