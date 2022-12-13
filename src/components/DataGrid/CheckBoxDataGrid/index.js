@@ -102,7 +102,7 @@ export function CheckBoxDataGrid({
     handleGridDoubleClick,
     selectionChange,
     height,
-    pageSize,
+    pageSize = 10,
     className
 }) {
     const [selectionModel, setSelectionModel] = useState([]);
@@ -135,7 +135,6 @@ export function CheckBoxDataGrid({
                 if (!active) {
                     return;
                 }
-
                 setGridDatas(newRows);
                 setLoading(false);
             })();
