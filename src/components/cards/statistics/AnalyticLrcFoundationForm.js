@@ -45,14 +45,26 @@ const AnalyticLrcFoundationForm = ({ color, id, title, count, child, percentage,
                 <div className="child" key={index}>
                     <MainCard contentSX={{ mt: 1, p: 0.25 }}>
                         <Stack spacing={0.5}>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 40, margin: 'auto' }}>
-                                <Typography variant="h6" sx={{ fontSize: '1rem', color: '#777777', whiteSpace: 'nowrap' }}>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    margin: 'auto',
+                                    gap: '40px'
+                                }}
+                            >
+                                <Typography
+                                    variant="h6"
+                                    sx={{ fontSize: '1rem', fontWeight: '500', color: '#777777', whiteSpace: 'nowrap' }}
+                                >
                                     {item.name}
                                 </Typography>
                                 <Typography
                                     variant="h6"
                                     color="inherit"
-                                    sx={{ fontSize: '1.5rem', fontWeight: '700', color: '#777777', whiteSpace: 'nowrap' }}
+                                    sx={{ fontSize: '1.25rem', fontWeight: '500', color: '#777777', whiteSpace: 'nowrap' }}
                                 >
                                     <a href="#" onClick={() => detailUrl(id, item.id)}>
                                         <b>{item.count}</b> 건
