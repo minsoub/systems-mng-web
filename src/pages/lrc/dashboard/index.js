@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Button, Grid, Typography } from '@mui/material';
 import moment from 'moment';
 import AnalyticLrcForm from 'components/cards/statistics/AnalyticLrcForm';
 import AnalyticLrcCharts from 'components/cards/statistics/AnalyticLrcCharts';
 import AnalyticLrcFoundationForm from 'components/cards/statistics/AnalyticLrcFoundationForm';
-
 import DashboardApi from 'apis/lrc/dashboard/index';
 import DashboardSearchDate from './components/DashboardSearchDate';
+import { v4 as uuidv4 } from 'uuid';
 
 // avatar style
 const avatarSX = {
@@ -55,6 +55,32 @@ const LrcDashboard = () => {
     const [start_date, setStartDate] = useState('');
     const [end_date, setEndDate] = useState('');
     const [period, setPeriod] = useState('1');
+
+    const mockData = useMemo(() => {
+        return [
+            {
+                count: 4,
+                id: uuidv4(),
+                name: 'mockData1',
+                type: 'BUSINESS',
+                use_yn: true
+            },
+            {
+                count: 2,
+                id: uuidv4(),
+                name: 'mockData2',
+                type: 'BUSINESS',
+                use_yn: true
+            },
+            {
+                count: 5,
+                id: uuidv4(),
+                name: 'mockData3',
+                type: 'BUSINESS',
+                use_yn: true
+            }
+        ];
+    }, []);
 
     const handleBlur = (e) => {
         console.log(e);
@@ -145,7 +171,6 @@ const LrcDashboard = () => {
         if (!responseData) {
             return;
         }
-        console.log(responseData);
         switch (responseData.transactionId) {
             case 'getList':
                 if (responseData.data.data && responseData.data.data.length > 0) {
@@ -247,7 +272,7 @@ const LrcDashboard = () => {
                     .filter((item) => item.type === 'BUSINESS')
                     .map((item) => (
                         <Grid key={item.id} item xs={3} sx={{ minWidth: '25%' }}>
-                            <AnalyticLrcFoundationForm id={item.id} title={item.name} count={item.count} child={[]} />
+                            <AnalyticLrcFoundationForm id={item.id} title={item.name} count={item.count} child={mockData} />
                         </Grid>
                     ))}
             </div>
@@ -261,7 +286,7 @@ const LrcDashboard = () => {
                     .filter((item) => item.type === 'NETWORK')
                     .map((item) => (
                         <Grid key={item.id} item xs={3} sx={{ minWidth: '25%' }}>
-                            <AnalyticLrcFoundationForm id={item.id} title={item.name} count={item.count} child={[]} />
+                            <AnalyticLrcFoundationForm id={item.id} title={item.name} count={item.count} child={mockData} />
                         </Grid>
                     ))}
             </div>
