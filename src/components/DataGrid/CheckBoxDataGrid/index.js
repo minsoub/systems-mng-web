@@ -131,13 +131,14 @@ export function CheckBoxDataGrid({
             (async () => {
                 setLoading(true);
                 const newRows = await loadServerRows(page, rows);
-
                 if (!active) {
                     return;
                 }
                 setGridDatas(newRows);
                 setLoading(false);
             })();
+        } else {
+            setGridDatas([]);
         }
 
         return () => {
