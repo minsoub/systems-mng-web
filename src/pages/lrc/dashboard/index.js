@@ -271,7 +271,7 @@ const LrcDashboard = () => {
                 {foundationsStatus
                     .filter((item) => item.type === 'BUSINESS')
                     .map((item) => (
-                        <Grid key={item.id} item xs={3} sx={{ minWidth: '25%' }}>
+                        <Grid key={item.id} item xs={3} sx={{ minWidth: '19%' }}>
                             <AnalyticLrcFoundationForm id={item.id} title={item.name} count={item.count} child={mockData} />
                         </Grid>
                     ))}
@@ -285,7 +285,7 @@ const LrcDashboard = () => {
                 {foundationsStatus
                     .filter((item) => item.type === 'NETWORK')
                     .map((item) => (
-                        <Grid key={item.id} item xs={3} sx={{ minWidth: '25%' }}>
+                        <Grid key={item.id} item xs={3} sx={{ minWidth: '19%' }}>
                             <AnalyticLrcFoundationForm id={item.id} title={item.name} count={item.count} child={mockData} />
                         </Grid>
                     ))}
