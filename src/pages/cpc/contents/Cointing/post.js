@@ -377,13 +377,11 @@ const Post = () => {
                                     />
                                 </td>
                             </tr>
-                            {createAccountName ? (
+                            {createAccountName && (
                                 <tr>
                                     <th className={'tb--title'}>등록자</th>
                                     <td>{createAccountName}</td>
                                 </tr>
-                            ) : (
-                                <></>
                             )}
                         </tbody>
                     </table>

@@ -97,8 +97,8 @@ const DetailContens = ({ type, editMode }) => {
         );
     }, []);
     const onChange = (e) => {
-        const { name, value, checked } = e.target;
-        if (name === 'reservationState') {
+        const { name, value, checked, type } = e.target;
+        if (type === 'checkbox') {
             setInputs({
                 ...inputs,
                 [name]: checked
