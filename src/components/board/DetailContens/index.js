@@ -98,17 +98,11 @@ const DetailContens = ({ type, editMode }) => {
     }, []);
     const onChange = (e) => {
         const { name, value, checked, type } = e.target;
-        if (type === 'checkbox') {
-            setInputs({
-                ...inputs,
-                [name]: checked
-            });
-        } else {
-            setInputs({
-                ...inputs,
-                [name]: value
-            });
-        }
+        const resultValue = type === 'checkbox' ? checked : value;
+        setInputs({
+            ...inputs,
+            [name]: resultValue
+        });
     };
 
     // 입력 박스 입력 시 호출
