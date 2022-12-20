@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, MenuItem, Select, TextareaAutosize } from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, TextareaAutosize } from '@mui/material';
 import moment from 'moment';
 import EducationApi from 'apis/cpc/education/maskingApi';
 import EducationAnswerApi from 'apis/cpc/education/answerApi';
@@ -8,7 +8,7 @@ import ErrorScreen from 'components/ErrorScreen';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import TopInputLayout from 'components/Common/TopInputLayout';
 import HeaderTitle from 'components/HeaderTitle';
-import MaskingModal from './MaskingDialog';
+import PrivateReasonDialog from 'pages/popup/PrivateResonPopup';
 import { getDateFormat } from 'utils/CommonUtils';
 import cx from 'classnames';
 import '../BoardList.module.scss';
@@ -18,11 +18,10 @@ const educationInitialState = {
     id: '', // ID
     name: '', // 이름
     email: '', // 이메일주소
-    sale_phone: '', // 휴대폰번호
+    cell_phone: '', // 휴대폰번호
     content: '', // 신청내용
     desire_date: getDateFormat(moment().format('YYYY-MM-DD')), // 교육희망일
     is_answer_complete: false, // 답변여부
-    is_consignment_agreement: false, // 개인정보 위탁 동의
     is_use_agreement: false, // 개인정보 수집 및 이용동의
     is_email: false, // 메일전송여부
     answer: '', // 답변
@@ -40,7 +39,9 @@ const Post = () => {
     const [educationInfo, setEducationInfo] = useState(educationInitialState);
     // 마스킹 상태
     const [isMasking, setIsMasking] = useState(true);
-    const [isMaskingModal, setIsMaskingModal] = useState(false);
+
+    // Log reason Dialog
+    const [openReason, setOpenReason] = useState(false);
 
     // 공통 에러처리
     const [open, setOpen] = useState(false);
@@ -70,22 +71,26 @@ const Post = () => {
         }
     };
 
-    const handleMasking = (reason) => {
-        setIsMaskingModal(false);
-        setIsMasking(false);
-        const data = {
-            id: educationInfo.id,
-            reason
-        };
-        searchUnMaskingEducation(data);
+    // 마스킹 상태 변경
+    const handleReasonPopupClose = (reason) => {
+        setOpenReason(false);
+        if (reason.length > 0) {
+            setIsMasking(false);
+            const data = {
+                id: educationInfo.id,
+                reason
+            };
+            searchUnMaskingEducation(data);
+        }
     };
 
-    const handleMaskingModal = () => {
-        setIsMaskingModal((prev) => !prev);
-    };
-
-    const handleMaskingModalClose = () => {
-        setIsMaskingModal(false);
+    const handleReasonPopupOpen = () => {
+        if (isMasking) {
+            setOpenReason((prev) => !prev);
+        } else {
+            // searchEducation({ id: educationInfo.id });
+            setIsMasking(true);
+        }
     };
 
     // 목록
@@ -97,15 +102,20 @@ const Post = () => {
     // 저장
     const saveClick = () => {
         if (!educationInfo.answer.length) return;
-        if (confirm('저장 하시겠습니까?')) {
-            const data = {
-                id: educationInfo.id,
-                isEmail: educationInfo.is_email,
-                answer: educationInfo.answer,
-                isMasking
-            };
-
-            sendAnswer(data);
+        const data = {
+            id: educationInfo.id,
+            isEmail: educationInfo.is_email,
+            answer: educationInfo.answer,
+            isMasking
+        };
+        if (educationInfo.is_email) {
+            if (confirm(`현재 입력된 답변 내용이 신청자의 이메일 주소로 발송됩니다.\n저장 하시겠습니까?`)) {
+                sendAnswer(data);
+            }
+        } else {
+            if (confirm('저장 하시겠습니까?')) {
+                sendAnswer(data);
+            }
         }
     };
 
@@ -117,25 +127,17 @@ const Post = () => {
 
     useEffect(() => {
         if (responseData) {
-            setEducationInfo(responseData.data.data);
+            const { answer, is_email } = responseData.data.data;
+            setEducationInfo({ ...responseData.data.data, answer: answer || '', is_email: is_email || false });
         }
     }, [responseData]);
 
     useEffect(() => {
-        console.log({ requestError });
-    }, [requestError]);
-
-    useEffect(() => {
-        console.log({ answerData });
+        if (answerData && answerData.data && answerData.data.result === 'SUCCESS') {
+            alert('저장되었습니다.');
+        }
     }, [answerData]);
 
-    useEffect(() => {
-        console.log({ answerError });
-    }, [answerError]);
-
-    useEffect(() => {
-        console.log({ educationInfo });
-    }, [educationInfo]);
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
@@ -157,7 +159,7 @@ const Post = () => {
                         <tbody>
                             <tr>
                                 <th className={'tb--title'}>상태</th>
-                                <td>접수</td>
+                                <td>{educationInfo.is_answer_complete ? '답변완료' : '교육신청'}</td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>이름</th>
@@ -169,7 +171,7 @@ const Post = () => {
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>휴대폰 번호</th>
-                                <td>{educationInfo.phone}</td>
+                                <td>{educationInfo.cell_phone}</td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>교육 희망일</th>
@@ -178,10 +180,6 @@ const Post = () => {
                             <tr>
                                 <th className={'tb--title'}>내용</th>
                                 <td>{educationInfo.content}</td>
-                            </tr>
-                            <tr>
-                                <th className={'tb--title'}>개인정보 위탁 동의</th>
-                                <td>{educationInfo.is_consignment_agreement ? 'Y' : 'N'}</td>
                             </tr>
                             <tr>
                                 <th className={'tb--title'}>개인정보 수집 및 이용 동의</th>
@@ -209,7 +207,7 @@ const Post = () => {
                                             name={'is_email'}
                                             onChange={handleChange}
                                             label={'이메일로 답변하기'}
-                                            control={<Checkbox />}
+                                            control={<Checkbox checked={educationInfo.is_email} />}
                                             labelPlacement={'end'}
                                         />
                                     </FormGroup>
@@ -231,16 +229,9 @@ const Post = () => {
                             type="submit"
                             variant="contained"
                             color="secondary"
-                            onClick={() => {
-                                if (isMasking) {
-                                    handleMaskingModal();
-                                } else {
-                                    searchEducation(educationInfo.id);
-                                    setIsMasking(true);
-                                }
-                            }}
+                            onClick={handleReasonPopupOpen}
                         >
-                            {isMasking ? '마스킹 해제' : '마스킹 설정'}
+                            마스킹 해제
                         </Button>
                         <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={saveClick}>
                             저장
@@ -250,8 +241,8 @@ const Post = () => {
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}
+                <PrivateReasonDialog open={openReason} onClose={handleReasonPopupClose} />
             </Grid>
-            <MaskingModal open={isMaskingModal} onClose={handleMaskingModalClose} onMasking={handleMasking} />
         </Grid>
     );
 };

@@ -28,7 +28,8 @@ const LineMngPage = Loadable(lazy(() => import('pages/lrc/line/index')));
 const FaqCategoryPage = Loadable(lazy(() => import('pages/lrc/faq/categorylist')));
 const FaqContentsPage = Loadable(lazy(() => import('pages/lrc/faq/index')));
 const FaqRegForm = Loadable(lazy(() => import('pages/lrc/faq/faqreg')));
-
+const ProjectUserMngPage = Loadable(lazy(() => import('pages/lrc/project-users-mng')));
+const SystemCheckMng = Loadable(lazy(() => import('pages/lrc/system-check-mng')));
 // render - 고객보호센터 - 대시보드
 const CpcDashboard = Loadable(lazy(() => import('pages/cpc/dashboard')));
 const MainDashboard = Loadable(lazy(() => import('pages/sysmng/dashboard')));
@@ -36,7 +37,7 @@ const MainDashboard = Loadable(lazy(() => import('pages/sysmng/dashboard')));
 // render - 고객보호센터 - 메인 관리
 const CpcMainContentsMng = Loadable(lazy(() => import('pages/cpc/main/contents')));
 // -----------------------
-// 사이트 운영/콘텐츠 관리
+// 사이트 운영/컨텐츠 관리
 // 피해사례
 const CpcDamageCaseMng = Loadable(lazy(() => import('pages/cpc/contents/Damage/view')));
 const CpcDamageCaseMngForm = Loadable(lazy(() => import('pages/cpc/contents/Damage/post')));
@@ -71,7 +72,6 @@ const CpcEventMngForm = Loadable(lazy(() => import('pages/cpc/contents/Event/pos
 // 코인팅
 const CpcCointingMng = Loadable(lazy(() => import('pages/cpc/contents/Cointing/view')));
 const CpcCointingMngForm = Loadable(lazy(() => import('pages/cpc/contents/Cointing/post')));
-
 
 // 찾아가는 교육 관리 - 신청자
 const CpcEducationMng = Loadable(lazy(() => import('pages/cpc/contents/Education/view')));
@@ -251,6 +251,11 @@ const MainRoutes = [
                 element: <ProjectsDetailPage />
             },
             {
+                path: 'lrc/project-users-mng',
+                element: <ProjectUserMngPage />
+            },
+
+            {
                 path: 'status/list',
                 element: <StatusRegForm />
             },
@@ -282,6 +287,10 @@ const MainRoutes = [
                 path: 'service/log/:paramId',
                 element: <ServiceDetail />
             },
+            {
+                path: '/lrc/system-check-mng',
+                element: <SystemCheckMng />
+            },
             // 고객보호센터 - 대시보드
             {
                 path: 'cpc/dashboard',
@@ -292,7 +301,7 @@ const MainRoutes = [
                 path: 'cpc/main/contents/list',
                 element: <CpcMainContentsMng />
             },
-            // 고객보호센터 - 콘텐츠 관리
+            // 고객보호센터 - 컨텐츠 관리
             {
                 path: 'cpc/contents/damage-case/list',
                 element: <CpcDamageCaseMng />

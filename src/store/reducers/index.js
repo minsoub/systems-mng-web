@@ -30,6 +30,8 @@ import cmsEvent from './cms/EventSearch';
 import cmsDetailData from './cms/DetailData';
 import cmsDetailEventData from './cms/DetailEventData';
 
+import lrcProjectUserMngSearchReducer from './lrc/ProjectUserMngSearch';
+import lrcSystemCheckMngSearchReducer from './lrc/SystemCheckMng';
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
@@ -60,6 +62,10 @@ const reducers = combineReducers({
     cmsEvent,
     cmsDetailData,
     cmsDetailEventData
+    cpcPressReleaseSearchReducer,
+    cpcCointingSearchReducer,
+    lrcProjectUserMngSearchReducer,
+    lrcSystemCheckMngSearchReducer
 });
 
 export default reducers;

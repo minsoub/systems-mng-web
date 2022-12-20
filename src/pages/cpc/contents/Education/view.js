@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
+import { setSearchData } from 'store/reducers/cpc/EducationSearch';
 import MainCard from 'components/Common/MainCard';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import EducationMaskingApi from 'apis/cpc/education/maskingApi';
@@ -13,9 +13,8 @@ import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import { setSearchData } from 'store/reducers/cpc/EducationSearch';
 import ContentLine from 'components/Common/ContentLine';
-import MaskingDialog from './MaskingDialog';
+import PrivateReasonDialog from 'pages/popup/PrivateResonPopup';
 import { getDateFormat } from 'utils/CommonUtils';
 import './style.scss';
 
@@ -60,7 +59,7 @@ const View = () => {
             maxWidth: 200
         },
         {
-            field: 'sale_phone',
+            field: 'cell_phone',
             headerName: '휴대폰 번호',
             flex: 1,
             headerAlign: 'center',
@@ -87,9 +86,9 @@ const View = () => {
         }
     ];
     const navigate = useNavigate();
-    // 마스킹 상태
-    const [isMasking, setIsMasking] = useState(true);
-    const [isMaskingModal, setIsMaskingModal] = useState(false);
+
+    // Log reason Dialog
+    const [openReason, setOpenReason] = useState(false);
 
     const [responseData, requestError, resLoading, { searchEducationList, searchUnMaskingList }] = EducationMaskingApi();
 
@@ -214,7 +213,7 @@ const View = () => {
                 setDateFromToSet(e.target.value);
                 break;
             case 'category':
-                setCategory(e.target.value);
+                setCategory(e.target.value === '' ? null : e.target.value);
                 break;
             case 'keyword':
                 setKeyword(e.target.value);
@@ -269,13 +268,17 @@ const View = () => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
         setPeriod('1');
-        setCategory('');
+        setCategory(null);
         setKeyword('');
     };
 
     // 검색
     const searchClick = () => {
         console.log('searchClick called...');
+        if (keyword.length === 1) {
+            alert('검색어를 2글자 이상 입력해 주세요.');
+            return;
+        }
         const request = {
             start_date,
             end_date,
@@ -295,25 +298,24 @@ const View = () => {
     };
 
     // 마스킹 상태 변경
-    const handleMasking = (reason) => {
-        console.log({ reason });
-        setIsMaskingModal(false);
-        setIsMasking(false);
-        const request = {
-            start_date,
-            end_date,
-            keyword,
-            category
-        };
-        searchUnMaskingList({ ...request, reason });
+    const handleReasonPopupClose = (reason) => {
+        setOpenReason(false);
+
+        if (reason.length > 0) {
+            const request = {
+                start_date,
+                end_date,
+                keyword,
+                category
+            };
+            searchUnMaskingList({ ...request, reason });
+        }
     };
 
-    const handleMaskingModal = () => {
-        setIsMaskingModal((prev) => !prev);
-    };
-
-    const handleMaskingModalClose = () => {
-        setIsMaskingModal(false);
+    const handleReasonPopupOpen = () => {
+        if (dataGridRows.length) {
+            setOpenReason((prev) => !prev);
+        }
     };
 
     return (
@@ -384,7 +386,11 @@ const View = () => {
                             </Button>
                         </div>
                     </ButtonLayout>
-                    <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '20px' }}>
+                    <ButtonLayout
+                        buttonName="bottom--blank__small"
+                        style={{ width: '100%', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '20px' }}
+                    >
+                        <Typography variant={'h5'}>{`총 ${dataGridRows.length} 건`}</Typography>
                         <Button
                             disableElevation
                             size="medium"
@@ -392,22 +398,9 @@ const View = () => {
                             variant="contained"
                             color="secondary"
                             style={{ width: 144 }}
-                            onClick={() => {
-                                if (isMasking) {
-                                    handleMaskingModal();
-                                } else {
-                                    const request = {
-                                        start_date,
-                                        end_date,
-                                        keyword,
-                                        category
-                                    };
-                                    searchEducationList(request);
-                                    setIsMasking(true);
-                                }
-                            }}
+                            onClick={handleReasonPopupOpen}
                         >
-                            {isMasking ? '마스킹 해제' : '마스킹 설정'}
+                            마스킹 해제
                         </Button>
                     </ButtonLayout>
                 </div>
@@ -427,7 +420,7 @@ const View = () => {
                 {errorMessage && (
                     <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
                 )}
-                <MaskingDialog open={isMaskingModal} onClose={handleMaskingModalClose} onMasking={handleMasking} />
+                <PrivateReasonDialog open={openReason} onClose={handleReasonPopupClose} />
             </Grid>
         </Grid>
     );

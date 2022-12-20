@@ -91,6 +91,16 @@ const menus = [
                 parents_menu_id: 'xxx'
             },
             {
+                id: 'projectusersmng',
+                title: '재단 사용자 관리',
+                type: 'item',
+                url: '/lrc/project-users-mng',
+                auth: true,
+                icon: icons.ChromeOutlined,
+                breadcrumbs: true,
+                parents_menu_id: 'xxx'
+            },
+            {
                 id: 'dealmng2',
                 title: 'FAQ 관리',
                 type: 'collapse',
@@ -101,7 +111,7 @@ const menus = [
                 children: [
                     {
                         id: 'dealmng19',
-                        title: '콘텐츠 관리',
+                        title: '컨텐츠 관리',
                         type: 'item',
                         url: '/faq/list',
                         auth: true,
@@ -173,7 +183,7 @@ const menus = [
                 children: [
                     {
                         id: 'cpcmaincontents',
-                        title: '콘텐츠 노출 관리',
+                        title: '컨텐츠 노출 관리',
                         type: 'item',
                         url: '/cpc/main/contents/list',
                         auth: true,
@@ -185,7 +195,7 @@ const menus = [
             },
             {
                 id: 'cpccontents',
-                title: '콘텐츠 관리',
+                title: '컨텐츠 관리',
                 type: 'collapse',
                 auth: true,
                 icon: icons.ChromeOutlined,

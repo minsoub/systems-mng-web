@@ -362,7 +362,7 @@ const ProjectCommunity = (props) => {
     const handlePage = (page) => {};
     const [page, setPage] = useState(0);
     const [viewPage, setViewPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(15);
 
     const handleChangePage = (event, newPage) => {
         setPage(Number(newPage - 1));

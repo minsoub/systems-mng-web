@@ -5,10 +5,16 @@ import { Button, FormHelperText, Grid, InputLabel, OutlinedInput, Stack } from '
 import useAuthorized from 'apis/auth/auths';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import base64 from 'base-64';
 
 const ResetPasswordForm = () => {
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { actionTempPassword, actionTempPasswordInit }] = useAuthorized();
+    const [
+        responseData,
+        requestError,
+        loading,
+        { actionTempPassword, actionTempPasswordInit, actionInit, actionRsaPublicKey }
+    ] = useAuthorized();
     const [title, setTitle] = useState();
 
     const { isLoggined, siteId, accessToken } = useSelector((state) => state.auth);
@@ -18,7 +24,12 @@ const ResetPasswordForm = () => {
         if (paramId) {
             setTitle('임시 비밀번호 발급');
         } else {
-            setTitle('본인 확인 요청');
+            setTitle('본인 확인');
+        }
+        // InitData가 없다면.
+        if (!localStorage.hasOwnProperty('InitData')) {
+            actionInit();
+            actionRsaPublicKey();
         }
     }, []);
 
@@ -42,7 +53,7 @@ const ResetPasswordForm = () => {
         if (requestError) {
             console.log('>> requestError <<');
             console.log(requestError);
-            alert('임시비밀번호 요청에 오류가 발생하였습니다.');
+            alert('임시비밀번호 발급에 오류가 발생하였습니다.');
         }
     }, [requestError]);
 
@@ -53,6 +64,20 @@ const ResetPasswordForm = () => {
         }
         console.log(responseData.transactionId);
         switch (responseData.transactionId) {
+            case 'initLogin':
+                if (responseData.data) {
+                    console.log(responseData.data);
+                    console.log(base64.decode(responseData.data.init_data));
+                    localStorage.setItem('initData', responseData.data.init_data);
+                }
+                break;
+            case 'rsaPublicKey':
+                if (responseData.data) {
+                    console.log(responseData.data);
+                    console.log(base64.decode(responseData.data.public_key));
+                    sessionStorage.setItem('rsaPublicKey', responseData.data.public_key);
+                }
+                break;
             case 'temp-password':
                 console.log(responseData);
                 if (responseData.data) {

@@ -12,6 +12,7 @@ import '../BoardList.module.scss';
 import HeaderTitle from 'components/HeaderTitle';
 import SearchDate from 'components/ContentManage/SearchDate';
 import SearchBar from 'components/ContentManage/SearchBar';
+import DefaultThumbnail from 'assets/images/default_thumbnail.png';
 import cx from 'classnames';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import { setSearchData } from 'store/reducers/cpc/InsightColumnSearch';
@@ -57,7 +58,12 @@ const View = () => {
                 <div className="div_thumbnail">
                     <img
                         className="img_thumbnail"
-                        src={params.value && (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)}
+                        src={
+                            params.value === ''
+                                ? DefaultThumbnail
+                                : params.value &&
+                                  (params.value.indexOf('http') === -1 ? `${boardThumbnailUrl}/${params.value}` : params.value)
+                        }
                         alt={`${params.row.title} 썸네일 이미지`}
                     />
                 </div>
@@ -147,6 +153,9 @@ const View = () => {
             if (requestError.result === 'FAIL') {
                 console.log('error requestError');
                 console.log(requestError);
+                if (requestError.error.code === 'F018') {
+                    alert('메인화면에 노출되고 있어 삭제할 수 없습니다.');
+                }
                 setErrorTitle('Error Message');
                 setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
                 setOpen(true);
@@ -290,6 +299,10 @@ const View = () => {
     // 검색
     const searchClick = () => {
         console.log('searchClick called...');
+        if (keyword.length === 1) {
+            alert('검색어를 2글자 이상 입력해 주세요.');
+            return;
+        }
         const request = {
             start_date,
             end_date,
@@ -311,7 +324,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 콘텐츠를 체크하세요.');
+            alert('삭제할 콘텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);

@@ -4,7 +4,7 @@ import useAxios from '../../useAxios';
 const MainContentsApis = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
 
-    // 메인화면 선택된 콘텐츠 조회
+    // 메인화면 선택된 컨텐츠 조회
     const getMainContents = () => {
         callApi('getMainContents', {
             axiosInstance: axiosInstanceDefault,
@@ -14,7 +14,7 @@ const MainContentsApis = () => {
         });
     };
 
-    // 메인 화면 콘텐츠용 게시글 조회
+    // 메인 화면 컨텐츠용 게시글 조회
     const getBoardsForMain = (boardMasterId, request) => {
         const start_date = request.start_date;
         const end_date = request.end_date;

@@ -54,7 +54,7 @@ const icons = {
     AppstoreOutlined, // 대시보드
     FundOutlined, // 거래지원 관리
     QuestionCircleOutlined, //FAQ 관리
-    DiffOutlined, // 상태값 관리, 찾아가는 교육관리
+    DiffOutlined, // 상태값 관리
     FileOutlined, // 서비스로그조회
     DesktopOutlined, // 메인관리
     FileAddOutlined, // 콘텐츠관리
@@ -81,20 +81,11 @@ const menuIcon = {
     // 고객지원 사이트관리자
     MENU_3c36442e601448b7a701c8df651e39d7: icons.DesktopOutlined, // 메인 관리
     MENU_80aee08e7c8240518df173f97be54c78: icons.FileAddOutlined, // 콘텐츠 관리
-    MENU_6be419821e0b4deda0f7e94008aa3946: icons.DiffOutlined, // 찾아가는 교육 관리
     MENU_3a0d00a2baf644a8a7a8e56fa29d2359: icons.AuditOutlined, // 권한 관리
     // 거래지원 사이트 소유자
     MENU_cfda4ccd3dd64f368500e4c29a7805a7: icons.QuestionCircleOutlined, // FAQ 관리
     MENU_1d9ba27ba00143fca4cf4888a0224bdf: icons.DiffOutlined, // 상태값 관리
-    MENU_5c3d549a94b84ce886e095aa5e692aea: icons.AuditOutlined, // 권한 관리
-    // 통합콘텐츠 사이트 관리자
-    MENU_8be8da53f8244abc9c2ef62a90fc776e: icons.SettingOutlined, // 공지사항 관리
-    MENU_9d2bc7d2c7ed4bee832d2e63ef3c61fb: icons.SettingOutlined, // 보도자료 관리
-    MENU_d872d49bb17845d9b3989324099596e6: icons.SettingOutlined, // 이벤트 관리
-    MENU_42198307a1024146ab4542996ad4f311: icons.SettingOutlined, // 가상자산 검토보고서 관리
-    MENU_a73ec655febc45818b624fec4812e2fe: icons.SettingOutlined, // 투자 유의지정 안내 관리
-    MENU_9e9920c1c8cc44549f3fab032124f20d: icons.SettingOutlined, // 빗썸 경제연구소 관리
-    MENU_b685b62162cb41098f1e64c25e8a7d2c: icons.SettingOutlined // 권한 관리
+    MENU_5c3d549a94b84ce886e095aa5e692aea: icons.AuditOutlined // 권한 관리
 };
 // mini-menu - wrapper
 const PopperStyled = styled(Popper)(({ theme }) => ({

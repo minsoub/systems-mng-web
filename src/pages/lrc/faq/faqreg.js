@@ -219,7 +219,7 @@ const FaqRegForm = () => {
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={12}>
-                <HeaderTitle titleNm="콘텐츠 관리" menuStep01="사이트 운영" menuStep02="FAQ 관리" menuStep03="콘텐츠 관리" />
+                <HeaderTitle titleNm="컨텐츠 관리" menuStep01="사이트 운영" menuStep02="FAQ 관리" menuStep03="컨텐츠 관리" />
 
                 <MainCard sx={{ mt: 2 }} content={false}>
                     <Grid container spacing={0} sx={{ mt: 1 }}>

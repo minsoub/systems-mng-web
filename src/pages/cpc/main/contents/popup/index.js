@@ -260,8 +260,8 @@ function BoardSearchDialog(props) {
     // 초기화
     const clearClick = () => {
         console.log('clearClick called...');
-        setStartDate('');
-        setEndDate('');
+        setStartDate(moment().format('YYYY-MM-DD'));
+        setEndDate(moment().format('YYYY-MM-DD'));
         setPeriod('1');
         setKeyword('');
     };

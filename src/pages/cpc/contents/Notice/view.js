@@ -28,6 +28,14 @@ const View = () => {
             maxWidth: 100
         },
         {
+            field: 'category',
+            headerName: '카테고리',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150
+        },
+        {
             field: 'title',
             headerName: '제목',
             flex: 1,
@@ -266,10 +274,15 @@ const View = () => {
     // 검색
     const searchClick = () => {
         console.log('searchClick called...');
+        if (keyword.length === 1) {
+            alert('검색어를 2글자 이상 입력해 주세요.');
+            return;
+        }
         const request = {
             start_date,
             end_date,
-            keyword
+            keyword,
+            category
         };
         searchBoardList(boardMasterId, request);
 
@@ -288,7 +301,7 @@ const View = () => {
     const deleteClick = () => {
         console.log('deleteClick called...');
         if (selectedRows.length === 0) {
-            alert('삭제 할 콘텐츠를 체크하세요.');
+            alert('삭제할 콘텐츠를 체크하세요.');
             return;
         }
         console.log(selectedRows);

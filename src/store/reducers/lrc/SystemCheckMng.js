@@ -1,7 +1,7 @@
-// Action Type - PressRelease data
-const SEARCH_ADD = 'cpc/PressRelease/SET_DATA';
-const SEARCH_DEL = 'cpc/PressRelease/DEL_DATA';
-const SEARCH_GET = 'cpc/PressRelease/GET_DATA';
+// Action Type - Notice data
+const SEARCH_ADD = 'lrc/SystemCheckMng/SET_DATA';
+const SEARCH_DEL = 'lrc/SystemCheckMng/DEL_DATA';
+const SEARCH_GET = 'lrc/SystemCheckMng/GET_DATA';
 
 // Action function => dispatch에서 호출
 export const setSearchData = (arg) => ({
@@ -18,11 +18,12 @@ const initialState = {
     reduceFromDate: '',
     reduceToDate: '',
     reducePeriod: '',
+    reduceCategory: '',
     reduceKeyword: ''
 };
 
 // 초기 데이터 리듀서
-const PressReleaseSearchReducer = (state = initialState, action) => {
+const SystemCheckMngSearchReducer = (state = initialState, action) => {
     const { type, data } = action;
     switch (action.type) {
         case SEARCH_ADD:
@@ -40,4 +41,4 @@ const PressReleaseSearchReducer = (state = initialState, action) => {
     }
 };
 
-export default PressReleaseSearchReducer;
+export default SystemCheckMngSearchReducer;

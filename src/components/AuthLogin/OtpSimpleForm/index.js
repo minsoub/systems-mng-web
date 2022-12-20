@@ -23,7 +23,7 @@ const OtpSimpleForm = ({ result }) => {
     useEffect(() => {
         if (requestError) {
             if (requestError.message === 'INVALID_OTP_NUMBER') {
-                setErrMsg('OTP 번호를 다시 입력해 주세요');
+                setErrMsg('OTP 번호를 다시 입력해 주세요.');
             } else {
                 alert('요청 정보 처리에 오류가 발생하였습니다.');
             }
@@ -35,9 +35,6 @@ const OtpSimpleForm = ({ result }) => {
         if (!responseData) {
             return;
         }
-        //거래지원 메신저 링크 이동
-        const moveUrl = sessionStorage.getItem('moveUrl');
-        sessionStorage.setItem('moveUrl', '');
 
         switch (responseData.transactionId) {
             case 'otplogin':
@@ -85,12 +82,7 @@ const OtpSimpleForm = ({ result }) => {
                     } else if (siteId === 'SITE_aa776861f48e455281dd2abd373dd258') {
                         navigate('/cms/dashboard');
                     } else {
-                        if (moveUrl) {
-                            // 거래지원 메신저 링크로 바로 이동.
-                            navigate(moveUrl);
-                        } else {
-                            navigate('/lrc/dashboard');
-                        }
+                        navigate('/lrc/dashboard');
                     }
                 }
                 break;
@@ -107,7 +99,7 @@ const OtpSimpleForm = ({ result }) => {
     const clearOtp = (e) => {
         e.preventDefault();
         console.log('called..');
-        if (confirm('초기화 요청하시겠습니까?')) {
+        if (confirm('OTP를 초기화 요청하시겠습니까?')) {
             let data = {
                 site_id: result.site_id,
                 email: result.email,
@@ -141,7 +133,7 @@ const OtpSimpleForm = ({ result }) => {
             // 로그인 실패시
         } catch (err) {
             console.log('err', err);
-            setErrMsg('OTP 번호를 다시 입력해 주세요');
+            setErrMsg(' 다시 입력해 주세요');
         }
     };
 

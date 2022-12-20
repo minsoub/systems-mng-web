@@ -1,7 +1,7 @@
-// Action Type - PressRelease data
-const SEARCH_ADD = 'cpc/PressRelease/SET_DATA';
-const SEARCH_DEL = 'cpc/PressRelease/DEL_DATA';
-const SEARCH_GET = 'cpc/PressRelease/GET_DATA';
+// Action Type - Cointing data
+const SEARCH_ADD = 'cpc/Cointing/SET_DATA';
+const SEARCH_DEL = 'cpc/Cointing/DEL_DATA';
+const SEARCH_GET = 'cpc/Cointing/GET_DATA';
 
 // Action function => dispatch에서 호출
 export const setSearchData = (arg) => ({
@@ -22,7 +22,7 @@ const initialState = {
 };
 
 // 초기 데이터 리듀서
-const PressReleaseSearchReducer = (state = initialState, action) => {
+const CointingSearchReducer = (state = initialState, action) => {
     const { type, data } = action;
     switch (action.type) {
         case SEARCH_ADD:
@@ -40,4 +40,4 @@ const PressReleaseSearchReducer = (state = initialState, action) => {
     }
 };
 
-export default PressReleaseSearchReducer;
+export default CointingSearchReducer;
