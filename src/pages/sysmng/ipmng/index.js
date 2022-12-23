@@ -6,7 +6,7 @@ import TopInputLayout from 'components/Common/TopInputLayout';
 import InputLayout from 'components/Common/InputLayout';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import SiteApi from 'apis/site/siteapi';
-import RoleApi from 'apis/roles/roleapi';
+import IpMngApi from 'apis/sysmng/ipmng';
 import ContentLine from 'components/Common/ContentLine';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import { getDateFormat } from 'utils/CommonUtils';
@@ -16,53 +16,62 @@ const IpMng = () => {
     const navigate = useNavigate();
     const [siteList, setSiteList] = useState([]);
     const [resData, reqErr, resLoading, { siteSearch }] = SiteApi();
-    const [responseData, requestError, loading, { roleList, roleComboSearch }] = RoleApi();
+    const [responseData, requestError, loading, { accessIpSearch }] = IpMngApi();
     const [site_id, setSiteId] = useState('');
     const [type, setType] = useState('ADMIN');
     const [is_use, setIsUse] = useState(true);
-    const [name, setName] = useState('');
+    const [keyword, setKeyword] = useState('');
     const [dataGridRows, setDataGridRows] = useState([]);
     const [selectedRows, setSeletedRows] = useState([]);
 
     const columns = [
         {
-            field: 'id',
-            headerName: '구분',
+            field: 'NO',
+            headerName: '순번',
             flex: 1,
             headerAlign: 'center',
-            align: 'center'
+            align: 'center',
+            renderCell: (index) => index.api.getRowIndex(index.row.id) + 1
         },
         {
-            field: 'name',
+            field: 'email',
             headerName: '이메일 주소',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
-            field: 'type',
+            field: 'name',
             headerName: '사용자명',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
-            field: 'is_use',
+            field: 'role_name',
             headerName: '운영권한',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
-            field: 'valid_start_date',
-            headerName: '접근 IP',
+            field: 'allow_ip',
+            headerName: '접근 IP 대역',
             flex: 1,
             headerAlign: 'center',
             align: 'center'
         },
         {
+            field: 'valid_start_date',
+            headerName: '유효일자(From)',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
+        },
+        {
             field: 'valid_end_date',
-            headerName: '생성일자',
+            headerName: '유효일자(To)',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
@@ -86,9 +95,10 @@ const IpMng = () => {
     };
     // 그리드 클릭
     const handleClick = (rowData) => {
+        console.log(rowData);
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            let searchCondition = { site_id: site_id, is_use: is_use };
-            navigate(`/ipmng/ipRegForm/${rowData.id}/${site_id}/${is_use}`);
+            //let searchCondition = { site_id: site_id, is_use: is_use };
+            navigate(`/ipmng/reg/${site_id}/${rowData.row.admin_account_id}`);
         }
     };
 
@@ -99,32 +109,11 @@ const IpMng = () => {
         console.log(e);
     };
 
+    // 검색 단어
     const handleChange = (e) => {
         switch (e.target.name) {
-            case 'id':
-                setId(e.target.value);
-                break;
-            case 'email':
-                setEmail(e.target.value);
-                setEmailChk(false);
-                break;
-            case 'name':
-                setName(e.target.value);
-                break;
-            case 'password':
-                setPassword(e.target.value);
-                break;
-            case 'is_use':
-                setIsUse(e.target.checked);
-                break;
-            case 'send_chk':
-                setSendChk(e.target.checked);
-                break;
-            case 'valid_start_date':
-                setValidStartDate(e.target.value);
-                break;
-            case 'valid_end_date':
-                setValidEndDate(e.target.value);
+            case 'keyword':
+                setKeyword(e.target.value);
                 break;
             default:
                 break;
@@ -137,7 +126,13 @@ const IpMng = () => {
             alert('사이트명을 선택하세요.');
             return;
         }
-        roleComboSearch(is_use, type, site_id);
+        accessIpSearch(site_id, keyword);
+    };
+
+    // program 등록 화면
+    const newClick = (e) => {
+        console.log('called register form');
+        navigate('/ipmng/reg');
     };
 
     // 사이트
@@ -172,17 +167,14 @@ const IpMng = () => {
         if (!responseData) {
             return;
         }
+        console.log(responseData);
         switch (responseData.transactionId) {
-            case 'siteList':
+            case 'searchList':
                 if (responseData.data.data && responseData.data.data.length > 0) {
                     setDataGridRows(responseData.data.data);
                 } else {
                     setDataGridRows([]);
                 }
-                break;
-            case 'deleteData':
-                console.log('deleteData');
-                roleList();
                 break;
             default:
         }
@@ -213,28 +205,31 @@ const IpMng = () => {
                                     id="filled-hidden-label-small"
                                     type="text"
                                     size="medium"
-                                    value={name}
-                                    name="name"
+                                    value={keyword}
+                                    name="keyword"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     placeholder="Input the name"
                                     fullWidth
                                 />
                             </FormControl>
-
-                            <ButtonLayout>
-                                <Button
-                                    disableElevation
-                                    size="medium"
-                                    color="primary"
-                                    type="submit"
-                                    variant="contained"
-                                    onClick={searchClick}
-                                >
-                                    조회
-                                </Button>
-                            </ButtonLayout>
                         </InputLayout>
+
+                        <ButtonLayout>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="outlined_d"
+                                color="secondary"
+                                onClick={searchClick}
+                            >
+                                검색
+                            </Button>
+                            <Button disableElevation size="medium" type="submit" variant="contained" onClick={newClick}>
+                                등록
+                            </Button>
+                        </ButtonLayout>
                     </TopInputLayout>
                 </MainCard>
 

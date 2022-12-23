@@ -20,6 +20,7 @@ import cpcInsightColumnSearchReducer from './cpc/InsightColumnSearch';
 import cpcLegalCounselingSearchReducer from './cpc/LegalCounselingSearch';
 import cpcNoticeSearchReducer from './cpc/NoticeSearch';
 import cpcPressReleaseSearchReducer from './cpc/PressReleaseSearch';
+import cpcCointingSearchReducer from './cpc/CointingSearch';
 
 import cmsNotice from './cms/NoticeSearch';
 import cmsPressRelease from './cms/PressRelease';
@@ -53,7 +54,9 @@ const reducers = combineReducers({
     cpcLegalCounselingSearchReducer,
     cpcNoticeSearchReducer,
     cpcPressReleaseSearchReducer,
-
+    cpcCointingSearchReducer,
+    lrcProjectUserMngSearchReducer,
+    lrcSystemCheckMngSearchReducer,
     cmsNotice,
     cmsPressRelease,
     cmsReviewReport,
@@ -62,10 +65,7 @@ const reducers = combineReducers({
     cmsEvent,
     cmsDetailData,
     cmsDetailEventData
-    cpcPressReleaseSearchReducer,
-    cpcCointingSearchReducer,
-    lrcProjectUserMngSearchReducer,
-    lrcSystemCheckMngSearchReducer
+
 });
 
 export default reducers;

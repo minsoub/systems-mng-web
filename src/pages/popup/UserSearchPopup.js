@@ -35,12 +35,12 @@ function UserSearchDialog(props) {
             flex: 1
         }
     ];
-    const { onClose, selectedValue, open } = props;
+    const { onClose, selectedValue, open, siteId } = props;
     // 그리드 목록 데이터
     const [selectedRows, setSeletedRows] = useState({});
     const [dataGridRows, setDataGridRows] = useState([]);
     const [keyword, setKeyword] = useState('');
-    const [responseData, requestError, loading, { accountSearch }] = AccountApis();
+    const [responseData, requestError, loading, { accountSearch, accountUserSearch, accountUserSiteSearch }] = AccountApis();
     const [errorOpen, setErrorOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -51,7 +51,7 @@ function UserSearchDialog(props) {
             console.log('error requestError');
             console.log(requestError);
             setErrorTitle('Error Message');
-            setErrorMessage(requestError);
+            setErrorMessage(requestError.error.message);
             setErrorOpen(true);
         }
     }, [requestError]);
@@ -96,7 +96,12 @@ function UserSearchDialog(props) {
         if (keyword === '') {
             alert('검색단어를 입력하세요.');
         } else {
-            accountSearch(keyword);
+            if (siteId) {
+                accountUserSiteSearch(siteId, true, keyword);
+            } else {
+                accountUserSearch(true, keyword);
+                //accountSearch(true, keyword);
+            }
         }
     };
 

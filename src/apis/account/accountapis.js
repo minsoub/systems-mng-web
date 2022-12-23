@@ -26,6 +26,16 @@ const AccountApis = () => {
             requestConfig: {}
         });
     };
+    const getUserSiteSearchData = (siteId, is_use, keyword) => {
+        if (is_use === null) is_use = '';
+        const encodeKeyword = encodeURIComponent(keyword);
+        callApi('getList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/accounts/${siteId}/user?searchText=${encodeKeyword}&isUse=${is_use}`,
+            requestConfig: {}
+        });
+    };
     // 데이터 조회
     const getListData = (is_use) => {
         callApi('getList', {
@@ -249,6 +259,7 @@ const AccountApis = () => {
         {
             accountSearch: getSearchData,
             accountUserSearch: getUserSearchData,
+            accountUserSiteSearch: getUserSiteSearchData,
             accountList: getListData,
             accountDetail: getDetailData,
             accountDelete: getDeleteData,

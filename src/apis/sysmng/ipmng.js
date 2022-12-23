@@ -4,47 +4,38 @@ import useAxios from '../useAxios';
 const IpMngApi = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
 
-    // 데이터 검색
-    const getSearchData = (is_use, keyword) => {
+    const getSearchData = (site_id, keyword) => {
         const encodeKeyword = encodeURIComponent(keyword);
-        callApi('ipRegSearchList', {
+        callApi('searchList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/sites?searchText=${encodeKeyword}&isUse=${is_use}`,
+            url: `/access/ip/${site_id}?keyword=${encodeKeyword}`,
             requestConfig: {}
         });
     };
 
     // 데이터 조회
-    const getListData = (is_use) => {
+    const getAccessIpList = (site_id, id) => {
         callApi('ipRegList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/sites?isUse=${is_use}`,
+            url: `/access/ip/${site_id}/${id}`,
             requestConfig: {}
         });
     };
 
     // 선택된 그리드 데이터 삭제
-    const getDeleteData = (selectedRows) => {
-        if (selectedRows && selectedRows.length > 0) {
-            let paramIds = selectedRows.join('&ids=');
+    const deleteData = (deleteIds) => {
+        if (deleteIds && deleteIds.length > 0) {
+            let data = { del_id: deleteIds };
+            console.log(data);
             callApi('deleteData', {
                 axiosInstance: axiosInstanceDefault,
-                method: 'delete',
-                url: `/faq/content?ids=${paramIds}`,
-                requestConfig: {}
+                method: 'put',
+                url: '/access/ip',
+                requestConfig: data
             });
         }
-    };
-
-    const getDelete = (id, data) => {
-        callApi('deleteData', {
-            axiosInstance: axiosInstanceDefault,
-            method: 'put',
-            url: `/site/${id}`,
-            requestConfig: data
-        });
     };
 
     // 데이터 등록
@@ -52,18 +43,18 @@ const IpMngApi = () => {
         callApi('insertData', {
             axiosInstance: axiosInstanceDefault,
             method: 'post',
-            url: '/site',
+            url: '/access/ip',
             requestConfig: data
         });
     };
 
-    // 데이터 상세 조회
-    const getDetailData = (id) => {
-        callApi('detailData', {
+    // 데이터 수정
+    const updateData = (data) => {
+        callApi('updateData', {
             axiosInstance: axiosInstanceDefault,
-            method: 'get',
-            url: `/site/${id}`,
-            requestConfig: {}
+            method: 'put',
+            url: `/access/ip/${data.site_id}`,
+            requestConfig: data
         });
     };
 
@@ -72,12 +63,11 @@ const IpMngApi = () => {
         requestError,
         loading,
         {
-            siteSearch: getSearchData,
-            siteList: getListData,
-            siteDelete: getDelete,
-            getDeleteData: getDeleteData,
+            accessIpSearch: getSearchData,
+            getAccessIpList: getAccessIpList,
+            deleteData: deleteData,
             insertData: insertData,
-            siteDetail: getDetailData
+            updateData: updateData
         }
     ];
 };

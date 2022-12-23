@@ -655,6 +655,10 @@ const MainRoutes = [
                 path: 'ipmng/reg',
                 element: <IpMngRegForm />
             },
+            {
+                path: 'ipmng/reg/:paramId1/:paramId2',
+                element: <IpMngRegForm />
+            },
             // 통합콘텐츠 - 대시보드
             {
                 path: 'cms/dashboard',
@@ -754,7 +758,7 @@ const MainRoutes = [
             {
                 path: 'cms/economic-research/reg/:paramId',
                 element: <EconomicResearchView />
-            },
+            }
         ]
     }
 ];

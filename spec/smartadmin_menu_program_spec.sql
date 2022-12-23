@@ -642,5 +642,35 @@ db.menu_program_specification.insertMany([
         action_url : '/api/v1/access/logs'
       }
     ]
+},
+{
+    path: '/ipmng/list',
+    element: '<IpMngBoard />',
+    programs: [
+        {
+            action_method : 'GET',
+            action_url : '/api/v1/access/ip/{site_id}'
+        },
+        {
+            action_method : 'GET',
+            action_url : '/api/v1/access/ip/{site_id}/{admin_account_id}'
+        },
+        {
+            action_method : 'PUT',
+            action_url : '/api/v1/access/ip'
+        },
+        {
+            action_method : 'POST',
+            action_url : '/api/v1/access/ip'
+        },
+        {
+            action_method : 'PUT',
+            action_url : '/api/v1/access/ip/{site_id}'
+        },
+        {
+            action_method : 'GET',
+            action_url : '/api/v1/accounts/{site_id}/user'
+        }
+    ]
 }
 ]);
