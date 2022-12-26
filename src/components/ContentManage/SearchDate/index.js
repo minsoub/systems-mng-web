@@ -92,7 +92,7 @@ const SearchDate = ({
                     onChange={(newValue) => {
                         setStartDate(newValue);
                     }}
-                    renderInput={(params) => <TextField {...params} />}
+                    renderInput={(params) => <TextField {...params} name={startName} onChange={handleChange} />}
                 />
                 <span className={cx('center')}> ~ </span>
                 <DesktopDatePicker
@@ -102,19 +102,9 @@ const SearchDate = ({
                     onChange={(e) => {
                         setEndDate(e);
                     }}
-                    renderInput={(params) => <TextField {...params} />}
+                    renderInput={(params) => <TextField {...params} name={endName} onChange={handleChange} />}
                 />
             </LocalizationProvider>
-
-            {/* <div className="result__list--input">
-                <FormControl size="medium" sx={{ marginBottom: '5px' }}>
-                    <TextField name={startName} value={start_date} onBlur={handleBlur} onChange={handleChange} type="date" />
-                </FormControl>
-                <span className={cx('center')}> ~ </span>
-                <FormControl size="medium">
-                    <TextField name={endName} value={end_date} onBlur={handleBlur} onChange={handleChange} type="date" />{' '}
-                </FormControl>
-            </div> */}
 
             <RadioGroup
                 className={cx('date-checked')}

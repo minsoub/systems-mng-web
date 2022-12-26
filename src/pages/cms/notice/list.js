@@ -30,24 +30,24 @@ import ContentLine from 'components/Common/ContentLine';
 import ErrorScreen from 'components/ErrorScreen';
 import ScrollX from 'components/Common/ScrollX';
 import styles from './styles.module.scss';
+import BoardApi from 'apis/cms/boardapi';
 import {
     activeFromDate,
     activeToDate,
     activeCategory,
     activeBannerNoti,
     activeBannerState,
-    activeKeyword,
-    activePageNum
+    activeKeyword
 } from 'store/reducers/cms/NoticeSearch';
 
 const NoticeList = () => {
+    const [responseData, requestError, loading, { searchBoardList }] = BoardApi();
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [from_date, setStartDate] = useState(''); // 검색 시작일
     const [to_date, setEndDate] = useState(''); // 검색 종료일
-    // const [period, setPeriod] = useState('1'); // 검색 일 묶음 타입 0:전체, 1:오늘, 2:한달, 3:3달
     const [bannerNotice, setBannerNotice] = useState(0); // 배너 공지 상태
     const [bannerState, setBannerState] = useState(0); // 배너 공개상태
-    const [categoryState, setCategoryState] = useState(1); // 선택한 카테고리
+    const [categoryState, setCategoryState] = useState(''); // 선택한 카테고리
     const [categoryList, setCategoryList] = useState([{name:'카테고리1',id:1}]); // 카테고리 전체 리스트
     const [selectedValue,setSelectedValue] = useState(''); // 선택라인
     const navigate = useNavigate();
@@ -72,9 +72,11 @@ const NoticeList = () => {
     ////////////////////////////////////////////////////
 
     const handleBlur = (e) => {
-        // console.log(e);
+        //const {value, name} = e.target;
+        //console.log(value, name);
     };
     const handleChange = (e /*, name */) => {
+        console.log(e.target.name);
         switch (e.target.name) {
             case 'keyword': //키워드 변경시
                 setKeyword(e.target.value);
@@ -107,6 +109,7 @@ const NoticeList = () => {
     };
     // 날자 변경 함수
     const changeDate = (type, e) => {
+        console.log(type, e);
         switch (type) {
             case 'start':
                 setStartDate(e);
@@ -132,6 +135,16 @@ const NoticeList = () => {
         dispatch(activeCategory({ reduceCategory: categoryState }));
         dispatch(activeBannerNoti({ reduceBannerNoti: bannerNotice }));
         dispatch(activeBannerState({ reduceBannerState: bannerState }));
+
+        const request = {
+            keyword,
+            category_id: categoryState,
+            is_banner: bannerNotice,
+            is_use: bannerState,
+            start_date: from_date,
+            end_date: to_date
+        };
+        searchBoardList('notices', request);
     };
     // 초기화
     const clearClick = () => {
@@ -140,7 +153,7 @@ const NoticeList = () => {
         setEndDate(moment().format('YYYY-MM-DD'));
         setBannerNotice(0);
         setBannerState(0);
-        setCategoryState(0);
+        setCategoryState('');
     };
     const handleChangePage = (event, newPage) => {
         // setPage(newPage);

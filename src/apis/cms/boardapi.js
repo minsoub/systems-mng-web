@@ -8,16 +8,28 @@ const BoardApis = () => {
     const getBoards = (boardKey, request) => {
         let apiURL = '/mng/cms/' + boardKey + '?';
         if (request.keyword != undefined) {
+            // 검색 키워드
             apiURL = apiURL + 'query=' + request.keyword;
         }
-        if (request.start_date != undefined) {
+        if (request.start_date != undefined && request.start_date != '') {
+            // 검색 시작일
             apiURL = apiURL + '&start_date=' + request.start_date;
         }
-        if (request.end_date != undefined) {
+        if (request.end_date != undefined && request.end_date != '') {
+            // 검색 종료일
             apiURL = apiURL + '&end_date=' + request.end_date;
         }
         if (request.is_use != undefined && request.is_use != 0) {
+            // 사용 상태
             apiURL = apiURL + '&is_use=' + (request.is_use == 1 ? 'true' : 'false');
+        }
+        if (request.category_id != undefined && request.category_id != '') {
+            // 카테고리 아이디
+            apiURL = apiURL + '&category_id=' + request.category_id;
+        }
+        if (request.is_banner != undefined && request.is_banner != 0) {
+            // 배너 공지 여부
+            apiURL = apiURL + '&is_banner=' + (request.is_banner == 1 ? 'true' : 'false');
         }
 
         callApi('getBoards', {
