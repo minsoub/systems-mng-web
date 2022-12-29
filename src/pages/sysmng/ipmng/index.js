@@ -11,6 +11,8 @@ import ContentLine from 'components/Common/ContentLine';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import { getDateFormat } from 'utils/CommonUtils';
 import { useNavigate } from 'react-router-dom';
+import { setSearchData } from 'store/reducers/sys/AccessIpMngSearch';
+import { useDispatch, useSelector } from 'react-redux';
 
 const IpMng = () => {
     const navigate = useNavigate();
@@ -24,6 +26,8 @@ const IpMng = () => {
     const [dataGridRows, setDataGridRows] = useState([]);
     const [selectedRows, setSeletedRows] = useState([]);
 
+    const { reduceSiteId, reduceKeyword } = useSelector((state) => state.sysAccessIpMngSearchReducer);
+    const dispatch = useDispatch();
     const columns = [
         {
             field: 'NO',
@@ -126,7 +130,14 @@ const IpMng = () => {
             alert('사이트명을 선택하세요.');
             return;
         }
+
         accessIpSearch(site_id, keyword);
+
+        const searchData = {
+            reduceSiteId: site_id,
+            reduceKeyword: keyword
+        };
+        dispatch(setSearchData(searchData));
     };
 
     // program 등록 화면
@@ -151,6 +162,9 @@ const IpMng = () => {
                         list.push(s);
                     });
                     setSiteList(list);
+
+                    if (reduceSiteId) setSiteId(reduceSiteId);
+                    if (reduceKeyword) setKeyword(reduceKeyword);
                 }
                 break;
             default:

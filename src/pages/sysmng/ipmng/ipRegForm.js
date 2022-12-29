@@ -110,6 +110,10 @@ const IpRegForm = () => {
         if (returnData.length !== 0) {
             // 데이터 처리
             console.log(returnData);
+            if (!returnData.row.role_management_id) {
+                alert('해당 사이트에 권한을 가지고 있지 않습니다.');
+                return;
+            }
             setName(returnData.row.name);
             setAdminId(returnData.row.id);
             setEmail(returnData.row.email);
@@ -134,9 +138,9 @@ const IpRegForm = () => {
 
     // 그리드 클릭
     const handleClick = (rowData) => {
-        if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/accountmng/reg/${rowData.id}`);
-        }
+        // if (rowData && rowData.field && rowData.field !== '__check__') {
+        //     navigate(`/accountmng/reg/${rowData.id}`);
+        // }
     };
 
     // program 등록 화면
@@ -441,7 +445,7 @@ const IpRegForm = () => {
                 <MainCard sx={{ height: 230 }} content={false} className="stateSubmit layout--inner">
                     <div className="bottom--blank">
                         <FlexBox>
-                            <DropInput title="사이트명">
+                            <DropInput title="사이트명" titleWidth={70}>
                                 <FormControl sx={{ minWidth: 250, boxSizing: 'border-box' }} size="medium">
                                     <Select name="site_id" label="사이트명" value={site_id} onChange={siteChanged}>
                                         {siteList.map((item, index) => (
@@ -452,7 +456,7 @@ const IpRegForm = () => {
                                     </Select>
                                 </FormControl>
                             </DropInput>
-                            <DropInput title="이메일주소">
+                            <DropInput title="이메일주소" titleWidth={70} style={{ marginLeft: '2rem' }}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -478,7 +482,7 @@ const IpRegForm = () => {
                     </div>
                     <div className="bottom--blank">
                         <FlexBox>
-                            <DropInput title="이름">
+                            <DropInput title="이름" titleWidth={70}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -489,7 +493,7 @@ const IpRegForm = () => {
                                     disabled={isUpdate}
                                 />
                             </DropInput>
-                            <DropInput title="운영권한">
+                            <DropInput title="운영권한" titleWidth={70} style={{ marginLeft: '2rem' }}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -504,7 +508,7 @@ const IpRegForm = () => {
                     </div>
                     <div>
                         <FlexBox>
-                            <DropInput title="계정상태">
+                            <DropInput title="계정상태" titleWidth={70}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -515,7 +519,7 @@ const IpRegForm = () => {
                                     fullWidth
                                 />
                             </DropInput>
-                            <DropInput title="유효기간">
+                            <DropInput title="유효기간" titleWidth={70} style={{ marginLeft: '2rem' }}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -526,7 +530,7 @@ const IpRegForm = () => {
                                     fullWidth
                                 />
                             </DropInput>
-                            <DropInput title="~">
+                            <DropInput title="~" style={{ marginLeft: '1rem' }}>
                                 <TextField
                                     id="filled-hidden-label-small"
                                     type="text"
@@ -586,7 +590,7 @@ const IpRegForm = () => {
 
                 <MainCard className="bottom__layout">
                     <FlexBox>
-                        <DropInput title="접근 IP 대역">
+                        <DropInput title="접근 IP 대역" titleWidth={70}>
                             <TextField
                                 id="filled-hidden-label-small"
                                 type="text"

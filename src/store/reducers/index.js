@@ -33,6 +33,8 @@ import cmsDetailEventData from './cms/DetailEventData';
 
 import lrcProjectUserMngSearchReducer from './lrc/ProjectUserMngSearch';
 import lrcSystemCheckMngSearchReducer from './lrc/SystemCheckMng';
+
+import sysAccessIpMngSearchReducer from './sys/AccessIpMngSearch';
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
@@ -64,8 +66,8 @@ const reducers = combineReducers({
     cmsEconomicResearch,
     cmsEvent,
     cmsDetailData,
-    cmsDetailEventData
-
+    cmsDetailEventData,
+    sysAccessIpMngSearchReducer
 });
 
 export default reducers;
