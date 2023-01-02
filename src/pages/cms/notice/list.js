@@ -2,34 +2,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    Button,
-    Grid,
-    Pagination,
-    MenuItem,
-    InputLabel,
-    Select,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    Radio,
-    TableRow
-} from '@mui/material';
-import { withStyles } from '@mui/styles';
+import { Button, Grid, MenuItem, InputLabel, Select } from '@mui/material';
 import moment from 'moment';
 import MainCard from 'components/Common/MainCard';
 import HeaderTitle from 'components/HeaderTitle';
-import DefaultDataGrid from 'components/DataGrid/RadioBoxDataGrid';
+import RadioBoxDataGrid from 'components/DataGrid/RadioBoxDataGrid';
 import SearchBar from 'components/ContentManage/SearchBar';
 import SearchDate from 'components/ContentManage/SearchDate';
 import InputLayout from 'components/Common/InputLayout';
 import DropInput from 'components/Common/DropInput';
 import TableHeader from 'components/Table/TableHeader';
+import SearchForm from '../common/SearchForm';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import ContentLine from 'components/Common/ContentLine';
 import ErrorScreen from 'components/ErrorScreen';
-import ScrollX from 'components/Common/ScrollX';
 import styles from './styles.module.scss';
 import BoardApi from 'apis/cms/boardapi';
 import { getDateFormat } from 'utils/CommonUtils';
@@ -76,7 +62,7 @@ const NoticeList = () => {
             }
         },
         {
-            field: 'is_draft',
+            field: 'is_show',
             headerName: '상태',
             flex: 1,
             headerAlign: 'center',
@@ -127,24 +113,18 @@ const NoticeList = () => {
             maxWidth: 100
         }
     ];
-    const [responseData, requestError, loading, { searchBoardList, getCategory }] = BoardApi();
+    const [responseData, requestError, loading, { searchBoardList, getCategory, changeBannerState }] = BoardApi();
     const [dataGridRows, setDataGridRows] = useState([]); // 그리드 목록 데이터
     const [dataTotal, setDataTotal] = useState(0); //데이터 전체 숫자
     const [keyword, setKeyword] = useState(''); //검색 키워드
-    const [from_date, setStartDate] = useState(''); // 검색 시작일
-    const [to_date, setEndDate] = useState(''); // 검색 종료일
+    const [from_date, setStartDate] = useState(); // 검색 시작일
+    const [to_date, setEndDate] = useState(); // 검색 종료일
     const [bannerNotice, setBannerNotice] = useState(0); // 배너 공지 상태
     const [bannerState, setBannerState] = useState(0); // 배너 공개상태
     const [categoryState, setCategoryState] = useState('0'); // 선택한 카테고리
     const [categoryList, setCategoryList] = useState([{}]); // 카테고리 전체 리스트
     const [selectedValue, setSelectedValue] = useState(''); // 선택라인
     const navigate = useNavigate();
-    const StyledTableCell = withStyles((theme) => ({
-        root: {
-            padding: '0px 16px',
-            height: 35
-        }
-    }))(TableCell);
     const { reduceFromDate, reduceToDate, reduceCategory, reduceBannerNoti, reduceBannerState, reduceKeyword } = useSelector((state) => state.cmsNotice);
     const dispatch = useDispatch();
     ////////////////////////////////////////////////////
@@ -163,10 +143,11 @@ const NoticeList = () => {
     // 페이징 변경 이벤트
     const handlePage = (page) => {};
     //체크박스 선택된 row id 저장
-    const handleSelectionChange = (item) => {};
+    const handleSelectionChange = (item) => {
+        setSelectedValue(item);
+    };
 
     const handleChange = (e) => {
-        console.log(e.target.name);
         switch (e.target.name) {
             case 'keyword': //키워드 변경시
                 setKeyword(e.target.value);
@@ -189,9 +170,6 @@ const NoticeList = () => {
                 break;
             case 'category_state': // 카테고리 변경시
                 setCategoryState(e.target.value);
-                break;
-            case 'selectRadio':
-                setSelectedValue(e.target.value);
                 break;
             default:
                 break;
@@ -229,7 +207,7 @@ const NoticeList = () => {
             keyword,
             category_id: categoryState,
             is_banner: bannerNotice,
-            is_use: bannerState,
+            is_show: bannerState,
             start_date: from_date,
             end_date: to_date
         };
@@ -243,19 +221,37 @@ const NoticeList = () => {
         setBannerNotice(0);
         setBannerState(0);
         setCategoryState('0');
+
+        const request = {
+            keyword: '',
+            category_id: '0',
+            is_banner: 0,
+            is_show: 0,
+            start_date: moment().format('YYYY-MM-DD'),
+            end_date: moment().format('YYYY-MM-DD')
+        };
+        searchBoardList('notices', request);
     };
-    //페이지 변경
-    const handleChangePage = (event, newPage) => {};
     // 그리드 클릭
     const handleClick = (e) => {
         const { field } = e;
-        //console.log(field);
+        console.log(e);
         if (field === '__check__') return;
-        navigate(`/cms/notice/reg/123456789`);
-        //if (rowData && rowData.field && rowData.field !== '__check__') {
-        // navigate(`/projects/detail/${rowData.id}`);
-        //}
+        navigate(`/cms/notice/reg/${e.id}`);
     };
+    //배너 상태 변경
+    const bannerStateChange = (state) => {
+        const _selNum = dataGridRows.findIndex((row) => row.id === selectedValue);
+        // eslint-disable-next-line security/detect-object-injection
+        const _isBanner = dataGridRows[_selNum].is_banner;
+        if (_isBanner === state) {
+            if (state) alert('현재 사용 상태입니다.');
+            if (!state) alert('현재 비사용 상태입니다.');
+        } else {
+            changeBannerState(selectedValue, state);
+        }
+    };
+    // 연동 결과
     useEffect(() => {
         if (!responseData) {
             return;
@@ -276,6 +272,13 @@ const NoticeList = () => {
                     setDataGridRows([]);
                 }
                 break;
+            case 'changeBannerState':
+                setDataGridRows([]);
+                if (responseData.data.data) {
+                    alert('상태가 변경되었습니다.');
+                    searchClick();
+                }
+                break;
             default:
                 return;
         }
@@ -283,12 +286,18 @@ const NoticeList = () => {
 
     // 초기 호출 함수
     useEffect(() => {
-        setStartDate(moment().format('YYYY-MM-DD'));
-        setEndDate(moment().format('YYYY-MM-DD'));
-
         // reduce 상태값을 사용하여 검색을 수행한다.
-        if (reduceFromDate) setStartDate(reduceFromDate);
-        if (reduceToDate) setEndDate(reduceToDate);
+        console.log('reduceFromDate', reduceFromDate);
+        if (reduceFromDate) {
+            setStartDate(reduceFromDate);
+        } else {
+            setStartDate(moment().format('YYYY-MM-DD'));
+        }
+        if (reduceToDate) {
+            setEndDate(reduceToDate);
+        } else {
+            setEndDate(moment().format('YYYY-MM-DD'));
+        }
         if (reduceCategory) setCategoryState(reduceCategory);
         if (reduceKeyword) setKeyword(reduceKeyword);
         if (reduceBannerNoti) setBannerNotice(reduceBannerNoti);
@@ -334,8 +343,8 @@ const NoticeList = () => {
                                     onChange={handleChange}
                                 >
                                     <MenuItem value="0">전체</MenuItem>
-                                    <MenuItem value="1">비노출</MenuItem>
-                                    <MenuItem value="2">노출</MenuItem>
+                                    <MenuItem value="1">노출</MenuItem>
+                                    <MenuItem value="2">비노출</MenuItem>
                                 </Select>
                             </DropInput>
 
@@ -377,9 +386,9 @@ const NoticeList = () => {
                         검색
                     </Button>
                 </ButtonLayout>
-                <TableHeader type="notice" dataTotal={dataTotal} />
+                <TableHeader type="notice" dataTotal={dataTotal} bannerStateChange={bannerStateChange} />
                 <ContentLine>
-                    <DefaultDataGrid
+                    <RadioBoxDataGrid
                         columns={columns}
                         rows={dataGridRows}
                         pageSize={10}
@@ -390,6 +399,9 @@ const NoticeList = () => {
                     />
                 </ContentLine>
             </Grid>
+            {errorMessage && (
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+            )}
         </Grid>
     );
 };

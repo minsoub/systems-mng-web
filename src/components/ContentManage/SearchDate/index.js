@@ -43,7 +43,6 @@ const SearchDate = ({
     },[end_date]);
     useEffect(() => {
         if (!start_date2) return;
-        if (!start_date2.$y || !start_date2.$M || !start_date2.$D) return;
         if (
             getFormatDate(new Date(start_date2.$y + '-' + (start_date2.$M + 1) + '-' + start_date2.$D)) >
             getFormatDate(new Date(end_view_date))
@@ -89,8 +88,8 @@ const SearchDate = ({
                     label="연도. 월. 일"
                     inputFormat="YYYY-MM-DD"
                     value={start_view_date} // 변수바뀜 확인필요
-                    onChange={(newValue) => {
-                        setStartDate(newValue);
+                    onChange={(e) => {
+                        setStartDate(e);
                     }}
                     renderInput={(params) => <TextField {...params} name={startName} onChange={handleChange} />}
                 />

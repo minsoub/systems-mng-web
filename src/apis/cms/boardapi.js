@@ -23,6 +23,10 @@ const BoardApis = () => {
             // 사용 상태
             apiURL = apiURL + '&is_use=' + (request.is_use == 1 ? 'true' : 'false');
         }
+        if (request.is_show != undefined && request.is_show != 0) {
+            // 사용 상태
+            apiURL = apiURL + '&is_show=' + (request.is_show == 1 ? 'true' : 'false');
+        }
         if (request.category_id != undefined && request.category_id != '0') {
             // 카테고리 아이디
             apiURL = apiURL + '&category_id=' + request.category_id;
@@ -46,6 +50,16 @@ const BoardApis = () => {
             method: 'post',
             url: `/mng/cms/${boardKey}`,
             requestConfig: data
+        });
+    };
+
+    // 게시글 상세
+    const readBoard = (boardKey, boardId) => {
+        callApi('readBoard', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/cms/${boardKey}/${boardId}`,
+            requestConfig: {}
         });
     };
 
@@ -79,6 +93,18 @@ const BoardApis = () => {
             requestConfig: {}
         });
     };
+    // 공지사항 배너 상태변경
+    const changeBannerState = (id, state) => {
+        const apiURL = '/mng/cms/notices/' + id + '/banners';
+        let method = 'post';
+        if (!state) method = 'delete';
+        callApi('changeBannerState', {
+            axiosInstance: axiosInstanceDefault,
+            method: method,
+            url: apiURL,
+            requestConfig: {}
+        });
+    };
 
     return [
         responseData,
@@ -87,9 +113,11 @@ const BoardApis = () => {
         {
             searchBoardList: getBoards,
             createBoard,
+            readBoard,
             updateBoard,
             deleteBoard,
-            getCategory
+            getCategory,
+            changeBannerState
         }
     ];
 };

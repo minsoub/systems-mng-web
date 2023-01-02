@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import styles from './styles.module.scss';
 //
-const TableHeader = ({ type, newAdd, dataTotal }) => {
+const TableHeader = ({ type, newAdd, dataTotal, bannerStateChange }) => {
     const navigate = useNavigate();
     const newListAdd = () => {
         if (type === 'category') {
@@ -22,10 +22,10 @@ const TableHeader = ({ type, newAdd, dataTotal }) => {
             <div>
                 {type === 'notice' && (
                     <>
-                        <Button disableElevation size="medium" type="submit" variant="contained" className={styles.banner}>
+                        <Button disableElevation size="medium" type="submit" variant="contained" className={styles.banner} onClick={()=>{bannerStateChange(false)}}>
                             배너 해제
                         </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" className={styles.banner}>
+                        <Button disableElevation size="medium" type="submit" variant="contained" className={styles.banner} onClick={()=>{bannerStateChange(true)}}>
                             배너 설정
                         </Button>
                     </>
