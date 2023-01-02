@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import HeaderTitle from 'components/HeaderTitle';
 import RadioBoxDataGrid from 'components/DataGrid/RadioBoxDataGrid';
 import TableHeader from 'components/Table/TableHeader';
-import SearchForm from '../common/SearchForm';
+import NoticeSearchForm from './search/NoticeSearchForm';
 import ContentLine from 'components/Common/ContentLine';
 import ErrorScreen from 'components/ErrorScreen';
 import styles from './styles.module.scss';
@@ -21,7 +21,15 @@ const NoticeList = () => {
             flex: 1,
             headerAlign: 'center',
             maxWidth: 80,
-            align: 'left'
+            align: 'center',
+            valueGetter: (value) => {
+                // console.log('-------------------------row의 다른값 체크후 변환 처리', value.row);
+                let setValue = '고정';
+                if (value.row.is_fix_top !== true) {
+                    setValue = value.id;
+                }
+                return setValue;
+            }
         },
         {
             field: 'title',
@@ -176,7 +184,7 @@ const NoticeList = () => {
         <Grid container rowSpacing={4} columnSpacing={2.75} className={styles.notceList}>
             <Grid item xs={12}>
                 <HeaderTitle titleNm="공지사항 관리" menuStep01="사이트 운영" menuStep02="공지사항 관리" />
-                <SearchForm listLoad={listLoad} listRelooad={listRelooad}/>
+                <NoticeSearchForm listLoad={listLoad} listRelooad={listRelooad} />
                 <TableHeader type="notice" dataTotal={dataTotal} bannerStateChange={bannerStateChange} />
                 <ContentLine>
                     <RadioBoxDataGrid

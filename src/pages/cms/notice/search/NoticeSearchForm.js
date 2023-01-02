@@ -20,7 +20,7 @@ import {
     activeKeyword
 } from 'store/reducers/cms/NoticeSearch';
 
-const SearchForm = ({ listLoad, listRelooad}) => {
+const NoticeSearchForm = ({ listLoad, listRelooad }) => {
     const [responseData, requestError, loading, { getCategory }] = BoardApi();
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [from_date, setStartDate] = useState(); // 검색 시작일
@@ -168,7 +168,7 @@ const SearchForm = ({ listLoad, listRelooad}) => {
         getCategory('notices/categories/items');
         searchClick();
     }, []);
-    // 초기 호출 함수
+    // reload
     useEffect(() => {
         if (listRelooad) searchClick();
     }, [listRelooad]);
@@ -255,4 +255,4 @@ const SearchForm = ({ listLoad, listRelooad}) => {
     );
 };
 
-export default SearchForm;
+export default NoticeSearchForm;
