@@ -23,7 +23,7 @@ const BoardApis = () => {
             // 사용 상태
             apiURL = apiURL + '&is_use=' + (request.is_use == 1 ? 'true' : 'false');
         }
-        if (request.category_id != undefined && request.category_id != '') {
+        if (request.category_id != undefined && request.category_id != '0') {
             // 카테고리 아이디
             apiURL = apiURL + '&category_id=' + request.category_id;
         }
@@ -68,6 +68,17 @@ const BoardApis = () => {
             requestConfig: {}
         });
     };
+    // 카테고리 목록 조회
+    const getCategory = (boardKey) => {
+        let apiURL = '/mng/cms/' + boardKey;
+
+        callApi('getCategory', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: apiURL,
+            requestConfig: {}
+        });
+    };
 
     return [
         responseData,
@@ -77,7 +88,8 @@ const BoardApis = () => {
             searchBoardList: getBoards,
             createBoard,
             updateBoard,
-            deleteBoard
+            deleteBoard,
+            getCategory
         }
     ];
 };

@@ -34,6 +34,7 @@ import CategoryModal from './popup/CategoryModal';
 import { getDateFormat } from 'utils/CommonUtils';
 
 const CategoryList = () => {
+    // 데이터 그리드 컬럼
     const columns = [
         {
             field: 'id',
@@ -111,10 +112,10 @@ const CategoryList = () => {
             }
         }
     ];
-    // 그리드 목록 데이터
-    const [dataGridRows, setDataGridRows] = useState([]);
+
     //통신 데이터
     const [responseData, requestError, loading, { searchBoardList }] = BoardApi();
+    const [dataGridRows, setDataGridRows] = useState([]); // 그리드 목록 데이터
     const [dataTotal, setDataTotal] = useState(0); //데이터 전체 숫자
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [categoryState, setCategoryState] = useState(0); // 카테고리 사용상태
@@ -148,8 +149,9 @@ const CategoryList = () => {
             setOpen(true);
         }
     }, [requestError]);
+    // 로딩 체크
     useEffect(() => {
-        console.log(loading);
+        // console.log(loading);
     }, [loading]);
     ////////////////////////////////////////////////////
     const handleChange = (e /*, name */) => {
@@ -191,13 +193,13 @@ const CategoryList = () => {
     };
     // 페이징 변경 이벤트
     const handlePage = (page) => {};
-    // 그리드 더블 클릭
-    const handleDoubleClick = (rowData) => {};
     //체크박스 선택된 row id 저장
     const handleSelectionChange = (item) => {};
+    //초기 호출
     useEffect(() => {
         searchClick();
     }, []);
+    //통신 결과 파싱
     useEffect(() => {
         if (!responseData) {
             return;
@@ -258,7 +260,6 @@ const CategoryList = () => {
                         height={660}
                         handlePageChange={handlePage}
                         handleGridClick={handleClick}
-                        handleGridDoubleClick={handleDoubleClick}
                         selectionChange={handleSelectionChange}
                     />
                 </ContentLine>

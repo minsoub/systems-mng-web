@@ -20,6 +20,7 @@ import { withStyles } from '@mui/styles';
 import moment from 'moment';
 import MainCard from 'components/Common/MainCard';
 import HeaderTitle from 'components/HeaderTitle';
+import DefaultDataGrid from 'components/DataGrid/RadioBoxDataGrid';
 import SearchBar from 'components/ContentManage/SearchBar';
 import SearchDate from 'components/ContentManage/SearchDate';
 import InputLayout from 'components/Common/InputLayout';
@@ -31,6 +32,7 @@ import ErrorScreen from 'components/ErrorScreen';
 import ScrollX from 'components/Common/ScrollX';
 import styles from './styles.module.scss';
 import BoardApi from 'apis/cms/boardapi';
+import { getDateFormat } from 'utils/CommonUtils';
 import {
     activeFromDate,
     activeToDate,
@@ -41,15 +43,101 @@ import {
 } from 'store/reducers/cms/NoticeSearch';
 
 const NoticeList = () => {
-    const [responseData, requestError, loading, { searchBoardList }] = BoardApi();
+    // 데이터 그리드 컬럼
+    const columns = [
+        {
+            field: 'id',
+            headerName: 'No.',
+            flex: 1,
+            headerAlign: 'center',
+            maxWidth: 80,
+            align: 'left'
+        },
+        {
+            field: 'title',
+            headerName: '제목',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'left'
+        },
+        {
+            field: 'is_banner',
+            headerName: '배너',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 80,
+            valueGetter: ({ value }) => {
+                if (value) {
+                    return '사용';
+                } else {
+                    return '미사용';
+                }
+            }
+        },
+        {
+            field: 'is_draft',
+            headerName: '상태',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 80,
+            valueGetter: ({ value }) => {
+                if (value) {
+                    return '사용';
+                } else {
+                    return '미사용';
+                }
+            }
+        },
+        {
+            field: 'create_date',
+            headerName: '등록일시',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
+        },
+        {
+            field: 'update_date',
+            headerName: '업데이트일시',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150,
+            valueGetter: ({ value }) => {
+                return value ? `${getDateFormat(value)}` : '-';
+            }
+        },
+        {
+            field: 'create_account_email',
+            headerName: '등록담당자',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150
+        },
+        {
+            field: 'read_count',
+            headerName: '조회수',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 100
+        }
+    ];
+    const [responseData, requestError, loading, { searchBoardList, getCategory }] = BoardApi();
+    const [dataGridRows, setDataGridRows] = useState([]); // 그리드 목록 데이터
+    const [dataTotal, setDataTotal] = useState(0); //데이터 전체 숫자
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [from_date, setStartDate] = useState(''); // 검색 시작일
     const [to_date, setEndDate] = useState(''); // 검색 종료일
     const [bannerNotice, setBannerNotice] = useState(0); // 배너 공지 상태
     const [bannerState, setBannerState] = useState(0); // 배너 공개상태
-    const [categoryState, setCategoryState] = useState(''); // 선택한 카테고리
-    const [categoryList, setCategoryList] = useState([{name:'카테고리1',id:1}]); // 카테고리 전체 리스트
-    const [selectedValue,setSelectedValue] = useState(''); // 선택라인
+    const [categoryState, setCategoryState] = useState('0'); // 선택한 카테고리
+    const [categoryList, setCategoryList] = useState([{}]); // 카테고리 전체 리스트
+    const [selectedValue, setSelectedValue] = useState(''); // 선택라인
     const navigate = useNavigate();
     const StyledTableCell = withStyles((theme) => ({
         root: {
@@ -70,12 +158,14 @@ const NoticeList = () => {
         setErrorMessage('');
     };
     ////////////////////////////////////////////////////
+    // 블러 이벤트
+    const handleBlur = (e) => {};
+    // 페이징 변경 이벤트
+    const handlePage = (page) => {};
+    //체크박스 선택된 row id 저장
+    const handleSelectionChange = (item) => {};
 
-    const handleBlur = (e) => {
-        //const {value, name} = e.target;
-        //console.log(value, name);
-    };
-    const handleChange = (e /*, name */) => {
+    const handleChange = (e) => {
         console.log(e.target.name);
         switch (e.target.name) {
             case 'keyword': //키워드 변경시
@@ -109,7 +199,6 @@ const NoticeList = () => {
     };
     // 날자 변경 함수
     const changeDate = (type, e) => {
-        console.log(type, e);
         switch (type) {
             case 'start':
                 setStartDate(e);
@@ -153,19 +242,46 @@ const NoticeList = () => {
         setEndDate(moment().format('YYYY-MM-DD'));
         setBannerNotice(0);
         setBannerState(0);
-        setCategoryState('');
+        setCategoryState('0');
     };
-    const handleChangePage = (event, newPage) => {
-        // setPage(newPage);
-    };
+    //페이지 변경
+    const handleChangePage = (event, newPage) => {};
     // 그리드 클릭
     const handleClick = (e) => {
-        if (e.target.name === 'selectRadio') return;
+        const { field } = e;
+        //console.log(field);
+        if (field === '__check__') return;
         navigate(`/cms/notice/reg/123456789`);
         //if (rowData && rowData.field && rowData.field !== '__check__') {
         // navigate(`/projects/detail/${rowData.id}`);
         //}
     };
+    useEffect(() => {
+        if (!responseData) {
+            return;
+        }
+        console.log('responseData.transactionId', responseData.transactionId);
+        switch (responseData.transactionId) {
+            case 'getCategory':
+                if (responseData.data.data) {
+                    setCategoryList(responseData.data.data.contents);
+                }
+                break;
+            case 'getBoards':
+                if (responseData.data.data) {
+                    console.log(responseData.data.data);
+                    setDataTotal(Number(responseData.data.data.total_counts));
+                    setDataGridRows(responseData.data.data.contents);
+                } else {
+                    setDataGridRows([]);
+                }
+                break;
+            default:
+                return;
+        }
+    }, [responseData]);
+
+    // 초기 호출 함수
     useEffect(() => {
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
@@ -177,6 +293,9 @@ const NoticeList = () => {
         if (reduceKeyword) setKeyword(reduceKeyword);
         if (reduceBannerNoti) setBannerNotice(reduceBannerNoti);
         if (reduceBannerState) setBannerState(reduceBannerState);
+
+        getCategory('notices/categories/items');
+        searchClick();
     }, []);
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className={styles.notceList}>
@@ -258,130 +377,18 @@ const NoticeList = () => {
                         검색
                     </Button>
                 </ButtonLayout>
-                <TableHeader type="notice" />
+                <TableHeader type="notice" dataTotal={dataTotal} />
                 <ContentLine>
-                    <ScrollX>
-                        <Table style={{ tableLayout: 'auto' }} stickyHeader aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <StyledTableCell style={{ width: '1%' }} align="center">
-                                        -
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '5%' }} align="center">
-                                        No.
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '30%' }} align="center">
-                                        제목
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '5%' }} align="center">
-                                        배너
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '8%' }} align="center">
-                                        상태
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '12%' }} align="center">
-                                        등록일시
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '12%' }} align="center">
-                                        업데이트일시
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '10%' }} align="center">
-                                        작성자
-                                    </StyledTableCell>
-                                    <StyledTableCell style={{ width: '12%' }} align="center">
-                                        조회수
-                                    </StyledTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow hover className="link" onClick={handleClick}>
-                                    <TableCell style={{ width: '7%' }} align="center" component="td" scope="row">
-                                        <Radio
-                                            checked={selectedValue === 'a'}
-                                            onChange={handleChange}
-                                            value="a"
-                                            name="selectRadio"
-                                            inputProps={{ 'aria-label': 'A' }}
-                                        />
-                                    </TableCell>
-                                    <TableCell style={{ width: '5%' }} align="center" component="td" scope="row">
-                                        고정
-                                    </TableCell>
-                                    <TableCell style={{ width: '7.5%' }} align="left" component="td" scope="row">
-                                        제목이여라1
-                                    </TableCell>
-                                    <TableCell style={{ width: '7.5%' }} align="center" component="td" scope="row">
-                                        비노출
-                                    </TableCell>
-                                    <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
-                                        공개
-                                    </TableCell>
-                                    <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
-                                        2022-03-15 12:00:00
-                                    </TableCell>
-                                    <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                        2022-03-15 12:00:00
-                                    </TableCell>
-                                    <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                        UserID
-                                    </TableCell>
-                                    <TableCell style={{ width: '15%' }} align="center" component="td" scope="row">
-                                        1,000,000
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow hover className="link" onClick={handleClick}>
-                                    <TableCell style={{ width: '7%' }} align="center" component="td" scope="row">
-                                        <Radio
-                                            checked={selectedValue === 'b'}
-                                            onChange={handleChange}
-                                            value="b"
-                                            name="selectRadio"
-                                            inputProps={{ 'aria-label': 'B' }}
-                                        />
-                                    </TableCell>
-                                    <TableCell style={{ width: '5%' }} align="center" component="td" scope="row">
-                                        고정
-                                    </TableCell>
-                                    <TableCell style={{ width: '7.5%' }} align="left" component="td" scope="row">
-                                        제목이여라2
-                                    </TableCell>
-                                    <TableCell style={{ width: '7.5%' }} align="center" component="td" scope="row">
-                                        비노출
-                                    </TableCell>
-                                    <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
-                                        공개
-                                    </TableCell>
-                                    <TableCell style={{ width: '8%' }} align="center" component="td" scope="row">
-                                        2022-03-15 12:00:00
-                                    </TableCell>
-                                    <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                        2022-03-15 12:00:00
-                                    </TableCell>
-                                    <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                        UserID
-                                    </TableCell>
-                                    <TableCell style={{ width: '15%' }} align="center" component="td" scope="row">
-                                        1,000,000
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </ScrollX>
+                    <DefaultDataGrid
+                        columns={columns}
+                        rows={dataGridRows}
+                        pageSize={10}
+                        height={660}
+                        handlePageChange={handlePage}
+                        handleGridClick={handleClick}
+                        selectionChange={handleSelectionChange}
+                    />
                 </ContentLine>
-                <Pagination
-                    sx={{
-                        background: '#fff',
-                        padding: '10px 0',
-                        display: 'flex',
-                        justifyContent: 'center'
-                    }}
-                    showFirstButton
-                    showLastButton
-                    count={500}
-                    variant="outlined"
-                    shape="rounded"
-                    onChange={handleChangePage}
-                />
             </Grid>
         </Grid>
     );
