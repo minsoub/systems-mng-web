@@ -29,7 +29,7 @@ const BoardApis = () => {
         }
         if (request.category_id != undefined && request.category_id != '0') {
             // 카테고리 아이디
-            apiURL = apiURL + '&category_id=' + request.category_id;
+            apiURL = apiURL + '&category_ids=' + request.category_id;
         }
         if (request.is_banner != undefined && request.is_banner != 0) {
             // 배너 공지 여부

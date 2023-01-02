@@ -20,7 +20,7 @@ import {
     activeKeyword
 } from 'store/reducers/cms/NoticeSearch';
 
-const SearchForm = () => {
+const SearchForm = ({ listLoad, listRelooad}) => {
     const [responseData, requestError, loading, { getCategory }] = BoardApi();
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [from_date, setStartDate] = useState(); // 검색 시작일
@@ -65,6 +65,7 @@ const SearchForm = () => {
     };
     // 날자 변경 함수
     const changeDate = (type, e) => {
+        console.log(type, e);
         switch (type) {
             case 'start':
                 setStartDate(e);
@@ -80,12 +81,19 @@ const SearchForm = () => {
     const resetPeriod = () => {};
     // 검색
     const searchClick = () => {
-        console.log('searchClick called...');
-        console.log(keyword, '|', from_date, '|', to_date);
-        console.log(bannerNotice, '|', bannerState, '|', categoryState);
         // 검색 조건에 대해서 상태를 저장한다.
-        dispatch(activeFromDate({ reduceFromDate: from_date }));
-        dispatch(activeToDate({ reduceToDate: to_date }));
+        if (from_date === '') {
+            setStartDate('1900-01-01');
+            dispatch(activeFromDate({ reduceFromDate: '1900-01-01' }));
+        } else {
+            dispatch(activeFromDate({ reduceFromDate: from_date }));
+        }
+        if (to_date === '') {
+            setEndDate('2300-12-31');
+            dispatch(activeToDate({ reduceToDate: '2300-12-31' }));
+        } else {
+            dispatch(activeToDate({ reduceToDate: to_date }));
+        }
         dispatch(activeKeyword({ reduceKeyword: keyword }));
         dispatch(activeCategory({ reduceCategory: categoryState }));
         dispatch(activeBannerNoti({ reduceBannerNoti: bannerNotice }));
@@ -99,7 +107,7 @@ const SearchForm = () => {
             start_date: from_date,
             end_date: to_date
         };
-        //searchBoardList('notices', request);
+        listLoad(request);
     };
     // 초기화
     const clearClick = () => {
@@ -118,7 +126,7 @@ const SearchForm = () => {
             start_date: moment().format('YYYY-MM-DD'),
             end_date: moment().format('YYYY-MM-DD')
         };
-        //searchBoardList('notices', request);
+        listLoad(request);
     };
     // 연동결과 파싱
     useEffect(() => {
@@ -140,6 +148,8 @@ const SearchForm = () => {
     // 초기 호출 함수
     useEffect(() => {
         // reduce 상태값을 사용하여 검색을 수행한다.
+        console.log('reduceFromDate', reduceFromDate);
+        console.log('reduceToDate', reduceToDate);
         if (reduceFromDate) {
             setStartDate(reduceFromDate);
         } else {
@@ -156,7 +166,13 @@ const SearchForm = () => {
         if (reduceBannerState) setBannerState(reduceBannerState);
 
         getCategory('notices/categories/items');
+        searchClick();
     }, []);
+    // 초기 호출 함수
+    useEffect(() => {
+        if (listRelooad) searchClick();
+    }, [listRelooad]);
+
     return (
         <>
             <MainCard>
