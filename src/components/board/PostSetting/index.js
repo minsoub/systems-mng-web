@@ -6,10 +6,10 @@ import { Typography, Button, RadioGroup, FormControlLabel, Radio } from '@mui/ma
 import { clipboardShare } from 'utils/CommonUtils';
 import cx from 'classnames';
 
-const PostSetting = ({ type, editMode }) => {
+const PostSetting = ({ type, editMode, postingData }) => {
     const dispatch = useDispatch();
-    const [isDateUpdate, setIsDateUpdate] = useState(1);
-    const [isBoardTopState, setIsBoardTopState] = useState(1);
+    const [isDateUpdate, setIsDateUpdate] = useState(0);
+    const [isBoardTopState, setIsBoardTopState] = useState(0);
     const handleChange = (e) => {
         switch (e.target.name) {
             case 'date_check':
@@ -29,8 +29,27 @@ const PostSetting = ({ type, editMode }) => {
         dispatch(activeTopNoti({ reduceTopNoti: isBoardTopState }));
     },[isBoardTopState]);
     const shareURLCopy = () => {
-        clipboardShare('URL 주소가 클립보드에 복사되었습니다.');
+        clipboardShare(`https://www.bithumb.com/events/${postingData.id}`);
     };
+    useEffect(() => {
+        if (!postingData) return;
+        if (postingData.is_use_update_date) {
+            setIsDateUpdate(1);
+        } else {
+            setIsDateUpdate(0);
+        }
+        if (postingData.is_align_top) {
+            setIsBoardTopState(1);
+        } else {
+            setIsBoardTopState(0);
+        }
+    }, [postingData]);
+    useEffect(() => {
+        return () => {
+            dispatch(activeUpdateDate({ reduceUpdateDate: 0 }));
+            dispatch(activeTopNoti({ reduceTopNoti: 0 }));
+        };
+    },[]);
     return (
         <>
             <div className="board--layout__title">
@@ -54,10 +73,10 @@ const PostSetting = ({ type, editMode }) => {
                                         onChange={handleChange}
                                     >
                                         <FormControlLabel value="1" control={<Radio />} label="Y" />
-                                        <FormControlLabel value="2" control={<Radio />} label="N" />
+                                        <FormControlLabel value="0" control={<Radio />} label="N" />
                                     </RadioGroup>
                                 ) : (
-                                    <>N</>
+                                    <>{isDateUpdate ? 'Y' : 'N'}</>
                                 )}
                             </td>
                             <th className={'tb--title'}>게시물 상단 노출</th>
@@ -72,21 +91,32 @@ const PostSetting = ({ type, editMode }) => {
                                         onChange={handleChange}
                                     >
                                         <FormControlLabel value="1" control={<Radio />} label="Y" />
-                                        <FormControlLabel value="2" control={<Radio />} label="N" />
+                                        <FormControlLabel value="0" control={<Radio />} label="N" />
                                     </RadioGroup>
                                 ) : (
-                                    <>N</>
+                                    <>{isBoardTopState ? 'Y' : 'N'}</>
                                 )}
                             </td>
                         </tr>
                         <tr>
-                            <th className={'tb--title'}>게시글 URL</th>
-                            <td className={'width15'} colSpan="3">
-                                <span className="copyText">https://www.bithumb.com/events/123122</span>
-                                <Button disableElevation size="medium" type="button" variant="outlined_d" color="secondary" onClick={shareURLCopy}>
-                                    복사하기
-                                </Button>
-                            </td>
+                            {postingData && postingData.id && (
+                                <>
+                                    <th className={'tb--title'}>게시글 URL</th>
+                                    <td className={'width15'} colSpan="3">
+                                        <span className="copyText">{`https://www.bithumb.com/events/${postingData.id}`}</span>
+                                        <Button
+                                            disableElevation
+                                            size="medium"
+                                            type="button"
+                                            variant="outlined_d"
+                                            color="secondary"
+                                            onClick={shareURLCopy}
+                                        >
+                                            복사하기
+                                        </Button>
+                                    </td>
+                                </>
+                            )}
                         </tr>
                     </tbody>
                 </table>

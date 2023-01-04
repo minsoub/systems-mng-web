@@ -1,4 +1,5 @@
 import axiosInstanceDefault from '../axiosDefault';
+import axiosInstanceUpload from 'apis/axiosUpload';
 import useAxios from '../useAxios';
 
 const BoardApis = () => {
@@ -46,7 +47,7 @@ const BoardApis = () => {
     // 게시글 등록
     const createBoard = (boardKey, data) => {
         callApi('createBoard', {
-            axiosInstance: axiosInstanceDefault,
+            axiosInstance: axiosInstanceUpload,
             method: 'post',
             url: `/mng/cms/${boardKey}`,
             requestConfig: data
@@ -82,6 +83,16 @@ const BoardApis = () => {
             requestConfig: {}
         });
     };
+    // 파일 업로드
+    const insertFileData = (data) => {
+        callApi('uploadFile', {
+            axiosInstance: axiosInstanceUpload,
+            method: 'post',
+            url: '/mng/cms/files',
+            requestConfig: data
+        });
+    };
+
     // 카테고리 목록 조회
     const getCategory = (boardKey) => {
         let apiURL = '/mng/cms/' + boardKey;
@@ -117,6 +128,7 @@ const BoardApis = () => {
             updateBoard,
             deleteBoard,
             getCategory,
+            insertFileData,
             changeBannerState
         }
     ];

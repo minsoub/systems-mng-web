@@ -24,9 +24,9 @@ const SearchDate = ({
     resetPeriod,
     titleWidth
 }) => {
-    const [start_date2, setStartDate] = useState();
-    const [end_date2, setEndDate] = useState();
-    const [start_view_date, setStartViewDate] = useState();
+    const [start_date2, setStartDate] = useState(start_date);
+    const [end_date2, setEndDate] = useState(end_date);
+    const [start_view_date, setStartViewDate] = useState(start_date);
     const [end_view_date, setEndViewDate] = useState();
     const titleWidthVal = titleWidth ? titleWidth : 120;
     SearchDate.defaultProps = {
@@ -34,12 +34,9 @@ const SearchDate = ({
         period: null
     };
     useEffect(() => {
-        //if (!start_date) return;
-        console.log('change-start_date',start_date)
         setStartViewDate(start_date);
     },[start_date]);
     useEffect(() => {
-        //if (!end_date) return;
         setEndViewDate(end_date);
     },[end_date]);
     useEffect(() => {
@@ -59,7 +56,7 @@ const SearchDate = ({
     },[start_date2]);
     useEffect(() => {
         if (!end_date2) {
-            setStartViewDate('');
+            setEndViewDate('');
             return;
         }
         if (
@@ -75,12 +72,22 @@ const SearchDate = ({
         if (!start_view_date) {
             return;
         }
+        if (start_view_date.length < 8) {
+            setStartViewDate(moment().format('YYYY-MM-DD'));
+            return;
+        }
+        if (!moment(start_view_date, 'YYYY-MM-DD').isValid()) return;
         changeDate('start', getFormatDate(new Date(start_view_date)));
     }, [start_view_date]);
     useEffect(() => {
         if (!end_view_date) {
             return;
         }
+        if (end_view_date.length < 8) {
+            setEndViewDate(moment().format('YYYY-MM-DD'));
+            return;
+        }
+        if (!moment(end_view_date, 'YYYY-MM-DD').isValid()) return;
         changeDate('end', getFormatDate(new Date(end_view_date)));
     }, [end_view_date]);
     const getFormatDate = (date) =>{

@@ -16,6 +16,12 @@ const NoticeView = () => {
     const [editMode, setEditMode] = useState(false);
     //상세번호
     const { paramId } = useParams();
+    //상세 데이터
+    const [detailData, setDetailData] = useState(null);
+    //공유 데이터
+    const [shareData, setShareData] = useState({});
+    //게시 설정
+    const [postingData, setPostingData] = useState({});
     const changeEditState = () => {
         setEditMode(true);
     };
@@ -25,9 +31,9 @@ const NoticeView = () => {
     }, [editMode]);
     //전달 인자확인
     useEffect(() => {
-        console.log('paramId', paramId);
         if (!paramId) {
             setEditMode(true);
+            return;
         }
         readBoard('notices', paramId);
     }, [paramId]);
@@ -36,11 +42,27 @@ const NoticeView = () => {
         if (!responseData) {
             return;
         }
-        console.log('responseData.transactionId', responseData.transactionId);
+        // console.log('responseData.transactionId', responseData.transactionId);
         switch (responseData.transactionId) {
             case 'readBoard':
                 if (responseData.data.data) {
-                    console.log(responseData.data.data.contents);
+                    // console.log(responseData.data.data);
+                    const _contents = responseData.data.data;
+                    setDetailData(_contents);
+                    const _shareData = {
+                        id: _contents.id,
+                        share_title: _contents.share_title,
+                        share_description: _contents.share_description,
+                        share_file_id: _contents.share_file_id,
+                        share_button_name: _contents.share_button_name
+                    };
+                    setShareData(_shareData);
+                    const _postingData = {
+                        id: _contents.id,
+                        is_use_update_date: _contents.is_use_update_date,
+                        is_align_top: _contents.is_align_top
+                    };
+                    setPostingData(_postingData);
                 }
                 break;
             default:
@@ -51,10 +73,10 @@ const NoticeView = () => {
         <Grid container rowSpacing={4} columnSpacing={2.75} className={styles.notceView}>
             <Grid item xs={12}>
                 <HeaderTitle titleNm="공지사항 상세" menuStep01="사이트 운영" menuStep02="공지사항 상세" />
-                <DetailContens type="notice" editMode={editMode} />
-                <ShareSetting type="notice" editMode={editMode} />
-                <PostSetting type="notice" editMode={editMode} />
-                <BottomButtonSet type="notice" editMode={editMode} changeEditState={changeEditState} />
+                <DetailContens type="notice" editMode={editMode} detailData={detailData} />
+                <ShareSetting type="notice" editMode={editMode} shareData={shareData} />
+                <PostSetting type="notice" editMode={editMode} postingData={postingData} />
+                <BottomButtonSet type="notice" editMode={editMode} changeEditState={changeEditState} id={detailData?.id} />
             </Grid>
         </Grid>
     );

@@ -191,15 +191,3 @@ const CategoryList = () => {
 };
 
 export default CategoryList;
-
-/*
-valueGetter: (value) => {
-    // console.log('-------------------------row의 다른값 체크후 변환 처리', value.row);
-    let setValue = '고정';
-    // dataGridRows.map((row) => {
-    //     if (row.create_date === value) {
-    //         setValue = row.id;
-    //     }
-    // });
-    return setValue;
-}*/

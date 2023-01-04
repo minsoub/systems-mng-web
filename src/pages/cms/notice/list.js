@@ -102,7 +102,10 @@ const NoticeList = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            maxWidth: 100
+            maxWidth: 100,
+            valueGetter: ({ value }) => {
+                return value ? `${(value).toLocaleString('ko-KR')}` : '-';
+            }
         }
     ];
     const [responseData, requestError, loading, { searchBoardList, changeBannerState }] = BoardApi();
@@ -121,6 +124,16 @@ const NoticeList = () => {
         setErrorTitle('');
         setErrorMessage('');
     };
+    // transaction error 처리
+    useEffect(() => {
+        if (requestError) {
+            console.log('error requestError');
+            console.log(requestError);
+            setErrorTitle('Error Message');
+            setErrorMessage(requestError);
+            setOpen(true);
+        }
+    }, [requestError]);
     ////////////////////////////////////////////////////
     // 페이징 변경 이벤트
     const handlePage = (page) => {};
@@ -156,11 +169,11 @@ const NoticeList = () => {
         if (!responseData) {
             return;
         }
-        console.log('list --- responseData.transactionId', responseData.transactionId);
+        // console.log('list --- responseData.transactionId', responseData.transactionId);
         switch (responseData.transactionId) {
             case 'getBoards':
                 if (responseData.data.data) {
-                    console.log(responseData.data.data);
+                    // console.log(responseData.data.data);
                     setDataTotal(Number(responseData.data.data.total_counts));
                     setDataGridRows(responseData.data.data.contents);
                 } else {

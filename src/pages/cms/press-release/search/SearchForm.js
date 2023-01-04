@@ -10,29 +10,17 @@ import InputLayout from 'components/Common/InputLayout';
 import DropInput from 'components/Common/DropInput';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import styles from './styles.module.scss';
-import BoardApi from 'apis/cms/boardapi';
-import {
-    activeFromDate,
-    activeToDate,
-    activeCategory,
-    activeBannerNoti,
-    activeBannerState,
-    activeKeyword
-} from 'store/reducers/cms/NoticeSearch';
+import { activeFromDate, activeToDate, activeViewState, activeKeyword, activePageNum } from 'store/reducers/cms/PressRelease';
 
-const NoticeSearchForm = ({ listLoad, listRelooad }) => {
-    const [responseData, requestError, loading, { getCategory }] = BoardApi();
+const SearchForm = ({ listLoad, listRelooad }) => {
     const [initCall, setInitCall] = useState(true); //초기 호출 체크
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [from_date, setStartDate] = useState(); // 검색 시작일
     const [to_date, setEndDate] = useState(); // 검색 종료일
-    const [bannerNotice, setBannerNotice] = useState(0); // 배너 공지 상태
-    const [bannerState, setBannerState] = useState(0); // 배너 공개상태
-    const [categoryState, setCategoryState] = useState('0'); // 선택한 카테고리
-    const [categoryList, setCategoryList] = useState([{}]); // 카테고리 전체 리스트
-    const { reduceFromDate, reduceToDate, reduceCategory, reduceBannerNoti, reduceBannerState, reduceKeyword } = useSelector((state) => state.cmsNotice);
+    const [viewState, setViewState] = useState(0); // 보도자료 상태
+    const { reduceFromDate, reduceToDate, reduceKeyword, reduceViewState } = useSelector((state) => state.cmsPressRelease);
     const dispatch = useDispatch();
-    
+
     ////////////////////////////////////////////////////
     // 블러 이벤트
     const handleBlur = (e) => {};
@@ -52,14 +40,8 @@ const NoticeSearchForm = ({ listLoad, listRelooad }) => {
                 }
                 setEndDate(e.target.value);
                 break;
-            case 'banner_notice': // 배너 공지 변경시
-                setBannerNotice(e.target.value);
-                break;
-            case 'banner_state': // 배너 상태 변경시
-                setBannerState(e.target.value);
-                break;
-            case 'category_state': // 카테고리 변경시
-                setCategoryState(e.target.value);
+            case 'view_state': // 상태 변경시
+                setViewState(e.target.value);
                 break;
             default:
                 break;
@@ -97,15 +79,11 @@ const NoticeSearchForm = ({ listLoad, listRelooad }) => {
             dispatch(activeToDate({ reduceToDate: to_date }));
         }
         dispatch(activeKeyword({ reduceKeyword: keyword }));
-        dispatch(activeCategory({ reduceCategory: categoryState }));
-        dispatch(activeBannerNoti({ reduceBannerNoti: bannerNotice }));
-        dispatch(activeBannerState({ reduceBannerState: bannerState }));
+        dispatch(activeViewState({ reduceViewState: viewState }));
 
         const request = {
             keyword,
-            category_id: categoryState,
-            is_banner: bannerNotice,
-            is_show: bannerState,
+            is_show: viewState,
             start_date: from_date,
             end_date: to_date
         };
@@ -118,36 +96,15 @@ const NoticeSearchForm = ({ listLoad, listRelooad }) => {
         setKeyword('');
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
-        setBannerNotice(0);
-        setBannerState(0);
-        setCategoryState('0');
 
         const request = {
             keyword: '',
-            category_id: '0',
-            is_banner: 0,
             is_show: 0,
             start_date: moment().format('YYYY-MM-DD'),
             end_date: moment().format('YYYY-MM-DD')
         };
         listLoad(request);
     };
-    // 연동결과 파싱
-    useEffect(() => {
-        if (!responseData) {
-            return;
-        }
-        // console.log('responseData.transactionId', responseData.transactionId);
-        switch (responseData.transactionId) {
-            case 'getCategory':
-                if (responseData.data.data) {
-                    setCategoryList(responseData.data.data.contents);
-                }
-                break;
-            default:
-                return;
-        }
-    }, [responseData]);
     useEffect(() => {
         if (!from_date) {
             return;
@@ -173,12 +130,8 @@ const NoticeSearchForm = ({ listLoad, listRelooad }) => {
         } else {
             setEndDate(moment().format('YYYY-MM-DD'));
         }
-        if (reduceCategory) setCategoryState(reduceCategory);
+        if (reduceViewState) setViewState(reduceViewState);
         if (reduceKeyword) setKeyword(reduceKeyword);
-        if (reduceBannerNoti) setBannerNotice(reduceBannerNoti);
-        if (reduceBannerState) setBannerState(reduceBannerState);
-
-        getCategory('notices/categories/items');
     }, []);
     // reload
     useEffect(() => {
@@ -190,50 +143,10 @@ const NoticeSearchForm = ({ listLoad, listRelooad }) => {
             <MainCard>
                 <Grid>
                     <InputLayout gridClass={styles.keywordWrap}>
-                        <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={keyword} />
-                        <DropInput title="카테고리" titleWidth={60}>
-                            <InputLabel id="category_state">카테고리</InputLabel>
-                            <Select
-                                labelId="category_state"
-                                id="category_state"
-                                name="category_state"
-                                value={categoryState}
-                                onChange={handleChange}
-                            >
-                                <MenuItem value="0">전체</MenuItem>
-                                {categoryList.map((item, index) => (
-                                    <MenuItem key={index} value={item.id}>
-                                        {item.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </DropInput>
-                    </InputLayout>
-                    <InputLayout gridClass={styles.keywordWrap}>
-                        <DropInput title="배너공지" titleWidth={120}>
-                            <InputLabel id="banner_notice">배너공지</InputLabel>
-                            <Select
-                                labelId="banner_notice"
-                                id="banner_notice"
-                                name="banner_notice"
-                                value={bannerNotice}
-                                onChange={handleChange}
-                            >
-                                <MenuItem value="0">전체</MenuItem>
-                                <MenuItem value="1">노출</MenuItem>
-                                <MenuItem value="2">비노출</MenuItem>
-                            </Select>
-                        </DropInput>
-
-                        <DropInput title="상태" titleWidth={60}>
-                            <InputLabel id="banner_state">상태</InputLabel>
-                            <Select
-                                labelId="banner_state"
-                                id="banner_state"
-                                name="banner_state"
-                                value={bannerState}
-                                onChange={handleChange}
-                            >
+                        <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={keyword}/>
+                        <DropInput title="상태" titleWidth={40} className={styles.dropdownWrap}>
+                            <InputLabel id="view_state">상태</InputLabel>
+                            <Select labelId="view_state" id="view_state" name="view_state" value={viewState} onChange={handleChange}>
                                 <MenuItem value="0">전체</MenuItem>
                                 <MenuItem value="1">공개</MenuItem>
                                 <MenuItem value="2">비공개</MenuItem>
@@ -267,4 +180,4 @@ const NoticeSearchForm = ({ listLoad, listRelooad }) => {
     );
 };
 
-export default NoticeSearchForm;
+export default SearchForm;

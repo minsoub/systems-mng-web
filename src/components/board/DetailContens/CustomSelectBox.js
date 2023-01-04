@@ -6,7 +6,7 @@ const CustomSelectBox = ({ editMode, value, name, change, selectList=[] }) => {
     const [viewValue, setViewValue] = useState('');
     useEffect(() => {
         selectList.map((item) => {
-            if (Number(item.id) === value) setViewValue(item.name);
+            if (item.id === value) setViewValue(item.name);
         });
     }, [value, selectList]);
     return editMode ? (

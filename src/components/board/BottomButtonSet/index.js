@@ -4,9 +4,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Grid, Button } from '@mui/material';
 import ButtonLayout from 'components/Common/ButtonLayout';
+import BoardApi from 'apis/cms/boardapi';
 import styles from './styles.module.scss';
 
-const BottomButtonSet = ({ type, editMode, changeEditState }) => {
+const BottomButtonSet = ({ type, editMode, changeEditState, id }) => {
+    const [responseData, requestError, loading, { createBoard, deleteBoard }] = BoardApi();
     const {
         reduceNotiCategory1,
         reduceNotiCategory2,
@@ -34,21 +36,18 @@ const BottomButtonSet = ({ type, editMode, changeEditState }) => {
         reduceEventOverlapMsg // 이벤트 중복 참여시 메시지
     } = useSelector((state) => state.cmsDetailEventData);
     const navigate = useNavigate();
-    // 삭제 버튼 제어
-    const [isDisabled, setIsDisabled] = useState(false);
+    // detail ID
+    const [detailID, setDetailID] = useState(id);
     // delete
     const deleteClick = () => {
         if (confirm('삭제를 하시겠습니까?')) {
-            const requestData = {
-                // id: id,
-                // name: name,
-                // valid_start_date: valid_start_date,
-                // valid_end_date: valid_end_date,
-                // site_id: site_id,
-                // is_use: false,
-                // type: type
-            };
-            //roleDelete(id, requestData);
+            switch (type) {
+                case 'notice':
+                    deleteBoard('notices', id);
+                    break;
+                default:
+                    break;
+            }
         }
     };
     // List
@@ -79,10 +78,71 @@ const BottomButtonSet = ({ type, editMode, changeEditState }) => {
         console.log('이벤트 버튼 링크 경로 : ', reduceEventBtnLink);
         console.log('이벤트 참여 완료시 메시지 : ', reduceEventSuccessMsg);
         console.log('이벤트 중복 참여시 메시지 : ', reduceEventOverlapMsg);
+        if (type === 'notice') {
+            // const request = {
+            //     category_ids: ['8b82daaa42614fea88faef4f2e6d357c'],
+            //     title: 'test1',
+            //     content: 'test2',
+            //     is_fix_top: false,
+            //     is_show: false,
+            //     is_delete: false,
+            //     is_schedule: false,
+            //     is_draft: false,
+            //     read_count: 0,
+            //     is_use_update_date: false,
+            //     is_align_top: false,
+            //     is_banner: false
+            // };
+            const request = {
+                // category_ids: ['5315d045f031424a8ca53128f344ac04'],
+                // title: '제목',
+                content: '본문',
+                // is_fix_top: false,
+                // is_show: false,
+                // is_delete: false,
+                // share_title: '공유 태그 타이틀',
+                // share_description: '공유 태그 설명',
+                // share_button_name: '공유 태그 버튼명',
+                // is_schedule: false,
+                // schedule_date: '2023-01-04T01:27:12.598Z',
+                // is_draft: false,
+                // read_count: 0,
+                // is_use_update_date: false,
+                // is_align_top: false,
+                // is_banner: true
+            };
+            const sendData = {
+                request: request,
+                file: '',
+                share_file: ''
+            };
+            createBoard('notices', sendData);
+        }
     };
+    // 연동 결과
     useEffect(() => {
-        // console.log(changeEditState, editMode);
-    }, []);
+        if (!responseData) {
+            return;
+        }
+        switch (responseData.transactionId) {
+            case 'createBoard':
+                if (responseData.data.data) {
+                    console.log(responseData.data.data);
+                }
+                break;
+            case 'deleteBoard':
+                if (responseData.data.data) {
+                    alert('삭제 되었습니다.');
+                    listClick();
+                }
+                break;
+            default:
+                return;
+        }
+    }, [responseData]);
+    useEffect(() => {
+        setDetailID(id);
+    }, [id]);
     return (
         <Grid className={styles.button_layout}>
             <ButtonLayout>
@@ -107,9 +167,11 @@ const BottomButtonSet = ({ type, editMode, changeEditState }) => {
                         <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={listClick}>
                             취소
                         </Button>
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={deleteClick}>
-                            초안 저장
-                        </Button>
+                        {!detailID && (
+                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={deleteClick}>
+                                초안 저장
+                            </Button>
+                        )}
                         <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={submitClick}>
                             출판
                         </Button>
