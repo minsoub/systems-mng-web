@@ -101,15 +101,15 @@ const ProjectCommunity = (props) => {
     useEffect(() => {
         // polling start
         console.log('fileList data => ');
-        console.log(fileList);
-        console.log(polling);
+        // console.log(fileList);
+        // console.log(polling);
         if (polling === 0) {
             // hat 파일 리스트에 파일정보가 아직 검사중인 경우
             console.log('chat file data search...');
             let found = 0;
             fileList.map((item) => {
-                console.log(item.file_key);
-                console.log(item.file_status);
+                // console.log(item.file_key);
+                // console.log(item.file_status);
                 if (item.file_status === 'ING') {
                     found = 1;
                     console.log('chat file found...');
@@ -249,6 +249,7 @@ const ProjectCommunity = (props) => {
             alert('다운로드 할 수 있는 상태가 아닙니다.');
         }
     };
+
     const sendEmail = (param) => {
         console.log(param);
         if (param === 'KOR') {
@@ -262,7 +263,6 @@ const ProjectCommunity = (props) => {
         }
     };
     // 페이징 변경 이벤트
-    const handlePage = (page) => {};
     const [page, setPage] = useState(0);
     const [viewPage, setViewPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(15);
@@ -277,6 +277,7 @@ const ProjectCommunity = (props) => {
     const fileSearch = (projectId, fileKey) => {
         fileDetailSearch(projectId, fileKey);
     };
+
     return (
         <>
             <Chat
@@ -291,6 +292,7 @@ const ProjectCommunity = (props) => {
             />
             <MainCard>
                 {/* 파일 업로드 */}
+                {/* FileUpload 임시적용 동작안됨 */}
                 <FileUpload id={paramId} insertChatFile={insertChatFile} />
                 <FlexBox sx={{ justifyContent: 'space-between', px: '0.7rem' }}>
                     <Typography variant="h4">첨부파일 목록</Typography>

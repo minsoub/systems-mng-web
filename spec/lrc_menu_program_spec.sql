@@ -48,6 +48,14 @@ db.menu_program_specification.insertMany([
       },
       {
         action_method : 'GET',
+        action_url : '/api/v1/mng/lrc/service/chat/{siteId}/{projectId}'
+      },
+      {
+        action_method : 'POST',
+        action_url : '/api/v1/mng/lrc/service/chat/{siteId}/{projectId}'
+      },
+      {
+        action_method : 'GET',
         action_url : '/api/v1/mng/lrc/statusmanagment/line-code'
       },
       {
