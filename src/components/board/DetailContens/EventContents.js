@@ -1,13 +1,19 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Select, MenuItem, TextField, Button } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { changeDateType } from 'utils/CommonUtils';
+
+// library
 import moment from 'moment';
+
+// project import
+import CustomTextfield from './CustomTextfield';
+
+// transition
 import {
     activeEventType,
     activeEventStartDate,
@@ -20,21 +26,24 @@ import {
     activeEventSuccessMsg,
     activeEventOverlapMsg
 } from 'store/reducers/cms/DetailEventData';
-import CustomTextfield from './CustomTextfield';
+
+// utiles
+import { changeDateType } from 'utils/CommonUtils';
+
+// style
 import styles from './styles.module.scss';
+
+// =============|| DetailContents - EventContents ||============= //
+
 const EventContents = ({ editMode, handleOpen }) => {
     const dispatch = useDispatch();
-    // 이벤트 시작일
-    const [startDate, setStartDate] = useState(moment().format('YYYY.MM.DD'));
-    // 이벤트 종료일
-    const [endDate, setEndDate] = useState(moment().format('YYYY.MM.DD'));
-    // 개인정보 수집 및  이용동의
-    const [privateText, setPrivateText] = useState('');
-    // 버튼, 버튼명 필드 사용여부
-    const [disableBtnBool, setDisableBtnBool] = useState(false);
-    // 이벤트 기간필드 사용여부
-    const [disableEventDateBool, setDisableEventDateBool] = useState(false);
-    // 인풋 관리
+
+    const [startDate, setStartDate] = useState(moment().format('YYYY.MM.DD')); // 이벤트 시작일
+
+    const [endDate, setEndDate] = useState(moment().format('YYYY.MM.DD')); // 이벤트 종료일
+    const [privateText, setPrivateText] = useState(''); // 개인정보 수집 및  이용동의
+    const [isDisableBtnBool, setIsDisableBtnBool] = useState(false); // 버튼, 버튼명 필드 사용여부
+    const [isDisableEventDateBool, setIsDisableEventDateBool] = useState(false); // 이벤트 기간필드 사용여부
     const [inputs, setInputs] = useState({
         eventBtnName: '', // 버튼명
         eventBtnColor: '', // 버튼 색상
@@ -43,7 +52,7 @@ const EventContents = ({ editMode, handleOpen }) => {
         eventOverlapMsg: '', // 중복 참여시 메시지
         eventType: 1, // 이벤트 유형
         targetPerson: 1 // 참여대상
-    });
+    }); // 인풋 관리
     const { eventBtnName, eventBtnColor, eventLink, eventJoinMsg, eventOverlapMsg, eventType, targetPerson } = inputs;
 
     useEffect(() => {
@@ -65,28 +74,26 @@ const EventContents = ({ editMode, handleOpen }) => {
     useEffect(() => {
         const private_btn = document.querySelector('.private_btn');
         if (!private_btn) return;
-        if ((targetPerson === 2 && !disableBtnBool) || eventType === 1) {
+        if ((targetPerson === 2 && !isDisableBtnBool) || eventType === 1) {
             private_btn.classList.add('Mui-disabled');
         } else {
             private_btn.classList.remove('Mui-disabled');
         }
-    }, [targetPerson, disableBtnBool, eventType]);
+    }, [targetPerson, isDisableBtnBool, eventType]);
 
     useEffect(() => {
         switch (eventType) {
             case 1:
-                setDisableEventDateBool(true);
-                setDisableBtnBool(true);
+                setIsDisableEventDateBool(true);
+                setIsDisableBtnBool(true);
                 break;
             case 2:
-                setDisableEventDateBool(false);
-                setDisableBtnBool(false);
-                //setTargetPerson(1);
+                setIsDisableEventDateBool(false);
+                setIsDisableBtnBool(false);
                 break;
             case 3:
-                setDisableEventDateBool(true);
-                setDisableBtnBool(false);
-                //setTargetPerson(1);
+                setIsDisableEventDateBool(true);
+                setIsDisableBtnBool(false);
                 break;
             default:
                 return;
@@ -99,6 +106,7 @@ const EventContents = ({ editMode, handleOpen }) => {
             [name]: value
         });
     };
+    //-- value 변경시 reducersㅇ에 바로 저장 -S- //
     useEffect(() => {
         dispatch(activeEventType({ reduceEventType: eventType }));
     }, [eventType]);
@@ -129,6 +137,7 @@ const EventContents = ({ editMode, handleOpen }) => {
     useEffect(() => {
         dispatch(activeEventOverlapMsg({ reduceEventOverlapMsg: eventOverlapMsg }));
     }, [eventOverlapMsg]);
+    //-- value 변경시 reducersㅇ에 바로 저장 -E- //
     return (
         <>
             <tr>
@@ -150,7 +159,7 @@ const EventContents = ({ editMode, handleOpen }) => {
                             <div className="eventDateWrap">
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DateTimePicker
-                                        disabled={disableEventDateBool}
+                                        disabled={isDisableEventDateBool}
                                         className="event_start_date"
                                         renderInput={(props) => <TextField {...props} />}
                                         label="이벤트 시작일시"
@@ -162,7 +171,7 @@ const EventContents = ({ editMode, handleOpen }) => {
                                     />
                                     <span className={styles.event_wave}> ~ </span>
                                     <DateTimePicker
-                                        disabled={disableEventDateBool}
+                                        disabled={isDisableEventDateBool}
                                         className="event_end_date"
                                         renderInput={(props) => <TextField {...props} />}
                                         label="이벤트 종료일시"
@@ -187,7 +196,7 @@ const EventContents = ({ editMode, handleOpen }) => {
                     {editMode ? (
                         <>
                             <Select
-                                disabled={disableBtnBool}
+                                disabled={isDisableBtnBool}
                                 className={styles.detail_select}
                                 name="targetPerson"
                                 label="참여 대상"
@@ -198,7 +207,7 @@ const EventContents = ({ editMode, handleOpen }) => {
                                 <MenuItem value={2}>비로그인 회원</MenuItem>
                             </Select>
                             <Button
-                                disabled={disableBtnBool}
+                                disabled={isDisableBtnBool}
                                 className={`${styles.insert_private} private_btn`}
                                 disableElevation
                                 size="medium"

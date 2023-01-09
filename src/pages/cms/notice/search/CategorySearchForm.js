@@ -1,16 +1,23 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Button, Grid, MenuItem, InputLabel, Select } from '@mui/material';
+
+// project import
 import MainCard from 'components/Common/MainCard';
 import SearchBar from 'components/ContentManage/SearchBar';
 import InputLayout from 'components/Common/InputLayout';
 import DropInput from 'components/Common/DropInput';
 import ButtonLayout from 'components/Common/ButtonLayout';
+
+// style
 import styles from './styles.module.scss';
+
+// =============|| Category - SearchForm ||============= //
 
 const CategorySearchForm = ({ listLoad, listRelooad }) => {
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [categoryState, setCategoryState] = useState(0); // 카테고리 사용상태
+
     const handleChange = (e /*, name */) => {
         switch (e.target.name) {
             case 'keyword': //키워드 변경시

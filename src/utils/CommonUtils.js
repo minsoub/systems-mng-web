@@ -41,7 +41,7 @@ export const nl2brToString = (content) => {
     }
     return content.split('\n').join('<br />');
 };
-
+// 파일 업로드 관련 함수 -S
 export const humanFileSize = (bytes, si = false, dp = 1) => {
     const thresh = si ? 1000 : 1024;
 
@@ -90,7 +90,9 @@ export const clipboardShare = (text) => {
         alert('URL 주소가 클립보드에 복사되었습니다.');
     }
 };
+// 파일 업로드 관련 함수 -E
 
+// 날자 출력 형태 변경
 export const changeDateType = (dateT) => {
     let returnDateT = '';
     let items = '';

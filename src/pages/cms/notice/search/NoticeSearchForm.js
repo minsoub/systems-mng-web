@@ -2,14 +2,19 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Grid, MenuItem, InputLabel, Select } from '@mui/material';
+
+// library
 import moment from 'moment';
+
+// project import
 import MainCard from 'components/Common/MainCard';
 import SearchBar from 'components/ContentManage/SearchBar';
 import SearchDate from 'components/ContentManage/SearchDate';
 import InputLayout from 'components/Common/InputLayout';
 import DropInput from 'components/Common/DropInput';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import styles from './styles.module.scss';
+
+// transition
 import BoardApi from 'apis/cms/boardapi';
 import {
     activeFromDate,
@@ -20,9 +25,15 @@ import {
     activeKeyword
 } from 'store/reducers/cms/NoticeSearch';
 
+// style
+import styles from './styles.module.scss';
+
 const NoticeSearchForm = ({ listLoad, listRelooad }) => {
+    const dispatch = useDispatch();
     const [responseData, requestError, loading, { getCategory }] = BoardApi();
-    const [initCall, setInitCall] = useState(true); //초기 호출 체크
+    const { reduceFromDate, reduceToDate, reduceCategory, reduceBannerNoti, reduceBannerState, reduceKeyword } = useSelector((state) => state.cmsNotice);
+
+    const [isInitCall, setIsInitCall] = useState(true); //초기 호출 체크
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [from_date, setStartDate] = useState(); // 검색 시작일
     const [to_date, setEndDate] = useState(); // 검색 종료일
@@ -30,9 +41,7 @@ const NoticeSearchForm = ({ listLoad, listRelooad }) => {
     const [bannerState, setBannerState] = useState(0); // 배너 공개상태
     const [categoryState, setCategoryState] = useState('0'); // 선택한 카테고리
     const [categoryList, setCategoryList] = useState([{}]); // 카테고리 전체 리스트
-    const { reduceFromDate, reduceToDate, reduceCategory, reduceBannerNoti, reduceBannerState, reduceKeyword } = useSelector((state) => state.cmsNotice);
-    const dispatch = useDispatch();
-    
+
     ////////////////////////////////////////////////////
     // 블러 이벤트
     const handleBlur = (e) => {};
@@ -152,8 +161,8 @@ const NoticeSearchForm = ({ listLoad, listRelooad }) => {
         if (!from_date) {
             return;
         }
-        if (initCall) {
-            setInitCall(false);
+        if (isInitCall) {
+            setIsInitCall(false);
             searchClick();
         }
     }, [from_date]);

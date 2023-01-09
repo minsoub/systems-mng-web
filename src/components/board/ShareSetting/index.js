@@ -1,15 +1,26 @@
-import { useEffect, useState } from 'react';
-import { Typography, TextField, Button } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { activeShareTitle, activeShareDesc, activeShareBtnName } from 'store/reducers/cms/DetailData';
-import TopInputLayout from 'components/Common/TopInputLayout';
-import { humanFileSize } from 'utils/CommonUtils';
-import styles from './styles.module.scss';
-import cx from 'classnames';
-import BoardApi from 'apis/cms/boardapi';
 
-// eslint-disable-next-line react/prop-types
-const ShareSetting = ({ type, editMode, shareData }) => {
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Typography, TextField, Button } from '@mui/material';
+
+// library
+import cx from 'classnames';
+
+// project import
+import TopInputLayout from 'components/Common/TopInputLayout';
+
+// transition
+import BoardApi from 'apis/cms/boardapi';
+import { activeShareTitle, activeShareDesc, activeShareBtnName } from 'store/reducers/cms/DetailData';
+
+//util
+import { humanFileSize } from 'utils/CommonUtils';
+
+//style
+import styles from './styles.module.scss';
+
+
+const ShareSetting = ({ editMode, shareData }) => {
     const [responseData, requestError, loading, { insertFileData }] = BoardApi();
     const dispatch = useDispatch();
     // 인풋 관리

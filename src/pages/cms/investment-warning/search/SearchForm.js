@@ -16,16 +16,16 @@ import DropInput from 'components/Common/DropInput';
 import ButtonLayout from 'components/Common/ButtonLayout';
 
 // transition
-import { activeFromDate, activeToDate, activeViewState, activeKeyword, activePageNum } from 'store/reducers/cms/PressRelease';
+import { activeFromDate, activeToDate, activeViewState, activeKeyword, activePageNum } from 'store/reducers/cms/InvestmentWarning';
 
 //style
 import styles from './styles.module.scss';
 
-// =============|| Pressrelease - SearchForm ||============= //
+// =============|| InvestmentWarning - SearchForm ||============= //
 
 const SearchForm = ({ listLoad, listRelooad }) => {
     const dispatch = useDispatch();
-    const { reduceFromDate, reduceToDate, reduceKeyword, reduceViewState } = useSelector((state) => state.cmsPressRelease);
+    const { reduceFromDate, reduceToDate, reduceKeyword, reduceViewState } = useSelector((state) => state.cmsInvestmentWarning);
 
     const [isInitCall, setIsInitCall] = useState(true); //초기 호출 체크
     const [keyword, setKeyword] = useState(''); //검색 키워드
@@ -76,6 +76,7 @@ const SearchForm = ({ listLoad, listRelooad }) => {
     const resetPeriod = () => {};
     // 검색
     const searchClick = () => {
+        // 검색 조건에 대해서 상태를 저장한다.
         if (from_date === '') {
             setStartDate('1900-01-01');
             dispatch(activeFromDate({ reduceFromDate: '1900-01-01' }));
@@ -101,7 +102,6 @@ const SearchForm = ({ listLoad, listRelooad }) => {
         if (to_date === '') request.end_date = '2300-12-31';
         listLoad(request);
     };
-
     // 초기화
     const clearClick = () => {
         setKeyword('');
@@ -141,7 +141,6 @@ const SearchForm = ({ listLoad, listRelooad }) => {
         if (reduceViewState) setViewState(reduceViewState);
         if (reduceKeyword) setKeyword(reduceKeyword);
     }, []);
-
     // reload
     useEffect(() => {
         if (listRelooad) searchClick();

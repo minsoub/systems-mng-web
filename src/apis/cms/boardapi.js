@@ -1,6 +1,6 @@
-import axiosInstanceDefault from '../axiosDefault';
+import useAxios from 'apis/useAxios';
 import axiosInstanceUpload from 'apis/axiosUpload';
-import useAxios from '../useAxios';
+import axiosInstanceDefault from 'apis/axiosDefault';
 
 const BoardApis = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
@@ -23,6 +23,10 @@ const BoardApis = () => {
         if (request.is_use != undefined && request.is_use != 0) {
             // 사용 상태
             apiURL = apiURL + '&is_use=' + (request.is_use == 1 ? 'true' : 'false');
+        }
+        if (request.event_type != undefined && request.event_type != 0) {
+            // 게시 유형 상태
+            apiURL = apiURL + '&event_type=' + (request.event_type == 1 ? 'true' : 'false');
         }
         if (request.is_show != undefined && request.is_show != 0) {
             // 사용 상태

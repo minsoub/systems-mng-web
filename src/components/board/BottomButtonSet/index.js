@@ -1,26 +1,36 @@
 /* eslint-disable no-unused-vars */
+
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Grid, Button } from '@mui/material';
+
+// project import
 import ButtonLayout from 'components/Common/ButtonLayout';
+
+// transition
 import BoardApi from 'apis/cms/boardapi';
+
+// style
 import styles from './styles.module.scss';
 
+// =============|| BottomButtonSet - Component ||============= //
+
 const BottomButtonSet = ({ type, editMode, changeEditState, id }) => {
+    const navigate = useNavigate();
     const [responseData, requestError, loading, { createBoard, deleteBoard }] = BoardApi();
     const {
-        reduceNotiCategory1,
-        reduceNotiCategory2,
-        reduceTitle,
-        reduceTopFixable,
-        reducePostState,
-        reduceReservation,
-        reduceReservationDate,
-        reduceShareTitle,
-        reduceShareDesc,
-        reduceShareBtnName,
-        reduceUpdateDate,
+        reduceNotiCategory1, // 공지 카테고리1
+        reduceNotiCategory2, // 공지 카테고리2
+        reduceTitle, // 타이틀
+        reduceTopFixable, // 상단고정
+        reducePostState, // 게시 상태
+        reduceReservation, // 예약 게시 여부
+        reduceReservationDate, // 예약 게시일
+        reduceShareTitle, // 공유 타이틀
+        reduceShareDesc, // 공유 설명
+        reduceShareBtnName, // 공유 버튼명
+        reduceUpdateDate, // 업데이트 날자  여부 설정
         reduceTopNoti
     } = useSelector((state) => state.cmsDetailData);
     const {
@@ -35,10 +45,9 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id }) => {
         reduceEventSuccessMsg, // 이벤트 참여 완료시 메시지
         reduceEventOverlapMsg // 이벤트 중복 참여시 메시지
     } = useSelector((state) => state.cmsDetailEventData);
-    const navigate = useNavigate();
-    // detail ID
-    const [detailID, setDetailID] = useState(id);
-    // delete
+
+    const [detailID, setDetailID] = useState(id); // detail ID
+
     const deleteClick = () => {
         if (confirm('삭제를 하시겠습니까?')) {
             switch (type) {
@@ -50,7 +59,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id }) => {
             }
         }
     };
-    // List
+
     const listClick = () => {
         navigate(`/cms/${type}/list`);
     };
@@ -94,31 +103,29 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id }) => {
             //     is_banner: false
             // };
             const request = {
-                // category_ids: ['5315d045f031424a8ca53128f344ac04'],
-                // title: '제목',
+                category_ids: ['5315d045f031424a8ca53128f344ac04'],
+                title: '제목',
                 content: '본문',
-                // is_fix_top: false,
-                // is_show: false,
-                // is_delete: false,
-                // share_title: '공유 태그 타이틀',
-                // share_description: '공유 태그 설명',
-                // share_button_name: '공유 태그 버튼명',
-                // is_schedule: false,
-                // schedule_date: '2023-01-04T01:27:12.598Z',
-                // is_draft: false,
-                // read_count: 0,
-                // is_use_update_date: false,
-                // is_align_top: false,
-                // is_banner: true
+                is_fix_top: false,
+                is_show: false,
+                is_delete: false,
+                share_title: '공유 태그 타이틀',
+                share_description: '공유 태그 설명',
+                share_button_name: '공유 태그 버튼명',
+                is_schedule: false,
+                schedule_date: '2023-01-08 01:27:12',
+                is_draft: false,
+                read_count: 0,
+                is_use_update_date: false,
+                is_align_top: false,
+                is_banner: false
             };
-            const sendData = {
-                request: request,
-                file: '',
-                share_file: ''
-            };
-            createBoard('notices', sendData);
+            const formData = new FormData();
+            formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
+            createBoard('notices', formData);
         }
     };
+
     // 연동 결과
     useEffect(() => {
         if (!responseData) {
@@ -140,6 +147,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id }) => {
                 return;
         }
     }, [responseData]);
+
     useEffect(() => {
         setDetailID(id);
     }, [id]);

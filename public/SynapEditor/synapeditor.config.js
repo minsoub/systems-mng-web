@@ -479,7 +479,7 @@ var synapEditorConfig = {
      * 이미지 업로드 API를 설정합니다.
      * ex) '/imageAPI'
      */
-    'editor.upload.image.api': 'https://smartadmin-inner-gateway-api.dev.bithumb.com/api/v1/mng/cpc/board/upload',
+    'editor.upload.image.api': '',
 
     /**
      * 이미지 업로드 요청 헤더를 설정합니다.

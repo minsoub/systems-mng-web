@@ -1,15 +1,24 @@
 /* eslint-disable no-unused-vars */
+
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
+
+// project import
 import HeaderTitle from 'components/HeaderTitle';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import ContentLine from 'components/Common/ContentLine';
 import TableHeader from 'components/Table/TableHeader';
 import ErrorScreen from 'components/ErrorScreen';
-import BoardApi from 'apis/cms/boardapi';
 import CategoryModal from './popup/CategoryModal';
 import CategorySearchForm from './search/CategorySearchForm';
+
+// transition
+import BoardApi from 'apis/cms/boardapi';
+
+// utils
 import { getDateFormat } from 'utils/CommonUtils';
+
+// =============|| Category - List ||============= //
 
 const CategoryList = () => {
     // 데이터 그리드 컬럼
@@ -91,23 +100,22 @@ const CategoryList = () => {
         }
     ];
 
-    //통신 데이터
     const [responseData, requestError, loading, { searchBoardList }] = BoardApi();
     const [dataGridRows, setDataGridRows] = useState([]); // 그리드 목록 데이터
     const [dataTotal, setDataTotal] = useState(0); //데이터 전체 숫자
     const [selectRowData, setSelectRowData] = useState(null); // 선택한 데이터
-    const [listRelooad, setListRelooad] = useState(false); // 리스트 갱신
+    const [isListRelooad, setIsListRelooad] = useState(false); // 리스트 갱신
+
     const handleOpen = () => setOpen(true);
     const handleClose = (loadState) => {
         if (loadState === 'reload') {
-            setListRelooad(true);
+            setIsListRelooad(true);
         } else {
             setSelectRowData(null);
         }
         setOpen(false);
     };
-    ////////////////////////////////////////////////////
-    // 공통 에러 처리
+    //-- 에러 처리 부분 -S- //
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -126,13 +134,11 @@ const CategoryList = () => {
             setOpen(true);
         }
     }, [requestError]);
-    // 로딩 체크
-    useEffect(() => {
-        // console.log(loading);
-    }, [loading]);
+    //-- 에러 처리 부분 -E- //
+
     // 목록 조회
     const listLoad = (request) => {
-        setListRelooad(false);
+        setIsListRelooad(false);
         searchBoardList('notices/categories', request);
     };
 
@@ -164,11 +170,12 @@ const CategoryList = () => {
                 return;
         }
     }, [responseData]);
+
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="categoryist">
             <Grid item xs={12}>
                 <HeaderTitle titleNm="카테고리 관리" menuStep01="사이트 운영" menuStep02="카테고리 관리" />
-                <CategorySearchForm listLoad={listLoad} listRelooad={listRelooad} />
+                <CategorySearchForm listLoad={listLoad} listRelooad={isListRelooad} />
                 <TableHeader type="category" newAdd={handleOpen} dataTotal={dataTotal} />
                 <ContentLine>
                     <DefaultDataGrid

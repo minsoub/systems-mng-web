@@ -16,22 +16,29 @@ import DropInput from 'components/Common/DropInput';
 import ButtonLayout from 'components/Common/ButtonLayout';
 
 // transition
-import { activeFromDate, activeToDate, activeViewState, activeKeyword, activePageNum } from 'store/reducers/cms/PressRelease';
+import {
+    activeFromDate,
+    activeToDate,
+    activeViewState,
+    activeKeyword,
+    activeEventType,
+    activePageNum
+} from 'store/reducers/cms/EventSearch';
 
 //style
 import styles from './styles.module.scss';
 
-// =============|| Pressrelease - SearchForm ||============= //
-
+// =============|| Event - SearchForm ||============= //
 const SearchForm = ({ listLoad, listRelooad }) => {
     const dispatch = useDispatch();
-    const { reduceFromDate, reduceToDate, reduceKeyword, reduceViewState } = useSelector((state) => state.cmsPressRelease);
+    const { reduceFromDate, reduceToDate, reduceKeyword, reduceEventType, reduceViewState } = useSelector((state) => state.cmsEvent);
 
     const [isInitCall, setIsInitCall] = useState(true); //초기 호출 체크
     const [keyword, setKeyword] = useState(''); //검색 키워드
     const [from_date, setStartDate] = useState(); // 검색 시작일
     const [to_date, setEndDate] = useState(); // 검색 종료일
-    const [viewState, setViewState] = useState(0); // 보도자료 상태
+    const [viewState, setViewState] = useState(0); // 선택한 상태
+    const [typeState, setTypeState] = useState(0); // 선택한 유형
 
     // 블러 이벤트
     const handleBlur = (e) => {};
@@ -51,6 +58,9 @@ const SearchForm = ({ listLoad, listRelooad }) => {
                 }
                 setEndDate(e.target.value);
                 break;
+            case 'type_state': // 유형 변경시
+                setTypeState(e.target.value);
+                break;
             case 'view_state': // 상태 변경시
                 setViewState(e.target.value);
                 break;
@@ -58,6 +68,7 @@ const SearchForm = ({ listLoad, listRelooad }) => {
                 break;
         }
     };
+
     // 날자 변경 함수
     const changeDate = (type, e) => {
         // console.log(type, e);
@@ -72,10 +83,13 @@ const SearchForm = ({ listLoad, listRelooad }) => {
                 break;
         }
     };
+
     // 날자 검색 타입 초기화 함수
     const resetPeriod = () => {};
+
     // 검색
     const searchClick = () => {
+        // 검색 조건에 대해서 상태를 저장한다.
         if (from_date === '') {
             setStartDate('1900-01-01');
             dispatch(activeFromDate({ reduceFromDate: '1900-01-01' }));
@@ -90,10 +104,12 @@ const SearchForm = ({ listLoad, listRelooad }) => {
         }
         dispatch(activeKeyword({ reduceKeyword: keyword }));
         dispatch(activeViewState({ reduceViewState: viewState }));
+        dispatch(activeEventType({ reduceEventType: typeState }));
 
         const request = {
             keyword,
             is_show: viewState,
+            event_type: typeState,
             start_date: from_date,
             end_date: to_date
         };
@@ -105,18 +121,21 @@ const SearchForm = ({ listLoad, listRelooad }) => {
     // 초기화
     const clearClick = () => {
         setKeyword('');
-        setViewState(0);
         setStartDate(moment().format('YYYY-MM-DD'));
         setEndDate(moment().format('YYYY-MM-DD'));
+        setTypeState(0);
+        setViewState(0);
 
         const request = {
             keyword: '',
             is_show: 0,
+            event_type: 0,
             start_date: moment().format('YYYY-MM-DD'),
             end_date: moment().format('YYYY-MM-DD')
         };
         listLoad(request);
     };
+
     useEffect(() => {
         if (!from_date) {
             return;
@@ -153,6 +172,15 @@ const SearchForm = ({ listLoad, listRelooad }) => {
                 <Grid>
                     <InputLayout gridClass={styles.keywordWrap}>
                         <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={keyword}/>
+                        <DropInput title="유형" titleWidth={40} className={styles.dropdownWrap}>
+                            <InputLabel id="type_state">유형</InputLabel>
+                            <Select labelId="type_state" id="type_state" name="type_state" value={typeState} onChange={handleChange}>
+                                <MenuItem value="0">전체</MenuItem>
+                                <MenuItem value="1">게시</MenuItem>
+                                <MenuItem value="2">참여</MenuItem>
+                                <MenuItem value="3">링크</MenuItem>
+                            </Select>
+                        </DropInput>
                         <DropInput title="상태" titleWidth={40} className={styles.dropdownWrap}>
                             <InputLabel id="view_state">상태</InputLabel>
                             <Select labelId="view_state" id="view_state" name="view_state" value={viewState} onChange={handleChange}>

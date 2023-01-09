@@ -1,96 +1,33 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Grid } from '@mui/material';
-import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
-import TableHeader from 'components/Table/TableHeader';
+
+// project import
 import HeaderTitle from 'components/HeaderTitle';
+import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import ContentLine from 'components/Common/ContentLine';
+import TableHeader from 'components/Table/TableHeader';
+import ErrorScreen from 'components/ErrorScreen';
 import SearchForm from './search/SearchForm';
+
+// transition
 import BoardApi from 'apis/cms/boardapi';
 
-const PressreleaseList = () => {
-    // 데이터 그리드 컬럼
-    const columns = [
-        {
-            field: 'id',
-            headerName: 'No.',
-            flex: 1,
-            headerAlign: 'center',
-            maxWidth: 80,
-            align: 'center'
-        },
-        {
-            field: 'title',
-            headerName: '제목',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'left'
-        },
-        {
-            field: 'is_show',
-            headerName: '상태',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 80,
-            valueGetter: ({ value }) => {
-                if (value) {
-                    return '사용';
-                } else {
-                    return '미사용';
-                }
-            }
-        },
-        {
-            field: 'create_date',
-            headerName: '등록일시',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 200,
-            valueGetter: ({ value }) => `${getDateFormat(value)}`
-        },
-        {
-            field: 'update_date',
-            headerName: '업데이트일시',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 200,
-            valueGetter: ({ value }) => {
-                return value ? `${getDateFormat(value)}` : '-';
-            }
-        },
-        {
-            field: 'create_account_email',
-            headerName: '작성자',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 200
-        },
-        {
-            field: 'read_count',
-            headerName: '조회수',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 100,
-            valueGetter: ({ value }) => {
-                return value ? `${(value).toLocaleString('ko-KR')}` : '-';
-            }
-        }
-    ];
+// etc
+import { columns } from '../colums/type1'; //columns data
 
+// =============|| Pressrelease - List ||============= //
+
+const PressreleaseList = () => {
     const navigate = useNavigate();
     const [responseData, requestError, loading, { searchBoardList }] = BoardApi();
+
     const [dataGridRows, setDataGridRows] = useState([]); // 그리드 목록 데이터
     const [dataTotal, setDataTotal] = useState(0); //데이터 전체 숫자
-    const [listRelooad, setListRelooad] = useState(false); // 리스트 갱신
-    ////////////////////////////////////////////////////
-    // 공통 에러 처리
+    const [isListRelooad, setIsListRelooad] = useState(false); // 리스트 갱신
+
+    //-- 에러 처리 부분 -S- //
     const [open, setOpen] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -109,7 +46,8 @@ const PressreleaseList = () => {
             setOpen(true);
         }
     }, [requestError]);
-    ////////////////////////////////////////////////////
+    //-- 에러 처리 부분 -E- //
+
     // 페이징 변경 이벤트
     const handlePage = (page) => {};
     // 그리드 클릭
@@ -121,7 +59,7 @@ const PressreleaseList = () => {
     const handleSelectionChange = (item) => {};
     // 목록 조회
     const listLoad = (request) => {
-        setListRelooad(false);
+        setIsListRelooad(false);
         searchBoardList('press-releases', request);
     };
 
@@ -130,7 +68,6 @@ const PressreleaseList = () => {
         if (!responseData) {
             return;
         }
-        // console.log('list --- responseData.transactionId', responseData.transactionId);
         switch (responseData.transactionId) {
             case 'getBoards':
                 if (responseData.data.data) {
@@ -151,7 +88,7 @@ const PressreleaseList = () => {
         <Grid container rowSpacing={4} columnSpacing={2.75} className="pressreleaseList">
             <Grid item xs={12}>
                 <HeaderTitle titleNm="보도자료 관리" menuStep01="사이트 운영" menuStep02="보도자료 관리" />
-                <SearchForm listLoad={listLoad} listRelooad={listRelooad} />
+                <SearchForm listLoad={listLoad} listRelooad={isListRelooad} />
                 <TableHeader type="press-release" dataTotal={dataTotal} />
                 <ContentLine>
                     <DefaultDataGrid

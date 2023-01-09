@@ -1,11 +1,20 @@
 /* eslint-disable no-unused-vars */
+
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Button, MenuItem, Select, Box, TextField, Modal } from '@mui/material';
+
+//library
+import PropTypes from 'prop-types';
+
+// transition
 import BoardApi from 'apis/cms/boardapi';
+
+// style
 import styles from './styles.module.scss';
+
+// =============|| Category - Modal ||============= //
+
 const CategoryModal = ({ open, onClose, selectRowData }) => {
-    //통신 데이터
     const [responseData, requestError, loading, { createBoard, updateBoard, deleteBoard }] = BoardApi();
 
     const [categoryValue, setCategoryValue] = useState('');
@@ -18,11 +27,11 @@ const CategoryModal = ({ open, onClose, selectRowData }) => {
         setStateValue(event.target.value);
     };
     useEffect(() => {
-        console.log('selectRowData', selectRowData);
         if (!selectRowData) return;
         setCategoryValue(selectRowData.name);
         setStateValue(selectRowData.is_use ? 1 : 2);
     }, [selectRowData]);
+
     useEffect(() => {
         if (!open) {
             setCategoryValue('');
@@ -73,6 +82,7 @@ const CategoryModal = ({ open, onClose, selectRowData }) => {
                 return;
         }
     }, [responseData]);
+    
     return (
         <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box className={`${styles.modal_wrap}`}>

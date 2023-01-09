@@ -1,8 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Button, MenuItem, Select, Box, TextField, Modal } from '@mui/material';
+
+// library
+import PropTypes from 'prop-types';
+
+// style
 import styles from './styles.module.scss';
+
+// =============|| DetailContents - EventModal ||============= //
+
 const EventModal = ({ open, onClose, modalType }) => {
     const [value, setValue] = useState('');
 
@@ -11,10 +18,11 @@ const EventModal = ({ open, onClose, modalType }) => {
     };
     useEffect(() => {
         console.log(modalType);
-    },[modalType]);
+    }, [modalType]);
     useEffect(() => {
         if (!open) setValue('');
     }, [open]);
+
     return (
         <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box className={`${styles.modal_wrap}`}>
