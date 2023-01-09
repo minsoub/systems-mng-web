@@ -1,92 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, TableCell, TextField, Typography, Table, TableBody, TableHead, TableRow, Tooltip } from '@mui/material';
-import MainCard from 'components/Common/MainCard';
-import Chat from './chat';
-import ChatApi from 'apis/chat/chatapi';
-import FoundationApi from 'apis/lrc/project/foundationapi';
-import TopInputLayout from '../../../components/Common/TopInputLayout';
 import { Empty } from 'antd';
-import './styles.scss';
-import { getDateFormat } from 'utils/CommonUtils';
+import { Button, TableCell, TextField, Typography, Table, TableBody, TableHead, TableRow, Tooltip } from '@mui/material';
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
+import Chat from './chat';
+import MainCard from 'components/Common/MainCard';
+import TopInputLayout from 'components/Common/TopInputLayout';
 import FlexBox from 'components/Common/FlexBox/index';
 import CustomPagination from 'components/CustomPagination';
+import FileUpload from 'components/FileUpload';
+import ChatApi from 'apis/chat/chatapi';
+import FoundationApi from 'apis/lrc/project/foundationapi';
+import { getDateFormat, humanFileSize } from 'utils/CommonUtils';
+import './styles.scss';
 
 const ProjectCommunity = (props) => {
-    let isSubmitting = false;
-    const columns = [
-        {
-            field: 'id',
-            headerName: '프로젝트명',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'name',
-            headerName: '심볼',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'type',
-            headerName: '거래지원 현황',
-            width: 300,
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            renderCell: (params) => {
-                <div>
-                    <Typography>{params.value.name}</Typography>
-                    <Typography color="textSecondary">{params.value.title}</Typography>
-                </div>;
-            }
-        },
-        {
-            field: 'is_use',
-            headerName: '사업 계열',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'valid_start_date',
-            headerName: '네트워크 계열',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'valid_end_date',
-            headerName: '마케팅 수량',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'parameter',
-            headerName: '연결 프로젝트',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'project_date',
-            headerName: '상장일',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        },
-        {
-            field: 'create_date',
-            headerName: '등록일시',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center'
-        }
-    ];
     const { paramId } = useParams();
 
     const [resData, reqError, loading, { insertChatFile, getChatFile, getChatFileList, fileDetailSearch }] = ChatApi();
@@ -173,15 +101,15 @@ const ProjectCommunity = (props) => {
     useEffect(() => {
         // polling start
         console.log('fileList data => ');
-        console.log(fileList);
-        console.log(polling);
+        // console.log(fileList);
+        // console.log(polling);
         if (polling === 0) {
             // hat 파일 리스트에 파일정보가 아직 검사중인 경우
             console.log('chat file data search...');
             let found = 0;
             fileList.map((item) => {
-                console.log(item.file_key);
-                console.log(item.file_status);
+                // console.log(item.file_key);
+                // console.log(item.file_status);
                 if (item.file_status === 'ING') {
                     found = 1;
                     console.log('chat file found...');
@@ -305,31 +233,6 @@ const ProjectCommunity = (props) => {
         setFilePart(e.target.files[0]);
     };
 
-    function byteString(index) {
-        const units = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; //  : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-
-        // eslint-disable-next-line security/detect-object-injection
-        return units[index];
-    }
-    function humanFileSize(bytes, si = false, dp = 1) {
-        const thresh = si ? 1000 : 1024;
-
-        if (Math.abs(bytes) < thresh) {
-            return bytes + ' B';
-        }
-
-        //const units = si ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-        let u = -1;
-        const r = 10 ** dp;
-
-        do {
-            bytes /= thresh;
-            ++u;
-        } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < 8 - 1); // units.length - 1);
-
-        return bytes.toFixed(dp) + ' ' + byteString(u); // units[u];
-    }
-
     // 파일을 다운로드 한다.
     const FileDownload = (key, name) => {
         // 파일 다운로드 할 수 있는지 상태를 체크한다.
@@ -346,6 +249,7 @@ const ProjectCommunity = (props) => {
             alert('다운로드 할 수 있는 상태가 아닙니다.');
         }
     };
+
     const sendEmail = (param) => {
         console.log(param);
         if (param === 'KOR') {
@@ -359,7 +263,6 @@ const ProjectCommunity = (props) => {
         }
     };
     // 페이징 변경 이벤트
-    const handlePage = (page) => {};
     const [page, setPage] = useState(0);
     const [viewPage, setViewPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(15);
@@ -374,6 +277,7 @@ const ProjectCommunity = (props) => {
     const fileSearch = (projectId, fileKey) => {
         fileDetailSearch(projectId, fileKey);
     };
+
     return (
         <>
             <Chat
@@ -388,7 +292,8 @@ const ProjectCommunity = (props) => {
             />
             <MainCard>
                 {/* 파일 업로드 */}
-
+                {/* FileUpload 임시적용 동작안됨 */}
+                <FileUpload id={paramId} insertChatFile={insertChatFile} />
                 <FlexBox sx={{ justifyContent: 'space-between', px: '0.7rem' }}>
                     <Typography variant="h4">첨부파일 목록</Typography>
                     <TopInputLayout className="file__upload--box">

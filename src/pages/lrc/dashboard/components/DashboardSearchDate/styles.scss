@@ -1,0 +1,29 @@
+.result__list--date {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    .center {
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        margin: 0 10px;
+    }
+
+    &.noneChecked {
+        .date-checked {
+            display: none;
+        }
+    }
+
+    .noneRadio {
+        display: none;
+    }
+    .date-checked {
+        margin-left: 1.5rem;
+    }
+}
+
+.result__list--input {
+    min-width: 328px;
+    margin-right: 20px;
+}

@@ -35,7 +35,7 @@ import cx from 'classnames';
 import InputLayout from '../../../components/Common/InputLayout';
 import './styles.scss';
 import ContentLine from '../../../components/Common/ContentLine';
-import { getDateFormat } from 'utils/CommonUtils';
+import { getDateFormatSecond } from 'utils/CommonUtils';
 import { stubFalse } from 'lodash';
 import { PlusOutlined } from '@ant-design/icons';
 import ScrollX from 'components/Common/ScrollX';
@@ -676,7 +676,7 @@ const ProjectsPage = () => {
                                         등록일시
                                     </StyledTableCell>
                                     <StyledTableCell align="center" rowSpan={2}>
-                                        최근 접속일시
+                                        최근 수정일시
                                     </StyledTableCell>
                                 </TableRow>
                                 <TableRow>
@@ -686,6 +686,7 @@ const ProjectsPage = () => {
                                     <StyledTableCell style={{ width: '7.5%' }} align="center">
                                         진행 상태
                                     </StyledTableCell>
+
                                     <StyledTableCell style={{ width: '10%' }} align="center">
                                         제안
                                     </StyledTableCell>
@@ -728,10 +729,10 @@ const ProjectsPage = () => {
                                             {item.ico_date}
                                         </TableCell>
                                         <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                            {getDateFormat(item.create_date)}
+                                            {getDateFormatSecond(item.create_date)}
                                         </TableCell>
                                         <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                            {getDateFormat(item.create_date)}
+                                            {getDateFormatSecond(item.create_date)}
                                         </TableCell>
                                     </TableRow>
                                 ))}

@@ -2,9 +2,11 @@ import axiosInstanceDefault from '../axiosDefault';
 import axiosInstanceUpload from 'apis/axiosUpload';
 import axiosInstanceDownload from 'apis/axiosDownload';
 import useAxios from '../useAxios';
+import { useSelector } from 'react-redux';
 
 const ChatApi = () => {
     const [resData, reqError, loading, callApi] = useAxios();
+    const { siteId, name } = useSelector((state) => state.auth);
 
     // 체크 및 수정
     const chatExists = (data) => {
@@ -73,6 +75,30 @@ const ChatApi = () => {
         });
     };
 
+    // 채팅 리스트
+    const getChatList = (siteId, projectId) => {
+        callApi('chatList', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/lrc/service/chat/${siteId}/${projectId}`,
+            requestConfig: {}
+        });
+    };
+
+    // 채팅쓰기
+    const postCreateChat = (siteId, projectId, content) => {
+        callApi('chatCreate', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'post',
+            url: `/mng/lrc/service/chat/${siteId}/${projectId}`,
+            requestConfig: {
+                content,
+                site_id: siteId,
+                name
+            }
+        });
+    };
+
     return [
         resData,
         reqError,
@@ -84,7 +110,9 @@ const ChatApi = () => {
             getChatFileList: getFileListData,
             deleteChat: deleteChatMessage,
             chatExcelDownload: chatExcelDownload,
-            fileDetailSearch: getFileDetailData
+            fileDetailSearch: getFileDetailData,
+            getChatList: getChatList,
+            postCreateChat: postCreateChat
         }
     ];
 };

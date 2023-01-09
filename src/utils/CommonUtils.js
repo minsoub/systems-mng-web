@@ -41,3 +41,28 @@ export const nl2brToString = (content) => {
     }
     return content.split('\n').join('<br />');
 };
+
+function byteString(index) {
+    const units = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; //  : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+
+    // eslint-disable-next-line security/detect-object-injection
+    return units[index];
+}
+export const humanFileSize = (bytes, si = false, dp = 1) => {
+    const thresh = si ? 1000 : 1024;
+
+    if (Math.abs(bytes) < thresh) {
+        return bytes + ' B';
+    }
+
+    //const units = si ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+    let u = -1;
+    const r = 10 ** dp;
+
+    do {
+        bytes /= thresh;
+        ++u;
+    } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < 8 - 1); // units.length - 1);
+
+    return bytes.toFixed(dp) + ' ' + byteString(u); // units[u];
+};
