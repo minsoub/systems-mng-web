@@ -311,6 +311,10 @@ db.menu_program_specification.insertMany([
         action_url : '/api/v1/mng/lrc/statusmanagment/line-code'
       },
       {
+        action_method : 'GET',
+        action_url : '/api/v1/mng/lrc/statusmanagment/line-code/tree'
+      },
+      {
         action_method : 'POST',
         action_url : '/api/v1/mng/lrc/statusmanagment/line-code'
       },
@@ -341,5 +345,27 @@ db.menu_program_specification.insertMany([
         action_url : '/api/v1/mng/lrc/service/logs/excel/export'
       }
     ]
+},
+{
+     path: '/project-users-mng',
+     element: '<ProjectUserMngPage />',
+     programs: [
+       {
+         action_method : 'GET',
+         action_url : '/api/v1/mng/lrc/lrcmanagment/user'
+       },
+       {
+         action_method : 'GET',
+         action_url : '/api/v1/mng/lrc/lrcmanagment/user/status-code'
+       },
+       {
+         action_method : 'GET',
+         action_url : '/api/v1/mng/lrc/lrcmanagment/user/masking'
+       },
+       {
+         action_method : 'PUT',
+         action_url : '/api/v1/mng/lrc/lrcmanagment/user'
+       }
+     ]
 }
 ]);
