@@ -529,7 +529,7 @@ const OfficeInfo = (props) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center" component="th">
-                                    컨트렉트 주소
+                                    컨트랙트 주소
                                 </TableCell>
                             </TableRow>
                         </TableHead>

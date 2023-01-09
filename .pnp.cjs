@@ -104,6 +104,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dnd-html5-backend", "npm:14.1.0"],\
             ["react-dom", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:17.0.2"],\
             ["react-draggable", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:4.4.5"],\
+            ["react-dropzone", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:14.2.3"],\
             ["react-element-to-jsx-string", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:14.3.4"],\
             ["react-error-overlay", "npm:6.0.9"],\
             ["react-hook-form", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:7.34.2"],\
@@ -7789,6 +7790,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["attr-accept", [\
+        ["npm:2.2.2", {\
+          "packageLocation": "./.yarn/cache/attr-accept-npm-2.2.2-b9cd0d8eac-496f724935.zip/node_modules/attr-accept/",\
+          "packageDependencies": [\
+            ["attr-accept", "npm:2.2.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["autobind-decorator", [\
         ["npm:2.4.0", {\
           "packageLocation": "./.yarn/cache/autobind-decorator-npm-2.4.0-07ffeb9afd-6fcc922580.zip/node_modules/autobind-decorator/",\
@@ -12936,6 +12946,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packagePeers": [\
             "@types/webpack",\
             "webpack"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["file-selector", [\
+        ["npm:0.6.0", {\
+          "packageLocation": "./.yarn/cache/file-selector-npm-0.6.0-04259af1f7-7d051b6e5d.zip/node_modules/file-selector/",\
+          "packageDependencies": [\
+            ["file-selector", "npm:0.6.0"],\
+            ["tslib", "npm:2.4.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -22032,6 +22052,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-dropzone", [\
+        ["npm:14.2.3", {\
+          "packageLocation": "./.yarn/cache/react-dropzone-npm-14.2.3-b5d5b11ea4-174b744d5c.zip/node_modules/react-dropzone/",\
+          "packageDependencies": [\
+            ["react-dropzone", "npm:14.2.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:14.2.3", {\
+          "packageLocation": "./.yarn/__virtual__/react-dropzone-virtual-ce0da2bb0f/0/cache/react-dropzone-npm-14.2.3-b5d5b11ea4-174b744d5c.zip/node_modules/react-dropzone/",\
+          "packageDependencies": [\
+            ["react-dropzone", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:14.2.3"],\
+            ["@types/react", null],\
+            ["attr-accept", "npm:2.2.2"],\
+            ["file-selector", "npm:0.6.0"],\
+            ["prop-types", "npm:15.8.1"],\
+            ["react", "npm:17.0.2"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["react-element-to-jsx-string", [\
         ["npm:14.3.4", {\
           "packageLocation": "./.yarn/cache/react-element-to-jsx-string-npm-14.3.4-47e7176d93-42bcd4423f.zip/node_modules/react-element-to-jsx-string/",\
@@ -24832,6 +24877,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dnd-html5-backend", "npm:14.1.0"],\
             ["react-dom", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:17.0.2"],\
             ["react-draggable", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:4.4.5"],\
+            ["react-dropzone", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:14.2.3"],\
             ["react-element-to-jsx-string", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:14.3.4"],\
             ["react-error-overlay", "npm:6.0.9"],\
             ["react-hook-form", "virtual:d70b2c4a4b2cb053983328977929ed15a85a267355e11c9a329c765d6b16dee29c48d8894413d8c7a83bffff1ba9e73a87627dd991f5c1d89b878ce4c5bea331#npm:7.34.2"],\
@@ -25362,6 +25408,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/tslib-npm-2.4.0-9cb6dc5030-8c4aa6a3c5.zip/node_modules/tslib/",\
           "packageDependencies": [\
             ["tslib", "npm:2.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:2.4.1", {\
+          "packageLocation": "./.yarn/cache/tslib-npm-2.4.1-36f0ed04db-19480d6e03.zip/node_modules/tslib/",\
+          "packageDependencies": [\
+            ["tslib", "npm:2.4.1"]\
           ],\
           "linkType": "HARD"\
         }]\

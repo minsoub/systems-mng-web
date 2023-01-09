@@ -10,7 +10,13 @@
        }
    }
 }
-
+.blue_color {
+  > div {
+    &:first-child {
+      background-color: #91D5FF;
+    }
+  }
+}
 .color_a {
      > div {
         &:first-child {
