@@ -25,7 +25,6 @@ import './styles.scss';
 import InputLayout from '../../../components/Common/InputLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import cx from 'classnames';
-import ButtonLayout from '../../../components/Common/ButtonLayout';
 import HeaderTitle from '../../../components/HeaderTitle';
 import ContentLine from '../../../components/Common/ContentLine';
 import DropInput from '../../../components/Common/DropInput';
@@ -60,9 +59,12 @@ const LineMngPage = () => {
         id: '',
         name: '',
         type: '',
-        use_yn: true
+        type_name: '',
+        order_no: '',
+        use_yn: true,
+        parent_id: ''
     });
-    const { id, name, type, use_yn } = inputs;
+    const { id, name, type, type_name, order_no, use_yn, parent_id } = inputs;
 
     // transaction error 처리
     useEffect(() => {
@@ -151,17 +153,17 @@ const LineMngPage = () => {
     };
 
     // new
-    const newClick = () => {
-        console.log('called register form');
-        //navigate('/account/reg');
-        setInputs({
-            id: '',
-            name: '',
-            type: '',
-            use_yn: true
-        });
-        setIsUpdate(false);
-    };
+    // const newClick = () => {
+    //     console.log('called register form');
+    //     //navigate('/account/reg');
+    //     setInputs({
+    //         id: '',
+    //         name: '',
+    //         type: '',
+    //         use_yn: true
+    //     });
+    //     setIsUpdate(false);
+    // };
 
     // save
     const saveClick = () => {
@@ -169,8 +171,8 @@ const LineMngPage = () => {
             alert('계열 명칭을 입력하지 않았습니다.');
             return;
         }
-        if (!type) {
-            alert('계열 타입을 선택하지 않았습니다.');
+        if (!order_no) {
+            alert('정렬 순서를 입력하지 않았습니다.');
             return;
         }
         console.log(inputs);
@@ -195,21 +197,80 @@ const LineMngPage = () => {
     };
 
     const onSelect = (selectedKeys) => {
-        const rowData = dataGridRows.find((row) => row.id === selectedKeys);
-        if (rowData) {
-            setSeletedRows([rowData]);
-            setIsUpdate(true);
+        //const rowData = dataGridRows.find((row) => row.id === selectedKeys);
+        // 선택한 노드가 하위 데이터일 수 있다.
+        let found = 0;
+        dataGridRows.map((rowData) => {
+            // parent
+            if (!rowData.parent_id && rowData.id === selectedKeys) {
+                found = 1;
+                setSeletedRows([rowData]);
+                setIsUpdate(true);
+                setInputs({
+                    id: rowData.id,
+                    name: rowData.name,
+                    use_yn: rowData.use_yn,
+                    type: rowData.type,
+                    type_name: search_line_type === 'BUSINESS' ? '사업계열' : '네트워크 계열',
+                    order_no: rowData.order_no,
+                    parent_id: rowData.parent_id
+                });
+                return;
+            } else {
+                // child search
+                console.log('child search');
+                console.log(rowData.children.length);
+                if (rowData.children && rowData.children.length > 0) {
+                    rowData.children.map((child) => {
+                        console.log(child);
+                        if (child.id === selectedKeys) {
+                            found = 1;
+                            setSeletedRows([rowData]);
+                            setIsUpdate(true);
+                            setInputs({
+                                id: child.id,
+                                name: child.name,
+                                use_yn: child.use_yn,
+                                type: child.type,
+                                type_name: search_line_type === 'BUSINESS' ? '사업계열' : '네트워크 계열',
+                                order_no: child.order_no,
+                                parent_id: child.parent_id
+                            });
+                            return;
+                        }
+                    });
+                }
+            }
+        });
+        if (found === 0) {
+            setIsUpdate(false);
             setInputs({
-                id: rowData.id,
-                name: rowData.name,
-                use_yn: rowData.use_yn,
-                type: rowData.type
+                id: '',
+                name: '',
+                use_yn: '',
+                type: search_line_type,
+                type_name: search_line_type === 'BUSINESS' ? '사업계열' : '네트워크 계열',
+                order_no: '1',
+                parent_id: ''
             });
         }
     };
 
+    const onParentPlusSelect = (selectedKeys) => {
+        setIsUpdate(false);
+        setInputs({
+            id: '',
+            name: '',
+            use_yn: '',
+            type: search_line_type,
+            type_name: search_line_type === 'BUSINESS' ? '사업계열' : '네트워크 계열',
+            order_no: '',
+            parent_id: selectedKeys
+        });
+    };
+
     return (
-        <Grid container rowSpacing={4} className="lineList">
+        <Grid container rowSpacing={0} className="lineList">
             <Grid item xs={12}>
                 <HeaderTitle titleNm="계열 관리" menuStep01="사이트 운영" menuStep02="상태값 관리" menuStep03="계열 관리" />
 
@@ -225,7 +286,7 @@ const LineMngPage = () => {
                 </Tabs>
             </Grid>
 
-            <LineTree dataGridRows={dataGridRows} onSelect={onSelect} />
+            <LineTree dataGridRows={dataGridRows} onParentPlusSelect={onParentPlusSelect} onSelect={onSelect} />
             <LineDetail
                 inputs={inputs}
                 handleBlur={handleBlur}
