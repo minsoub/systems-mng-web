@@ -5,7 +5,7 @@ import ChatApi from 'apis/chat/chatapi';
 import MessageLeft from 'components/Chat/MessageLeft';
 import MessageRight from 'components/Chat/MessageRight';
 import ChattingRoom from 'components/Chat/ChattingRoom';
-import { Button, FormControl, TextField, Typography } from '@mui/material';
+import { Button, Box, TextField, Typography, IconButton } from '@mui/material';
 import ButtonLayout from '../../../components/Common/ButtonLayout';
 import DownloadIcon from '@mui/icons-material/Download';
 import { MailOutlined, DownloadOutlined, SearchOutlined } from '@ant-design/icons';
@@ -538,12 +538,12 @@ const Chat = forwardRef((props, ref) => {
                     <Button color="secondary" variant="outlined" className="list__download" onClick={excelDownload}>
                         <DownloadOutlined /> 내역 다운로드
                     </Button>
-                    <FormControl sx={{ minWidth: 100, boxSizing: 'border-box' }} size="medium">
+                    <Box sx={{ display: 'flex', minWidth: 100, boxSizing: 'border-box' }} size="medium">
                         <TextField
                             id="symbol"
                             name="symbol"
                             inputRef={refKeyword}
-                            type="text"
+                            type="search"
                             size="small"
                             onKeyPress={(e) => {
                                 if (e.key === 'Enter') {
@@ -551,14 +551,16 @@ const Chat = forwardRef((props, ref) => {
                                 }
                             }}
                         />
-                    </FormControl>
-
-                    <Button disableElevation size="medium" type="submit" variant="outlined" color="secondary" onClick={searchClick}>
-                        <SearchOutlined />
-                    </Button>
+                        <IconButton disableElevation size="medium" type="submit" variant="outlined" color="secondary" onClick={searchClick}>
+                            <SearchOutlined />
+                        </IconButton>
+                    </Box>
                 </ButtonLayout>
             </FlexBox>
             <div className="chat--room">
+                <p className="chat--room__search-result">
+                    총 <strong>6</strong>건의 검색결과가 있습니다.
+                </p>
                 <div className="chat--room__box" id="scrollId" ref={refChatArea}>
                     <ChattingRoom>
                         {messageList.length > 0 &&

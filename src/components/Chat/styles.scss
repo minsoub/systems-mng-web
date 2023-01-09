@@ -1,5 +1,5 @@
 // 색상표 함수
-$green: #40A9FF;
+$green: #1890ff;
 $blue: white;
 $orange: #e38968;
 $gray: #92959e;
@@ -16,7 +16,7 @@ $gray: #92959e;
     color: #434651;
     margin-top: 8px;
     &__box {
-        padding: 40px 30px 20px;
+        padding: 20px 30px 20px;
         border-bottom: 0px solid white;
         overflow-y: scroll;
         height: 50vh;
@@ -64,6 +64,9 @@ $gray: #92959e;
     font-size: 14px;
     position: relative;
     word-break: break-all;
+    img {
+        margin-right: 12px;
+    }
     &:after {
         /*
         bottom: 100%;
@@ -119,11 +122,6 @@ $gray: #92959e;
         display: flex;
         justify-items: right;
         justify-content: flex-end;
-    }
-
-    // 삭제하기 버튼
-    .my-message__delete {
-        margin-top: 0.1rem;
     }
 }
 

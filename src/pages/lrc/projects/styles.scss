@@ -84,6 +84,37 @@
         justify-content: center;
         place-items: center;
     }
+    .MuiBox-root {
+        border-radius: 4px;
+        border: 1px solid rgba(140, 140, 140, 0.5);
+        height: 34px;
+        .MuiOutlinedInput-notchedOutline {
+            border: 0;
+        }
+        .MuiInputBase-root {
+            height: 32px;
+            .MuiInputBase-input {
+                margin: 0;
+                padding-right: 8px;
+            }
+            .MuiInputBase-input::-webkit-search-cancel-button {
+                margin-right: 0;
+                width: 24px;
+                height: 24px;
+                background: url('../../../assets/images/icons/close-circle.svg');
+            }
+        }
+        .MuiButtonBase-root {
+            margin: 0;
+            width: 32px;
+            height: 32px;
+            border-left: 1px solid rgba(140, 140, 140, 0.5);
+            border-radius: 0 !important;
+            .anticon {
+                margin-right: 0;
+            }
+        }
+    }
 }
 
 .project__info {
@@ -315,6 +346,17 @@ input::file-selector-button {
         border-bottom: 2px solid white;
         overflow-y: scroll;
         height: 60vh;
+    }
+    .chat--room__search-result {
+        padding-top: 17px;
+        padding-left: 30px;
+        strong {
+            font-weight: 700;
+            color: #f47422;
+        }
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 20px;
     }
 }
 

@@ -18,6 +18,7 @@ export const Index = ({ sendChat }) => {
         imageDefaultWidth: null,
         width: '100%',
         height: 188,
+        minHeight: 100,
         buttons: [
             'bold', 'italic', '|',
             'ul', 'ol', '|',

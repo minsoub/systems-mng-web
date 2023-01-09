@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import '../styles.scss';
 import { nl2br } from 'utils/CommonUtils';
+import FileDown from '../../../assets/images/icons/filedown.svg';
 
 const MessageRight = ({ id, message, timestamp, displayName, deleteChatMessage, fileList, fileDownload }) => {
     const deleteMessage = (id) => {
@@ -46,6 +47,7 @@ const MessageRight = ({ id, message, timestamp, displayName, deleteChatMessage, 
                     {message.fileKey ? (
                         <div key={id} className="message my-message" data-message-id={id}>
                             <a href="#" onClick={() => fileDownload(message.fileKey, message.fileName)}>
+                                <img src={FileDown} alt="file download icon" />
                                 {message.message}
                             </a>
                         </div>
