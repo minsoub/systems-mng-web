@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Grid, TextField } from '@mui/material';
+import { Button, Grid, TextField, FormControl, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import JoditEditor from 'jodit-react';
 import '../styles.scss';
 import ButtonLayout from '../../Common/ButtonLayout';
@@ -13,11 +13,19 @@ export const Index = ({ sendChat }) => {
     const config = {
         language: 'ko',
         readonly: false,
-        placeholder: '내용을 입력하세요.',
+        placeholder: '무엇이든 입력하세요..',
         enableDragAndDropFileToEditor: true,
         imageDefaultWidth: null,
         width: '100%',
-        height: 300
+        height: 188,
+        buttons: [
+            'bold', 'italic', '|',
+            'ul', 'ol', '|',
+            'font', 'fontsize', 'paragraph', '|',
+            'table', 'link', 'brush', '\n',
+            'undo', 'redo', '|',
+            'image', 'copy', 'print', 'about'
+        ]
     };
 
     const sendData = () => {
@@ -43,9 +51,16 @@ export const Index = ({ sendChat }) => {
             <Grid className="chat-message">
                 {/*<textarea rows="5" id="standard-text" label="텍스트 입력" value={value} onChange={handleChange} />*/}
                 <JoditEditor ref={editorRef} value={value} config={config} onBlur={(newContent) => setValue(newContent)} />
-                <ButtonLayout style={{ width: '100%', justifyContent: 'center', marginTop: 30 }}>
+                <ButtonLayout style={{ width: '184px' }}>
                     <Button variant="contained" color="primary" size="medium" className="button" onClick={sendData}>
-                        전송하기
+                        전송
+                    </Button>
+                    <RadioGroup name="sendMail" className="button-box">
+                        <FormControlLabel value="kor" control={<Radio size="small" />} label="국문 메일" />
+                        <FormControlLabel value="eng" control={<Radio size="small" />} label="영문 메일" />
+                    </RadioGroup>
+                    <Button variant="outlined" color="primary" size="medium" className="button-mail">
+                        알림 메일 발송하기
                     </Button>
                 </ButtonLayout>
             </Grid>

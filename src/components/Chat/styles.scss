@@ -16,8 +16,8 @@ $gray: #92959e;
     color: #434651;
     margin-top: 8px;
     &__box {
-        padding: 30px 30px 20px;
-        border-bottom: 2px solid white;
+        padding: 40px 30px 20px;
+        border-bottom: 0px solid white;
         overflow-y: scroll;
         height: 50vh;
     }
@@ -32,22 +32,36 @@ $gray: #92959e;
 
 .msg--left__time {
     color: lighten($gray, 8%);
-    padding-left: 12px;
-    font-size: 14px;
+    margin-right: 16px;
+    line-height: 20px; 
+    font-size: 12px;
+}
+
+.message-data-name {
+    margin-right: 16px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;  
+    color: rgba(0, 0, 0, 0.85);
 }
 
 .msg--right__time {
-    padding-right: 12px;
-    font-size: 14px;
+    margin-right: 16px;
+    line-height: 20px; 
+    font-size: 12px;
 }
-.message-data-name {
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.85);
+// 삭제하기 버튼
+.my-message__delete {
+    line-height: 20px; 
+    font-size: 12px;
+    background-color: transparent;
 }
+
 .message {
-    padding: 12px 20px;
-    line-height: 26px;
-    font-size: 16px;
+    max-width: 93%;
+    padding: 10px 10px;
+    line-height: 22px;
+    font-size: 14px;
     position: relative;
     word-break: break-all;
     &:after {
@@ -98,7 +112,7 @@ $gray: #92959e;
 .msg--right__speechBubble {
     display: grid;
     justify-items: right;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     .message-data-time {
         margin-top: 0.3rem;
         width: 100%;
@@ -116,7 +130,7 @@ $gray: #92959e;
 .msg--left__speechBubble {
     display: grid;
     justify-items: left;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 
     .message-data-time {
         margin-top: 0.3rem;
@@ -132,7 +146,8 @@ $gray: #92959e;
 }
 
 .chat-message {
-    padding: 30px;
+    margin: 20px 0;
+    padding: 0px;
     background: #fff;
     .css-i44wyl {
         width: 100%;
@@ -150,6 +165,14 @@ $gray: #92959e;
         border-color: #d4d4d4;
         margin-right: 1rem;
     }
+    .jodit-placeholder {
+        font-size: 14px !important;
+        text-align: center !important;
+        line-height: 4 !important;
+    }
+    .jodit-wysiwyg {
+        font-size: 14px !important;
+    }
 }
 
 .me {
@@ -158,6 +181,8 @@ $gray: #92959e;
 
 // 메세지 보내기
 .chat-message {
+    width: 100%;
+    display: flex;
     .inputLayout {
         width: 100%;
         display: flex;
@@ -168,5 +193,50 @@ $gray: #92959e;
         .css-1szk0az-MuiFormLabel-root-MuiInputLabel-root.MuiInputLabel-sizeSmall {
             line-height: 23px;
         }
+    }
+    .jodit-react-container {
+        flex-grow: 1;
+        .jodit-toolbar-editor-collection {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+    }
+    .buttonLayout {
+        width: 184px;
+        padding: 25px 26px;
+        flex-shrink: 0;
+        box-sizing: content-box;
+        flex-direction: column;
+        .button-box {
+            margin-top: 28px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .MuiFormControlLabel-root {
+                margin-right: 0;
+                .MuiButtonBase-root {
+                    width: 16px;
+                    height: 16px;
+                    padding: 0;
+                    margin-right: 8px;
+                }
+            }
+        }
+        input {
+            margin: 0;
+        }
+        .button {
+            width: 100%;
+            height: 40px;
+        }
+        .button-mail {
+            width: 100%;
+            height: 40px;
+            margin-top: 8px;
+        }
+
     }
 }

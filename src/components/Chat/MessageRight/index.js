@@ -56,12 +56,12 @@ const MessageRight = ({ id, message, timestamp, displayName, deleteChatMessage, 
                     )}
                     <h5 className="message-data-time">
                         {/* 메시지 전송한 시간 */}
-                        <span className="msg--right__time">{timestamp}</span>
                         <span className="message-data-name">{displayName}</span>
+                        <span className="msg--right__time">{timestamp}</span>
+                        <button className="my-message__delete" onClick={() => deleteMessage(id)}>
+                            삭제
+                        </button>
                     </h5>
-                    <div className="my-message__delete">
-                        <button onClick={() => deleteMessage(id)}>삭제</button>
-                    </div>
                 </div>
             </div>
         </>
