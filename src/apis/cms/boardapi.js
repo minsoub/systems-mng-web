@@ -108,6 +108,25 @@ const BoardApis = () => {
             requestConfig: {}
         });
     };
+    // 카테고리 등록
+    const createCategoryBoard = (boardKey, data) => {
+        callApi('createCategoryBoard', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'post',
+            url: `/mng/cms/${boardKey}`,
+            requestConfig: data
+        });
+    };
+    //  카테고리 수정
+    const updateCategoryBoard = (boardKey, boardId, data) => {
+        callApi('updateCategoryBoard', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'put',
+            url: `/mng/cms/${boardKey}/${boardId}`,
+            requestConfig: data
+        });
+    };
+
     // 공지사항 배너 상태변경
     const changeBannerState = (id, state) => {
         const apiURL = '/mng/cms/notices/' + id + '/banners';
@@ -128,6 +147,8 @@ const BoardApis = () => {
         {
             searchBoardList: getBoards,
             createBoard,
+            createCategoryBoard,
+            updateCategoryBoard,
             readBoard,
             updateBoard,
             deleteBoard,

@@ -49,7 +49,7 @@ const ShareSetting = ({ editMode, shareData }) => {
             case 'shareDesc':
                 dispatch(activeShareDesc({ reduceShareDesc: value }));
                 break;
-            case 'shareDesc':
+            case 'shareBtnName':
                 dispatch(activeShareBtnName({ reduceShareBtnName: value }));
                 break;
         }
@@ -108,6 +108,9 @@ const ShareSetting = ({ editMode, shareData }) => {
             ['shareFileName']: shareData.share_file_id ? shareData.share_file_id : '',
             ['shareBtnName']: shareData.share_button_name ? shareData.share_button_name : ''
         });
+        dispatch(activeShareTitle({ reduceShareTitle: shareData.share_title }));
+        dispatch(activeShareDesc({ reduceShareDesc: shareData.share_description }));
+        dispatch(activeShareBtnName({ reduceShareBtnName: shareData.share_button_name }));
     }, [shareData]);
     useEffect(() => {
         return () => {

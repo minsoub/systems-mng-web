@@ -6,10 +6,10 @@ import { Grid } from '@mui/material';
 
 // project import
 import HeaderTitle from 'components/HeaderTitle';
-import PostSetting from 'components/board/PostSetting';
-import ShareSetting from 'components/board/ShareSetting';
-import DetailContens from 'components/board/DetailContens';
-import BottomButtonSet from 'components/board/BottomButtonSet';
+import PostSetting from 'components/cmsboard/PostSetting';
+import ShareSetting from 'components/cmsboard/ShareSetting';
+import DetailContens from 'components/cmsboard/DetailContens';
+import BottomButtonSet from 'components/cmsboard/BottomButtonSet';
 
 //style
 import styles from './styles.module.scss';

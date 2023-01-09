@@ -15,11 +15,11 @@ import NoticeSearchForm from './search/NoticeSearchForm';
 // transition
 import BoardApi from 'apis/cms/boardapi';
 
+//utils
+import { getDateFormat } from 'utils/CommonUtils';
+
 //style
 import styles from './styles.module.scss';
-
-// etc
-import { columns } from '../colums/type2'; //columns data
 
 // =============|| Notice - List ||============= //
 
@@ -31,6 +31,110 @@ const NoticeList = () => {
     const [dataTotal, setDataTotal] = useState(0); //데이터 전체 숫자
     const [selectedValue, setSelectedValue] = useState(''); // 선택라인
     const [isListRelooad, setIsListRelooad] = useState(false); // 리스트 갱신
+
+    // 데이터 그리드 컬럼 공지사항관리
+    const columns = [
+        {
+            field: 'id',
+            headerName: 'No.',
+            flex: 1,
+            headerAlign: 'center',
+            maxWidth: 80,
+            align: 'center',
+            valueGetter: (value) => {
+                const { is_draft } = value.row;
+                let setValue = '고정';
+                if (is_draft) {
+                    return '-';
+                }
+                if (value.row.is_fix_top !== true) {
+                    setValue = dataGridRows.length - dataGridRows.findIndex((row) => row.id === value.id);
+                }
+                return setValue;
+            }
+        },
+        {
+            field: 'title',
+            headerName: '제목',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'left',
+            valueGetter: (value) => {
+                const { is_draft } = value.row;
+                const draftText = is_draft ? ' (초안)' : '';
+                return value.value + draftText;
+            }
+        },
+        {
+            field: 'is_banner',
+            headerName: '배너',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 80,
+            valueGetter: ({ value }) => {
+                if (value) {
+                    return '사용';
+                } else {
+                    return '미사용';
+                }
+            }
+        },
+        {
+            field: 'is_show',
+            headerName: '상태',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 80,
+            valueGetter: ({ value }) => {
+                if (value) {
+                    return '사용';
+                } else {
+                    return '미사용';
+                }
+            }
+        },
+        {
+            field: 'create_date',
+            headerName: '등록일시',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
+        },
+        {
+            field: 'update_date',
+            headerName: '업데이트일시',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150,
+            valueGetter: ({ value }) => {
+                return value ? `${getDateFormat(value)}` : '-';
+            }
+        },
+        {
+            field: 'create_account_email',
+            headerName: '등록담당자',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 150
+        },
+        {
+            field: 'read_count',
+            headerName: '조회수',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 100,
+            valueGetter: ({ value }) => {
+                return value ? `${value.toLocaleString('ko-KR')}` : '-';
+            }
+        }
+    ];
 
     //-- 에러 처리 부분 -S- //
     const [open, setOpen] = useState(false);
@@ -87,11 +191,9 @@ const NoticeList = () => {
         if (!responseData) {
             return;
         }
-        // console.log('list --- responseData.transactionId', responseData.transactionId);
         switch (responseData.transactionId) {
             case 'getBoards':
                 if (responseData.data.data) {
-                    // console.log(responseData.data.data);
                     setDataTotal(Number(responseData.data.data.total_counts));
                     setDataGridRows(responseData.data.data.contents);
                 } else {

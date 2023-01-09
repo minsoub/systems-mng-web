@@ -6,10 +6,10 @@ import { Grid } from '@mui/material';
 
 // project import
 import HeaderTitle from 'components/HeaderTitle';
-import PostSetting from 'components/board/PostSetting';
-import ShareSetting from 'components/board/ShareSetting';
-import DetailContens from 'components/board/DetailContens';
-import BottomButtonSet from 'components/board/BottomButtonSet';
+import PostSetting from 'components/cmsboard/PostSetting';
+import ShareSetting from 'components/cmsboard/ShareSetting';
+import DetailContens from 'components/cmsboard/DetailContens';
+import BottomButtonSet from 'components/cmsboard/BottomButtonSet';
 
 // transition
 import BoardApi from 'apis/cms/boardapi';
@@ -78,7 +78,13 @@ const NoticeView = () => {
                 <DetailContens type="notice" editMode={isEditMode} detailData={detailData} />
                 <ShareSetting editMode={isEditMode} shareData={shareData} />
                 <PostSetting type="notice" editMode={isEditMode} postingData={postingData} />
-                <BottomButtonSet type="notice" editMode={isEditMode} changeEditState={changeEditState} id={detailData?.id} />
+                <BottomButtonSet
+                    type="notice"
+                    editMode={isEditMode}
+                    changeEditState={changeEditState}
+                    id={detailData?.id}
+                    isDraft={detailData?.is_draft}
+                />
             </Grid>
         </Grid>
     );

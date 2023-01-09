@@ -16,7 +16,7 @@ import styles from './styles.module.scss';
 
 // =============|| BottomButtonSet - Component ||============= //
 
-const BottomButtonSet = ({ type, editMode, changeEditState, id }) => {
+const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
     const navigate = useNavigate();
     const [responseData, requestError, loading, { createBoard, deleteBoard }] = BoardApi();
     const {
@@ -63,20 +63,31 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id }) => {
     const listClick = () => {
         navigate(`/cms/${type}/list`);
     };
-    const submitClick = () => {
-        console.log('카테고리1 : ', reduceNotiCategory1);
-        console.log('카테고리2 : ', reduceNotiCategory2);
+    const submitClick = ($isDraft = false) => {
+        const editContents = window['contentsEditor'].getPublishingHtml();
+        const isTopFix = reduceTopFixable === 0 ? false : true;
+        const isShow = reducePostState === 0 ? false : true;
+        const isSchedule = reduceReservation;
+        const scheduleDate = reduceReservationDate.replace(' T ', ' ') + ':00';
+        const isUseUpdateDate = reduceUpdateDate === 0 ? false : true;
+        const isAlignTop = reduceTopNoti === 0 ? false : true;
+        let categorys = [];
+        if (reduceNotiCategory1 !== '0') categorys.push(reduceNotiCategory1);
+        if (reduceNotiCategory2 !== '0') categorys.push(reduceNotiCategory2);
+
+        console.log('초안 : ', $isDraft);
+        console.log('카테고리 : ', categorys);
         console.log('제목 : ', reduceTitle);
-        console.log('상단 고정 : ', reduceTopFixable);
-        console.log('공개 상태 : ', reducePostState);
-        console.log('게시 예약 : ', reduceReservation);
-        console.log('게시 예약일 : ', reduceReservationDate);
-        console.log('에디터 입력내용 : ', window['contentsEditor'].getPublishingHtml());
+        console.log('상단 고정 : ', isTopFix);
+        console.log('공개 상태 : ', isShow);
+        console.log('게시 예약 : ', isSchedule);
+        console.log('게시 예약일 : ', scheduleDate);
+        console.log('에디터 입력내용 : ', editContents);
         console.log('공유 타이틀 : ', reduceShareTitle);
         console.log('공유 설명 : ', reduceShareDesc);
         console.log('공유 버튼 이름 : ', reduceShareBtnName);
-        console.log('날자 업데이트 여부 : ', reduceUpdateDate);
-        console.log('게시물 상단 노출 : ', reduceTopNoti);
+        console.log('날자 업데이트 여부 : ', isUseUpdateDate);
+        console.log('게시물 상단 노출 : ', isAlignTop);
         console.log('이벤트 유형 : ', reduceEventType);
         console.log('이벤트 시작일시 : ', reduceEventStartDate);
         console.log('이벤트 종료일시 : ', reduceEventEndDate);
@@ -87,39 +98,40 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id }) => {
         console.log('이벤트 버튼 링크 경로 : ', reduceEventBtnLink);
         console.log('이벤트 참여 완료시 메시지 : ', reduceEventSuccessMsg);
         console.log('이벤트 중복 참여시 메시지 : ', reduceEventOverlapMsg);
+
         if (type === 'notice') {
-            // const request = {
-            //     category_ids: ['8b82daaa42614fea88faef4f2e6d357c'],
-            //     title: 'test1',
-            //     content: 'test2',
-            //     is_fix_top: false,
-            //     is_show: false,
-            //     is_delete: false,
-            //     is_schedule: false,
-            //     is_draft: false,
-            //     read_count: 0,
-            //     is_use_update_date: false,
-            //     is_align_top: false,
-            //     is_banner: false
-            // };
             const request = {
-                category_ids: ['5315d045f031424a8ca53128f344ac04'],
-                title: '제목',
-                content: '본문',
-                is_fix_top: false,
-                is_show: false,
-                is_delete: false,
-                share_title: '공유 태그 타이틀',
-                share_description: '공유 태그 설명',
-                share_button_name: '공유 태그 버튼명',
-                is_schedule: false,
-                schedule_date: '2023-01-08 01:27:12',
-                is_draft: false,
-                read_count: 0,
-                is_use_update_date: false,
-                is_align_top: false,
-                is_banner: false
+                category_ids: categorys,
+                title: reduceTitle,
+                content: editContents,
+                is_fix_top: isTopFix,
+                is_show: isShow,
+                share_title: reduceShareTitle,
+                share_description: reduceShareDesc,
+                share_button_name: reduceShareBtnName,
+                is_schedule: isSchedule,
+                schedule_date: scheduleDate,
+                is_draft: $isDraft,
+                is_use_update_date: isUseUpdateDate,
+                is_align_top: isAlignTop
             };
+
+            if (categorys.length === 0) {
+                alert('카테고리를 선택하세요.');
+                return;
+            }
+            if (reduceTitle === '') {
+                alert('제목을 입력하세요.');
+                return;
+            }
+            if (
+                editContents ===
+                '<div class="se-contents" style="box-sizing: content-box; font-family: &quot;맑은 고딕&quot;; font-size: 11pt; line-height: 1.2;" data-document-padding-top="18" data-document-padding-left="23" data-document-padding-right="23"><p style="margin: 16px 0px; display: block; overflow-wrap: break-word;"><br></p></div>'
+            ) {
+                alert('내용을 입력하세요.');
+                return;
+            }
+            console.log(scheduleDate);
             const formData = new FormData();
             formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
             createBoard('notices', formData);
@@ -135,6 +147,8 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id }) => {
             case 'createBoard':
                 if (responseData.data.data) {
                     console.log(responseData.data.data);
+                    alert('등록 되었습니다.');
+                    listClick();
                 }
                 break;
             case 'deleteBoard':
@@ -175,12 +189,30 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id }) => {
                         <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={listClick}>
                             취소
                         </Button>
-                        {!detailID && (
-                            <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={deleteClick}>
+                        {(!detailID || isDraft) && (
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {
+                                    submitClick(true);
+                                }}
+                            >
                                 초안 저장
                             </Button>
                         )}
-                        <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={submitClick}>
+                        <Button
+                            disableElevation
+                            size="medium"
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            onClick={() => {
+                                submitClick(false);
+                            }}
+                        >
                             출판
                         </Button>
                     </>

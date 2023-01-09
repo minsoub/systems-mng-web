@@ -15,7 +15,7 @@ import styles from './styles.module.scss';
 // =============|| Category - Modal ||============= //
 
 const CategoryModal = ({ open, onClose, selectRowData }) => {
-    const [responseData, requestError, loading, { createBoard, updateBoard, deleteBoard }] = BoardApi();
+    const [responseData, requestError, loading, { createCategoryBoard, updateCategoryBoard, deleteBoard }] = BoardApi();
 
     const [categoryValue, setCategoryValue] = useState('');
     const [stateValue, setStateValue] = useState('1');
@@ -58,9 +58,9 @@ const CategoryModal = ({ open, onClose, selectRowData }) => {
 
             if (selectRowData) {
                 // 업데이트
-                updateBoard('notices/categories', selectRowData.id, data);
+                updateCategoryBoard('notices/categories', selectRowData.id, data);
             } else {
-                createBoard('notices/categories', data);
+                createCategoryBoard('notices/categories', data);
             }
         }
     };
@@ -69,9 +69,9 @@ const CategoryModal = ({ open, onClose, selectRowData }) => {
             return;
         }
         switch (responseData.transactionId) {
-            case 'createBoard':
-            case 'updateBoard':
-                alert('등록되었습니다.');
+            case 'createCategoryBoard':
+            case 'updateCategoryBoard':
+                alert('저장되었습니다.');
                 onClose('reload');
                 break;
             case 'deleteBoard':

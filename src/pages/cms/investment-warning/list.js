@@ -52,7 +52,7 @@ const InvestmentWarningList = () => {
     // 목록 조회
     const listLoad = (request) => {
         setIsListRelooad(false);
-        searchBoardList('invest-warnings', request);
+        searchBoardList('investment-warnings', request);
     };
     // 페이징 변경 이벤트
     const handlePage = (page) => {};

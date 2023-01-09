@@ -39,7 +39,7 @@ import { humanFileSize, changeDateType } from 'utils/CommonUtils';
 // style
 import styles from './styles.module.scss';
 
-// =============|| DetailContens - Common ||============= //
+// =============|| DetailContens - Index ||============= //
 
 const DetailContens = ({ type, editMode, detailData }) => {
     const dispatch = useDispatch();
@@ -163,7 +163,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
         setContentsData(detailData.content);
         setReservationDate(
             detailData.schedule_date
-                ? detailData.schedule_date
+                ? changeDateType(moment(detailData.schedule_date).format('YYYY-MM-DD A hh:mm'))
                 : changeDateType(
                       moment()
                           .add(+2, 'days')
@@ -220,7 +220,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
                         <th className={'tb--title'}>업데이트 일시</th>
                         <td className={'width15'}>{detailData?.update_date ? detailData.update_date : '-'}</td>
                         <th className={'tb--title'}>작성자</th>
-                        <td className={'width15'}>{detailData?.create_account_id ? detailData.create_account_id : '-'}</td>
+                        <td className={'width15'}>{detailData?.create_account_email ? detailData.create_account_email : '-'}</td>
                         <th className={'tb--title'}>조회수</th>
                         <td className={'width15'}>{detailData?.read_count ? detailData.read_count.toLocaleString('ko-KR') : '-'}</td>
                     </tr>
@@ -297,7 +297,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
                                         <FormGroup aria-label="position" row>
                                             <FormControlLabel
                                                 name="reservationState"
-                                                control={<Checkbox onChange={onChange} />}
+                                                control={<Checkbox checked={reservationState} onChange={onChange} />}
                                                 label="게시 예약"
                                                 sx={{ ml: 1 }}
                                             />
@@ -319,7 +319,8 @@ const DetailContens = ({ type, editMode, detailData }) => {
                                 </>
                             ) : (
                                 <>
-                                    {visibleState === 1 ? '공개' : '비공개'} (게시 예약일시 : {reservationDate})
+                                    {visibleState === 1 ? '공개' : '비공개'}
+                                    {reservationState && `(게시 예약일시 : ${reservationDate})${reservationState}`}
                                 </>
                             )}
                         </td>
