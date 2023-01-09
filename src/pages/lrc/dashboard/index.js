@@ -52,8 +52,8 @@ const LrcDashboard = () => {
     const [slot, setSlot] = useState('week');
 
     // 검색 조건
-    const [start_date, setStartDate] = useState('');
-    const [end_date, setEndDate] = useState('');
+    const [start_date, setStartDate] = useState(moment().format('YYYY-MM-DD'));
+    const [end_date, setEndDate] = useState(moment().format('YYYY-MM-DD'));
     const [period, setPeriod] = useState('1');
 
     const mockData = useMemo(() => {
@@ -128,6 +128,11 @@ const LrcDashboard = () => {
     // search
     const searchClick = () => {
         console.log('searchClick called...');
+        const request = {
+            start_date,
+            end_date
+        };
+        foundationSearch(request);
     };
 
     // 기간 선택시 날짜 변경
@@ -145,6 +150,10 @@ const LrcDashboard = () => {
                 setStartDate(moment().add(-1, 'months').format('YYYY-MM-DD'));
                 setEndDate(moment().format('YYYY-MM-DD'));
                 break;
+            case '4':
+                setStartDate(undefined);
+                setEndDate(undefined);
+                break;
             default:
                 break;
         }
@@ -153,7 +162,11 @@ const LrcDashboard = () => {
     // onload
     useEffect(() => {
         setDataGridLineRows([]);
-        foundationSearch();
+        const request = {
+            start_date,
+            end_date
+        };
+        foundationSearch(request);
     }, []);
 
     // transaction error 처리
