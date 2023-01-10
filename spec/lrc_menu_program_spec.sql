@@ -189,7 +189,7 @@ db.menu_program_specification.insertMany([
       {
         action_method : 'GET',
         action_url : '/api/v1/mng/lrc/lrcmanagment/project/user-account/unmasking/{projectId}'
-      },
+      },      
       {
         action_method : 'POST',
         action_url : '/api/v1/mng/lrc/lrcmanagment/project/user-account/{projectId}'
@@ -255,7 +255,7 @@ db.menu_program_specification.insertMany([
       {
         action_method : 'PUT',
         action_url : '/api/v1/mng/lrc/faq/content'
-      },
+      },      
       {
         action_method : 'DELETE',
         action_url : '/api/v1/mng/lrc/faq/content/{id}'

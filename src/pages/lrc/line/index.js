@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Tree } from 'antd';
+
 import {
     Button,
     FormControl,
@@ -8,8 +8,6 @@ import {
     MenuItem,
     Select,
     Stack,
-    Tab,
-    Tabs,
     TextField,
     RadioGroup,
     Radio,
@@ -17,7 +15,6 @@ import {
     FormControlLabel
 } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
-import TabPanel from 'components/TabPanel';
 import DefaultDataGrid from 'components/DataGrid/DefaultDataGrid';
 import LineApis from 'apis/lrc/line/lineapi';
 import ErrorScreen from 'components/ErrorScreen';
@@ -25,11 +22,10 @@ import './styles.scss';
 import InputLayout from '../../../components/Common/InputLayout';
 import TopInputLayout from '../../../components/Common/TopInputLayout';
 import cx from 'classnames';
+import ButtonLayout from '../../../components/Common/ButtonLayout';
 import HeaderTitle from '../../../components/HeaderTitle';
 import ContentLine from '../../../components/Common/ContentLine';
 import DropInput from '../../../components/Common/DropInput';
-import LineTree from './lineTree';
-import LineDetail from './lineDetail';
 import { getDateFormat } from 'utils/CommonUtils';
 
 const LineMngPage = () => {
@@ -51,7 +47,7 @@ const LineMngPage = () => {
     };
     ////////////////////////////////////////////////////
 
-    const [search_line_type, setSearchLineType] = useState('BUSINESS');
+    const [search_line_type, setSearchLineType] = useState(' ');
     const [isUpdate, setIsUpdate] = useState(false);
 
     // 입력 데이터 - Default
@@ -59,12 +55,9 @@ const LineMngPage = () => {
         id: '',
         name: '',
         type: '',
-        type_name: '',
-        order_no: '',
-        use_yn: true,
-        parent_id: ''
+        use_yn: true
     });
-    const { id, name, type, type_name, order_no, use_yn, parent_id } = inputs;
+    const { id, name, type, use_yn } = inputs;
 
     // transaction error 처리
     useEffect(() => {
@@ -82,18 +75,9 @@ const LineMngPage = () => {
     // onload
     useEffect(() => {
         // 리스트 가져오기
-        // lineSearch('');
+        lineSearch('');
         setIsUpdate(false);
     }, []);
-
-    useEffect(() => {
-        lineSearch(search_line_type);
-    }, [search_line_type]);
-
-    useEffect(() => {
-        // lineSearch('searchLineType');
-        console.log('searchLineType', search_line_type);
-    }, [search_line_type]);
 
     // Transaction Return
     useEffect(() => {
@@ -132,8 +116,27 @@ const LineMngPage = () => {
         }
     }, [responseData]);
 
-    const searchLineChanged = (_, value) => {
-        setSearchLineType(value);
+    //체크박스 선택된 row id 저장
+    const handleSelectionChange = (item) => {
+        if (item) {
+            setSeletedRows(item);
+        }
+    };
+    // 페이징 변경 이벤트
+    const handlePage = (page) => {};
+
+    // 그리드 클릭
+    const handleClick = (rowData) => {
+        console.log(rowData);
+        if (rowData && rowData.field && rowData.field !== '__check__') {
+            setIsUpdate(true);
+            setInputs({
+                id: rowData.row.id,
+                name: rowData.row.name,
+                use_yn: rowData.row.use_yn,
+                type: rowData.row.type
+            });
+        }
     };
 
     // 입력 박스 입력 시 호출
@@ -147,23 +150,21 @@ const LineMngPage = () => {
             [name]: value
         });
     };
-
     const handleBlur = (e) => {
         console.log(e);
     };
-
     // new
-    // const newClick = () => {
-    //     console.log('called register form');
-    //     //navigate('/account/reg');
-    //     setInputs({
-    //         id: '',
-    //         name: '',
-    //         type: '',
-    //         use_yn: true
-    //     });
-    //     setIsUpdate(false);
-    // };
+    const newClick = () => {
+        console.log('called register form');
+        //navigate('/account/reg');
+        setInputs({
+            id: '',
+            name: '',
+            type: '',
+            use_yn: true
+        });
+        setIsUpdate(false);
+    };
 
     // save
     const saveClick = () => {
@@ -171,8 +172,8 @@ const LineMngPage = () => {
             alert('계열 명칭을 입력하지 않았습니다.');
             return;
         }
-        if (!order_no) {
-            alert('정렬 순서를 입력하지 않았습니다.');
+        if (!type) {
+            alert('계열 타입을 선택하지 않았습니다.');
             return;
         }
         console.log(inputs);
@@ -196,109 +197,122 @@ const LineMngPage = () => {
         }
     };
 
-    const onSelect = (selectedKeys) => {
-        //const rowData = dataGridRows.find((row) => row.id === selectedKeys);
-        // 선택한 노드가 하위 데이터일 수 있다.
-        let found = 0;
-        dataGridRows.map((rowData) => {
-            // parent
-            if (!rowData.parent_id && rowData.id === selectedKeys) {
-                found = 1;
-                setSeletedRows([rowData]);
-                setIsUpdate(true);
-                setInputs({
-                    id: rowData.id,
-                    name: rowData.name,
-                    use_yn: rowData.use_yn,
-                    type: rowData.type,
-                    type_name: search_line_type === 'BUSINESS' ? '사업계열' : '네트워크 계열',
-                    order_no: rowData.order_no,
-                    parent_id: rowData.parent_id
-                });
-                return;
-            } else {
-                // child search
-                console.log('child search');
-                console.log(rowData.children.length);
-                if (rowData.children && rowData.children.length > 0) {
-                    rowData.children.map((child) => {
-                        console.log(child);
-                        if (child.id === selectedKeys) {
-                            found = 1;
-                            setSeletedRows([rowData]);
-                            setIsUpdate(true);
-                            setInputs({
-                                id: child.id,
-                                name: child.name,
-                                use_yn: child.use_yn,
-                                type: child.type,
-                                type_name: search_line_type === 'BUSINESS' ? '사업계열' : '네트워크 계열',
-                                order_no: child.order_no,
-                                parent_id: child.parent_id
-                            });
-                            return;
-                        }
-                    });
-                }
-            }
-        });
-        if (found === 0) {
-            setIsUpdate(false);
+        const rowData = dataGridRows.find((row) => row.id === selectedKeys);
+        if (rowData) {
+            setSeletedRows([rowData]);
+            setIsUpdate(true);
             setInputs({
-                id: '',
-                name: '',
-                use_yn: '',
-                type: search_line_type,
-                type_name: search_line_type === 'BUSINESS' ? '사업계열' : '네트워크 계열',
-                order_no: '1',
-                parent_id: ''
+                id: rowData.id,
+                name: rowData.name,
+                use_yn: rowData.use_yn,
+                type: rowData.type
             });
         }
-    };
-
-    const onParentPlusSelect = (selectedKeys) => {
-        setIsUpdate(false);
-        setInputs({
-            id: '',
-            name: '',
-            use_yn: '',
-            type: search_line_type,
-            type_name: search_line_type === 'BUSINESS' ? '사업계열' : '네트워크 계열',
-            order_no: '',
-            parent_id: selectedKeys
-        });
-    };
-
     return (
-        <Grid container rowSpacing={0} className="lineList">
+        <Grid container rowSpacing={4} className="lineList">
             <Grid item xs={12}>
                 <HeaderTitle titleNm="계열 관리" menuStep01="사이트 운영" menuStep02="상태값 관리" menuStep03="계열 관리" />
 
-                <Tabs
-                    value={search_line_type}
-                    onChange={searchLineChanged}
-                    aria-label="basic tabs example"
-                    className="bottom--blank"
-                    sx={{ minHeight: '32px' }}
-                >
-                    <Tab label="사업계열" value={'BUSINESS'} />
-                    <Tab label="네트워크 계열" value={'NETWORK'} />
-                </Tabs>
+                <MainCard>
+                    <TopInputLayout>
+                        <DropInput title="계열 구분">
+                            <Select name="search_line_type" label="계열타입" value={search_line_type} onChange={searchLineChanged}>
+                                <MenuItem value=" ">전체</MenuItem>
+                                <MenuItem value="BUSINESS">사업계열</MenuItem>
+                                <MenuItem value="NETWORK">네트워크계열</MenuItem>
+                            </Select>
+                        </DropInput>
+
+                        <ButtonLayout>
+                            <Button
+                                disableElevation
+                                size="medium"
+                                type="submit"
+                                variant="outlined_d"
+                                color="secondary"
+                                onClick={searchClick}
+                            >
+                                검색
+                            </Button>
+
+                            <Button disableElevation size="medium" type="submit" variant="outlined_d" color="secondary" onClick={newClick}>
+                                신규
+                            </Button>
+                        </ButtonLayout>
+                    </TopInputLayout>
+                </MainCard>
+
+                <ContentLine>
+                    <DefaultDataGrid
+                        columns={columns}
+                        rows={dataGridRows}
+                        handlePageChange={handlePage}
+                        handleGridClick={handleClick}
+                        handleGridDoubleClick={handleDoubleClick}
+                        selectionChange={handleSelectionChange}
+                        height={450}
+                    />
+                </ContentLine>
+
+                <MainCard sx={{ mt: 2.5 }}>
+                    <InputLayout>
+                        <DropInput title="계열 타입">
+                            <Select name="type" label="계얄타입" value={type} onChange={handleChange}>
+                                <MenuItem value="BUSINESS">사업계열</MenuItem>
+                                <MenuItem value="NETWORK">네트워크계열</MenuItem>
+                            </Select>
+                        </DropInput>
+
+                        <DropInput title="계열 명칭">
+                            <TextField
+                                id="filled-hidden-label-small"
+                                type="medium"
+                                size="medium"
+                                value={name}
+                                name="name"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                fullWidth
+                            />
+                        </DropInput>
+                    </InputLayout>
+                    <InputLayout>
+                        <DropInput title="사용여부">
+                            <RadioGroup
+                                row
+                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                name="use_yn"
+                                value={use_yn}
+                                onChange={handleChange}
+                            >
+                                <FormControlLabel value="true" control={<Radio />} label="사용함" />
+                                <FormControlLabel value="false" control={<Radio />} label="사용안함" />
+                            </RadioGroup>
+                        </DropInput>
+                    </InputLayout>
+                </MainCard>
+                <ButtonLayout>
+                    <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                        저장
+                    </Button>
+                    <Button
+                        disableElevation
+                        disabled={!isUpdate}
+                        size="medium"
+                        type="submit"
+                        variant="outlined_d"
+                        color="secondary"
+                        onClick={deleteClick}
+                    >
+                        삭제
+                    </Button>
+                </ButtonLayout>
+
+                {errorMessage && (
+                    <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+                )}
             </Grid>
-
-            <LineTree dataGridRows={dataGridRows} onParentPlusSelect={onParentPlusSelect} onSelect={onSelect} />
-            <LineDetail
-                inputs={inputs}
-                handleBlur={handleBlur}
-                handleChange={handleChange}
-                saveClick={saveClick}
-                deleteClick={deleteClick}
-                isUpdate={isUpdate}
-            />
-
-            {errorMessage && (
-                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
-            )}
+            <LineTree dataGridRows={dataGridRows} onSelect={onSelect} />
         </Grid>
     );
 };

@@ -1,7 +1,6 @@
 import { Button, Grid, MenuItem, Select, TextField, RadioGroup, Radio, FormControlLabel, Typography } from '@mui/material';
 import MainCard from 'components/Common/MainCard';
 import ButtonLayout from 'components/Common/ButtonLayout';
-import React, { useEffect, useState } from 'react';
 
 const InputField = ({ title, children }) => {
     return (
@@ -23,21 +22,11 @@ const InputField = ({ title, children }) => {
 };
 
 const LineDetail = ({ inputs, handleBlur, handleChange, saveClick, deleteClick, isUpdate }) => {
-    const { id, name, type_name, order_no, use_yn } = inputs;
-    const [btnSaveTitle, setBtnSaveTitle] = useState('등록');
-    const [btnCancelTitle, setBtnCancelTitle] = useState('취소');
-
-    useEffect(() => {
-        if (isUpdate) {
-            setBtnSaveTitle('저장');
-        } else {
-            setBtnSaveTitle('등록');
-        }
-    }, [isUpdate]);
+    const { id, name, type, use_yn } = inputs;
 
     return (
         <Grid item xs={8} className="blank--layout">
-            <Typography variant="h3">계열등록</Typography>
+            <Typography>계열등록</Typography>
 
             <MainCard sx={{ mt: 2.5 }}>
                 <InputField title={'계열명'}>
@@ -52,14 +41,13 @@ const LineDetail = ({ inputs, handleBlur, handleChange, saveClick, deleteClick, 
                         fullWidth
                     />
                 </InputField>
-                <InputField title="계열 위치">
+                <InputField title="분류 위치">
                     <TextField
                         id="filled-hidden-label-small"
                         type="medium"
                         size="medium"
-                        value={type_name}
-                        name="type_name"
-                        disabled="true"
+                        value={name}
+                        name="name"
                         onBlur={handleBlur}
                         onChange={handleChange}
                         fullWidth
@@ -70,8 +58,8 @@ const LineDetail = ({ inputs, handleBlur, handleChange, saveClick, deleteClick, 
                         id="filled-hidden-label-small"
                         type="medium"
                         size="medium"
-                        value={order_no}
-                        name="order_no"
+                        value={name}
+                        name="name"
                         onBlur={handleBlur}
                         onChange={handleChange}
                         fullWidth
@@ -83,7 +71,6 @@ const LineDetail = ({ inputs, handleBlur, handleChange, saveClick, deleteClick, 
                         aria-labelledby="demo-row-radio-buttons-group-label"
                         name="use_yn"
                         value={use_yn}
-                        style={{ justifyContent: 'flex-first' }}
                         onChange={handleChange}
                     >
                         <FormControlLabel value="true" control={<Radio />} label="사용함" />
@@ -91,7 +78,10 @@ const LineDetail = ({ inputs, handleBlur, handleChange, saveClick, deleteClick, 
                     </RadioGroup>
                 </InputField>
             </MainCard>
-            <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '20px', justifyContent: 'flex-end' }}>
+            <ButtonLayout>
+                <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
+                    저장
+                </Button>
                 <Button
                     disableElevation
                     disabled={!isUpdate}
@@ -101,10 +91,7 @@ const LineDetail = ({ inputs, handleBlur, handleChange, saveClick, deleteClick, 
                     color="secondary"
                     onClick={deleteClick}
                 >
-                    {btnCancelTitle}
-                </Button>
-                <Button disableElevation size="medium" type="submit" variant="contained" onClick={saveClick}>
-                    {btnSaveTitle}
+                    삭제
                 </Button>
             </ButtonLayout>
         </Grid>

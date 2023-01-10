@@ -1,6 +1,6 @@
 import '../styles.scss';
 import { nl2br } from 'utils/CommonUtils';
-
+import Filedown from '../../../assets/images/icons/filedown.svg';
 const MessageLeft = ({ id, message, timestamp, displayName, fileList, fileDownload }) => {
     //const checkFile = (data) => {
     //    console.log(data);
@@ -40,6 +40,7 @@ const MessageLeft = ({ id, message, timestamp, displayName, fileList, fileDownlo
                     {message.fileKey ? (
                         <div key={id} className="message other-message" data-message-id={id}>
                             <a href="#" onClick={() => fileDownload(message.fileKey, message.fileName)}>
+                                <img src={Filedown} alt="file download icon" />
                                 {nl2br(message.message)}
                             </a>
                         </div>
