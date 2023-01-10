@@ -1,18 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Empty } from 'antd';
-import { Button, TableCell, TextField, Typography, Table, TableBody, TableHead, TableRow, Tooltip } from '@mui/material';
+import './styles.scss';
+import { getDateFormat } from 'utils/CommonUtils';
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
-import Chat from './chat';
-import MainCard from 'components/Common/MainCard';
-import TopInputLayout from 'components/Common/TopInputLayout';
 import FlexBox from 'components/Common/FlexBox/index';
 import CustomPagination from 'components/CustomPagination';
-import FileUpload from 'components/FileUpload';
-import ChatApi from 'apis/chat/chatapi';
-import FoundationApi from 'apis/lrc/project/foundationapi';
-import { getDateFormat, humanFileSize } from 'utils/CommonUtils';
-import './styles.scss';
+import CloseButton from '../../../assets/images/icons/close-circle.svg';
 
 const ProjectCommunity = (props) => {
     const { paramId } = useParams();
@@ -30,6 +24,12 @@ const ProjectCommunity = (props) => {
     // 파일 리스트
     const [fileList, setFileList] = useState([]);
     const [fileName, setFileName] = useState('');
+    // const [fileUploadText, setFileUploadText] = useState('이곳을 클릭해 파일을 업로드 해주세요');
+    const fileUploadRef = useRef();
+
+    const onCickFileUpload = () => {
+        fileUploadRef.current.click();
+    };
 
     // polling
     const [polling, setPolling] = useState(0);
@@ -101,15 +101,15 @@ const ProjectCommunity = (props) => {
     useEffect(() => {
         // polling start
         console.log('fileList data => ');
-        // console.log(fileList);
-        // console.log(polling);
+        console.log(fileList);
+        console.log(polling);
         if (polling === 0) {
             // hat 파일 리스트에 파일정보가 아직 검사중인 경우
             console.log('chat file data search...');
             let found = 0;
             fileList.map((item) => {
-                // console.log(item.file_key);
-                // console.log(item.file_status);
+                console.log(item.file_key);
+                console.log(item.file_status);
                 if (item.file_status === 'ING') {
                     found = 1;
                     console.log('chat file found...');
@@ -208,7 +208,7 @@ const ProjectCommunity = (props) => {
 
     const fileSave = (type, data) => {
         if (!file) {
-            alert('파일을 업로드 하지 않았습니다.');
+            alert('선택된 파일이 없습니다.');
             return;
         }
         const formData = new FormData();
@@ -221,6 +221,7 @@ const ProjectCommunity = (props) => {
 
         //console.log(formData);
         insertChatFile(formData);
+        setFile('');
     };
 
     // 입력 박스 입력 시 호출
@@ -249,7 +250,6 @@ const ProjectCommunity = (props) => {
             alert('다운로드 할 수 있는 상태가 아닙니다.');
         }
     };
-
     const sendEmail = (param) => {
         console.log(param);
         if (param === 'KOR') {
@@ -277,7 +277,6 @@ const ProjectCommunity = (props) => {
     const fileSearch = (projectId, fileKey) => {
         fileDetailSearch(projectId, fileKey);
     };
-
     return (
         <>
             <Chat
@@ -292,12 +291,12 @@ const ProjectCommunity = (props) => {
             />
             <MainCard>
                 {/* 파일 업로드 */}
-                {/* FileUpload 임시적용 동작안됨 */}
-                <FileUpload id={paramId} insertChatFile={insertChatFile} />
+
                 <FlexBox sx={{ justifyContent: 'space-between', px: '0.7rem' }}>
                     <Typography variant="h4">첨부파일 목록</Typography>
                     <TopInputLayout className="file__upload--box">
                         <TextField
+                            inputRef={fileUploadRef}
                             type="file"
                             id="file"
                             name="file"
@@ -306,10 +305,33 @@ const ProjectCommunity = (props) => {
                             onChange={fileHandleChange}
                             inputProps={{
                                 accept:
-                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
                             }}
                         />
-                        &nbsp;
+                        <button
+                            className="file__upload--field-act"
+                            onClick={() => {
+                                onCickFileUpload();
+                            }}
+                        >
+                            {file ? (
+                                <>
+                                    <span className="field-act__text">{file}</span>
+                                    <button
+                                        className="button-delete"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setFile('');
+                                            fileUploadRef.current.value = '';
+                                        }}
+                                    >
+                                        <img src={CloseButton} alt="" />
+                                    </button>
+                                </>
+                            ) : (
+                                '이곳을 클릭해 파일을 업로드 해주세요'
+                            )}
+                        </button>
                         <Button
                             disableElevation
                             size="medium"

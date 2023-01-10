@@ -189,7 +189,7 @@ db.menu_program_specification.insertMany([
       {
         action_method : 'GET',
         action_url : '/api/v1/mng/lrc/lrcmanagment/project/user-account/unmasking/{projectId}'
-      },
+      },      
       {
         action_method : 'POST',
         action_url : '/api/v1/mng/lrc/lrcmanagment/project/user-account/{projectId}'
@@ -255,7 +255,7 @@ db.menu_program_specification.insertMany([
       {
         action_method : 'PUT',
         action_url : '/api/v1/mng/lrc/faq/content'
-      },
+      },      
       {
         action_method : 'DELETE',
         action_url : '/api/v1/mng/lrc/faq/content/{id}'
@@ -345,5 +345,27 @@ db.menu_program_specification.insertMany([
         action_url : '/api/v1/mng/lrc/service/logs/excel/export'
       }
     ]
+},
+{
+     path: '/project-users-mng',
+     element: '<ProjectUserMngPage />',
+     programs: [
+       {
+         action_method : 'GET',
+         action_url : '/api/v1/mng/lrc/lrcmanagment/user'
+       },
+       {
+         action_method : 'GET',
+         action_url : '/api/v1/mng/lrc/lrcmanagment/user/status-code'
+       },
+       {
+         action_method : 'GET',
+         action_url : '/api/v1/mng/lrc/lrcmanagment/user/masking'
+       },
+       {
+         action_method : 'PUT',
+         action_url : '/api/v1/mng/lrc/lrcmanagment/user'
+       }
+     ]
 }
 ]);
