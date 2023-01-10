@@ -69,6 +69,21 @@ $gray: #92959e;
     }
     strong {
         font-weight: bold;
+        font-style: inherit;
+        text-decoration: inherit;
+    }
+    em {
+        font-weight: inherit;
+        font-style: italic;
+        text-decoration: inherit;
+    }
+    u {
+        font-weight: inherit;
+        font-style: inherit;
+    }
+    s {
+        font-weight: inherit;
+        font-style: inherit;
     }
     &:after {
         /*
@@ -175,9 +190,21 @@ $gray: #92959e;
         font-size: 14px !important;
         strong {
             font-weight: bold;
+            font-style: inherit;
+            text-decoration: inherit;
         }
         em {
+            font-weight: inherit;
             font-style: italic;
+            text-decoration: inherit;
+        }
+        u {
+            font-weight: inherit;
+            font-style: inherit;
+        }
+        s {
+            font-weight: inherit;
+            font-style: inherit;
         }
     }
 }
