@@ -94,7 +94,7 @@ const menus = [
                 id: 'projectusersmng',
                 title: '재단 사용자 관리',
                 type: 'item',
-                url: '/lrc/project-users-mng',
+                url: '/project-users-mng',
                 auth: true,
                 icon: icons.ChromeOutlined,
                 breadcrumbs: true,

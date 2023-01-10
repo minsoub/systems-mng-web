@@ -227,7 +227,7 @@ const MainRoutes = [
                 element: <ProjectsDetailPage />
             },
             {
-                path: 'lrc/project-users-mng',
+                path: 'project-users-mng',
                 element: <ProjectUserMngPage />
             },
 
@@ -264,7 +264,7 @@ const MainRoutes = [
                 element: <ServiceDetail />
             },
             {
-                path: '/lrc/system-check-mng',
+                path: 'system-check-mng',
                 element: <SystemCheckMng />
             },
             // 고객보호센터 - 대시보드
