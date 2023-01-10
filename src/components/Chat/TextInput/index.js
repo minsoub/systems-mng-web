@@ -6,9 +6,10 @@ import ButtonLayout from '../../Common/ButtonLayout';
 import InputLayout from '../../Common/InputLayout';
 import FlexBox from 'components/Common/FlexBox/index';
 
-export const Index = ({ sendChat }) => {
+export const Index = ({ sendChat, sendMail }) => {
     const editorRef = useRef(null);
     const [value, setValue] = useState('');
+    const [emailValue, setEmailValue] = useState('');
 
     const config = {
         language: 'ko',
@@ -20,12 +21,10 @@ export const Index = ({ sendChat }) => {
         height: 188,
         minHeight: 100,
         buttons: [
-            'bold', 'italic', '|',
+            'bold', 'italic', 'underline', 'strikethrough', '|',
             'ul', 'ol', '|',
             'font', 'fontsize', 'paragraph', '|',
-            'table', 'link', 'brush', '\n',
-            'undo', 'redo', '|',
-            'image', 'copy', 'print', 'about'
+            'table', 'link', 'brush'
         ]
     };
 
@@ -36,6 +35,15 @@ export const Index = ({ sendChat }) => {
             setValue('');
         }
     };
+    const handleChangeEmail = (e) => {
+        setEmailValue(e.target.value);
+    };
+    const sendEmailData = () => {
+        if (emailValue) {
+            let emailData = emailValue;
+            sendMail(emailData);
+        }
+    }
     const handleChange = (e) => {
         setValue(e.target.value);
     };
@@ -57,10 +65,18 @@ export const Index = ({ sendChat }) => {
                         전송
                     </Button>
                     <RadioGroup name="sendMail" className="button-box">
-                        <FormControlLabel value="kor" control={<Radio size="small" />} label="국문 메일" />
-                        <FormControlLabel value="eng" control={<Radio size="small" />} label="영문 메일" />
+                        <FormControlLabel onChange={handleChangeEmail} value="KOR" control={<Radio size="small" />} label="국문 메일" />
+                        <FormControlLabel onChange={handleChangeEmail} value="EN" control={<Radio size="small" />} label="영문 메일" />
                     </RadioGroup>
-                    <Button variant="outlined" color="primary" size="medium" className="button-mail">
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        size="medium"
+                        className="button-mail"
+                        onClick={() => {
+                            sendEmailData(emailValue);
+                        }}
+                    >
                         알림 메일 발송하기
                     </Button>
                 </ButtonLayout>

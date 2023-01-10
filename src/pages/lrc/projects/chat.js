@@ -511,30 +511,6 @@ const Chat = forwardRef((props, ref) => {
             <FlexBox sx={{ p: '1rem 2rem', justifyContent: 'space-between', alignItems: 'center', bgcolor: '#fff' }}>
                 <Typography variant="h4">커뮤니케이션</Typography>
                 <ButtonLayout buttonName="communicate">
-                    <Button
-                        disableElevation
-                        size="medium"
-                        type="button"
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => {
-                            sendEmail('KOR');
-                        }}
-                    >
-                        <MailOutlined /> 국문 알림 메일 발송하기
-                    </Button>
-                    <Button
-                        disableElevation
-                        size="medium"
-                        type="button"
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => {
-                            sendEmail('EN');
-                        }}
-                    >
-                        <MailOutlined /> 영문 알림 메일 발송하기
-                    </Button>
                     <Button color="secondary" variant="outlined" className="list__download" onClick={excelDownload}>
                         <DownloadOutlined /> 내역 다운로드
                     </Button>
@@ -551,7 +527,7 @@ const Chat = forwardRef((props, ref) => {
                                 }
                             }}
                         />
-                        <IconButton disableElevation size="medium" type="submit" variant="outlined" color="secondary" onClick={searchClick}>
+                        <IconButton size="medium" type="submit" variant="outlined" color="secondary" onClick={searchClick}>
                             <SearchOutlined />
                         </IconButton>
                     </Box>
@@ -595,7 +571,7 @@ const Chat = forwardRef((props, ref) => {
                             })}
                     </ChattingRoom>
                 </div>
-                <Index sendChat={handleSendChat} />
+                <Index sendChat={handleSendChat} sendMail={sendEmail} />
             </div>
         </div>
     );

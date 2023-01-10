@@ -67,6 +67,9 @@ $gray: #92959e;
     img {
         margin-right: 12px;
     }
+    strong {
+        font-weight: bold;
+    }
     &:after {
         /*
         bottom: 100%;
@@ -170,6 +173,12 @@ $gray: #92959e;
     }
     .jodit-wysiwyg {
         font-size: 14px !important;
+        strong {
+            font-weight: bold;
+        }
+        em {
+            font-style: italic;
+        }
     }
 }
 
