@@ -12,6 +12,7 @@ import FileUpload from 'components/FileUpload';
 import ChatApi from 'apis/chat/chatapi';
 import FoundationApi from 'apis/lrc/project/foundationapi';
 import { getDateFormat, humanFileSize } from 'utils/CommonUtils';
+import CloseButton from '../../../assets/images/icons/close-circle.svg';
 import './styles.scss';
 
 const ProjectCommunity = (props) => {
@@ -30,6 +31,12 @@ const ProjectCommunity = (props) => {
     // 파일 리스트
     const [fileList, setFileList] = useState([]);
     const [fileName, setFileName] = useState('');
+    // const [fileUploadText, setFileUploadText] = useState('이곳을 클릭해 파일을 업로드 해주세요');
+    const fileUploadRef = useRef();
+
+    const onCickFileUpload = () => {
+        fileUploadRef.current.click();
+    };
 
     // polling
     const [polling, setPolling] = useState(0);
@@ -208,7 +215,7 @@ const ProjectCommunity = (props) => {
 
     const fileSave = (type, data) => {
         if (!file) {
-            alert('파일을 업로드 하지 않았습니다.');
+            alert('선택된 파일이 없습니다.');
             return;
         }
         const formData = new FormData();
@@ -221,6 +228,7 @@ const ProjectCommunity = (props) => {
 
         //console.log(formData);
         insertChatFile(formData);
+        setFile('');
     };
 
     // 입력 박스 입력 시 호출
@@ -298,6 +306,7 @@ const ProjectCommunity = (props) => {
                     <Typography variant="h4">첨부파일 목록</Typography>
                     <TopInputLayout className="file__upload--box">
                         <TextField
+                            inputRef={fileUploadRef}
                             type="file"
                             id="file"
                             name="file"
@@ -306,10 +315,33 @@ const ProjectCommunity = (props) => {
                             onChange={fileHandleChange}
                             inputProps={{
                                 accept:
-                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                                    '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
                             }}
                         />
-                        &nbsp;
+                        <button
+                            className="file__upload--field-act"
+                            onClick={() => {
+                                onCickFileUpload();
+                            }}
+                        >
+                            {file ? (
+                                <>
+                                    <span className="field-act__text">{file}</span>
+                                    <button
+                                        className="button-delete"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setFile('');
+                                            fileUploadRef.current.value = '';
+                                        }}
+                                    >
+                                        <img src={CloseButton} alt="" />
+                                    </button>
+                                </>
+                            ) : (
+                                '이곳을 클릭해 파일을 업로드 해주세요'
+                            )}
+                        </button>
                         <Button
                             disableElevation
                             size="medium"

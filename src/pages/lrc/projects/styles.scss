@@ -79,10 +79,41 @@
 .chatting--container {
     .list__download {
         text-decoration: underline;
-        margin-right: 30px;
+        margin-right: 10px;
         display: flex;
         justify-content: center;
         place-items: center;
+    }
+    .MuiBox-root {
+        border-radius: 4px;
+        border: 1px solid rgba(140, 140, 140, 0.5);
+        height: 34px;
+        .MuiOutlinedInput-notchedOutline {
+            border: 0;
+        }
+        .MuiInputBase-root {
+            height: 32px;
+            .MuiInputBase-input {
+                margin: 0;
+                padding-right: 8px;
+            }
+            .MuiInputBase-input::-webkit-search-cancel-button {
+                margin-right: 0;
+                width: 24px;
+                height: 24px;
+                background: url('../../../assets/images/icons/close-circle.svg');
+            }
+        }
+        .MuiButtonBase-root {
+            margin: 0;
+            width: 32px;
+            height: 32px;
+            border-left: 1px solid rgba(140, 140, 140, 0.5);
+            border-radius: 0 !important;
+            .anticon {
+                margin-right: 0;
+            }
+        }
     }
 }
 
@@ -112,8 +143,34 @@
 
 .file__upload--box {
     .file__upload--field {
+        display: none;
         width: 100%;
         margin-right: 1rem;
+    }
+    .file__upload--field-act {
+        position: relative;
+        width: 400px;
+        text-align: left;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        margin-right: 10px;
+        padding: 11.5px 48px 11.5px 12px;
+        font-size: 14px;
+        background: transparent;
+        white-space: nowrap;
+        cursor: pointer;
+        .field-act__text {
+            vertical-align: baseline;
+        }
+        .button-delete {
+            position: absolute;
+            top: 50%;
+            right: 8px;
+            transform: translateY(-50%);
+            vertical-align: baseline;
+            margin-left: 12px;
+            background: transparent;
+        }
     }
 
     button {
@@ -315,6 +372,17 @@ input::file-selector-button {
         border-bottom: 2px solid white;
         overflow-y: scroll;
         height: 60vh;
+    }
+    .chat--room__search-result {
+        padding-top: 17px;
+        padding-left: 30px;
+        strong {
+            font-weight: 700;
+            color: #f47422;
+        }
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 20px;
     }
 }
 

@@ -1,48 +1,58 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import { Button, Grid, TextField } from '@mui/material';
+import { Button, Grid, TextField, FormControl, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import JoditEditor from 'jodit-react';
 import '../styles.scss';
 import ButtonLayout from '../../Common/ButtonLayout';
 import InputLayout from '../../Common/InputLayout';
 import FlexBox from 'components/Common/FlexBox/index';
 
-const BUTTON_OPTIONS = [
-    'bold',
-    'italic',
-    'underline',
-    'strikethrough',
-    '|',
-    'ul',
-    'ol',
-    '|',
-    'font',
-    'fontsize',
-    'paragraph',
-    'brush',
-    '|',
-    'table',
-    'link'
-];
-
-const EDITOR_CONFIG = {
-    language: 'ko',
-    readonly: false,
-    placeholder: '내용을 입력하세요.',
-    enableDragAndDropFileToEditor: true,
-    buttons: BUTTON_OPTIONS,
-    width: '100%',
-    height: 300
-};
-
-export const Index = forwardRef(({ sendChat }, ref) => {
-    // const editorRef = useRef(null);
+export const Index = forwardRef(({ sendChat, sendMail }, ref) => {
+    const editorRef = useRef(null);
     const [value, setValue] = useState('');
+    const [emailValue, setEmailValue] = useState('');
+
+    const config = {
+        language: 'ko',
+        readonly: false,
+        placeholder: '무엇이든 입력하세요..',
+        enableDragAndDropFileToEditor: true,
+        imageDefaultWidth: null,
+        width: '100%',
+        height: 188,
+        minHeight: 100,
+        buttons: [
+            'bold',
+            'italic',
+            'underline',
+            'strikethrough',
+            '|',
+            'ul',
+            'ol',
+            '|',
+            'font',
+            'fontsize',
+            'paragraph',
+            '|',
+            'table',
+            'link',
+            'brush'
+        ]
+    };
 
     const sendData = () => {
         if (value) {
             let data = value;
             sendChat(data);
             setValue('');
+        }
+    };
+    const handleChangeEmail = (e) => {
+        setEmailValue(e.target.value);
+    };
+    const sendEmailData = () => {
+        if (emailValue) {
+            let emailData = emailValue;
+            sendMail(emailData);
         }
     };
     const handleChange = (e) => {
@@ -60,10 +70,25 @@ export const Index = forwardRef(({ sendChat }, ref) => {
         <>
             <Grid className="chat-message">
                 {/*<textarea rows="5" id="standard-text" label="텍스트 입력" value={value} onChange={handleChange} />*/}
-                <JoditEditor ref={ref} value={value} config={EDITOR_CONFIG} onBlur={(newContent) => setValue(newContent)} />
-                <ButtonLayout style={{ width: '100%', justifyContent: 'center', marginTop: 30 }}>
+                <JoditEditor ref={editorRef} value={value} config={config} onBlur={(newContent) => setValue(newContent)} />
+                <ButtonLayout style={{ width: '184px' }}>
                     <Button variant="contained" color="primary" size="medium" className="button" onClick={sendData}>
-                        전송하기
+                        전송
+                    </Button>
+                    <RadioGroup name="sendMail" className="button-box">
+                        <FormControlLabel onChange={handleChangeEmail} value="KOR" control={<Radio size="small" />} label="국문 메일" />
+                        <FormControlLabel onChange={handleChangeEmail} value="EN" control={<Radio size="small" />} label="영문 메일" />
+                    </RadioGroup>
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        size="medium"
+                        className="button-mail"
+                        onClick={() => {
+                            sendEmailData(emailValue);
+                        }}
+                    >
+                        알림 메일 발송하기
                     </Button>
                 </ButtonLayout>
             </Grid>
