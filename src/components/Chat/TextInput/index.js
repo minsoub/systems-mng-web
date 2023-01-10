@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Button, Grid, TextField } from '@mui/material';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { Button, Grid, TextField, FormControl, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import JoditEditor from 'jodit-react';
 import '../styles.scss';
 import ButtonLayout from '../../Common/ButtonLayout';
 import InputLayout from '../../Common/InputLayout';
@@ -38,6 +38,7 @@ export const Index = forwardRef(({ sendChat, sendMail }, ref) => {
             'brush'
         ]
     };
+
     const sendData = () => {
         if (value) {
             let data = value;
@@ -68,15 +69,7 @@ export const Index = forwardRef(({ sendChat, sendMail }, ref) => {
     return (
         <>
             <Grid className="chat-message">
-                <FlexBox sx={{ justifyContent: 'space-between' }}>
-                    <textarea rows="5" id="standard-text" label="텍스트 입력" value={value} onChange={handleChange} />
-
-                    <ButtonLayout>
-                        <Button variant="contained" color="primary" size="medium" className="button" onClick={sendData}>
-                            전송
-                        </Button>
-                    </ButtonLayout>
-                </FlexBox>
+                {/*<textarea rows="5" id="standard-text" label="텍스트 입력" value={value} onChange={handleChange} />*/}
                 <JoditEditor ref={editorRef} value={value} config={config} onBlur={(newContent) => setValue(newContent)} />
                 <ButtonLayout style={{ width: '184px' }}>
                     <Button variant="contained" color="primary" size="medium" className="button" onClick={sendData}>
@@ -96,7 +89,9 @@ export const Index = forwardRef(({ sendChat, sendMail }, ref) => {
                         }}
                     >
                         알림 메일 발송하기
+                    </Button>
+                </ButtonLayout>
             </Grid>
         </>
     );
-};
+});
