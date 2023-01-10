@@ -147,6 +147,11 @@ const LrcDashboard = () => {
             case '4':
                 setStartDate(undefined);
                 setEndDate(undefined);
+                break;
+            default:
+                break;
+        }
+    };
     // onload
     useEffect(() => {
         setDataGridLineRows([]);
@@ -207,7 +212,9 @@ const LrcDashboard = () => {
         <Grid container rowSpacing={3} columnSpacing={2.75} className="lrcDashboard">
             <Grid item xs={12}>
                 <Grid sx={{ p: '1.625rem 1.5rem', bgcolor: '#fff' }}>
-                    <Typography variant="h3" sx={{ fontWeight: '700' }}>거래지원 현황</Typography>
+                    <Typography variant="h3" sx={{ fontWeight: '700' }}>
+                        거래지원 현황
+                    </Typography>
                 </Grid>
             </Grid>
             {dataStatus.map((item, index) => (
