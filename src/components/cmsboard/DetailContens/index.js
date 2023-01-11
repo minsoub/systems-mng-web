@@ -88,7 +88,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
                     .format('YYYY-MM-DD')
             )
         );
-        if (type === 'notice') {
+        if (type === 'notices') {
             getCategory('notices/categories/items');
         }
     }, []);
@@ -113,8 +113,17 @@ const DetailContens = ({ type, editMode, detailData }) => {
                 }
                 break;
             case 'fileInfo':
-                const extension = responseData.data.data.extension.toLowerCase();
-                setFileName(responseData.data.data.name + '.' + extension);
+                const { id, name, extension } = responseData.data.data;
+                switch (id) {
+                    case fileID:
+                        setFileName(name + '.' + extension.toLowerCase());
+                        break;
+                    case thumnailFileID:
+                        setThumnailFileName(name + '.' + extension.toLowerCase());
+                        break;
+                    default:
+                        break;
+                }
                 break;
             default:
                 return;
@@ -260,7 +269,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
                         <th className={'tb--title'}>조회수</th>
                         <td className={'width15'}>{detailData?.read_count ? detailData.read_count.toLocaleString('ko-KR') : '-'}</td>
                     </tr>
-                    {type === 'notice' && (
+                    {type === 'notices' && (
                         <tr>
                             <th className={'tb--title'}>카테고리1{editMode && <em className={styles.essential}>*</em>}</th>
                             <td className={'width15'}>
@@ -296,7 +305,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
                             />
                         </td>
                     </tr>
-                    {type === 'notice' && (
+                    {type === 'notices' && (
                         <tr>
                             <th className={'tb--title'}>상단 고정</th>
                             <td className={'width15'}>
@@ -372,7 +381,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
                             )}
                         </td>
                     </tr>
-                    {(type === 'review-report' || type === 'economic-research') && (
+                    {(type === 'review-reports' || type === 'economic-researches') && (
                         <tr>
                             <th className="tb--title">썸네일</th>
                             <td className="width15 thumnailFile" colSpan="7">
@@ -418,7 +427,6 @@ const DetailContens = ({ type, editMode, detailData }) => {
                             {editMode ? (
                                 <TopInputLayout className={`${styles.inputWrap} file__upload--box`}>
                                     <input
-                                        accept="image/*"
                                         id="addFile"
                                         type="file"
                                         name="addFile"
@@ -450,7 +458,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
                             )}
                         </td>
                     </tr>
-                    {type === 'event' && <EventContents editMode={editMode} handleOpen={handleOpen} />}
+                    {type === 'events' && <EventContents editMode={editMode} handleOpen={handleOpen} />}
                 </tbody>
             </table>
             <EventModal open={open} onClose={handleClose} modalType={modalType} />

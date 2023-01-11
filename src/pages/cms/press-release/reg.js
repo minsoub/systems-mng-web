@@ -23,6 +23,7 @@ const PressReleaseView = () => {
     const { paramId } = useParams(); //상세번호
     const [responseData, requestError, loading, { readBoard }] = BoardApi();
 
+    const pageType = 'press-releases';
     const [isEditMode, setIsEditMode] = useState(false); //수정모드
     const [detailData, setDetailData] = useState(null); //상세 데이터
     const [shareData, setShareData] = useState(null); //공유 데이터
@@ -38,7 +39,7 @@ const PressReleaseView = () => {
             setIsEditMode(true);
             return;
         }
-        readBoard('press-releases', paramId);
+        readBoard(pageType, paramId);
     }, [paramId]);
     // 통신 결과
     useEffect(() => {
@@ -76,11 +77,11 @@ const PressReleaseView = () => {
         <Grid container rowSpacing={4} columnSpacing={2.75} className={styles.notceView}>
             <Grid item xs={12}>
                 <HeaderTitle titleNm="보도자료 상세" menuStep01="사이트 운영" menuStep02="보도자료 상세" />
-                <DetailContens type="press-release" editMode={isEditMode} detailData={detailData} />
-                <ShareSetting type="press-release" editMode={isEditMode} shareData={shareData} />
-                <PostSetting type="press-release" editMode={isEditMode} postingData={postingData} />
+                <DetailContens type={pageType} editMode={isEditMode} detailData={detailData} />
+                <ShareSetting type={pageType} editMode={isEditMode} shareData={shareData} />
+                <PostSetting type={pageType} editMode={isEditMode} postingData={postingData} />
                 <BottomButtonSet
-                    type="press-release"
+                    type={pageType}
                     editMode={isEditMode}
                     changeEditState={changeEditState}
                     id={detailData?.id}

@@ -15,8 +15,8 @@ import NoticeSearchForm from './search/NoticeSearchForm';
 // transition
 import BoardApi from 'apis/cms/boardapi';
 
-//utils
-import { getDateFormat } from 'utils/CommonUtils';
+//etc
+import { getColumsData } from '../colums';
 
 //style
 import styles from './styles.module.scss';
@@ -27,114 +27,12 @@ const NoticeList = () => {
     const navigate = useNavigate();
     const [responseData, requestError, loading, { searchBoardList, changeBannerState }] = BoardApi();
 
+    const pageType = 'notices';
     const [dataGridRows, setDataGridRows] = useState([]); // 그리드 목록 데이터
     const [dataTotal, setDataTotal] = useState(0); //데이터 전체 숫자
     const [selectedValue, setSelectedValue] = useState(''); // 선택라인
     const [isListRelooad, setIsListRelooad] = useState(false); // 리스트 갱신
-
-    // 데이터 그리드 컬럼 공지사항관리
-    const columns = [
-        {
-            field: 'id',
-            headerName: 'No.',
-            flex: 1,
-            headerAlign: 'center',
-            maxWidth: 80,
-            align: 'center',
-            valueGetter: (value) => {
-                const { is_draft } = value.row;
-                let setValue = '고정';
-                if (is_draft) {
-                    return '-';
-                }
-                if (value.row.is_fix_top !== true) {
-                    setValue = dataGridRows.length - dataGridRows.findIndex((row) => row.id === value.id);
-                }
-                return setValue;
-            }
-        },
-        {
-            field: 'title',
-            headerName: '제목',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'left',
-            valueGetter: (value) => {
-                const { is_draft } = value.row;
-                const draftText = is_draft ? ' (초안)' : '';
-                return value.value + draftText;
-            }
-        },
-        {
-            field: 'is_banner',
-            headerName: '배너',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 80,
-            valueGetter: ({ value }) => {
-                if (value) {
-                    return '사용';
-                } else {
-                    return '미사용';
-                }
-            }
-        },
-        {
-            field: 'is_show',
-            headerName: '상태',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 80,
-            valueGetter: ({ value }) => {
-                if (value) {
-                    return '공개';
-                } else {
-                    return '비공개';
-                }
-            }
-        },
-        {
-            field: 'create_date',
-            headerName: '등록일시',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 150,
-            valueGetter: ({ value }) => `${getDateFormat(value)}`
-        },
-        {
-            field: 'update_date',
-            headerName: '업데이트일시',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 150,
-            valueGetter: ({ value }) => {
-                return value ? `${getDateFormat(value)}` : '-';
-            }
-        },
-        {
-            field: 'create_account_email',
-            headerName: '등록담당자',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 150
-        },
-        {
-            field: 'read_count',
-            headerName: '조회수',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 100,
-            valueGetter: ({ value }) => {
-                return value ? `${value.toLocaleString('ko-KR')}` : '-';
-            }
-        }
-    ];
+    const columns = getColumsData(pageType, dataGridRows); // 데이터 그리드 컬럼
 
     //-- 에러 처리 부분 -S- //
     const [open, setOpen] = useState(false);
@@ -166,13 +64,13 @@ const NoticeList = () => {
     // 목록 조회
     const listLoad = (request) => {
         setIsListRelooad(false);
-        searchBoardList('notices', request);
+        searchBoardList(pageType, request);
     };
     // 그리드 클릭
     const handleClick = (e) => {
         const { field } = e;
         if (field === '__check__') return;
-        navigate(`/cms/notice/reg/${e.id}`);
+        navigate(`/cms/${pageType}/reg/${e.id}`);
     };
     //배너 상태 변경
     const bannerStateChange = (state) => {
@@ -217,7 +115,7 @@ const NoticeList = () => {
             <Grid item xs={12}>
                 <HeaderTitle titleNm="공지사항 관리" menuStep01="사이트 운영" menuStep02="공지사항 관리" />
                 <NoticeSearchForm listLoad={listLoad} listRelooad={isListRelooad} />
-                <TableHeader type="notice" dataTotal={dataTotal} bannerStateChange={bannerStateChange} />
+                <TableHeader type={pageType} dataTotal={dataTotal} bannerStateChange={bannerStateChange} />
                 <ContentLine>
                     <RadioBoxDataGrid
                         columns={columns}

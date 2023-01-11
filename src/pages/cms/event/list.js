@@ -15,17 +15,19 @@ import SearchForm from './search/SearchForm';
 // transition
 import BoardApi from 'apis/cms/boardapi';
 
-// etc
-import { columns } from '../colums/type1'; //columns data
+//etc
+import { getColumsData } from '../colums';
 
 // =============|| Event - List ||============= //
 const EventList = () => {
     const navigate = useNavigate();
     const [responseData, requestError, loading, { searchBoardList }] = BoardApi();
 
+    const pageType = 'events';
     const [dataGridRows, setDataGridRows] = useState([]); // 그리드 목록 데이터
     const [dataTotal, setDataTotal] = useState(0); //데이터 전체 숫자
     const [isListRelooad, setIsListRelooad] = useState(false); // 리스트 갱신
+    const columns = getColumsData(pageType, dataGridRows); // 데이터 그리드 컬럼
 
     //-- 에러 처리 부분 -S- //
     const [open, setOpen] = useState(false);
@@ -51,13 +53,13 @@ const EventList = () => {
     // 목록 조회
     const listLoad = (request) => {
         setIsListRelooad(false);
-        searchBoardList('events', request);
+        searchBoardList(pageType, request);
     };
     // 페이징 변경 이벤트
     const handlePage = (page) => {};
     // 그리드 클릭
     const handleClick = (e) => {
-        navigate(`/cms/event/reg/${e.id}`);
+        navigate(`/cms/${pageType}/reg/${e.id}`);
     };
     //선택된 row id
     const handleSelectionChange = (item) => {};
@@ -87,7 +89,7 @@ const EventList = () => {
             <Grid item xs={12}>
                 <HeaderTitle titleNm="이벤트 관리" menuStep01="사이트 운영" menuStep02="이벤트 관리" />
                 <SearchForm listLoad={listLoad} listRelooad={isListRelooad} />
-                <TableHeader type="event" dataTotal={dataTotal} />
+                <TableHeader type={pageType} dataTotal={dataTotal} />
                 <ContentLine>
                     <DefaultDataGrid
                         columns={columns}

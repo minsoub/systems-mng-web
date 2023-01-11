@@ -29,6 +29,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         reduceReservation, // 예약 게시 여부
         reduceReservationDate, // 예약 게시일
         reduceFileId, // 첨부파일 아이디
+        reduceThumbnailId, // 쎔네일 아이디
         reduceShareTitle, // 공유 타이틀
         reduceShareDesc, // 공유 설명
         reduceShareFileId, // 공유 이미지
@@ -63,22 +64,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
 
     const deleteClick = () => {
         if (confirm('삭제를 하시겠습니까?')) {
-            switch (type) {
-                case 'notice':
-                    deleteBoard('notices', id);
-                    break;
-                case 'press-release':
-                    deleteBoard('press-releases', id);
-                    break;
-                case 'investment-warning':
-                    deleteBoard('investment-warnings', id);
-                    break;
-                case 'review-report':
-                    deleteBoard('review-reports', id);
-                    break;
-                default:
-                    break;
-            }
+            deleteBoard(type, id);
         }
     };
 
@@ -106,11 +92,13 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         console.log('게시 예약일 : ', scheduleDate);
         console.log('에디터 입력내용 : ', editContents);
         console.log('첨부파일 아이디: ', reduceFileId);
-        console.log('첨부파일 데이터: ', document.getElementById('addFile').files[0]);
+        console.log('첨부파일 데이터: ', document.getElementById('addFile') && document.getElementById('addFile').files[0]);
+        console.log('썸네일 아이디: ', reduceThumbnailId);
+        console.log('썸네일 데이터: ', document.getElementById('thumnailFile') && document.getElementById('thumnailFile').files[0]);
         console.log('공유 타이틀 : ', reduceShareTitle);
         console.log('공유 설명 : ', reduceShareDesc);
         console.log('공유 이미지 아이디: ', reduceShareFileId);
-        console.log('공유 이미지 데이터: ', document.getElementById('shareFile').files[0]);
+        console.log('공유 이미지 데이터: ', document.getElementById('shareFile') && document.getElementById('shareFile').files[0]);
         console.log('공유 버튼 이름 : ', reduceShareBtnName);
         console.log('날자 업데이트 여부 : ', isUseUpdateDate);
         console.log('게시물 상단 노출 : ', isAlignTop);
@@ -125,173 +113,71 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         console.log('이벤트 참여 완료시 메시지 : ', reduceEventSuccessMsg);
         console.log('이벤트 중복 참여시 메시지 : ', reduceEventOverlapMsg);
 
-        let request = {};
+        let request = {
+            title: reduceTitle,
+            content: editContents,
+            is_show: isShow,
+            file_id: reduceFileId,
+            share_title: reduceShareTitle,
+            share_description: reduceShareDesc,
+            share_file_id: reduceShareFileId,
+            share_button_name: reduceShareBtnName,
+            is_schedule: isSchedule,
+            schedule_date: scheduleDate,
+            is_draft: $isDraft,
+            is_use_update_date: isUseUpdateDate,
+            is_align_top: isAlignTop
+        };;
         const formData = new FormData();
-        const addFile = document.getElementById('addFile').files[0];
-        if (document.getElementById('addFile').value) {
+        const addFile = document.getElementById('addFile') && document.getElementById('addFile').files[0];
+        if (document.getElementById('addFile') && document.getElementById('addFile').value) {
             formData.append('file', addFile);
         }
-        const shareImageFile = document.getElementById('shareFile').files[0];
-        if (document.getElementById('shareFile').value) {
+        const shareImageFile = document.getElementById('shareFile') && document.getElementById('shareFile').files[0];
+        if (document.getElementById('shareFile') && document.getElementById('shareFile').value) {
             formData.append('share_file', shareImageFile);
         }
+        const thumnailImageFile = document.getElementById('thumnailFile') && document.getElementById('thumnailFile').files[0];
+        if (document.getElementById('thumnailFile') && document.getElementById('thumnailFile').value) {
+            formData.append('thumbnail_file', thumnailImageFile);
+        }
         switch (type) {
-            case 'notice':
+            case 'notices':
                 request = {
-                    category_ids: categorys,
-                    title: reduceTitle,
-                    content: editContents,
-                    is_fix_top: isTopFix,
-                    is_show: isShow,
-                    file_id: reduceFileId,
-                    share_title: reduceShareTitle,
-                    share_description: reduceShareDesc,
-                    share_file_id: reduceShareFileId,
-                    share_button_name: reduceShareBtnName,
-                    is_schedule: isSchedule,
-                    schedule_date: scheduleDate,
-                    is_draft: $isDraft,
-                    is_use_update_date: isUseUpdateDate,
-                    is_align_top: isAlignTop
+                    ...request,
+                    category_ids: categorys
                 };
-
-                // const categorySelector = document.querySelector("input[name='title']");
-                // console.log(categorySelector.focus());
-                // window.scrollTo({
-                //     top: 0,
-                //     left: 0,
-                //     behavior: 'smooth'
-                // });
                 if (categorys.length === 0) {
                     alert('카테고리를 선택하세요.');
                     return;
                 }
-                if (reduceTitle === '') {
-                    alert('제목을 입력하세요.');
-                    return;
-                }
-                if (
-                    editContents ===
-                    '<div class="se-contents" style="box-sizing: content-box; font-family: &quot;맑은 고딕&quot;; font-size: 11pt; line-height: 1.2;" data-document-padding-top="18" data-document-padding-left="23" data-document-padding-right="23"><p style="margin: 16px 0px; display: block; overflow-wrap: break-word;"><br></p></div>'
-                ) {
-                    alert('내용을 입력하세요.');
-                    return;
-                }
-                formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
-                if (detailID) {
-                    updateBoard('notices', detailID, formData);
-                } else {
-                    createBoard('notices', formData);
-                }
                 break;
-            case 'press-release':
+            case 'review-reports':
+            case 'economic-researches':
                 request = {
-                    title: reduceTitle,
-                    content: editContents,
-                    is_show: isShow,
-                    file_id: reduceFileId,
-                    share_title: reduceShareTitle,
-                    share_description: reduceShareDesc,
-                    share_file_id: reduceShareFileId,
-                    share_button_name: reduceShareBtnName,
-                    is_schedule: isSchedule,
-                    schedule_date: scheduleDate,
-                    is_draft: $isDraft,
-                    is_use_update_date: isUseUpdateDate,
-                    is_align_top: isAlignTop
+                    ...request,
+                    thumbnail_file_id: reduceThumbnailId
                 };
-                if (reduceTitle === '') {
-                    alert('제목을 입력하세요.');
-                    return;
-                }
-                if (
-                    editContents ===
-                    '<div class="se-contents" style="box-sizing: content-box; font-family: &quot;맑은 고딕&quot;; font-size: 11pt; line-height: 1.2;" data-document-padding-top="18" data-document-padding-left="23" data-document-padding-right="23"><p style="margin: 16px 0px; display: block; overflow-wrap: break-word;"><br></p></div>'
-                ) {
-                    alert('내용을 입력하세요.');
-                    return;
-                }
-                formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
-                if (detailID) {
-                    updateBoard('press-releases', detailID, formData);
-                } else {
-                    createBoard('press-releases', formData);
-                }
-                break;
-            case 'investment-warning':
-                request = {
-                    title: reduceTitle,
-                    content: editContents,
-                    is_show: isShow,
-                    file_id: reduceFileId,
-                    share_title: reduceShareTitle,
-                    share_description: reduceShareDesc,
-                    share_file_id: reduceShareFileId,
-                    share_button_name: reduceShareBtnName,
-                    is_schedule: isSchedule,
-                    schedule_date: scheduleDate,
-                    is_draft: $isDraft,
-                    is_use_update_date: isUseUpdateDate,
-                    is_align_top: isAlignTop
-                };
-                if (reduceTitle === '') {
-                    alert('제목을 입력하세요.');
-                    return;
-                }
-                if (
-                    editContents ===
-                    '<div class="se-contents" style="box-sizing: content-box; font-family: &quot;맑은 고딕&quot;; font-size: 11pt; line-height: 1.2;" data-document-padding-top="18" data-document-padding-left="23" data-document-padding-right="23"><p style="margin: 16px 0px; display: block; overflow-wrap: break-word;"><br></p></div>'
-                ) {
-                    alert('내용을 입력하세요.');
-                    return;
-                }
-                formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
-                if (detailID) {
-                    updateBoard('investment-warnings', detailID, formData);
-                } else {
-                    createBoard('investment-warnings', formData);
-                }
-                break;
-            case 'review-report':
-                request = {
-                    title: reduceTitle,
-                    content: editContents,
-                    is_show: isShow,
-                    file_id: reduceFileId,
-                    share_title: reduceShareTitle,
-                    share_description: reduceShareDesc,
-                    share_file_id: reduceShareFileId,
-                    share_button_name: reduceShareBtnName,
-                    is_schedule: isSchedule,
-                    schedule_date: scheduleDate,
-                    is_draft: $isDraft,
-                    is_use_update_date: isUseUpdateDate,
-                    is_align_top: isAlignTop
-                };
-                if (reduceTitle === '') {
-                    alert('제목을 입력하세요.');
-                    return;
-                }
-                if (
-                    editContents ===
-                    '<div class="se-contents" style="box-sizing: content-box; font-family: &quot;맑은 고딕&quot;; font-size: 11pt; line-height: 1.2;" data-document-padding-top="18" data-document-padding-left="23" data-document-padding-right="23"><p style="margin: 16px 0px; display: block; overflow-wrap: break-word;"><br></p></div>'
-                ) {
-                    alert('내용을 입력하세요.');
-                    return;
-                }
-                const thumnailImageFile = document.getElementById('thumnailFile').files[0];
-                if (document.getElementById('thumnailFile').value) {
-                    formData.append('thumbnail_file', thumnailImageFile);
-                }
-                formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
-                if (detailID) {
-                    updateBoard('review-reports', detailID, formData);
-                } else {
-                    createBoard('review-reports', formData);
-                }
                 break;
             default:
-                return;
+                break;
+        }
+        if (reduceTitle === '') {
+            alert('제목을 입력하세요.');
+            return;
+        }
+        if (
+            editContents ===
+            '<div class="se-contents" style="box-sizing: content-box; font-family: &quot;맑은 고딕&quot;; font-size: 11pt; line-height: 1.2;" data-document-padding-top="18" data-document-padding-left="23" data-document-padding-right="23"><p style="margin: 16px 0px; display: block; overflow-wrap: break-word;"><br></p></div>'
+        ) {
+            alert('내용을 입력하세요.');
+            return;
+        }
+        formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
+        if (detailID) {
+            updateBoard(type, detailID, formData);
+        } else {
+            createBoard(type, formData);
         }
     };
 
@@ -417,3 +303,11 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
 };
 
 export default BottomButtonSet;
+
+// const categorySelector = document.querySelector("input[name='title']");
+// console.log(categorySelector.focus());
+// window.scrollTo({
+//     top: 0,
+//     left: 0,
+//     behavior: 'smooth'
+// });

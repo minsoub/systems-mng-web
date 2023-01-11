@@ -15,96 +15,20 @@ import SearchForm from './search/SearchForm';
 // transition
 import BoardApi from 'apis/cms/boardapi';
 
-//utils
-import { getDateFormat } from 'utils/CommonUtils';
+//etc
+import { getColumsData } from '../colums';
+
 // =============|| InvestmentWarning - List ||============= //
 
 const InvestmentWarningList = () => {
-    const columns = [
-        {
-            field: 'id',
-            headerName: 'No.',
-            flex: 1,
-            headerAlign: 'center',
-            maxWidth: 80,
-            align: 'center',
-            valueGetter: (value) => {
-                const { is_draft } = value.row;
-                if (is_draft) {
-                    return '-';
-                }
-                return dataGridRows.length - dataGridRows.findIndex((row) => row.id === value.id);
-            }
-        },
-        {
-            field: 'title',
-            headerName: '제목',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'left'
-        },
-        {
-            field: 'is_show',
-            headerName: '상태',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 80,
-            valueGetter: ({ value }) => {
-                if (value) {
-                    return '공개';
-                } else {
-                    return '비공개';
-                }
-            }
-        },
-        {
-            field: 'create_date',
-            headerName: '등록일시',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 200,
-            valueGetter: ({ value }) => `${getDateFormat(value)}`
-        },
-        {
-            field: 'update_date',
-            headerName: '업데이트일시',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 200,
-            valueGetter: ({ value }) => {
-                return value ? `${getDateFormat(value)}` : '-';
-            }
-        },
-        {
-            field: 'create_account_email',
-            headerName: '작성자',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 200
-        },
-        {
-            field: 'read_count',
-            headerName: '조회수',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            maxWidth: 100,
-            valueGetter: ({ value }) => {
-                return value ? `${(value).toLocaleString('ko-KR')}` : '-';
-            }
-        }
-    ];
-
     const navigate = useNavigate();
     const [responseData, requestError, loading, { searchBoardList }] = BoardApi();
 
+    const pageType = 'investment-warnings';
     const [dataGridRows, setDataGridRows] = useState([]); // 그리드 목록 데이터
     const [dataTotal, setDataTotal] = useState(0); //데이터 전체 숫자
     const [isListRelooad, setIsListRelooad] = useState(false); // 리스트 갱신
+    const columns = getColumsData(pageType, dataGridRows); // 데이터 그리드 컬럼
 
     //-- 에러 처리 부분 -S- //
     const [open, setOpen] = useState(false);
@@ -130,13 +54,13 @@ const InvestmentWarningList = () => {
     // 목록 조회
     const listLoad = (request) => {
         setIsListRelooad(false);
-        searchBoardList('investment-warnings', request);
+        searchBoardList(pageType, request);
     };
     // 페이징 변경 이벤트
     const handlePage = (page) => {};
     // 그리드 클릭
     const handleClick = (e) => {
-        navigate(`/cms/investment-warning/reg/${e.id}`);
+        navigate(`/cms/${pageType}/reg/${e.id}`);
     };
     //선택된 row id
     const handleSelectionChange = (item) => {};
@@ -166,7 +90,7 @@ const InvestmentWarningList = () => {
             <Grid item xs={12}>
                 <HeaderTitle titleNm="투자유의지정 안내 관리" menuStep01="사이트 운영" menuStep02="투자유의지정 안내 관리" />
                 <SearchForm listLoad={listLoad} listRelooad={isListRelooad} />
-                <TableHeader type="investment-warning" dataTotal={dataTotal} />
+                <TableHeader type={pageType} dataTotal={dataTotal} />
                 <ContentLine>
                     <DefaultDataGrid
                         columns={columns}

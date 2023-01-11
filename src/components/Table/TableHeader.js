@@ -20,7 +20,7 @@ const TableHeader = ({ type, newAdd, dataTotal, bannerStateChange }) => {
                 <span>전체 : {dataTotal}건</span>
             </div>
             <div>
-                {type === 'notice' && (
+                {type === 'notices' && (
                     <>
                         <Button disableElevation size="medium" type="submit" variant="contained" className={styles.banner} onClick={()=>{bannerStateChange(false)}}>
                             배너 해제

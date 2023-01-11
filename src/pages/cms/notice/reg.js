@@ -23,6 +23,7 @@ const NoticeView = () => {
     const { paramId } = useParams(); //상세번호
     const [responseData, requestError, loading, { readBoard }] = BoardApi();
 
+    const pageType = 'notices';
     const [isEditMode, setIsEditMode] = useState(false); //수정모드
     const [detailData, setDetailData] = useState(null); //상세 데이터
     const [shareData, setShareData] = useState(null); //공유 데이터
@@ -38,7 +39,7 @@ const NoticeView = () => {
             setIsEditMode(true);
             return;
         }
-        readBoard('notices', paramId);
+        readBoard(pageType, paramId);
     }, [paramId]);
     // 통신 결과
     useEffect(() => {
@@ -76,11 +77,11 @@ const NoticeView = () => {
         <Grid container rowSpacing={4} columnSpacing={2.75} className={styles.notceView}>
             <Grid item xs={12}>
                 <HeaderTitle titleNm="공지사항 상세" menuStep01="사이트 운영" menuStep02="공지사항 상세" />
-                <DetailContens type="notice" editMode={isEditMode} detailData={detailData} />
-                <ShareSetting editMode={isEditMode} shareData={shareData} />
-                <PostSetting type="notice" editMode={isEditMode} postingData={postingData} />
+                <DetailContens type={pageType} editMode={isEditMode} detailData={detailData} />
+                <ShareSetting type={pageType} editMode={isEditMode} shareData={shareData} />
+                <PostSetting type={pageType} editMode={isEditMode} postingData={postingData} />
                 <BottomButtonSet
-                    type="notice"
+                    type={pageType}
                     editMode={isEditMode}
                     changeEditState={changeEditState}
                     id={detailData?.id}

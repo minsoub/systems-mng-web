@@ -16,6 +16,7 @@ import styles from './styles.module.scss';
 
 // =============|| Event - Detail ||============= //
 const EventView = () => {
+    const pageType = 'events';
     const { paramId } = useParams(); //상세번호
     const [isEditMode, setIsEditMode] = useState(false); //수정모드
 
@@ -33,10 +34,10 @@ const EventView = () => {
         <Grid container rowSpacing={4} columnSpacing={2.75} className={styles.notceView}>
             <Grid item xs={12}>
                 <HeaderTitle titleNm="이벤트 상세" menuStep01="사이트 운영" menuStep02="이벤트 상세" />
-                <DetailContens type="event" editMode={isEditMode} />
-                <ShareSetting type="event" editMode={isEditMode} />
-                <PostSetting type="event" editMode={isEditMode} />
-                <BottomButtonSet type="event" editMode={isEditMode} changeEditState={changeEditState} />
+                <DetailContens type={pageType} editMode={isEditMode} />
+                <ShareSetting type={pageType} editMode={isEditMode} />
+                <PostSetting type={pageType} editMode={isEditMode} />
+                <BottomButtonSet type={pageType} editMode={isEditMode} changeEditState={changeEditState} />
             </Grid>
         </Grid>
     );

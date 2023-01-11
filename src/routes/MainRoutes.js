@@ -666,97 +666,97 @@ const MainRoutes = [
             },
             // 통합콘텐츠 - 공지사항 관리 - 리스트
             {
-                path: 'cms/notice/list',
+                path: 'cms/notices/list',
                 element: <CmsNoticeList />
             },
             // 통합콘텐츠 - 공지사항 관리 - 등록
             {
-                path: 'cms/notice/reg',
+                path: 'cms/notices/reg',
                 element: <NoticeView />
             },
             // 통합콘텐츠 - 공지사항 관리 - 상세/수정
             {
-                path: 'cms/notice/reg/:paramId',
+                path: 'cms/notices/reg/:paramId',
                 element: <NoticeView />
             },
             // 통합콘텐츠 - 카테고리 관리 - 리스트
             {
-                path: 'cms/notice/categorylist',
+                path: 'cms/notices/categorylist',
                 element: <CmsCategoryList />
             },
             // 통합콘텐츠 - 보도자료 관리 - 리스트
             {
-                path: 'cms/press-release/list',
+                path: 'cms/press-releases/list',
                 element: <CmsPressreleaseList />
             },
             // 통합콘텐츠 - 보도자료 관리 - 등록
             {
-                path: 'cms/press-release/reg',
+                path: 'cms/press-releases/reg',
                 element: <PressReleaseView />
             },
             // 통합콘텐츠 - 보도자료 관리 - 상세/수정
             {
-                path: 'cms/press-release/reg/:paramId',
+                path: 'cms/press-releases/reg/:paramId',
                 element: <PressReleaseView />
             },
             // 통합콘텐츠 - 이벤트 관리 - 리스트
             {
-                path: 'cms/event/list',
+                path: 'cms/events/list',
                 element: <CmsEventList />
             },
             // 통합콘텐츠 - 이벤트 관리 - 등록
             {
-                path: 'cms/event/reg',
+                path: 'cms/events/reg',
                 element: <EventView />
             },
             // 통합콘텐츠 - 이벤트 관리 - 상세/수정
             {
-                path: 'cms/event/reg/:paramId',
+                path: 'cms/events/reg/:paramId',
                 element: <EventView />
             },
             // 통합콘텐츠 - 가상자산 검토보고서 관리 - 리스트
             {
-                path: 'cms/review-report/list',
+                path: 'cms/review-reports/list',
                 element: <CmsReviewReportList />
             },
             // 통합콘텐츠 - 가상자산 검토보고서 관리 - 등록
             {
-                path: 'cms/review-report/reg',
+                path: 'cms/review-reports/reg',
                 element: <ReviewReportView />
             },
             // 통합콘텐츠 - 가상자산 검토보고서 관리 - 상세/수정
             {
-                path: 'cms/review-report/reg/:paramId',
+                path: 'cms/review-reports/reg/:paramId',
                 element: <ReviewReportView />
             },
             // 통합콘텐츠 - 투자유의지정 안내 관리 - 리스트
             {
-                path: 'cms/investment-warning/list',
+                path: 'cms/investment-warnings/list',
                 element: <InvestmentWarningList />
             },
             // 통합콘텐츠 - 투자유의지정 안내 관리 - 등록
             {
-                path: 'cms/investment-warning/reg',
+                path: 'cms/investment-warnings/reg',
                 element: <InvestmentWarningView />
             },
             // 통합콘텐츠 - 투자유의지정 안내 관리 - 상세/수정
             {
-                path: 'cms/investment-warning/reg/:paramId',
+                path: 'cms/investment-warnings/reg/:paramId',
                 element: <InvestmentWarningView />
             },
             // 통합콘텐츠 - 빗썸 경제연구소 관리 - 리스트
             {
-                path: 'cms/economic-research/list',
+                path: 'cms/economic-researches/list',
                 element: <EconomicResearchList />
             },
             // 통합콘텐츠 - 빗썸 경제연구소 관리 - 등록
             {
-                path: 'cms/economic-research/reg',
+                path: 'cms/economic-researches/reg',
                 element: <EconomicResearchView />
             },
             // 통합콘텐츠 - 빗썸 경제연구소 관리 - 상세/수정
             {
-                path: 'cms/economic-research/reg/:paramId',
+                path: 'cms/economic-researches/reg/:paramId',
                 element: <EconomicResearchView />
             }
         ]
