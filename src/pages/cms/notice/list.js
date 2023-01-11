@@ -89,9 +89,9 @@ const NoticeList = () => {
             maxWidth: 80,
             valueGetter: ({ value }) => {
                 if (value) {
-                    return '사용';
+                    return '공개';
                 } else {
-                    return '미사용';
+                    return '비공개';
                 }
             }
         },

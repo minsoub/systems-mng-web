@@ -7,6 +7,7 @@ import { Grid, Button } from '@mui/material';
 
 // project import
 import ButtonLayout from 'components/Common/ButtonLayout';
+import PreviewModal from '../modal/PreviewModal';
 
 // transition
 import BoardApi from 'apis/cms/boardapi';
@@ -18,7 +19,7 @@ import styles from './styles.module.scss';
 
 const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
     const navigate = useNavigate();
-    const [responseData, requestError, loading, { createBoard, deleteBoard }] = BoardApi();
+    const [responseData, requestError, loading, { createBoard, deleteBoard, updateBoard }] = BoardApi();
     const {
         reduceNotiCategory1, // 공지 카테고리1
         reduceNotiCategory2, // 공지 카테고리2
@@ -27,11 +28,13 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         reducePostState, // 게시 상태
         reduceReservation, // 예약 게시 여부
         reduceReservationDate, // 예약 게시일
+        reduceFileId, // 첨부파일 아이디
         reduceShareTitle, // 공유 타이틀
         reduceShareDesc, // 공유 설명
+        reduceShareFileId, // 공유 이미지
         reduceShareBtnName, // 공유 버튼명
         reduceUpdateDate, // 업데이트 날자  여부 설정
-        reduceTopNoti
+        reduceTopNoti // 상단고정
     } = useSelector((state) => state.cmsDetailData);
     const {
         reduceEventType, // 이벤트 유형
@@ -47,12 +50,31 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
     } = useSelector((state) => state.cmsDetailEventData);
 
     const [detailID, setDetailID] = useState(id); // detail ID
+    const [open, setOpen] = useState(false);
+    const [viewMode, setViewMode] = useState('pc');
+
+    const openModal = (mode) => {
+        setViewMode(mode);
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const deleteClick = () => {
         if (confirm('삭제를 하시겠습니까?')) {
             switch (type) {
                 case 'notice':
                     deleteBoard('notices', id);
+                    break;
+                case 'press-release':
+                    deleteBoard('press-releases', id);
+                    break;
+                case 'investment-warning':
+                    deleteBoard('investment-warnings', id);
+                    break;
+                case 'review-report':
+                    deleteBoard('review-reports', id);
                     break;
                 default:
                     break;
@@ -68,7 +90,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         const isTopFix = reduceTopFixable === 0 ? false : true;
         const isShow = reducePostState === 0 ? false : true;
         const isSchedule = reduceReservation;
-        const scheduleDate = reduceReservationDate.replace(' T ', ' ') + ':00';
+        const scheduleDate = reduceReservationDate ? reduceReservationDate.replace(' T ', ' ') + ':00' : '';
         const isUseUpdateDate = reduceUpdateDate === 0 ? false : true;
         const isAlignTop = reduceTopNoti === 0 ? false : true;
         let categorys = [];
@@ -83,8 +105,12 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         console.log('게시 예약 : ', isSchedule);
         console.log('게시 예약일 : ', scheduleDate);
         console.log('에디터 입력내용 : ', editContents);
+        console.log('첨부파일 아이디: ', reduceFileId);
+        console.log('첨부파일 데이터: ', document.getElementById('addFile').files[0]);
         console.log('공유 타이틀 : ', reduceShareTitle);
         console.log('공유 설명 : ', reduceShareDesc);
+        console.log('공유 이미지 아이디: ', reduceShareFileId);
+        console.log('공유 이미지 데이터: ', document.getElementById('shareFile').files[0]);
         console.log('공유 버튼 이름 : ', reduceShareBtnName);
         console.log('날자 업데이트 여부 : ', isUseUpdateDate);
         console.log('게시물 상단 노출 : ', isAlignTop);
@@ -99,42 +125,173 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         console.log('이벤트 참여 완료시 메시지 : ', reduceEventSuccessMsg);
         console.log('이벤트 중복 참여시 메시지 : ', reduceEventOverlapMsg);
 
-        if (type === 'notice') {
-            const request = {
-                category_ids: categorys,
-                title: reduceTitle,
-                content: editContents,
-                is_fix_top: isTopFix,
-                is_show: isShow,
-                share_title: reduceShareTitle,
-                share_description: reduceShareDesc,
-                share_button_name: reduceShareBtnName,
-                is_schedule: isSchedule,
-                schedule_date: scheduleDate,
-                is_draft: $isDraft,
-                is_use_update_date: isUseUpdateDate,
-                is_align_top: isAlignTop
-            };
+        let request = {};
+        const formData = new FormData();
+        const addFile = document.getElementById('addFile').files[0];
+        if (document.getElementById('addFile').value) {
+            formData.append('file', addFile);
+        }
+        const shareImageFile = document.getElementById('shareFile').files[0];
+        if (document.getElementById('shareFile').value) {
+            formData.append('share_file', shareImageFile);
+        }
+        switch (type) {
+            case 'notice':
+                request = {
+                    category_ids: categorys,
+                    title: reduceTitle,
+                    content: editContents,
+                    is_fix_top: isTopFix,
+                    is_show: isShow,
+                    file_id: reduceFileId,
+                    share_title: reduceShareTitle,
+                    share_description: reduceShareDesc,
+                    share_file_id: reduceShareFileId,
+                    share_button_name: reduceShareBtnName,
+                    is_schedule: isSchedule,
+                    schedule_date: scheduleDate,
+                    is_draft: $isDraft,
+                    is_use_update_date: isUseUpdateDate,
+                    is_align_top: isAlignTop
+                };
 
-            if (categorys.length === 0) {
-                alert('카테고리를 선택하세요.');
+                // const categorySelector = document.querySelector("input[name='title']");
+                // console.log(categorySelector.focus());
+                // window.scrollTo({
+                //     top: 0,
+                //     left: 0,
+                //     behavior: 'smooth'
+                // });
+                if (categorys.length === 0) {
+                    alert('카테고리를 선택하세요.');
+                    return;
+                }
+                if (reduceTitle === '') {
+                    alert('제목을 입력하세요.');
+                    return;
+                }
+                if (
+                    editContents ===
+                    '<div class="se-contents" style="box-sizing: content-box; font-family: &quot;맑은 고딕&quot;; font-size: 11pt; line-height: 1.2;" data-document-padding-top="18" data-document-padding-left="23" data-document-padding-right="23"><p style="margin: 16px 0px; display: block; overflow-wrap: break-word;"><br></p></div>'
+                ) {
+                    alert('내용을 입력하세요.');
+                    return;
+                }
+                formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
+                if (detailID) {
+                    updateBoard('notices', detailID, formData);
+                } else {
+                    createBoard('notices', formData);
+                }
+                break;
+            case 'press-release':
+                request = {
+                    title: reduceTitle,
+                    content: editContents,
+                    is_show: isShow,
+                    file_id: reduceFileId,
+                    share_title: reduceShareTitle,
+                    share_description: reduceShareDesc,
+                    share_file_id: reduceShareFileId,
+                    share_button_name: reduceShareBtnName,
+                    is_schedule: isSchedule,
+                    schedule_date: scheduleDate,
+                    is_draft: $isDraft,
+                    is_use_update_date: isUseUpdateDate,
+                    is_align_top: isAlignTop
+                };
+                if (reduceTitle === '') {
+                    alert('제목을 입력하세요.');
+                    return;
+                }
+                if (
+                    editContents ===
+                    '<div class="se-contents" style="box-sizing: content-box; font-family: &quot;맑은 고딕&quot;; font-size: 11pt; line-height: 1.2;" data-document-padding-top="18" data-document-padding-left="23" data-document-padding-right="23"><p style="margin: 16px 0px; display: block; overflow-wrap: break-word;"><br></p></div>'
+                ) {
+                    alert('내용을 입력하세요.');
+                    return;
+                }
+                formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
+                if (detailID) {
+                    updateBoard('press-releases', detailID, formData);
+                } else {
+                    createBoard('press-releases', formData);
+                }
+                break;
+            case 'investment-warning':
+                request = {
+                    title: reduceTitle,
+                    content: editContents,
+                    is_show: isShow,
+                    file_id: reduceFileId,
+                    share_title: reduceShareTitle,
+                    share_description: reduceShareDesc,
+                    share_file_id: reduceShareFileId,
+                    share_button_name: reduceShareBtnName,
+                    is_schedule: isSchedule,
+                    schedule_date: scheduleDate,
+                    is_draft: $isDraft,
+                    is_use_update_date: isUseUpdateDate,
+                    is_align_top: isAlignTop
+                };
+                if (reduceTitle === '') {
+                    alert('제목을 입력하세요.');
+                    return;
+                }
+                if (
+                    editContents ===
+                    '<div class="se-contents" style="box-sizing: content-box; font-family: &quot;맑은 고딕&quot;; font-size: 11pt; line-height: 1.2;" data-document-padding-top="18" data-document-padding-left="23" data-document-padding-right="23"><p style="margin: 16px 0px; display: block; overflow-wrap: break-word;"><br></p></div>'
+                ) {
+                    alert('내용을 입력하세요.');
+                    return;
+                }
+                formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
+                if (detailID) {
+                    updateBoard('investment-warnings', detailID, formData);
+                } else {
+                    createBoard('investment-warnings', formData);
+                }
+                break;
+            case 'review-report':
+                request = {
+                    title: reduceTitle,
+                    content: editContents,
+                    is_show: isShow,
+                    file_id: reduceFileId,
+                    share_title: reduceShareTitle,
+                    share_description: reduceShareDesc,
+                    share_file_id: reduceShareFileId,
+                    share_button_name: reduceShareBtnName,
+                    is_schedule: isSchedule,
+                    schedule_date: scheduleDate,
+                    is_draft: $isDraft,
+                    is_use_update_date: isUseUpdateDate,
+                    is_align_top: isAlignTop
+                };
+                if (reduceTitle === '') {
+                    alert('제목을 입력하세요.');
+                    return;
+                }
+                if (
+                    editContents ===
+                    '<div class="se-contents" style="box-sizing: content-box; font-family: &quot;맑은 고딕&quot;; font-size: 11pt; line-height: 1.2;" data-document-padding-top="18" data-document-padding-left="23" data-document-padding-right="23"><p style="margin: 16px 0px; display: block; overflow-wrap: break-word;"><br></p></div>'
+                ) {
+                    alert('내용을 입력하세요.');
+                    return;
+                }
+                const thumnailImageFile = document.getElementById('thumnailFile').files[0];
+                if (document.getElementById('thumnailFile').value) {
+                    formData.append('thumbnail_file', thumnailImageFile);
+                }
+                formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
+                if (detailID) {
+                    updateBoard('review-reports', detailID, formData);
+                } else {
+                    createBoard('review-reports', formData);
+                }
+                break;
+            default:
                 return;
-            }
-            if (reduceTitle === '') {
-                alert('제목을 입력하세요.');
-                return;
-            }
-            if (
-                editContents ===
-                '<div class="se-contents" style="box-sizing: content-box; font-family: &quot;맑은 고딕&quot;; font-size: 11pt; line-height: 1.2;" data-document-padding-top="18" data-document-padding-left="23" data-document-padding-right="23"><p style="margin: 16px 0px; display: block; overflow-wrap: break-word;"><br></p></div>'
-            ) {
-                alert('내용을 입력하세요.');
-                return;
-            }
-            console.log(scheduleDate);
-            const formData = new FormData();
-            formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
-            createBoard('notices', formData);
         }
     };
 
@@ -146,8 +303,14 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         switch (responseData.transactionId) {
             case 'createBoard':
                 if (responseData.data.data) {
-                    console.log(responseData.data.data);
                     alert('등록 되었습니다.');
+                    listClick();
+                }
+                break;
+            case 'updateBoard':
+                if (responseData.data.data) {
+                    console.log(responseData.data.data);
+                    alert('수정 되었습니다.');
                     listClick();
                 }
                 break;
@@ -165,15 +328,36 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
     useEffect(() => {
         setDetailID(id);
     }, [id]);
+    useEffect(() => {
+        console.log(type);
+    }, [type]);
     return (
         <Grid className={styles.button_layout}>
             <ButtonLayout>
                 {editMode ? (
                     <>
-                        <Button disableElevation size="medium" type="button" variant="outlined_d" color="secondary" onClick={listClick}>
+                        <Button
+                            disableElevation
+                            size="medium"
+                            type="button"
+                            variant="outlined_d"
+                            color="secondary"
+                            onClick={() => {
+                                openModal('pc');
+                            }}
+                        >
                             PC 미리보기
                         </Button>
-                        <Button disableElevation size="medium" type="button" variant="outlined_d" color="secondary" onClick={listClick}>
+                        <Button
+                            disableElevation
+                            size="medium"
+                            type="button"
+                            variant="outlined_d"
+                            color="secondary"
+                            onClick={() => {
+                                openModal('mobile');
+                            }}
+                        >
                             MO 미리보기
                         </Button>
                     </>
@@ -227,6 +411,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
                     </>
                 )}
             </ButtonLayout>
+            <PreviewModal open={open} onClose={handleClose} viewMode={viewMode} />
         </Grid>
     );
 };

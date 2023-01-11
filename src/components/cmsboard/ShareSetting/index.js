@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Typography, TextField, Button } from '@mui/material';
@@ -11,17 +10,13 @@ import TopInputLayout from 'components/Common/TopInputLayout';
 
 // transition
 import BoardApi from 'apis/cms/boardapi';
-import { activeShareTitle, activeShareDesc, activeShareBtnName } from 'store/reducers/cms/DetailData';
-
-//util
-import { humanFileSize } from 'utils/CommonUtils';
+import { activeShareTitle, activeShareDesc, activeShareBtnName, activeShareFileId } from 'store/reducers/cms/DetailData';
 
 //style
 import styles from './styles.module.scss';
 
-
 const ShareSetting = ({ editMode, shareData }) => {
-    const [responseData, requestError, loading, { insertFileData }] = BoardApi();
+    const [responseData, requestError, loading, { fileInfo }] = BoardApi();
     const dispatch = useDispatch();
     // 인풋 관리
     const [inputs, setInputs] = useState({
@@ -31,9 +26,7 @@ const ShareSetting = ({ editMode, shareData }) => {
         shareFileName: ''
     });
     const { shareTitle, shareDesc, shareBtnName, shareFileName } = inputs;
-    // 파일 정보
-    const [file_part, setFilePart] = useState();
-    const [file, setFile] = useState('');
+    const [fileID, setFileID] = useState(''); // 첨부파일
 
     const handleBlur = () => {};
     const onChange = (e) => {
@@ -57,34 +50,19 @@ const ShareSetting = ({ editMode, shareData }) => {
 
     // 입력 박스 입력 시 호출
     const fileHandleChange = (e) => {
-        if (!e.target.files[0]) {
-            setFilePart();
-            return;
-        }
-        setFile(e.target.files[0].name);
         setInputs({
             ...inputs,
             ['shareFileName']: e.target.files[0].name
         });
-        setFilePart(e.target.files[0]);
     };
-    const fileSave = (data) => {
-        if (!file) {
-            alert('파일을 업로드 하지 않았습니다.');
-            return;
-        }
-        const formData = new FormData();
-        formData.append('file', file_part);
-        formData.append('fileName', file);
-        formData.append('fileType', file_part.type);
-        // 3.2MB로 계산하기
-        formData.append('fileSize', humanFileSize(file_part.size, true, 2));
-
-        // console.log(file_part);
-        // console.log(file);
-        // console.log(file_part.type);
-        // console.log(humanFileSize(file_part.size, true, 2));
-        insertFileData(formData);
+    const fileDeleteClickHandler = () => {
+        setInputs({
+            ...inputs,
+            ['shareFileName']: ''
+        });
+        setFileID('');
+        document.getElementById('shareFile').value = '';
+        dispatch(activeShareFileId({ reduceShareFileId: '' }));
     };
     // 연동결과 파싱
     useEffect(() => {
@@ -92,8 +70,12 @@ const ShareSetting = ({ editMode, shareData }) => {
             return;
         }
         switch (responseData.transactionId) {
-            case 'uploadFile':
-                console.log(responseData.data.data);
+            case 'fileInfo':
+                const extension = responseData.data.data.extension.toLowerCase();
+                setInputs({
+                    ...inputs,
+                    ['shareFileName']: responseData.data.data.name + '.' + extension
+                });
                 break;
             default:
                 return;
@@ -105,9 +87,9 @@ const ShareSetting = ({ editMode, shareData }) => {
             ...inputs,
             ['shareTitle']: shareData.share_title ? shareData.share_title : '',
             ['shareDesc']: shareData.share_description ? shareData.share_description : '',
-            ['shareFileName']: shareData.share_file_id ? shareData.share_file_id : '',
             ['shareBtnName']: shareData.share_button_name ? shareData.share_button_name : ''
         });
+        setFileID(shareData.share_file_id);
         dispatch(activeShareTitle({ reduceShareTitle: shareData.share_title }));
         dispatch(activeShareDesc({ reduceShareDesc: shareData.share_description }));
         dispatch(activeShareBtnName({ reduceShareBtnName: shareData.share_button_name }));
@@ -117,8 +99,14 @@ const ShareSetting = ({ editMode, shareData }) => {
             dispatch(activeShareTitle({ reduceShareTitle: '' }));
             dispatch(activeShareDesc({ reduceShareDesc: '' }));
             dispatch(activeShareBtnName({ reduceShareBtnName: '' }));
+            dispatch(activeShareFileId({ reduceShareFileId: '' }));
         };
     },[]);
+    useEffect(() => {
+        if (!fileID) return;
+        dispatch(activeShareFileId({ reduceShareFileId: fileID }));
+        fileInfo(fileID);
+    }, [fileID]);
 
     return (
         <>
@@ -173,39 +161,35 @@ const ShareSetting = ({ editMode, shareData }) => {
                             <td className="add_file">
                                 {editMode ? (
                                     <TopInputLayout className={`${styles.inputWrap} file__upload--box`}>
-                                        <div className={`${styles.file_name}`}>
-                                            {/* image.png<em>(10.00KB)</em> */}
-                                            {shareFileName ? shareFileName : '-'}
-                                        </div>
-                                        <TextField
+                                        <input
+                                            accept="image/*"
+                                            id="shareFile"
                                             type="file"
-                                            id="file"
-                                            name="file"
-                                            size="medium"
-                                            className="file__upload--field"
+                                            name="shareFile"
                                             onChange={fileHandleChange}
-                                            inputProps={{
-                                                accept: '.jpg, .jpeg, .png, .gif'
-                                            }}
+                                            style={{ display: 'none' }}
                                         />
-                                        &nbsp;
-                                        <Button
-                                            className={`${styles.file_dave_btn}`}
-                                            disableElevation
-                                            size="medium"
-                                            type="button"
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={() => fileSave(file)}
-                                        >
-                                            업로드
-                                        </Button>
+                                        <label htmlFor="shareFile">
+                                            <Button size="medium" type="button" variant="contained" color="primary" component="span">
+                                                파일선택
+                                            </Button>
+                                        </label>
+                                        <div className={`${styles.file_name}`}>{shareFileName ? shareFileName : '-'}</div>
+                                        {shareFileName && (
+                                            <Button
+                                                size="medium"
+                                                type="button"
+                                                variant="contained"
+                                                color="primary"
+                                                component="span"
+                                                onClick={fileDeleteClickHandler}
+                                            >
+                                                삭제
+                                            </Button>
+                                        )}
                                     </TopInputLayout>
                                 ) : (
-                                    <>
-                                        {/* image.png<em>(10.00KB)</em> */}
-                                        {shareFileName ? shareFileName : '-'}
-                                    </>
+                                    <>{shareFileName ? shareFileName : '-'}</>
                                 )}
                             </td>
                         </tr>

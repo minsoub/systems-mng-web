@@ -14,12 +14,91 @@ import SearchForm from './search/SearchForm';
 // transition
 import BoardApi from 'apis/cms/boardapi';
 
-// etc
-import { columns } from '../colums/type1'; //columns data
+//utils
+import { getDateFormat } from 'utils/CommonUtils';
 
 // =============|| Pressrelease - List ||============= //
 
 const PressreleaseList = () => {
+    const columns = [
+        {
+            field: 'id',
+            headerName: 'No.',
+            flex: 1,
+            headerAlign: 'center',
+            maxWidth: 80,
+            align: 'center',
+            valueGetter: (value) => {
+                const { is_draft } = value.row;
+                if (is_draft) {
+                    return '-';
+                }
+                return dataGridRows.length - dataGridRows.findIndex((row) => row.id === value.id);
+            }
+        },
+        {
+            field: 'title',
+            headerName: '제목',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'left'
+        },
+        {
+            field: 'is_show',
+            headerName: '상태',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 80,
+            valueGetter: ({ value }) => {
+                if (value) {
+                    return '공개';
+                } else {
+                    return '비공개';
+                }
+            }
+        },
+        {
+            field: 'create_date',
+            headerName: '등록일시',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 200,
+            valueGetter: ({ value }) => `${getDateFormat(value)}`
+        },
+        {
+            field: 'update_date',
+            headerName: '업데이트일시',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 200,
+            valueGetter: ({ value }) => {
+                return value ? `${getDateFormat(value)}` : '-';
+            }
+        },
+        {
+            field: 'create_account_email',
+            headerName: '작성자',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 200
+        },
+        {
+            field: 'read_count',
+            headerName: '조회수',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            maxWidth: 100,
+            valueGetter: ({ value }) => {
+                return value ? `${(value).toLocaleString('ko-KR')}` : '-';
+            }
+        }
+    ];
+
     const navigate = useNavigate();
     const [responseData, requestError, loading, { searchBoardList }] = BoardApi();
 

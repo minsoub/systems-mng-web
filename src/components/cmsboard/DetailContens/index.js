@@ -16,7 +16,7 @@ import moment from 'moment';
 // project import
 import Editor from 'components/editor/index';
 import TopInputLayout from 'components/Common/TopInputLayout';
-import EventModal from './EventModal';
+import EventModal from '../modal/EventModal';
 import CustomTextfield from './CustomTextfield';
 import EventContents from './EventContents';
 import CustomSelectBox from './CustomSelectBox';
@@ -28,13 +28,15 @@ import {
     activeTitle,
     activeTopFixable,
     activePostState,
+    activeFileId,
+    activeThumbnailId,
     activeReservation,
     activeReservationDate,
 } from 'store/reducers/cms/DetailData';
 import BoardApi from 'apis/cms/boardapi';
 
 // utils
-import { humanFileSize, changeDateType } from 'utils/CommonUtils';
+import { changeDateType } from 'utils/CommonUtils';
 
 // style
 import styles from './styles.module.scss';
@@ -43,14 +45,15 @@ import styles from './styles.module.scss';
 
 const DetailContens = ({ type, editMode, detailData }) => {
     const dispatch = useDispatch();
-    const [responseData, requestError, loading, { getCategory, insertFileData }] = BoardApi();
+    const [responseData, requestError, loading, { getCategory, insertFileData, fileInfo }] = BoardApi();
 
     const [categoryList, setCategoryList] = useState([{ id: '0', name: '선택안함' }]); // 카테고리1 리스트
     const [reservationDate, setReservationDate] = useState(moment().format('YYYY.MM.DD A hh:mm')); // 게시 예약일자
     const [contentsData, setContentsData] = useState(''); // 내용
-    const [file_part, setFilePart] = useState(); //파일 정보
-    const [file, setFile] = useState(''); // 첨부파일
-    const [fileName, setFileName] = useState(''); // 첨부파일
+    const [fileName, setFileName] = useState(''); // 첨부파일 이름
+    const [fileID, setFileID] = useState(''); // 첨부파일 아이디
+    const [thumnailFileName, setThumnailFileName] = useState(''); // 썸네일 파일 이름
+    const [thumnailFileID, setThumnailFileID] = useState(''); // 썸네일 파일 아이디
     const editParam = { editName: 'contentsEditor', value: { contentsData } }; // 에디터 설정관련
 
     const [inputs, setInputs] = useState({
@@ -109,46 +112,56 @@ const DetailContens = ({ type, editMode, detailData }) => {
                     setCategoryList(tempCate);
                 }
                 break;
-            case 'uploadFile':
-                console.log(responseData.data.data);
+            case 'fileInfo':
+                const extension = responseData.data.data.extension.toLowerCase();
+                setFileName(responseData.data.data.name + '.' + extension);
                 break;
             default:
                 return;
         }
     }, [responseData]);
     const fileHandleChange = (e) => {
-        if (!e.target.files[0]) {
-            setFilePart();
-            return;
+        const { name } = e.target;
+        switch (name) {
+            case 'addFile':
+                setFileName(e.target.files[0].name);
+                break;
+            case 'thumnailFile':
+                setThumnailFileName(e.target.files[0].name);
+                break;
+            default:
+                break;
         }
-        setFile(e.target.files[0].name);
-        setFileName(e.target.files[0].name);
-        setFilePart(e.target.files[0]);
     };
-    const fileSave = (data) => {
-        if (!file) {
-            alert('파일을 업로드 하지 않았습니다.');
-            return;
+    const fileDeleteClickHandler = (e) => {
+        const name = e.target.getAttribute('name');
+        switch (name) {
+            case 'addFile':
+                setFileID('');
+                setFileName('');
+                document.getElementById('addFile').value = '';
+                dispatch(activeFileId({ reduceFileId: '' }));
+                break;
+            case 'thumnailFile':
+                setThumnailFileID('');
+                setThumnailFileName('');
+                document.getElementById('thumnailFile').value = '';
+                dispatch(activeFileId({ reduceFileId: '' }));
+                break;
+            default:
+                break;
         }
-        const formData = new FormData();
-        formData.append('file', file_part);
-        formData.append('fileName', file);
-        formData.append('fileType', file_part.type);
-        // 3.2MB로 계산하기
-        formData.append('fileSize', humanFileSize(file_part.size, true, 2));
+    };
 
-        console.log(file_part);
-        console.log(file);
-        console.log(file_part.type);
-        console.log(humanFileSize(file_part.size, true, 2));
-        insertFileData(formData);
-    };
     useEffect(() => {
         if (!detailData) return;
         // 불러온 데이터 삽입
-        let _cate1 = detailData.category_names[0] ? detailData.category_names[0].id : '0';
-        let _cate2 = detailData.category_names[1] ? detailData.category_names[1].id : '0';
-        console.log('category', _cate1, _cate2);
+        let _cate1 = '0';
+        let _cate2 = '0';
+        if (detailData.category_names) {
+            _cate1 = detailData.category_names[0] ? detailData.category_names[0].id : '0';
+            _cate2 = detailData.category_names[1] ? detailData.category_names[1].id : '0';
+        }
         setInputs({
             ...inputs,
             ['category1']: _cate1,
@@ -159,7 +172,9 @@ const DetailContens = ({ type, editMode, detailData }) => {
             ['visibleState']: detailData.is_show ? 1 : 0,
             ['reservationState']: detailData.is_schedule
         });
-        setFileName(detailData.file_id);
+
+        setFileID(detailData.file_id);
+        setThumnailFileID(detailData.thumbnail_file_id);
         setContentsData(detailData.content);
         setReservationDate(
             detailData.schedule_date
@@ -209,6 +224,27 @@ const DetailContens = ({ type, editMode, detailData }) => {
     useEffect(() => {
         dispatch(activeReservationDate({ reduceReservationDate: reservationDate }));
     }, [reservationDate]);
+    useEffect(() => {
+        if (!fileID) return;
+        dispatch(activeFileId({ reduceFileId: fileID }));
+        fileInfo(fileID);
+    }, [fileID]);
+    useEffect(() => {
+        if (!thumnailFileID) return;
+        dispatch(activeThumbnailId({ reduceThumbnailId: thumnailFileID }));
+        fileInfo(thumnailFileID);
+    }, [thumnailFileID]);
+    useEffect(() => {
+        return () => {
+            dispatch(activeNotiCategory1({ reduceNotiCategory1: '' }));
+            dispatch(activeNotiCategory2({ reduceNotiCategory2: '' }));
+            dispatch(activeTopFixable({ reduceTopFixable: '' }));
+            dispatch(activePostState({ reducePostState: '' }));
+            dispatch(activeReservation({ reduceReservation: '' }));
+            dispatch(activeReservationDate({ reduceReservationDate: '' }));
+            dispatch(activeFileId({ reduceFileId: '' }));
+        }
+    }, [fileID]);
     //-- value 변경시 reducersㅇ에 바로 저장 -E- //
     return (
         <div className={cx('common-board--layout')}>
@@ -226,7 +262,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
                     </tr>
                     {type === 'notice' && (
                         <tr>
-                            <th className={'tb--title'}>카테고리1</th>
+                            <th className={'tb--title'}>카테고리1{editMode && <em className={styles.essential}>*</em>}</th>
                             <td className={'width15'}>
                                 <CustomSelectBox
                                     editMode={editMode}
@@ -249,7 +285,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
                         </tr>
                     )}
                     <tr>
-                        <th className={'tb--title'}>제목</th>
+                        <th className={'tb--title'}>제목{editMode && <em className={styles.essential}>*</em>}</th>
                         <td className={'width15'} colSpan="7">
                             <CustomTextfield
                                 editMode={editMode}
@@ -320,13 +356,14 @@ const DetailContens = ({ type, editMode, detailData }) => {
                             ) : (
                                 <>
                                     {visibleState === 1 ? '공개' : '비공개'}
-                                    {reservationState && `(게시 예약일시 : ${reservationDate})${reservationState}`}
+                                    {reservationState &&
+                                        ` (게시 예약일시 : ${moment(reservationDate.replace(' T ', ' ')).format('YYYY-MM-DD A hh:mm')})`}
                                 </>
                             )}
                         </td>
                     </tr>
                     <tr>
-                        <th className={'tb--title'}>내용</th>
+                        <th className={'tb--title'}>내용{editMode && <em className={styles.essential}>*</em>}</th>
                         <td className={'width15'} colSpan="7" style={{ maxWidth: '100px' }}>
                             {editMode ? (
                                 <Editor props={editParam} />
@@ -338,40 +375,39 @@ const DetailContens = ({ type, editMode, detailData }) => {
                     {(type === 'review-report' || type === 'economic-research') && (
                         <tr>
                             <th className="tb--title">썸네일</th>
-                            <td className="width15 add_file" colSpan="7">
+                            <td className="width15 thumnailFile" colSpan="7">
                                 {editMode ? (
                                     <TopInputLayout className={`${styles.inputWrap} file__upload--box`}>
-                                        <div className={`${styles.file_name}`}>
-                                            Notice.pdf<em>(110.00KB)</em>
-                                        </div>
-                                        <TextField
+                                        <input
+                                            accept="image/*"
+                                            id="thumnailFile"
                                             type="file"
-                                            id="file"
-                                            name="file"
-                                            size="medium"
-                                            className="file__upload--field"
+                                            name="thumnailFile"
                                             onChange={fileHandleChange}
-                                            inputProps={{
-                                                accept: '.jpg, .jpeg, .png, .gif'
-                                            }}
+                                            style={{ display: 'none' }}
                                         />
-                                        &nbsp;
-                                        <Button
-                                            className={`${styles.file_dave_btn}`}
-                                            disableElevation
-                                            size="medium"
-                                            type="button"
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={() => fileSave(file)}
-                                        >
-                                            업로드
-                                        </Button>
+                                        <label htmlFor="thumnailFile">
+                                            <Button size="medium" type="button" variant="contained" color="primary" component="span">
+                                                파일선택
+                                            </Button>
+                                        </label>
+                                        <div className={`${styles.file_name}`}>{thumnailFileName ? thumnailFileName : '-'}</div>
+                                        {thumnailFileName && (
+                                            <Button
+                                                size="medium"
+                                                type="button"
+                                                variant="contained"
+                                                color="primary"
+                                                component="span"
+                                                name="thumnailFile"
+                                                onClick={fileDeleteClickHandler}
+                                            >
+                                                삭제
+                                            </Button>
+                                        )}
                                     </TopInputLayout>
                                 ) : (
-                                    <>
-                                        Notice.pdf<em>(110.00KB)</em>
-                                    </>
+                                    <>{thumnailFileName ? thumnailFileName : '-'}</>
                                 )}
                             </td>
                         </tr>
@@ -381,31 +417,33 @@ const DetailContens = ({ type, editMode, detailData }) => {
                         <td className="width15 add_file" colSpan="7">
                             {editMode ? (
                                 <TopInputLayout className={`${styles.inputWrap} file__upload--box`}>
-                                    <div className={`${styles.file_name}`}>{fileName ? fileName : '-'}</div>
-                                    <TextField
+                                    <input
+                                        accept="image/*"
+                                        id="addFile"
                                         type="file"
-                                        id="file"
-                                        name="file"
-                                        size="medium"
-                                        className="file__upload--field"
+                                        name="addFile"
                                         onChange={fileHandleChange}
-                                        inputProps={{
-                                            accept:
-                                                '.doc, .docx, .xlsx, .xls, .ppt, .pptx, .ai, .mov, .mp4, .avi, .mkv, .jpg, .jpeg, .png, .gif, .pdf, .txt, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-                                        }}
+                                        style={{ display: 'none' }}
                                     />
-                                    &nbsp;
-                                    <Button
-                                        className={`${styles.file_dave_btn}`}
-                                        disableElevation
-                                        size="medium"
-                                        type="button"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() => fileSave(file)}
-                                    >
-                                        업로드
-                                    </Button>
+                                    <label htmlFor="addFile">
+                                        <Button size="medium" type="button" variant="contained" color="primary" component="span">
+                                            파일선택
+                                        </Button>
+                                    </label>
+                                    <div className={`${styles.file_name}`}>{fileName ? fileName : '-'}</div>
+                                    {fileName && (
+                                        <Button
+                                            size="medium"
+                                            type="button"
+                                            variant="contained"
+                                            color="primary"
+                                            component="span"
+                                            name="addFile"
+                                            onClick={fileDeleteClickHandler}
+                                        >
+                                            삭제
+                                        </Button>
+                                    )}
                                 </TopInputLayout>
                             ) : (
                                 <>{fileName ? fileName : '-'}</>

@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Grid } from '@mui/material';
@@ -10,6 +11,9 @@ import ShareSetting from 'components/cmsboard/ShareSetting';
 import DetailContens from 'components/cmsboard/DetailContens';
 import BottomButtonSet from 'components/cmsboard/BottomButtonSet';
 
+// transition
+import BoardApi from 'apis/cms/boardapi';
+
 //style
 import styles from './styles.module.scss';
 
@@ -17,26 +21,71 @@ import styles from './styles.module.scss';
 
 const PressReleaseView = () => {
     const { paramId } = useParams(); //상세번호
+    const [responseData, requestError, loading, { readBoard }] = BoardApi();
+
     const [isEditMode, setIsEditMode] = useState(false); //수정모드
+    const [detailData, setDetailData] = useState(null); //상세 데이터
+    const [shareData, setShareData] = useState(null); //공유 데이터
+    const [postingData, setPostingData] = useState({}); //게시 설정
 
     const changeEditState = () => {
         setIsEditMode(true);
     };
 
+    //전달 인자확인
     useEffect(() => {
-        console.log('paramId', paramId);
         if (!paramId) {
             setIsEditMode(true);
+            return;
         }
+        readBoard('press-releases', paramId);
     }, [paramId]);
+    // 통신 결과
+    useEffect(() => {
+        if (!responseData) {
+            return;
+        }
+        switch (responseData.transactionId) {
+            case 'readBoard':
+                if (responseData.data.data) {
+                    // console.log(responseData.data.data);
+                    const _contents = responseData.data.data;
+                    setDetailData(_contents);
+                    const _shareData = {
+                        id: _contents.id,
+                        share_title: _contents.share_title,
+                        share_description: _contents.share_description,
+                        share_file_id: _contents.share_file_id,
+                        share_button_name: _contents.share_button_name
+                    };
+                    setShareData(_shareData);
+                    const _postingData = {
+                        id: _contents.id,
+                        is_use_update_date: _contents.is_use_update_date,
+                        is_align_top: _contents.is_align_top
+                    };
+                    setPostingData(_postingData);
+                }
+                break;
+            default:
+                return;
+        }
+    }, [responseData]);
+
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className={styles.notceView}>
             <Grid item xs={12}>
                 <HeaderTitle titleNm="보도자료 상세" menuStep01="사이트 운영" menuStep02="보도자료 상세" />
-                <DetailContens type="press-release" editMode={isEditMode} />
-                <ShareSetting type="press-release" editMode={isEditMode} />
-                <PostSetting type="press-release" editMode={isEditMode} />
-                <BottomButtonSet type="press-release" editMode={isEditMode} changeEditState={changeEditState} />
+                <DetailContens type="press-release" editMode={isEditMode} detailData={detailData} />
+                <ShareSetting type="press-release" editMode={isEditMode} shareData={shareData} />
+                <PostSetting type="press-release" editMode={isEditMode} postingData={postingData} />
+                <BottomButtonSet
+                    type="press-release"
+                    editMode={isEditMode}
+                    changeEditState={changeEditState}
+                    id={detailData?.id}
+                    isDraft={detailData?.is_draft}
+                />
             </Grid>
         </Grid>
     );

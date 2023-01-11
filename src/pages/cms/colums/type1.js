@@ -1,4 +1,7 @@
-// 데이터 그리드 컬럼 보도자료관리, 이벤트관리, 가상자산검토보고서관리, 투자유의지정안내관리, 빗썸경제연구소관리
+//utils
+import { getDateFormat } from 'utils/CommonUtils';
+
+// 데이터 그리드 컬럼 이벤트관리, 가상자산검토보고서관리, 투자유의지정안내관리, 빗썸경제연구소관리
 export const columns = [
     {
         field: 'id',

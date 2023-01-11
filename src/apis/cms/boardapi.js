@@ -71,7 +71,7 @@ const BoardApis = () => {
     // 게시글 수정
     const updateBoard = (boardKey, boardId, data) => {
         callApi('updateBoard', {
-            axiosInstance: axiosInstanceDefault,
+            axiosInstance: axiosInstanceUpload,
             method: 'put',
             url: `/mng/cms/${boardKey}/${boardId}`,
             requestConfig: data
@@ -85,15 +85,6 @@ const BoardApis = () => {
             method: 'delete',
             url: `/mng/cms/${boardKey}/${boardId}`,
             requestConfig: {}
-        });
-    };
-    // 파일 업로드
-    const insertFileData = (data) => {
-        callApi('uploadFile', {
-            axiosInstance: axiosInstanceUpload,
-            method: 'post',
-            url: '/mng/cms/files',
-            requestConfig: data
         });
     };
 
@@ -140,6 +131,25 @@ const BoardApis = () => {
         });
     };
 
+    // 파일 업로드
+    const insertFileData = (data) => {
+        callApi('uploadFile', {
+            axiosInstance: axiosInstanceUpload,
+            method: 'post',
+            url: '/mng/cms/files',
+            requestConfig: data
+        });
+    };
+    // 파일 업로드
+    const fileInfo = (fileId) => {
+        callApi('fileInfo', {
+            axiosInstance: axiosInstanceDefault,
+            method: 'get',
+            url: `/mng/cms/files/${fileId}/info`,
+            requestConfig: {}
+        });
+    };
+
     return [
         responseData,
         requestError,
@@ -154,6 +164,7 @@ const BoardApis = () => {
             deleteBoard,
             getCategory,
             insertFileData,
+            fileInfo,
             changeBannerState
         }
     ];

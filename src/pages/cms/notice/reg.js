@@ -31,6 +31,7 @@ const NoticeView = () => {
     const changeEditState = () => {
         setIsEditMode(true);
     };
+
     //전달 인자확인
     useEffect(() => {
         if (!paramId) {
