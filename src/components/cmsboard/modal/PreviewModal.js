@@ -32,6 +32,7 @@ const PreviewModal = ({ open, onClose, viewMode }) => {
         <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box className={`${styles.preview_modal_wrap} ${viewMode}`}>
                 <h2 className={`${styles.modal_title}`}>{reduceTitle}</h2>
+                <div>2023-01-01 00:00:00</div>
                 <div className="common-board--layout" dangerouslySetInnerHTML={{ __html: editContents }}></div>
             </Box>
         </Modal>
