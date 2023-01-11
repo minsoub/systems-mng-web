@@ -28,16 +28,89 @@
     }
 }
 
-.preview_modal_wrap{
+.preview_modal_wrap {
     position: absolute;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
+    max-height: 600px;
+    overflow-y: auto;
     background-color: #fff;
     border: 2px solid #000;
     box-Shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%);
-    padding:32px;
+    padding:24px;
+    box-sizing: box-sizing;
+    &.pc {
+        .preview_modal_box {
+            width: 980px;
+            .modal_header {
+                padding-bottom: 24px;
+                border-bottom: 2px solid #1c2028;
+                .modal_header__title {
+                    font-size: 24px;
+                    font-weight: 500;
+                    line-height: 32px;
+                }
+    
+                .modal_header_box {
+                    margin-top: 13px;
+                    .modal_header__date {
+                        font-size: 16px;
+                        font-weight: 400;
+                        line-height: 23px;
+                        color: #93989e;
+                    }
+                }
+            }
+
+            .modal_content {
+                padding-top: 60px;
+            }
+            
+        }
+    }
+    &.mobile {
+        .preview_modal_box {
+            width: 360px;
+            .modal_header {
+                padding: 16px 0 40px;
+                border-bottom: 1px solid rgba(28, 32, 40, 0.1);
+
+                .modal_header__title {
+                    font-size: 24px;
+                    font-weight: 700;
+                    line-height: 34px;
+                    margin-bottom: 8px;
+                }
+                .modal_header_box {
+                    .modal_header__date {
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 20px;
+                        color: #ACB0B4;
+
+                    }
+                }
+            }
+
+            .modal_content {
+                padding-top: 40px;
+                word-break: break-all;
+                font-size: 16px !important;
+                p {
+                    word-wrap: break-word !important;
+                    line-height: 26px;
+                }
+                img,
+                table {
+                    max-width: 100%;
+                }
+                span {
+                    font-size: 16px !important;
+                }
+            }
+        }
+    }
     .modal_title{
         font-size: 1.5rem;
         font-weight: bold;
