@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Box, Modal } from '@mui/material';
+import { Box, Modal, Divider, Button } from '@mui/material';
 
 //library
 import PropTypes from 'prop-types';
@@ -35,8 +35,26 @@ const PreviewModal = ({ open, onClose, viewMode }) => {
     }, [open]);
 
     return (
-        <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            BackdropProps={{ style: { backgroundColor: 'rgba(0, 0, 0, 0.7' } }}
+        >
             <Box className={`${styles.preview_modal_wrap} ${viewModeStyle}`}>
+                <div className={styles.modal_title}>
+                    <h4 className={styles.header}>{viewMode} 미리보기</h4>
+                    <Button className={styles.button_close} size="small" onClick={onClose}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21 3.705L20.295 3L12 11.295L3.705 3L3 3.705L11.295 12L3 20.295L3.705 21L12 12.705L20.295 21L21 20.295L12.705 12L21 3.705V3.705Z"
+                                fill="#1C2028"
+                            />
+                        </svg>
+                    </Button>
+                </div>
+                <Divider sx={{ backgroundColor: 'transparent' }} />
                 <div className={styles.preview_modal_box}>
                     <div className={styles.modal_header}>
                         <h2 className={`${styles.modal_header__title}`}>{reduceTitle}</h2>
