@@ -10,6 +10,10 @@ db.menu_program_specification.insertMany([
       {
         action_method : 'GET',
         action_url : '/api/v1/mng/lrc/dashboard/line-code'
+      },
+      {
+        action_method : 'GET',
+        action_url : '/api/v1/mng/lrc/statusmanagment/line-code/tree'
       }
     ]
 },
