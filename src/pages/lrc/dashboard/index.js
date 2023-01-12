@@ -163,6 +163,7 @@ const LrcDashboard = () => {
                 break;
             case 'getLineList':
                 if (responseData.data.data && responseData.data.data.length > 0) {
+                    console.log('계열리스트', responseData.data.data);
                     setFoundationsStatus(responseData.data.data);
                 } else {
                     setFoundationsStatus([]);
@@ -224,7 +225,7 @@ const LrcDashboard = () => {
                     .filter((item) => item.type === 'BUSINESS')
                     .map((item) => (
                         <Grid key={item.id} item xs={3} sx={{ minWidth: '19%' }}>
-                            <AnalyticLrcFoundationForm id={item.id} title={item.name} count={item.count} child={mockData} />
+                            <AnalyticLrcFoundationForm id={item.id} title={item.name} count={item.count} child={item.children} />
                         </Grid>
                     ))}
             </div>
@@ -238,7 +239,7 @@ const LrcDashboard = () => {
                     .filter((item) => item.type === 'NETWORK')
                     .map((item) => (
                         <Grid key={item.id} item xs={3} sx={{ minWidth: '19%' }}>
-                            <AnalyticLrcFoundationForm id={item.id} title={item.name} count={item.count} child={mockData} />
+                            <AnalyticLrcFoundationForm id={item.id} title={item.name} count={item.count} child={item.children} />
                         </Grid>
                     ))}
             </div>

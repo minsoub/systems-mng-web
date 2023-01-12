@@ -17,7 +17,6 @@ const DashboardApi = () => {
                 start_date === undefined
                     ? `/mng/lrc/dashboard/status-code`
                     : `/mng/lrc/dashboard/status-code?fromDate=${start_date}&toDate=${end_date}`,
-            // url: `/mng/lrc/dashboard/status-code`,
             requestConfig: {}
         });
     };
@@ -28,7 +27,7 @@ const DashboardApi = () => {
         callApi('getLineList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/mng/lrc/dashboard/line-code`,
+            url: `/mng/lrc/statusmanagment/line-code/tree`,
             requestConfig: {}
         });
     };
