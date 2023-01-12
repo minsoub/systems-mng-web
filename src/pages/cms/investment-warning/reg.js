@@ -34,7 +34,6 @@ const InvestmentWarningView = () => {
     };
     //전달 인자확인
     useEffect(() => {
-        console.log('aaaa');
         if (!paramId) {
             setIsEditMode(true);
             return;

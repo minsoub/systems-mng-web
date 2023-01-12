@@ -8,6 +8,7 @@ import { Grid, Button } from '@mui/material';
 // project import
 import ButtonLayout from 'components/Common/ButtonLayout';
 import PreviewModal from '../modal/PreviewModal';
+import LoadingModal from '../modal/LoadingModal';
 
 // transition
 import BoardApi from 'apis/cms/boardapi';
@@ -52,6 +53,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
 
     const [detailID, setDetailID] = useState(id); // detail ID
     const [open, setOpen] = useState(false);
+    const [loadOpen, setLoadOpen] = useState(false);
     const [viewMode, setViewMode] = useState('pc');
 
     const openModal = (mode) => {
@@ -61,7 +63,9 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
     const handleClose = () => {
         setOpen(false);
     };
-
+    const loadClose = () => {
+        setLoadOpen(false);
+    };
     const deleteClick = () => {
         if (confirm('삭제를 하시겠습니까?')) {
             deleteBoard(type, id);
@@ -72,6 +76,9 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         navigate(`/cms/${type}/list`);
     };
     const submitClick = ($isDraft = false) => {
+        let categorys = [];
+        if (reduceNotiCategory1 !== '0') categorys.push(reduceNotiCategory1);
+        if (reduceNotiCategory2 !== '0') categorys.push(reduceNotiCategory2);
         const editContents = window['contentsEditor'].getPublishingHtml();
         const isTopFix = reduceTopFixable === 0 ? false : true;
         const isShow = reducePostState === 0 ? false : true;
@@ -79,9 +86,36 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         const scheduleDate = reduceReservationDate ? reduceReservationDate.replace(' T ', ' ') + ':00' : '';
         const isUseUpdateDate = reduceUpdateDate === 0 ? false : true;
         const isAlignTop = reduceTopNoti === 0 ? false : true;
-        let categorys = [];
-        if (reduceNotiCategory1 !== '0') categorys.push(reduceNotiCategory1);
-        if (reduceNotiCategory2 !== '0') categorys.push(reduceNotiCategory2);
+        let event_start_date = reduceEventStartDate ? reduceEventStartDate.replace(' T ', ' ') + ':00' : '';
+        let event_end_date = reduceEventEndDate ? reduceEventEndDate.replace(' T ', ' ') + ':00' : '';
+        let target = reduceEventJoinUser;
+        let button_name = reduceEventBtnName;
+        let button_color = reduceEventBtnColor;
+        let button_url = reduceEventBtnLink;
+        let participate_message = reduceEventSuccessMsg;
+        let duplicate_message = reduceEventOverlapMsg;
+        switch (reduceEventType) {
+            // 게시 유형 상태
+            case 'DEFAULT':
+                target = 'NOT_LOGIN';
+                event_start_date = '';
+                event_end_date = '';
+                button_name = '';
+                button_color = '';
+                button_url = '';
+                participate_message = '';
+                duplicate_message = '';
+                break;
+            case 'PARTICIPATION':
+                button_url = '';
+                break;
+            case 'LINK':
+                event_start_date = '';
+                event_end_date = '';
+                participate_message = '';
+                duplicate_message = '';
+                break;
+        }
 
         console.log('초안 : ', $isDraft);
         console.log('카테고리 : ', categorys);
@@ -103,15 +137,15 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         console.log('날자 업데이트 여부 : ', isUseUpdateDate);
         console.log('게시물 상단 노출 : ', isAlignTop);
         console.log('이벤트 유형 : ', reduceEventType);
-        console.log('이벤트 시작일시 : ', reduceEventStartDate);
-        console.log('이벤트 종료일시 : ', reduceEventEndDate);
-        console.log('이벤트 참여대상 : ', reduceEventJoinUser);
+        console.log('이벤트 시작일시 : ', event_start_date);
+        console.log('이벤트 종료일시 : ', event_end_date);
+        console.log('이벤트 참여대상 : ', target);
         console.log('이벤트 개인정보 수집 및 동의 : ', reduceEventPrivateTxt);
-        console.log('이벤트 버튼명 : ', reduceEventBtnName);
-        console.log('이벤트 버튼 색상 : ', reduceEventBtnColor);
-        console.log('이벤트 버튼 링크 경로 : ', reduceEventBtnLink);
-        console.log('이벤트 참여 완료시 메시지 : ', reduceEventSuccessMsg);
-        console.log('이벤트 중복 참여시 메시지 : ', reduceEventOverlapMsg);
+        console.log('이벤트 버튼명 : ', button_name);
+        console.log('이벤트 버튼 색상 : ', button_color);
+        console.log('이벤트 버튼 링크 경로 : ', button_url);
+        console.log('이벤트 참여 완료시 메시지 : ', participate_message);
+        console.log('이벤트 중복 참여시 메시지 : ', duplicate_message);
 
         let request = {
             title: reduceTitle,
@@ -127,7 +161,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
             is_draft: $isDraft,
             is_use_update_date: isUseUpdateDate,
             is_align_top: isAlignTop
-        };;
+        };
         const formData = new FormData();
         const addFile = document.getElementById('addFile') && document.getElementById('addFile').files[0];
         if (document.getElementById('addFile') && document.getElementById('addFile').value) {
@@ -159,6 +193,21 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
                     thumbnail_file_id: reduceThumbnailId
                 };
                 break;
+            case 'events':
+                const message = { participate_message, duplicate_message };
+                request = {
+                    ...request,
+                    type: reduceEventType,
+                    event_start_date,
+                    event_end_date,
+                    target,
+                    button_name,
+                    button_color,
+                    button_url,
+                    message,
+                    agreement_content: reduceEventPrivateTxt
+                };
+                break;
             default:
                 break;
         }
@@ -174,6 +223,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
             return;
         }
         formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
+        setLoadOpen(true);
         if (detailID) {
             updateBoard(type, detailID, formData);
         } else {
@@ -186,6 +236,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         if (!responseData) {
             return;
         }
+        setLoadOpen(false);
         switch (responseData.transactionId) {
             case 'createBoard':
                 if (responseData.data.data) {
@@ -298,6 +349,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
                 )}
             </ButtonLayout>
             <PreviewModal open={open} onClose={handleClose} viewMode={viewMode} />
+            <LoadingModal open={loadOpen} onClose={loadClose} />
         </Grid>
     );
 };

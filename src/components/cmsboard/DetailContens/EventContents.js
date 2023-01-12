@@ -19,12 +19,12 @@ import {
     activeEventStartDate,
     activeEventEndDate,
     activeEventJoinUser,
-    activeEventPrivateTxt,
     activeEventBtnName,
     activeEventBtnColor,
     activeEventBtnLink,
     activeEventSuccessMsg,
-    activeEventOverlapMsg
+    activeEventOverlapMsg,
+    activeEventPrivateTxt
 } from 'store/reducers/cms/DetailEventData';
 
 // utiles
@@ -35,13 +35,11 @@ import styles from './styles.module.scss';
 
 // =============|| DetailContents - EventContents ||============= //
 
-const EventContents = ({ editMode, handleOpen }) => {
+const EventContents = ({ editMode, handleOpen, detailData }) => {
     const dispatch = useDispatch();
 
     const [startDate, setStartDate] = useState(moment().format('YYYY.MM.DD')); // 이벤트 시작일
-
     const [endDate, setEndDate] = useState(moment().format('YYYY.MM.DD')); // 이벤트 종료일
-    const [privateText, setPrivateText] = useState(''); // 개인정보 수집 및  이용동의
     const [isDisableBtnBool, setIsDisableBtnBool] = useState(false); // 버튼, 버튼명 필드 사용여부
     const [isDisableEventDateBool, setIsDisableEventDateBool] = useState(false); // 이벤트 기간필드 사용여부
     const [inputs, setInputs] = useState({
@@ -50,8 +48,8 @@ const EventContents = ({ editMode, handleOpen }) => {
         eventLink: '', // 버튼 링크경로
         eventJoinMsg: '', // 참여 완료시 메시지
         eventOverlapMsg: '', // 중복 참여시 메시지
-        eventType: 1, // 이벤트 유형
-        targetPerson: 1 // 참여대상
+        eventType: 'DEFAULT', // 이벤트 유형
+        targetPerson: 'LOGIN' // 참여대상
     }); // 인풋 관리
     const { eventBtnName, eventBtnColor, eventLink, eventJoinMsg, eventOverlapMsg, eventType, targetPerson } = inputs;
 
@@ -74,7 +72,7 @@ const EventContents = ({ editMode, handleOpen }) => {
     useEffect(() => {
         const private_btn = document.querySelector('.private_btn');
         if (!private_btn) return;
-        if ((targetPerson === 2 && !isDisableBtnBool) || eventType === 1) {
+        if ((targetPerson === 'NOT_LOGIN' && !isDisableBtnBool) || eventType === 'DEFAULT') {
             private_btn.classList.add('Mui-disabled');
         } else {
             private_btn.classList.remove('Mui-disabled');
@@ -83,15 +81,15 @@ const EventContents = ({ editMode, handleOpen }) => {
 
     useEffect(() => {
         switch (eventType) {
-            case 1:
+            case 'DEFAULT':
                 setIsDisableEventDateBool(true);
                 setIsDisableBtnBool(true);
                 break;
-            case 2:
+            case 'PARTICIPATION':
                 setIsDisableEventDateBool(false);
                 setIsDisableBtnBool(false);
                 break;
-            case 3:
+            case 'LINK':
                 setIsDisableEventDateBool(true);
                 setIsDisableBtnBool(false);
                 break;
@@ -99,6 +97,16 @@ const EventContents = ({ editMode, handleOpen }) => {
                 return;
         }
     }, [eventType]);
+    const changeEventTypeTxt = ($type) => {
+        switch ($type) {
+            case 'DEFAULT':
+                return '게시형';
+            case 'PARTICIPATION':
+                return '참여형';
+            case 'LINK':
+                return '링크형';
+        }
+    }
     const onChange = (e) => {
         const { name, value } = e.target;
         setInputs({
@@ -106,6 +114,41 @@ const EventContents = ({ editMode, handleOpen }) => {
             [name]: value
         });
     };
+    useEffect(() => {
+        if (!detailData) return;
+        console.log(detailData);
+        // 불러온 데이터 삽입
+        setInputs({
+            ...inputs,
+            ['eventType']: detailData.type,
+            ['targetPerson']: detailData.target,
+            ['eventBtnName']: detailData.button_name ? detailData.button_name : '',
+            ['eventBtnColor']: detailData.button_color ? detailData.button_color : '',
+            ['eventLink']: detailData.button_url ? detailData.button_url : '',
+            ['eventJoinMsg']: detailData.message?.participate_message,
+            ['eventOverlapMsg']: detailData.message?.duplicate_message
+        });
+        setStartDate(
+            detailData.event_start_date
+                ? changeDateType(moment(detailData.event_start_date).format('YYYY-MM-DD A hh:mm'))
+                : changeDateType(
+                      moment()
+                          .add(+2, 'days')
+                          .format('YYYY-MM-DD')
+                  )
+        );
+        setEndDate(
+            detailData.event_end_date
+                ? changeDateType(moment(detailData.event_end_date).format('YYYY-MM-DD A hh:mm'))
+                : changeDateType(
+                      moment()
+                          .add(+2, 'days')
+                          .format('YYYY-MM-DD')
+                  )
+        );
+        dispatch(activeEventPrivateTxt({ reduceEventPrivateTxt: detailData.agreement_content }));
+    }, [detailData]);
+
     //-- value 변경시 reducersㅇ에 바로 저장 -S- //
     useEffect(() => {
         dispatch(activeEventType({ reduceEventType: eventType }));
@@ -119,9 +162,6 @@ const EventContents = ({ editMode, handleOpen }) => {
     useEffect(() => {
         dispatch(activeEventJoinUser({ reduceEventJoinUser: targetPerson }));
     }, [targetPerson]);
-    useEffect(() => {
-        dispatch(activeEventPrivateTxt({ reduceEventPrivateTxt: privateText }));
-    }, [privateText]);
     useEffect(() => {
         dispatch(activeEventBtnName({ reduceEventBtnName: eventBtnName }));
     }, [eventBtnName]);
@@ -137,6 +177,20 @@ const EventContents = ({ editMode, handleOpen }) => {
     useEffect(() => {
         dispatch(activeEventOverlapMsg({ reduceEventOverlapMsg: eventOverlapMsg }));
     }, [eventOverlapMsg]);
+    useEffect(() => {
+        return () => {
+            dispatch(activeEventType({ reduceEventType: '' }));
+            dispatch(activeEventStartDate({ reduceEventStartDate: '' }));
+            dispatch(activeEventEndDate({ reduceEventEndDate: '' }));
+            dispatch(activeEventJoinUser({ reduceEventJoinUser: '' }));
+            dispatch(activeEventBtnName({ reduceEventBtnName: '' }));
+            dispatch(activeEventBtnColor({ reduceEventBtnColor: '' }));
+            dispatch(activeEventBtnLink({ reduceEventBtnLink: '' }));
+            dispatch(activeEventSuccessMsg({ reduceEventSuccessMsg: '' }));
+            dispatch(activeEventOverlapMsg({ reduceEventOverlapMsg: '' }));
+            dispatch(activeEventPrivateTxt({ reduceEventPrivateTxt: '' }));
+        };
+    }, []);
     //-- value 변경시 reducersㅇ에 바로 저장 -E- //
     return (
         <>
@@ -152,9 +206,9 @@ const EventContents = ({ editMode, handleOpen }) => {
                                 value={eventType}
                                 onChange={onChange}
                             >
-                                <MenuItem value={1}>일반</MenuItem>
-                                <MenuItem value={2}>참여</MenuItem>
-                                <MenuItem value={3}>링크</MenuItem>
+                                <MenuItem value="DEFAULT">일반</MenuItem>
+                                <MenuItem value="PARTICIPATION">참여</MenuItem>
+                                <MenuItem value="LINK">링크</MenuItem>
                             </Select>
                             <div className="eventDateWrap">
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -186,8 +240,8 @@ const EventContents = ({ editMode, handleOpen }) => {
                         </>
                     ) : (
                         <>
-                            참여형 <br />
-                            (이벤트 기간 : 2022-10-25 12:00 ~ 2022-11-25 12:00)
+                            {changeEventTypeTxt(eventType)} <br />
+                            {eventType !== 'DEFAULT' && `(이벤트 기간 : ${startDate.replace(' T ', ' ')} ~ ${endDate.replace(' T ', ' ')})`}
                         </>
                     )}
                 </td>
@@ -203,8 +257,8 @@ const EventContents = ({ editMode, handleOpen }) => {
                                 value={targetPerson}
                                 onChange={onChange}
                             >
-                                <MenuItem value={1}>로그인 회원</MenuItem>
-                                <MenuItem value={2}>비로그인 회원</MenuItem>
+                                <MenuItem value="LOGIN">로그인 회원</MenuItem>
+                                <MenuItem value="NOT_LOGIN">비로그인 회원</MenuItem>
                             </Select>
                             <Button
                                 disabled={isDisableBtnBool}
@@ -223,20 +277,22 @@ const EventContents = ({ editMode, handleOpen }) => {
                         </>
                     ) : (
                         <>
-                            로그인 회원
-                            <Button
-                                className={styles.down_user}
-                                disableElevation
-                                size="medium"
-                                type="button"
-                                variant="contained"
-                                color="primary"
-                                onClick={() => {
-                                    handleOpen(0);
-                                }}
-                            >
-                                참여자 정보 다운로드
-                            </Button>
+                            {eventType === 'DEFAULT' ? '' : targetPerson === 'LOGIN' ? '로그인 회원' : '비로그인 회원'}
+                            {eventType === 'PARTICIPATION' && (
+                                <Button
+                                    className={styles.down_user}
+                                    disableElevation
+                                    size="medium"
+                                    type="button"
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => {
+                                        handleOpen(0);
+                                    }}
+                                >
+                                    참여자 정보 다운로드
+                                </Button>
+                            )}
                         </>
                     )}
                 </td>
@@ -251,7 +307,7 @@ const EventContents = ({ editMode, handleOpen }) => {
                         name="eventBtnName"
                         change={onChange}
                         holder="버튼명을 입력해 주세요."
-                        accessWap={[2, 3]}
+                        accessWap={['PARTICIPATION', 'LINK']}
                     />
                 </td>
                 <th className="tb--title">버튼 색상</th>
@@ -263,7 +319,7 @@ const EventContents = ({ editMode, handleOpen }) => {
                         name="eventBtnColor"
                         change={onChange}
                         holder="버튼색상을 입력해 주세요."
-                        accessWap={[2, 3]}
+                        accessWap={['PARTICIPATION', 'LINK']}
                     />
                 </td>
             </tr>
@@ -277,7 +333,7 @@ const EventContents = ({ editMode, handleOpen }) => {
                         name="eventLink"
                         change={onChange}
                         holder="링크를 입력해 주세요."
-                        accessWap={[3]}
+                        accessWap={['LINK']}
                     />
                 </td>
             </tr>
@@ -294,7 +350,7 @@ const EventContents = ({ editMode, handleOpen }) => {
                         name="eventJoinMsg"
                         change={onChange}
                         holder="메세지를 입력해 주세요."
-                        accessWap={[2]}
+                        accessWap={['PARTICIPATION']}
                     />
                 </td>
             </tr>
@@ -308,7 +364,7 @@ const EventContents = ({ editMode, handleOpen }) => {
                         name="eventOverlapMsg"
                         change={onChange}
                         holder="메세지를 입력해 주세요."
-                        accessWap={[2]}
+                        accessWap={['PARTICIPATION']}
                     />
                 </td>
             </tr>

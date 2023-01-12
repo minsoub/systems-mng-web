@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 // style
 import styles from './styles.module.scss';
 
-// =============|| Category - Modal ||============= //
+// =============|| DetailContents - PreviewModal ||============= //
 
 const PreviewModal = ({ open, onClose, viewMode }) => {
     const { reduceTitle } = useSelector((state) => state.cmsDetailData);
@@ -19,13 +19,11 @@ const PreviewModal = ({ open, onClose, viewMode }) => {
 
     useEffect(() => {
         if (!viewMode) return;
-        console.log(viewMode);
         if (viewMode === 'pc') {
             setViewModeStyle(styles.pc);
         } else {
             setViewModeStyle(styles.mobile);
         }
-        console.log(viewModeStyle);
     }, [viewMode]);
 
     useEffect(() => {

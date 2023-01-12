@@ -16,7 +16,7 @@ import { activeShareTitle, activeShareDesc, activeShareBtnName, activeShareFileI
 import styles from './styles.module.scss';
 
 const ShareSetting = ({ editMode, shareData }) => {
-    const [responseData, requestError, loading, { fileInfo }] = BoardApi();
+    const [responseData, requestError, loading, { fileInfo, downloadFileData }] = BoardApi();
     const dispatch = useDispatch();
     // 인풋 관리
     const [inputs, setInputs] = useState({
@@ -64,6 +64,9 @@ const ShareSetting = ({ editMode, shareData }) => {
         document.getElementById('shareFile').value = '';
         dispatch(activeShareFileId({ reduceShareFileId: '' }));
     };
+    const fileDownloadClickHandler = () => {
+        downloadFileData(fileID);
+    };
     // 연동결과 파싱
     useEffect(() => {
         if (!responseData) {
@@ -74,8 +77,21 @@ const ShareSetting = ({ editMode, shareData }) => {
                 const extension = responseData.data.data.extension.toLowerCase();
                 setInputs({
                     ...inputs,
-                    ['shareFileName']: responseData.data.data.name + '.' + extension
+                    ['shareFileName']: responseData.data.data.name + '.' + extension.toLowerCase()
                 });
+                break;
+            case 'downloadFile':
+                if (responseData.data) {
+                    let res = responseData;
+                    const url = window.URL.createObjectURL(new Blob([res.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `${shareFileName}`);
+                    link.style.cssText = 'display:none';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                }
                 break;
             default:
                 return;
@@ -189,7 +205,15 @@ const ShareSetting = ({ editMode, shareData }) => {
                                         )}
                                     </TopInputLayout>
                                 ) : (
-                                    <>{shareFileName ? shareFileName : '-'}</>
+                                    <>
+                                        {shareFileName ? (
+                                            <Button className={styles.file_download} onClick={fileDownloadClickHandler}>
+                                                {shareFileName}
+                                            </Button>
+                                        ) : (
+                                            '-'
+                                        )}
+                                    </>
                                 )}
                             </td>
                         </tr>

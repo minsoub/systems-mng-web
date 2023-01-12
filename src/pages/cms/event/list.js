@@ -43,8 +43,9 @@ const EventList = () => {
         if (requestError) {
             console.log('error requestError');
             console.log(requestError);
-            setErrorTitle('Error Message');
-            setErrorMessage(requestError);
+            //setErrorTitle('Error Message');
+            //setErrorMessage(requestError);
+            setErrorMessage('[' + requestError.data.code + '] ' + requestError.data.message);
             setOpen(true);
         }
     }, [requestError]);

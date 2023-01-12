@@ -1,6 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Button, MenuItem, Select, Box, TextField, Modal } from '@mui/material';
+import { Button, Box, TextField, Modal } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+// transition
+import { activeEventPrivateTxt } from 'store/reducers/cms/DetailEventData';
 
 // library
 import PropTypes from 'prop-types';
@@ -11,17 +16,29 @@ import styles from './styles.module.scss';
 // =============|| DetailContents - EventModal ||============= //
 
 const EventModal = ({ open, onClose, modalType }) => {
+    const dispatch = useDispatch();
+    const { reduceEventPrivateTxt } = useSelector((state) => state.cmsDetailEventData);
+
     const [value, setValue] = useState('');
 
     const handleChange = (event) => {
         setValue(event.target.value);
     };
     useEffect(() => {
-        console.log(modalType);
     }, [modalType]);
     useEffect(() => {
         if (!open) setValue('');
+        if (modalType === 1) {
+            setValue(reduceEventPrivateTxt);
+        }
     }, [open]);
+
+    const onSave = () => {
+        if (modalType === 1) {
+            dispatch(activeEventPrivateTxt({ reduceEventPrivateTxt: value }));
+            onClose();
+        }
+    };
 
     return (
         <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
@@ -85,8 +102,9 @@ const EventModal = ({ open, onClose, modalType }) => {
                                         variant="contained"
                                         color="primary"
                                         className={styles.buttons}
+                                        onClick={onSave}
                                     >
-                                        저장
+                                        {modalType === 1 ? '저장' : '다운로드'}
                                     </Button>
                                 </td>
                             </tr>

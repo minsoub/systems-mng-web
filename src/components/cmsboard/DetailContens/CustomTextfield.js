@@ -10,7 +10,7 @@ const CustomTextfield = ({ typeNum, editMode, value, name, change, holder, acces
     const [isDisAble, setIsDisAble] = useState(false);
 
     useEffect(() => {
-        if (accessWap.indexOf(Number(typeNum)) > -1) {
+        if (accessWap.indexOf(typeNum) > -1) {
             setIsDisAble(false);
         } else {
             setIsDisAble(true);
@@ -27,12 +27,12 @@ const CustomTextfield = ({ typeNum, editMode, value, name, change, holder, acces
 export default CustomTextfield;
 
 CustomTextfield.defaultProps = {
-    typeNum: 0,
-    accessWap: [0]
+    typeNum: 'DEFAULT',
+    accessWap: ['DEFAULT']
 };
 
 CustomTextfield.propTypes = {
-    typeNum: PropTypes.number,
+    typeNum: PropTypes.string,
     editMode: PropTypes.bool,
     value: PropTypes.string,
     name: PropTypes.string,

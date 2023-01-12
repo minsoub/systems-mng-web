@@ -45,7 +45,7 @@ import styles from './styles.module.scss';
 
 const DetailContens = ({ type, editMode, detailData }) => {
     const dispatch = useDispatch();
-    const [responseData, requestError, loading, { getCategory, insertFileData, fileInfo }] = BoardApi();
+    const [responseData, requestError, loading, { getCategory, fileInfo, downloadFileData }] = BoardApi();
 
     const [categoryList, setCategoryList] = useState([{ id: '0', name: '선택안함' }]); // 카테고리1 리스트
     const [reservationDate, setReservationDate] = useState(moment().format('YYYY.MM.DD A hh:mm')); // 게시 예약일자
@@ -54,6 +54,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
     const [fileID, setFileID] = useState(''); // 첨부파일 아이디
     const [thumnailFileName, setThumnailFileName] = useState(''); // 썸네일 파일 이름
     const [thumnailFileID, setThumnailFileID] = useState(''); // 썸네일 파일 아이디
+    const [downloadName, setDownloadName] = useState(''); // 다운로드 파일명
     const editParam = { editName: 'contentsEditor', value: { contentsData } }; // 에디터 설정관련
 
     const [inputs, setInputs] = useState({
@@ -113,16 +114,31 @@ const DetailContens = ({ type, editMode, detailData }) => {
                 }
                 break;
             case 'fileInfo':
-                const { id, name, extension } = responseData.data.data;
-                switch (id) {
-                    case fileID:
-                        setFileName(name + '.' + extension.toLowerCase());
-                        break;
-                    case thumnailFileID:
-                        setThumnailFileName(name + '.' + extension.toLowerCase());
-                        break;
-                    default:
-                        break;
+                if (responseData.data.data) {
+                    const { id, name, extension } = responseData.data.data;
+                    switch (id) {
+                        case fileID:
+                            setFileName(name + '.' + extension.toLowerCase());
+                            break;
+                        case thumnailFileID:
+                            setThumnailFileName(name + '.' + extension.toLowerCase());
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            case 'downloadFile':
+                if (responseData.data) {
+                    let res = responseData;
+                    const url = window.URL.createObjectURL(new Blob([res.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `${downloadName}`);
+                    link.style.cssText = 'display:none';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
                 }
                 break;
             default:
@@ -160,6 +176,14 @@ const DetailContens = ({ type, editMode, detailData }) => {
             default:
                 break;
         }
+    };
+    const thumnailFileClickHandler = () => {
+        setDownloadName(thumnailFileName);
+        downloadFileData(thumnailFileID);
+    };
+    const fileDownloadClickHandler = () => {
+        setDownloadName(fileName);
+        downloadFileData(fileID);
     };
 
     useEffect(() => {
@@ -253,7 +277,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
             dispatch(activeReservationDate({ reduceReservationDate: '' }));
             dispatch(activeFileId({ reduceFileId: '' }));
         }
-    }, [fileID]);
+    }, []);
     //-- value 변경시 reducersㅇ에 바로 저장 -E- //
     return (
         <div className={cx('common-board--layout')}>
@@ -416,7 +440,15 @@ const DetailContens = ({ type, editMode, detailData }) => {
                                         )}
                                     </TopInputLayout>
                                 ) : (
-                                    <>{thumnailFileName ? thumnailFileName : '-'}</>
+                                    <>
+                                        {thumnailFileName ? (
+                                            <Button className={styles.file_download} onClick={thumnailFileClickHandler}>
+                                                {thumnailFileName}
+                                            </Button>
+                                        ) : (
+                                            '-'
+                                        )}
+                                    </>
                                 )}
                             </td>
                         </tr>
@@ -454,11 +486,19 @@ const DetailContens = ({ type, editMode, detailData }) => {
                                     )}
                                 </TopInputLayout>
                             ) : (
-                                <>{fileName ? fileName : '-'}</>
+                                <>
+                                    {fileName ? (
+                                        <Button className={styles.file_download} onClick={fileDownloadClickHandler}>
+                                            {fileName}
+                                        </Button>
+                                    ) : (
+                                        '-'
+                                    )}
+                                </>
                             )}
                         </td>
                     </tr>
-                    {type === 'events' && <EventContents editMode={editMode} handleOpen={handleOpen} />}
+                    {type === 'events' && <EventContents editMode={editMode} handleOpen={handleOpen} detailData={detailData} />}
                 </tbody>
             </table>
             <EventModal open={open} onClose={handleClose} modalType={modalType} />

@@ -1,6 +1,7 @@
 import useAxios from 'apis/useAxios';
 import axiosInstanceUpload from 'apis/axiosUpload';
 import axiosInstanceDefault from 'apis/axiosDefault';
+import axiosInstanceDownload from 'apis/axiosDownload';
 
 const BoardApis = () => {
     const [responseData, requestError, loading, callApi] = useAxios();
@@ -24,9 +25,17 @@ const BoardApis = () => {
             // 사용 상태
             apiURL = apiURL + '&is_use=' + (request.is_use == 1 ? 'true' : 'false');
         }
-        if (request.event_type != undefined && request.event_type != 0) {
+        switch (request.event_type) {
             // 게시 유형 상태
-            apiURL = apiURL + '&event_type=' + (request.event_type == 1 ? 'true' : 'false');
+            case '1':
+                apiURL = apiURL + '&event_type=DEFAULT';
+                break;
+            case '2':
+                apiURL = apiURL + '&event_type=PARTICIPATION';
+                break;
+            case '3':
+                apiURL = apiURL + '&event_type=LINK';
+                break;
         }
         if (request.is_show != undefined && request.is_show != 0) {
             // 사용 상태
@@ -140,7 +149,16 @@ const BoardApis = () => {
             requestConfig: data
         });
     };
-    // 파일 업로드
+    // 파일 다운로드
+    const downloadFileData = (fileId) => {
+        callApi('downloadFile', {
+            axiosInstance: axiosInstanceDownload,
+            method: 'get',
+            url: `/mng/cms/files/${fileId}`,
+            requestConfig: {}
+        });
+    };
+    // 파일 정보
     const fileInfo = (fileId) => {
         callApi('fileInfo', {
             axiosInstance: axiosInstanceDefault,
@@ -165,6 +183,7 @@ const BoardApis = () => {
             getCategory,
             insertFileData,
             fileInfo,
+            downloadFileData,
             changeBannerState
         }
     ];
