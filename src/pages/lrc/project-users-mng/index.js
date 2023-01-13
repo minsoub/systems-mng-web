@@ -4,6 +4,8 @@ import cx from 'classnames';
 import moment from 'moment';
 import { Button, Grid, Stack, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import { getDateFormat } from 'utils/CommonUtils';
+import ProjectUserMngApi from 'apis/lrc/projectUsersMng/projectUserMngApi';
+
 import HeaderTitle from 'components/HeaderTitle';
 import MainCard from 'components/Common/MainCard';
 import SearchDate from 'components/ContentManage/SearchDate';
@@ -72,7 +74,11 @@ const columns = [
     }
 ];
 
+// ==============================|| ProjectUsersMngPage - DEFAULT ||============================== //
+
 const ProjectUsersMngPage = () => {
+    const [responseData, requestError, Loading, { projectUserMngSearch }] = ProjectUserMngApi();
+
     const { reduceFromDate, reduceToDate, reducePeriod, reduceCategory, reduceKeyword } = useSelector(
         (state) => state.lrcProjectUserMngSearchReducer
     );
@@ -83,9 +89,9 @@ const ProjectUsersMngPage = () => {
     const [dataGridRows, setDataGridRows] = useState([]);
 
     // 검색 조건
-    const [start_date, setStartDate] = useState('');
-    const [end_date, setEndDate] = useState('');
-    const [period, setPeriod] = useState('1');
+    const [start_date, setStartDate] = useState(undefined);
+    const [end_date, setEndDate] = useState(undefined);
+    const [period, setPeriod] = useState('5');
     const [keyword, setKeyword] = useState('');
     const [category, setCategory] = useState('');
 
@@ -110,6 +116,35 @@ const ProjectUsersMngPage = () => {
                 break;
         }
     };
+
+    // 기간 선택시 날짜 변경
+    const setDateFromToSet = (periodIndex) => {
+        switch (periodIndex) {
+            case '1':
+                setStartDate(moment().format('YYYY-MM-DD'));
+                setEndDate(moment().format('YYYY-MM-DD'));
+                break;
+            case '2':
+                setStartDate(moment().add(-1, 'weeks').format('YYYY-MM-DD'));
+                setEndDate(moment().format('YYYY-MM-DD'));
+                break;
+            case '3':
+                setStartDate(moment().add(-1, 'months').format('YYYY-MM-DD'));
+                setEndDate(moment().format('YYYY-MM-DD'));
+                break;
+            case '4':
+                setStartDate(moment().add(-1, 'months').format('YYYY-MM-DD'));
+                setEndDate(moment().format('YYYY-MM-DD'));
+                break;
+            case '5':
+                setStartDate(undefined);
+                setEndDate(undefined);
+                break;
+            default:
+                break;
+        }
+    };
+
     const handleChange = (e) => {
         switch (e.target.name) {
             case 'start_date':
@@ -153,17 +188,7 @@ const ProjectUsersMngPage = () => {
             end_date,
             keyword
         };
-        searchBoardList(boardMasterId, request);
-
-        // 검색 조건에 대해서 상태를 저장한다.
-        const searchData = {
-            reduceFromDate: start_date,
-            reduceToDate: end_date,
-            reducePeriod: period,
-            reduceKeyword: keyword,
-            reduceCategory: category
-        };
-        dispatch(setSearchData(searchData));
+        projectUserMngSearch(request);
     };
 
     //체크박스 선택된 row id 저장
@@ -178,7 +203,7 @@ const ProjectUsersMngPage = () => {
     // 그리드 클릭
     const handleClick = (rowData) => {
         if (rowData && rowData.field && rowData.field !== '__check__') {
-            navigate(`/cpc/contents/notice/reg/${rowData.id}`);
+            // navigate(`/cpc/contents/notice/reg/${rowData.id}`);
         }
     };
 
@@ -187,19 +212,40 @@ const ProjectUsersMngPage = () => {
 
     // onload
     useEffect(() => {
-        setStartDate(moment().format('YYYY-MM-DD'));
-        setEndDate(moment().format('YYYY-MM-DD'));
-        setPeriod(1);
-
-        // reduce 상태값을 사용하여 검색을 수행한다.
-        if (reduceFromDate) setStartDate(reduceFromDate);
-        if (reduceToDate) setEndDate(reduceToDate);
-        if (reduceKeyword) setKeyword(reduceKeyword);
-        if (reducePeriod) setPeriod(reducePeriod);
-        if (reduceCategory) setCategory(reduceCategory);
-
+        const request = {
+            start_date,
+            end_date
+        };
+        projectUserMngSearch(request);
         setIsSearch(true);
     }, []);
+
+    // transaction error 처리
+    useEffect(() => {
+        if (requestError) {
+            if (requestError.result === 'FAIL') {
+                console.log('error requestError');
+                console.log(requestError);
+            }
+        }
+    }, [requestError]);
+
+    // Transaction Return
+    useEffect(() => {
+        if (!responseData) {
+            return;
+        }
+        switch (responseData.transactionId) {
+            case 'getList':
+                if (responseData.data.data && responseData.data.data.length > 0) {
+                    setDataGridRows(responseData.data.data);
+                } else {
+                    setDataGridRows([]);
+                }
+                break;
+            default:
+        }
+    }, [responseData]);
 
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75}>
@@ -217,6 +263,7 @@ const ProjectUsersMngPage = () => {
                         endName="end_date"
                         changeDate={changeDate}
                         resetPeriod={resetPeriod}
+                        addAll={true}
                     />
                     {/* 카테고리 영역 */}
                     <div className={cx('category')}>
