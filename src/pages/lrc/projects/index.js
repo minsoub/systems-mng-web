@@ -732,7 +732,7 @@ const ProjectsPage = () => {
                                             {getDateFormatSecond(item.create_date)}
                                         </TableCell>
                                         <TableCell style={{ width: '10%' }} align="center" component="td" scope="row">
-                                            {getDateFormatSecond(item.create_date)}
+                                            {getDateFormatSecond(item.update_date)}
                                         </TableCell>
                                     </TableRow>
                                 ))}

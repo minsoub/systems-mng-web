@@ -11,7 +11,7 @@ export const getDateFormat = (paramDate) => {
 };
 export const getDateFormatSecond = (paramDate) => {
     if (paramDate) {
-        const dateFormat = 'YYYY-MM-DD HH:mm:ss';
+        const dateFormat = 'YYYY.MM.DD HH:mm:ss';
         const newDate = moment(paramDate).add(9, 'h').format(dateFormat);
         return newDate;
     }
