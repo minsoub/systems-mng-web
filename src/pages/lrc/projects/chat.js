@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import { useSelector } from 'react-redux';
-import useRSocketClient from 'apis/chat/index';
 import ChatApi from 'apis/chat/chatapi';
 import MessageLeft from 'components/Chat/MessageLeft';
 import MessageRight from 'components/Chat/MessageRight';
@@ -21,18 +20,7 @@ const Chat = forwardRef((props, ref) => {
     const [resData, reqError, loading, { chatExistsAndSave, deleteChat, chatExcelDownload, getChatList, postCreateChat }] = ChatApi();
     const [responseDataC, requestError, loadingData, { sendEmailToProjectUser }] = FoundationApi();
     const { siteId } = useSelector((state) => state.auth);
-    // const [
-    //     clientError,
-    //     rSocket,
-    //     createClient,
-    //     sendJoinChat,
-    //     connectionClose,
-    //     sendRequestChannel,
-    //     sendRequestResponse,
-    //     sendDataJoinChat,
-    //     responseData,
-    //     responseError
-    // ] = useRSocketClient();
+    const [matchChatCount, setMatchChatCount] = useState(0);
 
     useImperativeHandle(ref, () => ({
         sendRequest,
@@ -41,7 +29,6 @@ const Chat = forwardRef((props, ref) => {
     }));
     // 가짜 데이터
     const [messageList, setMessageList] = useState([]);
-    const [realMessageList, setRealMessageList] = useState([]);
     const refChatArea = useRef(null);
 
     const domMessage = useRef();
@@ -259,214 +246,6 @@ const Chat = forwardRef((props, ref) => {
         getChatList(siteId, projectId);
     }, [projectId, fileList, chatStart]);
 
-    // useEffect(() => {
-    // console.log({ fileList });
-    // if (messageList.length) {
-    //     if (chatStart) {
-    //         const newMessageList = messageList.map((message) => {
-    //             const file = fileInfo(message.message);
-    //             if (file) {
-    //                 return {
-    //                     ...message,
-    //                     fileKey: file.id,
-    //                     fileName: file.file_name,
-    //                     fileSize: file.file_size,
-    //                     fileType: file.file_type,
-    //                     message: `첨부파일 : ${file.file_name}`
-    //                 };
-    //             }
-    //             return message;
-    //         });
-    //         console.log({ newMessageList });
-    //         setRealMessageList(newMessageList);
-    //     }
-    // }
-    // if (rSocket) {
-    //     console.log(chatStart);
-    //     if (chatStart === true) {
-    //         console.log('>> file id is changed.....');
-    //         console.log(projectId);
-    //         //setMessageList([]);
-    //         if (fileItem) {
-    //             let data = fileItem;
-    //             const fileKey = data.message.replace('FILE_MESSAGE::', '');
-    //             const fileInfo = fileList.find((file) => {
-    //                 return file.id === fileKey;
-    //             });
-    //             if (fileInfo) {
-    //                 data.fileKey = fileInfo.id;
-    //                 data.fileName = fileInfo.file_name;
-    //                 data.fileSize = fileInfo.file_size;
-    //                 data.fileType = fileInfo.file_type;
-    //                 data.message = `첨부파일 : ${data.fileName}`;
-    //
-    //                 setMessageList([...messageList, data]);
-    //             }
-    //             setFileItem('');
-    //         } else {
-    //             // sendDataJoinChat('join-chat', projectId);
-    //         }
-    //     }
-    // }
-    // }, [fileList, chatStart]);
-
-    // response 값 처리
-    // useEffect(() => {
-    //     if (!responseData) return;
-    //     console.log('>> get response data: ', responseData);
-    // if (responseData) {
-    //     if (responseData.length > 0) {
-    //         console.log('here');
-    //         let msg = [];
-    //         let data = {};
-    //         console.log(`>> chat list data << `);
-    //         responseData.map((item, index) => {
-    //             if (item.id === null) return;
-    //             let data = {};
-    //             //console.log(item);
-    //
-    //             if (item.role === 'ADMIN') {
-    //                 data = {
-    //                     id: item.id,
-    //                     receiver: 'receiveUser',
-    //                     sender: item.name ? item.name : 'Listing Team',
-    //                     message: item.content,
-    //                     type: item.role,
-    //                     createdDt: getDateFormatSecond(item.create_date),
-    //                     fileKey: '',
-    //                     fileName: '',
-    //                     fileSize: '',
-    //                     fileType: ''
-    //                 };
-    //             } else {
-    //                 data = {
-    //                     id: item.id,
-    //                     receiver: 'Listing Team',
-    //                     sender: item.email,
-    //                     message: item.content,
-    //                     type: item.role,
-    //                     createdDt: getDateFormatSecond(item.create_date),
-    //                     fileKey: '',
-    //                     fileName: '',
-    //                     fileSize: '',
-    //                     fileType: ''
-    //                 };
-    //                 sendMailaddress.current = item.email;
-    //                 //console.log('>> found sendMail address : %s', sendMailaddress.current);
-    //             }
-    //
-    //             if (item.content.indexOf('FILE_MESSAGE::') !== -1) {
-    //                 console.log('>> found file data => FILE_MESSAGE');
-    //                 const fileKey = item.content.replace('FILE_MESSAGE::', '');
-    //                 const fileInfo = fileList.find((file) => {
-    //                     return file.id === fileKey;
-    //                 });
-    //                 if (fileInfo) {
-    //                     data.fileKey = fileInfo.id;
-    //                     data.fileName = fileInfo.file_name;
-    //                     data.fileSize = fileInfo.file_size;
-    //                     data.fileType = fileInfo.file_type;
-    //                     data.message = `첨부파일 : ${data.fileName}`;
-    //                 }
-    //             }
-    //             //console.log(data);
-    //             msg.push(data);
-    //             //setMessageList([...messageList, mDataSend]);
-    //         });
-    //         setMessageList(msg);
-    //     } else {
-    //         if (responseData.id) {
-    //             console.log('called....');
-    //             if (responseData.operation_type !== 'REPLACE') {
-    //                 let data = {};
-    //                 if (responseData.role === 'ADMIN') {
-    //                     data = {
-    //                         id: responseData.id,
-    //                         receiver: 'receiveUser',
-    //                         sender: responseData.name ? responseData.name : 'Listing Team',
-    //                         message: responseData.content,
-    //                         type: responseData.role,
-    //                         createdDt: getDateFormatSecond(responseData.create_date),
-    //                         fileKey: '',
-    //                         fileName: '',
-    //                         fileSize: '',
-    //                         fileType: ''
-    //                     };
-    //                 } else {
-    //                     data = {
-    //                         id: responseData.id,
-    //                         receiver: 'Listing Team',
-    //                         sender: responseData.email,
-    //                         message: responseData.content,
-    //                         type: responseData.role,
-    //                         createdDt: getDateFormatSecond(responseData.create_date),
-    //                         fileKey: '',
-    //                         fileName: '',
-    //                         fileSize: '',
-    //                         fileType: ''
-    //                     };
-    //                     sendMailaddress.current = responseData.email;
-    //                 }
-    //                 let item = responseData.content;
-    //                 if (item.indexOf('FILE_MESSAGE::') !== -1) {
-    //                     const fileKey = item.replace('FILE_MESSAGE::', '');
-    //                     const fileInfo = fileList.find((file) => {
-    //                         return file.id === fileKey;
-    //                     });
-    //                     if (fileInfo) {
-    //                         data.fileKey = fileInfo.id;
-    //                         data.fileName = fileInfo.file_name;
-    //                         data.fileSize = fileInfo.file_size;
-    //                         data.fileType = fileInfo.file_type;
-    //                         data.message = `첨부파일 : ${data.fileName}`;
-    //
-    //                         setMessageList([...messageList, data]);
-    //                     } else {
-    //                         if (item.indexOf('FILE_MESSAGE::') !== -1) {
-    //                             setFileItem(data);
-    //                             fileSearch(projectId, fileKey);
-    //                         }
-    //                     }
-    //                 } else {
-    //                     setMessageList([...messageList, data]);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-    // }, [responseData]);
-
-    // 에러처리
-    // useEffect(() => {
-    //     console.log(responseError);
-    //     if (!responseError) return;
-    //
-    //     if (responseError.toString().indexOf('Socket close') !== -1 || responseError.toString().indexOf('connection was closed') !== -1) {
-    //         //if (!rSocket) {
-    //         console.log('>> chat error occured...rSocket closed. timer start => createClient call...');
-    //         createClient(projectId);
-    //         // let timer = setTimeout(() => {
-    //         //     createClient(projectId);
-    //         // }, 2000);
-    //
-    //         // return () => {
-    //         //     clearTimeout(timer);
-    //         // };
-    //     } else {
-    //         console.log('>> chat error occured...rSocket is connected.... => join-chat call...');
-    //         setMessageList([]);
-    //         sendDataJoinChat('join-chat', projectId);
-    //         // let timer = setTimeout(() => {
-    //         //     setMessageList([]);
-    //         //     sendJoinChat('join-chat', projectId);
-    //         // }, 2000);
-    //
-    //         // return () => {
-    //         //     clearTimeout(timer);
-    //         // };
-    //     }
-    // }, [responseError]);
-
     useEffect(() => {
         initChatScroll();
     }, [messageList]);
@@ -497,6 +276,7 @@ const Chat = forwardRef((props, ref) => {
             }
         });
     };
+
     const searchClick = () => {
         console.log(refKeyword.current.value);
         const keyword = refKeyword.current.value;
@@ -557,6 +337,7 @@ const Chat = forwardRef((props, ref) => {
                 item.innerHTML = nl2brToString(comment);
             }
         });
+        setMatchChatCount(matchCount);
 
         /* 마지막라인까지 검색이 끝나면 초기화하여 다시 검색할 수 있도록 한다. */
         if (searchPosNow + 1 >= matchCount) {
@@ -578,6 +359,7 @@ const Chat = forwardRef((props, ref) => {
         });
         prevSearchKeyword = '';
         searchPosNow = 0;
+        setMatchChatCount(0);
     };
 
     // 내역 다운로드
@@ -630,9 +412,12 @@ const Chat = forwardRef((props, ref) => {
                 </ButtonLayout>
             </FlexBox>
             <div className="chat--room">
-                <p className="chat--room__search-result">
-                    총 <strong>6</strong>건의 검색결과가 있습니다.
-                </p>
+                {matchChatCount > 0 && (
+                    <p className="chat--room__search-result">
+                        총 <strong>{matchChatCount}</strong>건의 검색결과가 있습니다.
+                    </p>
+                )}
+
                 <div className="chat--room__box" id="scrollId" ref={refChatArea}>
                     <ChattingRoom>
                         {messageList.length > 0 &&

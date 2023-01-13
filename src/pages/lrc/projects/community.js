@@ -301,7 +301,7 @@ const ProjectCommunity = (props) => {
             <MainCard>
                 {/* 파일 업로드 */}
                 {/* FileUpload 임시적용 동작안됨 */}
-                <FileUpload id={paramId} insertChatFile={insertChatFile} />
+                {/*<FileUpload id={paramId} insertChatFile={insertChatFile} />*/}
                 <FlexBox sx={{ justifyContent: 'space-between', px: '0.7rem' }}>
                     <Typography variant="h4">첨부파일 목록</Typography>
                     <TopInputLayout className="file__upload--box">
