@@ -3,19 +3,23 @@
     align-items: center;
     display: flex;
 }
-.input--field{
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
-  &__label {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex: 1;
-  }
-  &__content {
-    display: flex;
-    align-items: center;
-    flex: 4;
+
+.line-detail__table {
+  margin: 1rem 0;
+  background: #ffffff;
+  width: 100%;
+  tr {
+    td {
+      border: 1.5px solid #e5e5e5;
+      padding: 0.5rem 1rem;
+    }
+    .line-detail__table-label {
+      background: #e6ebf1;
+      font-weight: 700;
+      text-align: right;
+    }
+    .line-detail__table-children {
+
+    }
   }
 }

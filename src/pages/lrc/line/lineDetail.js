@@ -3,22 +3,12 @@ import MainCard from 'components/Common/MainCard';
 import ButtonLayout from 'components/Common/ButtonLayout';
 import React, { useEffect, useState } from 'react';
 
-const InputField = ({ title, children }) => {
+const Field = ({ title, children }) => {
     return (
-        <div className={'input--field'} style={{ display: 'flex', gap: '1rem', marginBottom: 8 }}>
-            <div
-                className={'input--field__label'}
-                style={{ flex: 1, display: 'flex', textAlign: 'center', alignItems: 'center', justifyContent: 'flex-end' }}
-            >
-                <Typography style={{ fontWeight: 700 }}>{title}</Typography>
-            </div>
-            <div
-                className={'input--field__content'}
-                style={{ flex: 4, display: 'flex', textAlign: 'center', alignItems: 'center', justifyContent: 'flex-end' }}
-            >
-                {children}
-            </div>
-        </div>
+        <tr>
+            <td className={'line-detail__table-label'}>{title}</td>
+            <td className={'line-detail__table-children'}>{children}</td>
+        </tr>
     );
 };
 
@@ -39,8 +29,8 @@ const LineDetail = ({ inputs, handleBlur, handleChange, saveClick, deleteClick, 
         <Grid item xs={8} className="blank--layout">
             <Typography variant="h3">계열등록</Typography>
 
-            <MainCard sx={{ mt: 2.5 }}>
-                <InputField title={'계열명'}>
+            <table className="line-detail__table">
+                <Field title={'계열명'}>
                     <TextField
                         id="filled-hidden-label-small"
                         type="medium"
@@ -51,8 +41,8 @@ const LineDetail = ({ inputs, handleBlur, handleChange, saveClick, deleteClick, 
                         onChange={handleChange}
                         fullWidth
                     />
-                </InputField>
-                <InputField title="계열 위치">
+                </Field>
+                <Field title="계열 위치">
                     <TextField
                         id="filled-hidden-label-small"
                         type="medium"
@@ -64,8 +54,8 @@ const LineDetail = ({ inputs, handleBlur, handleChange, saveClick, deleteClick, 
                         onChange={handleChange}
                         fullWidth
                     />
-                </InputField>
-                <InputField title="정렬 순서">
+                </Field>
+                <Field title="정렬 순서">
                     <TextField
                         id="filled-hidden-label-small"
                         type="medium"
@@ -76,8 +66,8 @@ const LineDetail = ({ inputs, handleBlur, handleChange, saveClick, deleteClick, 
                         onChange={handleChange}
                         fullWidth
                     />
-                </InputField>
-                <InputField title="사용 여부">
+                </Field>
+                <Field title="사용 여부">
                     <RadioGroup
                         row
                         aria-labelledby="demo-row-radio-buttons-group-label"
@@ -89,8 +79,8 @@ const LineDetail = ({ inputs, handleBlur, handleChange, saveClick, deleteClick, 
                         <FormControlLabel value="true" control={<Radio />} label="사용함" />
                         <FormControlLabel value="false" control={<Radio />} label="사용안함" />
                     </RadioGroup>
-                </InputField>
-            </MainCard>
+                </Field>
+            </table>
             <ButtonLayout buttonName="bottom--blank__small" style={{ marginBottom: '20px', justifyContent: 'flex-end' }}>
                 <Button
                     disableElevation
