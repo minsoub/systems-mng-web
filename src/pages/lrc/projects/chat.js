@@ -214,7 +214,7 @@ const Chat = forwardRef((props, ref) => {
                     if (resData.data.data.length) {
                         setMessageList(
                             resData.data.data.map((item) => {
-                                if (item.id === null) return;
+                                if (item.id === null) return [];
                                 return parsingChatData(item);
                                 //setMessageList([...messageList, mDataSend]);
                             })
@@ -422,7 +422,6 @@ const Chat = forwardRef((props, ref) => {
                     <ChattingRoom>
                         {messageList.length > 0 &&
                             messageList.map((item, idx) => {
-                                const key = `key_${idx}`;
                                 if (item.type === 'ADMIN') {
                                     return (
                                         <MessageRight
