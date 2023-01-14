@@ -13,11 +13,13 @@ const DashboardApi = () => {
         callApi('getList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url:
-                start_date === undefined
-                    ? `/mng/lrc/dashboard/status-code`
-                    : `/mng/lrc/dashboard/status-code?fromDate=${start_date}&toDate=${end_date}`,
-            requestConfig: {}
+            url: `/mng/lrc/dashboard/status-code`,
+            requestConfig: {
+                params: {
+                    fromDate: start_date,
+                    toDate: end_date
+                }
+            }
         });
     };
 
