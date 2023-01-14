@@ -1,27 +1,46 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Button, Grid, Typography } from '@mui/material';
-
+// library
+import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
-
+// project import
 import AnalyticLrcForm from 'components/cards/statistics/AnalyticLrcForm';
 import AnalyticLrcFoundationForm from 'components/cards/statistics/AnalyticLrcFoundationForm';
 import AnalyticLrcFoundationStatusForm from 'components/cards/statistics/AnalyticLrcFoundationStatusForm';
-
+import ErrorScreen from 'components/ErrorScreen';
 import DashboardSearchDate from './components/DashboardSearchDate';
 
+// transition
 import DashboardApi from 'apis/lrc/dashboard/index';
+
+// utils
+import { setSearchData } from 'store/reducers/lrc/DashboardSearch';
+
+// style
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const LrcDashboard = () => {
     const [responseData, requestError, Loading, { foundationSearch, lineSearch }] = DashboardApi();
 
+    // 검색 조건 Reduce
+    const { reduceFromDate, reduceToDate, reducePeriod } = useSelector((state) => state.lrcDashboardSearchReducer);
+    const dispatch = useDispatch();
+
     const [dataStatus, setDataGridRows] = useState([]);
     const [foundationsStatus, setFoundationsStatus] = useState([]);
-    const [start_date, setStartDate] = useState(moment().format('YYYY-MM-DD'));
-    const [end_date, setEndDate] = useState(moment().format('YYYY-MM-DD'));
-    const [period, setPeriod] = useState('1');
+    ////////////////////////////////////////////////////
+    // 공통 에러 처리
+    const [open, setOpen] = useState(false);
+    const [errorTitle, setErrorTitle] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const parentErrorClear = () => {
+        setOpen(false);
+        setErrorTitle('');
+        setErrorMessage('');
+    };
+    ////////////////////////////////////////////////////
 
     const mockData = useMemo(() => {
         return [
@@ -52,40 +71,35 @@ const LrcDashboard = () => {
     const handleBlur = (e) => {
         console.log(e);
     };
+
     const resetPeriod = () => {
-        setPeriod(0);
+        dispatch(setSearchData({ reducePeriod: '1' }));
     };
+
     const changeDate = (type, e) => {
         switch (type) {
             case 'start':
-                setStartDate(e);
+                dispatch(setSearchData({ reduceFromDate: e }));
                 break;
             case 'end':
-                setEndDate(e);
+                dispatch(setSearchData({ reduceToDate: e }));
                 break;
             default:
                 break;
         }
     };
+
     const handleChange = (e) => {
         switch (e.target.name) {
             case 'start_date':
-                setStartDate(e.target.value);
-                setPeriod('');
+                dispatch(setSearchData({ reduceFromDate: e.target.value, reducePeriod: '' }));
                 break;
             case 'end_date':
-                setEndDate(e.target.value);
-                setPeriod('');
+                dispatch(setSearchData({ reduceToDate: e.target.value, reducePeriod: '' }));
                 break;
             case 'period':
-                setPeriod(e.target.value);
+                dispatch(setSearchData({ reducePeriod: e.target.value }));
                 setDateFromToSet(e.target.value);
-                break;
-            case 'category':
-                setCategory(e.target.value);
-                break;
-            case 'keyword':
-                setKeyword(e.target.value);
                 break;
             default:
                 break;
@@ -94,52 +108,64 @@ const LrcDashboard = () => {
 
     // search
     const searchClick = () => {
-        console.log('searchClick called...');
-        const request = {
-            start_date,
-            end_date
-        };
-        foundationSearch(request);
+        foundationSearch({
+            start_date: reduceFromDate,
+            end_date: reduceToDate
+        });
     };
 
     // 기간 선택시 날짜 변경
     const setDateFromToSet = (periodIndex) => {
         switch (periodIndex) {
             case '1':
-                setStartDate(moment().format('YYYY-MM-DD'));
-                setEndDate(moment().format('YYYY-MM-DD'));
+                dispatch(
+                    setSearchData({
+                        reduceFromDate: moment().format('YYYY-MM-DD'),
+                        reduceToDate: moment().format('YYYY-MM-DD')
+                    })
+                );
                 break;
             case '2':
-                setStartDate(moment().add(-1, 'weeks').format('YYYY-MM-DD'));
-                setEndDate(moment().format('YYYY-MM-DD'));
+                dispatch(
+                    setSearchData({
+                        reduceFromDate: moment().add(-1, 'weeks').format('YYYY-MM-DD'),
+                        reduceToDate: moment().format('YYYY-MM-DD')
+                    })
+                );
                 break;
             case '3':
-                setStartDate(moment().add(-1, 'months').format('YYYY-MM-DD'));
-                setEndDate(moment().format('YYYY-MM-DD'));
+                dispatch(
+                    setSearchData({
+                        reduceFromDate: moment().add(-1, 'months').format('YYYY-MM-DD'),
+                        reduceToDate: moment().format('YYYY-MM-DD')
+                    })
+                );
                 break;
             case '4':
-                setStartDate(undefined);
-                setEndDate(undefined);
+                dispatch(
+                    setSearchData({
+                        reduceFromDate: undefined,
+                        reduceToDate: undefined
+                    })
+                );
                 break;
             default:
                 break;
         }
     };
+
     // onload
     useEffect(() => {
-        const request = {
-            start_date,
-            end_date
-        };
-        foundationSearch(request);
+        searchClick();
     }, []);
 
     // transaction error 처리
     useEffect(() => {
         if (requestError) {
+            console.log({ requestError });
             if (requestError.result === 'FAIL') {
-                console.log('error requestError');
-                console.log(requestError);
+                setErrorTitle('Error Message');
+                setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
             }
         }
     }, [requestError]);
@@ -153,11 +179,6 @@ const LrcDashboard = () => {
             case 'getList':
                 if (responseData.data.data && responseData.data.data.length > 0) {
                     setDataGridRows(responseData.data.data);
-                    let items = responseData.data.data;
-                    let dataList = [];
-                    items.map((item) => {
-                        dataList.push({ argument: item.name, value: item.count });
-                    });
                 } else {
                     setDataGridRows([]);
                 }
@@ -165,7 +186,6 @@ const LrcDashboard = () => {
                 break;
             case 'getLineList':
                 if (responseData.data.data && responseData.data.data.length > 0) {
-                    console.log('계열리스트', responseData.data.data);
                     setFoundationsStatus(responseData.data.data);
                 } else {
                     setFoundationsStatus([]);
@@ -187,9 +207,9 @@ const LrcDashboard = () => {
                     {/* 기간 검색 */}
                     <div style={{ display: 'flex', gap: 60 }}>
                         <DashboardSearchDate
-                            start_date={start_date}
-                            end_date={end_date}
-                            period={period}
+                            start_date={reduceFromDate}
+                            end_date={reduceToDate}
+                            period={reducePeriod}
                             handleBlur={handleBlur}
                             handleChange={handleChange}
                             startName="start_date"
@@ -251,6 +271,9 @@ const LrcDashboard = () => {
                         </Grid>
                     ))}
             </div>
+            {errorMessage && (
+                <ErrorScreen open={open} errorTitle={errorTitle} errorMessage={errorMessage} parentErrorClear={parentErrorClear} />
+            )}
         </Grid>
     );
 };

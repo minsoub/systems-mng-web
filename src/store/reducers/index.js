@@ -22,6 +22,7 @@ import cpcNoticeSearchReducer from './cpc/NoticeSearch';
 import cpcPressReleaseSearchReducer from './cpc/PressReleaseSearch';
 import cpcCointingSearchReducer from './cpc/CointingSearch';
 
+import lrcDashboardSearchReducer from './lrc/DashboardSearch';
 import lrcProjectUserMngSearchReducer from './lrc/ProjectUserMngSearch';
 import lrcSystemCheckMngSearchReducer from './lrc/SystemCheckMng';
 // ==============================|| COMBINE REDUCERS ||============================== //
@@ -46,6 +47,7 @@ const reducers = combineReducers({
     cpcNoticeSearchReducer,
     cpcPressReleaseSearchReducer,
     cpcCointingSearchReducer,
+    lrcDashboardSearchReducer,
     lrcProjectUserMngSearchReducer,
     lrcSystemCheckMngSearchReducer
 });
