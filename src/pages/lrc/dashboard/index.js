@@ -166,6 +166,7 @@ const LrcDashboard = () => {
             if (requestError.result === 'FAIL') {
                 setErrorTitle('Error Message');
                 setErrorMessage('[' + requestError.error.code + '] ' + requestError.error.message);
+                setOpen(true);
             }
         }
     }, [requestError]);

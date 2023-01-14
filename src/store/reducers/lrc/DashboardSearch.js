@@ -26,7 +26,6 @@ const DashboardSearchReducer = (state = initialState, action) => {
     const { type, data } = action;
     switch (type) {
         case SEARCH_ADD:
-            console.log('12313', data);
             return {
                 ...state,
                 ...data
