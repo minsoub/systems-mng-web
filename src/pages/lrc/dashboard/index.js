@@ -6,6 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import AnalyticLrcForm from 'components/cards/statistics/AnalyticLrcForm';
 import AnalyticLrcFoundationForm from 'components/cards/statistics/AnalyticLrcFoundationForm';
+import AnalyticLrcFoundationStatusForm from 'components/cards/statistics/AnalyticLrcFoundationStatusForm';
+
 import DashboardSearchDate from './components/DashboardSearchDate';
 
 import DashboardApi from 'apis/lrc/dashboard/index';
@@ -153,7 +155,7 @@ const LrcDashboard = () => {
                     setDataGridRows(responseData.data.data);
                     let items = responseData.data.data;
                     let dataList = [];
-                    items.map((item, index) => {
+                    items.map((item) => {
                         dataList.push({ argument: item.name, value: item.count });
                     });
                 } else {
@@ -215,6 +217,12 @@ const LrcDashboard = () => {
                     재단 현황
                 </Typography>
             </Grid>
+
+            {mockData.map((item) => (
+                <Grid key={item.id} item xs={3} sx={{ minWidth: '19%' }}>
+                    <AnalyticLrcFoundationStatusForm id={item.id} title={item.name} count={item.count} />
+                </Grid>
+            ))}
             <div style={{ width: '100%' }}>
                 <Typography variant="h3" sx={{ p: '1.625rem 1.625rem ' }}>
                     사업 계열
