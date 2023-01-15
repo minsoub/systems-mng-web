@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Stack, FormControl } from '@mui/material';
+import { Grid, Stack, FormControl, InputLabel, MenuItem, ListSubheader, Select } from '@mui/material';
 import LineApis from 'apis/lrc/line/lineapi';
 import { StsCheckbox } from './StsCheckbox';
 import cx from 'classnames';
 import './styles.scss';
 import StackLabel from 'components/Common/StackLabel';
+import GroupSelect from 'components/Selects/GroupSelect';
+import Tag from 'components/Tag';
 
-export const BusinessCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
-    const [responseData, requestError, loading, { lineSearch }] = LineApis();
-    const [dataGridRows, setDataGridRows] = useState([]);
-
+export const BusinessCheckboxList = ({ businessLineList, checkedItemHandler, selectedBusinessItemHandler, isAllChecked }) => {
+    const [selectValue, setSelectValue] = useState('');
     // checkbox
     const [bChecked, setChecked] = useState(false);
 
@@ -18,12 +18,10 @@ export const BusinessCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
         //handleChange(e);
         checkedItemHandler(e.target.id, e.target.checked);
     };
-
-    // onload
-    useEffect(() => {
-        // 리스트 가져오기
-        lineSearch('BUSINESS');
-    }, []);
+    const handleChange = (e) => {
+        setSelectValue(e.target.value);
+        selectedBusinessItemHandler(e.target.value);
+    };
 
     useEffect(() => {
         console.log('isAllChecked called...');
@@ -33,36 +31,27 @@ export const BusinessCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
         }
     }, [isAllChecked]);
 
-    // Transaction Return
-    useEffect(() => {
-        if (!responseData) {
-            return;
-        }
-        switch (responseData.transactionId) {
-            case 'getList':
-                if (responseData.data.data) {
-                    setDataGridRows(responseData.data.data);
-                } else {
-                    setDataGridRows([]);
-                }
-                break;
-            default:
-        }
-    }, [responseData]);
     return (
         <>
             <Grid container spacing={0} sx={{ mt: 1, alignItems: 'center' }}>
-                <StackLabel title="사업 계열" titleWidth={120}/>
-                <Grid item xs={8} sm={10}>
-                    {dataGridRows.map((item, index) => (
-                        <StsCheckbox
-                            className="checkedBox--width"
-                            checkedItemHandler={checkedItemHandler}
-                            isAllChecked={isAllChecked}
-                            item={item}
-                            key={index}
+                <StackLabel title="사업 계열" titleWidth={112} />
+
+                <Grid item sm={2}>
+                    <GroupSelect items={businessLineList} title={'사업계열'} value={selectValue} onChange={handleChange} />
+                </Grid>
+                <Grid item sm={3}>
+                    <div className={'tags--wrap'}>
+                        <Tag
+                            title={'안녕'}
+                            isDelete={true}
+                            onClick={() => {
+                                console.log('tag클릭');
+                            }}
+                            onDeleteClick={() => {
+                                console.log('x클릭');
+                            }}
                         />
-                    ))}
+                    </div>
                 </Grid>
             </Grid>
         </>

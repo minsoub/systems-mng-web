@@ -9,8 +9,13 @@ const LineApis = () => {
         callApi('getList', {
             axiosInstance: axiosInstanceDefault,
             method: 'get',
-            url: `/mng/lrc/statusmanagment/line-code/tree?type=${lineType}&isUse=true`,
-            requestConfig: {}
+            url: `/mng/lrc/statusmanagment/line-code/tree`,
+            requestConfig: {
+                params: {
+                    type: lineType,
+                    isUse: true
+                }
+            }
         });
     };
 

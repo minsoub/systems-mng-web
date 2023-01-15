@@ -7,10 +7,7 @@ import LineApis from 'apis/lrc/line/lineapi';
 import cx from 'classnames';
 import StackLabel from 'components/Common/StackLabel';
 
-export const NetworkCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
-    const [responseData, requestError, loading, { lineSearch }] = LineApis();
-    const [dataGridRows, setDataGridRows] = useState([]);
-
+export const NetworkCheckboxList = ({ networkLineList, checkedItemHandler, isAllChecked }) => {
     // checkbox
     const [bChecked, setChecked] = useState(false);
 
@@ -19,11 +16,6 @@ export const NetworkCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
         //handleChange(e);
         checkedItemHandler(e.target.id, e.target.checked);
     };
-    // onload
-    useEffect(() => {
-        // 리스트 가져오기
-        lineSearch('NETWORK');
-    }, []);
 
     useEffect(() => {
         console.log('isAllChecked called...');
@@ -33,27 +25,11 @@ export const NetworkCheckboxList = ({ checkedItemHandler, isAllChecked }) => {
         }
     }, [isAllChecked]);
 
-    // Transaction Return
-    useEffect(() => {
-        if (!responseData) {
-            return;
-        }
-        switch (responseData.transactionId) {
-            case 'getList':
-                if (responseData.data.data) {
-                    setDataGridRows(responseData.data.data);
-                } else {
-                    setDataGridRows([]);
-                }
-                break;
-            default:
-        }
-    }, [responseData]);
     return (
         <Grid container spacing={0} sx={{ mt: 1, alignItems: 'center' }}>
             <StackLabel title="네트워크 계열" titleWidth={120} />
             <Grid item xs={8} sm={10}>
-                {dataGridRows.map((item, index) => (
+                {networkLineList.map((item, index) => (
                     <StsCheckbox
                         className="checkedBox--width"
                         checkedItemHandler={checkedItemHandler}

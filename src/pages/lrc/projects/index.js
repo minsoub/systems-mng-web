@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import {
     Button,
     Grid,
@@ -16,29 +15,42 @@ import {
     Typography
 } from '@mui/material';
 import { makeStyles, withStyles } from '@mui/styles';
+
+// library
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
+import { PlusOutlined } from '@ant-design/icons';
+
+// project import
 import MainCard from 'components/Common/MainCard';
-import StatusApi from 'apis/lrc/status/statusapi';
-import FoundationApi from 'apis/lrc/project/foundationapi';
 import ErrorScreen from 'components/ErrorScreen';
+import HeaderTitle from 'components/HeaderTitle';
+import SearchDate from 'components/ContentManage/SearchDate';
+import DropInput from 'components/Common/DropInput';
+import SearchBar from 'components/ContentManage/SearchBar';
+import ButtonLayout from 'components/Common/ButtonLayout';
+import InputLayout from 'components/Common/InputLayout';
+import ContentLine from 'components/Common/ContentLine';
+import ScrollX from 'components/Common/ScrollX';
 import { BusinessCheckboxList } from './component/business';
 import { NetworkCheckboxList } from './component/network';
 import StsCategory from './component/stscategory';
-import moment from 'moment';
-import { useDispatch, useSelector } from 'react-redux';
+
+// transition
+import StatusApi from 'apis/lrc/status/statusapi';
+import FoundationApi from 'apis/lrc/project/foundationapi';
+import LineApis from 'apis/lrc/line/lineapi';
+
+// utils
 import { setSearchData } from 'store/reducers/projectsearch';
-import HeaderTitle from '../../../components/HeaderTitle';
-import SearchDate from '../../../components/ContentManage/SearchDate';
-import DropInput from '../../../components/Common/DropInput';
-import SearchBar from '../../../components/ContentManage/SearchBar';
-import ButtonLayout from '../../../components/Common/ButtonLayout';
-import cx from 'classnames';
-import InputLayout from '../../../components/Common/InputLayout';
-import './styles.scss';
-import ContentLine from '../../../components/Common/ContentLine';
 import { getDateFormatSecond } from 'utils/CommonUtils';
+import cx from 'classnames';
 import { stubFalse } from 'lodash';
-import { PlusOutlined } from '@ant-design/icons';
-import ScrollX from 'components/Common/ScrollX';
+
+// style
+import './styles.scss';
+
+// ==============================|| LRC Project - List  ||============================== //
 
 const ProjectsPage = () => {
     let isSubmitting = false;
@@ -67,9 +79,15 @@ const ProjectsPage = () => {
 
     const navigate = useNavigate();
     const { paramId1, paramId2 } = useParams();
-    const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
-    const [responseData, requestError, loading, { foundationSearch, foundationExcelDownload }] = FoundationApi();
 
+    // 거래지원 상태(계약, 진행) API
+    const [resData, reqErr, resLoading, { statusSearch }] = StatusApi();
+    // 거래지원 프로젝트 API
+    const [responseData, requestError, loading, { foundationSearch, foundationExcelDownload }] = FoundationApi();
+    // 거래지원 계열 API
+    const [lineResponseData, lineRequestError, lineLoading, { lineSearch }] = LineApis();
+
+    // 검색 조건 Reduce
     const {
         reduceFromDate,
         reduceToDate,
@@ -108,6 +126,7 @@ const ProjectsPage = () => {
     const [contract_code, setSts] = useState('');
     const [process_code, setProcess] = useState('');
 
+    const [lineList, setLineList] = useState([]); // 계열 리스트
     const [checkedBusinessItems, setCheckedBusinessItems] = useState(new Set()); // 비즈니스 체크박스 리스트
     const [checkedNetworkItems, setCheckedNetworkItems] = useState(new Set()); // Network 체크박스 리스트
     const [statusAllList, setStatusAllList] = useState([]); // 전체 상태 리스트
@@ -127,7 +146,7 @@ const ProjectsPage = () => {
         setDateFromToSet('5');
         setPeriod('5'); // default value
         statusSearch(false); // 상태 값 모두 조회
-        console.log(new Date());
+        lineSearch();
         if (!paramId1 && !paramId2) {
             setIsSearch(true);
         }
@@ -145,6 +164,7 @@ const ProjectsPage = () => {
             }
         }
     }, [requestError]);
+
     useEffect(() => {
         if (isSearch) {
             searchClick();
@@ -161,6 +181,7 @@ const ProjectsPage = () => {
             setPeriod('5'); // default value
         }
     }, [statusList]);
+
     // 진행상태 변경
     useEffect(() => {
         if (paramId2) {
@@ -183,17 +204,13 @@ const ProjectsPage = () => {
                 if (resData.data.data) {
                     setStatusAllList(resData.data.data);
 
-                    let itemData = resData.data.data;
-                    let list = [];
-                    let category = [];
+                    const itemData = resData.data.data;
+                    const list = [];
+                    const category = [];
                     itemData.map((item, index) => {
                         if (item.parent_code === '') {
-                            const s = { id: item.id, name: item.name };
-                            //console.log(s);
-                            list.push(s);
-
-                            const s1 = { id: item.id, name: item.name, count: 0 };
-                            category.push(s1);
+                            list.push({ id: item.id, name: item.name });
+                            category.push({ id: item.id, name: item.name, count: 0 });
                         }
                     });
                     setStatusList(list);
@@ -262,6 +279,23 @@ const ProjectsPage = () => {
             default:
         }
     }, [responseData]);
+
+    // Line Transaction Return
+    useEffect(() => {
+        if (!lineResponseData) {
+            return;
+        }
+        switch (lineResponseData.transactionId) {
+            case 'getList':
+                if (lineResponseData.data.data) {
+                    setLineList(lineResponseData.data.data);
+                } else {
+                    setLineList([]);
+                }
+                break;
+            default:
+        }
+    }, [lineResponseData]);
 
     const handleClose = () => {
         setVisible(false);
@@ -370,6 +404,11 @@ const ProjectsPage = () => {
             checkedBusinessItems.delete(id);
             setCheckedBusinessItems(checkedBusinessItems);
         }
+    };
+    const selectedBusinessItemHandler = (id) => {
+        console.log('selectedBusinessItemHandler', id);
+        checkedBusinessItems.add(id);
+        setCheckedBusinessItems(checkedBusinessItems);
     };
     // Network Checkbox Handler
     const checkedNetworkItemHandler = (id, isChecked) => {
@@ -549,6 +588,10 @@ const ProjectsPage = () => {
     //     return num.toFixed(4).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     // };
 
+    useEffect(() => {
+        console.log({ checkedBusinessItems });
+    }, [checkedBusinessItems]);
+
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="projectList">
             <Grid item xs={12}>
@@ -608,10 +651,18 @@ const ProjectsPage = () => {
                             </DropInput>
                         </InputLayout>
 
-                        <div className="orderLayout">
-                            <BusinessCheckboxList checkedItemHandler={checkedBusinessItemHandler} isAllChecked={isAllChecked} />
-                            <NetworkCheckboxList checkedItemHandler={checkedNetworkItemHandler} isAllChecked={isAllChecked} />
-                        </div>
+                        <BusinessCheckboxList
+                            businessLineList={lineList.filter((line) => line.type === 'BUSINESS')}
+                            checkedItemHandler={checkedBusinessItemHandler}
+                            selectedBusinessItemHandler={selectedBusinessItemHandler}
+                            isAllChecked={isAllChecked}
+                        />
+
+                        <NetworkCheckboxList
+                            networkLineList={lineList.filter((line) => line.type === 'NETWORK')}
+                            checkedItemHandler={checkedNetworkItemHandler}
+                            isAllChecked={isAllChecked}
+                        />
 
                         <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={keyword} />
                     </Grid>
