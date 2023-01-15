@@ -1,0 +1,14 @@
+.group--menu {
+  color: red;
+  background: red;
+  & --sub {
+    color: blue;
+
+    background: blue;
+  }
+}
+
+.menu--item {
+  color: yellow;
+  background: yellow;
+}
