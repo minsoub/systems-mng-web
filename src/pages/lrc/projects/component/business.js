@@ -8,21 +8,31 @@ import StackLabel from 'components/Common/StackLabel';
 import GroupSelect from 'components/Selects/GroupSelect';
 import Tag from 'components/Tag';
 
-export const BusinessCheckboxList = ({ businessLineList, checkedItemHandler, selectedBusinessItemHandler, isAllChecked }) => {
+export const BusinessCheckboxList = ({
+    lineMapObj,
+    businessLineList,
+    selectItems,
+    selectedBusinessItemHandler,
+    deleteLineItemHandler,
+    isAllChecked
+}) => {
     const [selectValue, setSelectValue] = useState('');
     // checkbox
     const [bChecked, setChecked] = useState(false);
 
-    const checkHandler = (e) => {
-        setChecked(!bChecked);
-        //handleChange(e);
-        checkedItemHandler(e.target.id, e.target.checked);
-    };
     const handleChange = (e) => {
         setSelectValue(e.target.value);
         selectedBusinessItemHandler(e.target.value);
     };
 
+    const titleValue = (id) => {
+        const targetLineObj = lineMapObj.get(id);
+        if (targetLineObj.parent_id) {
+            return `${lineMapObj.get(targetLineObj.parent_id).name} > ${targetLineObj.name}`;
+        } else {
+            return `${targetLineObj.name}`;
+        }
+    };
     useEffect(() => {
         console.log('isAllChecked called...');
         if (isAllChecked === true) {
@@ -30,6 +40,8 @@ export const BusinessCheckboxList = ({ businessLineList, checkedItemHandler, sel
             setChecked(false);
         }
     }, [isAllChecked]);
+
+    useEffect(() => {}, [lineMapObj]);
 
     return (
         <>
@@ -41,16 +53,19 @@ export const BusinessCheckboxList = ({ businessLineList, checkedItemHandler, sel
                 </Grid>
                 <Grid item sm={3}>
                     <div className={'tags--wrap'}>
-                        <Tag
-                            title={'안녕'}
-                            isDelete={true}
-                            onClick={() => {
-                                console.log('tag클릭');
-                            }}
-                            onDeleteClick={() => {
-                                console.log('x클릭');
-                            }}
-                        />
+                        {selectItems.map((line) => (
+                            <Tag
+                                key={line}
+                                title={titleValue(line)}
+                                isDelete={true}
+                                onClick={() => {
+                                    console.log('tag클릭');
+                                }}
+                                onDeleteClick={() => {
+                                    deleteLineItemHandler(line);
+                                }}
+                            />
+                        ))}
                     </div>
                 </Grid>
             </Grid>

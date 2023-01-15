@@ -127,16 +127,17 @@ const ProjectsPage = () => {
     const [process_code, setProcess] = useState('');
 
     const [lineList, setLineList] = useState([]); // 계열 리스트
-    const [checkedBusinessItems, setCheckedBusinessItems] = useState(new Set()); // 비즈니스 체크박스 리스트
-    const [checkedNetworkItems, setCheckedNetworkItems] = useState(new Set()); // Network 체크박스 리스트
+    const [selectedBusinessItems, setSelectedBusinessItems] = useState(new Set()); // 비즈니스 Selected 리스트
+    const [selectedNetworkItems, setSelectedNetworkItems] = useState(new Set()); // Network Selected 리스트
     const [statusAllList, setStatusAllList] = useState([]); // 전체 상태 리스트
     const [statusList, setStatusList] = useState([]); // 계약 상태
     const [processList, setProcessList] = useState([]); // 계약 상태 변경 시 진행상태 출력 리스트.
 
     // 진행상태
     const [categoryList, setCategoryList] = useState([]);
-
     const [isAllChecked, setIsAllChecked] = useState(false);
+    // 계열관리
+    const [lineMapObj, setLineMapObj] = useState(new Map()); // 계열관리 Map 객체
     // reduce search mode
     const [isSearch, setIsSearch] = useState(false);
     // onload
@@ -289,6 +290,7 @@ const ProjectsPage = () => {
             case 'getList':
                 if (lineResponseData.data.data) {
                     setLineList(lineResponseData.data.data);
+                    tourLineList(lineResponseData.data.data);
                 } else {
                     setLineList([]);
                 }
@@ -296,6 +298,22 @@ const ProjectsPage = () => {
             default:
         }
     }, [lineResponseData]);
+
+    useEffect(() => {
+        console.log({ lineMapObj });
+    }, [lineMapObj]);
+
+    // 계열 관리 Objs를 1계층 MAP Obj로 해체
+    const tourLineList = (lineObjs) => {
+        if (Array.isArray(lineObjs)) {
+            for (const line of lineObjs) {
+                setLineMapObj((prev) => new Map([...prev, [line.id, line]]));
+                if (Array.isArray(line.children)) {
+                    tourLineList(line.children);
+                }
+            }
+        }
+    };
 
     const handleClose = () => {
         setVisible(false);
@@ -394,31 +412,30 @@ const ProjectsPage = () => {
             }
         });
     };
-    // Business Checkbox Handler
-    const checkedBusinessItemHandler = (id, isChecked) => {
-        setIsAllChecked(false);
-        if (isChecked) {
-            checkedBusinessItems.add(id);
-            setCheckedBusinessItems(checkedBusinessItems);
-        } else if (!isChecked && checkedBusinessItems.has(id)) {
-            checkedBusinessItems.delete(id);
-            setCheckedBusinessItems(checkedBusinessItems);
-        }
-    };
+
+    // Business Selected Handler
     const selectedBusinessItemHandler = (id) => {
-        console.log('selectedBusinessItemHandler', id);
-        checkedBusinessItems.add(id);
-        setCheckedBusinessItems(checkedBusinessItems);
+        setSelectedBusinessItems((prev) => new Set([...prev, id]));
     };
+
+    // Business Selected Remove Handler
+    const deleteBusinessLineItemHandler = (id) => {
+        setSelectedBusinessItems((prev) => {
+            const newState = new Set(prev);
+            newState.delete(id);
+            return newState;
+        });
+    };
+
     // Network Checkbox Handler
     const checkedNetworkItemHandler = (id, isChecked) => {
         setIsAllChecked(false);
         if (isChecked) {
-            checkedNetworkItems.add(id);
-            setCheckedNetworkItems(checkedNetworkItems);
-        } else if (!isChecked && checkedNetworkItems.has(id)) {
-            checkedNetworkItems.delete(id);
-            setCheckedNetworkItems(checkedNetworkItems);
+            selectedNetworkItems.add(id);
+            setSelectedNetworkItems(selectedNetworkItems);
+        } else if (!isChecked && selectedNetworkItems.has(id)) {
+            selectedNetworkItems.delete(id);
+            setSelectedNetworkItems(selectedNetworkItems);
         }
     };
 
@@ -454,10 +471,10 @@ const ProjectsPage = () => {
         //roleComboSearch(is_use, type, site_id);
         let business_list = [];
         let network_list = [];
-        Array.from(checkedBusinessItems).map((item, idx) => {
+        Array.from(selectedBusinessItems).map((item, idx) => {
             business_list.push(item);
         });
-        Array.from(checkedNetworkItems).map((item, idx) => {
+        Array.from(selectedNetworkItems).map((item, idx) => {
             network_list.push(item);
         });
         let start_date = from_date;
@@ -502,10 +519,10 @@ const ProjectsPage = () => {
         // setEndDate(moment().format('YYYY-MM-DD'));
         setSts('');
         setProcess('');
-        checkedBusinessItems.clear();
-        setCheckedBusinessItems(new Set());
-        setCheckedNetworkItems(new Set());
-        checkedNetworkItems.clear();
+        selectedBusinessItems.clear();
+        setSelectedBusinessItems(new Set());
+        setSelectedNetworkItems(new Set());
+        selectedNetworkItems.clear();
         setKeyword('');
         setIsAllChecked(true);
 
@@ -545,10 +562,10 @@ const ProjectsPage = () => {
         //roleComboSearch(is_use, type, site_id);
         let business_list = [];
         let network_list = [];
-        Array.from(checkedBusinessItems).map((item, idx) => {
+        Array.from(selectedBusinessItems).map((item, idx) => {
             business_list.push(item);
         });
-        Array.from(checkedNetworkItems).map((item, idx) => {
+        Array.from(selectedNetworkItems).map((item, idx) => {
             network_list.push(item);
         });
         let start_date = from_date;
@@ -589,8 +606,8 @@ const ProjectsPage = () => {
     // };
 
     useEffect(() => {
-        console.log({ checkedBusinessItems });
-    }, [checkedBusinessItems]);
+        console.log({ selectedBusinessItems });
+    }, [selectedBusinessItems]);
 
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="projectList">
@@ -652,9 +669,11 @@ const ProjectsPage = () => {
                         </InputLayout>
 
                         <BusinessCheckboxList
+                            lineMapObj={lineMapObj}
                             businessLineList={lineList.filter((line) => line.type === 'BUSINESS')}
-                            checkedItemHandler={checkedBusinessItemHandler}
+                            selectItems={Array.from(selectedBusinessItems)}
                             selectedBusinessItemHandler={selectedBusinessItemHandler}
+                            deleteLineItemHandler={deleteBusinessLineItemHandler}
                             isAllChecked={isAllChecked}
                         />
 
