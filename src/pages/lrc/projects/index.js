@@ -32,7 +32,7 @@ import ButtonLayout from 'components/Common/ButtonLayout';
 import InputLayout from 'components/Common/InputLayout';
 import ContentLine from 'components/Common/ContentLine';
 import ScrollX from 'components/Common/ScrollX';
-import { BusinessCheckboxList } from './component/business';
+import { LineSelectField } from './component/lineSelectField';
 import { NetworkCheckboxList } from './component/network';
 import StsCategory from './component/stscategory';
 
@@ -427,6 +427,19 @@ const ProjectsPage = () => {
         });
     };
 
+    // Network Selected Handler
+    const selectedNetworkItemHandler = (id) => {
+        setSelectedNetworkItems((prev) => new Set([...prev, id]));
+    };
+
+    // Network Selected Remove Handler
+    const deleteNetworkLineItemHandler = (id) => {
+        setSelectedNetworkItems((prev) => {
+            const newState = new Set(prev);
+            newState.delete(id);
+            return newState;
+        });
+    };
     // Network Checkbox Handler
     const checkedNetworkItemHandler = (id, isChecked) => {
         setIsAllChecked(false);
@@ -668,7 +681,8 @@ const ProjectsPage = () => {
                             </DropInput>
                         </InputLayout>
 
-                        <BusinessCheckboxList
+                        <LineSelectField
+                            title={'사업 계열'}
                             lineMapObj={lineMapObj}
                             businessLineList={lineList.filter((line) => line.type === 'BUSINESS')}
                             selectItems={Array.from(selectedBusinessItems)}
@@ -677,9 +691,13 @@ const ProjectsPage = () => {
                             isAllChecked={isAllChecked}
                         />
 
-                        <NetworkCheckboxList
-                            networkLineList={lineList.filter((line) => line.type === 'NETWORK')}
-                            checkedItemHandler={checkedNetworkItemHandler}
+                        <LineSelectField
+                            title={'네트워크 계열'}
+                            lineMapObj={lineMapObj}
+                            businessLineList={lineList.filter((line) => line.type === 'NETWORK')}
+                            selectItems={Array.from(selectedNetworkItems)}
+                            selectedBusinessItemHandler={selectedNetworkItemHandler}
+                            deleteLineItemHandler={deleteNetworkLineItemHandler}
                             isAllChecked={isAllChecked}
                         />
 

@@ -8,7 +8,7 @@ import cx from 'classnames';
 import StackLabel from 'components/Common/StackLabel';
 
 export const NetworkCheckboxList = ({ networkLineList, checkedItemHandler, isAllChecked }) => {
-    // checkbox
+    열; // checkbox
     const [bChecked, setChecked] = useState(false);
 
     const checkHandler = (e) => {

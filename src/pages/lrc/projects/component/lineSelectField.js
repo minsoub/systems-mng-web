@@ -6,7 +6,8 @@ import StackLabel from 'components/Common/StackLabel';
 import GroupSelect from 'components/Selects/GroupSelect';
 import Tag from 'components/Tag';
 
-export const BusinessCheckboxList = ({
+export const LineSelectField = ({
+    title,
     lineMapObj,
     businessLineList,
     selectItems,
@@ -35,17 +36,15 @@ export const BusinessCheckboxList = ({
         }
     };
 
-    useEffect(() => {}, [lineMapObj]);
-
     return (
         <>
             <Grid container spacing={0} sx={{ mt: 1, alignItems: 'center' }}>
-                <StackLabel title="사업 계열" titleWidth={112} />
+                <StackLabel title={title} titleWidth={112} />
 
                 <Grid item sm={2}>
                     <GroupSelect
                         items={businessLineList}
-                        title={'사업계열'}
+                        title={title}
                         value={selectValue}
                         onChange={handleChange}
                         subOnClick={subOnClick}
