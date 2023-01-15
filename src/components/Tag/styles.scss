@@ -1,0 +1,21 @@
+.tag--container {
+    position: relative;
+    height: 100%;
+    button {
+      background: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2px 8px;
+      border: 1px solid #1c2028;
+      border-radius: 15px;
+      span {
+        color: #1c2028;
+        font-size: 14px;
+      }
+      button {
+        padding: 0;
+        border: none;
+      }
+    }
+}
