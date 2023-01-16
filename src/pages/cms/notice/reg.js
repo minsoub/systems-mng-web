@@ -80,13 +80,7 @@ const NoticeView = () => {
                 <DetailContens type={pageType} editMode={isEditMode} detailData={detailData} />
                 <ShareSetting type={pageType} editMode={isEditMode} shareData={shareData} />
                 <PostSetting type={pageType} editMode={isEditMode} postingData={postingData} />
-                <BottomButtonSet
-                    type={pageType}
-                    editMode={isEditMode}
-                    changeEditState={changeEditState}
-                    id={detailData?.id}
-                    isDraft={detailData?.is_draft}
-                />
+                <BottomButtonSet type={pageType} editMode={isEditMode} changeEditState={changeEditState} isDraft={detailData?.is_draft} />
             </Grid>
         </Grid>
     );

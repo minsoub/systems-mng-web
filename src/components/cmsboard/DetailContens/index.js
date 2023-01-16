@@ -49,6 +49,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
 
     const [categoryList, setCategoryList] = useState([{ id: '0', name: '선택안함' }]); // 카테고리1 리스트
     const [reservationDate, setReservationDate] = useState(moment().format('YYYY.MM.DD A hh:mm')); // 게시 예약일자
+    const [createDate, setCreateDate] = useState('-'); // 등록일
     const [contentsData, setContentsData] = useState(''); // 내용
     const [fileName, setFileName] = useState(''); // 첨부파일 이름
     const [fileID, setFileID] = useState(''); // 첨부파일 아이디
@@ -205,7 +206,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
             ['visibleState']: detailData.is_show ? 1 : 0,
             ['reservationState']: detailData.is_schedule
         });
-
+        setCreateDate(detailData.create_date ? detailData.create_date : '-');
         setFileID(detailData.file_id);
         setThumnailFileID(detailData.thumbnail_file_id);
         setContentsData(detailData.content);
@@ -242,6 +243,9 @@ const DetailContens = ({ type, editMode, detailData }) => {
         }
         dispatch(activeNotiCategory2({ reduceNotiCategory2: category2 }));
     }, [category2]);
+    useEffect(() => {
+        localStorage.setItem('createDate', createDate);
+    }, [createDate]);
     useEffect(() => {
         dispatch(activeTitle({ reduceTitle: title }));
     }, [title]);
@@ -285,7 +289,7 @@ const DetailContens = ({ type, editMode, detailData }) => {
                 <tbody>
                     <tr>
                         <th className={'tb--title'}>등록일시</th>
-                        <td className={'width15'}>{detailData?.create_date ? detailData.create_date : '-'}</td>
+                        <td className={'width15'}>{createDate}</td>
                         <th className={'tb--title'}>업데이트 일시</th>
                         <td className={'width15'}>{detailData?.update_date ? detailData.update_date : '-'}</td>
                         <th className={'tb--title'}>작성자</th>

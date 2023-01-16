@@ -6,6 +6,7 @@ import { Box, Modal, Divider, Button } from '@mui/material';
 
 //library
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 // style
 import styles from './styles.module.scss';
@@ -15,6 +16,7 @@ import styles from './styles.module.scss';
 const PreviewModal = ({ open, onClose, viewMode }) => {
     const { reduceTitle } = useSelector((state) => state.cmsDetailData);
     const [editContents, setEditContents] = useState('');
+    const [createDate, setCreateDate] = useState(moment().format('YYYY.MM.DD hh:mm:ss'));
     const [viewModeStyle, setViewModeStyle] = useState(styles.false);
 
     useEffect(() => {
@@ -27,10 +29,17 @@ const PreviewModal = ({ open, onClose, viewMode }) => {
     }, [viewMode]);
 
     useEffect(() => {
-        if(open){
+        if (open) {
             setEditContents(window['contentsEditor'].getPublishingHtml());
+            let _date = localStorage.getItem('createDate');
+            if (_date !== '-') {
+                setCreateDate(_date);
+            }
         }
     }, [open]);
+    useEffect(() => {
+        console.log(createDate);
+    }, [createDate]);
 
     return (
         <Modal
@@ -57,7 +66,7 @@ const PreviewModal = ({ open, onClose, viewMode }) => {
                     <div className={styles.modal_header}>
                         <h2 className={`${styles.modal_header__title}`}>{reduceTitle}</h2>
                         <p className={styles.modal_header_box}>
-                            <span className={styles.modal_header__date}>2023-01-01 00:00:00</span>
+                            <span className={styles.modal_header__date}>{createDate}</span>
                         </p>
                     </div>
                     <div

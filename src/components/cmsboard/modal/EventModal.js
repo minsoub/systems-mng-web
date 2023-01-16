@@ -1,11 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Button, Box, TextField, Modal } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // transition
 import { activeEventPrivateTxt } from 'store/reducers/cms/DetailEventData';
+
+// transition
+import BoardApi from 'apis/cms/boardapi';
 
 // library
 import PropTypes from 'prop-types';
@@ -16,7 +19,9 @@ import styles from './styles.module.scss';
 // =============|| DetailContents - EventModal ||============= //
 
 const EventModal = ({ open, onClose, modalType }) => {
+    const { paramId } = useParams(); //상세번호
     const dispatch = useDispatch();
+    const [responseData, requestError, loading, { excelDownload }] = BoardApi();
     const { reduceEventPrivateTxt } = useSelector((state) => state.cmsDetailEventData);
 
     const [value, setValue] = useState('');
@@ -37,8 +42,34 @@ const EventModal = ({ open, onClose, modalType }) => {
         if (modalType === 1) {
             dispatch(activeEventPrivateTxt({ reduceEventPrivateTxt: value }));
             onClose();
+        } else {
+            excelDownload(paramId, value);
         }
     };
+
+    useEffect(() => {
+        if (!responseData) {
+            return;
+        }
+        switch (responseData.transactionId) {
+            case 'downloadExcel':
+                if (responseData.data) {
+                    let res = responseData;
+                    const url = window.URL.createObjectURL(new Blob([res.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', '참여자 정보.xlsx');
+                    link.style.cssText = 'display:none';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    onClose();
+                }
+                break;
+            default:
+                break;
+        }
+    }, [responseData]);
 
     return (
         <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">

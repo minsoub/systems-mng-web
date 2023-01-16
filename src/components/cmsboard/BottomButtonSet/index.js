@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { Grid, Button } from '@mui/material';
 
 // project import
@@ -18,7 +19,8 @@ import styles from './styles.module.scss';
 
 // =============|| BottomButtonSet - Component ||============= //
 
-const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
+const BottomButtonSet = ({ type, editMode, changeEditState, isDraft }) => {
+    const { paramId } = useParams(); //상세번호
     const navigate = useNavigate();
     const [responseData, requestError, loading, { createBoard, deleteBoard, updateBoard }] = BoardApi();
     const {
@@ -51,7 +53,6 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         reduceEventOverlapMsg // 이벤트 중복 참여시 메시지
     } = useSelector((state) => state.cmsDetailEventData);
 
-    const [detailID, setDetailID] = useState(id); // detail ID
     const [open, setOpen] = useState(false);
     const [loadOpen, setLoadOpen] = useState(false);
     const [viewMode, setViewMode] = useState('pc');
@@ -68,7 +69,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
     };
     const deleteClick = () => {
         if (confirm('삭제를 하시겠습니까?')) {
-            deleteBoard(type, id);
+            deleteBoard(type, paramId);
         }
     };
 
@@ -224,8 +225,8 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
         }
         formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
         setLoadOpen(true);
-        if (detailID) {
-            updateBoard(type, detailID, formData);
+        if (paramId) {
+            updateBoard(type, paramId, formData);
         } else {
             createBoard(type, formData);
         }
@@ -246,7 +247,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
                 break;
             case 'updateBoard':
                 if (responseData.data.data) {
-                    console.log(responseData.data.data);
+                    // console.log(responseData.data.data);
                     alert('수정 되었습니다.');
                     listClick();
                 }
@@ -263,10 +264,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
     }, [responseData]);
 
     useEffect(() => {
-        setDetailID(id);
-    }, [id]);
-    useEffect(() => {
-        console.log(type);
+        // console.log(type);
     }, [type]);
     return (
         <Grid className={styles.button_layout}>
@@ -310,7 +308,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, id, isDraft }) => {
                         <Button disableElevation size="medium" type="submit" variant="contained" color="primary" onClick={listClick}>
                             취소
                         </Button>
-                        {(!detailID || isDraft) && (
+                        {(!paramId || isDraft) && (
                             <Button
                                 disableElevation
                                 size="medium"

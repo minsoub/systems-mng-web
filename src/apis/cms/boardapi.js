@@ -57,6 +57,7 @@ const BoardApis = () => {
             requestConfig: {}
         });
     };
+
     // 게시글 등록
     const createBoard = (boardKey, data) => {
         callApi('createBoard', {
@@ -108,6 +109,7 @@ const BoardApis = () => {
             requestConfig: {}
         });
     };
+
     // 카테고리 등록
     const createCategoryBoard = (boardKey, data) => {
         callApi('createCategoryBoard', {
@@ -117,6 +119,7 @@ const BoardApis = () => {
             requestConfig: data
         });
     };
+
     //  카테고리 수정
     const updateCategoryBoard = (boardKey, boardId, data) => {
         callApi('updateCategoryBoard', {
@@ -149,6 +152,7 @@ const BoardApis = () => {
             requestConfig: data
         });
     };
+
     // 파일 다운로드
     const downloadFileData = (fileId) => {
         callApi('downloadFile', {
@@ -158,6 +162,17 @@ const BoardApis = () => {
             requestConfig: {}
         });
     };
+
+    // 엑셀 다운로드
+    const excelDownload = (id, reason) => {
+        callApi('downloadExcel', {
+            axiosInstance: axiosInstanceDownload,
+            method: 'get',
+            url: `/mng/cms/events/${id}/excel?reason=${reason}`,
+            requestConfig: {}
+        });
+    };
+
     // 파일 정보
     const fileInfo = (fileId) => {
         callApi('fileInfo', {
@@ -184,7 +199,8 @@ const BoardApis = () => {
             insertFileData,
             fileInfo,
             downloadFileData,
-            changeBannerState
+            changeBannerState,
+            excelDownload
         }
     ];
 };
