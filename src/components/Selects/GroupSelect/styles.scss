@@ -1,20 +1,19 @@
-.tag--container {
-    position: relative;
-    height: 100%;
-    button {
-      background: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 4.5px 8px;
-      border: 1px solid #1c2028;
-      border-radius: 15px;
-      span {
-        color: #1c2028;
-      }
-      button {
-        padding: 0;
-        border: none;
-      }
-    }
+group--menu {
+  color: red;
+  background: red;
+  & --sub {
+    color: blue;
+
+    background: blue;
+  }
+}
+
+.menu--item {
+  color: #1b2b3b;
+  &.menuParent {
+    color: #93989e;
+  }
+  &.subMenu {
+    padding-left: 30px;
+  }
 }

@@ -38,19 +38,11 @@ export const LineSelectField = ({
 
     return (
         <>
-            <Grid container spacing={0} sx={{ mt: 1, alignItems: 'center' }}>
+            <Grid container spacing={0} sx={{ mt: 0.5, mb: 0.5, alignItems: 'center' }}>
                 <StackLabel title={title} titleWidth={112} />
 
-                <Grid item sm={2}>
-                    <GroupSelect
-                        items={businessLineList}
-                        title={title}
-                        value={selectValue}
-                        onChange={handleChange}
-                        subOnClick={subOnClick}
-                    />
-                </Grid>
-                <Grid item sm={3}>
+                <GroupSelect items={businessLineList} title={title} value={selectValue} onChange={handleChange} subOnClick={subOnClick} />
+                <Grid item sm={4} sx={{ ml: 5, alignItems: 'center' }}>
                     <div className={'tags--wrap'}>
                         {selectItems.map((line) => (
                             <Tag
