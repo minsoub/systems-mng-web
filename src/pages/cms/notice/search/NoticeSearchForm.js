@@ -47,28 +47,30 @@ const NoticeSearchForm = ({ listLoad, listRelooad }) => {
     const handleBlur = (e) => {};
     // 인풋 체인지 이벤트
     const handleChange = (e) => {
-        switch (e.target.name) {
+        const { name, value } = e.target;
+        // console.log(name, value);
+        switch (name) {
             case 'keyword': //키워드 변경시
-                setKeyword(e.target.value);
+                setKeyword(value);
                 break;
             case 'from_date': // 시작 날자 변경시
-                setStartDate(e.target.value);
+                setStartDate(value);
                 break;
             case 'to_date': // 종료날자 변경시
-                if (from_date > e.target.value) {
+                if (from_date > value) {
                     alert('기간 검색에서 종료일이 시작일보다 작을 수 없습니다.');
                     return;
                 }
-                setEndDate(e.target.value);
+                setEndDate(value);
                 break;
             case 'banner_notice': // 배너 공지 변경시
-                setBannerNotice(e.target.value);
+                setBannerNotice(value);
                 break;
             case 'banner_state': // 배너 상태 변경시
-                setBannerState(e.target.value);
+                setBannerState(value);
                 break;
             case 'category_state': // 카테고리 변경시
-                setCategoryState(e.target.value);
+                setCategoryState(value);
                 break;
             default:
                 break;
@@ -158,6 +160,7 @@ const NoticeSearchForm = ({ listLoad, listRelooad }) => {
         }
     }, [responseData]);
     useEffect(() => {
+        // console.log(from_date);
         if (!from_date) {
             return;
         }
