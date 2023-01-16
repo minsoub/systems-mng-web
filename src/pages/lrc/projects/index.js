@@ -33,7 +33,6 @@ import InputLayout from 'components/Common/InputLayout';
 import ContentLine from 'components/Common/ContentLine';
 import ScrollX from 'components/Common/ScrollX';
 import { LineSelectField } from './component/lineSelectField';
-import { NetworkCheckboxList } from './component/network';
 import StsCategory from './component/stscategory';
 
 // transition
@@ -44,8 +43,6 @@ import LineApis from 'apis/lrc/line/lineapi';
 // utils
 import { setSearchData } from 'store/reducers/projectsearch';
 import { getDateFormatSecond } from 'utils/CommonUtils';
-import cx from 'classnames';
-import { stubFalse } from 'lodash';
 
 // style
 import './styles.scss';
@@ -53,22 +50,6 @@ import './styles.scss';
 // ==============================|| LRC Project - List  ||============================== //
 
 const ProjectsPage = () => {
-    let isSubmitting = false;
-    const useStyles = makeStyles({
-        tableRow: {
-            height: 25
-        },
-        tableCell: {
-            padding: '0px 16px',
-            height: 35
-        },
-        table: {
-            '& .MuiTableCell-root': {
-                borderLeft: '1px solid rgba(224, 224, 224, 1)'
-            }
-        }
-    });
-
     const StyledTableCell = withStyles((theme) => ({
         root: {
             padding: '0px 16px',
@@ -96,7 +77,9 @@ const ProjectsPage = () => {
         reduceProcessCode,
         reduceBusinessList,
         reduceNetworkList,
-        reduceKeyword
+        reduceKeyword,
+        reducePage,
+        reduceRowsPerPage
     } = useSelector((state) => state.projectSearchReducer);
     const dispatch = useDispatch();
 
@@ -119,16 +102,16 @@ const ProjectsPage = () => {
     ////////////////////////////////////////////////////
 
     // 검색 조건
-    const [keyword, setKeyword] = useState('');
-    const [from_date, setStartDate] = useState(''); // new Date());
-    const [to_date, setEndDate] = useState(''); // new Date());
-    const [period, setPeriod] = useState('1');
-    const [contract_code, setSts] = useState('');
-    const [process_code, setProcess] = useState('');
-
-    const [lineList, setLineList] = useState([]); // 계열 리스트
+    // const [keyword, setKeyword] = useState('');
+    // const [reduceFromDate, setStartDate] = useState(''); // new Date());
+    // const [to_date, setEndDate] = useState(''); // new Date());
+    // const [period, setPeriod] = useState('1');
+    // const [contract_code, setSts] = useState('');
+    // const [process_code, setProcess] = useState('');
     const [selectedBusinessItems, setSelectedBusinessItems] = useState(new Set()); // 비즈니스 Selected 리스트
     const [selectedNetworkItems, setSelectedNetworkItems] = useState(new Set()); // Network Selected 리스트
+
+    const [lineList, setLineList] = useState([]); // 계열 리스트
     const [statusAllList, setStatusAllList] = useState([]); // 전체 상태 리스트
     const [statusList, setStatusList] = useState([]); // 계약 상태
     const [processList, setProcessList] = useState([]); // 계약 상태 변경 시 진행상태 출력 리스트.
@@ -142,10 +125,7 @@ const ProjectsPage = () => {
     const [isSearch, setIsSearch] = useState(false);
     // onload
     useEffect(() => {
-        // setStartDate(moment().format('YYYY-MM-DD'));
-        // setEndDate(moment().format('YYYY-MM-DD'));
         setDateFromToSet('5');
-        setPeriod('5'); // default value
         statusSearch(false); // 상태 값 모두 조회
         lineSearch();
         if (!paramId1 && !paramId2) {
@@ -176,17 +156,17 @@ const ProjectsPage = () => {
     // 계약상태 데이터 변경
     useEffect(() => {
         if (paramId1) {
-            setSts(paramId1);
+            dispatch(setSearchData({ reduceProcessCode: paramId1 }));
             processPrint(paramId1);
             setDateFromToSet('5');
-            setPeriod('5'); // default value
+            dispatch(setSearchData({ reducePeriod: '5' })); // default value
         }
     }, [statusList]);
 
     // 진행상태 변경
     useEffect(() => {
         if (paramId2) {
-            setProcess(paramId2);
+            dispatch(setSearchData({ reduceProcessCode: paramId2 }));
         }
 
         if (paramId1 || paramId2) {
@@ -216,16 +196,21 @@ const ProjectsPage = () => {
                     });
                     setStatusList(list);
                     setCategoryList(category);
-                    // reduce 상태값을 사용하여 검색을 수행한다.
-                    if (reduceFromDate) setStartDate(reduceFromDate);
-                    if (reduceToDate) setEndDate(reduceToDate);
-                    if (reduceKeyword) setKeyword(reduceKeyword);
-                    if (reducePeriod) setPeriod(reducePeriod);
-                    if (reduceContractCode) setSts(reduceContractCode);
-                    if (reduceProcessCode) setProcess(reduceProcessCode);
 
-                    // 사업계열, 네트워크 계열
-                    if (reduceFromDate && reduceToDate) setIsSearch(true);
+                    // // reduce 상태값을 사용하여 검색을 수행한다.
+                    // if (reduceFromDate) setStartDate(reduceFromDate);
+                    // if (reduceToDate) setEndDate(reduceToDate);
+                    // if (reduceKeyword) setKeyword(reduceKeyword);
+                    // if (reducePeriod) setPeriod(reducePeriod);
+                    // if (reduceContractCode) setSts(reduceContractCode);
+                    // if (reduceProcessCode) setProcess(reduceProcessCode);
+                    // if (reduceBusinessList) setSelectedBusinessItems(reduceBusinessList);
+                    // if (reduceNetworkList) setSelectedNetworkItems(reduceNetworkList);
+                    // if (reducePage) setPage(reducePage);
+                    // if (reduceRowsPerPage) setRowsPerPage(reduceRowsPerPage);
+                    //
+                    // // 사업계열, 네트워크 계열
+                    // if (reduceFromDate && reduceToDate) setIsSearch(true);
                 }
                 break;
             default:
@@ -322,15 +307,15 @@ const ProjectsPage = () => {
         console.log(e);
     };
     const resetPeriod = () => {
-        setPeriod(0);
+        dispatch(setSearchData({ reducePeriod: '0' }));
     };
     const changeDate = (type, e) => {
         switch (type) {
             case 'start':
-                setStartDate(e);
+                dispatch(setSearchData({ reduceFromDate: e }));
                 break;
             case 'end':
-                setEndDate(e);
+                dispatch(setSearchData({ reduceToDate: e }));
                 break;
             default:
                 break;
@@ -339,30 +324,30 @@ const ProjectsPage = () => {
     const handleChange = (e /*, name */) => {
         switch (e.target.name) {
             case 'keyword':
-                setKeyword(e.target.value);
+                dispatch(setSearchData({ reduceKeyword: e.target.value }));
                 break;
             // 시작
             case 'from_date':
-                setStartDate(e.target.value);
+                dispatch(setSearchData({ reduceFromDate: e.target.value }));
                 break;
             case 'to_date':
-                if (from_date > e.target.value) {
+                if (reduceFromDate > e.target.value) {
                     alert('기간 검색에서 종료일이 시작일보다 작을 수 없습니다.');
                     return;
                 }
-                setEndDate(e.target.value);
+                dispatch(setSearchData({ reduceToDate: e.target.value }));
                 break;
             case 'period':
-                setPeriod(e.target.value);
+                dispatch(setSearchData({ reducePeriod: e.target.value }));
                 setDateFromToSet(e.target.value);
                 break;
             case 'contract_code':
-                setSts(e.target.value);
+                dispatch(setSearchData({ reduceContractCode: e.target.value, reduceProcessCode: '' }));
                 // 진행상태 출력.
                 processPrint(e.target.value);
                 break;
             case 'process_code':
-                setProcess(e.target.value);
+                dispatch(setSearchData({ reduceProcessCode: e.target.value }));
                 break;
             case 'start_picker':
                 console.log(e.target.value);
@@ -378,20 +363,24 @@ const ProjectsPage = () => {
     const setDateFromToSet = (periodIndex) => {
         switch (periodIndex) {
             case '1':
-                setStartDate(moment().format('YYYY-MM-DD'));
-                setEndDate(moment().format('YYYY-MM-DD'));
+                dispatch(setSearchData({ reduceFromDate: moment().format('YYYY-MM-DD') }));
+                dispatch(setSearchData({ reduceToDate: moment().format('YYYY-MM-DD') }));
+
                 break;
             case '2':
-                setStartDate(moment().add(-1, 'days').format('YYYY-MM-DD'));
-                setEndDate(moment().add(-1, 'days').format('YYYY-MM-DD'));
+                dispatch(setSearchData({ reduceFromDate: moment().add(-1, 'days').format('YYYY-MM-DD') }));
+                dispatch(setSearchData({ reduceToDate: moment().add(-1, 'days').format('YYYY-MM-DD') }));
+
                 break;
             case '3':
-                setStartDate(moment().add(-30, 'days').format('YYYY-MM-DD'));
-                setEndDate(moment().format('YYYY-MM-DD'));
+                dispatch(setSearchData({ reduceFromDate: moment().add(-30, 'days').format('YYYY-MM-DD') }));
+                dispatch(setSearchData({ reduceToDate: moment().format('YYYY-MM-DD') }));
+
                 break;
             case '4':
-                setStartDate(moment().add(-90, 'days').format('YYYY-MM-DD'));
-                setEndDate(moment().format('YYYY-MM-DD'));
+                dispatch(setSearchData({ reduceFromDate: moment().add(-90, 'days').format('YYYY-MM-DD') }));
+                dispatch(setSearchData({ reduceToDate: moment().format('YYYY-MM-DD') }));
+
                 break;
             default:
                 break;
@@ -484,16 +473,16 @@ const ProjectsPage = () => {
         //roleComboSearch(is_use, type, site_id);
         let business_list = [];
         let network_list = [];
-        Array.from(selectedBusinessItems).map((item, idx) => {
+        Array.from(selectedBusinessItems).map((item) => {
             business_list.push(item);
         });
-        Array.from(selectedNetworkItems).map((item, idx) => {
+        Array.from(selectedNetworkItems).map((item) => {
             network_list.push(item);
         });
-        let start_date = from_date;
-        let end_date = to_date;
+        let start_date = reduceFromDate;
+        let end_date = reduceToDate;
 
-        if (period === '5') {
+        if (reducePeriod === '5') {
             start_date = '2022-01-01';
             end_date = '2099-12-31';
         }
@@ -501,42 +490,31 @@ const ProjectsPage = () => {
         let data = {
             from_date: start_date,
             to_date: end_date,
-            contract_code: contract_code,
-            progress_code: process_code,
+            contract_code: reduceContractCode,
+            progress_code: reduceProcessCode,
             business_list: business_list,
             network_list: network_list,
-            keyword: keyword
+            keyword: reduceKeyword
         };
         console.log(data);
         foundationSearch(data);
-        // 검색 조건에 대해서 상태를 저장한다.
-        const searchData = {
-            reduceFromDate: from_date,
-            reduceToDate: to_date,
-            reducePeriod: period,
-            reduceContractCode: contract_code,
-            reduceProcessCode: process_code,
-            reduceBusinessList: business_list,
-            reduceNetworkList: network_list,
-            reduceKeyword: keyword
-        };
-        dispatch(setSearchData(searchData));
     };
     const clearClick = () => {
         setPage(0);
         setRowsPerPage(10);
-        setPeriod('5');
+        dispatch(setSearchData({ reducePeriod: '5' }));
         setDateFromToSet('5');
         clearCategory();
         // setStartDate(moment().format('YYYY-MM-DD'));
         // setEndDate(moment().format('YYYY-MM-DD'));
-        setSts('');
-        setProcess('');
+        dispatch(setSearchData({ reduceContractCode: '' }));
+        dispatch(setSearchData({ reduceProcessCode: '' }));
         selectedBusinessItems.clear();
         setSelectedBusinessItems(new Set());
         setSelectedNetworkItems(new Set());
         selectedNetworkItems.clear();
-        setKeyword('');
+        dispatch(setSearchData({ reduceKeyword: '' }));
+
         setIsAllChecked(true);
 
         setDataGridRows([]);
@@ -581,10 +559,10 @@ const ProjectsPage = () => {
         Array.from(selectedNetworkItems).map((item, idx) => {
             network_list.push(item);
         });
-        let start_date = from_date;
-        let end_date = to_date;
+        let start_date = reduceFromDate;
+        let end_date = reduceToDate;
 
-        if (period === '5') {
+        if (reducePeriod === '5') {
             start_date = '2022-01-01';
             end_date = '2099-12-31';
         }
@@ -592,11 +570,11 @@ const ProjectsPage = () => {
         let data = {
             from_date: start_date,
             to_date: end_date,
-            contract_code: contract_code,
-            progress_code: process_code,
+            contract_code: reduceContractCode,
+            progress_code: reduceProcessCode,
             business_list: business_list,
             network_list: network_list,
-            keyword: keyword
+            keyword: reduceKeyword
         };
         console.log(data);
         foundationExcelDownload(data);
@@ -619,8 +597,10 @@ const ProjectsPage = () => {
     // };
 
     useEffect(() => {
-        console.log({ selectedBusinessItems });
-    }, [selectedBusinessItems]);
+        console.log({ reducePeriod });
+        console.log({ reduceContractCode });
+        console.log({ reduceProcessCode });
+    }, [reducePeriod, reduceContractCode, reduceProcessCode]);
 
     return (
         <Grid container rowSpacing={4} columnSpacing={2.75} className="projectList">
@@ -631,9 +611,9 @@ const ProjectsPage = () => {
                     <Grid>
                         {/* 기간 검색 */}
                         <SearchDate
-                            start_date={from_date}
-                            end_date={to_date}
-                            period={period}
+                            start_date={reduceFromDate}
+                            end_date={reduceToDate}
+                            period={reducePeriod}
                             handleBlur={handleBlur}
                             handleChange={handleChange}
                             startName="from_date"
@@ -650,7 +630,7 @@ const ProjectsPage = () => {
                                     labelId="contract_code"
                                     id="contract_code"
                                     name="contract_code"
-                                    value={contract_code}
+                                    value={reduceContractCode}
                                     onChange={handleChange}
                                 >
                                     <MenuItem value="">전체</MenuItem>
@@ -668,7 +648,7 @@ const ProjectsPage = () => {
                                     labelId="process_code"
                                     id="process_code"
                                     name="process_code"
-                                    value={process_code}
+                                    value={reduceProcessCode}
                                     onChange={handleChange}
                                 >
                                     <MenuItem value="">전체</MenuItem>
@@ -701,7 +681,7 @@ const ProjectsPage = () => {
                             isAllChecked={isAllChecked}
                         />
 
-                        <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={keyword} />
+                        <SearchBar handleBlur={handleBlur} handleChange={handleChange} keyword={reduceKeyword} />
                     </Grid>
                 </MainCard>
 

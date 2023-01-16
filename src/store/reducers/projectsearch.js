@@ -1,7 +1,6 @@
 // Action Type - login auth data
 const PROJECT_SEARCH_ADD = 'project/SET_DATA';
 const PROJECT_SEARCH_DEL = 'project/DEL_DATA';
-const PROJECT_SEARCH_GET = 'project/GET_DATA';
 
 // Action function => dispatch에서 호출
 export const setSearchData = (arg) => ({
@@ -17,18 +16,20 @@ export const delSearchData = () => ({
 const initialState = {
     reduceFromDate: '',
     reduceToDate: '',
-    reducePeriod: '',
+    reducePeriod: '5',
     reduceContractCode: '',
     reduceProcessCode: '',
     reduceBusinessList: [],
     reduceNetworkList: [],
-    reduceKeyword: ''
+    reduceKeyword: '',
+    reducePage: 0,
+    reduceRowsPerPage: 10
 };
 
 // 초기 데이터 리듀서
 const projectSearchReducer = (state = initialState, action) => {
     const { type, data } = action;
-    switch (action.type) {
+    switch (type) {
         case PROJECT_SEARCH_ADD:
             return {
                 ...state,
