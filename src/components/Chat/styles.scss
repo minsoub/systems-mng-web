@@ -85,6 +85,36 @@ $gray: #92959e;
         font-weight: inherit;
         font-style: inherit;
     }
+    h1, h2, h3, h4, h5, h6 {
+        color: inherit;
+        font-style: inherit;
+        text-decoration: inherit;
+        font-weight: inherit;
+    }
+    h1 {
+        font-size: 2em;
+        line-height: 2em;
+    }
+    h2 {
+        font-size: 1.8em;
+        line-height: 1.8em;
+    }
+    h3 {
+        font-size: 1.6em;
+        line-height: 1.6em;
+    }
+    h4 {
+        font-size: 1.4em;
+        line-height: 1.4em;
+    }
+    h5 {
+        font-size: 1.2em;
+        line-height: 1.2em;
+    }
+    h6 {
+        font-size: 1.1em;
+        line-height: 1.1em;
+    }
     &:after {
         /*
         bottom: 100%;
@@ -205,6 +235,36 @@ $gray: #92959e;
         s {
             font-weight: inherit;
             font-style: inherit;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: inherit;
+            font-style: inherit;
+            text-decoration: inherit;
+            font-weight: inherit;
+        }
+        h1 {
+            font-size: 2em;
+            line-height: 2em;
+        }
+        h2 {
+            font-size: 1.8em;
+            line-height: 1.8em;
+        }
+        h3 {
+            font-size: 1.6em;
+            line-height: 1.6em;
+        }
+        h4 {
+            font-size: 1.4em;
+            line-height: 1.4em;
+        }
+        h5 {
+            font-size: 1.2em;
+            line-height: 1.2em;
+        }
+        h6 {
+            font-size: 1.1em;
+            line-height: 1.1em;
         }
     }
 }
