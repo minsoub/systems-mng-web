@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Button, Box, TextField, Modal } from '@mui/material';
+import { Button, Box, TextField, Modal, Input } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 // transition
-import { activeEventPrivateTxt } from 'store/reducers/cms/DetailEventData';
+import { activeEventPrivateTitle, activeEventPrivateTxt } from 'store/reducers/cms/DetailEventData';
 
 // transition
 import BoardApi from 'apis/cms/boardapi';
@@ -22,28 +22,36 @@ const EventModal = ({ open, onClose, modalType }) => {
     const { paramId } = useParams(); //상세번호
     const dispatch = useDispatch();
     const [responseData, requestError, loading, { excelDownload }] = BoardApi();
-    const { reduceEventPrivateTxt } = useSelector((state) => state.cmsDetailEventData);
+    const { reduceEventPrivateTitle, reduceEventPrivateTxt } = useSelector((state) => state.cmsDetailEventData);
 
-    const [value, setValue] = useState('');
+    const [eventTitle, setEventTitle] = useState('개인정보 수집 및 이용 동의');
+    const [eventContents, setEventContents] = useState('');
 
+    const handleChangeTitle = (event) => {
+        setEventTitle(event.target.value);
+    };
     const handleChange = (event) => {
-        setValue(event.target.value);
+        setEventContents(event.target.value);
     };
     useEffect(() => {
-    }, [modalType]);
-    useEffect(() => {
-        if (!open) setValue('');
+        if (!open) setEventContents('');
         if (modalType === 1) {
-            setValue(reduceEventPrivateTxt);
+            setEventContents(reduceEventPrivateTxt);
+            if (reduceEventPrivateTitle) {
+                setEventTitle(reduceEventPrivateTitle);
+            } else {
+                setEventTitle('개인정보 수집 및 이용 동의');
+            }
         }
     }, [open]);
 
     const onSave = () => {
         if (modalType === 1) {
-            dispatch(activeEventPrivateTxt({ reduceEventPrivateTxt: value }));
+            dispatch(activeEventPrivateTitle({ reduceEventPrivateTitle: eventTitle }));
+            dispatch(activeEventPrivateTxt({ reduceEventPrivateTxt: eventContents }));
             onClose();
         } else {
-            excelDownload(paramId, value);
+            excelDownload(paramId, eventContents);
         }
     };
 
@@ -75,7 +83,25 @@ const EventModal = ({ open, onClose, modalType }) => {
         <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box className={`${styles.modal_wrap}`}>
                 <h2 className={`${styles.modal_title}`}>
-                    {modalType === 0 ? <>개인정보 열람 사유입력</> : <>개인정보 수집 및 이용 동의</>}
+                    {modalType === 0 ? (
+                        <>개인정보 열람 사유입력</>
+                    ) : (
+                        <>
+                            <Input
+                                type="text"
+                                size="small"
+                                value=""
+                                maxRows={1}
+                                maxLength={18}
+                                name="title"
+                                value={eventTitle}
+                                inputProps={{ maxLength: 18 }}
+                                onChange={handleChangeTitle}
+                                placeholder="개인정보 수집 및 이용 동의"
+                                fullWidth
+                            />
+                        </>
+                    )}
                 </h2>
                 <div className="common-board--layout">
                     <table>
@@ -88,8 +114,8 @@ const EventModal = ({ open, onClose, modalType }) => {
                                                 type="text"
                                                 size="small"
                                                 value=""
-                                                name="title"
-                                                value={value}
+                                                name="contents"
+                                                value={eventContents}
                                                 onChange={handleChange}
                                                 placeholder="개인정보 열람 사유를 입력해 주세요."
                                                 fullWidth
@@ -103,8 +129,8 @@ const EventModal = ({ open, onClose, modalType }) => {
                                                 value=""
                                                 multiline
                                                 maxRows={3}
-                                                name="title"
-                                                value={value}
+                                                name="contents"
+                                                value={eventContents}
                                                 onChange={handleChange}
                                                 placeholder="개인정보 수집 및 이용 동의를 입력해 주세요."
                                                 fullWidth

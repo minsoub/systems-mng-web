@@ -5,7 +5,8 @@ const initialState = {
     reduceEventStartDate: '', // 이벤트 시작일시
     reduceEventEndDate: '', // 이벤트 종료일시
     reduceEventJoinUser: '', // 이벤트 참여대상
-    reduceEventPrivateTxt: '', // 이벤트 개인정보 수집 및 동의
+    reduceEventPrivateTitle: '', // 이벤트 개인정보 수집 및 동의 타이틀
+    reduceEventPrivateTxt: '', // 이벤트 개인정보 수집 및 동의 텍스트
     reduceEventBtnName: '', // 이벤트 버튼명
     reduceEventBtnColor: '', // 이벤트 버튼 색상
     reduceEventBtnLink: '', // 이벤트 버튼 링크 경로
@@ -29,6 +30,9 @@ const cmsDetailEventData = createSlice({
         },
         activeEventJoinUser(state, action) {
             state.reduceEventJoinUser = action.payload.reduceEventJoinUser;
+        },
+        activeEventPrivateTitle(state, action) {
+            state.reduceEventPrivateTitle = action.payload.reduceEventPrivateTitle;
         },
         activeEventPrivateTxt(state, action) {
             state.reduceEventPrivateTxt = action.payload.reduceEventPrivateTxt;
@@ -58,6 +62,7 @@ export const {
     activeEventStartDate,
     activeEventEndDate,
     activeEventJoinUser,
+    activeEventPrivateTitle,
     activeEventPrivateTxt,
     activeEventBtnName,
     activeEventBtnColor,

@@ -8,6 +8,7 @@ import cx from 'classnames';
 
 const PostSetting = ({ type, editMode, postingData }) => {
     const dispatch = useDispatch();
+    const [copyUrl, setCopyUrl] = useState('');
     const [isDateUpdate, setIsDateUpdate] = useState(0);
     const [isBoardTopState, setIsBoardTopState] = useState(0);
     const handleChange = (e) => {
@@ -23,13 +24,36 @@ const PostSetting = ({ type, editMode, postingData }) => {
         }
     };
     useEffect(() => {
+        console.log(type);
+        switch (type) {
+            case 'notices':
+                setCopyUrl('https://www.bithumb.com/react/board/notice/');
+                break;
+            case 'press-releases':
+                setCopyUrl('https://www.bithumb.com/react/board/press/');
+                break;
+            case 'events':
+                setCopyUrl('https://www.bithumb.com/react/board/event/');
+                break;
+            case 'review-reports':
+                setCopyUrl('https://www.bithumb.com/react/board/report/');
+                break;
+            case 'investment-warnings':
+                setCopyUrl('');
+                break;
+            case 'economic-researches':
+                setCopyUrl('https://www.bithumb.com/react/board/lab/');
+                break;
+        }
+    }, [type]);
+    useEffect(() => {
         dispatch(activeUpdateDate({ reduceUpdateDate: isDateUpdate }));
     },[isDateUpdate]);
     useEffect(() => {
         dispatch(activeTopNoti({ reduceTopNoti: isBoardTopState }));
     },[isBoardTopState]);
     const shareURLCopy = () => {
-        clipboardShare(`https://www.bithumb.com/events/${postingData.id}`);
+        clipboardShare(`${copyUrl}${postingData.id}`);
     };
     useEffect(() => {
         if (!postingData) return;
@@ -103,7 +127,7 @@ const PostSetting = ({ type, editMode, postingData }) => {
                                 <>
                                     <th className={'tb--title'}>게시글 URL</th>
                                     <td className={'width15'} colSpan="3">
-                                        <span className="copyText">{`https://www.bithumb.com/events/${postingData.id}`}</span>
+                                        <span className="copyText">{`${copyUrl}${postingData.id}`}</span>
                                         <Button
                                             disableElevation
                                             size="medium"

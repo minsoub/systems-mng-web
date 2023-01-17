@@ -24,6 +24,7 @@ import {
     activeEventBtnLink,
     activeEventSuccessMsg,
     activeEventOverlapMsg,
+    activeEventPrivateTitle,
     activeEventPrivateTxt
 } from 'store/reducers/cms/DetailEventData';
 
@@ -146,6 +147,7 @@ const EventContents = ({ editMode, handleOpen, detailData }) => {
                           .format('YYYY-MM-DD')
                   )
         );
+        dispatch(activeEventPrivateTitle({ reduceEventPrivateTitle: detailData.agreement_title }));
         dispatch(activeEventPrivateTxt({ reduceEventPrivateTxt: detailData.agreement_content }));
     }, [detailData]);
 

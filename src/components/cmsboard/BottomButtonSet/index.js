@@ -45,7 +45,8 @@ const BottomButtonSet = ({ type, editMode, changeEditState, isDraft }) => {
         reduceEventStartDate, // 이벤트 시작일시
         reduceEventEndDate, // 이벤트 종료일시
         reduceEventJoinUser, // 이벤트 참여대상
-        reduceEventPrivateTxt, // 이벤트 개인정보 수집 및 동의
+        reduceEventPrivateTitle, // 이벤트 개인정보 수집 및 동의 타이틀
+        reduceEventPrivateTxt, // 이벤트 개인정보 수집 및 동의 텍스트
         reduceEventBtnName, // 이벤트 버튼명
         reduceEventBtnColor, // 이벤트 버튼 색상
         reduceEventBtnLink, // 이벤트 버튼 링크 경로
@@ -141,6 +142,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, isDraft }) => {
         console.log('이벤트 시작일시 : ', event_start_date);
         console.log('이벤트 종료일시 : ', event_end_date);
         console.log('이벤트 참여대상 : ', target);
+        console.log('이벤트 개인정보 수집 및 동의 타이틀 : ', reduceEventPrivateTitle);
         console.log('이벤트 개인정보 수집 및 동의 : ', reduceEventPrivateTxt);
         console.log('이벤트 버튼명 : ', button_name);
         console.log('이벤트 버튼 색상 : ', button_color);
@@ -206,6 +208,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, isDraft }) => {
                     button_color,
                     button_url,
                     message,
+                    agreement_title: reduceEventPrivateTitle,
                     agreement_content: reduceEventPrivateTxt
                 };
                 break;
