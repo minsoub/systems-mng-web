@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 // =============|| DetailContens - CustomTextfield ||============= //
 
-const CustomTextfield = ({ typeNum, editMode, value, name, change, holder, accessWap }) => {
+const CustomTextfield = ({ typeNum, editMode, value, name, change, holder, accessWap, maxLength }) => {
     const [isDisAble, setIsDisAble] = useState(false);
 
     useEffect(() => {
@@ -18,7 +18,17 @@ const CustomTextfield = ({ typeNum, editMode, value, name, change, holder, acces
     }, [typeNum]);
 
     return editMode ? (
-        <TextField disabled={isDisAble} type="text" size="small" value={value} name={name} onChange={change} placeholder={holder} fullWidth />
+        <TextField
+            disabled={isDisAble}
+            type="text"
+            size="small"
+            value={value}
+            name={name}
+            onChange={change}
+            placeholder={holder}
+            inputProps={{ maxLength: maxLength }}
+            fullWidth
+        />
     ) : (
         <>{value}</>
     );
@@ -28,7 +38,8 @@ export default CustomTextfield;
 
 CustomTextfield.defaultProps = {
     typeNum: 'DEFAULT',
-    accessWap: ['DEFAULT']
+    accessWap: ['DEFAULT'],
+    maxLength: 100
 };
 
 CustomTextfield.propTypes = {
@@ -38,5 +49,6 @@ CustomTextfield.propTypes = {
     name: PropTypes.string,
     change: PropTypes.func,
     holder: PropTypes.string,
-    accessWap: PropTypes.array
+    accessWap: PropTypes.array,
+    maxLength: PropTypes.number
 };

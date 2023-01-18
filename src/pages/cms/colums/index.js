@@ -120,8 +120,7 @@ export const getColumsData = (type, dataArray) => {
                     flex: 1,
                     headerAlign: 'center',
                     align: 'center',
-                    maxWidth: 150,
-                    valueGetter: ({ value }) => `${getDateFormat(value)}`
+                    maxWidth: 150
                 },
                 {
                     field: 'create_account_email',
@@ -139,7 +138,7 @@ export const getColumsData = (type, dataArray) => {
                     align: 'center',
                     maxWidth: 150,
                     valueGetter: ({ value }) => {
-                        return value ? `${getDateFormat(value)}` : '-';
+                        return value ? `${value}` : '-';
                     }
                 },
                 {
@@ -224,8 +223,7 @@ export const getColumsData = (type, dataArray) => {
                     flex: 1,
                     headerAlign: 'center',
                     align: 'center',
-                    maxWidth: 150,
-                    valueGetter: ({ value }) => `${getDateFormat(value)}`
+                    maxWidth: 150
                 },
                 {
                     field: 'update_date',
@@ -235,7 +233,7 @@ export const getColumsData = (type, dataArray) => {
                     align: 'center',
                     maxWidth: 150,
                     valueGetter: ({ value }) => {
-                        return value ? `${getDateFormat(value)}` : '-';
+                        return value ? `${value}` : '-';
                     }
                 },
                 {
@@ -307,8 +305,7 @@ export const getColumsData = (type, dataArray) => {
                     flex: 1,
                     headerAlign: 'center',
                     align: 'center',
-                    maxWidth: 200,
-                    valueGetter: ({ value }) => `${getDateFormat(value)}`
+                    maxWidth: 200
                 },
                 {
                     field: 'update_date',
@@ -318,7 +315,7 @@ export const getColumsData = (type, dataArray) => {
                     align: 'center',
                     maxWidth: 200,
                     valueGetter: ({ value }) => {
-                        return value ? `${getDateFormat(value)}` : '-';
+                        return value ? `${value}` : '-';
                     }
                 },
                 {

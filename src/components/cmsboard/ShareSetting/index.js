@@ -145,6 +145,7 @@ const ShareSetting = ({ editMode, shareData }) => {
                                         name="shareTitle"
                                         onBlur={handleBlur}
                                         onChange={onChange}
+                                        inputProps={{ maxLength: 50 }}
                                         placeholder="공유할 페이지 제목을 입력하세요."
                                         fullWidth
                                     />
@@ -164,6 +165,9 @@ const ShareSetting = ({ editMode, shareData }) => {
                                         name="shareDesc"
                                         onBlur={handleBlur}
                                         onChange={onChange}
+                                        multiline
+                                        rows={3}
+                                        inputProps={{ maxLength: 100 }}
                                         placeholder="공유할 페이지 설명을 입력하세요."
                                         fullWidth
                                     />
@@ -228,6 +232,7 @@ const ShareSetting = ({ editMode, shareData }) => {
                                         name="shareBtnName"
                                         onBlur={handleBlur}
                                         onChange={onChange}
+                                        inputProps={{ maxLength: 10 }}
                                         placeholder="공유 버튼명을 입력해 주세요."
                                         fullWidth
                                     />

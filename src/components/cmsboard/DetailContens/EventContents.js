@@ -308,6 +308,7 @@ const EventContents = ({ editMode, handleOpen, detailData }) => {
                         value={eventBtnName}
                         name="eventBtnName"
                         change={onChange}
+                        maxLength={10}
                         holder="버튼명을 입력해 주세요."
                         accessWap={['PARTICIPATION', 'LINK']}
                     />
@@ -320,6 +321,7 @@ const EventContents = ({ editMode, handleOpen, detailData }) => {
                         value={eventBtnColor}
                         name="eventBtnColor"
                         change={onChange}
+                        maxLength={6}
                         holder="버튼색상을 입력해 주세요."
                         accessWap={['PARTICIPATION', 'LINK']}
                     />
@@ -351,6 +353,7 @@ const EventContents = ({ editMode, handleOpen, detailData }) => {
                         value={eventJoinMsg}
                         name="eventJoinMsg"
                         change={onChange}
+                        maxLength={20}
                         holder="메세지를 입력해 주세요."
                         accessWap={['PARTICIPATION']}
                     />
@@ -365,6 +368,7 @@ const EventContents = ({ editMode, handleOpen, detailData }) => {
                         value={eventOverlapMsg}
                         name="eventOverlapMsg"
                         change={onChange}
+                        maxLength={20}
                         holder="메세지를 입력해 주세요."
                         accessWap={['PARTICIPATION']}
                     />

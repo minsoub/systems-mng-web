@@ -72,6 +72,7 @@ const EventModal = ({ open, onClose, modalType }) => {
                     link.click();
                     link.remove();
                     onClose();
+                    alert('저장 되었습니다.');
                 }
                 break;
             default:
@@ -87,12 +88,12 @@ const EventModal = ({ open, onClose, modalType }) => {
                         <>개인정보 열람 사유입력</>
                     ) : (
                         <>
+                            <h3 className={`${styles.modal_title}`}>동의 정보 입력</h3>
                             <Input
                                 type="text"
                                 size="small"
                                 value=""
                                 maxRows={1}
-                                maxLength={18}
                                 name="title"
                                 value={eventTitle}
                                 inputProps={{ maxLength: 18 }}
