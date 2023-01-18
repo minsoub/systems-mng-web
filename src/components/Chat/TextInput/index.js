@@ -20,6 +20,7 @@ export const Index = forwardRef(({ sendChat, sendMail }, ref) => {
         width: '100%',
         height: 188,
         minHeight: 100,
+        toolbarAdaptive: false,
         buttons: [
             'bold',
             'italic',
