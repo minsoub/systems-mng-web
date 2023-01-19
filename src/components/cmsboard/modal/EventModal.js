@@ -1,25 +1,108 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Button, MenuItem, Select, Box, TextField, Modal } from '@mui/material';
-import styles from './styles.module.scss';
-const EventModal = ({ open, onClose, modalType }) => {
-    const [value, setValue] = useState('');
+import { useParams } from 'react-router-dom';
+import { Button, Box, TextField, Modal, Input } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 
+// transition
+import { activeEventPrivateTitle, activeEventPrivateTxt } from 'store/reducers/cms/DetailEventData';
+
+// transition
+import BoardApi from 'apis/cms/boardapi';
+
+// library
+import PropTypes from 'prop-types';
+
+// style
+import styles from './styles.module.scss';
+
+// =============|| DetailContents - EventModal ||============= //
+
+const EventModal = ({ open, onClose, modalType }) => {
+    const { paramId } = useParams(); //상세번호
+    const dispatch = useDispatch();
+    const [responseData, requestError, loading, { excelDownload }] = BoardApi();
+    const { reduceEventPrivateTitle, reduceEventPrivateTxt } = useSelector((state) => state.cmsDetailEventData);
+
+    const [eventTitle, setEventTitle] = useState('개인정보 수집 및 이용 동의');
+    const [eventContents, setEventContents] = useState('');
+
+    const handleChangeTitle = (event) => {
+        setEventTitle(event.target.value);
+    };
     const handleChange = (event) => {
-        setValue(event.target.value);
+        setEventContents(event.target.value);
     };
     useEffect(() => {
-        console.log(modalType);
-    },[modalType]);
-    useEffect(() => {
-        if (!open) setValue('');
+        if (!open) setEventContents('');
+        if (modalType === 1) {
+            setEventContents(reduceEventPrivateTxt);
+            if (reduceEventPrivateTitle) {
+                setEventTitle(reduceEventPrivateTitle);
+            } else {
+                setEventTitle('개인정보 수집 및 이용 동의');
+            }
+        }
     }, [open]);
+
+    const onSave = () => {
+        if (modalType === 1) {
+            dispatch(activeEventPrivateTitle({ reduceEventPrivateTitle: eventTitle }));
+            dispatch(activeEventPrivateTxt({ reduceEventPrivateTxt: eventContents }));
+            onClose();
+        } else {
+            excelDownload(paramId, eventContents);
+        }
+    };
+
+    useEffect(() => {
+        if (!responseData) {
+            return;
+        }
+        switch (responseData.transactionId) {
+            case 'downloadExcel':
+                if (responseData.data) {
+                    let res = responseData;
+                    const url = window.URL.createObjectURL(new Blob([res.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', '참여자 정보.xlsx');
+                    link.style.cssText = 'display:none';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    onClose();
+                    alert('저장 되었습니다.');
+                }
+                break;
+            default:
+                break;
+        }
+    }, [responseData]);
+
     return (
         <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box className={`${styles.modal_wrap}`}>
                 <h2 className={`${styles.modal_title}`}>
-                    {modalType === 0 ? <>개인정보 열람 사유입력</> : <>개인정보 수집 및 이용 동의</>}
+                    {modalType === 0 ? (
+                        <>개인정보 열람 사유입력</>
+                    ) : (
+                        <>
+                            <h3 className={`${styles.modal_title}`}>동의 정보 입력</h3>
+                            <Input
+                                type="text"
+                                size="small"
+                                value=""
+                                maxRows={1}
+                                name="title"
+                                value={eventTitle}
+                                inputProps={{ maxLength: 18 }}
+                                onChange={handleChangeTitle}
+                                placeholder="개인정보 수집 및 이용 동의"
+                                fullWidth
+                            />
+                        </>
+                    )}
                 </h2>
                 <div className="common-board--layout">
                     <table>
@@ -32,8 +115,8 @@ const EventModal = ({ open, onClose, modalType }) => {
                                                 type="text"
                                                 size="small"
                                                 value=""
-                                                name="title"
-                                                value={value}
+                                                name="contents"
+                                                value={eventContents}
                                                 onChange={handleChange}
                                                 placeholder="개인정보 열람 사유를 입력해 주세요."
                                                 fullWidth
@@ -47,8 +130,8 @@ const EventModal = ({ open, onClose, modalType }) => {
                                                 value=""
                                                 multiline
                                                 maxRows={3}
-                                                name="title"
-                                                value={value}
+                                                name="contents"
+                                                value={eventContents}
                                                 onChange={handleChange}
                                                 placeholder="개인정보 수집 및 이용 동의를 입력해 주세요."
                                                 fullWidth
@@ -77,8 +160,9 @@ const EventModal = ({ open, onClose, modalType }) => {
                                         variant="contained"
                                         color="primary"
                                         className={styles.buttons}
+                                        onClick={onSave}
                                     >
-                                        저장
+                                        {modalType === 1 ? '저장' : '다운로드'}
                                     </Button>
                                 </td>
                             </tr>

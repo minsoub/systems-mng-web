@@ -165,24 +165,20 @@ var synapEditorConfig = {
      * 툴바 설정 참고 : https://synapeditor.com/docs/pages/viewpage.action?pageId=8421767
      */
     'editor.toolbar': [
-        'new', 'open', 'template', 'layout', '|',
-        'contentsProperties', '|',
         'undo', 'redo', '|',
         'copy', 'cut', 'paste', '|',
-        'link', 'unlink', 'bookmark', '|',
+        'link', 'unlink', '|',
         'image', 'background', 'video', 'file', '|',
         'table', 'div', 'horizontalLine', 'quote', '|',
         'specialCharacter', 'emoji', '-',
         'paragraphStyleWithText', '|',
-        'fontFamilyWithText', '|',
         'fontSizeWithText', '|',
         'bold', 'italic', 'underline', 'strike', '|',
-        'growFont', 'shrinkFont', '|',
         'fontColor', 'fontBackgroundColor', '|',
         'bulletList', 'numberedList', 'multiLevelList', '|',
         'align', '|',
         'lineHeight', '|',
-        'decreaseIndent', 'increaseIndent'
+        'decreaseIndent', 'increaseIndent', 'customRunStyle'
     ],
 
     /**
@@ -350,7 +346,7 @@ var synapEditorConfig = {
      * 에디터에서 편집시 사용할 폰트크기의 단위를 설정합니다.
      * 'pt'(기본값) or 'px'
      */
-    'editor.fontSize.unit': 'pt',
+    'editor.fontSize.unit': 'px',
 
     /**
      * 에디터에서 편집시 사용가능한 줄간격을 설정합니다.
@@ -366,7 +362,7 @@ var synapEditorConfig = {
            'Heading1', 'Heading2', Heading3', Heading4', Heading5', Heading6'
      */
     'editor.defaultStyle': {
-        'Body': 'font-family: 맑은 고딕; font-size: 11pt; line-height: 1.2;'
+        'Body': ''
     },
 
     /**
@@ -479,7 +475,7 @@ var synapEditorConfig = {
      * 이미지 업로드 API를 설정합니다.
      * ex) '/imageAPI'
      */
-    'editor.upload.image.api': 'https://smartadmin-inner-gateway-api.dev.bithumb.com/api/v1/mng/cpc/board/upload',
+    'editor.upload.image.api': '',
 
     /**
      * 이미지 업로드 요청 헤더를 설정합니다.

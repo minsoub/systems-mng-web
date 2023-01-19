@@ -8,8 +8,11 @@ const initialState = {
     reducePostState: '', // 게시글 상태
     reduceReservation: '', // 게시 예약
     reduceReservationDate: '', // 게시 예약일
+    reduceThumbnailId: '', // 첨부파일 ID
+    reduceFileId: '', // 첨부파일 ID
     reduceShareTitle: '', // 공유 타이틀
     reduceShareDesc: '', // 공유 설명
+    reduceShareFileId: '', // 공유 파일 ID
     reduceShareBtnName: '', // 공유 버튼명
     reduceUpdateDate: '', // 공유 날자 업데이트 여부
     reduceTopNoti: '' // 공유 상단 노출
@@ -41,11 +44,20 @@ const cmsDetailData = createSlice({
         activeReservationDate(state, action) {
             state.reduceReservationDate = action.payload.reduceReservationDate;
         },
+        activeFileId(state, action) {
+            state.reduceFileId = action.payload.reduceFileId;
+        },
+        activeThumbnailId(state, action) {
+            state.reduceThumbnailId = action.payload.reduceThumbnailId;
+        },
         activeShareTitle(state, action) {
             state.reduceShareTitle = action.payload.reduceShareTitle;
         },
         activeShareDesc(state, action) {
             state.reduceShareDesc = action.payload.reduceShareDesc;
+        },
+        activeShareFileId(state, action) {
+            state.reduceShareFileId = action.payload.reduceShareFileId;
         },
         activeShareBtnName(state, action) {
             state.reduceShareBtnName = action.payload.reduceShareBtnName;
@@ -69,8 +81,11 @@ export const {
     activePostState,
     activeReservation,
     activeReservationDate,
+    activeFileId,
+    activeThumbnailId,
     activeShareTitle,
     activeShareDesc,
+    activeShareFileId,
     activeShareBtnName,
     activeUpdateDate,
     activeTopNoti

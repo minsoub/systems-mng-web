@@ -1,27 +1,28 @@
 /* eslint-disable react/prop-types */
 import { useEffect } from 'react';
 
+// =============|| DetailContents - EventContents ||============= //
+
 const Editor = (props) => {
     let authData = null;
-    if (localStorage.hasOwnProperty('authenticated')) {
-        authData = JSON.parse(localStorage.getItem('authenticated'));
-    }
-    let Authorization = `Bearer ${authData.accessToken}`;
+    let Authorization = '';
+
     // onload
     useEffect(() => {
-        console.log(props);
-        //console.log(authData);
-        //console.log(synapEditorConfig['editor.autoSave.period'] = '1');
-        //console.log(synapEditorConfig);
-        synapEditorConfig['editor.upload.image.api'] =  process.env.REACT_APP_DEFAULT_API_URL + '/mng/cpc/board/upload';
+        if (localStorage.hasOwnProperty('authenticated')) {
+            authData = JSON.parse(localStorage.getItem('authenticated'));
+        }
+        Authorization = `Bearer ${authData.accessToken}`;
+        // console.log(props);
+        synapEditorConfig['editor.upload.image.api'] =  process.env.REACT_APP_DEFAULT_API_URL + '/mng/cms/files/image';
         synapEditorConfig['editor.upload.image.headers'] = {
             Authorization: `${Authorization}`,
             site_id: process.env.REACT_APP_DEFAULT_SITE_ID,
             my_site_id: authData.siteId,
             active_role: authData.roleId
         };
-        window[props.props.editName] = new SynapEditor(props.props.editName, synapEditorConfig, props.props.value);
-        return(() => {
+        window[props.props.editName] = new SynapEditor(props.props.editName, synapEditorConfig, props.props.value.contentsData);
+        return (() => {
             delete window[props.props.editName];
         });
     }, []);

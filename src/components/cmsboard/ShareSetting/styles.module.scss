@@ -2,11 +2,14 @@
     display: inline-block;
 }
 .file_name{
-    margin-right: 20px;
+    margin: 0 20px 0 50px;
 }
 input::file-selector-button {
     display: none;
 }
 .file_dave_btn{
     margin-left:10px;
+}
+.file_download{
+    text-decoration: underline;
 }

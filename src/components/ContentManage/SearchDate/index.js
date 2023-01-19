@@ -24,26 +24,26 @@ const SearchDate = ({
     resetPeriod,
     titleWidth
 }) => {
-    const [start_date2, setStartDate] = useState();
-    const [end_date2, setEndDate] = useState();
-    const [start_view_date, setStartViewDate] = useState();
+    const [start_date2, setStartDate] = useState(start_date);
+    const [end_date2, setEndDate] = useState(end_date);
+    const [start_view_date, setStartViewDate] = useState(start_date);
     const [end_view_date, setEndViewDate] = useState();
-    const titleWidthVal = titleWidth?titleWidth:120;
+    const titleWidthVal = titleWidth ? titleWidth : 120;
     SearchDate.defaultProps = {
         noneChecked: null,
         period: null
     };
     useEffect(() => {
-        if (!start_date) return;
         setStartViewDate(start_date);
     },[start_date]);
     useEffect(() => {
-        if (!end_date) return;
         setEndViewDate(end_date);
     },[end_date]);
     useEffect(() => {
-        if (!start_date2) return;
-        if (!start_date2.$y || !start_date2.$M || !start_date2.$D) return;
+        if (!start_date2) {
+            setStartViewDate('');
+            return;
+        }
         if (
             getFormatDate(new Date(start_date2.$y + '-' + (start_date2.$M + 1) + '-' + start_date2.$D)) >
             getFormatDate(new Date(end_view_date))
@@ -55,7 +55,10 @@ const SearchDate = ({
         setStartViewDate(start_date2.$y + '-' + (start_date2.$M + 1) + '-' + start_date2.$D);
     },[start_date2]);
     useEffect(() => {
-        if (!end_date2) return;
+        if (!end_date2) {
+            setEndViewDate('');
+            return;
+        }
         if (
             getFormatDate(new Date(start_view_date)) > getFormatDate(new Date(end_date2.$y + '-' + (end_date2.$M + 1) + '-' + end_date2.$D))
         ) {
@@ -66,11 +69,25 @@ const SearchDate = ({
         setEndViewDate(end_date2.$y + '-' + (end_date2.$M + 1) + '-' + end_date2.$D);
     }, [end_date2]);
     useEffect(() => {
-        if (!start_view_date) return;
+        if (!start_view_date) {
+            return;
+        }
+        if (start_view_date.length < 8) {
+            setStartViewDate(moment().format('YYYY-MM-DD'));
+            return;
+        }
+        if (!moment(start_view_date, 'YYYY-MM-DD').isValid()) return;
         changeDate('start', getFormatDate(new Date(start_view_date)));
     }, [start_view_date]);
     useEffect(() => {
-        if (!end_view_date) return;
+        if (!end_view_date) {
+            return;
+        }
+        if (end_view_date.length < 8) {
+            setEndViewDate(moment().format('YYYY-MM-DD'));
+            return;
+        }
+        if (!moment(end_view_date, 'YYYY-MM-DD').isValid()) return;
         changeDate('end', getFormatDate(new Date(end_view_date)));
     }, [end_view_date]);
     const getFormatDate = (date) =>{
@@ -89,8 +106,8 @@ const SearchDate = ({
                     label="연도. 월. 일"
                     inputFormat="YYYY-MM-DD"
                     value={start_view_date} // 변수바뀜 확인필요
-                    onChange={(newValue) => {
-                        setStartDate(newValue);
+                    onChange={(e) => {
+                        setStartDate(e);
                     }}
                     renderInput={(params) => <TextField {...params} name={startName} onChange={handleChange} />}
                 />

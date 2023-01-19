@@ -1,18 +1,13 @@
 import propTypes from 'prop-types';
 import { Breadcrumb } from 'antd';
 import './styles.scss';
-import { StarOutlined } from '@ant-design/icons';
-import { IconButton } from '@mui/material';
 
 // 타이틀 명, 메뉴 경로
 const HeaderTitle = ({ titleNm, menuStep01, menuStep02, menuStep03 }) => {
     return (
         <div className="admin--title">
-            <div className='title'>
+            <div className="title">
                 <h3>{titleNm}</h3>
-                {/* <IconButton variant="text" size="small"  sx={{ width: 'auto', minWidth: 'auto'}}>
-                    <StarOutlined />
-                </IconButton> */}
             </div>
 
             <Breadcrumb>

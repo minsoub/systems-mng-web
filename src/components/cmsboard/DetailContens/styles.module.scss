@@ -6,7 +6,7 @@
     display: inline-block;
 }
 .file_name{
-    margin-right: 20px;
+    margin: 0 20px 0 50px;
 }
 input::file-selector-button {
     display: none;
@@ -26,12 +26,17 @@ input::file-selector-button {
     margin-left: 5px;
 }
 .down_user{
-    margin-left: 5px;
+    margin-left: 30px;
 }
 .event_wave{
     line-height: 41px;
 }
 
+.contentsViewArea{
+    max-height: 500px;
+    overflow-y: auto;
+}
+.essential{color:red;}
 .modal_wrap{
     position: absolute;
     top: 40%;

@@ -1,0 +1,8 @@
+.keywordWrap{
+    margin-bottom: 20px;
+}
+.dropdownWrap{
+    :global(.MuiFormControl-root){
+        min-width: 120px;
+    }
+}
