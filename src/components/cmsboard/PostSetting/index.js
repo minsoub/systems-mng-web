@@ -1,10 +1,19 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { activeUpdateDate, activeTopNoti } from 'store/reducers/cms/DetailData';
+import PropTypes from 'prop-types';
 import { Typography, Button, RadioGroup, FormControlLabel, Radio } from '@mui/material';
-import { clipboardShare } from 'utils/CommonUtils';
+
+//library
 import cx from 'classnames';
+
+// project import
+import { activeUpdateDate, activeTopNoti } from 'store/reducers/cms/DetailData';
+
+//utils
+import { clipboardShare } from 'utils/CommonUtils';
+
+// =============|| DetailContents - PostSetting ||============= //
 
 const PostSetting = ({ type, editMode, postingData }) => {
     const dispatch = useDispatch();
@@ -39,7 +48,7 @@ const PostSetting = ({ type, editMode, postingData }) => {
                 setCopyUrl('https://www.bithumb.com/react/board/report/');
                 break;
             case 'investment-warnings':
-                setCopyUrl('');
+                setCopyUrl('https://www.bithumb.com/react/board/investment/');
                 break;
             case 'economic-researches':
                 setCopyUrl('https://www.bithumb.com/react/board/lab/');
@@ -146,9 +155,13 @@ const PostSetting = ({ type, editMode, postingData }) => {
                 </table>
             </div>
         </>
-    )
+    );
 };
 
-PostSetting.propTypes = {};
-
 export default PostSetting;
+
+PostSetting.propTypes = {
+    type: PropTypes.string,
+    editMode: PropTypes.bool,
+    postingData: PropTypes.object
+};

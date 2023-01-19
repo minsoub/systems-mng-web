@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Typography, TextField, Button } from '@mui/material';
 
 // library
@@ -247,3 +248,8 @@ const ShareSetting = ({ editMode, shareData }) => {
         </>
     )};
 export default ShareSetting;
+
+ShareSetting.propTypes = {
+    editMode: PropTypes.bool,
+    shareData: PropTypes.object
+};

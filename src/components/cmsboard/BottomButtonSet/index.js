@@ -85,7 +85,7 @@ const BottomButtonSet = ({ type, editMode, changeEditState, isDraft }) => {
         const isTopFix = reduceTopFixable === 0 ? false : true;
         const isShow = reducePostState === 0 ? false : true;
         const isSchedule = reduceReservation;
-        const scheduleDate = reduceReservationDate ? reduceReservationDate.replace(' T ', ' ') + ':00' : '';
+        const scheduleDate = isSchedule && reduceReservationDate ? reduceReservationDate.replace(' T ', ' ') + ':00' : '';
         const isUseUpdateDate = reduceUpdateDate === 0 ? false : true;
         const isAlignTop = reduceTopNoti === 0 ? false : true;
         let event_start_date = reduceEventStartDate ? reduceEventStartDate.replace(' T ', ' ') + ':00' : '';
@@ -267,8 +267,14 @@ const BottomButtonSet = ({ type, editMode, changeEditState, isDraft }) => {
     }, [responseData]);
 
     useEffect(() => {
-        // console.log(type);
-    }, [type]);
+        if (!requestError) {
+            return;
+        }
+        if (requestError.data.code === 'DUPLICATE_SCHEDULE_DATE'){
+            alert('예약된 게시글이 존재하여 예약 게시할 수 없습니다.\n다른 일시를 선택하세요.');
+            setLoadOpen(false);
+        }
+    }, [requestError]);
     return (
         <Grid className={styles.button_layout}>
             <ButtonLayout>
